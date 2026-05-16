@@ -1144,3 +1144,122 @@ fires when each acquisition lands as a follow-on P3.2-style discharge,
 one per atom.)
 
 **Commit:** (filled below after commit lands)
+
+## 2026-05-16: P3.4 — final pass: rebuild `CITATION_INDEX.md` + verify `\unchecked` delta
+
+**summary.tex location:** N/A — `summary.tex` is **not modified** by
+this commit. P3.4 is a downstream rebuild of `CITATION_INDEX.md`
+plus a count-delta verification gate.
+
+**Before** (CITATION_INDEX.md at HEAD prior to this commit, the
+post-P3.3 state at commit `a5364f8`): SHA256
+`a20aec3c6b26141130d71974c4b0a9b9b123f641efd40caf75906fc99ab46bbd`;
+generation-metadata header records the pre-Phase-3 `summary.tex`
+SHA256 `fa4d2059…` and `\unchecked`-macro count 26 (lines as listed
+in that header).
+
+**After** (this commit; emitted by re-running
+`scripts/build-citation-index.py` against the current `summary.tex`):
+SHA256
+`99e65fabe7bba867acbffb6d0b76c034d6e6b207da5346b9f7d43bc1e744e90f`;
+header records the current `summary.tex` SHA256 `83bdf1bc…` and
+`\unchecked`-macro count 21 (lines as listed in the new header).
+Re-running the script a second time produces byte-identical output
+(I-gate satisfied; SHA256 unchanged).
+
+**Diff summary** (`git diff CITATION_INDEX.md` between HEAD and this
+commit):
+
+- **Generation-metadata header:** `summary.tex` SHA256 updated
+  (`fa4d2059…` → `83bdf1bc…`); `\unchecked`-macro count updated
+  (26 → 21) and the per-line-number list updated to match.
+  `references/manifest/SOURCES.md` SHA256 unchanged.
+- **Summary table — per-atom `summary.tex lines` field** (which
+  records *author-keyword occurrence lines* per `scripts/build-citation-index.py`
+  `harvest_atom_backrefs`, NOT `\unchecked` positions; this is the
+  schema clarification filed as `bd cft-anyons-umx`): 5 new
+  occurrence lines added across 3 atoms, attributable to the Phase-3
+  `summary.tex` edits.
+  - `feiguin-golden-chain` gains lines 2486, 2488, 2489, 2490 — the
+    P3.0 `\bibitem{SRC-GOLDEN-CHAIN}` bibliography entry (the
+    bibitem body contains the keywords ``Feiguin'' and ``golden
+    chain'' the script's `PATTERNS` list matches).
+  - `koo-saleur` gains line 2465 — the P3.3 footnote body for
+    `aq:koo-saleur` mentions ``Koo--Saleur'' (twice) explaining the
+    1994-original-vs-2017-follow-up distinction.
+  - `g2-1-chiral-cft` gains line 1866 — the P3.3 footnote body for
+    `aq:g2-1-chiral-cft` mentions ``$(G_2)_1$''.
+- **Per-atom `Discharge status` fields:** **all 9 atoms preserve
+  their HEAD status** (`koo-saleur` partial; `osborne-stottmeister`,
+  `feiguin-golden-chain`, `string-net` discharged; `pasquier`,
+  `huse`, `frs`, `anyonic-mera`, `g2-1-chiral-cft` undischarged).
+  This is **expected**: the script's `discharge_status()` function
+  (`scripts/build-citation-index.py:565--592`) returns `discharged`
+  iff `resolved_src` is non-empty, `partial` iff `resolved_lit` or
+  `resolved_af` is non-empty, else `undischarged`. The resolution
+  consults the hard-coded `src_ids` / `lit_paper_ids` / `lit_bibkeys`
+  / `af_node_ids` in each `_atom(...)` call (`scripts/build-citation-index.py:155--305`),
+  NOT the count or presence of `\unchecked` macros in `summary.tex`.
+  Discharging a `\unchecked` at the `summary.tex` level (P3.2) does
+  not change citation-provenance discharge status (which is what
+  CITATION_INDEX tracks); it only changes claim-discharge for that
+  specific site. Conversely, removing all `\unchecked` macros for an
+  atom would not flip its status to `undischarged` if the
+  `references/`/`literature/`/`AF` mappings remain.
+
+**Plan-vs-reality observation (count metric):**
+
+Plan literal at `stocktake/MIGRATION_PLAN.md:174` says: ``verify the
+count of `\unchecked` flags decreased by exactly the count of P3.2
+atomic steps.'' Under user-locked per-atom granularity (P3.2 ran as
+3 atomic commits: `3403ca5` for `osborne-stottmeister`, `c8d055b` for
+`feiguin-golden-chain`, `c607efa` for `string-net`), the metric
+``count of P3.2 atomic steps'' = 3. The actual measured
+`\unchecked`-macro-count delta is 26 → 21 = 5 instances (P3.2.a
+discharged 3 instances; P3.2.b discharged 1; P3.2.c discharged 1).
+The plan-literal check passes per per-atom interpretation (3 atomic
+commits actually shipped); the per-instance delta (5) is the stronger
+coherent number recorded in this entry. Both readings hold; neither
+contradicts the plan; the discrepancy reflects the plan's writing-time
+assumption that one `\unchecked` site per atom would be typical
+(true for 2 of the 3 dischargeable atoms, but not for
+`osborne-stottmeister` which had 3 sites). Recorded as a Deviation
+in `MIGRATION_LOG.md` for future plan-revision reference.
+
+**Source of correction:** N/A — this is **not a correction to a
+previously-asserted claim** in `summary.tex` or any other canonical
+artifact. P3.4 is a pure downstream rebuild of an auto-generated file
+(`CITATION_INDEX.md`) plus a count-delta verification gate.
+`scripts/build-citation-index.py` itself is **not modified** by this
+commit; the deferred CITATION_INDEX bugs (`cft-anyons-eit`,
+`cft-anyons-es5`, `cft-anyons-umx`, `cft-anyons-6ku`) remain open
+for a later Phase-3 cleanup pass.
+
+**Validation:**
+
+- **M** (mechanical): `python3 scripts/build-citation-index.py`
+  exits 0 (stdout captured in commit body). The emitted
+  CITATION_INDEX.md is the live one (overwrite is the script's
+  contract). The script's own M-gate stats (`\unchecked` macros
+  found: 21; AF externals read: 5; citation atoms emitted: 9; mapped
+  a/b/c: 3/4/0; undischarged: 5) match the expected post-Phase-3
+  state.
+- **I** (idempotent): two consecutive runs of
+  `scripts/build-citation-index.py` against the current
+  `summary.tex` + manifest + literature DB + AF externals produce
+  byte-identical CITATION_INDEX.md (SHA256 `99e65fab…` both times)
+  and byte-identical stdout. Verified at this commit.
+- **D** (definitional): N/A — no GLOSSARY entry is added, altered,
+  or referenced; the regenerated CITATION_INDEX.md fields are
+  schema-stable per the P2.8 emission contract (only the per-atom
+  `summary.tex lines` lists and the header SHAs/counts change).
+- **C** (cross-reference): N/A — no claim is discharged.
+- **R** (review): mechanical per CLAUDE.md Rule 4 (rebuild + count
+  verification + single-row PROVENANCE hash refresh + an
+  observation-only ERRATA entry that asserts no new mathematical
+  claim). Post-commit hostile Opus reviewer subagent per orchestrator
+  policy (orchestrator may judge whether to escalate; the editorial
+  judgments here are minimal and confined to the count-metric
+  observation).
+
+**Commit:** (filled below after commit lands)

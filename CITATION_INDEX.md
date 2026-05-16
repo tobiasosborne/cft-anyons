@@ -16,11 +16,11 @@ TRIGGER: Every \cite{}, \unchecked, or bibliographic mention added to
 ## Generation metadata
 
 - Generator: `scripts/build-citation-index.py` (P2.8).
-- Source `summary.tex` SHA256: `fa4d2059f3fb577ebe9e84ace2ab0ee6ef2b6d0cec7cde60d53da7951b0bfe63`.
+- Source `summary.tex` SHA256: `83bdf1bc1691c5e953e7c210fcde05eadc29fb880101d3a2f887cbc970f1df77`.
 - Source `references/manifest/SOURCES.md` SHA256: `6445790c3df1e47cb0af23b30fc419f29ffc57ef0866da47ca00e73263ad0878`.
 - AF externals source (pre-Phase-7 sibling): `/home/tobiasosborne/Projects/cft-anyons-deprecated/af/master/externals` (5 externals at run time).
 - AF entries reference the sibling repo `/home/tobiasosborne/Projects/cft-anyons-deprecated` and will need refreshing post-Phase-7 import.
-- `\unchecked` macros in summary.tex: 26 total (lines 37, 53, 101, 497, 1734, 1769, 1789, 1866, 2300, 2302, 2304, 2305, 2307, 2309, 2310, 2380, 2437, 2461, 2465, 2468, 2469, 2471, 2474, 2477, 2479, 2480). One is the macro definition (`\newcommand`); the rest flag citations or claims.
+- `\unchecked` macros in summary.tex: 21 total (lines 37, 53, 101, 497, 1734, 1769, 1789, 1866, 2300, 2302, 2305, 2307, 2309, 2310, 2437, 2461, 2465, 2469, 2471, 2474, 2479). One is the macro definition (`\newcommand`); the rest flag citations or claims.
 - Re-run command: `python3 scripts/build-citation-index.py`.
 
 ## Citation atom unit
@@ -35,15 +35,15 @@ Per-citation discharge status is one of: `discharged` (local PDF in `references/
 
 | Slug | Discharge | references/ (SRC-*) | literature/ (paper id / bib_key) | AF nodes | summary.tex lines |
 |---|---|---|---|---|---|
-| `koo-saleur` | partial | — | paper#590 | — | 1729, 1731, 1737, 1768, 2302, 2314, 2375, 2377, 2381, 2446, 2464, 2466 |
+| `koo-saleur` | partial | — | paper#590 | — | 1729, 1731, 1737, 1768, 2302, 2314, 2375, 2377, 2381, 2446, 2464, 2465, 2466 |
 | `osborne-stottmeister` | discharged | SRC-OAR-FERMIONS, SRC-OAR-WAVELETS, SRC-OSBORNE-CONTINUUM | Stottmeister2022Anyon, paper#520, paper#521 | — | 2303, 2381, 2446, 2466 |
 | `pasquier` | undischarged | — | — | — | 2305, 2453, 2469 |
 | `huse` | undischarged | — | — | — | 2306, 2307, 2453, 2454, 2470 |
 | `frs` | undischarged | — | — | — | 100, 497, 515, 2308, 2451, 2472 |
-| `feiguin-golden-chain` | discharged | SRC-GOLDEN-CHAIN | FeiguinTrebstLudwigTroyerKitaevWangFreedman2007, Trebst2008 | — | 1860, 2274, 2444, 2475 |
+| `feiguin-golden-chain` | discharged | SRC-GOLDEN-CHAIN | FeiguinTrebstLudwigTroyerKitaevWangFreedman2007, Trebst2008 | — | 1860, 2274, 2444, 2475, 2486, 2488, 2489, 2490 |
 | `anyonic-mera` | undischarged | — | — | — | 2310 |
 | `string-net` | discharged | SRC-STRING-NET | paper#324 | — | 1304, 2480 |
-| `g2-1-chiral-cft` | undischarged | — | — | — | 1858, 1865, 1867, 1888, 1944, 2272, 2442 |
+| `g2-1-chiral-cft` | undischarged | — | — | — | 1858, 1865, 1866, 1867, 1888, 1944, 2272, 2442 |
 
 ## Per-citation entries
 
@@ -65,7 +65,7 @@ Schema: each entry follows the per-citation schema declared previously in this f
 
 ### `feiguin-golden-chain` — Feiguin et al.\ (2007) and follow-ups — golden-chain Fibonacci antiferromagnetic continuum at tricritical Ising M(4,5), c=7/10
 
-**summary.tex location(s):** lines 1860, 2274, 2444, 2475
+**summary.tex location(s):** lines 1860, 2274, 2444, 2475, 2486, 2488, 2489, 2490
   (canonical enumeration entry at `summary.tex:2475`)
 **Currently flagged:** `\unchecked` (per summary.tex's blanket
   `Every external reference in this document is flagged \unchecked`
@@ -96,7 +96,7 @@ Schema: each entry follows the per-citation schema declared previously in this f
 
 ### `g2-1-chiral-cft` — (G_2)_1 chiral CFT — c=14/5, primary h_tau=2/5; cited as the simplest chiral CFT with Fibonacci modular data
 
-**summary.tex location(s):** lines 1858, 1865, 1867, 1888, 1944, 2272, 2442
+**summary.tex location(s):** lines 1858, 1865, 1866, 1867, 1888, 1944, 2272, 2442
   (canonical enumeration entry at `summary.tex:1858`)
 **Currently flagged:** `\unchecked` (per summary.tex's blanket
   `Every external reference in this document is flagged \unchecked`
@@ -124,7 +124,7 @@ Schema: each entry follows the per-citation schema declared previously in this f
 
 ### `koo-saleur` — Koo, Saleur — lattice Virasoro approximants from XXZ/RSOS / TL chains
 
-**summary.tex location(s):** lines 1729, 1731, 1737, 1768, 2302, 2314, 2375, 2377, 2381, 2446, 2464, 2466
+**summary.tex location(s):** lines 1729, 1731, 1737, 1768, 2302, 2314, 2375, 2377, 2381, 2446, 2464, 2465, 2466
   (canonical enumeration entry at `summary.tex:2464`)
 **Currently flagged:** `\unchecked` (per summary.tex's blanket
   `Every external reference in this document is flagged \unchecked`
