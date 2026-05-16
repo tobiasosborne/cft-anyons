@@ -350,6 +350,125 @@ via `cp -a` (`diff -rq` zero divergence vs source at import).
 
 ---
 
+## Phase 4 imports — Lean infrastructure (`Formalisation/LinearAlgebra/`)
+
+Phase 4 ports the 13 abstract `LinearAlgebra/` Lean files from
+`cft-anyons-deprecated/Formalisation/LinearAlgebra/` into this
+repo's `Formalisation/LinearAlgebra/`. All 13 files contain only
+finite-dimensional matrix lemmas (isometry/coisometry, polar,
+Kronecker tensor, tensor-power, heterogeneous tensor, trace,
+postcompose, component projection, no-mixing, fine-graining,
+coherent-system, diagonal scaling, charge-only); no fusion-category
+content, Mathlib-only dependencies, Mathlib pin
+`d6dab93da86c64219ab1497ffadce1a66aa04701`, toolchain
+`leanprover/lean4:v4.30.0-rc2`. Each per-file commit also appended
+one `import Formalisation.LinearAlgebra.<file>` line to
+`Formalisation.lean` (the P4.1 placeholder; 11-line comment block
++ 1 blank + 13 imports = 25-line file at P4.14 close).
+
+Each per-file commit (P4.2–P4.14) is a single-file atomic port
+with `lake build` green, mutation-proof PASS, zero `sorry` / zero
+`axiom`, and a docstring block extending the source with
+`-- GLOSSARY: <slug>` cross-references to already-existing
+GLOSSARY entries. The body of every file is byte-for-byte verbatim
+from the source from `namespace CFTAnyons` to EOF; the only
+diff between source and destination is the added docstring block
+(which is why source and destination SHA256s differ per file).
+
+**Source root:** `/home/tobiasosborne/Projects/cft-anyons-deprecated/Formalisation/LinearAlgebra/`
+(13 `.lean` files; pre-existing in the source repo, no in-source
+edits performed in this consolidation).
+
+**Destination root:** `Formalisation/LinearAlgebra/` in this repo.
+
+**Per-file SHA256 table.** Source SHA256 = pre-existing source hash
+at port time; Destination SHA256 = post-port hash (differs from
+source by the added docstring block). Both hashes were recorded
+verbatim in each P4.X commit message at port time and are
+re-verified in this commit (13/13 match for both source and
+destination).
+
+| P-step | File | Source SHA256 | Destination SHA256 | Commit |
+| --- | --- | --- | --- | --- |
+| P4.2  | `Isometry.lean`            | `c50b83eea32ca55fcbc024ee98bb71d7e3c231694c0d360914105e80b09da6b1` | `c409f590310b03631b854d5ed662ad98d7ae3fa1e4b17129ce1043df1c7647fc` | `8c04ada` |
+| P4.3  | `Polar.lean`               | `3ea66a65dae65ac2428cbef1ae7d9d0d0677e78e9de4fd185c35f820d60f1f61` | `cf7851c4dedb31524190c892fda30ab9c7535d83a50d4cae41d5f0a7cce685c0` | `a413ff1` |
+| P4.4  | `Tensor.lean`              | `31bcddbd604c0442b9d17ae7a9ec8807019cab5b9c126b748f46a39a0e9a6afd` | `66dd43925f6b84d0882686a4c02e2d2c7542943abac48e90d9d352c459c135c6` | `626230e` |
+| P4.5  | `TensorPower.lean`         | `9180306ffbed970610445f8a196f00e16383e30ed2d4b46506cb4ac904b38e7a` | `9264053f0f6a2b286b45bc603eb628503f6abd61a37f12c0b160c7d0964e2154` | `1c4e41a` |
+| P4.6  | `HeterogeneousTensor.lean` | `2249954c8b084576e611010b6cf51998d4bf6574c26dd2261fc1166ff66fb0f4` | `f304c59d61e5878e528a0d2645ce2195648bb7e3062e8a7b77f59454c5ade11f` | `3f5443d` |
+| P4.7  | `Trace.lean`               | `e82354c21b04ef7671d540c040483946f7994b5f22a3879891ef3de68c8c5e5c` | `e6fc54c55e97b0503492057435df6efe094d2ca7b58cde0983b66fcca6711ae8` | `832fcf3` |
+| P4.8  | `Postcompose.lean`         | `7601cbc4451da5a480e44de22af0f270c73fdd4af6193e27efdf7b76a07b4bcf` | `77711cf5ea218445c5d336e06b4a810e02b1c720176f4644b1566d9a12176666` | `9c88cb2` |
+| P4.9  | `Component.lean`           | `8eccc6e05ea527bbbfb110cf418ffb8bad1a6cd3791a1311fadf9e0e3f483136` | `c2dbd2b5a5c81e237335a88af5b2b299237bb229595d83a2c217903411ae72e8` | `5e02be7` |
+| P4.10 | `NoMixing.lean`            | `63f6cd10136d3b56f181dba919ccbf79e3fcde4d612454623782d76d32ad4027` | `82622f7568d9068d7129dda351b652cb9809083e313e7635cdfb35458da6c046` | `180e87b` |
+| P4.11 | `FineGraining.lean`        | `e02b98f8d80994e5c05bf103f267c91f08641d5fd5c453397456fa02383bab62` | `f5e194e5d8229cc59e1fbd5634ee9b07586c59da919c0b3350742e16c25fd7ba` | `1e93a90` |
+| P4.12 | `CoherentSystem.lean`      | `729f2f430b2b57e9568e0a77d898ace9863f8eca4a7f5fc32985f67bae2c4d7a` | `edc121dcfa22cbecda1da1ca802cf8d7c522fc65e09d0ccc11d47bfd5b2e3770` | `b890772` |
+| P4.13 | `DiagonalScaling.lean`     | `798caa5ba56ea7818f10d6651870370bc4e3bf2b6eadc24cf598f1b0d4624832` | `f13a34c09100ba641cc4fa04d4026ce553957eb85490eef8b501ae0a54ece776` | `9a741fc` |
+| P4.14 | `ChargeOnly.lean`          | `9b9646d9a12da7619c2cdd62f6d79aa7c8c17381d24f946489c3920e67b2e439` | `8f6e53141c9d8736eef682c4160144c100dfd2c4ccc3ef01144ead9635a616b4` | `e80e6fd` |
+
+**Harmonisation applied per file:** docstring block extended with
+`-- GLOSSARY: <slug>` cross-references (D-gate); body verbatim
+from source from `namespace CFTAnyons` onward. No semantic edits
+to declarations, no proof modifications, no new GLOSSARY entries
+added (every cross-referenced slug pre-existed at port time).
+Specific GLOSSARY slugs cross-referenced are recorded per-commit
+in each P4.X commit message body (`GLOSSARY changes: none (N
+existing slugs cross-referenced; no new entries)`).
+
+**Validation passed per port:** M (lake build green), D (GLOSSARY
+slugs cross-referenced and verified pre-existing), I (file hash
+stable post-landing). R-gate exercised post-commit by hostile Opus
+reviewer per orchestrator policy (Core-tier port-and-verify mode;
+each port carries a verdict in its commit-attached review record
+under `bd cft-anyons-99c.<N>`).
+
+**Mutation-proof per port:** each P4.X commit demonstrates that the
+lake build catches semantic edits to proof bodies (typical
+mutation: rename an identifier in the proof body → FAIL; restore
+→ PASS), per CLAUDE.md Rule 5 port-and-verify discipline. Mutations
+were NOT committed.
+
+**Sorry/axiom invariant per port:**
+`grep -n 'sorry\|axiom' Formalisation/LinearAlgebra/<file>.lean`
+returns empty for every file (load-bearing invariant per CLAUDE.md
+hallucination-risk callout: "Lean `0 sorry, 0 axiom` is a
+load-bearing invariant").
+
+**Verifier (re-runnable).** All 26 hashes above are computable from
+the working tree at this commit:
+```bash
+for f in Isometry Polar Tensor TensorPower HeterogeneousTensor \
+         Trace Postcompose Component NoMixing FineGraining \
+         CoherentSystem DiagonalScaling ChargeOnly; do
+  sha256sum \
+    "/home/tobiasosborne/Projects/cft-anyons-deprecated/Formalisation/LinearAlgebra/$f.lean" \
+    "Formalisation/LinearAlgebra/$f.lean"
+done
+```
+(Source-path is the absolute path on the device where the ports
+were performed; on a fresh clone, edit the source root or skip
+the source hashes — destination hashes alone suffice for drift
+detection within this repo.)
+
+**Cross-validation at this commit (P4.15).** All 13 × 2 = 26
+SHA256s computed in this commit match the SHA256s recorded in the
+respective P4.X commit messages verbatim. No drift detected.
+
+**`lakefile.lean` / `lean-toolchain` / `lake-manifest.json`.** Not
+re-recorded here — already documented at the P4.1 row of
+`MIGRATION_LOG.md` (commit `bf2b088`) where they were copied
+verbatim from `cft-anyons-deprecated/` with hashes
+`4d7def06125182f9c615b86abdc0fa7836f0443cd0c0f944e99f30af902e49ae`
+/ `ce4c4e3d87434b9663f46de25ce34b48a0cf0d392e0a320a0787b4674a2d7b61`
+/ `9622a638b3bba50584b56136b05be6e52aafde26db59ffa6b3d1468a9e2d8623`.
+The P4.1 lake skeleton + Mathlib cache + minimal
+`Formalisation.lean` placeholder are the precondition for the 13
+ports recorded above.
+
+**Phase 4 close.** With P4.15 (this commit), all 14 P-step
+children of `bd cft-anyons-99c` are closed; the Phase 4 epic
+closes genuinely (not re-opened — last child landed).
+
+---
+
 ## Schema for each entry (future Phase 2+ imports)
 
 ```
