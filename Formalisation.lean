@@ -16,6 +16,7 @@ import Formalisation.Foundations.DirectSumCoordinates
 import Formalisation.Foundations.FockSpace
 import Formalisation.Foundations.ProjectDefinitions
 import Formalisation.Foundations.SkeletalFusion
+import Formalisation.Fibonacci.Basic
 import Formalisation.LinearAlgebra.Isometry
 import Formalisation.LinearAlgebra.Polar
 import Formalisation.LinearAlgebra.Tensor
