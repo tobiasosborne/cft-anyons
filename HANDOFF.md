@@ -13,104 +13,110 @@ TRIGGER: End of session; or any time MIGRATION_LOG.md is updated with a
 -->
 
 **Last updated:** 2026-05-16
-**Last session goal:** Execute Phase 1 of MIGRATION_PLAN (definitional bedrock — populate GLOSSARY + CONVENTIONS, lock the Hilbert-space translation map, build out the per-source translation maps).
-**Last commit:** `d8c0a40` (P1.7 — CAD-Lean translation maps populated)
+**Last session goal:** Close Phase 1 (definitional bedrock) by completing P1.8 → P1.9 → P1.10 → P1.11.
+**Last commit:** `76886d2` (P1.11 — PRD v0 → v1 refresh).
+
+---
+
+## 🚨 STOP — Phase 2 is gated on user read-and-approve
+
+Per `stocktake/MIGRATION_PLAN.md:137-139` and the P1.9 audit:
+
+> Stop and confirm with user before proceeding to Phase 2.
+
+The P1.9 hostile Opus audit verdict is **APPROVE FOR PHASE 2** (zero CRITICAL, zero MAJOR; 8 MINOR/NIT findings; 5 MINOR applied in the P1.9 commit). The audit report is at:
+
+```
+stocktake/reports/opus-glossary-audit.md   (183 lines)
+```
+
+**The user has not yet read-and-approved the audit.** Until they do, **do NOT begin Phase 2 work** (no `references/` import, no `literature/` import, no `CITATION_INDEX.md` discharge). If the user says "go ahead with Phase 2" — or any explicit approval of the audit — then Phase 2 unblocks.
+
+If the user wants edits to the audit-flagged items first, the 3 NITs deferred this session are:
+1. `def:RG-amp`, `def:stress` are orphan entries (not cross-linked from other entries) — backlink polish would help discoverability.
+2. Schema template at `GLOSSARY.md:76-77` still references "TBD pending P1.7/P1.8" — by design per HANDOFF gotcha #15 (script keys on real slugs, not the `<placeholder>` template). The auditor flagged this as NIT only because a future reviewer might re-flag it.
+3. Asymmetric cross-links — some Notes refs are unidirectional where bidirectional would aid navigation. Polish-only.
 
 ---
 
 ## TL;DR — what to do next
 
-**Run `bd ready`. The next concrete task is `MIGRATION_PLAN.md` step P1.8 (MMA-Julia translation maps).** Specifically, populate the **MMA bullets** of the relevant GLOSSARY Translation map fields per `stocktake/reports/mma-julia.md` §5 — symmetric to what P1.7 just did for CAD. Plan-named primary targets per `MIGRATION_PLAN.md:132`:
-
-- `def:partition` ← `LabelledConfig`
-- `def:refmap` ← `normalized_product_isometry` (= `E_{P→P'}`)
-- `def:TL-cat` ← `interaction_hamiltonian` (`Σ P_j` ↔ `e_i / d_σ`)
-
-The Hilbert-space MMA mappings (`def:HP`, `def:Hlatt`, `def:indlim`, `def:mobile-Fock`) are **already done** by P1.5 — those entries' MMA bullets contain the full bidirectional bijection. P1.8 fills in the remaining MMA Julia-struct-level mappings for the entries that don't yet have one.
-
-After P1.8: P1.9 (definitional gate audit — Opus subagent reads GLOSSARY + CONVENTIONS end-to-end), P1.10 (PROVENANCE refresh), P1.11 (PRD v0 → v1 refresh). Then Phase 1 closes.
+1. Read `stocktake/reports/opus-glossary-audit.md` (the user's call, but you should also re-read it if you're a fresh agent that didn't run P1.9).
+2. Ask the user: "Approve Phase 2 unblock? Or apply any of the 3 deferred NITs first?"
+3. **If user approves Phase 2:** start Phase 2 work per `stocktake/MIGRATION_PLAN.md` Phase 2 spec (lines 143-160). Phase 2 step P2.1 is "Copy `cft-anyons-deprecated/references/` → `cft-anyons/references/`". File a new bd epic for Phase 2 (`cft-anyons-?`), then file P2.1-P2.8 as sub-tasks.
+4. **If user wants NIT cleanup first:** file a small bd task for the polish and apply it before opening Phase 2.
 
 ---
 
-## Quick orientation (10–15 min, in this order)
+## Quick orientation (10 min, in this order)
 
-1. **`PRD.md`** — what this project is, scope in/out, canonical artifacts. 1245 words; ~5 min.
-2. **`CLAUDE.md` / `AGENTS.md`** (identical pair) — methodology, Two Laws, 11 Rules, hallucination-risk callouts. ~10 min. *Especially: Rule 4 (reviewer-gating), Rule 5 (red-green / port-and-verify), Rule 8 (docs-in-lockstep), Rule 11 (GLOSSARY conformance overrides everything).*
-3. **This file (HANDOFF.md)** — current session-specific state. ~5 min.
-4. **`bd ready`** in shell — see what's queued.
+1. **`PRD.md`** — refreshed to v1 in P1.11. Status line confirms Phase 1 complete. New "GLOSSARY entries to internalise, by task class" section is the cheat-sheet for any new content. ~5 min.
+2. **`CLAUDE.md` / `AGENTS.md`** (identical pair) — methodology, Two Laws, 11 Rules. Especially Rule 4 (reviewer-gating), Rule 11 (GLOSSARY conformance), and Hallucination-risk callouts (all 8 audit-verified to fire). ~5 min.
+3. **This file (HANDOFF.md)** — current session-specific state. ~3 min.
+4. **`stocktake/reports/opus-glossary-audit.md`** — the P1.9 audit's verdict + 8 findings + per-priority summary. Critical read if proceeding to Phase 2. ~5 min.
+5. **`bd ready`** in shell — see what's queued (currently 4 ready bug/follow-up issues; no in-progress sub-task since Phase 1 epic auto-closed).
 
-Stop here if you're just orienting. Sections below are needed only when you start work.
+Stop here if you're just orienting.
 
 ---
 
-## What landed this session
-
-**8 commits total** (7 substantive P-steps + 1 admin backfill):
+## What landed this session (4 commits)
 
 | Commit | Step | Summary |
 |---|---|---|
-| `8640f1e` | **P1.1** | Extract 48 def/conv from `summary.tex` into GLOSSARY (4 conv + 44 def, verbatim in ```latex blocks) |
-| `2edb424` | (admin) | Backfill MIGRATION_LOG rows for P1.4-early-{A,B,C} (prior session) + P1.1 |
-| `0e4592a` | **P1.2** | ERRATA entry for `lem:binary-Z` squared-amplitudes bug (audit-trail for pre-baseline fix; no `summary.tex` edit) |
-| `99749cf` | **P1.3** | GLOSSARY §A/§B split; new `def:mobile-Fock` entry in §B; cross-links between the four Hilbert-space framings |
-| `40c0a22` | **P1.5** | Write explicit Hilbert-space translation maps (4 entries: `def:HP`, `def:Hlatt`, `def:indlim`, `def:mobile-Fock`) from bridge report §2 |
-| `8226003` | **P1.6** | Populate `CONVENTIONS.md` with 10 lettered entries (a)–(j) |
-| `d8c0a40` | **P1.7** | Populate all 49 CAD bullets in GLOSSARY (23/23 CAD `.lean` files covered) |
+| `fe96ec7` | **P1.8** | MMA-Julia translation maps in GLOSSARY (45 MMA bullets populated; `conv:basics` Aliases updated). Hostile Opus review APPROVE WITH MINOR EDITS, 5 applied. |
+| `b986495` | **P1.9** | Definitional gate audit + 5 MINOR cleanups (APPROVE FOR PHASE 2). |
+| `edb547a` | **P1.10** | PROVENANCE.md refresh from stub (Phase 1 canonical baseline; 288 lines). |
+| `76886d2` | **P1.11** | PRD.md v0 → v1 refresh (GLOSSARY/CONVENTIONS internalised, brief Opus review of diff APPROVE WITH MINOR EDITS, 1 nit applied). |
 
-Each substantive commit went through a hostile Opus subagent review (verdicts all **APPROVE WITH MINOR EDITS**, minor edits all applied). Review reports landed alongside each step in `stocktake/reports/opus-*-review.md`.
+**Phase 1 progress:** all 11 of 11 steps done. Phase 1 epic (`cft-anyons-k3s`) auto-closed at P1.11 close.
 
-**Phase 1 progress: 7 of 11 steps done. P1.4 was done early by the prior session (commits `770d730`/`1008cd8`/`93a2bea`).**
+**Phase 1 outputs:**
+- `GLOSSARY.md`: 49 entries (48 §A from `summary.tex` + 1 §B for `def:mobile-Fock`), 2053 lines. All Translation map bullets populated (MMA + CAD).
+- `CONVENTIONS.md`: 10 lettered entries (a)–(j), 565 lines. 7/10 letters currently invoked from GLOSSARY; (c)/(e)/(f) are pre-registered hooks.
+- `ERRATA.md`: 1 entry (`lem:binary-Z` audit trail; pre-baseline fix).
+- `PROVENANCE.md`: full Phase-1 canonical baseline + per-artifact entries, 288 lines.
+- `PRD.md`: v1; per-task-class GLOSSARY entry lists; concrete Phase-1 examples of M/D/C/R gates.
+
+**Filed during the session as P3 Phase-gated follow-ups:**
+
+| ID | Title |
+|---|---|
+| `cft-anyons-2ae` | LB-2: Add MMA test for dense Ising c=1/2 sector (Phase 8) |
+| `cft-anyons-pvu` | LB-3: Audit GLOSSARY for fabricated TensorCategories function names (Phase 8) |
+| `cft-anyons-d7w` | LB-4: Re-validate `archive/mma-archive-v0-snapshot/` cited paths post-import (Phase 2) |
+
+LB-1 (`cft-anyons-q6h`) remains open from prior session (MMA `enumerate_fusion_trees` multiplicity bug, Phase 8).
 
 ---
 
 ## Open work
 
-`bd ready` shows the actionable items. Current state:
+`bd ready` after Phase 1 close:
 
 | ID | Title | Type | Priority | Status |
 |---|---|---|---|---|
-| `cft-anyons-k3s` | P1: Phase 1 — Definitional bedrock (GLOSSARY) | epic | P1 | open ← **start here** |
-| `cft-anyons-q6h` | LB-1: MMA enumerate_fusion_trees | bug | P2 | open (blocked by Phase 8; do not fix yet) |
-| `cft-anyons-fnm` | P0 epic | epic | P1 | **closed** ✓ |
-| `cft-anyons-9cr` | P1.4-early task | task | P1 | **closed** ✓ |
-| `cft-anyons-k3s.1`–`.6` | Sub-tasks for P1.1, P1.2, P1.3, P1.5, P1.6, P1.7 | task | P1 | **closed** ✓ |
+| `cft-anyons-q6h` | LB-1: MMA `enumerate_fusion_trees` incomplete for non-multiplicity-free | bug | P2 | open (Phase-8-gated; do not fix yet) |
+| `cft-anyons-d7w` | LB-4: Re-validate archive paths post-snapshot-import | task | P3 | open (Phase-2-gated) |
+| `cft-anyons-pvu` | LB-3: Audit GLOSSARY for fabricated TensorCategories function names | task | P3 | open (Phase-8-gated) |
+| `cft-anyons-2ae` | LB-2: Add MMA test for dense Ising c=1/2 sector | task | P3 | open (Phase-8-gated) |
+| `cft-anyons-k3s` | Phase 1 epic | epic | P1 | **CLOSED** ✓ (all 11 sub-tasks done) |
 
-Remaining Phase 1 steps per `stocktake/MIGRATION_PLAN.md` (lines 131–135):
-
-- **P1.8** ← *next*. MMA-Julia struct translation maps. Source: `stocktake/reports/mma-julia.md` §5. Entries to touch: `def:partition`, `def:refmap`, `def:TL-cat` (plan-named); plus any other entries with MMA bullets still reading "TBD pending P1.8".
-- **P1.9.** Definitional gate audit: spawn Opus subagent to read `GLOSSARY.md` + `CONVENTIONS.md` end-to-end and flag undefined terms, internal inconsistencies, conflicts with `summary.tex`. Output to `stocktake/reports/opus-glossary-audit.md`. **Mandatory user-read-and-approve before Phase 2.**
-- **P1.10.** Update `PROVENANCE.md` with Phase 1 summary (currently `PROVENANCE.md` is a stub).
-- **P1.11.** Refresh `PRD.md` v0 → v1 with GLOSSARY/CONVENTIONS pointers internalised. Brief Opus review of the diff only.
-
-```bash
-cd /home/tobias/Projects/cft-anyons
-bd ready                    # confirm cft-anyons-k3s open epic + queue
-bd show cft-anyons-k3s      # read epic description
-# … then file cft-anyons-k3s.7 for P1.8 and start
-```
+**No active in-progress sub-task.** The natural next bd work is filing a Phase-2 epic — but only **after user read-and-approve of the P1.9 audit**.
 
 ---
 
-## Gotchas surfaced this session (not yet in CLAUDE.md)
+## Gotchas surfaced this session (additions to CLAUDE.md hallucination-risk list)
 
-The session-1 HANDOFF had 10 gotchas. Adding 6 more from this session:
+The session-2 HANDOFF had 16 gotchas. Adding 4 more from this session:
 
-11. **`bd close <sub-task>` auto-closes the parent epic** when the sub-task is the only open child. Saw this 6 times this session. After each P-step's `bd close cft-anyons-k3s.N`, run `bd update cft-anyons-k3s --status open` to reopen the epic, *unless* the last Phase 1 sub-task (P1.11) is genuinely closing the phase.
+17. **Slug regex must accept uppercase letters.** When writing bulk-edit scripts that walk GLOSSARY `## <slug> —` headers, use `[a-zA-Z][a-zA-Z0-9\-:]*` not `[a-z][a-z0-9\-:]*`. Slugs like `def:Q`, `def:HP`, `def:KS-Ln`, `def:OPE`, `def:RG-amp`, `def:TL-cat`, `def:PF`, `def:Zfunc`, `def:Ageom`, `def:Jinterp`, `def:ising-F`, `def:fib-F` all have uppercase. P1.8's first script run missed 12 of 45 entries because of this — caught immediately by the script's own "expected 45, actually 33" report. Fix took one regex character.
 
-12. **`MIGRATION_LOG.md` row belongs in the *same atomic commit* as the P-step's content change** (per CLAUDE.md Rule 8 "docs in lockstep"). The first P-step this session (P1.1) shipped without the log row; the row was added in a follow-on admin commit `2edb424` (which also backfilled three prior-session gaps). Every subsequent P-step this session correctly bundled the log row in the same commit. **Keep doing this.** The pattern: write the row with `(this)` as the commit hash in the row, then the *next* commit backfills the prior `(this)` with the actual hash. See P1.5/P1.7's MIGRATION_LOG diffs for the pattern.
+18. **Don't fabricate plausible-sounding TensorCategories.jl API names.** P1.8 reviewer caught `multiplication_table` (which I made up). The actual MMA pattern is `dim(Hom(S[a] ⊗ S[b], S[c]))`. **Lesson:** when writing about an API, grep the source code to confirm the function exists before naming it. LB-3 (`cft-anyons-pvu`) is the bulk-audit follow-up.
 
-13. **`MIGRATION_PLAN.md` text drifts from execution.** Spotted twice:
-    - **P1.2 said "all 4 reviewers flagged it"** — actually 3 of 4 (review_4 had different CRITICAL findings, silent on `lem:binary-Z`). ERRATA records honestly.
-    - **P1.3 said "TBD pending P1.4"** for stubs — but P1.4 was done early in the prior session. P1.3 was reframed as "TBD pending P1.5" instead.
-    - **P1.7's M-gate** ("each CAD Lean file in cad-lean.md has a GLOSSARY translation entry") was undercounting — 4 supporting files (BraidMatrices.lean, ConfigurationSpace.lean, FockSpace.lean, Isometry.lean) needed late mentions added.
-    
-    **General lesson:** treat the plan's per-step text as a guideline, not as a verbatim contract. Cross-check against current reality before each step.
+19. **"`fsymbols.jl:35`" was wrong for category instantiations.** The TensorCategories.jl constructors `fibonacci_category()`, `ising_category()`, `graded_vector_spaces(Z/2)` are **NOT** called anywhere in MMA's `src/`. They're called in `test/test_categories.jl:7,26,44`. P1.8's first draft cited `src/MobileAnyons/fsymbols.jl:35` for all three (and the line 35 there is the body of `build_fsymbol_cache`, an irrelevant loop assignment). Reviewer caught this in 4 entries (`def:fuscat`, `conv:unitary-default`, `def:fib`, `def:ising`). **Lesson:** for any "X is in file Y at line Z" claim, `head` the file at line Z to confirm. Same hazard class as the P1.7 `def:polar-repair` Mathlib-gap reversal.
 
-14. **For bulk same-shaped edits to GLOSSARY** (like P1.7's 49 CAD bullets), the **Python-script-then-Write approach** worked cleanly: read GLOSSARY.md, run regex find-and-replace per slug, write back, then verify §A canonical bodies are still byte-verbatim via the D-gate script. Saves many Edit calls. **Caveat:** verify cross-links + D-gate after, because Write means the entire file's content has to be correct. See `/tmp/p1_7_apply.py` in your session if needed (gets cleaned across sessions; reconstruct from the P1.7 commit's diff if reuseing).
-
-15. **The schema doc's `<placeholder>` examples shouldn't get touched by bulk edits.** When I scripted P1.7, the regex was keyed on actual slugs (e.g., `def:fuscat`) — not the literal `<label>` template — so the schema doc's "CAD: ... TBD pending P1.7" example was preserved. Anyone scripting future bulk edits to GLOSSARY/CONVENTIONS should match on real slugs only, never on `<placeholder>` text.
-
-16. **§B (entries from outside `summary.tex`) is now structurally established** by P1.3's split. The schema doc authorises multiple `**Canonical (description):**` blocks for §B entries (per the P1.3 reviewer's edit). If you add new §B entries (e.g., for MMA Julia structs in P1.8 that have no `summary.tex` equivalent), follow the `def:mobile-Fock` pattern: include a slug-of-convenience disclosure in the Source field saying the slug is GLOSSARY-internal, not a citable label in the external source.
+20. **HANDOFF gotcha #12 reaffirmed for P1.X where X ≥ 8:** MIGRATION_LOG row belongs in the same atomic commit as the P-step's content change, with `(this)` as the commit-hash placeholder. The next commit backfills the prior row's `(this)` with the actual hash. Pattern: P1.8 commit added a P1.8 row with `(this)`; P1.9 commit backfilled it to `fe96ec7` (and added its own P1.9 row with `(this)`); ... P1.11 commit backfilled P1.10 to `edb547a` (and added P1.11 row with `(this)`). Need a future commit to backfill `(this)` → `76886d2`. **For the next agent: if the very first thing you do is a new commit, please backfill the P1.11 row's `(this)` → `76886d2` in the same commit.**
 
 ---
 
@@ -118,42 +124,74 @@ The session-1 HANDOFF had 10 gotchas. Adding 6 more from this session:
 
 ```bash
 cd /home/tobias/Projects/cft-anyons
-git log --oneline | head -10           # P1.7 d8c0a40 at top; 8 commits this session
-git status                              # clean
-wc -l GLOSSARY.md CONVENTIONS.md ERRATA.md MIGRATION_LOG.md
-# Expected: ~1790 ~552 ~143 ~51
+git log --oneline | head -6
+# Expected: 76886d2 P1.11; edb547a P1.10; b986495 P1.9; fe96ec7 P1.8; cf80117 prior HANDOFF; d8c0a40 P1.7
 
-bd stats                                # 10 issues, 2 open, 8 closed
-bd ready                                # 2 ready (P1 epic + LB-1 bug)
-ls stocktake/reports/opus-*review.md    # 6 review reports: prd-v0, prd-v0.1, glossary-p1.1, errata-p1.2, glossary-p1.3, glossary-p1.5, conventions-p1.6, glossary-p1.7
+git status
+# Expected: working tree clean
+
+wc -l GLOSSARY.md CONVENTIONS.md ERRATA.md MIGRATION_LOG.md PROVENANCE.md PRD.md
+# Expected: ~2053 ~565 ~143 ~53 ~288 ~279
+
+bd stats
+# Expected: 17 issues total, 4 open, 13 closed
+
+bd ready
+# Expected: 4 open issues (cft-anyons-q6h LB-1; cft-anyons-d7w LB-4;
+#           cft-anyons-pvu LB-3; cft-anyons-2ae LB-2)
+# NO in-progress sub-task; Phase 1 epic CLOSED
+
+ls stocktake/reports/opus-*.md
+# Expected: prd-v0, prd-v0.1, glossary-p1.1, errata-p1.2, glossary-p1.3,
+#           glossary-p1.5, conventions-p1.6, glossary-p1.7,
+#           glossary-p1.8, glossary-audit (10 reports)
 ```
 
-To verify P1.7's M-gate (every CAD Lean file in `cad-lean.md` §5 is referenced somewhere in GLOSSARY):
+To re-run the D-gate verification (canonical bodies byte-verbatim from `summary.tex`):
 
 ```bash
-python3 -c "
+python3 <<'EOF'
 import re
-with open('GLOSSARY.md') as f: g = f.read()
-with open('stocktake/reports/cad-lean.md') as f: c = f.read()
-b = re.search(r'## 5\..*?(?=## 6\.)', c, re.S).group(0)
-files = set(re.findall(r'\`([A-Z][a-zA-Z]*/[A-Z][a-zA-Z]*\.lean)\`', b))
-print('Covered:', len({f for f in files if f in g}), '/', len(files))
-"
-# Expected: 23 / 23
+g = open('GLOSSARY.md').read()
+s = open('summary.tex').readlines()
+lines = g.splitlines(keepends=True)
+sa_start = next(i for i,l in enumerate(lines) if l.startswith('## §A.'))
+sa_end = next(i for i,l in enumerate(lines) if l.startswith('## §B.'))
+passes, fails = 0, []
+for i in range(sa_start, sa_end):
+    m = re.match(r'^## ([a-zA-Z][a-zA-Z0-9\-:]*) —', lines[i])
+    if not m: continue
+    slug = m.group(1)
+    cs = ce = None
+    for j in range(i+1, min(i+200, sa_end)):
+        if lines[j].rstrip('\n') == '```latex': cs = j+1; continue
+        if cs and lines[j].rstrip('\n') == '```': ce = j; break
+    if not (cs and ce): continue
+    sl = None
+    for j in range(ce, min(ce+40, sa_end)):
+        sm = re.match(r'^\*\*Source:\*\*\s+`summary\.tex:(\d+)`', lines[j])
+        if sm: sl = int(sm.group(1)); break
+    if not sl: continue
+    block = lines[cs:ce]
+    if block == s[sl-1:sl-1+len(block)]:
+        passes += 1
+    else:
+        fails.append(slug)
+print(f'D-gate: {passes} PASS / {len(fails)} FAIL')
+EOF
+# Expected: D-gate: 48 PASS / 0 FAIL
 ```
-
-If any of these don't match, stop and check the recent commits.
 
 ---
 
 ## What NOT to do this session
 
-- **Do not import content from `microscopic-mobile-anyons/` or `cft-anyons-deprecated/`.** All imports remain scheduled for Phase 2+ in the migration plan; importing now bypasses the GLOSSARY/CONVENTIONS gates this session locked.
-- **Do not read `archive/chats/chat*.md`** unless explicitly asked. (Deep storage; superseded.)
-- **Do not edit `summary.tex` outside of an ERRATA-tracked atomic commit.** ERRATA now has one real entry (P1.2's `lem:binary-Z` audit-trail); follow that template for any future entry.
-- **Do not fix LB-1** (`cft-anyons-q6h`). Blocked on Phase 8.
-- **Do not add `.github/workflows/`** — no GitHub CI is project policy.
-- **Do not push.** No git remote configured. Mention to the user at session end (manual push only when a remote is wired up).
+- **Do not start Phase 2 work** without user read-and-approve of the P1.9 audit. The most concrete forbidden actions: copying `cft-anyons-deprecated/references/` into `cft-anyons/references/`; importing `microscopic-mobile-anyons/literature/`; touching `CITATION_INDEX.md`; building `scripts/build-citation-index.py`. Per `MIGRATION_PLAN.md:137-139`, these are all "stop and confirm" gated.
+- **Do not start Phase 5 work** (Lean migration) or Phase 8 work (Julia migration). LB-1/2/3 are all Phase-8-gated. LB-4 is Phase-2-gated.
+- **Do not read `archive/chats/chat*.md`** unless explicitly asked.
+- **Do not edit `summary.tex` outside of an ERRATA-tracked atomic commit.**
+- **Do not push.** No git remote configured. Mention to user at session-end.
+- **Do not assume that "MINOR fixes applied" closes the audit's read-and-approve gate.** The user still needs to read and approve. The audit's APPROVE FOR PHASE 2 is the *recommendation*; the user's read is the *gate*.
 
 ---
 
@@ -161,55 +199,51 @@ If any of these don't match, stop and check the recent commits.
 
 | Path | What it is |
 |---|---|
-| `PRD.md` | Entry point — read first |
-| `CLAUDE.md` = `AGENTS.md` | Methodology + 11 Rules + hallucination-risk callouts |
-| `GLOSSARY.md` | **49 entries now populated.** §A: 48 verbatim from `summary.tex`; §B: 1 (`def:mobile-Fock`) from outside. All CAD bullets populated; many MMA bullets still "TBD pending P1.8". Schema documented in lines 47–98. |
-| `CONVENTIONS.md` | **10 entries (a)–(j) populated.** (f) TikZ is deferred (no TikZ in `summary.tex` yet). All forward-pointers from GLOSSARY's `[P1.6(letter)]` tags resolve. |
-| `ERRATA.md` | 1 entry: `lem:binary-Z` audit-trail (no `summary.tex` edit in P1.2 — the fix was pre-baseline). |
-| `MIGRATION_LOG.md` | Per-step commit log. Phase 0 + P1.1–P1.7 + early P1.4 rows present. Row for "this commit" placeholder gets backfilled by the next commit. |
-| `summary.tex` | Canonical mathematical statement — **unchanged this session**. Build artifacts (`summary.aux`, `summary.log`, `summary.pdf`, `summary.toc`, `summary.out`) are gitignored. |
-| `stocktake/MIGRATION_PLAN.md` | The phased plan. Phase 1 lines 117–139. **You are at the start of P1.8.** |
-| `stocktake/reports/opus-hilbert-bridge.md` | **Authoritative source** for the three Hilbert-space framings + translation maps + 7 conventions. Sourced by P1.3, P1.5, parts of P1.6, P1.7. |
-| `stocktake/reports/cad-lean.md` | **Authoritative source** for P1.7. §5 has the per-file mapping. |
-| `stocktake/reports/mma-julia.md` | **Authoritative source for P1.8.** §5 has the MMA-Julia ↔ summary.tex per-struct mapping. Start there. |
-| `stocktake/reports/opus-glossary-p1.1-review.md` etc. | 6 review reports (P1.1, P1.2, P1.3, P1.5, P1.6, P1.7). Each Phase-1 step's hostile-review verdict + minor-edit recipe. |
-| `reviews/review_{1-4}.md` | 4 hostile audits of `summary.tex` from the prior session. P1.2 discharged the unanimous `lem:binary-Z` finding; other findings remain for later phases. |
-| `.beads/issues.jsonl` | bd JSONL snapshot. Updated before every session-ending commit per CLAUDE.md cross-device sync rule. |
+| `PRD.md` | **v1** (P1.11 refresh). Entry point — read first. New per-task-class GLOSSARY-entry lists at lines 122-154. |
+| `CLAUDE.md` = `AGENTS.md` | Methodology + 11 Rules + hallucination-risk callouts. Unchanged this session. |
+| `GLOSSARY.md` | 49 entries, fully populated. All §A canonical bodies byte-verbatim from summary.tex (D-gate 48/48). All MMA + CAD Translation maps populated. |
+| `CONVENTIONS.md` | 10 lettered entries (a)–(j). Status block refreshed at P1.9. (a) archive-path citation clarified at P1.9. |
+| `ERRATA.md` | 1 entry: `lem:binary-Z` (pre-baseline fix, audit-trail). |
+| `PROVENANCE.md` | **Populated at P1.10**. Phase 1 canonical baseline summary table + per-artifact entries + R-gate review-report table + future-schema. |
+| `MIGRATION_LOG.md` | All Phase 0 + Phase 1 P-step rows present. P1.11 row has `(this)` placeholder needing backfill to `76886d2` in next commit. |
+| `summary.tex` | **Unchanged this session.** `fa4d2059…`. |
+| `stocktake/MIGRATION_PLAN.md` | Phase 1 lines 117-139. **All 11 P1.X steps now executed.** Phase 2 spec at lines 143-160. |
+| `stocktake/reports/opus-glossary-audit.md` | **Critical: the P1.9 audit** — Phase 2 unblock awaits user read-and-approve. |
+| `stocktake/reports/opus-hilbert-bridge.md` | Authoritative source for Hilbert-space framings + CONVENTIONS (g)–(j). |
+| `stocktake/reports/cad-lean.md` | Authoritative source for P1.7 CAD bullets. |
+| `stocktake/reports/mma-julia.md` | Authoritative source for P1.8 MMA bullets. |
+| `stocktake/reports/opus-glossary-p1.{1,3,5,7,8}-review.md` etc. | 10 review/audit reports total. |
+| `.beads/issues.jsonl` | 17 issues (was 10 at start of session). Updated before this commit. |
 
 ---
 
 ## If you only have 5 minutes
 
-Read PRD.md sections "Mission" and "Read order". Then `bd show cft-anyons-k3s`. Then **read `stocktake/reports/mma-julia.md` §5** (per-file Julia struct ↔ summary.tex mapping). Then file `bd create --title="P1.8: MMA-Julia translation maps in GLOSSARY" --type=task --priority=1 --parent=cft-anyons-k3s` and `bd update <id> --claim`. The work is symmetric to the P1.7 commit `d8c0a40` (just MMA instead of CAD); look at that commit's diff for the pattern.
+Read PRD.md "Mission" + "Status line at the top" + the new "GLOSSARY entries to internalise, by task class" section (lines 122-154). Then `bd ready` to see open follow-ups. Then **stop and wait for user direction on the Phase 2 gate** — don't open the audit report or write code unless asked.
 
 ---
 
-## Pattern for the next P-step (templated from this session)
+## Pattern for the next phase (Phase 2; user-gated)
 
-For any P1.X (and later):
+When the user approves Phase 2 unblock:
 
-1. **Read MIGRATION_PLAN's P1.X row** for the exact scope + validation gates.
-2. **Read the authoritative source** named in the plan (e.g., `stocktake/reports/mma-julia.md` §5 for P1.8).
-3. **`bd create --title="P1.X: ..." --type=task --priority=1 --parent=cft-anyons-k3s`** then `bd update <id> --claim`.
-4. **Do the work.** Edit GLOSSARY/CONVENTIONS/ERRATA/PROVENANCE etc. as needed. Bulk edits → Python-script-then-Write (see P1.7); individual edits → Edit.
-5. **Run mechanical/D-gates.** A typical D-gate replay script is in any of the recent review reports. The §A canonical-bodies-byte-verbatim check is the load-bearing invariant.
-6. **Spawn an Opus 4.7 reviewer subagent** (`general-purpose`, model `opus`). Give it the focus-areas list scoped to your step's deliverables. Reviewer reports go to `stocktake/reports/opus-<topic>-p1.X-review.md`.
-7. **Apply the reviewer's minor edits.** Re-run gates.
-8. **`bd close cft-anyons-k3s.<N> --reason="..."`** with the verdict summary. **`bd update cft-anyons-k3s --status open`** to reopen the auto-closed epic. **`bd export -o .beads/issues.jsonl`**.
-9. **Add MIGRATION_LOG row in the same atomic commit** (with the `(this)` placeholder for the not-yet-computed commit hash). Update the *previous* row's `(this)` to its actual commit hash.
-10. **Atomic commit** with the full provenance footer from CLAUDE.md `§ Commit discipline`. `Review:` line per Rule 4. `Co-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>`.
-11. **Verify clean tree + green gates.** Push is manual (no remote); mention to user at session end.
+1. File a Phase 2 epic: `bd create --title="P2: Phase 2 — Provenance infrastructure (validator imports)" --type=epic --priority=1`.
+2. Per `MIGRATION_PLAN.md:143-160`, Phase 2 has 8 steps (P2.1–P2.8) — file as sub-tasks under the epic.
+3. **P2.1 = first concrete work**: copy `/home/tobias/Projects/cft-anyons-deprecated/references/` → `/home/tobias/Projects/cft-anyons/references/`. Preserve all subdirs. Validation: M (`diff -r` against source), I.
+4. **P2.2 = SHA256 verification**: recompute hashes for every file under `references/`, compare to `references/manifest/SOURCES.md`. Any mismatch is a stop condition.
+5. **P2.5 = SQLite integrity**: `sqlite3 literature/db/papers.sqlite "PRAGMA integrity_check;"` + verify row counts match `SYNTHESIS.md` (630 papers, 702 citations).
+6. **Pattern continues from P2.6–P2.8**: literature CLI import, CONVENTIONS append, `scripts/build-citation-index.py`.
+7. Each P-step gets its own atomic commit + MIGRATION_LOG row + bd close + R-gate review where appropriate per CLAUDE.md Rule 4 tiers.
+8. **LB-4 (`cft-anyons-d7w`) reminder**: once snapshot import happens (likely P2.X), re-validate CONVENTIONS (a)'s archive-path citation.
 
 ---
 
-## Session close protocol (re-stated from CLAUDE.md)
+## Session close protocol (already executed this session)
 
-When you end your session:
-
-1. Run the gates that apply to what you touched (`pdflatex` if you touched `summary.tex`; `lake build` if you touched `Formalisation/`; etc.).
-2. Close finished `bd` issues; reopen the epic if auto-closed.
-3. `bd export -o .beads/issues.jsonl`.
-4. **Rewrite this file (HANDOFF.md)** with the new session-end state. Old content goes into git history; don't preserve it in-file.
-5. Commit. (Push manual — no remote.)
-
-The push step is currently manual (no remote). Mention this to the user when you finish.
+- ✓ Filed remaining-work bd issues (LB-2/3/4).
+- ✓ Ran D-gate / cross-link / schema-doc / P1.5-intact checks after each commit; all PASS.
+- ✓ Closed all 11 Phase-1 sub-tasks; parent epic auto-closed.
+- ✓ `bd export -o .beads/issues.jsonl` before each commit (cross-device sync).
+- ✓ MIGRATION_LOG.md updated with P1.8/P1.9/P1.10/P1.11 rows; P1.7/P1.8/P1.9/P1.10 `(this)` placeholders backfilled.
+- ✓ This HANDOFF rewritten (not appended) per policy.
+- ✗ Push to remote — **no git remote configured**. Mention to user.
