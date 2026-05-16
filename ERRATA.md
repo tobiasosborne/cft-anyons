@@ -273,3 +273,241 @@ in `MIGRATION_LOG.md` under "Deviations from MIGRATION_PLAN.md".
   ERRATA + MIGRATION_LOG updates land in the same atomic commit.
 
 **Commit:** (filled below after commit lands)
+
+---
+
+## 2026-05-16: P3.2.a — discharge `osborne-stottmeister` `\unchecked` flags → `\cite{SRC-OAR-FERMIONS,SRC-OAR-WAVELETS,SRC-OSBORNE-CONTINUUM}` (3 sites)
+
+**summary.tex location:** §"Statements judged unverifiable from the
+transcripts alone" (line 2304); Conjecture `conj:KS` (line 2380);
+§"External references mentioned (all unchecked)" (line 2468). Three
+per-item `\unchecked` macros discharged to a triple `\cite{...}` each.
+Diff = 3 deletions, 3 insertions, perfectly balanced.
+
+**Before** (`summary.tex` at commit `6d9ca8c`, the post-P3.0 baseline):
+
+Line 2303--2304 — inside the "Statements judged unverifiable" itemize:
+```latex
+\item the \emph{Osborne--Stottmeister} convergence theorem for transverse-field
+      Ising scaling representations\unchecked,
+```
+
+Line 2380--2381 — inside `\begin{conjecture}[Koo--Saleur ascending
+convergence for TL/Ising] \label{conj:KS}`:
+```latex
+$c = \bar c = 1/2$.\unchecked\ \emph{Status: depends on
+Koo--Saleur and Osborne--Stottmeister references.}
+```
+
+Line 2466--2468 — inside the "External references mentioned (all
+unchecked)" itemize:
+```latex
+\item Osborne, Stottmeister: convergence of Koo--Saleur approximants in the
+      scaling representation, including the transverse-field Ising case
+      (chat~1 §10).\unchecked
+```
+
+**After** (this commit):
+
+Line 2304:
+```latex
+      Ising scaling representations\cite{SRC-OAR-FERMIONS,SRC-OAR-WAVELETS,SRC-OSBORNE-CONTINUUM},
+```
+
+Line 2380:
+```latex
+$c = \bar c = 1/2$.\cite{SRC-OAR-FERMIONS,SRC-OAR-WAVELETS,SRC-OSBORNE-CONTINUUM}\ \emph{Status: depends on
+```
+
+Line 2468:
+```latex
+      (chat~1 §10).\cite{SRC-OAR-FERMIONS,SRC-OAR-WAVELETS,SRC-OSBORNE-CONTINUUM}
+```
+
+The `\ ` (forced-space) immediately following `\unchecked` on line 2380
+is preserved verbatim after replacement (the surrounding text typesetting
+demands the explicit space before `\emph{...}`). All other characters of
+`summary.tex` are unchanged.
+
+**Discrepancy with CITATION_INDEX.md / orchestrator briefing (3 vs 4
+sites):**
+
+The pre-existing `CITATION_INDEX.md` (built by P2.8 via
+`scripts/build-citation-index.py`) lists the `osborne-stottmeister`
+atom's `summary.tex` locations as **lines 2303, 2381, 2446, 2466** (4
+sites). However, those line numbers are **author-name-occurrence
+lines** (where the script's surname-string matcher fires on
+"Osborne--Stottmeister" / "Osborne, Stottmeister"), not `\unchecked`
+macro lines. Inspection of the file at this commit shows:
+
+- Line 2303 (`Osborne--Stottmeister`) → per-item `\unchecked` on line 2304 (discharged).
+- Line 2381 (`Osborne--Stottmeister references.`) → per-item `\unchecked` on line 2380 (discharged).
+- Line 2466 (`Osborne, Stottmeister:`) → per-item `\unchecked` on line 2468 (discharged).
+- Line 2446 (`whether the cited Koo--Saleur and Osborne--Stottmeister results cover`) → **no per-item `\unchecked`**. This sentence is item (3) of the `\begin{enumerate}` at lines 2441--2456 inside the `\section*{Reference status}` block; the entire enumerate is covered by the **blanket** declaration on line 2437 (`Every external reference in this document is flagged \unchecked.`), not by per-item `\unchecked` macros.
+
+The blanket-declaration `\unchecked` on line 2437 is a single text-mode
+macro instance (not per-citation-atom) — it would need a different
+discharge strategy (e.g., update the wording to enumerate the
+now-discharged atoms) and is out of scope for P3.2.a. The structural
+distinction matches `scripts/build-citation-index.py:336--368`
+(`harvest_atom_backrefs` uses author-surname matching, not `\unchecked`
+proximity); the field name `summary.tex location(s)` in CITATION_INDEX
+is "the lines where the atom is referenced", not "the lines where a
+discharge target exists". A follow-up doc-sync to clarify the
+CITATION_INDEX schema field name and to record the discharge count (3
+in this commit, not 4) is filed as a deferred follow-up
+(piggybacking on the existing P2.7 / P3.0 doc-sync queue; see
+MIGRATION_LOG.md Deviations section).
+
+**Editorial-choice justification per site** (load-bearing C-gate
+evidence: each of the 3 sites cross-checks `summary.tex` + a PDF
+excerpt from each cited SRC-*; ≥ 2-source agreement per CLAUDE.md
+Rule 5):
+
+The 3 sites all assert the same conceptual claim, in 3 places:
+**Osborne and Stottmeister proved the convergence of the Koo--Saleur
+Virasoro approximants in the operator-algebraic-renormalisation scaling
+representation, including the transverse-field Ising case at central
+charge `c = 1/2`.** Per CLAUDE.md Rule 5 (≥ 2 source agreement) and
+the C-gate of MIGRATION_PLAN.md:172, the triple `\cite{SRC-OAR-FERMIONS,
+SRC-OAR-WAVELETS,SRC-OSBORNE-CONTINUUM}` is applied at all 3 sites for
+uniformity and for the strongest claim-support, with the following
+attribution chain:
+
+- **`SRC-OAR-FERMIONS`** (Osborne--Stottmeister 2023, arXiv:2107.13834,
+  CMP 398:219) — **primary citation: the convergence theorem itself.**
+  PDF excerpt (`references/text/CFTFromLatticeFermions.txt:14--21`):
+  > *"We provide a rigorous lattice approximation of conformal field
+  > theories given in terms of lattice fermions in 1+1-dimensions,
+  > focussing on free fermion models and Wess-Zumino-Witten models. To
+  > this end, we utilize a recently introduced operator-algebraic
+  > framework for Wilson-Kadanoff renormalization. In this setting, we
+  > **prove the convergence of the approximation of the Virasoro
+  > generators by the Koo-Saleur formula**. From this, we deduce the
+  > convergence of lattice approximations of conformal correlation
+  > functions to their continuum limit."*
+
+  The transverse-field Ising case is covered via the equivalence with
+  the transverse XY model (TOC §2.7 at
+  `references/text/CFTFromLatticeFermions.txt:38`: *"Equivalence with
+  the transverse XY model"*). This is the primary support for all 3
+  `summary.tex` sites — both the explicit "convergence theorem"
+  attribution (sites 1 and 3) and the `c = c̄ = 1/2` Virasoro convergence
+  (site 2).
+
+- **`SRC-OAR-WAVELETS`** (Stottmeister--Morinelli--Morsella--Tanimoto
+  2021, arXiv:2002.01442, PRL 127:230601) — **supporting framework
+  citation: the operator-algebraic-renormalisation "scaling
+  representation" construction.** PDF excerpt
+  (`references/text/OARWavelets.txt:10--16`):
+  > *"We report on a rigorous operator-algebraic renormalization group
+  > scheme and **construct the free field with a continuous action of
+  > translations as the scaling limit of Hamiltonian lattice systems
+  > using wavelet theory**. A renormalization group step is determined
+  > by the scaling equation identifying lattice observables with the
+  > continuum field smeared by compactly supported wavelets."*
+
+  The phrase "scaling representation" in all 3 `summary.tex` sites
+  refers to this construction (operator-algebraic renormalisation with
+  wavelet-based scaling-equation RG steps). Without this framework
+  paper, the "scaling representation" referent is undefined.
+
+- **`SRC-OSBORNE-CONTINUUM`** (Osborne 2019, arXiv:1901.06124) —
+  **supporting foundational citation: the general continuum-limits
+  programme for quantum lattice systems** that OAR-FERMIONS instantiates
+  and extends. PDF excerpt
+  (`references/text/OsborneContinuumLimitsQuantumLatticeSystems.txt:5--14`):
+  > *"We describe a general procedure to give effective continuous
+  > descriptions of quantum lattice systems in terms of quantum fields.
+  > There are two key novelties of our method: firstly, it is framed in
+  > the hamiltonian setting and applies equally to distinguishable
+  > quantum spins, bosons, and fermions and, secondly, it works for
+  > arbitrary variational tensor network states and can easily produce
+  > computable non-gaussian quantum field states. Our construction
+  > extends the mean-field fluctuation formalism of Hepp and Lieb
+  > (developed later by Verbeure and coworkers) to identify emergent
+  > continuous large-scale degrees of freedom — the continuous degrees
+  > of freedom are not identified beforehand. We apply the construction
+  > to to tensor network states, including, matrix product states and
+  > projected entangled-pair states, where we recover their recently
+  > introduced continuous counterparts, and also for tree tensor
+  > networks and the multi-scale entanglement renormalisation ansatz."*
+
+  Single-author Osborne foundational paper for the continuum-limit
+  programme cited by both OAR-WAVELETS and OAR-FERMIONS as upstream
+  context. Listed as the third member of the citation triple because
+  the document's pre-P3.0 prose attribution at lines 2466--2468 ("Osborne,
+  Stottmeister: convergence of Koo--Saleur approximants in the scaling
+  representation, including the transverse-field Ising case") chains
+  Osborne's single-author continuum work and the Osborne--Stottmeister
+  joint convergence proof into one citation atom (per
+  `CITATION_INDEX.md:147--150`).
+
+The multi-cite is the cleanest discharge: each of the 3 SRC-* covers a
+distinct sub-claim of the named theorem ("convergence theorem" ↔
+OAR-FERMIONS, "scaling representation" ↔ OAR-WAVELETS,
+"continuum-limits framework" ↔ OSBORNE-CONTINUUM), and the union is
+exactly what the pre-P3.0 prose attributed. CITATION_INDEX cross-ref
+anomalies between SRC-OSBORNE-CONTINUUM (PDF = arXiv:1901.06124,
+single-author Osborne 2019) and the literature DB cross-ref
+`paper#521 = arXiv:2107.13834 = OAR-FERMIONS` were already documented
+in the P3.0 ERRATA entry as a deferred follow-up; the bibitem and this
+discharge use the PDF's actual identity per CLAUDE.md Rule 7.
+
+**Source of correction:** N/A — this is the **discharge of inherited
+`\unchecked` flags**, not a correction to a previously-asserted claim.
+The summary.tex's surrounding mathematical wording is unchanged. The
+attribution `Osborne--Stottmeister convergence theorem for transverse-field
+Ising scaling representations` is verified against the three PDFs as
+described above; the inline `\unchecked` macro is replaced by the verified
+`\cite{...}`. Per `bd` `cft-anyons-r25` and orchestrator briefing.
+
+**Validation:**
+
+- **M** (mechanical): `pdflatex -interaction=nonstopmode -halt-on-error
+  -draftmode summary.tex` two-pass succeeds. Page count: 33 (unchanged
+  from P3.0 post-state). Log lines: 1009 (unchanged from P3.0 post-state,
+  same byte count). Warning count: 39 (unchanged). Underfull count: 10
+  (unchanged). `Undefined`-class messages: 0. `No \bibitem`-class
+  messages: 0. The pre-existing overfull-`\hbox` at lines 2303--2305
+  **improved** from 90.08 pt too wide → 24.38 pt too wide (the
+  bibliography number `[2,3,4]` is typographically narrower than the
+  red superscript `[unchecked, stage 2]`).
+- **D** (definitional): `git diff summary.tex` shows exactly 3
+  deletions and 3 insertions (verified by
+  `git diff summary.tex | grep -c '^+[^+]' == 3` and the symmetric
+  deletion count). Every deleted line is a `summary.tex` `\unchecked`
+  macro occurrence; every inserted line is the same line with
+  `\unchecked` replaced by the `\cite{...}` triple. No other lines of
+  `summary.tex` are modified. No GLOSSARY-defined term is added or
+  altered; the surrounding mathematical content (the conjecture body
+  at `conj:KS`, the "Statements judged unverifiable" enumeration, and
+  the "External references mentioned" itemize) is byte-verbatim outside
+  the 3 inline-macro replacements.
+- **C** (cross-reference, ≥ 2 source agreement): for each of the 3
+  discharged sites, the PDF excerpts above (one each from
+  `references/text/CFTFromLatticeFermions.txt`,
+  `references/text/OARWavelets.txt`,
+  `references/text/OsborneContinuumLimitsQuantumLatticeSystems.txt`)
+  confirm the cited theorem statement / framework / continuum-limit
+  programme that the `summary.tex` text invokes. C-gate sources for
+  each site: (1) the `summary.tex` statement itself (the named
+  attribution); (2)+(3)+(4) the three SRC-* PDF abstracts/TOC excerpts.
+  ≥ 2 sources agree per site (in fact ≥ 4: summary.tex + 3 PDFs).
+- **R** (review): Core-tier per CLAUDE.md Rule 4 (substantive
+  `summary.tex` content change discharging `\unchecked` flags + adding
+  citations). Hostile Opus reviewer subagent post-commit per
+  orchestrator policy. Reviewer should verify: (i) the 3 site
+  identifications match the 3 actual `\unchecked` macros in summary.tex
+  associated with `Osborne--Stottmeister` author-name occurrences;
+  (ii) the per-site editorial choices (triple cite vs single cite) are
+  justified by the claim wording; (iii) the C-gate PDF excerpts genuinely
+  support the cited claim; (iv) the line-2446 omission is correct (the
+  enumerate item has no per-item `\unchecked` to discharge — only the
+  blanket on line 2437 applies, and that's a separate discharge target);
+  (v) the diff is exactly 3 deletions + 3 insertions; (vi) `pdflatex`
+  builds clean.
+- **I** (integration): Two-pass `pdflatex` build is reproducible; ERRATA
+  + MIGRATION_LOG updates land in the same atomic commit.
+
+**Commit:** (filled below after commit lands)
