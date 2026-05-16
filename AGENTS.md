@@ -284,29 +284,35 @@ Rollback: <git revert <commit> | rm -rf <path>>
 
 `bd` (beads) is the only **persistent** task tracker for this repo.
 
-**Backend: vanilla JSONL via git.** `bd init` creates
-`.beads/issues.jsonl` as the authoritative store. We rely on
-**git for cross-device sync**: the JSONL file is tracked in git; the
-SQLite cache (`.beads/beads.db`) is `.gitignore`d and regenerable
-from JSONL via `bd import`. No dolt, no automated remote — consistent
-with Rule 9.
+**Backend: embedded dolt, with JSONL export for cross-device sync.**
+`bd init` (already done; do not re-run) created `.beads/embeddeddolt/`
+as the local Dolt store. The Dolt store is **per-machine** (gitignored
+via `.beads/.gitignore`). Cross-device sync goes via
+`.beads/issues.jsonl`: snapshot with `bd export`, commit, pull on the
+other device, then `bd import`. No `bd dolt push`, no external Dolt
+server, no automated remote — consistent with Rule 9. This matches the
+scientist-workbench convention.
 
 ```bash
-bd init                          # one-time fresh repo (initial setup)
+# (bd init was done at P0.1b. Do NOT re-run. For new-device setup see below.)
+
 bd ready                         # find available work
 bd show <id>                     # view issue
-bd create --title="..." --description="..." --type=task --priority=2
+bd create --title="..." --description="..." --issue-type=task --priority=2
 bd update <id> --status in_progress    # claim
 bd close <id>                    # done
 bd dep add <issue> <depends-on>  # dependency edge
 bd blocked                       # show blocked issues
 bd stats                         # project state
+bd prime                         # detailed bd help (run if confused)
 
 # Cross-device sync (manual; integrated with git):
-bd export -o .beads/issues.jsonl     # snapshot SQLite → JSONL
+bd export -o .beads/issues.jsonl     # snapshot Dolt → JSONL
 git add .beads/issues.jsonl && git commit -m "bd: snapshot"
-git pull --rebase                     # pull other devices' changes
-bd import .beads/issues.jsonl         # fold incoming JSONL into local SQLite
+git push                              # share to other devices
+# ... on other device:
+git pull --rebase                     # pull updates
+bd import .beads/issues.jsonl         # fold incoming JSONL into local Dolt
 ```
 
 **Rules:**
@@ -314,20 +320,20 @@ bd import .beads/issues.jsonl         # fold incoming JSONL into local SQLite
 - File issues for anything that should outlive the conversation:
   features, bugs, migration steps, decisions, deferred questions.
 - Respect the dependency DAG.
-- **Never run `bd init --force`** on an existing populated repo
-  (destroys data; this is why scientist-workbench switched to
-  `bd bootstrap` for re-init). For *this* repo's first init, plain
-  `bd init` is correct. For a fresh clone on a new device: do **not**
-  run `bd init` — instead, `bd import .beads/issues.jsonl` to
-  populate the local SQLite cache from the JSONL committed in git.
+- **Never run `bd init --force`** — destroys data. The repo is already
+  initialised. For a fresh clone on a new device: do **not** run
+  `bd init`; instead, `bd import .beads/issues.jsonl` to populate the
+  local Dolt cache from the JSONL committed in git.
 - Close issues with the same commit that completes them, where
   possible.
 - **`bd export -o .beads/issues.jsonl` before every session-ending
   commit** if you closed or modified issues; otherwise the JSONL
-  drifts from the SQLite cache and cross-device sync breaks. A
-  pre-commit git hook automating this is a desirable follow-up
-  (`scripts/install-bd-hooks.sh` — see scientist-workbench's
-  `.githooks/pre-commit` for a reference implementation).
+  drifts from the local Dolt store and cross-device sync breaks. A
+  pre-commit hook to automate this is filed as a deferred follow-up
+  (see scientist-workbench's `.githooks/pre-commit` for the pattern).
+- The `.beads/hooks/` directory holds bd's git-hook templates;
+  `.beads/.gitignore` already excludes the Dolt store and per-machine
+  runtime files — do not commit `.beads/embeddeddolt/`.
 
 **TaskCreate exception** (inherited convention, scientist-workbench
 granted this 2026-05-12): the harness `TaskCreate` / `TaskUpdate`
@@ -460,50 +466,3 @@ of stopping to update GLOSSARY first is minutes.
 
 When in doubt: re-read this file, re-read PRD, re-read GLOSSARY, then
 ask the user.
-
-<!-- BEGIN BEADS INTEGRATION v:1 profile:minimal hash:ca08a54f -->
-## Beads Issue Tracker
-
-This project uses **bd (beads)** for issue tracking. Run `bd prime` to see full workflow context and commands.
-
-### Quick Reference
-
-```bash
-bd ready              # Find available work
-bd show <id>          # View issue details
-bd update <id> --claim  # Claim work
-bd close <id>         # Complete work
-```
-
-### Rules
-
-- Use `bd` for ALL task tracking — do NOT use TodoWrite, TaskCreate, or markdown TODO lists
-- Run `bd prime` for detailed command reference and session close protocol
-- Use `bd remember` for persistent knowledge — do NOT use MEMORY.md files
-
-## Session Completion
-
-**When ending a work session**, you MUST complete ALL steps below. Work is NOT complete until `git push` succeeds.
-
-**MANDATORY WORKFLOW:**
-
-1. **File issues for remaining work** - Create issues for anything that needs follow-up
-2. **Run quality gates** (if code changed) - Tests, linters, builds
-3. **Update issue status** - Close finished work, update in-progress items
-4. **PUSH TO REMOTE** - This is MANDATORY:
-   ```bash
-   git pull --rebase
-   bd dolt push
-   git push
-   git status  # MUST show "up to date with origin"
-   ```
-5. **Clean up** - Clear stashes, prune remote branches
-6. **Verify** - All changes committed AND pushed
-7. **Hand off** - Provide context for next session
-
-**CRITICAL RULES:**
-- Work is NOT complete until `git push` succeeds
-- NEVER stop before pushing - that leaves work stranded locally
-- NEVER say "ready to push when you are" - YOU must push
-- If push fails, resolve and retry until it succeeds
-<!-- END BEADS INTEGRATION -->
