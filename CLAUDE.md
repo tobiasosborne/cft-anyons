@@ -20,19 +20,23 @@ Read order for any task:
 1. `PRD.md`
 2. `GLOSSARY.md`
 3. `CONVENTIONS.md`
-4. The relevant section of `summary.tex` (the canonical mathematical narrative)
+4. The relevant section of `summary.tex` (the guiding conceptual mathematical statement)
 5. `MIGRATION_PLAN.md` *only* if you are doing consolidation work
 6. `stocktake/README.md` *only* if you need the inheritance picture from
    the three source projects
 
-If you have not read 1–4, you must refuse to add mathematical content.
-(Per PRD's hardening: this gate is enforced by filing a bd issue
+If you have not read all of `PRD.md`, `GLOSSARY.md`, `CONVENTIONS.md`,
+and `CLAUDE.md` (this file = `AGENTS.md`), you must refuse to add
+mathematical content. (The gate is stated by named files, not
+ordinals, to prevent count-drift across documents.)
+
+Per PRD's hardening: this gate is enforced by filing a bd issue
 blocked on "Pre-read PRD/GLOSSARY/CONVENTIONS/CLAUDE.md required"
 rather than silently skipping work. "Mathematical content" includes
 new claims, definitions, lemmas, proofs, equations, F-matrix entries,
 gauge choices, citation footnotes, or prose asserting any of these.
 Phase-0 exception: while GLOSSARY is empty, adding GLOSSARY entries
-IS the permitted form of mathematical-content addition.)
+IS the permitted form of mathematical-content addition.
 
 ---
 
@@ -369,6 +373,16 @@ Don't push through any of these. Stop and ask.
   hard pauses, not advisory.
 - The `\unchecked` flag you're trying to discharge has no local
   source.
+- A Lean import would require the Mathlib version pin to drift from
+  the canonical commit (currently `d6dab93` per CAD's lake-manifest).
+  Pinning policy is a user-level decision.
+- A `bd` cross-device sync conflict (issues.jsonl merge) cannot be
+  resolved cleanly with standard merge tools. Do not "just pick one
+  side" — issue state can be lost.
+- A review subagent returns a non-actionable verdict (e.g., "looks
+  ok" with no per-claim signoff or specific recommendations). Re-request
+  the review with an explicit per-claim checklist; if still vague,
+  escalate to the user.
 
 When escalating, attach: the step you were on, what failed, the
 specific reproducible command, and the relevant
