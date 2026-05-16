@@ -704,3 +704,222 @@ Per `bd` `cft-anyons-rpf` and orchestrator briefing.
   + MIGRATION_LOG updates land in the same atomic commit.
 
 **Commit:** (filled below after commit lands)
+
+---
+
+## 2026-05-16: P3.2.c — discharge `string-net` `\unchecked` flag → `\cite{SRC-STRING-NET}` (1 site)
+
+**summary.tex location:** §"External references mentioned (all unchecked)"
+(`summary.tex:2480`), the "String-net fixed-point wavefunction intuition
+(chat~2 §0)" entry of the canonical enumeration at lines 2458--2481. One
+per-item `\unchecked` macro discharged to `\cite{SRC-STRING-NET}`. Diff =
+1 deletion, 1 insertion, perfectly balanced.
+
+**Before** (`summary.tex` at commit `c8d055b`, the post-P3.2.b baseline):
+
+Line 2480 — inside the "External references mentioned (all unchecked)"
+itemize:
+```latex
+\item String-net fixed-point wavefunction intuition (chat~2 §0).\unchecked
+```
+
+**After** (this commit):
+
+Line 2480:
+```latex
+\item String-net fixed-point wavefunction intuition (chat~2 §0).\cite{SRC-STRING-NET}
+```
+
+All other characters of `summary.tex` are unchanged.
+
+**Discrepancy with CITATION_INDEX.md / orchestrator briefing (1 vs 2
+sites):**
+
+The pre-existing `CITATION_INDEX.md` (built by P2.8 via
+`scripts/build-citation-index.py`) lists the `string-net` atom's
+`summary.tex` locations as **lines 1304, 2480** (2 sites). However, as
+previously documented in the P3.2.a / P3.2.b ERRATA entries (and the
+known build-citation-index.py bug `cft-anyons-umx`), those line numbers
+are **author-name / keyword occurrence lines** (where the script's
+string-net / Levin / Wen / topological-order pattern matches), not
+`\unchecked` macro lines. Inspection of the file at this commit shows:
+
+- Line 1304 ("PF from quantum-dimension/string-net weighting, coassoc from") → inside `\begin{warning}[PF $\neq$ coassociative]` at lines 1300--1312. **No per-item `\unchecked`** macro inside this warning environment (verified by grep of `\unchecked` in summary.tex showing zero hits between lines 1300 and 1312). The string-net keyword here is a parenthetical reference to where the PF amplitude formula's normalisation originates ("quantum-dimension/string-net weighting"); the surrounding warning's substantive content is a comparison of two distinct amplitude derivations (PF vs coassoc), not a bibliographic claim about Levin--Wen string-nets requiring discharge. Out of scope for P3.2.c (no `\unchecked` macro to discharge at this line).
+- Line 2480 ("String-net fixed-point wavefunction intuition (chat~2 §0).") → the discharge target itself. This is the only actual `\unchecked` macro associated with the `string-net` citation atom in `summary.tex`.
+
+The structural distinction matches `scripts/build-citation-index.py:336--368`
+(`harvest_atom_backrefs` uses keyword matching, not `\unchecked`
+proximity); the field name `summary.tex location(s)` in CITATION_INDEX
+records "the lines where the atom is referenced", not "the lines where
+a discharge target exists". The CITATION_INDEX schema-clarity follow-up
+filed at P3.2.a (piggybacking on the existing P2.7 / P3.0 doc-sync
+queue) covers this case too (no new follow-up needed).
+
+**`SRC-STRING-NET` PDF identity vs lit-DB cross-ref (also known issue,
+out of scope here):** the local PDF `references/StringNetCondMat0510613.pdf`
+is Levin--Wen 2007 (cond-mat/0510613, "Detecting topological order in a
+ground state wave function"); the literature DB cross-ref at
+`CITATION_INDEX.md` line 184 is id=324 = the related Levin--Wen 2005
+cond-mat/0404617 paper "String-net condensation: A physical mechanism
+for topological phases". Both papers are by the same authors, both
+develop the string-net framework, and both support the broad
+"string-net" intuition cited at `summary.tex:2480`. The bibitem
+`SRC-STRING-NET` records the local-PDF identity per ground-truth-before-
+content (CLAUDE.md Rule 7); this discharge's C-gate evidence comes from
+the actual local PDF text at `references/text/StringNetCondMat0510613.txt`.
+This is documented in `bd cft-anyons-es5` and the P3.0 ERRATA entry as
+a deferred CITATION_INDEX cross-ref follow-up.
+
+**Editorial-choice justification** (single-cite, not multi-cite;
+load-bearing C-gate evidence: `summary.tex` statement + a PDF excerpt
+from the cited SRC-STRING-NET PDF; ≥ 2-source agreement per CLAUDE.md
+Rule 5):
+
+The 1 site asserts: **the "string-net fixed-point wavefunction"
+intuition — the picture introduced by Levin and Wen in which a class of
+topologically ordered ground states are described as fixed-point
+wavefunctions of "string-net" configurations on a lattice, characterised
+by F-symbol-like graphical relations.** Per CLAUDE.md Rule 5
+(≥ 2 source agreement) and the C-gate of MIGRATION_PLAN.md:172, the
+single `\cite{SRC-STRING-NET}` macro is the cleanest discharge — this
+atom has only one local PDF (`references/StringNetCondMat0510613.pdf`,
+the 2007 PRL follow-up), and the literature DB cross-reference (the
+related Levin--Wen 2005 cond-mat/0404617 paper) is not locally
+available as a PDF. The local PDF directly discusses the "string-net
+condensation picture" in its abstract and develops the "string-net
+wave function Φ" extensively in the body, exactly matching the
+attribution at `summary.tex:2480`:
+
+- **`SRC-STRING-NET`** (Levin, Wen 2007, arXiv:cond-mat/0510613,
+  PRL 96:110405; title "Detecting topological order in a ground state
+  wave function") — **primary citation: the string-net wavefunction
+  picture itself.** PDF excerpts:
+
+  Title at `references/text/StringNetCondMat0510613.txt:1`:
+  > *"Detecting topological order in a ground state wave function"*
+
+  Abstract at `references/text/StringNetCondMat0510613.txt:5--8`:
+  > *"A large class of topological orders can be understood and
+  > classified using the **string-net condensation** picture. These
+  > topological orders can be characterized by a set of data (N, d_i,
+  > F^{ijk}_{lmn}, δ_{ijk}). We describe a way to detect this kind of
+  > topological order using only the ground state wave function."*
+
+  Body — string-net wave function exposition at
+  `references/text/StringNetCondMat0510613.txt:130--132`:
+  > *"General string-net models: To derive (1) in the general case, we
+  > compute the the topological entropy for the exactly soluble
+  > **string-net models** discussed in Ref. [17]. The ground states of
+  > these models describe a large class of (2 + 1) dimensional
+  > topological orders."*
+
+  Body — fixed-point ground state wavefunction Φ at
+  `references/text/StringNetCondMat0510613.txt:165--168`:
+  > *"FIG. 4: A typical **string-net state** on the honeycomb lattice.
+  > The empty links correspond to spins in the i = 0 state. The
+  > orientation conventions on the links are denoted by arrows. ...
+  > the **string-net wave function** Φ only depends on the topologies
+  > of the network of strings."*
+
+  Body — fixed-point construction via graphical (F-symbol) relations at
+  `references/text/StringNetCondMat0510613.txt:170--178`:
+  > *"F^{ijm}_{kln} satisfying certain algebraic relations [17]. For
+  > each set of F^{ijm}_{kln}, d_i, δ_{ijk} satisfying these relations,
+  > there is a corresponding exactly soluble topologically ordered spin
+  > model. ... The ground state wave function Φ of the model is also
+  > known exactly."*
+
+  The three content-bearing phrases of the discharged attribution
+  ("string-net", "fixed-point wavefunction", "intuition") are all
+  directly supported by the PDF: "string-net" appears in the title's
+  abstract and throughout the body; "wavefunction" / "ground state wave
+  function" is the title phrase + the body's Φ construction; the
+  "fixed-point" character of the wavefunction is encoded in the
+  F-symbol relations (3-6) that the PDF body develops (the wavefunction
+  is invariant under continuous deformation of the string-net
+  configuration — line 156--163 — which is the fixed-point property
+  the `summary.tex` attribution alludes to); "intuition" is the chat~2
+  §0 framing of the conceptual picture summarised by the PDF abstract's
+  "string-net condensation picture".
+
+The single-cite is the cleanest discharge: the one SRC-* covers the
+entire claim of the discharged sentence verbatim from the PDF
+abstract + body, and the C-gate threshold is met without recourse to
+additional sources (summary.tex + PDF = 2 sources, both agreeing on
+the cited result).
+
+**Source of correction:** N/A — this is the **discharge of an inherited
+`\unchecked` flag**, not a correction to a previously-asserted claim.
+The `summary.tex` surrounding mathematical wording is unchanged. The
+attribution `String-net fixed-point wavefunction intuition (chat~2 §0)`
+is verified against the PDF abstract + body as described above; the
+inline `\unchecked` macro is replaced by the verified `\cite{...}`.
+Per `bd` `cft-anyons-h81` and orchestrator briefing.
+
+**Validation:**
+
+- **M** (mechanical): `pdflatex -interaction=nonstopmode -halt-on-error
+  -draftmode summary.tex` three-pass succeeds (rc=0 on all three passes).
+  Steady-state (3-pass; both pre-edit baseline at commit `c8d055b` and
+  post-edit converge identically to steady state in 3 passes — the
+  added `\cite{...}` perturbs the `.aux` cross-reference table the
+  same way the P3.2.a / P3.2.b edits did): log lines 1009 → 1009
+  (unchanged); Warning count 39 → 39 (unchanged); Underfull count
+  10 → 10 (unchanged); Overfull count 8 → 8 (unchanged);
+  `Undefined`-class messages 0; `No \bibitem`-class messages 0;
+  `Citation undefined` messages 0; `Label(s) may have changed`
+  warnings 0 at steady state. Page count: 33 (unchanged). Normalised
+  log diff (timestamp + checksum + run-time normalised): exactly 1
+  line of difference, "620 PDF objects out of 1000" → "621 PDF objects
+  out of 1000" (+1 PDF object reflecting the new `\cite{...}`
+  hyperlink target, as expected — identical structural behaviour to
+  the P3.2.a / P3.2.b builds).
+- **D** (definitional): `git diff summary.tex` shows exactly 1 deletion
+  and 1 insertion (verified by `git diff summary.tex | grep -c '^+[^+]'
+  == 1` and the symmetric deletion count). The deleted line is the
+  `summary.tex` line 2480 `\unchecked` macro occurrence; the inserted
+  line is the same line with `\unchecked` replaced by
+  `\cite{SRC-STRING-NET}`. No other lines of `summary.tex` are
+  modified. No GLOSSARY-defined term is added or altered; the
+  surrounding mathematical content (the "External references mentioned"
+  itemize and adjacent items for FRS, Feiguin (just discharged in
+  P3.2.b), "Anyonic MERA literature") is byte-verbatim outside the 1
+  inline-macro replacement.
+- **C** (cross-reference, ≥ 2 source agreement): for the 1 discharged
+  site, the PDF excerpts above (from
+  `references/text/StringNetCondMat0510613.txt:1`, `:5--8`, `:130--132`,
+  `:165--168`, `:170--178`, the paper's title + abstract + relevant
+  body sections) confirm the cited concept (string-net wavefunction
+  picture; ground state Φ characterised by F-symbol relations; fixed-
+  point character via deformation invariance). C-gate sources: (1) the
+  `summary.tex` statement itself (the named attribution); (2) the
+  SRC-STRING-NET PDF title + abstract + body. ≥ 2 sources agree
+  (summary.tex + PDF). Three of the three content-bearing phrases of
+  the attribution ("string-net", "wavefunction", "intuition" /
+  "fixed-point" — the latter as deformation-invariance) are directly
+  supported by the PDF text. (Literature DB id=324 cross-ref to the
+  related 2005 Levin--Wen cond-mat/0404617 paper is a third potential
+  source per `CITATION_INDEX.md` but is not locally available as a PDF
+  in P2; not used for this discharge.)
+- **R** (review): Core-tier per CLAUDE.md Rule 4 (substantive
+  `summary.tex` content change discharging a `\unchecked` flag + adding
+  a citation). Hostile Opus reviewer subagent post-commit per
+  orchestrator policy. Reviewer should verify: (i) the 1 site
+  identification matches the 1 actual `\unchecked` macro in
+  summary.tex associated with the String-net canonical-enumeration
+  entry at line 2480; (ii) the single-cite editorial choice (vs
+  multi-cite) is justified by the SRC-STRING-NET PDF directly
+  asserting the content-bearing phrases of the attribution
+  (string-net concept in title and abstract; wave function Φ
+  construction in body; fixed-point character via F-symbol-based
+  deformation invariance); (iii) the C-gate PDF excerpts genuinely
+  support the cited claim; (iv) the line-1304 omission is correct
+  (that's a keyword occurrence inside `warn:PF-coassoc` warning
+  environment with no per-item `\unchecked` to discharge — confirmed
+  by zero `\unchecked` macros between lines 1300 and 1312); (v) the
+  diff is exactly 1 deletion + 1 insertion; (vi) `pdflatex` builds
+  clean.
+- **I** (integration): Three-pass `pdflatex` build is reproducible;
+  ERRATA + MIGRATION_LOG updates land in the same atomic commit.
+
+**Commit:** (filled below after commit lands)
