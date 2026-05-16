@@ -392,21 +392,47 @@ The full $N$-site space is $\Hh_N = \bigoplus_{W\in\Irr(\Cc)} \Hh_N^{W}$.
 **Source:** `summary.tex:285`
 **Aliases:** "$H_N^W$", "fixed-lattice Hilbert space".
 **Translation map:**
-  - MMA: TBD pending **P1.3** (mobile-Fock formulation reconciliation;
-    see `stocktake/reports/opus-hilbert-bridge.md` §2: MMA's mobile-Fock
-    is the inductive limit / direct sum over configurations, equivalent
-    via the partition `H_P^W` bridge).
+  - MMA / mobile-Fock [[def:mobile-Fock]]: equivalent via the bijection
+    in bridge report §2.2 (lines 181–230). Concretely
+    $H_{\mathrm{MMA}}(L) \cong \bigoplus_{W\in\Irr(\Cc)}
+    \bigoplus_{N=0}^{L} \Hh_N^{W}$, with index match $c$ (MMA) $\leftrightarrow
+    W$ (summary). The bijection on basis elements is:
+    - **$N \to \mathrm{MF}$**: reindex the label sequence
+      $(a_1,\dots,a_N)\in\Irr(\Cc)^N$ as
+      $(\,\text{positions } x_p \text{ of non-vacuum legs},\ \text{non-vacuum labels } b_p = a_{x_p}\,)$;
+      the fusion fibre $\Hom(W, a_1\otimes\cdots\otimes a_N)$
+      collapses canonically onto $\Hom(W, b_1\otimes\cdots\otimes b_n)$
+      because tensoring with $\one$ is the identity functor (vacuum
+      legs absorb).
+    - **$\mathrm{MF} \to N$**: build the length-$L$ label sequence
+      $(a_x = b_p \text{ if } x = x_p,\ a_x = \one \text{ else})$; use
+      `fusion_tree` (sequence of intermediate charges in the
+      left-associated basis) as the coordinate in
+      $\Hom(c, a_1\otimes\cdots\otimes a_L)$ — MMA's
+      `enumerate_fusion_trees` already iterates only over the
+      non-vacuum labels, which is the inverse of vacuum absorption.
+    - **Neither is "more general"**: the two are identifications of
+      the same Hom-space under different geometric framings.
+    - **Conventions required** (locked at P1.6 per the plan): vacuum
+      at index 1 [P1.6(a)]; hard-core (automatic — a site is either
+      vacuum or one simple); left-associated fusion-tree basis
+      [P1.6(i)]; multiplicity-free assumption [P1.6(d)] (each simple
+      appears with multiplicity 1 in $Q$); F-matrix gauge translation
+      [P1.6(b)] (relevant for any computation using F-symbol entry
+      values, not for the basis-element bijection itself, which is
+      gauge-independent).
+    - **Worked example**: Fibonacci $\Hh_2^\tau$ has $\dim = 3$ in
+      both formulations; basis-vector-level bijection given in bridge
+      report §5.1–§5.3 (`opus-hilbert-bridge.md:291-339`).
   - CAD: TBD pending **P1.7**. Lean side is
     `IndefiniteParticleSectorCoordinates` at the coordinate-skeleton level
     (not categorical); see `stocktake/reports/cad-lean.md` §5.
 **Notes:** Equivalent to [[def:HP]] when all $A_I = Q$ (per the remark
-following `def:HP`). The three Hilbert-space framings (this one,
-[[def:HP]], and MMA's mobile-Fock [[def:mobile-Fock]]) all reconcile
-per `stocktake/reports/opus-hilbert-bridge.md`; the partition
-formulation [[def:HP]] is declared canonical. Mobile-Fock
-[[def:mobile-Fock]] differs from this entry by additionally summing
-over particle number $N$ and total charge $c$ (not held as
-superselection labels) — see the bridge report §2.2.
+following `def:HP`). The three discrete Hilbert-space framings (this
+one, [[def:HP]], and MMA's mobile-Fock [[def:mobile-Fock]]) all
+reconcile per `stocktake/reports/opus-hilbert-bridge.md`; the partition
+formulation [[def:HP]] is declared canonical. The continuum
+analytical closure is [[def:indlim]].
 
 ---
 
@@ -487,8 +513,37 @@ A_P \;:=\; A_{I_1}\otimes A_{I_2}\otimes\cdots\otimes A_{I_N}, \qquad
 **Source:** `summary.tex:384`
 **Aliases:** "$H_P^W$", "spatial-partition Hilbert space".
 **Translation map:**
-  - MMA: TBD pending **P1.3** (mobile-Fock = direct limit over $P$;
-    `stocktake/reports/opus-hilbert-bridge.md` §2.)
+  - MMA / mobile-Fock [[def:mobile-Fock]]: special case via the chain
+    in bridge report §2.3 (= compose §2.1 partition↔N-tensor and §2.2
+    N-tensor↔mobile-Fock).
+    - **Partition $\to$ MF**: take $|P| = L$ (lattice cut-off equals
+      cell count); set $A_I = Q_{\mathrm{full}} = \bigoplus_{a\in\Irr(\Cc)} a$
+      on every cell; identify with N-tensor $\Hh_N^W$
+      ($N = |P|$); then sum over $W \in \Irr(\Cc)$ (recovering MMA's
+      total-charge direct sum) and absorb the vacuum legs into a
+      sparse hard-core position list.
+    - **MF $\to$ partition**: pick any partition $P$ of size $|P| = L$
+      (cell lengths arbitrary — they are not relevant for the
+      Hilbert space itself, only for refinement maps [[def:refmap]]);
+      fix $A_I = Q_{\mathrm{full}}$ on every cell; decompose
+      $H_{\mathrm{MMA}}(L)$ by total charge $c$ to recover
+      $\bigoplus_W \Hh_P^W$.
+    - **Partition is strictly more general** for two reasons:
+      (i) per-cell $A_I$ are allowed (required for blocked /
+      coarse-grained refinements where a coarse cell carries a
+      larger object than a fine cell — see Remark `rem:Q-choices`(4)
+      at `summary.tex:233-236`); (ii) total charge $W$ is treated as
+      a superselection label, not summed.
+    - **Conventions required** (locked at P1.6): same as
+      [[def:Hlatt]] above — vacuum at index 1 [P1.6(a)];
+      left-associated fusion-tree basis [P1.6(i)]; multiplicity-free
+      [P1.6(d)]; plus the choice $Q = Q_{\mathrm{full}}$ uniform
+      across cells, which is the MMA convention [P1.6(h)].
+    - **Worked example**: Fibonacci $\Hh_P^\tau$ with $|P| = 2$ and
+      $A_I = Q_{\mathrm{full}} = \one \oplus \tau$ has $\dim = 3$;
+      basis-vector-level bijection to MMA's
+      $(\text{config}, \text{fusion\_tree}, c)$ tuples given at
+      bridge report §5.1–§5.2 (`opus-hilbert-bridge.md:291-325`).
   - CAD: TBD pending **P1.7**.
 **Notes:** **This is the canonical Hilbert-space formulation per
 `stocktake/reports/opus-hilbert-bridge.md`**. Three equivalent framings:
@@ -585,10 +640,32 @@ direct limit
 **Aliases:** "$H_\infty^W$", "continuum Hilbert space", "direct limit",
 "thermodynamic limit Hilbert space".
 **Translation map:**
-  - MMA: TBD pending P1.8 (MMA's mobile-Fock direct sum
-    $H = \bigoplus_N \bigoplus_{\text{configs}}\Hom(c, X_{a_1}\otimes\cdots\otimes X_{a_n})$
-    is the discrete analogue of this continuum limit; see
-    `stocktake/reports/opus-hilbert-bridge.md` §2.)
+  - MMA / mobile-Fock [[def:mobile-Fock]]: **discrete fixed-$L$
+    analogue, not equivalent.** Mobile-Fock
+    $H_{\mathrm{MMA}}(L) \cong \bigoplus_W \bigoplus_{N=0}^L \Hh_N^W$
+    is finite-dimensional for fixed $L$ — see bridge report §1.3
+    line 138 for the cardinality formula. The inductive-limit
+    closure here takes the partition tower
+    $\{\Hh_P^W, E_{P\to P'}\}$ over the directed set $(P, \preceq)$
+    of refinements ([[def:refine]], [[def:refmap]]) and forms the
+    Hilbert completion of the algebraic direct limit; MMA itself has
+    no continuum counterpart (it lives at fixed lattice cut-off $L$).
+    The translation is therefore:
+    - **MMA $\to$ inductive limit**: $H_{\mathrm{MMA}}(L)$ embeds as
+      the $|P| = L$ slice (with $A_I = Q_{\mathrm{full}}$, summed
+      over $W$) of the inductive system, before the $L \to \infty$
+      Hilbert completion.
+    - **Inductive limit $\to$ MMA**: no canonical inverse — the
+      continuum limit drops the lattice cut-off, which MMA requires.
+      One can restrict to $\Hh_P^W$ for a specific $|P| = L$ and then
+      compose with the partition $\leftrightarrow$ mobile-Fock map
+      (per [[def:HP]] Translation map) to recover the MMA basis.
+    - **Conventions required**: same as [[def:HP]] / [[def:Hlatt]] at
+      each finite $L$ slice; the continuum closure additionally
+      requires the cellwise-local-isometry condition on the
+      refinement maps [[def:refmap]] (the inductive system must be
+      compatible: $E_{P\to P}=\id$ and
+      $E_{P'\to P''}E_{P\to P'}=E_{P\to P''}$).
   - CAD: TBD pending P1.7.
 **Notes:** Compatibility = associativity-of-refinement. Cf. [[def:HP]],
 [[def:refmap]]. The Hilbert-completion step is the load-bearing step
@@ -1626,14 +1703,51 @@ of any LaTeX environment in the MMA source.**
 **Aliases:** "MMA Hilbert space", "`H_MMA(L)`", "mobile anyons Fock
 space", "hard-core-anyon Fock space on an `L`-site lattice".
 **Translation map:**
-  - Summary.tex / partition: **TBD pending P1.5** (already de-risked:
-    mobile-Fock is a special case of [[def:HP]] with $A_I =
-    Q_{\mathrm{full}} = \bigoplus_a a$ on every cell, plus a direct sum
-    over particle number $N$ and total charge $c$; see bridge report
-    §2.3 for the constructive bijection in both directions).
-  - Summary.tex / N-tensor: **TBD pending P1.5** (mobile-Fock relates
-    to [[def:Hlatt]] by summing over $N$ and $c$; bridge §2.2).
-  - CAD: **TBD pending P1.7**.
+  - **Summary.tex / partition [[def:HP]]**: per bridge report §2.3
+    (lines 232–238). Mobile-Fock is a special case of the partition
+    formulation; the partition formulation is strictly more general
+    (allows per-cell $A_I$ and treats total charge $W$ as a
+    superselection label rather than summing over it). Bidirectional
+    map (see [[def:HP]] Translation map for the full algorithm):
+    - **MF $\to$ partition**: pick any partition $P$ with $|P| = L$
+      (cell-length geometry is arbitrary at the level of the Hilbert
+      space alone); fix $A_I = Q_{\mathrm{full}} = \bigoplus_a a$ on
+      every cell; decompose $H_{\mathrm{MMA}}(L)$ by total charge $c$
+      to recover $\bigoplus_W \Hh_P^W$.
+    - **Partition $\to$ MF**: take $|P| = L$, set $A_I =
+      Q_{\mathrm{full}}$, sum over $W \in \Irr(\Cc)$, absorb vacuum
+      legs (labels $a_i = \one$) into a sparse hard-core position
+      list.
+  - **Summary.tex / N-tensor [[def:Hlatt]]**: per bridge report §2.2
+    (lines 181–230). **Equivalent** (bijective on basis elements;
+    neither is more general — they are identifications of the same
+    Hom-space under different geometric framings):
+    $H_{\mathrm{MMA}}(L) \cong \bigoplus_{W\in\Irr(\Cc)}
+    \bigoplus_{N=0}^L \Hh_N^W$, with index match $c$ (MMA) $\leftrightarrow
+    W$ (summary). The bijection on basis elements uses vacuum-leg
+    absorption (see [[def:Hlatt]] Translation map for the full
+    algorithm).
+  - **Summary.tex / inductive-limit closure [[def:indlim]]**: not
+    equivalent — mobile-Fock is the discrete fixed-$L$ analogue;
+    inductive-limit takes $L \to \infty$ via the cellwise-local
+    isometries [[def:refmap]] and forms the Hilbert completion. See
+    [[def:indlim]] Translation map.
+  - **Worked example** (all three pairings): Fibonacci $\Hh_2^\tau$
+    has $\dim = 3$ in each formulation; bridge report §5.1–§5.3
+    (`opus-hilbert-bridge.md:291-339`) gives the explicit
+    basis-vector-level bijection and verifies F-symbol-change-of-basis
+    consistency (which acts identically across all three formulations
+    for Fibonacci because the F-matrix [[def:fib-F]] is involutory in
+    both the unitary `summary.tex` gauge and MMA's TensorCategories.jl
+    gauge — they coincide for Fibonacci).
+  - **Conventions required** (summary, locked at P1.6): vacuum at
+    index 1 [P1.6(a)]; left-associated fusion-tree basis [P1.6(i)];
+    multiplicity-free [P1.6(d)]; choice $Q = Q_{\mathrm{full}}$
+    uniform across cells [P1.6(h)]; F-matrix gauge translation
+    [P1.6(b)] (relevant for any computation that uses F-symbol entry
+    values; not relevant for the basis-element bijection itself, which
+    is gauge-independent).
+  - **CAD**: TBD pending **P1.7**.
 **Notes:** The third of the three discrete Hilbert-space framings
 reconciled in `stocktake/reports/opus-hilbert-bridge.md` (alongside the
 partition-canonical [[def:HP]] and the fixed-lattice [[def:Hlatt]]);
