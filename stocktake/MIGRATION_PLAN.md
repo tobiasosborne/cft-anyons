@@ -414,4 +414,4 @@ This is the structure of `PRD.md` v0; content for each section is drafted in P0.
 11. **Escalation** — when to ask the user; what to attach when asking; where to put open questions (`RESEARCH_NOTES.md`).
 12. **Versioning** — current canonical version (e.g., "v0.3, mid-consolidation"); how the consolidation milestones map to version tags.
 
-**Style:** PRD body should be ≤ 800 words. Anything longer goes into a referenced doc. The PRD's job is orientation, not exposition.
+**Style:** PRD body should be ≤ 1500 words. Anything longer goes into a referenced doc. The PRD's job is orientation, not exposition. (Bumped from 800 → 1500 per P0.9 hostile-review recommendation; the v0 draft hit ~1221 words once the Critical/Major findings were addressed and pre-read warnings + read-order routing were folded in.)
