@@ -19,3 +19,4 @@ import Formalisation.LinearAlgebra.Trace
 import Formalisation.LinearAlgebra.Postcompose
 import Formalisation.LinearAlgebra.Component
 import Formalisation.LinearAlgebra.NoMixing
+import Formalisation.LinearAlgebra.FineGraining
