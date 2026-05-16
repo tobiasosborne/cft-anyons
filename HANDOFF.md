@@ -13,51 +13,53 @@ TRIGGER: End of session; or any time MIGRATION_LOG.md is updated with a
 -->
 
 **Last updated:** 2026-05-16
-**Last session goal:** Consolidate three prior projects (`microscopic-mobile-anyons/`, `cft-anyons-deprecated/`, this repo's chat transcripts) into a single canonical ground-truth repo. Execute MIGRATION_PLAN Phase 0 + de-risk Phase 1 via Hilbert-space deep-dive.
-**Last commit:** `93a2bea` (P1.4-early-C, plan revision after de-risking)
+**Last session goal:** Execute Phase 1 of MIGRATION_PLAN (definitional bedrock — populate GLOSSARY + CONVENTIONS, lock the Hilbert-space translation map, build out the per-source translation maps).
+**Last commit:** `d8c0a40` (P1.7 — CAD-Lean translation maps populated)
 
 ---
 
 ## TL;DR — what to do next
 
-**Run `bd ready`. The next concrete task is Phase 1 of `stocktake/MIGRATION_PLAN.md` (epic `cft-anyons-k3s`). Specifically, start with step P1.1: read `summary.tex` end-to-end and extract every `\begin{definition}` / `\begin{convention}` into `GLOSSARY.md`.**
+**Run `bd ready`. The next concrete task is `MIGRATION_PLAN.md` step P1.8 (MMA-Julia translation maps).** Specifically, populate the **MMA bullets** of the relevant GLOSSARY Translation map fields per `stocktake/reports/mma-julia.md` §5 — symmetric to what P1.7 just did for CAD. Plan-named primary targets per `MIGRATION_PLAN.md:132`:
 
-The hardest open question (whether the three Hilbert-space formulations reconcile) **has already been answered: YES, with convention work** — see `stocktake/reports/opus-hilbert-bridge.md`. You can trust the partition formulation `H_P^W = Hom_C(W, A_P)` as canonical and proceed.
+- `def:partition` ← `LabelledConfig`
+- `def:refmap` ← `normalized_product_isometry` (= `E_{P→P'}`)
+- `def:TL-cat` ← `interaction_hamiltonian` (`Σ P_j` ↔ `e_i / d_σ`)
+
+The Hilbert-space MMA mappings (`def:HP`, `def:Hlatt`, `def:indlim`, `def:mobile-Fock`) are **already done** by P1.5 — those entries' MMA bullets contain the full bidirectional bijection. P1.8 fills in the remaining MMA Julia-struct-level mappings for the entries that don't yet have one.
+
+After P1.8: P1.9 (definitional gate audit — Opus subagent reads GLOSSARY + CONVENTIONS end-to-end), P1.10 (PROVENANCE refresh), P1.11 (PRD v0 → v1 refresh). Then Phase 1 closes.
 
 ---
 
 ## Quick orientation (10–15 min, in this order)
 
 1. **`PRD.md`** — what this project is, scope in/out, canonical artifacts. 1245 words; ~5 min.
-2. **`CLAUDE.md` / `AGENTS.md`** (identical pair) — the methodology, the Two Laws, the 11 Rules, hallucination-risk callouts. ~10 min. *Especially: Rule 4 (reviewer-gating) and Rule 5 (red-green TDD) and Rule 10 (GLOSSARY conformance overrides everything else).*
+2. **`CLAUDE.md` / `AGENTS.md`** (identical pair) — methodology, Two Laws, 11 Rules, hallucination-risk callouts. ~10 min. *Especially: Rule 4 (reviewer-gating), Rule 5 (red-green / port-and-verify), Rule 8 (docs-in-lockstep), Rule 11 (GLOSSARY conformance overrides everything).*
 3. **This file (HANDOFF.md)** — current session-specific state. ~5 min.
 4. **`bd ready`** in shell — see what's queued.
 
-Stop here if you're just orienting. Below sections are only needed when you start work.
+Stop here if you're just orienting. Sections below are needed only when you start work.
 
 ---
 
-## What just landed (this session)
+## What landed this session
 
-15 atomic commits total. Two phases:
+**8 commits total** (7 substantive P-steps + 1 admin backfill):
 
-### Phase 0: Repo skeleton + meta files + PRD (commits 7e62d9a → 5dd5381, ~11 commits)
-- Git initialised; baseline commit.
-- `bd init` (dolt backend embedded; vanilla JSONL backend no longer exists in bd).
-- Directory skeleton: `archive/{chats,cad-meta-snapshot,mma-archive-v0-snapshot}/`, `reviews/`, `references/`, `literature/`, `Formalisation/`, `scripts/{julia,wolfram}/`, `results/`, `src/`, `tests/`, `af/`, `docs/`.
-- 9 stub meta files at top level: `PRD.md`, `GLOSSARY.md`, `CONVENTIONS.md`, `ERRATA.md`, `RESEARCH_NOTES.md`, `PROVENANCE.md`, `CITATION_INDEX.md`, `MIGRATION_LOG.md`, plus the docstrings.
-- `chat1-4.md` moved to `archive/chats/` (deep storage; don't read).
-- `review_1-4.md` moved to `reviews/`.
-- `PRD.md` drafted (P0.8) and survived 2 rounds of hostile Opus review (`stocktake/reports/opus-prd-v0-review.md`, `opus-prd-v0.1-review.md`). Final verdict: APPROVE WITH MINOR EDITS, conditional fix applied. PRD is 1245 words against a 1500-word cap (bumped from 800 mid-session per reviewer recommendation).
-- `README.md` is a one-pager pointing at PRD.
+| Commit | Step | Summary |
+|---|---|---|
+| `8640f1e` | **P1.1** | Extract 48 def/conv from `summary.tex` into GLOSSARY (4 conv + 44 def, verbatim in ```latex blocks) |
+| `2edb424` | (admin) | Backfill MIGRATION_LOG rows for P1.4-early-{A,B,C} (prior session) + P1.1 |
+| `0e4592a` | **P1.2** | ERRATA entry for `lem:binary-Z` squared-amplitudes bug (audit-trail for pre-baseline fix; no `summary.tex` edit) |
+| `99749cf` | **P1.3** | GLOSSARY §A/§B split; new `def:mobile-Fock` entry in §B; cross-links between the four Hilbert-space framings |
+| `40c0a22` | **P1.5** | Write explicit Hilbert-space translation maps (4 entries: `def:HP`, `def:Hlatt`, `def:indlim`, `def:mobile-Fock`) from bridge report §2 |
+| `8226003` | **P1.6** | Populate `CONVENTIONS.md` with 10 lettered entries (a)–(j) |
+| `d8c0a40` | **P1.7** | Populate all 49 CAD bullets in GLOSSARY (23/23 CAD `.lean` files covered) |
 
-### P1.4-early: Hilbert-space deep-dive pulled forward (commits 770d730, 1008cd8, 93a2bea)
-- User requested de-risking the most-load-bearing step (P1.4 Opus dive) BEFORE Phase 1 GLOSSARY work begins.
-- Opus 4.7 deep-dive verdict: **YELLOW (reconcilable with convention work)**. Full report at `stocktake/reports/opus-hilbert-bridge.md` (461 lines).
-- All three Hilbert-space formulations equivalent; **partition `H_P^W` is canonical**.
-- 7 conventions need locking at P1.6 (4 already in CLAUDE.md callouts, 3 new: fusion-tree left-associated, multiplicity-free assumption, N=0 boundary).
-- **Bonus**: Critical latent bug found in MMA Julia (LB-1 — `enumerate_fusion_trees` treats `dim Hom > 0` as Boolean rather than counting multiplicity). Latent for current categories, blocking for any extension. Filed as bd ticket + RESEARCH_NOTES entry + P8.4 TODO marker scheduled.
-- MIGRATION_PLAN updated: P1.6 expanded from 6 → 10 convention items; P1.7, P8.1, P8.4 got scope clarifications.
+Each substantive commit went through a hostile Opus subagent review (verdicts all **APPROVE WITH MINOR EDITS**, minor edits all applied). Review reports landed alongside each step in `stocktake/reports/opus-*-review.md`.
+
+**Phase 1 progress: 7 of 11 steps done. P1.4 was done early by the prior session (commits `770d730`/`1008cd8`/`93a2bea`).**
 
 ---
 
@@ -68,82 +70,90 @@ Stop here if you're just orienting. Below sections are only needed when you star
 | ID | Title | Type | Priority | Status |
 |---|---|---|---|---|
 | `cft-anyons-k3s` | P1: Phase 1 — Definitional bedrock (GLOSSARY) | epic | P1 | open ← **start here** |
-| `cft-anyons-q6h` | LB-1: MMA enumerate_fusion_trees incomplete for non-multiplicity-free categories | bug | P2 | open (blocked by Phase 8; do not fix yet) |
-| `cft-anyons-fnm` | P0: Phase 0 — repo skeleton, bd init, meta-files, PRD | epic | P1 | **closed** ✓ |
-| `cft-anyons-9cr` | P1.4-early: Hilbert-space deep-dive | task | P1 | **closed** ✓ |
+| `cft-anyons-q6h` | LB-1: MMA enumerate_fusion_trees | bug | P2 | open (blocked by Phase 8; do not fix yet) |
+| `cft-anyons-fnm` | P0 epic | epic | P1 | **closed** ✓ |
+| `cft-anyons-9cr` | P1.4-early task | task | P1 | **closed** ✓ |
+| `cft-anyons-k3s.1`–`.6` | Sub-tasks for P1.1, P1.2, P1.3, P1.5, P1.6, P1.7 | task | P1 | **closed** ✓ |
 
-To resume:
+Remaining Phase 1 steps per `stocktake/MIGRATION_PLAN.md` (lines 131–135):
+
+- **P1.8** ← *next*. MMA-Julia struct translation maps. Source: `stocktake/reports/mma-julia.md` §5. Entries to touch: `def:partition`, `def:refmap`, `def:TL-cat` (plan-named); plus any other entries with MMA bullets still reading "TBD pending P1.8".
+- **P1.9.** Definitional gate audit: spawn Opus subagent to read `GLOSSARY.md` + `CONVENTIONS.md` end-to-end and flag undefined terms, internal inconsistencies, conflicts with `summary.tex`. Output to `stocktake/reports/opus-glossary-audit.md`. **Mandatory user-read-and-approve before Phase 2.**
+- **P1.10.** Update `PROVENANCE.md` with Phase 1 summary (currently `PROVENANCE.md` is a stub).
+- **P1.11.** Refresh `PRD.md` v0 → v1 with GLOSSARY/CONVENTIONS pointers internalised. Brief Opus review of the diff only.
 
 ```bash
 cd /home/tobias/Projects/cft-anyons
-bd ready                                # confirm cft-anyons-k3s is the open epic
-bd show cft-anyons-k3s                  # read the description
-# … then start P1.1 per stocktake/MIGRATION_PLAN.md
+bd ready                    # confirm cft-anyons-k3s open epic + queue
+bd show cft-anyons-k3s      # read epic description
+# … then file cft-anyons-k3s.7 for P1.8 and start
 ```
-
-The P1.1–P1.11 steps are atomic per the plan; file sub-task bd issues as you go (or use TaskCreate for in-session sub-step tracking per CLAUDE.md's TaskCreate-exception clause).
 
 ---
 
 ## Gotchas surfaced this session (not yet in CLAUDE.md)
 
-1. **`bd init` defaults to embedded Dolt** (sqlite backend has been removed from bd). Our "JSONL via git" plan therefore means: Dolt is the local store (per-machine; gitignored); JSONL is the cross-device sync vehicle (committed in git). Workflow: `bd export -o .beads/issues.jsonl` before any session-ending commit that touched issues. This is already documented in CLAUDE.md's Beads section.
+The session-1 HANDOFF had 10 gotchas. Adding 6 more from this session:
 
-2. **`bd init` auto-modifies `CLAUDE.md` / `AGENTS.md`** by appending a duplicate "Beads Issue Tracker" block and a duplicate "Session Completion" section (visible in commit `36a730d`'s diff). Both auto-additions were removed in `cd6e108` (P0.1c reconciliation) because they contradict our custom sections (the auto block says "do NOT use TaskCreate" which conflicts with the scientist-workbench-inherited TaskCreate-exception clause). **If you run any `bd setup …` command, expect these blocks to come back — remove them again and bundle the removal in the commit.**
+11. **`bd close <sub-task>` auto-closes the parent epic** when the sub-task is the only open child. Saw this 6 times this session. After each P-step's `bd close cft-anyons-k3s.N`, run `bd update cft-anyons-k3s --status open` to reopen the epic, *unless* the last Phase 1 sub-task (P1.11) is genuinely closing the phase.
 
-3. **The "refuse to add mathematical content" gate is stated by named files, not ordinals.** PRD and CLAUDE.md both name the four files (PRD, GLOSSARY, CONVENTIONS, CLAUDE) directly. Do NOT change to "1–4" or any ordinal — the v0.1 reviewer (Opus, P0.9) flagged ordinal-drift as the critical risk. See `stocktake/reports/opus-prd-v0.1-review.md` finding N-C1.
+12. **`MIGRATION_LOG.md` row belongs in the *same atomic commit* as the P-step's content change** (per CLAUDE.md Rule 8 "docs in lockstep"). The first P-step this session (P1.1) shipped without the log row; the row was added in a follow-on admin commit `2edb424` (which also backfilled three prior-session gaps). Every subsequent P-step this session correctly bundled the log row in the same commit. **Keep doing this.** The pattern: write the row with `(this)` as the commit hash in the row, then the *next* commit backfills the prior `(this)` with the actual hash. See P1.5/P1.7's MIGRATION_LOG diffs for the pattern.
 
-4. **`summary.tex` build artifacts are at top level** (`summary.aux`, `summary.log`, `summary.out`, `summary.pdf`, `summary.toc`). These are gitignored from the baseline; do NOT `git add` them. Run `pdflatex summary.tex` to regenerate. The PDF is regenerable; don't track it.
+13. **`MIGRATION_PLAN.md` text drifts from execution.** Spotted twice:
+    - **P1.2 said "all 4 reviewers flagged it"** — actually 3 of 4 (review_4 had different CRITICAL findings, silent on `lem:binary-Z`). ERRATA records honestly.
+    - **P1.3 said "TBD pending P1.4"** for stubs — but P1.4 was done early in the prior session. P1.3 was reframed as "TBD pending P1.5" instead.
+    - **P1.7's M-gate** ("each CAD Lean file in cad-lean.md has a GLOSSARY translation entry") was undercounting — 4 supporting files (BraidMatrices.lean, ConfigurationSpace.lean, FockSpace.lean, Isometry.lean) needed late mentions added.
+    
+    **General lesson:** treat the plan's per-step text as a guideline, not as a verbatim contract. Cross-check against current reality before each step.
 
-5. **The hostile-review reports are themselves canonical artifacts.** When Opus reviews land in `stocktake/reports/`, they get committed alongside the change they reviewed. Treat them as audit-trail; do not delete or rewrite.
+14. **For bulk same-shaped edits to GLOSSARY** (like P1.7's 49 CAD bullets), the **Python-script-then-Write approach** worked cleanly: read GLOSSARY.md, run regex find-and-replace per slug, write back, then verify §A canonical bodies are still byte-verbatim via the D-gate script. Saves many Edit calls. **Caveat:** verify cross-links + D-gate after, because Write means the entire file's content has to be correct. See `/tmp/p1_7_apply.py` in your session if needed (gets cleaned across sessions; reconstruct from the P1.7 commit's diff if reuseing).
 
-6. **The 3 source projects are still in place** at `/home/tobias/Projects/microscopic-mobile-anyons/` and `/home/tobias/Projects/cft-anyons-deprecated/`. They are not yet imported into the canonical repo. Migration is phased per `stocktake/MIGRATION_PLAN.md`. Do not edit them (read-only inputs to the consolidation).
+15. **The schema doc's `<placeholder>` examples shouldn't get touched by bulk edits.** When I scripted P1.7, the regex was keyed on actual slugs (e.g., `def:fuscat`) — not the literal `<label>` template — so the schema doc's "CAD: ... TBD pending P1.7" example was preserved. Anyone scripting future bulk edits to GLOSSARY/CONVENTIONS should match on real slugs only, never on `<placeholder>` text.
 
-7. **`cft-anyons-deprecated` is misleadingly named** — it's not actually deprecated; it's the formalisation-first version of this project that was renamed when the chat-transcript-driven work began. Its Lean code (28 files, 3049 lines, **zero sorry, zero axiom**) is a load-bearing asset to migrate in Phase 5. See `stocktake/README.md` §1.
-
-8. **MIGRATION_PLAN.md updates** happen via Edit not Write — the plan is long and Write would risk losing structure. Append rows to MIGRATION_LOG.md as you go.
-
-9. **Each atomic commit's message MUST include the provenance footer** (`Source:`, `Validation passed:`, `Review:`, `Rollback:`) per the template in CLAUDE.md §Commit discipline. Reviewer-gating exemption phrasing: `Review: mechanical, exempt` (with brief reason).
-
-10. **Co-Authored-By line** for AI-assisted commits: use `Co-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>`. Match exactly.
+16. **§B (entries from outside `summary.tex`) is now structurally established** by P1.3's split. The schema doc authorises multiple `**Canonical (description):**` blocks for §B entries (per the P1.3 reviewer's edit). If you add new §B entries (e.g., for MMA Julia structs in P1.8 that have no `summary.tex` equivalent), follow the `def:mobile-Fock` pattern: include a slug-of-convenience disclosure in the Source field saying the slug is GLOSSARY-internal, not a citable label in the external source.
 
 ---
 
-## How to verify the repo state on entry
-
-Run these commands; you should see what's claimed:
+## How to verify repo state on entry
 
 ```bash
 cd /home/tobias/Projects/cft-anyons
-git log --oneline | head -20            # 15 atomic commits, oldest first should be P0.1
-git status                              # should be clean
-ls -la                                  # 10 top-level .md (incl. HANDOFF, README, PRD, GLOSSARY, etc.); summary.tex; .gitignore; subdirs
-wc -l summary.tex CLAUDE.md PRD.md      # ~2483, ~470, ~155 (lines, not words)
-bd stats                                # 4 issues total, 2 open, 2 closed
+git log --oneline | head -10           # P1.7 d8c0a40 at top; 8 commits this session
+git status                              # clean
+wc -l GLOSSARY.md CONVENTIONS.md ERRATA.md MIGRATION_LOG.md
+# Expected: ~1790 ~552 ~143 ~51
+
+bd stats                                # 10 issues, 2 open, 8 closed
 bd ready                                # 2 ready (P1 epic + LB-1 bug)
-ls stocktake/reports/                   # 10 reports incl. opus-prd-v0-review.md, opus-prd-v0.1-review.md, opus-hilbert-bridge.md
+ls stocktake/reports/opus-*review.md    # 6 review reports: prd-v0, prd-v0.1, glossary-p1.1, errata-p1.2, glossary-p1.3, glossary-p1.5, conventions-p1.6, glossary-p1.7
 ```
 
-If any of these don't match, **stop and ask the user** — the repo is in an unexpected state.
-
-To verify GLOSSARY work hasn't already started:
+To verify P1.7's M-gate (every CAD Lean file in `cad-lean.md` §5 is referenced somewhere in GLOSSARY):
 
 ```bash
-grep -c "^##" GLOSSARY.md               # should be 1 (just the "Schema" section)
-wc -l GLOSSARY.md                       # ~28 lines (stub size)
+python3 -c "
+import re
+with open('GLOSSARY.md') as f: g = f.read()
+with open('stocktake/reports/cad-lean.md') as f: c = f.read()
+b = re.search(r'## 5\..*?(?=## 6\.)', c, re.S).group(0)
+files = set(re.findall(r'\`([A-Z][a-zA-Z]*/[A-Z][a-zA-Z]*\.lean)\`', b))
+print('Covered:', len({f for f in files if f in g}), '/', len(files))
+"
+# Expected: 23 / 23
 ```
 
-If GLOSSARY has substantive content already, read it before adding more (you'd be building on prior work).
+If any of these don't match, stop and check the recent commits.
 
 ---
 
 ## What NOT to do this session
 
-- **Do not import any content from `microscopic-mobile-anyons/` or `cft-anyons-deprecated/` yet.** All imports are scheduled for Phase 2 onward in the migration plan; importing now would bypass GLOSSARY/CONVENTIONS locking and is the dominant risk-of-drift the project is designed to prevent.
-- **Do not read `archive/chats/chat*.md`** unless explicitly asked. They are superseded source transcripts and contain definitions `summary.tex` has already reconciled. Reading them risks re-importing dropped notation.
-- **Do not edit `summary.tex` outside of an `ERRATA.md`-tracked atomic commit.** The 4 hostile review files at `reviews/` flagged ~25 issues; only the unanimous `lem:binary-Z` bug is scheduled for Phase 1.2 fixing. Others come later.
-- **Do not fix LB-1 (MMA enumerate_fusion_trees bug) yet.** It is blocked by Phase 8 (MMA migration). Fixing it before MMA Julia is imported into the canonical repo would create cross-repo edits.
-- **Do not add `.github/workflows/`** — no GitHub CI is project policy (CLAUDE.md Rule 9; PRD Scope: out).
+- **Do not import content from `microscopic-mobile-anyons/` or `cft-anyons-deprecated/`.** All imports remain scheduled for Phase 2+ in the migration plan; importing now bypasses the GLOSSARY/CONVENTIONS gates this session locked.
+- **Do not read `archive/chats/chat*.md`** unless explicitly asked. (Deep storage; superseded.)
+- **Do not edit `summary.tex` outside of an ERRATA-tracked atomic commit.** ERRATA now has one real entry (P1.2's `lem:binary-Z` audit-trail); follow that template for any future entry.
+- **Do not fix LB-1** (`cft-anyons-q6h`). Blocked on Phase 8.
+- **Do not add `.github/workflows/`** — no GitHub CI is project policy.
+- **Do not push.** No git remote configured. Mention to the user at session end (manual push only when a remote is wired up).
 
 ---
 
@@ -153,40 +163,53 @@ If GLOSSARY has substantive content already, read it before adding more (you'd b
 |---|---|
 | `PRD.md` | Entry point — read first |
 | `CLAUDE.md` = `AGENTS.md` | Methodology + 11 Rules + hallucination-risk callouts |
-| `GLOSSARY.md` | Canonical definitions — currently a stub; you populate it in Phase 1 |
-| `CONVENTIONS.md` | Notational/gauge/indexing choices — currently a stub; populated at P1.6 |
-| `summary.tex` | Guiding conceptual mathematical statement (2483 lines, canonical, edit-via-ERRATA only) |
-| `ERRATA.md` | Append-only log of `summary.tex` corrections |
-| `RESEARCH_NOTES.md` | Open questions, acquisition queue, **latent bugs (LB-N)** |
-| `PROVENANCE.md` | What came from where, with hashes |
-| `MIGRATION_LOG.md` | Per-step commit log |
-| `CITATION_INDEX.md` | `summary.tex` citations → discharge status |
-| `README.md` | Directory map + "Read PRD.md first" |
-| `stocktake/README.md` | Inheritance picture from 3 source projects |
-| `stocktake/MIGRATION_PLAN.md` | The phased plan (12 phases; you are at start of Phase 1) |
-| `stocktake/reports/opus-hilbert-bridge.md` | **THE critical de-risking artifact** — Hilbert-space three-framings reconciliation. Read before any Phase 1 GLOSSARY work touching the Hilbert space definition. |
-| `stocktake/reports/opus-prd-v0-review.md`, `opus-prd-v0.1-review.md` | PRD's hostile review trail |
-| `stocktake/reports/{mma-*,cad-*}.md` | Per-slice inventory reports from the original 7-agent stocktake |
+| `GLOSSARY.md` | **49 entries now populated.** §A: 48 verbatim from `summary.tex`; §B: 1 (`def:mobile-Fock`) from outside. All CAD bullets populated; many MMA bullets still "TBD pending P1.8". Schema documented in lines 47–98. |
+| `CONVENTIONS.md` | **10 entries (a)–(j) populated.** (f) TikZ is deferred (no TikZ in `summary.tex` yet). All forward-pointers from GLOSSARY's `[P1.6(letter)]` tags resolve. |
+| `ERRATA.md` | 1 entry: `lem:binary-Z` audit-trail (no `summary.tex` edit in P1.2 — the fix was pre-baseline). |
+| `MIGRATION_LOG.md` | Per-step commit log. Phase 0 + P1.1–P1.7 + early P1.4 rows present. Row for "this commit" placeholder gets backfilled by the next commit. |
+| `summary.tex` | Canonical mathematical statement — **unchanged this session**. Build artifacts (`summary.aux`, `summary.log`, `summary.pdf`, `summary.toc`, `summary.out`) are gitignored. |
+| `stocktake/MIGRATION_PLAN.md` | The phased plan. Phase 1 lines 117–139. **You are at the start of P1.8.** |
+| `stocktake/reports/opus-hilbert-bridge.md` | **Authoritative source** for the three Hilbert-space framings + translation maps + 7 conventions. Sourced by P1.3, P1.5, parts of P1.6, P1.7. |
+| `stocktake/reports/cad-lean.md` | **Authoritative source** for P1.7. §5 has the per-file mapping. |
+| `stocktake/reports/mma-julia.md` | **Authoritative source for P1.8.** §5 has the MMA-Julia ↔ summary.tex per-struct mapping. Start there. |
+| `stocktake/reports/opus-glossary-p1.1-review.md` etc. | 6 review reports (P1.1, P1.2, P1.3, P1.5, P1.6, P1.7). Each Phase-1 step's hostile-review verdict + minor-edit recipe. |
+| `reviews/review_{1-4}.md` | 4 hostile audits of `summary.tex` from the prior session. P1.2 discharged the unanimous `lem:binary-Z` finding; other findings remain for later phases. |
+| `.beads/issues.jsonl` | bd JSONL snapshot. Updated before every session-ending commit per CLAUDE.md cross-device sync rule. |
 
 ---
 
 ## If you only have 5 minutes
 
-Read PRD.md sections "Mission" and "Read order". Then `bd ready`. Then `bd show cft-anyons-k3s`. Then read CLAUDE.md Rules 4, 5, and 10. That's enough to know what kind of project this is and what's allowed.
+Read PRD.md sections "Mission" and "Read order". Then `bd show cft-anyons-k3s`. Then **read `stocktake/reports/mma-julia.md` §5** (per-file Julia struct ↔ summary.tex mapping). Then file `bd create --title="P1.8: MMA-Julia translation maps in GLOSSARY" --type=task --priority=1 --parent=cft-anyons-k3s` and `bd update <id> --claim`. The work is symmetric to the P1.7 commit `d8c0a40` (just MMA instead of CAD); look at that commit's diff for the pattern.
 
-If you have an hour, also read `stocktake/reports/opus-hilbert-bridge.md` — it'll save you (or the user) from re-deriving the Hilbert-space bridge in any GLOSSARY entry.
+---
+
+## Pattern for the next P-step (templated from this session)
+
+For any P1.X (and later):
+
+1. **Read MIGRATION_PLAN's P1.X row** for the exact scope + validation gates.
+2. **Read the authoritative source** named in the plan (e.g., `stocktake/reports/mma-julia.md` §5 for P1.8).
+3. **`bd create --title="P1.X: ..." --type=task --priority=1 --parent=cft-anyons-k3s`** then `bd update <id> --claim`.
+4. **Do the work.** Edit GLOSSARY/CONVENTIONS/ERRATA/PROVENANCE etc. as needed. Bulk edits → Python-script-then-Write (see P1.7); individual edits → Edit.
+5. **Run mechanical/D-gates.** A typical D-gate replay script is in any of the recent review reports. The §A canonical-bodies-byte-verbatim check is the load-bearing invariant.
+6. **Spawn an Opus 4.7 reviewer subagent** (`general-purpose`, model `opus`). Give it the focus-areas list scoped to your step's deliverables. Reviewer reports go to `stocktake/reports/opus-<topic>-p1.X-review.md`.
+7. **Apply the reviewer's minor edits.** Re-run gates.
+8. **`bd close cft-anyons-k3s.<N> --reason="..."`** with the verdict summary. **`bd update cft-anyons-k3s --status open`** to reopen the auto-closed epic. **`bd export -o .beads/issues.jsonl`**.
+9. **Add MIGRATION_LOG row in the same atomic commit** (with the `(this)` placeholder for the not-yet-computed commit hash). Update the *previous* row's `(this)` to its actual commit hash.
+10. **Atomic commit** with the full provenance footer from CLAUDE.md `§ Commit discipline`. `Review:` line per Rule 4. `Co-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>`.
+11. **Verify clean tree + green gates.** Push is manual (no remote); mention to user at session end.
 
 ---
 
 ## Session close protocol (re-stated from CLAUDE.md)
 
-When you end your session, this file should be **rewritten** (not appended) with your session's state. Old content goes into git history. Then:
+When you end your session:
 
-```bash
-bd export -o .beads/issues.jsonl
-git add -A
-git commit -m "<your final session commit>"
-git push  # if a remote is configured
-```
+1. Run the gates that apply to what you touched (`pdflatex` if you touched `summary.tex`; `lake build` if you touched `Formalisation/`; etc.).
+2. Close finished `bd` issues; reopen the epic if auto-closed.
+3. `bd export -o .beads/issues.jsonl`.
+4. **Rewrite this file (HANDOFF.md)** with the new session-end state. Old content goes into git history; don't preserve it in-file.
+5. Commit. (Push manual — no remote.)
 
-The push step is currently **manual** (no remote configured yet). Mention this to the user when you finish.
+The push step is currently manual (no remote). Mention this to the user when you finish.
