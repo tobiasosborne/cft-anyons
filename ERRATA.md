@@ -511,3 +511,196 @@ described above; the inline `\unchecked` macro is replaced by the verified
   + MIGRATION_LOG updates land in the same atomic commit.
 
 **Commit:** (filled below after commit lands)
+
+---
+
+## 2026-05-16: P3.2.b — discharge `feiguin-golden-chain` `\unchecked` flag → `\cite{SRC-GOLDEN-CHAIN}` (1 site)
+
+**summary.tex location:** §"External references mentioned (all unchecked)"
+(`summary.tex:2477`), the "Feiguin et al. (2007) and follow-ups: ..." entry
+of the canonical enumeration at lines 2458--2481. One per-item `\unchecked`
+macro discharged to `\cite{SRC-GOLDEN-CHAIN}`. Diff = 1 deletion, 1
+insertion, perfectly balanced.
+
+**Before** (`summary.tex` at commit `3403ca5`, the post-P3.2.a baseline):
+
+Line 2475--2477 — inside the "External references mentioned (all
+unchecked)" itemize:
+```latex
+\item Feiguin et al.\ (2007) and follow-ups: golden-chain Fibonacci
+      antiferromagnetic continuum at tricritical Ising $M(4,5)$, $c = 7/10$
+      (chat~2 §1, Warning~\ref{warn:fibCFTs}).\unchecked
+```
+
+**After** (this commit):
+
+Line 2477:
+```latex
+      (chat~2 §1, Warning~\ref{warn:fibCFTs}).\cite{SRC-GOLDEN-CHAIN}
+```
+
+All other characters of `summary.tex` are unchanged.
+
+**Discrepancy with CITATION_INDEX.md / orchestrator briefing (1 vs 4
+sites):**
+
+The pre-existing `CITATION_INDEX.md` (built by P2.8 via
+`scripts/build-citation-index.py`) lists the `feiguin-golden-chain`
+atom's `summary.tex` locations as **lines 1860, 2274, 2444, 2475** (4
+sites). However, as previously documented in the P3.2.a ERRATA entry (and
+the known build-citation-index.py bug `cft-anyons-umx`), those line
+numbers are **author-name / keyword occurrence lines** (where the
+script's golden-chain / Feiguin / tricritical / M(4,5) / c=7/10 pattern
+matches), not `\unchecked` macro lines. Inspection of the file at this
+commit shows:
+
+- Line 1860 ("antiferromagnetic Fibonacci ``golden chain''") → inside `\begin{warning}[Two distinct CFTs called ``Fibonacci'']` (lines 1855--1869). **No per-item `\unchecked`** at this line. The only `\unchecked` macro in this warning environment is at line 1866, attached to the chiral-$(G_2)_1$-convention sentence ("Calculations in this document use the chiral $(G_2)_1$ convention $h_\tau=2/5$ ... following Chat~2's stated choice."), which is the `g2-1-chiral-cft` citation atom (confirmed by `CITATION_INDEX.md` line 46 which lists lines `1858, 1865, 1867, 1888, ...` against `g2-1-chiral-cft`). Out of scope for P3.2.b (atom `g2-1-chiral-cft` is `undischarged` per `CITATION_INDEX.md`; no local PDF; deferred to P3.3 with `RESEARCH_NOTES.md` acquisition pointer).
+- Line 2274 ("(the antiferromagnetic golden chain) flows to tricritical Ising") → inside the `\begin{itemize}` (lines 2255--2276) of "Cross-chat differences requiring user adjudication". **No per-item `\unchecked`** at this line; the surrounding itemize carries no per-item `\unchecked` macros and is governed by the blanket `\unchecked` declaration on line 2437. Out of scope (covered by blanket; separate discharge target).
+- Line 2444 ("whether the Fibonacci antiferromagnetic chain (golden chain) has tricritical Ising $M(4,5)$ continuum;") → item (2) of the `\begin{enumerate}` at lines 2441--2456 inside `\section*{Reference status}`. **No per-item `\unchecked`** at this line; the entire enumerate is covered by the blanket declaration on line 2437, identical to the P3.2.a discrepancy at line 2446 for `osborne-stottmeister`. Out of scope (separate discharge target).
+- Line 2475 ("Feiguin et al.\ (2007) and follow-ups: golden-chain Fibonacci") → opens the `\item` whose per-item `\unchecked` macro is at line 2477 (the discharge target).
+
+The blanket-declaration `\unchecked` on line 2437 is a single text-mode
+macro instance (not per-citation-atom) — it would need a different
+discharge strategy (e.g., update the wording to enumerate the
+now-discharged atoms) and remains out of scope (parallel to P3.2.a's
+treatment of the line-2446 case). The structural distinction matches
+`scripts/build-citation-index.py:336--368` (`harvest_atom_backrefs`
+uses author-name / keyword matching, not `\unchecked` proximity); the
+field name `summary.tex location(s)` in CITATION_INDEX records "the
+lines where the atom is referenced", not "the lines where a discharge
+target exists". The CITATION_INDEX schema-clarity follow-up filed at
+P3.2.a (piggybacking on the existing P2.7 / P3.0 doc-sync queue)
+covers this case too.
+
+**Editorial-choice justification** (single-cite, not multi-cite; load-bearing
+C-gate evidence: `summary.tex` statement + a PDF excerpt from the cited
+SRC-GOLDEN-CHAIN PDF; ≥ 2-source agreement per CLAUDE.md Rule 5):
+
+The 1 site asserts: **Feiguin et al. (2007) (and follow-ups by the
+same author group) identified the antiferromagnetic Fibonacci golden
+chain as having a continuum limit at the tricritical Ising minimal
+model $M(4, 5)$ with central charge $c = 7/10$.** Per CLAUDE.md Rule 5
+(≥ 2 source agreement) and the C-gate of MIGRATION_PLAN.md:172, the
+single `\cite{SRC-GOLDEN-CHAIN}` macro is the cleanest discharge —
+this atom has only one local PDF (`references/GoldenChainFeiguinEtAl.pdf`,
+the 2007 PRL paper itself), and the literature DB cross-reference
+`Trebst2008` (id=36) is a follow-up review that summarises and extends
+the same result without locally-available full text. Multi-cite would
+require either acquiring the Trebst 2008 follow-up PDF (not in P2
+scope) or fabricating a SRC-* key for it (forbidden by Rule 7); the
+single SRC-GOLDEN-CHAIN cite covers the explicit attribution in the
+discharged sentence:
+
+- **`SRC-GOLDEN-CHAIN`** (Feiguin, Trebst, Ludwig, Troyer, Kitaev,
+  Wang, Freedman 2007, arXiv:cond-mat/0612341, PRL 98:160409) —
+  **primary citation: the golden-chain → tricritical Ising $M(4,5)$,
+  $c = 7/10$ result itself.** PDF excerpt
+  (`references/text/GoldenChainFeiguinEtAl.txt:21--27`, abstract
+  verbatim):
+  > *"We discuss generalizations of quantum spin Hamiltonians using
+  > anyonic degrees of freedom. The simplest model for interacting
+  > anyons energetically favors neighboring anyons to fuse into the
+  > trivial (`identity') channel, similar to the quantum Heisenberg
+  > model favoring neighboring spins to form spin singlets. **Numerical
+  > simulations of a chain of Fibonacci anyons show that the model is
+  > critical with a dynamical critical exponent $z = 1$, and described
+  > by a two-dimensional (2D) conformal field theory with central
+  > charge $c = 7/10$**. **An exact mapping of the anyonic chain onto
+  > the 2D tricritical Ising model is given using the
+  > restricted-solid-on-solid (RSOS) representation of the
+  > Temperley-Lieb algebra.** The gaplessness of the chain is shown
+  > to have topological origin."*
+
+  Three of the four content-bearing phrases in the `summary.tex`
+  attribution are verbatim from the PDF abstract: (1) "golden chain" =
+  the paper's title (`references/text/GoldenChainFeiguinEtAl.txt:1`:
+  *"Interacting anyons in topological quantum liquids: The golden
+  chain"*); (2) "tricritical Ising" = abstract sentence 4 (line :26);
+  (3) "$c = 7/10$" = abstract sentence 3 (line :25). The
+  fourth phrase, "$M(4,5)$" (the Friedan--Qiu--Shenker unitary minimal
+  series notation for tricritical Ising), is the standard CFT-literature
+  name for the tricritical Ising model that the paper's abstract identifies
+  in plain words; the identification $M(4,5) =$ tricritical Ising is
+  textbook (CFT [DiFrancesco--Mathieu--Sénéchal] Ch. 7, and pre-dates
+  the cited paper). The "antiferromagnetic" qualifier corresponds to the
+  abstract's "energetically favors neighboring anyons to fuse into the
+  trivial channel" (line :22) — antiferromagnetic in the sense of the
+  spin-singlet analogy made explicit in the next sentence (line :23,
+  "the quantum Heisenberg model favoring neighboring spins to form spin
+  singlets").
+
+The single-cite is the cleanest discharge: the one SRC-* covers the
+entire claim of the discharged sentence verbatim from the PDF abstract,
+and the C-gate threshold is met without recourse to additional sources
+(summary.tex + PDF = 2 sources, both agreeing on the cited result).
+
+**Source of correction:** N/A — this is the **discharge of an inherited
+`\unchecked` flag**, not a correction to a previously-asserted claim.
+The `summary.tex` surrounding mathematical wording is unchanged. The
+attribution `Feiguin et al. (2007) and follow-ups: golden-chain
+Fibonacci antiferromagnetic continuum at tricritical Ising $M(4,5)$,
+$c = 7/10$` is verified against the PDF abstract as described above;
+the inline `\unchecked` macro is replaced by the verified `\cite{...}`.
+Per `bd` `cft-anyons-rpf` and orchestrator briefing.
+
+**Validation:**
+
+- **M** (mechanical): `pdflatex -interaction=nonstopmode -halt-on-error
+  -draftmode summary.tex` two-pass succeeds (rc=0 on both passes).
+  Steady-state (3-pass; both pre-edit baseline at commit `3403ca5` and
+  post-edit converge identically to steady state in 3 passes — the
+  added `\cite{...}` perturbs the `.aux` cross-reference table the
+  same way the P3.2.a edits did): log lines 1009 → 1009 (unchanged);
+  Warning count 39 → 39 (unchanged); Underfull count 10 → 10
+  (unchanged); Overfull count 8 → 8 (unchanged); `Undefined`-class
+  messages 0; `No \bibitem`-class messages 0; `Label(s) may have
+  changed` warnings 0 at steady state. Page count: 33 (unchanged).
+  Normalised log diff (timestamp + checksum + run-time normalised):
+  exactly 1 line of difference, "619 PDF objects out of 1000" → "620
+  PDF objects out of 1000" (+1 PDF object reflecting the new
+  `\cite{...}` hyperlink target, as expected).
+- **D** (definitional): `git diff summary.tex` shows exactly 1 deletion
+  and 1 insertion (verified by `git diff summary.tex | grep -c '^+[^+]'
+  == 1` and the symmetric deletion count). The deleted line is a
+  `summary.tex` `\unchecked` macro occurrence; the inserted line is
+  the same line with `\unchecked` replaced by `\cite{SRC-GOLDEN-CHAIN}`.
+  No other lines of `summary.tex` are modified. No GLOSSARY-defined
+  term is added or altered; the surrounding mathematical content (the
+  "External references mentioned" itemize and adjacent items for
+  Pasquier, Huse, FRS, Feiguin, "Anyonic MERA literature", String-net)
+  is byte-verbatim outside the 1 inline-macro replacement.
+- **C** (cross-reference, ≥ 2 source agreement): for the 1 discharged
+  site, the PDF excerpt above (from
+  `references/text/GoldenChainFeiguinEtAl.txt:21--27`, the paper's
+  abstract verbatim) confirms the cited result (golden-chain critical
+  with $c = 7/10$; mapping to 2D tricritical Ising). C-gate sources:
+  (1) the `summary.tex` statement itself (the named attribution); (2)
+  the SRC-GOLDEN-CHAIN PDF abstract. ≥ 2 sources agree (summary.tex +
+  PDF abstract). Three of the four content-bearing phrases of the
+  attribution are verbatim from the PDF; the fourth phrase ("$M(4,5)$")
+  is the textbook-standard name for the tricritical Ising model the
+  abstract identifies in plain words, with the identification predating
+  the cited paper. (Trebst 2008 follow-up at literature DB id=36 is a
+  third potential source per `CITATION_INDEX.md` cross-references but
+  is not locally available as a PDF in P2; not used for this discharge.)
+- **R** (review): Core-tier per CLAUDE.md Rule 4 (substantive
+  `summary.tex` content change discharging a `\unchecked` flag + adding
+  a citation). Hostile Opus reviewer subagent post-commit per
+  orchestrator policy. Reviewer should verify: (i) the 1 site
+  identification matches the 1 actual `\unchecked` macro in
+  summary.tex associated with the Feiguin et al. canonical-enumeration
+  entry at lines 2475--2477; (ii) the single-cite editorial choice (vs
+  multi-cite) is justified by the SRC-GOLDEN-CHAIN PDF directly
+  asserting all 4 content-bearing phrases of the attribution; (iii) the
+  C-gate PDF excerpt genuinely supports the cited claim; (iv) the
+  line-1860 / line-2274 / line-2444 omissions are correct (those are
+  author-name / keyword occurrences with no per-item `\unchecked` to
+  discharge — line 1860 is inside `warn:fibCFTs` whose `\unchecked`
+  on line 1866 belongs to atom `g2-1-chiral-cft`; lines 2274 and 2444
+  are inside itemize / enumerate blocks covered by the blanket
+  `\unchecked` declaration on line 2437); (v) the diff is exactly 1
+  deletion + 1 insertion; (vi) `pdflatex` builds clean.
+- **I** (integration): Two-pass `pdflatex` build is reproducible; ERRATA
+  + MIGRATION_LOG updates land in the same atomic commit.
+
+**Commit:** (filled below after commit lands)
