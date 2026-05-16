@@ -16,44 +16,67 @@ TRIGGER: Any new term encountered in any addition; any aliased term in
 
 ## Status
 
-**P1.1:** populated by mechanical extraction of every `\begin{definition}`
-and `\begin{convention}` in `summary.tex` (4 conv + 44 def = 48
-entries). "Canonical" payloads are copied **verbatim** (full environment,
-from `\begin{...}` through `\end{...}`) inside ```latex code fences to
-preserve LaTeX syntax exactly. "Source" gives the `\begin{...}` line in
-`summary.tex`.
+**P1.1** (`8640f1e`): populated by mechanical extraction of every
+`\begin{definition}` and `\begin{convention}` in `summary.tex` (4 conv +
+44 def = 48 entries). "Canonical" payloads copied **verbatim** (full
+environment, from `\begin{...}` through `\end{...}`) inside ```latex
+code fences to preserve LaTeX syntax exactly. "Source" gives the
+`\begin{...}` line in `summary.tex`.
 
-**P1.2:** ERRATA entry for the `lem:binary-Z` amplitudes-vs-probabilities
-bug (no `summary.tex` edit — the `\sqrt{}` fix was pre-baseline; see
-`ERRATA.md`). No GLOSSARY change.
+**P1.2** (`0e4592a`): ERRATA entry for the `lem:binary-Z`
+amplitudes-vs-probabilities bug (no `summary.tex` edit — the `\sqrt{}`
+fix was pre-baseline; see `ERRATA.md`). No GLOSSARY change.
 
-**P1.3 (this commit):** added one entry from **outside `summary.tex`**:
-`def:mobile-Fock`, the MMA Hilbert-space formulation, sourced from
-`stocktake/reports/opus-hilbert-bridge.md` (the in-repo authoritative
-description of MMA's framing; MMA itself imports in Phase 8). Declared
-the partition formulation [[def:HP]] as canonical (already so from P1.1;
-re-affirmed in the new entry's cross-references). Added cross-links in
-[[def:HP]], [[def:Hlatt]], [[def:indlim]] Notes so the four-way
-relationship is explicit. Translation-map fields stubbed "TBD pending
-P1.5" per the plan.
+**P1.3** (`99749cf`): added §B with one entry from **outside
+`summary.tex`** — `def:mobile-Fock`, the MMA Hilbert-space formulation,
+sourced from `stocktake/reports/opus-hilbert-bridge.md` (the in-repo
+authoritative description of MMA's framing; MMA itself imports in
+Phase 8). Declared the partition formulation [[def:HP]] as canonical
+and added cross-links in [[def:HP]], [[def:Hlatt]], [[def:indlim]]
+Notes so the four-way relationship is explicit. §A/§B split formalised.
 
-Remaining Phase 1 work that populates stub fields:
+**P1.5** (`40c0a22`): filled the four Hilbert-space Translation maps
+([[def:HP]], [[def:Hlatt]], [[def:indlim]], [[def:mobile-Fock]]) with
+explicit bidirectional bijections transcribed from bridge report
+§2.1–§2.3 (plus §5.1–§5.3 for the basis-vector-level Fibonacci worked
+example).
 
-- **P1.5:** write the explicit translation map (already de-risked: bridge
-  report §2 has constructive bijections in both directions for all three
-  formulations).
-- **P1.6:** new `CONVENTIONS.md` entries derived from but not literally
-  identical to `summary.tex` conventions (vacuum index, F-matrix gauge,
-  multiplicity-free assumption, fusion-tree ordering, `N=0` boundary,
-  etc.).
-- **P1.7:** CAD-Lean translation map (per-file mapping in
-  `stocktake/reports/cad-lean.md` §5).
-- **P1.8:** MMA-Julia translation map (per `stocktake/reports/mma-julia.md` §5).
-- **P1.9:** definitional-gate audit (Opus subagent reads this file
-  end-to-end and flags any undefined term or internal inconsistency).
+**P1.6** (`8226003`): `CONVENTIONS.md` populated with 10 lettered
+entries (a)–(j) — vacuum index, F-matrix gauge, dagger, multiplicity-free,
+complex conjugation, TikZ (deferred), particle-number disambiguation,
+local cell object Q choice, fusion-tree ordering, N=0 boundary.
+
+**P1.7** (`d8c0a40`): all 49 CAD-Lean Translation map bullets populated
+from `stocktake/reports/cad-lean.md` §5. ~21 substantive CAD mappings
+(file + struct + Phase 4–5 migration step), ~28 "not formalised in CAD"
+entries with §5 'Notable gaps' justifications. M-gate 23/23: every CAD
+`.lean` file in cad-lean.md §5 is referenced from a GLOSSARY entry.
+
+**P1.8** (`fe96ec7`): all 45 MMA Translation map bullets populated from
+`stocktake/reports/mma-julia.md` §5 (the four P1.5 entries already had
+MMA bullets). Plan-named primary targets: [[def:partition]] ←
+`LabelledConfig`, [[def:refmap]] ← `normalized_product_isometry`,
+[[def:TL-cat]] ← `interaction_hamiltonian`. Also: [[conv:basics]]
+`Aliases` updated from "TBD pending P1.8" to a substantive
+cross-reference list.
+
+**P1.9 (this commit):** definitional gate audit — Opus subagent read
+GLOSSARY + CONVENTIONS end-to-end. Verdict **APPROVE FOR PHASE 2**
+(zero CRITICAL, zero MAJOR, 8 MINOR/NIT findings). Report at
+`stocktake/reports/opus-glossary-audit.md`. Cleanups applied in this
+commit: this Status section refreshed; `CONVENTIONS.md` Status block
+refreshed; 7 future-tense forward-pointers to landed P1.5/P1.6 steps
+converted to past tense / `[P1.X(letter)]` anchors; CONVENTIONS (a)
+archive-path citation clarified; CONVENTIONS (a) Sweep status
+correctly distinguishes [[def:Q]] (generic) from CONVENTIONS (h)
+(canonical default Q_full).
+
+Remaining Phase 1 work: **P1.10** (`PROVENANCE.md` refresh from stub),
+**P1.11** (`PRD.md` v0 → v1 refresh with GLOSSARY/CONVENTIONS pointers
+internalised). Then Phase 1 closes and Phase 2 unblocks.
 
 Lemmas, propositions, theorems, corollaries, remarks, warnings, and
-examples in `summary.tex` are **not** in scope for P1.1 — only
+examples in `summary.tex` are **not** in scope — only
 `\begin{definition}` and `\begin{convention}` environments.
 
 ## Schema for each entry
@@ -140,8 +163,8 @@ extended in [[conv:1op]] (specifically for `A = \one\oplus p`). The
 "categorical unit object = vacuum simple" identification is load-bearing
 for the [[def:HP]] discussion; cf. the Hilbert-space deep-dive at
 `stocktake/reports/opus-hilbert-bridge.md` §4 on the `\one`/empty-configuration
-distinction. P1.6 will lift the F-matrix gauge and multiplicity-free
-assumption from implicit-here to declared `CONVENTIONS.md` items.
+distinction. The F-matrix gauge and multiplicity-free assumption are
+declared in `CONVENTIONS.md` per [P1.6(b)] and [P1.6(d)].
 
 ---
 
@@ -409,13 +432,13 @@ objects).
 distinct natural choices are catalogued in `summary.tex` Remark
 `rem:Q-choices` ($Q_{\mathrm{full}}$, $Q_{\mathrm{restr}}$,
 $Q^{\mathrm{geom}}_I$ (multiplicity-decorated), site-dependent $A_I$,
-coarse-grained $Q^{\otimes k}$); P1.6(h) will declare $Q_{\mathrm{full}}$
+coarse-grained $Q^{\otimes k}$); [P1.6(h)] declares $Q_{\mathrm{full}}$
 as the canonical default. The warning `warn:Q-not-canonical`
 (`summary.tex:254`) is the explicit guard against assuming $Q$ has any one
 form. **Separately note** the vacuum-index 0-vs-1 drift hazard from
 `CLAUDE.md` ("Vacuum-index convention" callout — three-way conflict
 between MMA's `hilbert_space.md:39` (0-indexed) and MMA's `config.jl:12`
-(1-indexed) was the STL-1 bug): P1.6(a) will lock the canonical choice
+(1-indexed) was the STL-1 bug): [P1.6(a)] locks the canonical choice
 in `CONVENTIONS.md`. See also [[def:Ageom]] for the geometry-enriched
 extension.
 
@@ -609,12 +632,12 @@ $A_I = Q$); and MMA's mobile-Fock formulation [[def:mobile-Fock]]
 every cell; mobile-Fock additionally sums over partition size $|P|$
 (running $0 \le |P| \le L$) and over total charge $c \in \Irr(\Cc)$).
 The continuum direct limit of this construction is [[def:indlim]].
-[[def:Ageom]] is the geometry-enriched extension. P1.5 will write the
-explicit translation map into the relevant entries. (Avoiding the
-notation "particle number $N$" here because P1.6(g) will lock $N$ to
-*tensor degree / lattice length / cell count* — `summary.tex`'s
-convention — whereas MMA uses $N$ for the non-vacuum-leg count;
-disambiguation pending.)
+[[def:Ageom]] is the geometry-enriched extension. The explicit
+translation map is written into the relevant entries above (per P1.5).
+(Avoiding the notation "particle number $N$" here because [P1.6(g)]
+locks $N$ to *tensor degree / lattice length / cell count* —
+`summary.tex`'s convention — whereas MMA uses $N$ for the
+non-vacuum-leg count.)
 
 ---
 
@@ -1325,7 +1348,7 @@ $x_N=c$, and $x_i\subset x_{i-1}\otimes\sigma$.
   - CAD: not formalised (per `stocktake/reports/cad-lean.md` §5 'Notable gaps: §8.2–8.4 (TL generators, dense Ising chain, Koo–Saleur): not formalised').
 **Notes:** Specific configuration of [[def:Hlatt]] in $\Ising$. The
 fusion-path basis is the left-associated multiplicity-free splitting tree
-([[def:splitbasis]]); P1.6(i) will lock this ordering as the canonical
+([[def:splitbasis]]); [P1.6(i)] locks this ordering as the canonical
 fusion-tree convention. Path-adjacency = $A_3$ Dynkin (Lemma
 `lem:path-adj`).
 
@@ -2038,9 +2061,9 @@ $N=0$ specialisation ($H_0^W = \delta_{W,1}\cdot\mathbb{C}$); see
 bridge report §3 ("Edge cases checked", first bullet), line 253.
 Partition formulation [[def:HP]] does
 **not** technically permit $|P| = 0$ (a partition covers `X`, requiring
-at least one cell). P1.6(j) will lift "empty partition / $N=0$
-boundary" to a CONVENTIONS entry so the three formulations agree at
-the absolute boundary.
+at least one cell). [P1.6(j)] declares the "empty partition / $N=0$
+boundary" convention so the three formulations agree at the absolute
+boundary.
 
 **LB-1 caveat (latent bug, blocked on Phase 8):** the MMA function
 `enumerate_fusion_trees` at

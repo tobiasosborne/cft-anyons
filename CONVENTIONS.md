@@ -15,7 +15,7 @@ TRIGGER: Any new representational choice; any imported content that uses
 
 ## Status
 
-**P1.6 (this commit):** 10 conventions declared per
+**P1.6** (`8226003`, 2026-05-16): 10 conventions declared per
 `MIGRATION_PLAN.md` P1.6 (the 6-item base plus 4 items
 (g)–(j) added by P1.4-early per
 `stocktake/reports/opus-hilbert-bridge.md` §4). Item (f) (TikZ macro
@@ -31,6 +31,17 @@ the invoker entries are `def:HP`, `def:Hlatt`, `def:indlim`,
 are declared but not currently invoked by a forward-pointer — they
 remain in scope for any new content that introduces dagger, complex
 conjugation, or TikZ.
+
+**P1.9 (this commit):** definitional gate audit (Opus 4.7 subagent)
+re-validated this file end-to-end; 7/7 invoked letter forward-pointers
+resolve to entries below; no internal inconsistencies. Two MINOR
+cleanups applied in this commit: (a) Reasoning + Translation rules
+clarified that `archive/mma-archive-v0-snapshot/` is a placeholder
+directory pending snapshot import (ground-truth file currently lives
+at `microscopic-mobile-anyons/archive/v0/docs/hilbert_space.md:39`);
+(a) Sweep status rephrased to distinguish [[def:Q]] (generic
+definition, any `Q∈C`) from CONVENTIONS (h) (canonical default
+`Q_full = ⊕_a a`). Report at `stocktake/reports/opus-glossary-audit.md`.
 
 ## Schema for each entry
 
@@ -73,8 +84,11 @@ Two compatible statements:
 
 **Reasoning:** matches `summary.tex` (which never indexes simples
 numerically — it uses the symbol `\one`) and MMA (which is 1-indexed).
-The three-way conflict between MMA-v0's 0-indexed
-`archive/mma-archive-v0-snapshot/.../hilbert_space.md:39` and
+The three-way conflict between MMA-v0's 0-indexed `hilbert_space.md:39`
+(ground-truth file currently at
+`microscopic-mobile-anyons/archive/v0/docs/hilbert_space.md:39`;
+scheduled for snapshot import into `archive/mma-archive-v0-snapshot/`,
+where the in-repo directory is presently a `.gitkeep` placeholder) and
 1-indexed `config.jl:12` was the historic **STL-1 bug** flagged in
 `CLAUDE.md`'s hallucination-risk callouts. Locking 1-indexed prevents
 re-introduction of the conflict.
@@ -87,7 +101,13 @@ item (a); `CLAUDE.md` § "Hallucination-risk callouts".
 - **MMA (current Julia):** 1-indexed; no translation needed.
 - **archive/mma-archive-v0-snapshot:** if reading those files for
   reference, **shift any 0-indexed simple reference by +1** to align.
-  These files are **read-only**; do not import directly.
+  These files are **read-only**; do not import directly. The in-repo
+  `archive/mma-archive-v0-snapshot/` directory is currently a
+  `.gitkeep` placeholder pending the deprecated-MMA snapshot import;
+  the ground-truth file is
+  `microscopic-mobile-anyons/archive/v0/docs/hilbert_space.md:39`.
+  [[def:Q]] Notes uses the bare `hilbert_space.md:39` shorthand for
+  the same file.
 - **CAD:** `LocalOccupationModel.vacuum : label` is unconstrained
   (`ProjectDefinitions.lean:3-13`); the canonical instance picks the
   first simple as the vacuum.
@@ -95,10 +115,14 @@ item (a); `CLAUDE.md` § "Hallucination-risk callouts".
 
 **Sweep status:** [[conv:basics]] declares the abstract `\one`
 notation; [[def:fuscat]] defines `1 ∈ Irr(C)` as the unit; [[def:Q]]
-uses `Q_full = ⊕_{a ∈ Irr(C)} a` (the enumeration is canonical
-1-indexed); [[def:mobile-Fock]] convention dep #1 references this
-explicitly. All four Hilbert-space Translation maps cite "vacuum at
-index 1 [P1.6(a)]".
+is the abstract definition (any object `Q∈C`) and **does not** itself
+fix the enumeration — CONVENTIONS (h) declares the canonical default
+`Q_full = ⊕_{a∈Irr(C)} a` with this 1-indexed enumeration, and
+[[def:HP]] / [[def:Hlatt]] / [[def:mobile-Fock]] all use that
+canonical default per their respective Translation maps;
+[[def:mobile-Fock]] convention dep #1 references the index-1
+convention explicitly. All four Hilbert-space Translation maps cite
+"vacuum at index 1 [P1.6(a)]".
 
 ---
 
