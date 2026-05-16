@@ -469,6 +469,160 @@ closes genuinely (not re-opened — last child landed).
 
 ---
 
+## Phase 5 imports — Lean fusion-category content (`Formalisation/{Foundations,Fibonacci,Ising}/`)
+
+Phase 5 ports the 15 fusion-category Lean files from
+`cft-anyons-deprecated/Formalisation/{Foundations,Fibonacci,Ising}/`
+into this repo's corresponding `Formalisation/` sub-directories:
+6 `Foundations/` files (P5.1–P5.6), 8 `Fibonacci/` files (P5.7–P5.14),
+and 1 `Ising/` file (P5.15). Same Mathlib pin
+`d6dab93da86c64219ab1497ffadce1a66aa04701` and toolchain
+`leanprover/lean4:v4.30.0-rc2` as Phase 4. Each per-file commit
+also appended one `import Formalisation.<subdir>.<file>` line to
+`Formalisation.lean` (which grew from the P4.14 close at 25 lines
+to 40 lines at P5.15 close).
+
+Each per-file commit (P5.1–P5.15) is a single-file atomic port
+with `lake build` green at the corresponding job count (8449 →
+8463 over the 15 commits), mutation-proof PASS, zero `sorry` /
+zero `axiom`, hostile Opus reviewer verdict PASS (with per-commit
+recommendations applied in-commit per CLAUDE.md Law 2), and an
+extended docstring containing GLOSSARY pre-binding citations
+(verbatim quotes from the relevant translation maps) plus per-decl
+correspondence audits. The body of every file is byte-for-byte
+verbatim from the source from `namespace CFTAnyons` to EOF, EXCEPT
+for the 4 decoupling-refactor ports P5.3/P5.4/P5.5/P5.6 (which
+DROPPED Fibonacci-specific second namespaces from CAD's
+`Foundations/` files; deferred decls tracked in `cft-anyons-5tm.3`)
+and the 5 reviewer-driven additive named-theorem ports P5.7/P5.8/
+P5.10/... (which ADDED named theorems honouring GLOSSARY
+pre-binding promise text literally; never modified existing CAD
+proofs or statements).
+
+**Source root:** `/home/tobiasosborne/Projects/cft-anyons-deprecated/Formalisation/{Foundations,Fibonacci,Ising}/`
+(15 `.lean` files; pre-existing in the source repo, no in-source
+edits performed in this consolidation).
+
+**Destination root:** `Formalisation/{Foundations,Fibonacci,Ising}/`
+in this repo (the `Fibonacci/` and `Ising/` sub-directories were
+newly created at P5.7 and P5.15 respectively; `Foundations/` was
+newly created at P5.1).
+
+**Per-file SHA256 table.** Source SHA256 = pre-existing source
+hash at port time; Destination SHA256 = post-port hash (differs
+from source by the docstring extension, plus the body changes
+noted above for refactor/reviewer-additive ports). All hashes
+recorded verbatim in each P5.X commit message at port time and
+re-verified in this commit (15/15 match for both source and
+destination).
+
+| P-step | File | Source SHA256 | Destination SHA256 | Commit |
+| --- | --- | --- | --- | --- |
+| P5.1  | `Foundations/SkeletalFusion.lean`       | `fc6428cea8aa6b325887f6264386bfa61009f4b4e5bb1a8cd5e9079851494b79` | `364cfbe634fd1713428d7ec3b5d307e8b721ad61ad66127031f6ba1c50f578b7` | `eb337ff` |
+| P5.2  | `Foundations/DirectSumCoordinates.lean` | `57393ff23e276cb89e45c5a462b1a96453ee825d4b06fb50f894028bd29394ee` | `e8603096ba732f9c0aba7464f02433d40ad651bd9cc09b09174df3fc965dcde3` | `8f3f1b2` |
+| P5.3  | `Foundations/Configurations.lean`       | `915878be0f0f5891b06e0820cfba93e38620c557604acef08f4383d7280a0d1b` | `2747e50de48d0cc71ed90bad61b7bacaaeddd059c2f38707aa028150745493cb` | `7601c78` |
+| P5.4  | `Foundations/ConfigurationSpace.lean`   | `9d979b292817da08b743ded868c88787c8cbb4a8719d52804364173d7ebcfd23` | `f3765245942d388a35c9254ed570b21e13679dd9df76f68846e872ec7ed3bd6e` | `a896156` |
+| P5.5  | `Foundations/FockSpace.lean`            | `6762d9f6c3aa28e9b69916e71f86a7450531fcd62be8a7a7660b30c9deb8ad67` | `9cf2f2b643835cf51e73a2247ec81e45ece9c0b25d3c9b2c8766954bf7b2c5f0` | `2706c88` |
+| P5.6  | `Foundations/ProjectDefinitions.lean`   | `bd8bcae29dc81371eb89c8a2f5901ce1d722aa4c12a9d77b684c47360de2dbaf` | `b5b14f14ac066678bb8b94fba20add646cef14f773efe16d5962ab2021033bc5` | `05516c1` |
+| P5.7  | `Fibonacci/Basic.lean`                  | `24fd79e3ffaef9c029dd161ccd94b39a3ff1351e4cafd50f1bed0e4c38bb3443` | `a444b4eb328806109ef01aa2f515439b138701e1b04b8dcc281865affa79e5d9` | `91db405` |
+| P5.8  | `Fibonacci/Matrix.lean`                 | `824e8563832b86747b58c2300c8b8c0ec8bdc5b2d6a2308f243e8933048e499d` | `36b25deb800e3bc2b0a43aadfab569b22d6263d053ddb42b6809c4f0b3e46720` | `4ae7c8f` |
+| P5.9  | `Fibonacci/FusionRules.lean`            | `667e41f1fb7b64246237198b927eee0b77a19764abb13dc5c142d19b169fbfc9` | `d6b2e19880103b444b6d823303365331b232e13711211efac1e6e8a79b849fac` | `f9c8b3e` |
+| P5.10 | `Fibonacci/Binary.lean`                 | `1663a7565b32f1f226257cf34ced4b14edc14e4f4a741c59f3979a70d387eba2` | `3f924ee15b76750a4188dad30e02a659cb753552c785ea266852dd44c3f87b50` | `483bcd8` |
+| P5.11 | `Fibonacci/Coassoc.lean`                | `79d2e6f323a162ce9bcbd77b37b94f9a406e8c11a02da201d6769e0ca4f14a1b` | `0c76c2f397a4592ee599eb0be839b0b7581fa72741612911a8fb2a8788da8849` | `9a17b02` |
+| P5.12 | `Fibonacci/CFTWeights.lean`             | `af8dfbf51b950def1c1fdbb4b20e59bb7ec54c66a68cb1a41a5ebb8fc1df6e9f` | `25263aeb1d7f95c7f1f6d96ff093c1f126424f2669a403ec72c039eced6ae22c` | `79baabd` |
+| P5.13 | `Fibonacci/BraidMatrices.lean`          | `f21e57d7d407ca6b2076e743637829aded333222235f02dd6527c5fdce4bf890` | `c848b9a7aaf8cfaf9e7c5cb55392e5bee0c97fbcf79acd1e43971a0c8ea0610a` | `461e033` |
+| P5.14 | `Fibonacci/RGNoMixing.lean`             | `57b4f90419ce74cb575a15fe0fd8bcbebbbd5832484f0cd4c30890b816e9acd1` | `39f278a84469d18ddff62ba00dc86bfa13fcd1c81f161f705b6fb43fa8422dd7` | `0e1372d` |
+| P5.15 | `Ising/Basic.lean`                      | `a8c43300f9da46f548981ae042ebcff8e360b9dfcee05ae3372ea11e9c0486cb` | `4e0b1b5211c57e134afead5618671b26f9bfca1663c4c4774d20316e3cda93b4` | `90b6b39` |
+
+**Harmonisation applied per file.** Five distinct patterns:
+
+(i) *Verbatim port + docstring extension* (P5.1, P5.2, P5.7, P5.8,
+P5.9, P5.10, P5.11, P5.12, P5.13, P5.14, P5.15): body byte-identical
+to CAD source; docstring extended with GLOSSARY pre-binding citations
+(verbatim translation-map quotes), per-decl correspondence, 2-way
+C-gate, Wolfram-leg deferral notes.
+
+(ii) *Decoupling refactor* (P5.3, P5.4, P5.5, P5.6): CAD's
+`Foundations/` files mixed generic and Fibonacci-specific namespaces;
+each refactor DROPPED the `Fibonacci*` namespace, deferring those
+declarations to `cft-anyons-5tm.3`. Body is byte-equivalent
+modulo the dropped block.
+
+(iii) *Reviewer-additive named theorems* (P5.7 + P5.8 + P5.10):
+hostile Opus reviewer (per `feedback_reviewer_deep_d_gate.md`)
+required additional named theorems to honour GLOSSARY pre-binding
+text literally (e.g., P5.7 added `two_phi_inv_sq_plus_phi_inv_cubed`
+for `lem:fib-arith` sub-claim D; P5.8 added 4 `FibF_entry_*` lemmas
++ `FibF_transpose`). These additions never modified existing CAD
+proofs.
+
+(iv) *Critical scope disambiguation* (P5.11): the file proves
+SCALAR coassociativity; the docstring explicitly disavows the
+CATEGORICAL equation `(η⊗id)η = (id⊗η)η` per CLAUDE.md
+hallucination-risk callout #3 (4× disavowal in docstring).
+
+(v) *Decision step with deferral* (P5.15): orchestrator chose
+option (b) per MIGRATION_PLAN.md §P5.15 — port verbatim, defer
+the `isingSkeletalFusionData` FiniteSkeletalFusionData connection
+to follow-up `cft-anyons-5tm.25` (documented in
+RESEARCH_NOTES.md DD-1).
+
+**Validation passed per port.** M (lake build green at the
+expected job count), D (GLOSSARY pre-bindings honoured per-promise;
+hostile Opus reviewer's deep D-gate audit cleared), C (2-way
+C-gate Lean ↔ summary.tex executed in docstring per-sub-claim;
+3-way Wolfram leg deferred to Phase 6 via 9 bd follow-ups —
+cft-anyons-5tm.9, .11, .13, .15, .17, .19, .21, .23, .26),
+I (zero sorry / zero axiom load-bearing invariant). R-gate
+exercised explicitly for P5.1 (R required per plan) and P5.11
+(R-tier per plan); other ports exercised R-gate implicitly via
+the per-commit hostile reviewer.
+
+**Mutation-proof per port.** Each P5.X commit demonstrates that
+the lake build catches semantic edits (typical mutation: perturb
+an equational-RHS or a fusion-multiplicity entry → FAIL with a
+specific named-decl diagnostic; restore → PASS). Mutations were
+NOT committed. Notable: P5.10's mutation specifically tested the
+amplitude-vs-squared-amplitude bug pattern (perturbing
+`pfAmplitude_one_tau_tau`'s sqrt collapse → 2 cascading errors),
+honouring CLAUDE.md Rule 2 and ERRATA.md 2026-05-16.
+
+**Sorry/axiom invariant per port.**
+`grep -nE '\bsorry\b|\baxiom\b' Formalisation/{Foundations,Fibonacci,Ising}/<file>.lean`
+returns empty for every file (load-bearing invariant per CLAUDE.md
+hallucination-risk callout).
+
+**Verifier (re-runnable).** All 30 hashes above are computable
+from the working tree at this commit:
+```bash
+for d in Foundations Fibonacci Ising; do
+  for f in /home/tobiasosborne/Projects/cft-anyons-deprecated/Formalisation/$d/*.lean; do
+    fn=$(basename "$f")
+    sha256sum "$f" "Formalisation/$d/$fn"
+  done
+done
+```
+(Source-path is the absolute path on the device where the ports
+were performed; destination hashes alone suffice for drift
+detection within this repo.)
+
+**Cross-validation at this commit (P5.16).** All 15 × 2 = 30
+SHA256s computed in this commit match the SHA256s recorded in the
+P5.1–P5.15 commit message bodies. Final lake build verified green
+at 8463 jobs.
+
+**Phase 5 close.** With P5.16 (this commit), all 16 P-step
+children of `bd cft-anyons-5tm` are closed (P5.1–P5.15 + P5.16);
+the Phase 5 epic remains OPEN until 9 Wolfram-followup bd issues
+(cft-anyons-5tm.{9,11,13,15,17,19,21,23,26}) + the deferred
+decls follow-up (cft-anyons-5tm.3 — 11 cumulative deferred decls
+from P5.3–P5.6 refactors) + the FiniteSkeletalFusionData connection
+(cft-anyons-5tm.25) are addressed. These follow-ups are Phase-6
+work; Phase 5's PRIMARY content scope (per-file ports + GLOSSARY
+pre-binding discharge + 2-way C-gates) is now complete.
+
+---
+
 ## Schema for each entry (future Phase 2+ imports)
 
 ```
