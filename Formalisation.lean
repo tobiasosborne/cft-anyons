@@ -9,3 +9,5 @@
 --
 -- Invariant (post-Phase 5): `lake build` passes; zero `sorry`;
 -- zero `axiom`.
+
+import Formalisation.LinearAlgebra.Isometry
