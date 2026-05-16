@@ -10,6 +10,7 @@
 -- Invariant (post-Phase 5): `lake build` passes; zero `sorry`;
 -- zero `axiom`.
 
+import Formalisation.Foundations.DirectSumCoordinates
 import Formalisation.Foundations.SkeletalFusion
 import Formalisation.LinearAlgebra.Isometry
 import Formalisation.LinearAlgebra.Polar
