@@ -31,6 +31,7 @@ src/MobileAnyons/            Julia computational backend
 tests/                       Julia tests
 scripts/julia/               Julia triple-check scripts
 scripts/wolfram/             Wolfram triple-check scripts
+scripts/lit/                 literature CLI (lit.py — SQLite-backed bibliography)
 results/CHECKS.md            triple-check command log
 
 references/                  local PDFs + SHA256 manifest
@@ -53,12 +54,14 @@ docs/                        long-form docs (af quickref, etc.)
 
 ## Status
 
-**v0, Phase 0 of MIGRATION_PLAN.md in progress.** See
-[`MIGRATION_LOG.md`](MIGRATION_LOG.md) for the per-step log and
+**v1, Phase 1 (definitional bedrock) complete; Phase 2 (provenance
+infrastructure / validator imports) in progress.** See
+[`MIGRATION_LOG.md`](MIGRATION_LOG.md) for the per-step log,
+[`PRD.md`](PRD.md) for the version/phase line, and
 [`stocktake/README.md`](stocktake/README.md) for the inheritance
 picture from the three source projects.
 
 ## License
 
-[TBD by user — flag this in `RESEARCH_NOTES.md` if relevant before
-publication.]
+GNU Affero General Public License v3.0 (AGPLv3). See
+[`LICENSE`](LICENSE) for the full text.

@@ -268,6 +268,88 @@ these reports as authoritative.
 
 ---
 
+## Phase 2 imports
+
+Phase 2 imports the external validators (PDFs, bibliography, hostile
+reviews) before any new mathematical content. Each artifact below has
+its source path, import commit, verifier script, and hashes recorded
+here so future agents can detect drift cheaply (without re-running the
+full P2.2 / P2.4 imports).
+
+### `references/` (P2.1, P2.2)
+
+Bulk-imported in P2.1 (`a9a3095`) from
+`/home/tobiasosborne/Projects/cft-anyons-deprecated/references/` via
+`cp -a` (38 files, 28M; `diff -rq` zero divergence vs source at
+import). SHA256-verified in P2.2 (`4b2147f`): 33/33 PASS (16 primary
+local sources + 17 extracted text files) against the per-file hashes
+in `references/manifest/SOURCES.md`. The per-file manifest is the
+authoritative record; this section is a pointer to it, not a
+duplication.
+
+- **Manifest (per-file SHA256 table):** `references/manifest/SOURCES.md`.
+- **Verifier script:** `scripts/check-references-sha256.py` —
+  re-runs the P2.2 verification (computes SHA256 for every primary
+  source + every extracted text, compares against the manifest, exits 0
+  on full PASS / 1 on any mismatch). NOTE: pre-existing path bug
+  (bd `cft-anyons-wfr`) — line 17 hard-codes `/home/tobias/Projects/cft-anyons`;
+  on devices with a different user-home prefix the script will not find
+  the manifest. Workaround until fixed: edit the path or run the
+  verification ad-hoc per `MIGRATION_LOG.md` P2.2 notes.
+- **Line-locator audit:** `scripts/check-references-line-locators.py`
+  scans canonical content for `references/text/<file>:<line>` citations
+  and reports per-locator PASS/FAIL/EMPTY. P2.3 (`f921991`) reports
+  0 locators in present canonical content (vacuous PASS); the gate
+  fires in earnest from Phase 3 onward.
+
+### `literature/` (P2.4, P2.5, P2.6, P2.7)
+
+Bulk-imported in P2.4 (`e975def`) from
+`/home/tobiasosborne/Projects/microscopic-mobile-anyons/literature/`
+via `cp -a` (`diff -rq` zero divergence vs source at import).
+
+- **Files under version control:** 387 (excludes the gitignored DB
+  stack — see next bullet).
+- **Total size of versioned content:** 107541244 bytes (~103 MiB).
+- **Roll-up SHA256 digest:**
+  `0861d623d0dca63c8f75e3fbabde8053a1077c180f3be6a2a32264c6c8809e22`.
+  Construction: enumerate every file under `literature/` excluding
+  the gitignored DB stack, sort lexicographically, SHA256 each file,
+  SHA256 the resulting `<hash>  <path>` lines. Reproducible at this
+  commit via `python3 scripts/check-literature-tree.py`.
+- **Verifier script:** `scripts/check-literature-tree.py` (new in
+  P2.7) — recomputes the roll-up digest from a portable repo root
+  (`Path(__file__).resolve().parents[1]`); excludes the gitignored DB
+  stack; prints per-file count + total size + roll-up digest; always
+  exits 0 (audit tool, not a gate). Drift detection: any change to a
+  versioned literature file changes the roll-up digest; future agents
+  compare against this PROVENANCE entry to spot drift.
+- **`literature/db/papers.sqlite`:** per-machine local cache
+  (gitignored per `.gitignore:61`); content varies by device and
+  curation epoch. **Source on this device (P2.5 transfer):**
+  `/home/tobiasosborne/Projects/microscopic-mobile-anyons/literature/db/papers.sqlite`,
+  SHA256
+  `8b6db8ff3a7dd4d5147ea6a8bc22fa6688cd12c2b8f0ed7a36bc752dcc2e6520`,
+  524288 bytes. **P2.5 verifier:** `scripts/check-literature-db.py`
+  (commit `36189d5`); `PRAGMA integrity_check` PASS; row counts
+  papers=630, citations=702, authors=29, paper_authors=31,
+  crawl_log=17, seeds=10, file_provenance=47 — all matching the
+  `literature/SYNTHESIS.md:20-21` baseline (630 papers, 702 citation
+  edges) verbatim.
+- **`scripts/lit/lit.py`:** literature CLI, ported in P2.6 (`2ecf220`)
+  from
+  `/home/tobiasosborne/Projects/microscopic-mobile-anyons/scripts/lit.py`
+  with a one-line `REPO_ROOT` adjustment
+  (`parent.parent` → `parents[2]`) for the extra `lit/` subdirectory
+  required by the plan's `scripts/lit/` target. Source SHA256
+  `a8105d2350499941d53804d48ed833608d8a225b3fb482c5e4d83be423ce3c2f`;
+  destination SHA256
+  `119c3f0f06b63fe343f647771cde9d1f147d96dd06f702c7e5376ee27600eaa5`.
+  Mutation-proven (revert REPO_ROOT → FAIL on `lit status`; restore →
+  PASS). Stdlib-only imports; no helper files copied.
+
+---
+
 ## Schema for each entry (future Phase 2+ imports)
 
 ```
