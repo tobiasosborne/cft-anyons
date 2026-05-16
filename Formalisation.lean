@@ -18,6 +18,7 @@ import Formalisation.Foundations.ProjectDefinitions
 import Formalisation.Foundations.SkeletalFusion
 import Formalisation.Fibonacci.Basic
 import Formalisation.Fibonacci.Binary
+import Formalisation.Fibonacci.CFTWeights
 import Formalisation.Fibonacci.Coassoc
 import Formalisation.Fibonacci.FusionRules
 import Formalisation.Fibonacci.Matrix
