@@ -30,7 +30,10 @@ TRIGGER: Every atomic migration step. Initialised retroactively for
 | P0.8     | 2026-05-16 | 3f2a25e  | Ship PRD.md v0 (post-2-round hostile review)        | M, D, C, R | Opus × 2 (APPROVE WITH MINOR EDITS conditional, condition met) | bundled named-file gate fix (N-C1) + new stop conditions + Mi10 summary.tex description harmonise |
 | P0.9     | 2026-05-16 | (folded into P0.8) | Hostile Opus reviews of PRD v0 (2 rounds) | R       | self     | reports in stocktake/reports/opus-prd-v0-review.md + opus-prd-v0.1-review.md |
 | P0.10    | 2026-05-16 | 5dd5381  | README.md as PRD pointer + final Phase 0 commit     | M, I       | mechanical (user-verbatim) | bd snapshot to JSONL + Phase 1 issue filed |
-| P1.4-early-A | 2026-05-16 | (this)   | Hilbert-space three-framings deep-dive (Opus): YELLOW verdict, canonical = partition | R | Opus | full report at stocktake/reports/opus-hilbert-bridge.md; verdict YELLOW (reconcilable with convention work, no plan revision needed); P1.5 stop condition does not trigger |
+| P1.4-early-A | 2026-05-16 | 770d730  | Hilbert-space three-framings deep-dive (Opus): YELLOW verdict, canonical = partition | R | Opus | full report at stocktake/reports/opus-hilbert-bridge.md; verdict YELLOW (reconcilable with convention work, no plan revision needed); P1.5 stop condition does not trigger |
+| P1.4-early-B | 2026-05-16 | 1008cd8  | File LB-1 (MMA enumerate_fusion_trees multiplicity bug) | M, I | mechanical | bd issue cft-anyons-q6h filed; RESEARCH_NOTES entry added; P8.4 TODO marker scheduled |
+| P1.4-early-C | 2026-05-16 | 93a2bea  | Incorporate Opus deep-dive findings into MIGRATION_PLAN | M, D | self | P1.6 expanded 6 → 10 convention items; P1.7/P8.1/P8.4 scope clarifications |
+| P1.1     | 2026-05-16 | 8640f1e  | Extract 48 def/conv entries from summary.tex into GLOSSARY.md (verbatim) | M, D, C, R, I | Opus (APPROVE WITH MINOR EDITS, all applied) | 4 conv + 44 def; schema enforced; cross-link graph closes; review at stocktake/reports/opus-glossary-p1.1-review.md; bd issue cft-anyons-k3s.1 closed; parent epic reopened (10 Phase-1 steps remain) |
 
 ## Corrections
 
