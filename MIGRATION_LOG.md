@@ -20,14 +20,14 @@ TRIGGER: Every atomic migration step. Initialised retroactively for
 | P0.1b    | 2026-05-16 | 36a730d  | bd init (embedded Dolt backend; per-machine local)  | M, I       | mechanical | auto-committed by bd init; modified CLAUDE/AGENTS/.gitignore |
 | P0.1c    | 2026-05-16 | cd6e108  | Reconcile CLAUDE/AGENTS beads section with actual backend | M, I       | mechanical | removed bd's auto-added duplicate sections; corrected backend description |
 | P0.2     | 2026-05-16 | 17706f4  | Directory skeleton with .gitkeep placeholders       | M, I       | mechanical | archive/, reviews/, references/, literature/, Formalisation/, scripts/{julia,wolfram}/, results/, src/, tests/, af/, docs/ |
-| P0.3     | 2026-05-16 | (this)   | Stub meta files (PRD/GLOSSARY/CONVENTIONS/ERRATA/RESEARCH_NOTES/PROVENANCE/CITATION_INDEX/MIGRATION_LOG) | M, I | mechanical | docstrings only; bodies populated in later phases |
-| P0.4     |            |          | Move chat1-4.md → archive/chats/                    |            |           |       |
-| P0.5     |            |          | Move review_*.md → reviews/                         |            |           |       |
-| P0.6     |            |          | (subsumed by P0.1 .gitignore already in place)      |            |           |       |
-| P0.7     |            |          | (this file)                                          |            |           |       |
-| P0.8     |            |          | Draft PRD.md v0                                      |            |           |       |
-| P0.9     |            |          | Hostile Opus review of PRD v0                        |            |           |       |
-| P0.10    |            |          | README.md as PRD pointer; final P0 commit            |            |           |       |
+| P0.3     | 2026-05-16 | ef57c17  | Stub meta files (PRD/GLOSSARY/CONVENTIONS/ERRATA/RESEARCH_NOTES/PROVENANCE/CITATION_INDEX/MIGRATION_LOG) | M, I | mechanical | docstrings only; bodies populated in later phases |
+| P0.4     | 2026-05-16 | 9dabdab  | Move chat1-4.md → archive/chats/ + add archive/README.md | M, I | mechanical | deep-storage warning README |
+| P0.5     | 2026-05-16 | 35d939b  | Move review_*.md → reviews/                         | M, I       | mechanical | reviews accessible (validators), not deep-storage |
+| P0.6     | —          | —        | SUBSUMED by P0.1 (.gitignore present from baseline) | —          | —         | see Deviations section |
+| P0.7     | 2026-05-16 | (this)   | Backfill P0.4/P0.5/P0.6 rows in MIGRATION_LOG       | M, I       | mechanical | log was initialised in P0.3; this catches up the table |
+| P0.8     |            |          | Draft PRD.md v0                                     |            |           |       |
+| P0.9     |            |          | Hostile Opus review of PRD v0                       |            |           |       |
+| P0.10    |            |          | README.md as PRD pointer; final P0 commit           |            |           |       |
 
 ## Corrections
 
