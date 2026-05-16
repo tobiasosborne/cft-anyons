@@ -1,0 +1,78 @@
+# ============================================================
+# .gitignore — cft-anyons canonical repo
+# ============================================================
+
+# ---------- LaTeX build artifacts ----------
+# Top-level build artifacts. Source .pdf files under references/pdfs/
+# are tracked (they are reference material, not build output).
+*.aux
+*.log
+*.out
+*.toc
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.synctex.gz
+*.synctex*
+*.nav
+*.snm
+*.vrb
+*.idx
+*.ilg
+*.ind
+*.lof
+*.lot
+*.run.xml
+*.bcf
+
+# Top-level summary.pdf is built artifact; regenerate with `pdflatex summary.tex`.
+# (PDFs under references/pdfs/ are source material — see negation below.)
+/summary.pdf
+
+# ---------- Lean ----------
+.lake/
+build/
+_build/
+.cache/
+
+# ---------- Julia ----------
+*.cov
+*.jl.cov
+*.jl.mem
+deps/build.log
+deps/deps.jl
+deps/usr/
+
+# ---------- Python (lit CLI, scripts) ----------
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+.python-version
+*.egg-info/
+
+# ---------- bd (beads) ----------
+# JSONL is authoritative + tracked; SQLite is local cache.
+.beads/beads.db
+.beads/beads.db-journal
+.beads/beads.db-wal
+.beads/beads.db-shm
+.beads/locks/
+.beads/bd.sock
+.beads/daemon.pid
+.beads/embeddeddolt/
+
+# ---------- Editor / OS ----------
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# ---------- Negations (track these despite patterns above) ----------
+# Reference PDFs are source, not build output.
+!references/pdfs/*.pdf
+!references/**/*.pdf

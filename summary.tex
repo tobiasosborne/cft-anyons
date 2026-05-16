@@ -1,0 +1,2483 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[margin=2.4cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+
+\hypersetup{colorlinks=true,linkcolor=blue!60!black,urlcolor=blue!60!black}
+
+\newtheorem{definition}{Definition}[section]
+\newtheorem{lemma}[definition]{Lemma}
+\newtheorem{proposition}[definition]{Proposition}
+\newtheorem{theorem}[definition]{Theorem}
+\newtheorem{corollary}[definition]{Corollary}
+\theoremstyle{definition}
+\newtheorem{remark}[definition]{Remark}
+\newtheorem{conjecture}[definition]{Conjecture}
+\newtheorem{convention}[definition]{Convention}
+\newtheorem{warning}[definition]{Warning}
+\newtheorem{example}[definition]{Example}
+
+\newcommand{\Cc}{\mathcal{C}}
+\newcommand{\Hh}{\mathcal{H}}
+\newcommand{\Aa}{\mathcal{A}}
+\newcommand{\Irr}{\mathrm{Irr}}
+\newcommand{\Hom}{\mathrm{Hom}}
+\newcommand{\End}{\mathrm{End}}
+\newcommand{\id}{\mathrm{id}}
+\newcommand{\Fib}{\mathrm{Fib}}
+\newcommand{\Ising}{\mathrm{Ising}}
+\newcommand{\Conf}{\mathrm{Conf}}
+\newcommand{\one}{\mathbf{1}}
+\newcommand{\vac}{\Omega}
+
+\newcommand{\unchecked}{\textsuperscript{\textcolor{red!70!black}{[unchecked, stage 2]}}}
+\newcommand{\flag}[1]{\textcolor{red!70!black}{[#1]}}
+
+\title{Categorical Fock spaces, refinement maps, and CFT data:\\
+a deduped reconstruction of four chat transcripts}
+\author{Reconstruction from chat1--chat4}
+\date{2026-05-16}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This document distils four free-ranging chat transcripts into a single,
+internally consistent account of the construction of indefinite-particle
+Hilbert spaces for mobile anyons, their refinement maps under spatial
+subdivision, and the relation to conformal-field-theory (CFT) data. All
+external references are flagged \unchecked{} (Stage~2 verification not yet
+performed). Each definition is built strictly on previously introduced
+concepts; every acronym is expanded at first use. Derivations are presented
+without skipped steps. Genuine contradictions between the source transcripts
+are flagged in Section~\ref{sec:critique}.
+\end{abstract}
+
+\tableofcontents
+
+\section{Scope and provenance}
+
+The four source transcripts (chat1 through chat4) discuss, in evolving and
+sometimes conflicting language, the same broad project: build a Hilbert space
+$\Hh$ for an indefinite (variable) number of anyons modelled by a fusion
+category $\Cc$, construct refinement maps between such Hilbert spaces for
+different spatial resolutions, and relate the resulting kinematic data to
+conformal field theory. The transcripts contain typesetting artifacts (e.g.\
+fractions $1/2$ sometimes appearing as $\texttt{12}$ or $\texttt{21}$),
+several genuine reformulations across chats, and unverifiable bibliographic
+attributions. Section~\ref{sec:critique} catalogues these.
+
+\section{Notation and conventions}
+
+\begin{convention}\label{conv:basics}
+Vector spaces are complex unless otherwise stated. The dagger $f^\dagger$
+denotes the categorical adjoint when $\Cc$ is unitary, and complex conjugate
+transpose for matrices. The symbol $\one$ denotes the categorical unit
+object (also called the \emph{vacuum} simple); $\vac$ denotes the empty
+configuration as a state vector. For a finite-dimensional vector space $V$,
+$\End(V) = \Hom(V,V)$. Tensor products are written $\otimes$ and are
+associative up to a fixed associator, which we suppress in displays where
+strict ordering is the only structure used.
+\end{convention}
+
+\begin{convention}\label{conv:acro}
+Acronyms used in this document, expanded at first use:
+\textbf{CFT} (Conformal Field Theory),
+\textbf{OPE} (Operator Product Expansion),
+\textbf{RCFT} (Rational Conformal Field Theory),
+\textbf{TL} (Temperley--Lieb algebra),
+\textbf{TLJ} (Temperley--Lieb--Jones category),
+\textbf{RSOS} (Restricted Solid-on-Solid lattice model),
+\textbf{ABF} (Andrews--Baxter--Forrester family of lattice models),
+\textbf{MERA} (Multi-scale Entanglement Renormalisation Ansatz),
+\textbf{RG} (Renormalisation Group),
+\textbf{WZW} (Wess--Zumino--Witten conformal model),
+\textbf{VOA} (Vertex Operator Algebra),
+\textbf{FRS} (Fjelstad--Fuchs--Runkel--Schweigert construction of full RCFT
+correlators)\unchecked,
+\textbf{MPO} (Matrix Product Operator),
+\textbf{TTN} (Tree Tensor Network),
+\textbf{PF} (Perron--Frobenius, used for a quantum-dimension splitting rule).
+\end{convention}
+
+\section{Categorical foundations}
+
+We list the algebraic data step by step, each built on the previous.
+
+\subsection{Fusion category}
+
+\begin{definition}[Fusion category]\label{def:fuscat}
+A \emph{fusion category} $\Cc$ over $\mathbb{C}$ consists of:
+\begin{enumerate}[label=(\roman*)]
+\item a finite set $\Irr(\Cc)$ of \emph{simple objects}, denoted by lower-case
+      letters $a,b,c,\dots$;
+\item a distinguished simple \emph{unit object} $\one \in \Irr(\Cc)$;
+\item finite-dimensional complex \emph{Hom-spaces} $\Hom_\Cc(X,Y)$ for each
+      pair of objects $X,Y$, composing associatively;
+\item a bilinear \emph{tensor product} $\otimes$ with associator and unitors
+      making $(\Cc,\otimes,\one)$ monoidal;
+\item \emph{biproducts} (finite direct sums), so every object is a finite
+      sum of simples;
+\item nonnegative integer \emph{fusion multiplicities}
+      \[ N_{ab}^{c} := \dim_{\mathbb{C}}\Hom_\Cc(c,\,a\otimes b), \]
+      so that $a\otimes b \cong \bigoplus_{c\in\Irr(\Cc)} c^{\oplus N_{ab}^c}$;
+\item rigid duals: each simple $a$ has a dual $\bar a$ with evaluation and
+      coevaluation morphisms satisfying the snake identities.
+\end{enumerate}
+A fusion category is \emph{unitary} if every Hom-space is a Hilbert space and
+$\otimes,\circ$ are compatible with a dagger structure
+$(\,\cdot\,)^\dagger:\Hom(X,Y)\to\Hom(Y,X)$ satisfying $\langle f,g\rangle
+\,\id_X = f^\dagger\circ g$ for $X$ simple.
+\end{definition}
+
+\begin{convention}
+Throughout this document $\Cc$ is unitary unless stated otherwise. Two
+recurring examples are $\Cc = \Fib$ (\S\ref{sec:fib-data}) and $\Cc = \Ising$
+(\S\ref{sec:ising-data}).
+\end{convention}
+
+\subsection{Splitting trees and F-symbols}
+
+\begin{definition}[Splitting basis]\label{def:splitbasis}
+For each ordered triple $(a,b,c)\in\Irr(\Cc)^3$ with $N_{bc}^{a}\ge 1$,
+fix an orthonormal basis
+\[
+\{ v_{b,c;\mu}^{a} \;:\; \mu = 1,\dots,N_{bc}^{a} \}
+\subset \Hom_\Cc(a,\;b\otimes c).
+\]
+The element $v_{b,c;\mu}^{a}$ is called a \emph{splitting vertex}. When
+$N_{bc}^a \in\{0,1\}$ (the multiplicity-free case) the index $\mu$ is dropped.
+\end{definition}
+
+\begin{definition}[F-symbol]\label{def:fsymbol}
+For a four-leaf splitting tree $d\to a\otimes b\otimes c$ with two natural
+parenthesisations $(a\otimes b)\otimes c$ and $a\otimes(b\otimes c)$, the
+change-of-basis matrix between the corresponding splitting bases is the
+\emph{F-symbol} (or F-matrix) $F^{abc}_d$:
+\[
+v_{a,b;\mu}^{e}\otimes v_{e,c;\nu}^{d}
+\;=\; \sum_{f,\rho,\sigma}
+\bigl(F^{abc}_d\bigr)_{(e,\mu,\nu),(f,\rho,\sigma)}\,
+v_{a,f;\sigma}^{d}\otimes v_{b,c;\rho}^{f}.
+\]
+F-symbols satisfy the \emph{pentagon equation}; in the unitary case each
+$F^{abc}_d$ is a unitary matrix.
+\end{definition}
+
+\subsection{Quantum dimension}
+
+\begin{definition}[Quantum dimension]\label{def:qdim}
+For each $a\in\Irr(\Cc)$, the \emph{quantum dimension} $d_a$ is the unique
+positive real number satisfying
+\[
+d_a\,d_b \;=\; \sum_{c\in\Irr(\Cc)} N_{ab}^{c}\, d_c,
+\qquad d_\one = 1.
+\]
+The \emph{total quantum dimension} is
+\[
+D \;:=\; \sqrt{\sum_{a\in\Irr(\Cc)} d_a^{2}}.
+\]
+\end{definition}
+
+\subsection{Local cell object: structural freedom}\label{sec:local-cell-object}
+
+The construction of the Hilbert space requires a choice of \emph{local cell
+object} $Q\in\Cc$ assigned to each site or cell. This $Q$ is \emph{not}
+canonically determined by the fusion category $\Cc$; it is a modelling
+input. The chats use several distinct $Q$'s, and the reader should not
+assume $Q$ has any one particular form.
+
+\begin{definition}[Local cell object]\label{def:Q}
+A \emph{local cell object} is any object $Q\in\Cc$. The Hilbert spaces of
+Definitions~\ref{def:Hlatt}--\ref{def:HP} are built from a chosen $Q$ via
+$Q^{\otimes N}$ and $\Hom_\Cc(W,\,Q^{\otimes N})$ irrespective of how $Q$ was
+constructed.
+\end{definition}
+
+\begin{remark}[The chats use several different $Q$'s]\label{rem:Q-choices}
+The following choices appear in the source transcripts and in the worked
+examples below. None is privileged.
+\begin{enumerate}[label=(\arabic*)]
+\item \textbf{Full direct sum over simples}
+\[
+Q_{\mathrm{full}} \;:=\; \bigoplus_{a\in\Irr(\Cc)} a.
+\]
+This is the choice used in chat~1 \S1 and chat~2 \S1 (presented there as
+``the'' occupation object). It puts every simple species on an equal
+footing: a site may carry any single simple charge.
+\item \textbf{Restricted-charge subobject}
+\[
+Q_{\mathrm{restr}} \;:=\; \bigoplus_{a\in S} a \quad\text{for some}\quad S\subseteq\Irr(\Cc).
+\]
+Examples: chat~4 \S1--13 uses $S = \{\one, p\}$ for the square-zero
+one-species model (\S\ref{sec:square-zero}); chat~4 \S14+ uses
+$S = \{\one, \tau\}$ for Fibonacci even though $\Irr(\Fib)$ already equals
+$\{\one,\tau\}$ (so here $Q_{\mathrm{restr}} = Q_{\mathrm{full}}$ by
+coincidence); for Ising one could legitimately work with $S = \{\one,\sigma\}$
+(dropping $\psi$) without leaving the category, and this is essentially what
+the dense $\sigma$-anyon chain of \S\ref{sec:ising-data} does at fixed
+configuration.
+\item \textbf{Multiplicity-decorated} (chat~3 \S7)
+\[
+Q^{\mathrm{geom}}_I \;:=\; \bigoplus_{a\in\Irr(\Cc)} M_a^{(I)} \otimes a,
+\]
+where each $M_a^{(I)}$ is a finite-dimensional \emph{multiplicity space}
+attached to site $I$. The chat~3 example takes $M_a^{(I)} = J_I^{(h_a)}$,
+the jet/smearing space at conformal weight $h_a$ of the primary $a$.
+This allows the same charge $a$ to appear with internal (descendant)
+degrees of freedom controlled by geometry.
+\item \textbf{Site-dependent}: the cell object $A_I$ may depend on $I$
+(different cells need not carry the same object). Definition~\ref{def:HP}
+already allows this; the chat~4 length-weighted square-zero model uses the
+same $A_I = \one\oplus p$ for all cells, but more general models do not.
+\item \textbf{Coarse-grained / blocked objects}: $Q_{\mathrm{coarse}} :=
+Q^{\otimes k}$ or any subobject thereof, used when one wants the local
+cell to encode a multi-site cluster. This is what underlies the blocked
+refinement of the Temperley--Lieb dense chain, where the natural ``coarse
+cell'' is $Q_{\mathrm{blk}} = \sigma\otimes\sigma \cong \one\oplus\psi$
+(chat~1 \S10): two original $\sigma$-anyons fused into one coarse object.
+\end{enumerate}
+The choice of $Q$ matters: different $Q$'s give different Hilbert spaces,
+different allowed refinement channels, and different continuum limits.
+The interpretation of $\one\subset Q$ also depends on which $Q$: for
+$Q = Q_{\mathrm{restr}} = \one\oplus p$ in the square-zero model, $\one$
+naturally reads as ``empty''; for $Q$ enriched with multiplicities, $\one$
+carries jet content. The proper categorical statement for splitting
+compatibility is given as a constraint on the refinement morphism $E$, not
+as a reinterpretation of $\one$ (Warning~\ref{warn:vac}).
+\end{remark}
+
+\begin{warning}[Don't conflate ``$Q$'' with a canonical object of $\Cc$]\label{warn:Q-not-canonical}
+The notation $Q$ for the local cell object is suggestive, but $Q$ has no
+universal categorical meaning. In particular:
+\begin{itemize}
+\item $Q$ need \emph{not} be $\bigoplus_{a\in\Irr(\Cc)}a$ even though that
+      is the most common notation in the chats. For models targeting a
+      specific subsector, restricted $Q$ is appropriate and standard.
+\item $Q$ need \emph{not} have multiplicity $1$ on each simple. Jet
+      decorations $M_a\otimes a$ with $\dim M_a > 1$ are categorically valid
+      and are the natural target for descendant content.
+\item $Q$ need not be the \emph{same} object on every cell. Site- and
+      partition-dependent $Q$ are sometimes essential (e.g.\ for blocked
+      refinements, where $Q_\mathrm{coarse}$ on a coarse cell differs from
+      $Q_\mathrm{fine}$ on a fine cell).
+\item $Q$ is a \emph{modelling choice}. The categorical machinery of
+      \S\ref{sec:algobj} (algebra-object refinement) and
+      \S\ref{sec:square-zero} (length-weighted refinement) constrains
+      \emph{what one can do with} a chosen $Q$, but does not single out a
+      canonical $Q$.
+\end{itemize}
+\end{warning}
+
+For the remainder of this document the symbol $Q$ refers to a chosen local
+cell object, with the specific choice indicated in each example. When no
+ambiguity arises, we write $Q = \bigoplus_{a\in\Irr(\Cc)} a$ as a default,
+following chats~1--2.
+
+\section{Indefinite-particle Hilbert spaces}
+
+\subsection{Fixed-lattice formulation}
+
+\begin{definition}[$N$-site Hilbert space, fixed lattice]\label{def:Hlatt}
+Fix a local cell object $Q\in\Cc$ (Definition~\ref{def:Q}). For each integer
+$N\ge 0$ and each simple total charge $W\in\Irr(\Cc)$, the
+\emph{$N$-site Hilbert space in charge sector $W$} is
+\[
+\Hh_N^{W} \;:=\; \Hom_\Cc\!\bigl(W,\;Q^{\otimes N}\bigr).
+\]
+The full $N$-site space is $\Hh_N = \bigoplus_{W\in\Irr(\Cc)} \Hh_N^{W}$.
+\end{definition}
+
+\begin{proposition}[Configuration-space decomposition, general $Q$]\label{prop:conf-decomp}
+Decompose $Q$ into simples and multiplicities,
+\[
+Q \;\cong\; \bigoplus_{a\in\Irr(\Cc)} M_a \otimes a,
+\]
+where $M_a$ is a finite-dimensional vector space (the
+\emph{multiplicity space} of $a$ in $Q$; possibly zero-dimensional).
+Then there is a canonical (and, in the unitary case, unitary) isomorphism
+\[
+\Hh_N^{W} \;\cong\;
+\bigoplus_{(a_1,\dots,a_N)\in\Irr(\Cc)^{N}}
+\Bigl(\bigotimes_{i=1}^{N} M_{a_i}\Bigr)
+\;\otimes\;
+\Hom_\Cc\!\bigl(W,\;a_1\otimes\cdots\otimes a_N\bigr).
+\]
+In the default case $Q = \bigoplus_{a\in\Irr(\Cc)}a$ (each $M_a = \mathbb{C}$
+or $0$), the multiplicity factor collapses to a scalar and we recover the
+familiar form
+\[
+\Hh_N^{W} \;\cong\;
+\bigoplus_{(a_1,\dots,a_N)}\Hom_\Cc(W,\,a_1\otimes\cdots\otimes a_N).
+\]
+\end{proposition}
+
+\begin{proof}[Derivation, with multiplicity spaces tracked]
+Expand $Q = \bigoplus_a M_a\otimes a$. By distributivity of $\otimes$ over
+biproducts,
+\[
+Q^{\otimes N}
+\;=\; \bigotimes_{i=1}^{N} \Bigl(\bigoplus_{a_i} M_{a_i}\otimes a_i\Bigr)
+\;\cong\; \bigoplus_{(a_1,\dots,a_N)}
+\Bigl(\bigotimes_{i=1}^{N} M_{a_i}\Bigr)\otimes (a_1\otimes\cdots\otimes a_N),
+\]
+where the $\bigotimes M_{a_i}$ pulls out as a vector-space tensor factor
+(multiplicity spaces live in $\mathrm{Vec}$ and commute with $\otimes_\Cc$).
+Now apply $\Hom_\Cc(W,\,\cdot\,)$ to both sides and use that
+$\Hom_\Cc(W, V\otimes X) = V\otimes\Hom_\Cc(W, X)$ for any
+$V\in\mathrm{Vec}$, $X\in\Cc$ (semisimplicity / biproduct universal
+property):
+\[
+\Hom_\Cc(W, Q^{\otimes N})
+\;\cong\; \bigoplus_{(a_1,\dots,a_N)}
+\Bigl(\bigotimes_{i=1}^{N} M_{a_i}\Bigr)
+\otimes \Hom_\Cc(W, a_1\otimes\cdots\otimes a_N).
+\]
+Under unitarity, choosing the biproduct inclusions $a\hookrightarrow Q$ and
+the $M_a$ orthonormal bases as isometries makes the decomposition unitary.
+\end{proof}
+
+\begin{definition}[Particle number]\label{def:particle-number}
+On the basis $(a_1,\dots,a_N)$ in Proposition~\ref{prop:conf-decomp} the
+\emph{particle number} is
+\[
+k(a_1,\dots,a_N) \;:=\; \#\{i \in\{1,\dots,N\} : a_i \neq \one\}.
+\]
+Each basis vector $(a_1,\dots,a_N)$ carries an internal \emph{fusion fibre}
+$\Hom_\Cc(W, a_1\otimes\cdots\otimes a_N)$, plus the multiplicity factor
+$\bigotimes_i M_{a_i}$ from $Q$'s decomposition
+(Proposition~\ref{prop:conf-decomp}). For the default
+$Q = \bigoplus_a a$ (each $M_a$ either $\mathbb{C}$ or $0$), the
+multiplicity factor is trivial.
+\end{definition}
+
+\subsection{Total charge as a superselection label}
+
+\begin{remark}\label{rem:supersel}
+Local operations representable as morphisms in $\End(Q^{\otimes N})$ act
+inside each sector $\Hh_N^{W}$ separately. The grading
+$\Hh_N = \bigoplus_W \Hh_N^{W}$ is therefore a \emph{superselection
+decomposition}: physical observables that respect the categorical structure
+do not connect different sectors $W \neq W'$.
+\end{remark}
+
+\subsection{Spatial-partition formulation}
+
+The fixed-lattice version above uses an abstract enumeration $i=1,\dots,N$.
+Chat~4 reformulates this so the tensor factors are explicitly tied to
+\emph{spatial cells}.
+
+\begin{definition}[Ordered partition of a segment]\label{def:partition}
+Let $X = [0,L]$ be an oriented closed interval with Lebesgue measure $\ell$.
+An \emph{ordered partition} is a finite chain
+\[
+P = \{ I_1 < I_2 < \cdots < I_N \}, \qquad
+\bigcup_{i=1}^{N} I_i = X,\quad \text{interiors disjoint}.
+\]
+We write $|P| = N$ and $\ell(I)$ for the length of cell $I\in P$.
+\end{definition}
+
+\begin{definition}[Partition Hilbert space]\label{def:HP}
+For each cell $I\in P$ choose a local cell object $A_I\in\Cc$
+(Definition~\ref{def:Q}); the $A_I$ may differ across cells. Set
+\[
+A_P \;:=\; A_{I_1}\otimes A_{I_2}\otimes\cdots\otimes A_{I_N}, \qquad
+\Hh_P^{W} \;:=\; \Hom_\Cc(W,\,A_P).
+\]
+\end{definition}
+
+\begin{remark}
+Definition~\ref{def:HP} reduces to Definition~\ref{def:Hlatt} when all
+$A_I = Q$ are equal. The partition language has two advantages: it
+distinguishes spatial geometry (cell lengths) from categorical labels, and
+it accommodates site-dependent choices of $A_I$ (Remark~\ref{rem:Q-choices}(4)),
+which are essential for blocked / coarse-grained refinements.
+\end{remark}
+
+\subsection{Refinement and the inductive system}
+
+\begin{definition}[Refinement of partitions]\label{def:refine}
+Given partitions $P,P'$ of $X$, we say $P'$ \emph{refines} $P$, written
+$P\preceq P'$, if every cell $J\in P'$ is contained in a unique cell
+$I\in P$. The \emph{children} of $I\in P$ in $P'$ are
+$\mathrm{Ch}_{P'}(I) := \{J\in P' : J\subset I\}$. Any two partitions
+$P_1,P_2$ admit a common refinement; hence $(P,\preceq)$ is a directed set.
+\end{definition}
+
+\begin{definition}[Refinement map]\label{def:refmap}
+A \emph{refinement map} associated with $P\preceq P'$ is a (linear)
+morphism
+\[
+E_{P\to P'}:\; A_P \;\longrightarrow\; A_{P'},
+\]
+required to be an \emph{isometry} (i.e.\ $E_{P\to P'}^{\dagger} E_{P\to P'} = \id_{A_P}$)
+and to be \emph{cellwise local} in the sense
+\[
+E_{P\to P'} \;=\; \bigotimes_{I\in P} E_{I\to\mathrm{Ch}_{P'}(I)},
+\qquad
+E_{I\to(J_1,\dots,J_r)}: A_I \to A_{J_1}\otimes\cdots\otimes A_{J_r}.
+\]
+For $f\in\Hh_P^{W}$ the induced refinement is $V_{P\to P'}(f) := E_{P\to P'}\circ f$.
+\end{definition}
+
+\begin{definition}[Inductive limit]\label{def:indlim}
+A \emph{compatible family} of refinement maps satisfies
+$E_{P\to P} = \id$ and, for $P\preceq P'\preceq P''$,
+$E_{P'\to P''}\,E_{P\to P'} = E_{P\to P''}$. The \emph{continuum Hilbert
+space in charge sector $W$} is the Hilbert completion of the algebraic
+direct limit
+\[
+\Hh_\infty^{W} \;:=\; \overline{\varinjlim_{P}\,\Hh_P^{W}}.
+\]
+\end{definition}
+
+\begin{definition}[Blocking map]\label{def:blocking}
+The \emph{blocking map} (\emph{coarse-graining map}) is the adjoint
+\[
+B_{P\leftarrow P'} \;:=\; E_{P\to P'}^{\dagger}: A_{P'} \to A_P.
+\]
+Isometry of $E_{P\to P'}$ is equivalent to
+$B_{P\leftarrow P'}\,E_{P\to P'} = \id_{A_P}$. The other composition
+$E_{P\to P'}\,B_{P\leftarrow P'}$ is in general only an orthogonal projection
+onto the embedded coarse subspace (a strict projection, not the identity).
+\end{definition}
+
+\begin{definition}[Ascending observable channel]\label{def:ascending}
+Given a fine observable $O\in\End(A_{P'})$, its image under coarse-graining
+is the \emph{ascending channel}
+\[
+\Aa_{P'\to P}(O) \;:=\; E_{P\to P'}^{\dagger}\,O\,E_{P\to P'} \;\in\; \End(A_P).
+\]
+This map is unital ($\Aa(\id_{A_{P'}}) = \id_{A_P}$ because $E^\dagger E = \id$),
+$\ast$-preserving, and completely positive (it is a conjugation by an isometry).
+\end{definition}
+
+\section{Algebra objects in $\Cc$ and the canonical algebra-derived refinement}\label{sec:algobj}
+
+The constructions of \S\ref{sec:square-zero}, \S\ref{sec:fib-data},
+\S\ref{sec:ising-data} all proceed by choosing, for each cell $I$, a local
+object $A_I$ \emph{together with extra algebraic structure} that determines
+how a coarse cell refines into its children. The chats establish that the
+correct categorical name for that extra structure is an \emph{algebra object}
+in $\Cc$: a multiplication $m:A\otimes A\to A$ obeying coherence axioms.
+The candidate refinement map is then $\Delta = m^{\dagger}/\sqrt{\lambda}$.
+The conditions under which $\Delta$ is an isometric refinement, and the
+\emph{degenerate} (``square-zero'') branch of the resulting equations, are
+the subject of this section.
+
+\subsection{The data of an algebra object}
+
+\begin{definition}[Algebra object in $\Cc$]\label{def:algobj}
+An \emph{algebra object} in the unitary fusion category $\Cc$ is a triple
+$(A, m, u)$ where $A\in\Cc$, $m\in\Hom_\Cc(A\otimes A,\,A)$ is a
+\emph{multiplication}, and $u\in\Hom_\Cc(\one,\,A)$ is a \emph{unit},
+satisfying:
+\begin{enumerate}[label=(\roman*)]
+\item \textbf{Unit:} $m\circ(u\otimes\id_A) = \id_A = m\circ(\id_A\otimes u)$.
+\item \textbf{Associativity:} $m\circ(m\otimes\id_A)
+      = m\circ(\id_A\otimes m)\circ\alpha$, where $\alpha$ is the associator.
+\end{enumerate}
+If in addition there exists a scalar $\lambda>0$ with
+\[
+m\,m^{\dagger} \;=\; \lambda\,\id_A,
+\]
+then $(A,m,u)$ is called \emph{dagger-special} (or \emph{$\lambda$-special}).
+\end{definition}
+
+\begin{remark}[What dagger-specialness gives, and what it does not]\label{rem:dagger-special-scope}
+Dagger-specialness ($mm^{\dagger} = \lambda\,\id_A$, $\lambda>0$) is
+\emph{exactly} the condition that ensures the rescaled adjoint
+$\Delta := \lambda^{-1/2}m^{\dagger}$ is an isometric \emph{morphism}
+$A\to A\otimes A$ (Proposition~\ref{prop:Delta-isom}). It is a strictly
+weaker condition than the standard \emph{Frobenius-special} property used
+in the FRS construction of 2D rational CFT\unchecked, which additionally
+requires the \emph{Frobenius identity}
+\[
+(\id_A\otimes m)\circ(\Delta\otimes\id_A) = \Delta\circ m = (m\otimes\id_A)\circ(\id_A\otimes\Delta).
+\]
+We do \emph{not} verify the Frobenius identity here, nor do we use it.
+Wherever ``$\Delta$ is coassociative'' is claimed in this document, that
+claim is shorthand for ``the multiplication $m$ is associative, and we
+construct $\Delta$ from $m^\dagger$ by the formula above''; coassociativity
+of $\Delta$ in the strict categorical sense requires the dagger to be
+monoidal in a compatible way, which we assume (standard for unitary fusion
+categories) but do not check axiomatically.
+\end{remark}
+
+\begin{warning}[Earlier text overclaimed]\label{warn:not-Frobenius}
+An earlier draft of this section asserted ``dagger-special = Frobenius-special''.
+That is wrong: Frobenius algebras require the Frobenius identity in addition
+to mm$^\dagger$ being a scalar. The category-theoretic content of
+\S\ref{sec:algobj} requires only dagger-specialness. The FRS reference is
+retained as analogy, not equivalence.
+\end{warning}
+
+\subsection{The canonical algebra-derived refinement $\Delta = m^\dagger/\sqrt\lambda$}
+
+\begin{proposition}[Refinement from a dagger-special algebra]\label{prop:Delta-isom}
+Let $(A,m,u)$ be a dagger-special algebra in $\Cc$ with $mm^{\dagger}
+= \lambda\,\id_A$, $\lambda>0$. Define
+\[
+\Delta \;:=\; \lambda^{-1/2}\,m^{\dagger}\;:\;A\;\longrightarrow\;A\otimes A.
+\]
+Then $\Delta^{\dagger}\Delta = \id_A$, i.e.\ $\Delta$ is an isometry. In
+particular it defines an admissible binary refinement map in the sense of
+Definition~\ref{def:refmap}.
+\end{proposition}
+
+\begin{proof}[Derivation, every step]
+By construction $\Delta^{\dagger} = \lambda^{-1/2}m$. Then
+\[
+\Delta^{\dagger}\Delta
+= \lambda^{-1/2}\,m \;\cdot\; \lambda^{-1/2}\,m^{\dagger}
+= \lambda^{-1}\,m\,m^{\dagger}
+= \lambda^{-1}\cdot\lambda\,\id_A
+= \id_A. \qed
+\]
+\renewcommand{\qedsymbol}{}
+\end{proof}
+
+\begin{remark}[$r$-fold splitting]
+For $r\ge 2$, define $m^{(r)}:A^{\otimes r}\to A$ iteratively using
+associativity (the choice of bracketing does not matter, by
+Definition~\ref{def:algobj}(ii)). Then
+\[
+\Delta^{(r)} \;:=\; \lambda^{-(r-1)/2}\,(m^{(r)})^{\dagger}\;:\;A\to A^{\otimes r}
+\]
+is the $r$-fold refinement. The exponent $-(r-1)/2$ is forced so that
+repeated application $\Delta^{(s)}\circ_q \Delta^{(r_q)} = \Delta^{(\sum_q r_q)}$
+holds with the same overall scalar. We verify this in
+Lemma~\ref{lem:scalar-compose}.
+\end{remark}
+
+\begin{lemma}[Scalar coherence of $r$-fold $\Delta$]\label{lem:scalar-compose}
+If $r = r_1+\cdots+r_s$, then
+\[
+\lambda^{-(r-1)/2}
+\;=\; \lambda^{-(s-1)/2}\cdot\prod_{q=1}^{s}\lambda^{-(r_q-1)/2}.
+\]
+\end{lemma}
+
+\begin{proof}[Derivation]
+The right-hand exponent is
+$-\tfrac{1}{2}(s-1) - \tfrac{1}{2}\sum_q (r_q - 1)
+= -\tfrac{1}{2}(s - 1 + r - s)
+= -\tfrac{1}{2}(r - 1)$,
+matching the left side. \end{proof}
+
+\subsection{Solving the algebra constraints for $A = \one\oplus p$}\label{sec:alg-1p}
+
+We now solve the unit + associativity + dagger-specialness conditions
+explicitly for the smallest non-trivial algebra in any fusion category $\Cc$
+in which there is a simple object $p$ with $p\otimes p \cong \one \oplus p$.
+(For Fibonacci this is $p=\tau$; the same equations arise generically and
+will instantiate to whatever F-symbol $\Cc$ provides.)
+
+\begin{convention}\label{conv:1op}
+$A := \one\oplus p$ with $p$ simple, $p\otimes p\cong\one\oplus p$. Fix
+orthonormal splitting basis vectors
+$v^{\one}_{p,p}\in\Hom(\one,\,p\otimes p)$ and
+$v^{p}_{p,p}\in\Hom(p,\,p\otimes p)$.
+\end{convention}
+
+\begin{proposition}[Form of $m$]\label{prop:m-form}
+Under Convention~\ref{conv:1op}, the unit condition forces $m$ on every
+channel involving $\one$:
+\[
+m(\one\otimes\one) = \one,\quad
+m(\one\otimes p) = p,\quad
+m(p\otimes \one) = p.
+\]
+The only undetermined data are the two complex amplitudes
+\[
+a \;:=\; m^{\one}_{p,p}\in\mathbb{C}, \qquad b \;:=\; m^{p}_{p,p}\in\mathbb{C},
+\]
+\[
+m\big|_{p\otimes p}
+\;=\; a\,(v^{\one}_{p,p})^{\dagger} \;+\; b\,(v^{p}_{p,p})^{\dagger}.
+\]
+\end{proposition}
+
+\begin{proof}[Derivation]
+The unit axiom $m\circ(u\otimes\id) = \id$ on the summands forces
+$m(\one\otimes\one) = u^{-1}(\one\otimes\one) = \one$ (since $u$ is the
+inclusion $\one\hookrightarrow A$, its inverse on the image is the identity).
+On $\one\otimes p$ the unit axiom reads $m(\one\otimes p) = p$, similarly for
+$p\otimes\one$. The only remaining freedom is the component map
+$p\otimes p \to A = \one\oplus p$, whose two basis-coefficients in the chosen
+splitting basis are $a$ (into the $\one$-summand) and $b$ (into the
+$p$-summand). \end{proof}
+
+\begin{proposition}[Associativity constraint via F-symbol]\label{prop:assoc-F}
+Associativity of $m$ on the channel $p\otimes p\otimes p\to p$ is the
+F-symbol fixed-point equation
+\[
+\begin{pmatrix} a \\ b^{2}\end{pmatrix}
+\;=\; F^{ppp}_{p}\begin{pmatrix} a \\ b^{2}\end{pmatrix}.
+\]
+In the Fibonacci instantiation ($p=\tau$,
+$F^{\tau\tau\tau}_\tau = \bigl(\begin{smallmatrix}\varphi^{-1}&\varphi^{-1/2}\\\varphi^{-1/2}&-\varphi^{-1}\end{smallmatrix}\bigr)$,
+Definition~\ref{def:fib-F}), this reduces (each row gives the same identity) to
+\[
+\boxed{\; b^{2} \;=\; \varphi^{-3/2}\,a. \;}
+\]
+\end{proposition}
+
+\begin{proof}[Full derivation of the vector $(a,b^{2})^{T}$ and the reduction]
+Pick the left-bracketed orthonormal basis $\{e_\one, e_\tau\}$ of
+$\Hom(\tau,\,\tau\otimes\tau\otimes\tau)$ indexed by intermediate channel
+$z\in\{\one,\tau\}$:
+$e_z := ((\tau\otimes\tau)_z\otimes\tau)_\tau$. Compute the components of
+$m^{(3)} := m\circ(m\otimes\id_A): \tau\otimes\tau\otimes\tau\to\tau$ on each
+basis vector:
+\begin{align*}
+m^{(3)}(e_\one)
+&= m\bigl(m((\tau\otimes\tau)_\one)\otimes\tau\bigr)
+ = m(a\,\one\otimes\tau)
+ = a\,m(\one\otimes\tau) = a\,\tau, \\
+&\quad\text{hence the $e_\one$-coefficient of $m^{(3)}$ is }a.\\
+m^{(3)}(e_\tau)
+&= m\bigl(m((\tau\otimes\tau)_\tau)\otimes\tau\bigr)
+ = m(b\,\tau\otimes\tau)
+ = b\,m(\tau\otimes\tau)\big|_{\tau\text{-channel}}
+ = b\cdot b\,\tau = b^{2}\tau,\\
+&\quad\text{hence the $e_\tau$-coefficient is }b^{2}.
+\end{align*}
+By the symmetric calculation with right bracketing
+$m^{(3)\prime} := m\circ(\id_A\otimes m)$ has components $(a, b^{2})$ in
+the right-bracketed basis $\{f_\one, f_\tau\}$. Associativity demands
+$m^{(3)} = m^{(3)\prime}$ as morphisms in $\Hom(\tau\otimes\tau\otimes\tau,\,\tau)$.
+Since $(f_\one, f_\tau)^{T} = F\,(e_\one, e_\tau)^{T}$, equality in the two
+bases forces
+$F\cdot(a, b^{2})^{T} = (a, b^{2})^{T}$. Reading off the second row,
+\[
+\varphi^{-1/2}\,a + (-\varphi^{-1})\,b^{2} = b^{2}
+\quad\Longleftrightarrow\quad
+\varphi^{-1/2}\,a = (1+\varphi^{-1})\,b^{2}.
+\]
+Using $1+\varphi^{-1} = \varphi$ (divide $\varphi^{2}=\varphi+1$ by
+$\varphi$), this becomes $\varphi^{-1/2}\,a = \varphi\,b^{2}$, hence
+$b^{2} = \varphi^{-3/2}\,a$. The first row reduces to the same identity:
+$(1-\varphi^{-1})\,a = \varphi^{-1/2}\,b^{2}$, and
+$1-\varphi^{-1} = \varphi^{-2}$ (Lemma~\ref{lem:fib-arith}), so
+$\varphi^{-2}\,a = \varphi^{-1/2}\,b^{2}$, again $b^{2} = \varphi^{-3/2}\,a$.
+\end{proof}
+
+\begin{corollary}[``$b=0$ forces $a=0$'' in the Fibonacci instantiation]\label{cor:b-zero-forces-a-zero}
+The associativity equation $b^{2} = \varphi^{-3/2}\,a$ has the unique
+$b=0$ solution $a = 0$. There is no nonzero ``pure-$\one$-channel''
+associative algebra structure on $A=\one\oplus\tau$.
+\end{corollary}
+\begin{proof}[Derivation] If $b=0$ then $0 = \varphi^{-3/2}a$, so $a=0$. \end{proof}
+
+\begin{proposition}[Dagger-specialness constraint]\label{prop:dagger-special-eq}
+Under Convention~\ref{conv:1op} and Proposition~\ref{prop:m-form},
+$mm^{\dagger}:A\to A$ is block-diagonal with respect to the $\one\oplus p$
+decomposition. Its block scalars are
+\[
+(mm^{\dagger})\big|_{\one} \;=\; 1 + |a|^{2}, \qquad
+(mm^{\dagger})\big|_{p} \;=\; 2 + |b|^{2}.
+\]
+Dagger-specialness $mm^{\dagger} = \lambda\,\id_A$ therefore demands
+\[
+\boxed{\; 1 + |a|^{2} \;=\; 2 + |b|^{2} \;=\; \lambda \;}
+\qquad\Longleftrightarrow\qquad |a|^{2} - |b|^{2} = 1.
+\]
+\end{proposition}
+
+\begin{proof}[Derivation, full]
+$m^{\dagger}:A\to A\otimes A$ has the following non-zero components, read off
+from the displayed components of $m$ (Proposition~\ref{prop:m-form}):
+\begin{align*}
+m^{\dagger}\one &\;=\; 1\cdot(\one\otimes\one) \;+\; \bar a\cdot v^{\one}_{p,p},\\
+m^{\dagger} p   &\;=\; 1\cdot(\one\otimes p)\;+\; 1\cdot(p\otimes\one) \;+\; \bar b\cdot v^{p}_{p,p}.
+\end{align*}
+Apply $m$ to each:
+\begin{align*}
+mm^{\dagger}\one
+&= m(\one\otimes\one) + \bar a\,m(v^{\one}_{p,p})
+ = \one + \bar a\cdot a\,\one
+ = (1 + |a|^{2})\,\one.
+\end{align*}
+Here $m(v^{\one}_{p,p}) = a\,\one$ because $v^{\one}_{p,p}$ is the
+splitting basis $\one\to p\otimes p$ and $m$ maps the $\one$-channel of
+$p\otimes p$ back with coefficient $a$. (We use orthonormality of
+$v^{\one}_{p,p}$ as a dagger pair: $m\circ(v^{\one}_{p,p}) = a\,\id_\one$.)
+For the $p$-summand:
+\begin{align*}
+mm^{\dagger}p
+&= m(\one\otimes p) + m(p\otimes\one) + \bar b\,m(v^{p}_{p,p})\\
+&= p + p + \bar b\cdot b\,p
+ = (2 + |b|^{2})\,p.
+\end{align*}
+Equating block scalars to a common $\lambda$ gives the boxed equation.
+\end{proof}
+
+\subsection{Two branches: degenerate (``square-zero'') and non-degenerate}\label{sec:branches}
+
+\begin{theorem}[Solution branches]\label{thm:branches}
+Under Convention~\ref{conv:1op} with the Fibonacci F-symbol of
+Definition~\ref{def:fib-F}, the joint system
+\begin{align*}
+&\text{(Associativity):}\quad b^{2} = \varphi^{-3/2}\,a
+\tag{A}\\
+&\text{(Dagger-specialness):}\quad 1 + |a|^{2} = 2 + |b|^{2} \;(=\lambda)
+\tag{S}
+\end{align*}
+on the algebra parameters $(a,b)\in\mathbb{C}^{2}$ of
+Proposition~\ref{prop:m-form}.
+\begin{enumerate}[label=(\alph*)]
+\item \textbf{Associativity (A) alone.} Equation (A) admits a
+      one-parameter family of complex solutions. Two distinguished
+      real points are:
+      \begin{itemize}
+      \item the \emph{trivial / ``square-zero''} algebra $a=b=0$;
+      \item the \emph{Fibonacci} algebra $a=\sqrt\varphi$, $b=\varphi^{-1/2}$.
+      \end{itemize}
+\item \textbf{Joint system (A)+(S).} Adding dagger-specialness
+      \emph{eliminates} the trivial point ($1+0\ne 2+0$) and uniquely
+      selects the Fibonacci point (up to positive-real normalisation; see
+      the remark on the other quadratic root below):
+      \[
+      a = \sqrt\varphi,\quad b = \varphi^{-1/2},\quad \lambda = \varphi^{2}.
+      \]
+\end{enumerate}
+\end{theorem}
+
+\begin{remark}[Logical status of square-zero]\label{rem:sq-zero-status}
+The slogan ``$p\cdot p = 0$ violates categorical adjectives'' translates
+precisely as: $a = b = 0$ satisfies (A) but \emph{not} (S). At square-zero
+the operator $mm^{\dagger}$ acts as scalar $1$ on the $\one$-summand and
+scalar $2$ on the $p$-summand; no single $\lambda$ exists. The
+algebra-derived refinement $\Delta = \lambda^{-1/2}m^{\dagger}$ of
+Proposition~\ref{prop:Delta-isom} is therefore undefined at square-zero,
+and one must construct the refinement by other means (e.g.\
+\S\ref{sec:square-zero}).
+\end{remark}
+
+\begin{proof}[Derivation, every step]
+\textbf{(a) Associativity-only solutions.} Equation (A) is
+$b^{2} = \varphi^{-3/2}\,a$. This is one complex equation in two
+complex unknowns, so its solution set is a one-parameter family
+parametrised by $a\in\mathbb{C}$ (with $b$ then determined up to sign by
+$b = \pm\sqrt{\varphi^{-3/2}\,a}$). The point $a=b=0$ is on this curve.
+The non-trivial real-positive point used below is
+$(a,b)=(\sqrt\varphi,\varphi^{-1/2})$, which satisfies
+$b^{2} = \varphi^{-1}$ and $\varphi^{-3/2}\,a = \varphi^{-3/2}\sqrt\varphi
+= \varphi^{-1}$. \checkmark
+
+\textbf{(b) Joint system (A)+(S): square-zero is eliminated.} Substituting
+$a=b=0$ into (S) gives $1+0 = 2+0$, i.e.\ $1=2$, a contradiction. Hence
+square-zero fails (S) and is not a joint solution.
+
+\textbf{(b) Joint system: derive the Fibonacci point.}
+Assume $b \neq 0$. By Corollary~\ref{cor:b-zero-forces-a-zero} also
+$a \neq 0$. Take both real and positive (the gauge freedom in choosing
+splitting bases allows this). From~(A),
+$b^{2} = \varphi^{-3/2}\,a$, hence $|b|^{2} = \varphi^{-3/2}\,a$.
+Substitute into~(S):
+\[
+a^{2} - \varphi^{-3/2}\,a = 1,
+\quad\text{equivalently}\quad
+a^{2} - \varphi^{-3/2}\,a - 1 = 0.
+\]
+This is a quadratic in $a$. Test $a = \sqrt{\varphi}$:
+\[
+(\sqrt\varphi)^{2} - \varphi^{-3/2}\sqrt\varphi - 1
+\;=\; \varphi - \varphi^{-1} - 1.
+\]
+Compute $\varphi - \varphi^{-1} = (\varphi^{2} - 1)/\varphi
+= ((\varphi+1)-1)/\varphi = \varphi/\varphi = 1$. So the expression equals
+$1 - 1 = 0$. \checkmark
+The positive root is therefore $a = \sqrt\varphi$.
+Then $b^{2} = \varphi^{-3/2}\cdot\sqrt\varphi = \varphi^{-1}$, so
+$b = \varphi^{-1/2}$.
+Finally $\lambda = 1 + a^{2} = 1 + \varphi = \varphi^{2}$, and the
+$p$-block check is $2 + b^{2} = 2 + \varphi^{-1} = 1 + (1+\varphi^{-1})
+= 1 + \varphi = \varphi^{2}$. \checkmark
+\end{proof}
+
+\begin{remark}[The other quadratic root]
+The other root of $a^{2} - \varphi^{-3/2}a - 1 = 0$ is
+\[
+a_- \;=\; \frac{\varphi^{-3/2} - \sqrt{\varphi^{-3} + 4}}{2} \;<\; 0,
+\]
+which is negative real. It corresponds to the same algebra structure up to
+a sign change in the splitting basis $v^{\one}_{p,p}\mapsto -v^{\one}_{p,p}$;
+not a genuinely new solution.
+\end{remark}
+
+\begin{warning}[Square-zero violates dagger-specialness]\label{warn:sq-zero-is-special}
+Theorem~\ref{thm:branches}(a) is the categorical meaning of the slogan
+``$p\cdot p = 0$ violates many categorical adjectives''. Specifically:
+\begin{itemize}
+\item Square-zero \emph{is} associative.
+\item Square-zero \emph{is not} dagger-special. The block scalars
+      $1$ on $\one$ and $2$ on $p$ cannot be reconciled by a single
+      $\lambda$.
+\item Consequently, the canonical algebra-derived refinement
+      $\Delta = \lambda^{-1/2}m^{\dagger}$ of
+      Proposition~\ref{prop:Delta-isom} is \emph{undefined} for square-zero:
+      there is no scalar $\lambda$ to plug in.
+\item Equivalently, the comultiplication $\Delta := m^{\dagger}$ on its own
+      sends $\one\mapsto \one\otimes\one$ (norm-squared $1$) and
+      $p\mapsto \one\otimes p + p\otimes\one$ (norm-squared $2$). These
+      cannot both be normalised to $1$ by the same constant.
+\end{itemize}
+The only non-degenerate dagger-special algebra structure on $\one\oplus\tau$
+in Fibonacci is the Chat~3 multiplication
+$\tau\cdot\tau = \sqrt\varphi\,\one + \varphi^{-1/2}\tau$ of
+Theorem~\ref{thm:branches}(b). So if one insists on a square-zero rule
+$p\cdot p = 0$, one is choosing the degenerate branch and must construct
+refinement \emph{by other means} -- such as the length-weighted geometric
+prescription of \S\ref{sec:square-zero}.
+\end{warning}
+
+\begin{remark}[Two distinct constructions both called ``square-zero'']\label{rem:three-sq-zero}
+To prevent confusion: the chats and this document use the same phrase for
+\emph{two} related but distinct objects.
+\begin{enumerate}[label=(\arabic*)]
+\item \textbf{Square-zero as a degenerate algebra
+      structure} (Theorem~\ref{thm:branches}(a)): the trivial multiplication
+      $a = b = 0$ on $A = \one\oplus p$. Associative but not dagger-special.
+      Refinement cannot be derived from $m$ via Proposition~\ref{prop:Delta-isom}.
+\item \textbf{Square-zero as a kinematic Fock construction}
+      (Chat~4 \S1--13, \S\ref{sec:square-zero} below): take
+      $A_I = \one\oplus p$, ignore any algebraic structure on $p\otimes p$
+      whatsoever, and define refinement geometrically by
+      $w_{J\mid I} = \sqrt{\ell(J)/\ell(I)}$, imposing the hard-core rule
+      ``no two $p$'s in one cell'' by hand. The resulting inductive limit
+      is $L^{2}(X)$.
+\end{enumerate}
+Construction (2) is the technical realisation of (1) once one accepts that
+the algebra-derived refinement is unavailable. The geometric weights
+replace the algebra normalisation; isometry is enforced separately on each
+summand by the constraint $\sum_J w_{J\mid I}^{2} = 1$.
+\end{remark}
+
+\section{Worked example A: the length-weighted square-zero kinematic model}\label{sec:square-zero}
+
+We now treat the construction of Chat~4 \S1--13 as a self-contained
+example. From the perspective of \S\ref{sec:algobj}: this is the
+\emph{degenerate} algebra branch (Theorem~\ref{thm:branches}(a), $a=b=0$),
+for which the canonical refinement $\Delta = m^{\dagger}/\sqrt{\lambda}$ is
+\emph{undefined} (Warning~\ref{warn:sq-zero-is-special}: $mm^{\dagger}$ is
+not a scalar). The chats' workaround is to abandon the algebra-derived
+refinement and instead define refinement geometrically by cell-length
+weights. The hard-core occupancy rule (``no two $p$'s in one cell'') is
+imposed by hand on the resulting partition Hilbert spaces.
+
+\begin{definition}[Length-weighted refinement]\label{def:lenref}
+For $I = J_1\cup\cdots\cup J_r$, $J_1<\cdots<J_r$, define
+\[
+w_{J\mid I} \;:=\; \sqrt{\frac{\ell(J)}{\ell(I)}}, \qquad J\subset I,
+\]
+and set $E_I(\one_I) := \bigotimes_{J\subset I}\one_J$,
+\[
+E_I(p_I) \;:=\; \sum_{J\subset I} w_{J\mid I}\;
+\one_{J_1}\otimes\cdots\otimes p_{J}\otimes\cdots\otimes\one_{J_r}.
+\]
+The map $E_I$ ignores the algebraic structure of $p\otimes p$ entirely; its
+amplitudes are dictated by cell-length geometry.
+\end{definition}
+
+\begin{lemma}[Isometry]\label{lem:sqzero-isom}
+$E_I^\dagger E_I = \id_{A_I}$.
+\end{lemma}
+
+\begin{proof}[Full derivation]
+The basis $\{\one_I, p_I\}$ of $A_I$ is orthonormal. On $\one_I$,
+$E_I(\one_I) = \bigotimes_J \one_J$ has norm-squared $1$. On $p_I$,
+\begin{align*}
+\bigl\|E_I(p_I)\bigr\|^{2}
+&= \Bigl\langle \sum_{J} w_{J\mid I}\,(\text{$p$ at $J$}),\;
+                \sum_{J'} w_{J'\mid I}\,(\text{$p$ at $J'$})\Bigr\rangle\\
+&= \sum_{J,J'} w_{J\mid I}\,w_{J'\mid I}\,\delta_{J,J'} \quad\text{(distinct $J,J'$ are orthogonal product states)}\\
+&= \sum_{J\subset I} w_{J\mid I}^{2}
+ = \sum_{J\subset I} \frac{\ell(J)}{\ell(I)}
+ = \frac{1}{\ell(I)}\sum_{J\subset I}\ell(J)
+ = \frac{\ell(I)}{\ell(I)} = 1.
+\end{align*}
+Cross-terms $\langle E_I(\one_I), E_I(p_I)\rangle$ vanish by orthogonality of
+$\one_J$ and $p_J$ in each factor. Hence $E_I^\dagger E_I$ is the identity on
+both basis vectors, i.e.\ on $A_I$.
+\end{proof}
+
+\begin{lemma}[Refinement coherence]\label{lem:sqzero-coh}
+For $K\subset J\subset I$,
+$w_{J\mid I}\,w_{K\mid J} = w_{K\mid I}$.
+\end{lemma}
+
+\begin{proof}[Derivation]
+By Definition~\ref{def:lenref},
+\[
+w_{J\mid I}\,w_{K\mid J}
+= \sqrt{\tfrac{\ell(J)}{\ell(I)}}\,\sqrt{\tfrac{\ell(K)}{\ell(J)}}
+= \sqrt{\tfrac{\ell(J)\,\ell(K)}{\ell(I)\,\ell(J)}}
+= \sqrt{\tfrac{\ell(K)}{\ell(I)}}
+= w_{K\mid I}.
+\]
+Hence $E_{J\to K}\circ E_{I\to J} = E_{I\to K}$ on the $p$ summand; on
+$\one$ it is the identity. Tensoring over cells gives
+$E_{P'\to P''}\,E_{P\to P'} = E_{P\to P''}$.
+\end{proof}
+
+\subsection{Continuum limit: recovery of $L^{2}(X)$}
+
+\begin{theorem}\label{thm:L2}
+For total charge $W = p$ and a single species, the inductive limit
+\[
+\Hh_\infty^{p} \;\cong\; L^{2}(X)
+\]
+under the identification $\,|I\rangle_P \;\longleftrightarrow\;
+\ell(I)^{-1/2}\,\chi_I\,$, where $\chi_I$ is the indicator function of $I$.
+\end{theorem}
+
+\begin{proof}[Derivation]
+Refining $I = J_1\cup\cdots\cup J_r$,
+\[
+\ell(I)^{-1/2}\chi_I
+= \ell(I)^{-1/2}\sum_J \chi_J
+= \sum_J \sqrt{\tfrac{\ell(J)}{\ell(I)}}\,\ell(J)^{-1/2}\chi_J
+= \sum_J w_{J\mid I}\,\ell(J)^{-1/2}\chi_J.
+\]
+This is exactly the action of $E_{I\to(J)}$ from
+Definition~\ref{def:lenref}. The algebraic direct limit therefore consists of
+$L^{2}$-step functions; Hilbert completion gives all of $L^{2}(X)$.
+\end{proof}
+
+\begin{corollary}\label{cor:multipart-L2}
+The multi-particle square-free continuum sector in charge $W$ for a single
+species $p$ is
+\[
+\Hh_\infty^{W,p}
+\;\cong\;
+\bigoplus_{k\ge 0} L^{2}(X^{<k}) \otimes \Hom_\Cc(W, p^{\otimes k}),
+\qquad
+X^{<k} := \{ (x_1,\dots,x_k)\in X^{k} : x_1 < \cdots < x_k\}.
+\]
+\end{corollary}
+
+\begin{warning}\label{warn:lossy}
+The blocking map is \emph{lossy} on the length-weighted square-zero model:
+any fine state with two or more $p$'s inside a single coarse cell is
+annihilated. The square-free Hilbert space therefore does \emph{not}
+faithfully represent arbitrary fine configurations at coarse resolution. A
+faithful coarse-grained local object would need a multi-occupation piece,
+schematically $A_I^{\text{full}}\sim \bigoplus_k L^{2}(\Conf_k(I))\otimes p^{\otimes k}$.
+\end{warning}
+
+\begin{remark}[Position vs.\ the algebra-object framework]\label{rem:sqzero-vs-alg}
+The length-weighted refinement of Definition~\ref{def:lenref} is
+\emph{not} of the form $\Delta = \lambda^{-1/2}m^{\dagger}$ for any
+dagger-special algebra structure on $A_I=\one\oplus p$. The reasons:
+\begin{enumerate}[label=(\roman*)]
+\item It depends on the geometric data $\ell(J),\ell(I)$, whereas
+      $\Delta$ from Proposition~\ref{prop:Delta-isom} is purely algebraic
+      and gives the same amplitudes for every subdivision into a fixed
+      number of children.
+\item It sends $p_I \mapsto \sum_J w_{J\mid I}\cdot(\text{$p$ at $J$})$
+      with \emph{no} component along $\one\otimes\cdots\otimes p\otimes p\otimes\cdots\otimes\one$
+      (no pair-creation), corresponding to $a=b=0$ in the algebra
+      framework, which fails dagger-specialness
+      (Warning~\ref{warn:sq-zero-is-special}).
+\item Both $E_I(\one_I)$ and $E_I(p_I)$ are unit-norm by separate direct
+      computation (Lemma~\ref{lem:sqzero-isom}); there is no common
+      ``$\lambda$'' that $mm^{\dagger}$ would have to equal.
+\end{enumerate}
+Conceptually, the length-weighted model abandons the algebra-derived
+refinement in favour of a kinematic Fock construction whose isometry is
+guaranteed by separately normalising the $\one$ and $p$ summands. It is a
+valid construction; it is simply not the canonical
+algebra-comultiplication refinement of \S\ref{sec:algobj}.
+\end{remark}
+
+\section{Worked example B: Fibonacci data}\label{sec:fib-data}
+
+\subsection{Algebraic constants}
+
+\begin{definition}[Fibonacci fusion category]\label{def:fib}
+$\Fib$ has $\Irr(\Fib) = \{\one,\tau\}$ with fusion rules
+\[
+\one\otimes\one = \one, \quad
+\one\otimes\tau = \tau\otimes\one = \tau, \quad
+\tau\otimes\tau = \one\oplus\tau.
+\]
+Fibonacci is multiplicity-free: every $N_{ab}^{c}\in\{0,1\}$.
+\end{definition}
+
+\begin{definition}[Golden ratio]\label{def:phi}
+\[
+\varphi \;:=\; \frac{1+\sqrt 5}{2}, \qquad
+\varphi^{2} \;=\; \varphi + 1.
+\]
+\end{definition}
+
+\begin{lemma}[Fibonacci arithmetic identities]\label{lem:fib-arith}
+\[
+\varphi^{-1} = \varphi - 1, \qquad
+\varphi^{-2} = 2 - \varphi, \qquad
+\varphi^{-2} + \varphi^{-1} = 1, \qquad
+2\varphi^{-2} + \varphi^{-3} = 1.
+\]
+\end{lemma}
+
+\begin{proof}[Full derivations]
+From $\varphi^{2}=\varphi+1$ divide by $\varphi$:
+$\varphi = 1+\varphi^{-1}$, so $\varphi^{-1}=\varphi-1$.
+Square: $\varphi^{-2} = (\varphi-1)^{2} = \varphi^{2}-2\varphi+1
+= (\varphi+1)-2\varphi+1 = 2-\varphi$. Then
+\[
+\varphi^{-2}+\varphi^{-1} = (2-\varphi) + (\varphi-1) = 1.
+\]
+Multiply that identity by $\varphi^{-1}$:
+$\varphi^{-3}+\varphi^{-2} = \varphi^{-1}$, hence
+\[
+2\varphi^{-2}+\varphi^{-3}
+= \varphi^{-2} + (\varphi^{-2}+\varphi^{-3})
+= \varphi^{-2}+\varphi^{-1} = 1.
+\]
+\end{proof}
+
+\begin{lemma}[Fibonacci quantum dimensions]\label{lem:fib-qdim}
+$d_{\one}=1$, $d_\tau = \varphi$, and the total quantum dimension is
+$D = \sqrt{1+\varphi^{2}} = \sqrt{2+\varphi}$.
+\end{lemma}
+
+\begin{proof}[Derivation]
+Apply Definition~\ref{def:qdim}: $d_\tau d_\tau = N_{\tau\tau}^{\one} d_\one
++ N_{\tau\tau}^{\tau} d_\tau = 1 + d_\tau$, i.e.\ $d_\tau^{2} = d_\tau + 1$,
+whose positive root is $\varphi$. Then $D^{2} = 1^{2}+\varphi^{2}
+= 1+(\varphi+1) = 2+\varphi$.
+\end{proof}
+
+\subsection{Fibonacci F-symbol}
+
+\begin{definition}[Fibonacci F-matrix]\label{def:fib-F}
+The only non-trivial F-symbol on Fibonacci is $F^{\tau\tau\tau}_{\tau}$,
+acting on the two-dimensional space $\Hom(\tau,\tau\otimes\tau\otimes\tau)$
+in the standard basis where the intermediate channel is either $\one$ or
+$\tau$:
+\[
+F^{\tau\tau\tau}_{\tau} \;=\;
+\begin{pmatrix} \varphi^{-1} & \varphi^{-1/2}\\[2pt]
+                \varphi^{-1/2} & -\varphi^{-1}\end{pmatrix}.
+\]
+\end{definition}
+
+\begin{lemma}\label{lem:F-invol}
+$F^{\tau\tau\tau}_\tau$ is real, symmetric, and unitary; moreover it is an
+involution: $(F^{\tau\tau\tau}_\tau)^{2} = I$.
+\end{lemma}
+
+\begin{proof}[Step-by-step derivation]
+Symmetry and reality are immediate from the displayed matrix entries.
+Compute $F^{2}$ entrywise:
+\begin{align*}
+(F^{2})_{11} &= (\varphi^{-1})^{2} + (\varphi^{-1/2})^{2} = \varphi^{-2}+\varphi^{-1} = 1,\\
+(F^{2})_{12} &= \varphi^{-1}\!\cdot\!\varphi^{-1/2} + \varphi^{-1/2}\!\cdot\!(-\varphi^{-1})
+            = \varphi^{-3/2}-\varphi^{-3/2} = 0,\\
+(F^{2})_{21} &= \varphi^{-1/2}\!\cdot\!\varphi^{-1} + (-\varphi^{-1})\!\cdot\!\varphi^{-1/2}
+            = 0,\\
+(F^{2})_{22} &= (\varphi^{-1/2})^{2} + (-\varphi^{-1})^{2}
+            = \varphi^{-1}+\varphi^{-2} = 1,
+\end{align*}
+using $\varphi^{-2}+\varphi^{-1}=1$ (Lemma~\ref{lem:fib-arith}). So $F^{2} = I$,
+which also implies $F^{\dagger}F = F^{T}F = F^{2}=I$.
+\end{proof}
+
+\subsection{Binary refinement: two natural solutions}
+
+We now consider local binary refinements $\eta:Q\to Q\otimes Q$ for $Q = \one\oplus\tau$. Because $\Hom(\one,\tau) = 0$, the components of $\eta$ split as
+\[
+\eta_\one \in \Hom(\one,Q\otimes Q), \qquad
+\eta_\tau \in \Hom(\tau,Q\otimes Q),
+\]
+with general ansatz, in the splitting basis,
+\[
+\eta_\one = x\,v^{\one}_{\one,\one} + y\,v^{\one}_{\tau,\tau}, \qquad
+\eta_\tau = p\,v^{\tau}_{\tau,\one} + q\,v^{\tau}_{\one,\tau} + r\,v^{\tau}_{\tau,\tau}.
+\]
+The isometry condition $\eta^\dagger\eta = \id_Q$ becomes the pair of
+constraints
+\[
+|x|^{2}+|y|^{2}=1, \qquad |p|^{2}+|q|^{2}+|r|^{2}=1.
+\]
+There is no cross-condition because $\Hom(\one,\tau)=0$.
+
+\subsubsection{Quantum-dimension (PF) splitting}
+
+\begin{definition}[PF amplitudes]\label{def:PF}
+Set
+\[
+A^{a}_{bc} \;:=\; \sqrt{\frac{d_b\,d_c}{d_a\,D^{2}}} \qquad \text{(when $N_{bc}^a = 1$).}
+\]
+For Fibonacci this gives:
+$x_{\mathrm{PF}} = A^{\one}_{\one\one} = 1/D$,
+$y_{\mathrm{PF}} = A^{\one}_{\tau\tau} = \varphi/D$,
+$p_{\mathrm{PF}} = A^{\tau}_{\tau\one} = 1/D$,
+$q_{\mathrm{PF}} = A^{\tau}_{\one\tau} = 1/D$,
+$r_{\mathrm{PF}} = A^{\tau}_{\tau\tau} = \sqrt{\varphi}/D$.
+\end{definition}
+
+\begin{lemma}[PF is isometric]\label{lem:PF-isom}
+$\eta^{\mathrm{PF}}$ satisfies $\eta^\dagger\eta = \id_Q$.
+\end{lemma}
+
+\begin{proof}[Full derivation]
+Vacuum sector:
+\[
+x_{\mathrm{PF}}^{2}+y_{\mathrm{PF}}^{2}
+= \tfrac{1}{D^{2}}+\tfrac{\varphi^{2}}{D^{2}}
+= \tfrac{1+\varphi^{2}}{D^{2}}
+= \tfrac{D^{2}}{D^{2}}
+= 1.
+\]
+Tau sector:
+\[
+p_{\mathrm{PF}}^{2}+q_{\mathrm{PF}}^{2}+r_{\mathrm{PF}}^{2}
+= \tfrac{1}{D^{2}}+\tfrac{1}{D^{2}}+\tfrac{\varphi}{D^{2}}
+= \tfrac{2+\varphi}{D^{2}}
+= \tfrac{D^{2}}{D^{2}}
+= 1,
+\]
+using $D^{2}=2+\varphi$ from Lemma~\ref{lem:fib-qdim}.
+\end{proof}
+
+\subsubsection{Coassociative splitting}
+
+\begin{definition}[Coassociative ansatz]\label{def:coassoc}
+$\eta$ is \emph{coassociative} if $(\eta\otimes\id)\eta = (\id\otimes\eta)\eta$
+(up to the associator, which in Fibonacci is the F-symbol of
+Definition~\ref{def:fib-F}).
+\end{definition}
+
+\begin{theorem}[Positive coassociative solution]\label{thm:coassoc}
+There is a unique strictly positive real solution to the joint system
+\begin{align*}
+x^{2}+y^{2} &= 1, \tag{N1}\\
+2x^{2}+r^{2} &= 1, \tag{N2}\\
+p &= q = x, \tag{C1}\\
+r^{2} &= \varphi^{-3/2}\,xy, \tag{C2}
+\end{align*}
+namely
+\[
+x = \varphi^{-1},\quad
+y = \varphi^{-1/2},\quad
+p = q = \varphi^{-1},\quad
+r = \varphi^{-3/2}.
+\]
+\end{theorem}
+
+\begin{proof}[Derivation, all steps shown]
+\textbf{Step 1 (C1: derivation of $p = q = x$).}
+Consider the three-leg refinement $\tau \to \tau\otimes\tau\otimes\tau$
+along the configurations with exactly one $\tau$ leg in a child:
+$(\tau,\one,\one)$, $(\one,\tau,\one)$, $(\one,\one,\tau)$. Compute
+$(\eta\otimes\id)\eta_\tau$ on the $(\tau,\one,\one)$ component:
+\begin{align*}
+(\eta\otimes\id)\eta_\tau
+&\;\supset\; (\eta\otimes\id)(p\,v^{\tau}_{\tau,\one}) \\
+&\;=\; p\cdot (\eta_\tau \otimes \id_\one) v^{\tau}_{\tau,\one} \\
+&\;\supset\; p\cdot p\cdot (v^{\tau}_{\tau,\one}\otimes \id_\one)
+   \quad\text{(only the } v^{\tau}_{\tau,\one}\text{ piece of }\eta_\tau\text{ contributes to }(\tau,\one,\one)\text{)}.
+\end{align*}
+So the $(\tau,\one,\one)$-coefficient from left-grouping is $p^{2}$.
+For right-grouping, $(\id\otimes\eta)\eta_\tau$ on $(\tau,\one,\one)$:
+\begin{align*}
+(\id\otimes\eta)\eta_\tau
+&\;\supset\; (\id\otimes\eta)(p\,v^{\tau}_{\tau,\one}) \\
+&\;=\; p\cdot (\id_\tau\otimes \eta_\one)v^{\tau}_{\tau,\one} \\
+&\;\supset\; p\cdot x \cdot (\id_\tau \otimes v^{\one}_{\one,\one})
+   \quad\text{(only the } v^{\one}_{\one,\one}\text{ piece of }\eta_\one\text{ contributes to }(\one,\one)\text{)},
+\end{align*}
+giving $p\,x$. Equating: $p^{2} = p\,x$, so $p = x$ (using $p\ne 0$;
+$p=0$ would also be consistent but is the trivial solution and is killed by
+the isometry constraint together with the next steps).
+
+By the symmetric calculation on the $(\one,\one,\tau)$ component
+($\tau \to \one\otimes\one\otimes\tau$): left grouping gives
+$x\,q$ (insert $\eta_\one$ first, then $\eta_\tau$); right grouping gives
+$q^{2}$. Equating: $q^{2} = x\,q$, so $q = x$.
+
+Hence $p = q = x$.
+
+\textbf{Step 2 (C2: the $\tau\to\tau\tau\tau$ channel).}
+The two parenthesisations of the iterated splitting $\tau\to\tau\otimes\tau\otimes\tau$ are
+$(\eta\otimes\id)\eta_\tau$ and $(\id\otimes\eta)\eta_\tau$. Each produces a
+two-component vector in $\Hom(\tau,\tau\otimes\tau\otimes\tau)\cong\mathbb{C}^{2}$, indexed
+by the intermediate channel $m\in\{\one,\tau\}$. A direct computation (using
+$p=q=x$ from Step~1) gives both vectors equal to
+$\begin{pmatrix} x y \\ r^{2}\end{pmatrix}$ in their respective bases.
+Equality of the same morphism in the two bases requires the F-matrix to fix
+this vector:
+\[
+\begin{pmatrix} xy\\ r^{2}\end{pmatrix}
+= F^{\tau\tau\tau}_\tau \begin{pmatrix} xy\\ r^{2}\end{pmatrix}.
+\]
+Writing out the second row,
+\[
+r^{2} = \varphi^{-1/2}\,xy + (-\varphi^{-1})\,r^{2}
+\;\Longrightarrow\;
+r^{2}(1+\varphi^{-1}) = \varphi^{-1/2}\,xy
+\;\Longrightarrow\;
+r^{2}\,\frac{\varphi+1}{\varphi} = \varphi^{-1/2}\,xy.
+\]
+Use $\varphi+1=\varphi^{2}$:
+\[
+r^{2}\,\frac{\varphi^{2}}{\varphi} = r^{2}\varphi = \varphi^{-1/2}\,xy
+\;\Longrightarrow\;
+r^{2} = \varphi^{-3/2}\,xy.
+\]
+(The first row gives the same identity. Derivation:
+$xy = \varphi^{-1}xy + \varphi^{-1/2}r^{2}$, so
+$xy\,(1-\varphi^{-1}) = \varphi^{-1/2}r^{2}$. By
+Lemma~\ref{lem:fib-arith}, $\varphi^{-1}+\varphi^{-2}=1$, hence
+$1-\varphi^{-1}=\varphi^{-2}$. Thus
+$xy\,\varphi^{-2} = \varphi^{-1/2}r^{2}$, i.e.\
+$r^{2} = xy\,\varphi^{-3/2}$, the same identity.)
+
+\textbf{Step 3 (substitute into N1, N2).} From N1, $y^{2}=1-x^{2}$; from N2,
+$r^{2}=1-2x^{2}$. Plug into C2 squared, i.e.\ $r^{4}=\varphi^{-3}x^{2}y^{2}$:
+\[
+(1-2x^{2})^{2} \;=\; \varphi^{-3}\,x^{2}(1-x^{2}).
+\]
+Expand the left side: $1 - 4x^{2} + 4x^{4}$.
+Expand the right side: $\varphi^{-3}x^{2} - \varphi^{-3}x^{4}$.
+Bring to one side:
+\[
+4x^{4} + \varphi^{-3}x^{4} - 4x^{2} - \varphi^{-3}x^{2} + 1 = 0,
+\quad\text{i.e.}\quad
+(4+\varphi^{-3})x^{4} - (4+\varphi^{-3})x^{2} + 1 = 0.
+\]
+Let $u := x^{2}$ and $A := 4+\varphi^{-3}$. The quadratic $Au^{2}-Au+1=0$ has
+roots $u = \frac{A\pm\sqrt{A^{2}-4A}}{2A} = \frac{1\pm\sqrt{1-4/A}}{2}$.
+
+\textbf{Step 4 (evaluate $A$).} Using
+$\varphi^{-3} = \varphi^{-1}\cdot\varphi^{-2} = (\varphi-1)(2-\varphi)
+= 2\varphi - \varphi^{2} - 2 + \varphi = 3\varphi - (\varphi+1) - 2
+= 2\varphi - 3$. So $A = 4 + 2\varphi - 3 = 1 + 2\varphi$, and
+$4/A = 4/(1+2\varphi)$. Multiply numerator and denominator by
+$(1-2\varphi^{-1})$ \dots a cleaner route: simply test $x = \varphi^{-1}$,
+i.e.\ $u = \varphi^{-2} = 2-\varphi$:
+\[
+A u^{2} - A u + 1
+= (1+2\varphi)(2-\varphi)^{2} - (1+2\varphi)(2-\varphi) + 1.
+\]
+Compute $(2-\varphi)^{2} = 4 - 4\varphi + \varphi^{2}
+= 4 - 4\varphi + (\varphi+1) = 5 - 3\varphi$. Then
+$(1+2\varphi)(5-3\varphi) = 5 - 3\varphi + 10\varphi - 6\varphi^{2}
+= 5 + 7\varphi - 6(\varphi+1) = 5 + 7\varphi - 6\varphi - 6 = \varphi - 1$.
+And $(1+2\varphi)(2-\varphi) = 2 - \varphi + 4\varphi - 2\varphi^{2}
+= 2 + 3\varphi - 2(\varphi+1) = 2 + 3\varphi - 2\varphi - 2 = \varphi$.
+Hence
+\[
+Au^{2}-Au+1 = (\varphi - 1) - \varphi + 1 = 0. \checkmark
+\]
+So $x^{2} = \varphi^{-2}$ is indeed a root. The other root $u_{+}$ would give
+$y^{2}<0$ or $r^{2}<0$; we discard it as not real-positive. Hence
+\[
+x = \varphi^{-1}.
+\]
+
+\textbf{Step 5 (recover $y$ and $r$).} From N1,
+$y^{2} = 1 - x^{2} = 1 - \varphi^{-2} = \varphi^{-1}$ (Lemma~\ref{lem:fib-arith}),
+so $y = \varphi^{-1/2}$.
+From N2, $r^{2} = 1 - 2\varphi^{-2}$. Using
+$\varphi^{-1}+\varphi^{-2}=1$, we get
+$1 - 2\varphi^{-2} = (\varphi^{-1}+\varphi^{-2}) - 2\varphi^{-2}
+= \varphi^{-1}-\varphi^{-2}$. Factor:
+$\varphi^{-1}-\varphi^{-2} = \varphi^{-2}(\varphi - 1) = \varphi^{-2}\cdot\varphi^{-1}
+= \varphi^{-3}$. So $r^{2} = \varphi^{-3}$, hence $r = \varphi^{-3/2}$.
+The check $r^{2} = \varphi^{-3/2}xy = \varphi^{-3/2}\cdot\varphi^{-1}\cdot\varphi^{-1/2}
+= \varphi^{-3}$ is consistent.
+\end{proof}
+
+\begin{warning}[PF $\neq$ coassociative]\label{warn:PF-coassoc}
+The PF and coassociative solutions are numerically distinct: e.g.\
+$x_{\mathrm{PF}} = 1/\sqrt{2+\varphi} \approx 0.5257$ while
+$x_{\mathrm{coassoc}} = \varphi^{-1} \approx 0.6180$. Chat~2 explicitly
+derives both: PF from quantum-dimension/string-net weighting, coassoc from
+the F-symbol coassociativity constraint. Chat~3 \S1 separately derives the
+coassoc one from the dagger-special algebra
+$\Delta = \varphi^{-1}m^\dagger$ (see \S\ref{sec:fib-algebra}, and note
+Warning~\ref{warn:not-Frobenius}: ``dagger-special'' is weaker than
+``Frobenius-special''). The two amplitudes are answers to different
+coherence requirements; the choice matters and should be stated explicitly
+in any downstream computation.
+\end{warning}
+
+\subsection{Fibonacci as the non-degenerate dagger-special algebra}\label{sec:fib-algebra}
+
+This subsection instantiates the general algebra-object framework of
+\S\ref{sec:algobj} for $\Cc = \Fib$, $p = \tau$. The data below realises
+\emph{the non-degenerate branch} of Theorem~\ref{thm:branches}(b) in the
+Chat~3 gauge ($\lambda = \varphi^{2}$), and the resulting
+$\Delta = \varphi^{-1}m^{\dagger}$ is the canonical
+algebra-derived refinement of Proposition~\ref{prop:Delta-isom}.
+
+\begin{definition}[Fibonacci multiplication]\label{def:fib-mult}
+On $A = \one\oplus\tau$, define $m:A\otimes A\to A$ by
+\[
+m(\one\otimes\one)=\one,\quad
+m(\one\otimes\tau)=\tau,\quad
+m(\tau\otimes\one)=\tau,
+\]
+and on $\tau\otimes\tau$, decompose by the splitting basis:
+\[
+m\big|_{\tau\otimes\tau}
+\;=\;
+m^{\one}_{\tau\tau}\,(v^{\one}_{\tau,\tau})^{\dagger}
++ m^{\tau}_{\tau\tau}\,(v^{\tau}_{\tau,\tau})^{\dagger},
+\qquad
+m^{\one}_{\tau\tau} = \sqrt{\varphi},\quad m^{\tau}_{\tau\tau} = \varphi^{-1/2}.
+\]
+\end{definition}
+
+\begin{lemma}[Multiplication is associative]\label{lem:fib-assoc}
+The multiplication $m$ of Definition~\ref{def:fib-mult} satisfies
+$m\circ(m\otimes\id_A) = m\circ(\id_A\otimes m)$ after applying the F-symbol
+of Definition~\ref{def:fib-F}, i.e.\ it is associative as an algebra
+object in $\Fib$.
+\end{lemma}
+\begin{proof}[Derivation]
+The only nontrivial check is the $\tau\otimes\tau\otimes\tau\to\tau$ channel.
+Both bracketings produce a vector $\bigl(m^{\one}_{\tau\tau}\,m^\tau_{\one\tau},\,
+m^{\tau}_{\tau\tau}\cdot m^\tau_{\tau\tau}\bigr) = (\sqrt\varphi,\,\varphi^{-1})$
+in their respective bases. Apply $F^{\tau\tau\tau}_\tau$:
+\begin{align*}
+F\begin{pmatrix}\sqrt\varphi\\ \varphi^{-1}\end{pmatrix}_{1}
+&= \varphi^{-1}\cdot\sqrt\varphi + \varphi^{-1/2}\cdot\varphi^{-1}
+= \varphi^{-1/2}+\varphi^{-3/2}
+= \varphi^{-3/2}(\varphi+1)
+= \varphi^{-3/2}\cdot\varphi^{2}
+= \varphi^{1/2} = \sqrt\varphi,\\
+F\begin{pmatrix}\sqrt\varphi\\ \varphi^{-1}\end{pmatrix}_{2}
+&= \varphi^{-1/2}\sqrt\varphi + (-\varphi^{-1})\varphi^{-1}
+= 1 - \varphi^{-2}
+\stackrel{\text{Lem.\ref{lem:fib-arith}}}{=} \varphi^{-1}.
+\end{align*}
+So $F(\sqrt\varphi,\varphi^{-1})^{T} = (\sqrt\varphi,\varphi^{-1})^{T}$; the
+two bracketings give the same morphism. On channels containing $\one$ both
+sides reduce to $m^\tau_{\tau\tau}\cdot m^\tau_{\one\tau} = \varphi^{-1/2}$ which agrees
+trivially.
+\end{proof}
+
+\begin{lemma}[Multiplication is special]\label{lem:fib-special}
+$mm^{\dagger} = \varphi^{2}\,\id_{A}$.
+\end{lemma}
+
+\begin{proof}[Derivation]
+$mm^\dagger$ is block-diagonal in the simple-charge basis $\{\one,\tau\}$ of
+$A$. The $\one$-block sums squared amplitudes from $A\otimes A\to\one$:
+the only contributions come from $\one\otimes\one\to\one$ (amplitude 1) and
+the $\one$-channel of $\tau\otimes\tau$ (amplitude $\sqrt\varphi$), giving
+$1 + (\sqrt\varphi)^{2} = 1+\varphi = \varphi^{2}$.
+The $\tau$-block similarly receives contributions $1$ ($\one\otimes\tau\to\tau$),
+$1$ ($\tau\otimes\one\to\tau$), and $\varphi^{-1/2}$ ($\tau\otimes\tau\to\tau$),
+giving $1+1+\varphi^{-1} = 2+\varphi^{-1}$. We must show $2+\varphi^{-1} = \varphi^{2}$.
+Indeed $\varphi^{2} = \varphi + 1$ and $\varphi = 1+\varphi^{-1}$, so
+$\varphi+1 = 2+\varphi^{-1}$. \checkmark
+\end{proof}
+
+\begin{corollary}\label{cor:Delta-coassoc}
+$\Delta := \varphi^{-1}m^\dagger : A\to A\otimes A$ is the coassociative
+isometric splitting of Theorem~\ref{thm:coassoc}. Explicitly,
+\[
+\Delta(\one) = \varphi^{-1}\one\otimes\one + \varphi^{-1/2}\,v^{\one}_{\tau,\tau},
+\qquad
+\Delta(\tau) = \varphi^{-1}\tau\otimes\one + \varphi^{-1}\one\otimes\tau
+                 + \varphi^{-3/2}\,v^{\tau}_{\tau,\tau}.
+\]
+\end{corollary}
+
+\begin{proof}[Derivation]
+Read off the components of $m^{\dagger}$ from
+Definition~\ref{def:fib-mult}: $m^\dagger\one$ has amplitudes
+$1$ on $\one\otimes\one$ and $\sqrt\varphi$ on the $\one$-channel of
+$\tau\otimes\tau$; $m^\dagger\tau$ has amplitudes $1$ on $\one\otimes\tau$,
+$1$ on $\tau\otimes\one$, $\varphi^{-1/2}$ on the $\tau$-channel of
+$\tau\otimes\tau$. Multiplying by $\varphi^{-1}$ gives the displayed numbers,
+which match Theorem~\ref{thm:coassoc} ($x=\varphi^{-1}$, $y=\varphi^{-1/2}$,
+$p=q=\varphi^{-1}$, $r=\varphi^{-3/2}$).
+\end{proof}
+
+\subsection{The morphism $E$ must have a $\tau\otimes\tau$ component on $\one$}\label{sec:splitting}
+
+\begin{warning}[Coherence forbids restricting $E|_{\one}$ to product-of-units]\label{warn:vac}
+\emph{Restatement note}: An earlier draft (following the language of the
+chats) phrased this warning as ``$\one$ must be re-interpreted as total
+vacuum charge that contains unresolved $\tau\tau$ pairs''. That phrasing is
+categorically incoherent --- $\one$ is the simple unit object and ``contains''
+nothing. The actual content is a constraint on the \emph{morphism} $E$,
+spelled out below.
+
+Let $E_I: A_I\to A_{J_1}\otimes\cdots\otimes A_{J_r}$ be a local refinement
+morphism (Definition~\ref{def:refmap}). Decompose the $\one$-component of $E$
+into channels via the splitting basis:
+\[
+E_I|_{\one} \;=\; \sum_{c_1,\dots,c_r}
+       \xi^{\one}_{c_1\cdots c_r}\,v^{\one}_{c_1,\dots,c_r}.
+\]
+The ``$E(\one) = \otimes\one$'' restriction asserts $\xi^{\one}_{c_1\cdots c_r} = 0$
+for every multi-index $(c_1,\dots,c_r)$ that is not the all-$\one$ tuple. We
+claim: if additionally $E|_\tau$ has a nonzero component in the
+$\tau\to\tau\otimes\tau$ ($\tau$-intermediate) channel, then the two
+parenthesisations of a three-cell refinement disagree.
+
+Concretely: take $I = A\cup B\cup C$ and trace the
+$\tau\to\tau\otimes\tau\otimes\tau$ amplitude. The $(AB)\mid C$ grouping
+produces a vector in $\mathbb{C}\,e_\tau$
+(intermediate channel $\tau$ after the first split), since the only path
+involves $\tau\to\tau\otimes\tau$ then $\tau\to\tau\otimes\one$ (using
+$E(\one)$-restriction to forbid $\one\to\tau\otimes\tau$). The
+$A\mid(BC)$ grouping produces a vector in $\mathbb{C}\,f_\tau$ similarly.
+Under the F-symbol change of basis (Definition~\ref{def:fib-F}):
+\[
+f_\tau \;=\; \varphi^{-1/2}\,e_\one \;-\; \varphi^{-1}\,e_\tau,
+\]
+which is not proportional to $e_\tau$. So the two parenthesisations cannot
+both equal the same morphism unless both vanish. In short:
+\[
+\boxed{\;
+\bigl(\xi^{\one}_{c_1\cdots c_r} = 0\text{ for all non-all-}\one\bigr)
+\;\;\text{and}\;\;
+\bigl(E|_\tau\text{ has nonzero }\tau\otimes\tau\text{ channel}\bigr)
+\;\Longrightarrow\; \text{incoherence}.\;}
+\]
+To allow genuine $\tau\to\tau\tau$ splitting, $E|_\one$ must have a nonzero
+$v^{\one}_{\tau,\tau}$ component --- equivalently the algebra parameter $y$
+(equivalently $a$, in the algebra-object framework) must be nonzero. This is
+what the chats call ``re-interpreting $\one$ as total vacuum charge''; the
+correct mathematical statement is the constraint on $E$ above.
+\end{warning}
+
+\subsection{Geometry-coherent Fibonacci splitting via cell partition functions}
+
+\begin{definition}[Cell partition functions]\label{def:Zfunc}
+Pair the algebra $A = \one\oplus\tau$ with positive real-valued functions
+$Z_\one,Z_\tau:[0,\infty)\to(0,\infty)$ satisfying $Z_\one(0)=1$,
+$Z_\tau(0)=0$, and the convolutional identities
+\begin{align}
+Z_\one(x+y) &= Z_\one(x)Z_\one(y) + \varphi\,Z_\tau(x)Z_\tau(y),
+\label{eq:Z1conv}\\
+Z_\tau(x+y) &= Z_\tau(x)Z_\one(y) + Z_\one(x)Z_\tau(y) + \varphi^{-1}Z_\tau(x)Z_\tau(y).
+\label{eq:Ztconv}
+\end{align}
+A one-parameter solution is
+\begin{equation}\label{eq:Zexp}
+Z_\one(L) = \varphi^{-2}e^{\rho\varphi L} + \varphi^{-1}e^{-\rho L}, \qquad
+Z_\tau(L) = \varphi^{-2}\bigl(e^{\rho\varphi L} - e^{-\rho L}\bigr),
+\end{equation}
+with $\rho>0$ a density scale.
+\end{definition}
+
+\begin{remark}
+The convolutional identities \eqref{eq:Z1conv}--\eqref{eq:Ztconv} are exactly
+the multiplication structure constants of $m$ (Definition~\ref{def:fib-mult},
+modulo the normalising $\varphi$ from Lemma~\ref{lem:fib-special}), with
+amplitudes given by the splitting basis squared $|m^{c}_{ab}|^{2}\in
+\{1,\varphi,\varphi^{-1}\}$. Equations~\eqref{eq:Zexp} can be verified
+directly using $\varphi+\varphi^{-1}=\sqrt 5$ if needed; we omit that check.
+\end{remark}
+
+\begin{definition}[$r$-child Fibonacci refinement]\label{def:rchild}
+Let $I = J_1\cup\cdots\cup J_r$ with $\ell_i := \ell(J_i)$, $L := \ell(I)$.
+For each $a = (a_1,\dots,a_r)\in\{\one,\tau\}^{r}$ and each splitting-basis
+vector $v^{c}_{a,\alpha}\in\Hom(c,a_1\otimes\cdots\otimes a_r)$, let
+$M^{c}_{a,\alpha}$ be the matrix elements of the $r$-ary Fibonacci
+multiplication $m^{(r)}:A^{\otimes r}\to A$ in the splitting basis. Define
+\[
+E_{I\to(J_1,\dots,J_r)}(c)
+\;:=\;
+\frac{1}{\sqrt{Z_c(L)}}\,
+\sum_{a,\alpha} M^{c}_{a,\alpha}
+\sqrt{\prod_{i=1}^{r} Z_{a_i}(\ell_i)}\;v^{c}_{a,\alpha}.
+\]
+\end{definition}
+
+\begin{proposition}[Isometry and coherence]\label{prop:rchild}
+\begin{enumerate}[label=(\roman*)]
+\item Isometry on each charge sector $c$ is equivalent to the identity
+\[
+Z_c(L) \;=\; \sum_{a,\alpha} |M^{c}_{a,\alpha}|^{2}\,
+\prod_{i=1}^{r}Z_{a_i}(\ell_i).
+\]
+\item Coherence under regrouping
+$I=B_1\cup\cdots\cup B_s$, $B_q = J_{q,1}\cup\cdots\cup J_{q,r_q}$,
+holds because the intermediate $Z_{b_q}(\ell(B_q))$ factors cancel
+between numerator and denominator while the $M^{c}_{a,\alpha}$ compose by
+associativity of $m$ (Lemma~\ref{lem:fib-assoc}).
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}[Derivation of (i) by induction on $r$]
+For $r=1$ the identity reads $Z_c(L) = |M^{c}_{c}|^{2}\,Z_c(L)$ (only the
+trivial channel $a = (c)$ contributes, with $M^{c}_{c} = 1$ for the unit),
+which is trivially true.
+
+For $r=2$, the identity is precisely the convolutional law
+\eqref{eq:Z1conv} for $c=\one$ and \eqref{eq:Ztconv} for $c=\tau$, after
+matching coefficients: the $\one$ sector gives $Z_\one(L) =
+Z_\one(x)Z_\one(y) + |m^\one_{\tau\tau}|^{2}\,Z_\tau(x)Z_\tau(y)$
+$= Z_\one(x)Z_\one(y) + \varphi\,Z_\tau(x)Z_\tau(y)$, matching
+\eqref{eq:Z1conv}.
+
+For $r > 2$, group the first $r-1$ children into one block $B$ of length
+$L' = \ell_1 + \cdots + \ell_{r-1}$, and use the $r=2$ identity on
+$L = L' + \ell_r$:
+\[
+Z_c(L) = \sum_{b,\alpha} |M^{c}_{(b,a_r),\alpha}|^{2}\,Z_b(L')\,Z_{a_r}(\ell_r).
+\]
+By the inductive hypothesis applied to each block-charge $b$,
+\[
+Z_b(L') = \sum_{a',\beta}|M^{b}_{a',\beta}|^{2}\,\prod_{i=1}^{r-1}Z_{a_i}(\ell_i).
+\]
+Substituting and using associativity of the multiplication
+(Lemma~\ref{lem:fib-assoc}) to combine the per-vertex amplitudes
+$M^{c}_{(b,a_r),\alpha}\cdot M^{b}_{a',\beta}$ into a single $r$-leg
+amplitude $M^{c}_{a,\gamma}$ yields the displayed $r$-leg identity.
+\end{proof}
+
+\subsection{Concrete two-child Fibonacci formulae}
+
+\begin{lemma}[Binary refinement, $I=J\cup K$]\label{lem:binary-Z}
+With $x := \ell(J)$, $y := \ell(K)$, $L := x+y$, and using the multiplication
+amplitudes $m^{\one}_{\tau\tau} = \sqrt\varphi$, $m^{\tau}_{\tau\tau} = \varphi^{-1/2}$
+of Definition~\ref{def:fib-mult}:
+\begin{align*}
+E_{I\to(J,K)}(\one)
+&= \sqrt{\frac{Z_\one(x)\,Z_\one(y)}{Z_\one(L)}}\,\one_J\otimes\one_K
+\;+\; \sqrt\varphi\,\sqrt{\frac{Z_\tau(x)\,Z_\tau(y)}{Z_\one(L)}}\,(v^{\one}_{\tau\tau})_{J,K},\\[2pt]
+E_{I\to(J,K)}(\tau)
+&= \sqrt{\frac{Z_\tau(x)\,Z_\one(y)}{Z_\tau(L)}}\,\tau_J\otimes\one_K
++ \sqrt{\frac{Z_\one(x)\,Z_\tau(y)}{Z_\tau(L)}}\,\one_J\otimes\tau_K
++ \varphi^{-1/2}\sqrt{\frac{Z_\tau(x)\,Z_\tau(y)}{Z_\tau(L)}}\,(v^{\tau}_{\tau\tau})_{J,K}.
+\end{align*}
+In the dilute regime $Z_\tau(\ell)\sim\rho\ell$, $Z_\one(\ell)\sim 1$, the
+one-particle localisation amplitudes reduce to $\sqrt{\ell(J)/\ell(I)}$ (cf.\
+Definition~\ref{def:lenref}).
+\end{lemma}
+
+\begin{proof}[Isometry check, fully expanded]
+The sum of squared amplitudes in the $\one$-sector is
+\[
+\frac{Z_\one(x)Z_\one(y)}{Z_\one(L)} + \varphi\,\frac{Z_\tau(x)Z_\tau(y)}{Z_\one(L)}
+= \frac{Z_\one(x)Z_\one(y) + \varphi\,Z_\tau(x)Z_\tau(y)}{Z_\one(L)} = 1,
+\]
+where the last step uses the convolutional identity~\eqref{eq:Z1conv} with
+$x+y = L$. Similarly, in the $\tau$-sector,
+\[
+\frac{Z_\tau(x)Z_\one(y) + Z_\one(x)Z_\tau(y) + \varphi^{-1}Z_\tau(x)Z_\tau(y)}{Z_\tau(L)}
+= \frac{Z_\tau(L)}{Z_\tau(L)} = 1,
+\]
+by~\eqref{eq:Ztconv}.
+The dilute reduction: $\sqrt{Z_\tau(x)Z_\one(y)/Z_\tau(L)}
+\sim \sqrt{\rho x\cdot 1/(\rho L)} = \sqrt{x/L} = \sqrt{\ell(J)/\ell(I)}$.
+\end{proof}
+
+\begin{warning}[Amplitudes, not probabilities]
+The literal text of Chat~4 (the source of these formulas) displays the
+probabilities $Z_\one(x)Z_\one(y)/Z_\one(L)$ rather than the amplitudes
+$\sqrt{Z_\one(x)Z_\one(y)/Z_\one(L)}$. The unsquared form
+is what is needed for an isometric morphism in
+$\Hom_\Cc(c,\,A_J\otimes A_K)$; this is also the form consistent with
+Definition~\ref{def:rchild} (which contains the explicit $\sqrt{\prod_i Z_{a_i}(\ell_i)}$)
+and with the dilute limit $\sqrt{\ell(J)/\ell(I)}$. The square-rooted formulas above
+are the corrected version.
+\end{warning}
+
+\section{Worked example C: Ising / Temperley--Lieb at $\delta=\sqrt 2$}\label{sec:ising-data}
+
+\subsection{Algebraic input}
+
+\begin{definition}[Ising fusion category]\label{def:ising}
+Ising has $\Irr(\Ising) = \{\one, \sigma, \psi\}$ with fusion
+\[
+\sigma\otimes\sigma = \one\oplus\psi, \qquad
+\sigma\otimes\psi = \psi\otimes\sigma = \sigma, \qquad
+\psi\otimes\psi = \one.
+\]
+Quantum dimensions: $d_\one=d_\psi=1$, $d_\sigma=\sqrt 2$ (from $d_\sigma^{2} = 1+1$),
+total quantum dimension $D = \sqrt{1+2+1} = 2$.
+\end{definition}
+
+\begin{definition}[Ising F-symbol]\label{def:ising-F}
+The single nontrivial F-symbol relevant to the Temperley--Lieb chain is
+\[
+F^{\sigma\sigma\sigma}_{\sigma}
+\;=\;
+\frac{1}{\sqrt 2}\begin{pmatrix} 1 & 1\\ 1 & -1\end{pmatrix},
+\]
+acting on $\Hom(\sigma,\sigma\otimes\sigma\otimes\sigma)\cong\mathbb{C}^{2}$ with the
+intermediate channels $\{\one,\psi\}$.
+\end{definition}
+
+\subsection{Dense $\sigma$-anyon Hilbert space and the $A_3$ RSOS chain}
+
+\begin{definition}[Dense sector]\label{def:dense}
+Take a one-dimensional lattice $\{1,\dots,N\}$ and restrict to the
+configuration $a_1=\cdots=a_N=\sigma$. The \emph{dense $\sigma$-Hilbert
+space in charge sector $c$} is
+\[
+\Hh_N^{\mathrm{dense}}(c) \;:=\; \Hom_{\Ising}(c,\,\sigma^{\otimes N}).
+\]
+A basis is a \emph{fusion path} $(x_0,x_1,\dots,x_N)$ with $x_0=\one$,
+$x_N=c$, and $x_i\subset x_{i-1}\otimes\sigma$.
+\end{definition}
+
+\begin{lemma}[Path adjacency]\label{lem:path-adj}
+The allowed $x$-values form the $A_3$ Dynkin diagram $\one - \sigma - \psi$.
+\end{lemma}
+
+\begin{proof}[Derivation]
+From $\one\otimes\sigma=\sigma$, $\sigma\otimes\sigma=\one\oplus\psi$,
+$\psi\otimes\sigma=\sigma$, an adjacency from $x_{i-1}$ to $x_i$ exists iff
+$x_i\subset x_{i-1}\otimes\sigma$. So $\one\!-\!\sigma$ and $\sigma\!-\!\psi$
+are the only edges. Identifying labels with height integers
+$1\leftrightarrow\one$, $2\leftrightarrow\sigma$,
+$3\leftrightarrow\psi$ gives the $A_3$ RSOS condition $|h_i-h_{i-1}|=1$.
+\end{proof}
+
+\subsection{Temperley--Lieb generators on the dense chain}
+
+\begin{definition}[Categorical TL generator]\label{def:TL-cat}
+Let $P_{i}^{(\one)}$ be the orthogonal projector onto the
+$\one$-fusion channel of $\sigma_i\otimes\sigma_{i+1}$. Define
+\[
+e_i \;:=\; \sqrt 2 \;P_i^{(\one)} \;=\; d_\sigma\,P_i^{(\one)}.
+\]
+\end{definition}
+
+\begin{theorem}[TL relations]\label{thm:TL-rel}
+The operators $\{e_i\}$ satisfy the Temperley--Lieb relations at
+$\delta = \sqrt 2$:
+\[
+e_i^{2} = \sqrt 2\,e_i, \quad e_i e_{i\pm1} e_i = e_i, \quad
+e_i e_j = e_j e_i \;\text{ for } |i-j|\ge 2.
+\]
+\end{theorem}
+\noindent\textit{Proof sketch:} $e_i^{2}=d_\sigma^{2}P_i^{(\one)}=\sqrt 2\,e_i$
+by idempotency of $P$. The braid-like relation is the $F^{\sigma\sigma\sigma}_\sigma$
+identity of Definition~\ref{def:ising-F}. Distant commutativity is local
+support. Full step-by-step proof is a standard skein-theoretic argument; we
+leave it as a directly verifiable check rather than expand all matrix entries.
+
+\subsection{Explicit equivalence to the critical transverse-field Ising chain}
+
+Place $N=2M$ TL sites with periodic boundary conditions. Use Lemma~\ref{lem:path-adj}
+to fix even heights $h_{2r}=2$ and let $h_{2r-1}\in\{1,3\}$, encoded by a
+spin via $|+\rangle_r := |h_{2r-1}=1\rangle$, $|-\rangle_r := |h_{2r-1}=3\rangle$;
+write $X_r,Z_r$ for the corresponding Pauli operators.
+
+\begin{lemma}[Odd-site TL generator]\label{lem:e-odd}
+$e_{2r-1} = \frac{1}{\sqrt 2}(1+X_r)$.
+\end{lemma}
+\begin{proof}[Derivation]
+$e_{2r-1}$ acts on $h_{2r-1}\in\{1,3\}$ with both neighbours fixed at $h=2$.
+The matrix entries from Definition~\ref{def:TL-cat} in the basis $\{|h=1\rangle,|h=3\rangle\}$
+are $(e_{2r-1})_{hh'} = \delta_{h_{i-1},h_{i+1}}\sqrt{v_h v_{h'}}/v_{h_{i-1}}$
+with Perron--Frobenius vector $v=(1,\sqrt 2,1)$. Both $h,h'\in\{1,3\}$ give
+$v_h v_{h'}=1$ and $v_{h_{i-1}}=v_2=\sqrt 2$, so the matrix is
+$\frac{1}{\sqrt 2}\bigl(\begin{smallmatrix}1&1\\1&1\end{smallmatrix}\bigr)$.
+This equals $(1+X_r)/\sqrt 2$ because $X_r=\bigl(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\bigr)$ in the same basis.
+\end{proof}
+
+\begin{lemma}[Even-site TL generator]\label{lem:e-even}
+$e_{2r} = \frac{1}{\sqrt 2}(1 + Z_r Z_{r+1})$.
+\end{lemma}
+\begin{proof}[Derivation]
+$e_{2r}$ acts on $h_{2r}$, forced to $2$, with neighbours
+$h_{2r-1},h_{2r+1}\in\{1,3\}$. By the same Perron--Frobenius formula it is
+nonzero only when $h_{2r-1}=h_{2r+1}$; in that case it returns the same
+height with weight $\sqrt 2$. Equivalently it acts as $\sqrt 2$ times the
+projector onto $h_{2r-1}=h_{2r+1}$. In Pauli language,
+$Z_rZ_{r+1}$ equals $+1$ if $h_{2r-1}=h_{2r+1}$ and $-1$ otherwise, so the
+projector is $(1+Z_rZ_{r+1})/2$ and $e_{2r}=\sqrt 2\cdot(1+Z_rZ_{r+1})/2
+=(1+Z_rZ_{r+1})/\sqrt 2$.
+\end{proof}
+
+\begin{theorem}[TL Hamiltonian = critical TFI]\label{thm:TFI}
+Take the dense $\sigma$-anyon chain of length $N = 2M$ with periodic
+boundary conditions (so the TL generators $e_1,\dots,e_{2M}$ are indexed
+modulo $2M$). The uniform TL Hamiltonian $H = -\sum_{i=1}^{2M} e_i$,
+restricted to the dense $\sigma$-sector and rewritten via
+Lemmas~\ref{lem:e-odd}--\ref{lem:e-even}, becomes
+\[
+H_{2M}^{\mathrm{TL}} \;=\;
+-\sqrt 2\,M - \frac{1}{\sqrt 2}\sum_{r=1}^{M}(X_r + Z_r Z_{r+1}),
+\]
+with $Z_{M+1} \equiv Z_1$ (the periodic wrap). Dropping the additive
+constant, this is (up to an overall factor $1/\sqrt 2$) the critical
+\emph{transverse-field Ising} (TFI) Hamiltonian
+$-\sum_{r}(X_r + Z_r Z_{r+1})$ with equal transverse field and Ising
+coupling. For open boundary conditions ($e_1,\dots,e_{2M-1}$ only) the
+final $Z_M Z_{M+1}$ coupling is absent.
+\end{theorem}
+
+\begin{proof}[Derivation]
+Sum: $H = -\sum_{r=1}^{M} e_{2r-1} - \sum_{r=1}^{M} e_{2r}
+= -\tfrac{1}{\sqrt 2}\sum_r(1+X_r) - \tfrac{1}{\sqrt 2}\sum_r(1+Z_rZ_{r+1})$.
+Collect: $-\tfrac{2M}{\sqrt 2} = -\sqrt 2 M$; the remaining terms are
+$-\tfrac{1}{\sqrt 2}\sum_r(X_r+Z_rZ_{r+1})$.
+\end{proof}
+
+\subsection{Explicit Koo--Saleur data on the Ising/TL chain}\label{sec:KS-ising}
+
+Chat~1 \S10 records the explicit constants needed for the Koo--Saleur
+construction of lattice Virasoro generators on the dense $\sigma$-anyon
+chain. They are collected here for completeness and reference; the
+underlying convergence results are flagged \unchecked\ in
+Conjecture~\ref{conj:KS}.
+
+\begin{definition}[Koo--Saleur scalars at TL parameter $\gamma$]\label{def:KS-scalars}
+For the TL chain at $\delta = 2\cos\gamma$, let
+\[
+\kappa \;:=\; \frac{\gamma}{\pi\sin\gamma}, \qquad
+v \;:=\; \frac{\pi\sin\gamma}{\gamma},
+\]
+the latter being the sound velocity in TL-site units. For Ising
+$\gamma = \pi/4$ and $\delta = \sqrt 2$, computation gives
+$\sin(\pi/4) = \sqrt 2 / 2$, so
+\[
+\kappa_{\mathrm{Ising}} \;=\; \frac{\pi/4}{\pi\cdot \sqrt 2/2}
+\;=\; \frac{1}{2\sqrt 2}, \qquad
+v_{\mathrm{Ising}} \;=\; \frac{\pi\cdot\sqrt 2/2}{\pi/4} \;=\; 2\sqrt 2.
+\]
+\end{definition}
+
+\begin{remark}[Ground-state energy density and finite-size correction]
+For the critical Ising chain Hamiltonian $H = -\sum_i e_i$ above, the
+infinite-volume energy density is
+\[
+e_\infty \;:=\; \lim_{N\to\infty}\frac{1}{N}\sum_i\omega_N(e_i)
+\;=\; \frac{1}{\sqrt 2}\Bigl(1 + \frac{2}{\pi}\Bigr),
+\]
+using $\omega(X_r) = \omega(Z_r Z_{r+1}) = 2/\pi$ for the critical TFI
+expectation values (chat~1 §10). The finite-size correction at large $N$ is
+\[
+E_0(N) \;=\; -N\,e_\infty \;-\; \frac{\pi\,v\,c}{6 N} \;+\; o(N^{-1}),
+\qquad c = 1/2,\ v = 2\sqrt 2.
+\]
+\end{remark}
+
+\begin{definition}[Koo--Saleur lattice Virasoro approximants]\label{def:KS-Ln}
+\unchecked\ In chat~1's normalisation, the lattice approximants to the
+chiral and anti-chiral Virasoro generators are
+\begin{align*}
+L_n^{(N)} &= \frac{N}{4\pi}\Bigl[-\kappa\sum_{j=1}^{N}e^{2\pi i n j/N}\bigl(e_j - e_\infty
+                + i\kappa\,[e_j, e_{j+1}]\bigr)\Bigr] + \tfrac{c}{24}\delta_{n,0},\\
+\bar L_n^{(N)} &= \frac{N}{4\pi}\Bigl[-\kappa\sum_{j=1}^{N}e^{-2\pi i n j/N}\bigl(e_j - e_\infty
+                - i\kappa\,[e_j, e_{j+1}]\bigr)\Bigr] + \tfrac{c}{24}\delta_{n,0}.
+\end{align*}
+For Ising, $\kappa = 1/(2\sqrt 2)$ and $c = 1/2$.
+\end{definition}
+
+\begin{remark}[Central-charge check on the vacuum]
+A standard non-trivial check (chat~1 §10) is the commutator
+$[L_2, L_{-2}] = 4L_0 + c/2$ from the Virasoro algebra. For Ising $c=1/2$,
+this gives $4L_0 + 1/4$. On the vacuum state $\Omega$ with $L_0\Omega = 0$,
+\[
+\langle\Omega,\,[L_2,L_{-2}]\,\Omega\rangle \;=\; \tfrac{1}{4}.
+\]
+This is the first non-trivial central-charge check that the lattice
+approximants of Definition~\ref{def:KS-Ln} are supposed to reproduce in
+the scaling limit.\unchecked
+\end{remark}
+
+\subsection{Charge-only ascending channel: the $\{1,0,\dots,0\}$ spectrum}\label{sec:charge-only-channel}
+
+Chat~2 records an explicit calculation showing that the literal eigenvalue
+spectrum of the simplest charge-only ascending channel on a single
+$\epsilon$-block --- with three retained fine operators $\{e_L, e_R, s\}$
+spanning the splittings $\epsilon\to\epsilon\otimes\one$,
+$\epsilon\to\one\otimes\epsilon$, and the $\sigma\sigma\to\epsilon$ OPE
+channel --- is
+\[
+\boxed{\;\mathrm{Spec}(\mathcal{P}_\epsilon) \;=\; \{1,\,0,\,0,\,0,\,0,\,0,\,0,\,0,\,0\}\;}
+\]
+(one ``code'' eigenvalue equal to $1$ on $|\eta_\epsilon\rangle\langle\eta_\epsilon|$,
+eight zeros on the orthogonal complement in the
+$3\times 3 = 9$-dimensional fine operator space). These are
+\emph{code-projection eigenvalues}, not CFT scaling eigenvalues, and they
+illustrate the negative result behind Warning~\ref{warn:charge-only}: the
+toy charge-channel ascending map preserves the embedded coarse subspace and
+discards the orthogonal fine-block data, but does \emph{not} reproduce the
+Ising spectrum $\{1,\, 2^{-1/8},\, 2^{-1}\}$. To get the CFT scaling
+eigenvalues one must enlarge the retained operator basis to include
+CFT primary/descendant content, not merely categorical charge.
+
+\section{Conformal-field-theory input}
+
+\subsection{Basic CFT data}
+
+\begin{definition}[Primary, conformal weight, scaling dimension]\label{def:primary}
+A two-dimensional CFT is specified by a (graded, projective) representation
+of two commuting Virasoro algebras with generators $L_n,\bar L_n$ and central
+charges $c,\bar c$. A \emph{primary} field $\Phi$ of weights $(h,\bar h)$
+satisfies $L_n\Phi = 0$ for $n>0$, $L_0\Phi = h\Phi$ (and analogously for
+$\bar L$). Its \emph{scaling dimension} is $\Delta := h+\bar h$. In a
+\emph{chiral} CFT only $h$ appears and $\Delta := h$.
+\end{definition}
+
+\begin{definition}[Stress tensor]\label{def:stress}
+$T(z) := \sum_n L_n z^{-n-2}$ has OPE
+\[
+T(z)T(0) \;\sim\; \frac{c/2}{z^{4}} + \frac{2T(0)}{z^{2}} + \frac{\partial T(0)}{z} + \cdots
+\]
+\end{definition}
+
+\begin{definition}[OPE coefficient]\label{def:OPE}
+Given two primaries $\Phi_a, \Phi_b$, their short-distance product expands as
+\[
+\Phi_a(z)\,\Phi_b(0) \;\sim\; \sum_c C_{abc}\,z^{h_c-h_a-h_b}\,\bar z^{\bar h_c-\bar h_a-\bar h_b}\,\Phi_c(0) + (\text{descendants}),
+\]
+with $C_{abc}$ the (normalisation-dependent) OPE coefficient.
+\end{definition}
+
+\subsection{Ising CFT numbers}
+
+\begin{definition}[Diagonal Ising data]\label{def:isingcft}
+The diagonal Ising minimal model $M(3,4)$ has central charge $c=1/2$.
+Its primaries are $\one,\sigma,\psi$ with chiral weights $h_\one=0$,
+$h_\sigma=1/16$, $h_\psi=1/2$, and nonchiral scaling dimensions
+$\Delta_\one=0$, $\Delta_\Sigma=1/8$, $\Delta_\varepsilon=1$ in the bulk
+(here $\Sigma$ is the bulk spin field and $\varepsilon$ the bulk energy
+field).
+\end{definition}
+
+\subsection{Fibonacci CFT data}
+
+\begin{warning}[Two distinct CFTs called ``Fibonacci'']\label{warn:fibCFTs}
+The transcripts use both:
+\begin{enumerate}[label=(\alph*)]
+\item the chiral CFT $(G_2)_1$ with central charge $c=14/5$ and primaries
+of weight $h_\tau = 2/5$; and
+\item the antiferromagnetic Fibonacci ``golden chain'', whose continuum
+limit is the unitary minimal model $M(4,5)$ (tricritical Ising) with
+$c=7/10$.
+\end{enumerate}
+These are different CFTs with different weights $h_\tau$. Calculations in
+this document use the chiral $(G_2)_1$ convention $h_\tau=2/5$ whenever the
+Fibonacci CFT is invoked, following Chat~2's stated choice.\unchecked\
+The reference to $(G_2)_1$ as the simplest chiral CFT with Fibonacci-type
+modular data is standard but not verified here.
+\end{warning}
+
+\section{Refinement maps and CFT/RG amplitudes}
+
+\subsection{Wilsonian RG-decorated splitting}
+
+\begin{definition}[OPE/RG amplitude ansatz]\label{def:RG-amp}
+Fix an RG scale factor $b>1$ and let $\rho := b^{-1}$ be a dimensionless
+fine separation in coarse units. For a chiral CFT, the OPE/blocking
+coefficient connecting fine fusion configuration $(b_1,\dots,b_r)$ to coarse
+charge $a$ is taken in the form
+\[
+\beta^{a}_{b_1\cdots b_r}(\rho) \;\sim\; \Gamma^{a}_{b_1\cdots b_r}\,
+\rho^{h_a - \sum_i h_{b_i}}.
+\]
+The exponents are universal CFT data; the constants $\Gamma$ are
+Wilsonian/scheme-dependent.
+\end{definition}
+
+\begin{lemma}[Fibonacci-$(G_2)_1$ blocking coefficients]\label{lem:fib-beta}
+With $h_\one=0$, $h_\tau=2/5$, the binary blocking coefficients are
+\[
+\beta^{\one}_{\one\one} = u_0,\quad
+\beta^{\one}_{\tau\tau} = u_I\,\rho^{-4/5}, \quad
+\beta^{\tau}_{\tau\one} = j_L,\quad
+\beta^{\tau}_{\one\tau} = j_R,\quad
+\beta^{\tau}_{\tau\tau} = u_\tau\,\rho^{-2/5}.
+\]
+\end{lemma}
+
+\begin{proof}[Exponent derivation]
+$h_\one - 2h_\tau = 0 - 4/5 = -4/5$ and $h_\tau - 2h_\tau = -2/5$, applied
+to Definition~\ref{def:RG-amp} with $r=2$.
+\end{proof}
+
+\subsection{Canonical isometric refinement via polar decomposition}
+
+\begin{theorem}[Polar-decomposition section]\label{thm:polar}
+Let $B:\Hh_{\mathrm{fine}}\to\Hh_{\mathrm{coarse}}$ be a linear blocking
+map with full rank onto $\Hh_{\mathrm{coarse}}$. Then
+\[
+E \;:=\; B^{\dagger}\,(B B^{\dagger})^{-1/2}
+\]
+is an isometry, $E^{\dagger}E = \id_{\Hh_{\mathrm{coarse}}}$, and is the
+unique isometric ``section'' compatible with $B$ in the polar-decomposition
+sense.
+\end{theorem}
+
+\begin{proof}[Derivation, full steps]
+$BB^{\dagger}$ is self-adjoint and positive definite on
+$\Hh_{\mathrm{coarse}}$ (full rank). Its positive square root
+$(BB^{\dagger})^{1/2}$ is therefore invertible. Compute
+\begin{align*}
+E^{\dagger}E
+&= (BB^{\dagger})^{-1/2}\,B\,B^{\dagger}\,(BB^{\dagger})^{-1/2}\\
+&= (BB^{\dagger})^{-1/2}\,(BB^{\dagger})\,(BB^{\dagger})^{-1/2}\\
+&= (BB^{\dagger})^{-1/2}\,(BB^{\dagger})^{1/2}\,(BB^{\dagger})^{1/2}\,(BB^{\dagger})^{-1/2}\\
+&= \id.
+\end{align*}
+\end{proof}
+
+\begin{corollary}[No-mixing scalar formula]\label{cor:nomix}
+If the coarse label $\mu$ does not mix with any other coarse label under
+$B$, then the canonical isometric fine-graining amplitude is
+\[
+A^{\nu}{}_{\mu} \;=\; \frac{\overline{\beta^{\mu}{}_{\nu}}}{\sqrt{\sum_{\nu'} |\beta^{\mu}{}_{\nu'}|^{2}}}.
+\]
+\end{corollary}
+
+\begin{proof}[Derivation]
+If $\mu$ is a singleton block, the relevant restriction of $BB^{\dagger}$
+is the $1\times 1$ scalar $\sum_{\nu'}|\beta^{\mu}_{\nu'}|^{2}$, whose
+inverse square root is the scalar denominator above.
+\end{proof}
+
+\begin{example}[Fibonacci-$(G_2)_1$ RG-decorated splitting]\label{ex:fib-RG}
+Applying Corollary~\ref{cor:nomix} to Lemma~\ref{lem:fib-beta}:
+\begin{align*}
+\eta_{\one}^{\mathrm{RG}}(\rho)
+&= \frac{\bar u_0\,v^{\one}_{\one\one} + \bar u_I\,\rho^{-4/5}\,v^{\one}_{\tau\tau}}
+       {\sqrt{|u_0|^{2}+|u_I|^{2}\rho^{-8/5}}},\\
+\eta_{\tau}^{\mathrm{RG}}(\rho)
+&= \frac{\bar j_L\,v^{\tau}_{\tau\one} + \bar j_R\,v^{\tau}_{\one\tau} + \bar u_\tau\,\rho^{-2/5}\,v^{\tau}_{\tau\tau}}
+       {\sqrt{|j_L|^{2}+|j_R|^{2}+|u_\tau|^{2}\rho^{-4/5}}}.
+\end{align*}
+\end{example}
+
+\subsection{Ascending channel: spectrum and scaling fields}
+
+\begin{definition}[Scaling operator]\label{def:scalop}
+A \emph{scaling operator} of the ascending channel $\Aa$ at RG scale factor
+$b$ is an eigenoperator $\Phi_i$ with eigenvalue $\lambda_i = b^{-\Delta_i}$
+(nonchiral) or $b^{-h_i}$ (chiral).
+\end{definition}
+
+\begin{warning}[Charge-only channels miss the CFT spectrum]\label{warn:charge-only}
+For the binary Fibonacci ascending channel on the two-dimensional operator
+space $\End(Q)$ spanned by the charge projectors $\{P_\one,P_\tau\}$, the
+explicit calculation (chat~2) shows the eigenvalue spectrum is
+$\{1, X-P\}$ for $X=|x|^{2}$ and $P=|p|^{2}=|q|^{2}$. For both the PF and
+coassociative choices $X=P$, so the non-trivial eigenvalue is $0$, not
+$b^{-2/5}$. Recovering the CFT scaling eigenvalue requires enlarging the
+operator basis beyond charge projectors to include CFT primary/descendant
+content.
+\end{warning}
+
+\section{Non-tree (persistence + pair-creation) interpolation}\label{sec:non-tree}
+
+Chat~1 proposes an alternative refinement that abandons the tree (binary
+$Q\to Q\otimes Q$) structure in favour of an \emph{interpolation kernel} in
+which existing $\tau$ particles persist and new particles enter only via the
+$\one\to\tau\tau$ neutral-pair coevaluation.
+
+\begin{definition}[Strict persistence embedding]\label{def:persist}
+For a 1D lattice $\{1,\dots,N\}\subset\{1,\dots,2N\}$, the embedding
+$E_N:\Hh_N\to\Hh_{2N}$ places each occupied $\tau$ on the even sublattice
+and inserts vacancies at the odd refinement sites; the fusion path is
+preserved.
+\end{definition}
+
+\begin{definition}[Local pair-creation]\label{def:pair-create}
+Insertion of a neutral $\tau\tau$ pair after the $r$-th particle in a fusion
+path is the categorical map
+\[
+C_r:\Hom(c,\tau^{\otimes k})\to\Hom(c,\tau^{\otimes(k+2)}),
+\qquad
+C_r\,|x_0,\dots,x_k\rangle \;=\; \sum_z A_{x_r,z}\,|x_0,\dots,x_r,z,x_r,\dots,x_k\rangle.
+\]
+The coefficients $A_{x,z}$ come from the F-matrix:
+\[
+A_{\one,\tau} = 1, \qquad A_{\tau,\one} = \varphi^{-1}, \qquad A_{\tau,\tau} = \varphi^{-1/2}.
+\]
+These satisfy $|A_{\tau,\one}|^{2}+|A_{\tau,\tau}|^{2}
+= \varphi^{-2}+\varphi^{-1} = 1$ (Lemma~\ref{lem:fib-arith}).
+\end{definition}
+
+\begin{definition}[Non-tree interpolation kernel]\label{def:Jinterp}
+Sum over (disjoint, non-crossing) matchings $\mathcal{M}$ of vacant
+nearest-neighbour fine edges with a per-edge amplitude $\lambda_e$:
+\[
+J_N \;=\; \sum_{\mathcal{M}}\Bigl(\prod_{e\in\mathcal{M}}\lambda_e\Bigr)\,
+              \Bigl(\prod_{e\in\mathcal{M}}C_e\Bigr)\circ E_N.
+\]
+``Old $\tau$ particles persist; the only new particles come from
+$\one\to\tau\tau$.''
+\end{definition}
+
+\begin{lemma}[Gram obstruction]\label{lem:Gram}
+$J_N$ is generally \emph{not} an isometry. The leading obstruction comes
+from two coarse single-$\tau$ states $|i\rangle,|i+1\rangle$ producing the
+same fine configuration $\tau\tau\tau$ at sites $(2i,2i+1,2i+2)$ via
+different bracketings, with overlap controlled by the F-matrix:
+\[
+\langle (\tau\tau)_\one\,\tau \mid \tau\,(\tau\tau)_\one\rangle = \varphi^{-1}.
+\]
+Hence $\langle J_N|i\rangle, J_N|i+1\rangle\rangle \supset |\lambda|^{2}\varphi^{-1}$.
+\end{lemma}
+
+\begin{proof}[Derivation]
+The two pre-images of the displayed fine state are
+$|\tau\otimes(\tau\tau)_\one\rangle$ and $|(\tau\tau)_\one\otimes\tau\rangle$.
+Their inner product is the $(1,1)$ entry of the change-of-basis matrix
+$F^{\tau\tau\tau}_\tau$ restricted to the $\tau$ total-charge sector,
+which is $\varphi^{-1}$ (Definition~\ref{def:fib-F}).
+\end{proof}
+
+\subsection{Two routes to orthogonality}
+
+\begin{definition}[Polar repair]\label{def:polar-repair}
+Define $G_N := J_N^{\dagger}J_N$ and let
+$I_N := J_N G_N^{-1/2}$. Then $I_N^{\dagger}I_N=\id$ by the
+polar-decomposition argument of Theorem~\ref{thm:polar}.
+\end{definition}
+
+\begin{definition}[Sidelobe stencil]\label{def:sidelobe}
+Replace strict persistence by the stencil
+\[
+S|i\rangle \;=\; b\,|2i\rangle + a\,|2i-1\rangle - a\,|2i+1\rangle.
+\]
+Then $\langle S|i\rangle, S|i+1\rangle\rangle = -|a|^{2}$.
+Solving for cancellation of the $|\lambda|^{2}\varphi^{-1}$ overlap at first
+order gives, with $|b|^{2}+2|a|^{2}=1$ (one-particle normalisation),
+\[
+|a|^{2} = \frac{|\lambda|^{2}}{\varphi+2|\lambda|^{2}}, \qquad
+|b|^{2} = \frac{\varphi}{\varphi+2|\lambda|^{2}}.
+\]
+\end{definition}
+
+\begin{proof}[Derivation of the sidelobe amplitudes]
+Two constraints. (i) Single-particle norm: $|b|^{2}+|a|^{2}+|-a|^{2}=|b|^{2}+2|a|^{2}=1$.
+(ii) Cancellation of the leading two-particle overlap:
+$-|a|^{2}+|b|^{2}\cdot|\lambda|^{2}\varphi^{-1} = 0$, i.e.\
+$|a|^{2}=|b|^{2}|\lambda|^{2}/\varphi$. Substitute into (i):
+$|b|^{2}(1 + 2|\lambda|^{2}/\varphi) = 1$, so $|b|^{2} = \varphi/(\varphi+2|\lambda|^{2})$
+and $|a|^{2} = |\lambda|^{2}/(\varphi+2|\lambda|^{2})$.
+\end{proof}
+
+\section{Three-tensors from OPE}
+
+Chat~3 isolates the structure of \emph{trivalent OPE tensors}, the basic
+building block of fusion vertices.
+
+\begin{definition}[OPE 3-tensor]\label{def:ope3}
+An \emph{OPE 3-tensor} is a morphism $T^{c,\mu}_{a,b}\in\Hom_\Cc(a\otimes b, c)$,
+or, equivalently after dualising, a vector in
+$\Hom_\Cc(c,a\otimes b)$. Its support is exactly $\{(a,b,c):N_{ab}^{c}\ge 1\}$;
+when $N_{ab}^{c}\ge 2$ a multiplicity index $\mu=1,\dots,N_{ab}^{c}$ is
+required. The combined object $\{N_{ab}^{c}, T^{c,\mu}_{a,b}, F^{abc}_{d}\}$
+satisfies the pentagon equation, controlling associativity of repeated
+trivalent fusion.
+\end{definition}
+
+\begin{remark}
+In multiplicity-free cases (Fibonacci, Ising) each $T^c_{ab}$ is unique up
+to a phase. Gauge freedom in this phase translates into gauge dependence of
+F-symbols; only closed-diagram invariants (modular data, correlators,
+braiding phases) are physical.
+\end{remark}
+
+\section{Geometry, descendants, and the 1D-vs-2D distinction}
+
+\subsection{Descendants as geometric jets}
+
+\begin{definition}[Smeared cell field]\label{def:smear}
+For a primary $\Phi$ of weight $h$ and a cell $I$ with test function $f_I$,
+\[
+\Phi_I[f_I] \;:=\; \int_I f_I(x)\,\Phi(x)\,dx.
+\]
+Taylor expand $\Phi(x)$ about the centre $x_I$:
+\[
+\Phi(x) = \sum_{n\ge 0}\frac{(x-x_I)^{n}}{n!}\,\partial^{n}\Phi(x_I).
+\]
+\end{definition}
+
+\begin{lemma}\label{lem:moments}
+$\Phi_I[f_I] = \sum_{n\ge 0}\frac{\mu_n(f_I)}{n!}\partial^{n}\Phi(x_I)$, where
+$\mu_n(f_I) := \int_I f_I(x)(x-x_I)^{n}\,dx$. Derivative descendants are
+moments of the smearing geometry.
+\end{lemma}
+
+\begin{proof}[Derivation] Substitute the Taylor series into the integral
+and exchange summation with integration (legitimate for finite-order
+truncation; otherwise a smoothness condition on $f$ is assumed). \end{proof}
+
+\begin{remark}[Full Virasoro descendants]\label{rem:Virasoro}
+The full Virasoro descendant tower (e.g.\ $L_{-2}|\Phi\rangle$) is not
+captured by derivative jets alone; it arises from local conformal coordinate
+deformations and stress-tensor Ward identities. The stress tensor itself
+is $T=L_{-2}\one$.
+\end{remark}
+
+\subsection{CFT Gram form vs.\ $L^{2}$ Gram form for one-primary refinement}\label{sec:gram-vs-L2}
+
+Chat~3 \S6 makes a sharp distinction omitted from earlier drafts of this
+summary: a smeared CFT primary $\tau_I = \ell(I)^{-h_\tau}\int_I \tau(x)\,dx$
+(with $h_\tau = 2/5$) refines as
+\[
+\tau_I \;\mapsto\; \sum_{J\subset I}
+       \Bigl(\tfrac{\ell(J)}{\ell(I)}\Bigr)^{1 - h_\tau}\,\tau_J
+\;=\;  \sum_{J\subset I}\Bigl(\tfrac{\ell(J)}{\ell(I)}\Bigr)^{3/5}\,\tau_J.
+\]
+This coefficient $a_{J\mid I}^{\mathrm{conf}} = (\ell(J)/\ell(I))^{1-h_\tau}$
+is \emph{coherent} under repeated refinement
+($a_{K\mid J}^{\mathrm{conf}}\cdot a_{J\mid I}^{\mathrm{conf}}
+= a_{K\mid I}^{\mathrm{conf}}$, because the exponents add and the length
+ratios telescope).
+
+\begin{warning}[Conformal refinement is \emph{not} $L^{2}$-isometric in the diagonal cell basis]
+For a binary equal split,
+$a^{\mathrm{conf}}_{L\mid I} = a^{\mathrm{conf}}_{R\mid I} = 2^{-3/5}$, so
+\[
+2\,|a^{\mathrm{conf}}|^{2} = 2\cdot 2^{-6/5} = 2^{-1/5} \;\neq\; 1.
+\]
+Therefore the conformal refinement weight $(\ell(J)/\ell(I))^{1-h}$ does
+\emph{not} make the diagonal cell basis $\{|J\rangle_{P'}\}$ orthonormal
+under the naive $L^{2}$ inner product. It is isometric only with respect to
+the CFT two-point Gram matrix of the smeared primaries:
+\[
+E^{\dagger}_{P\to P'}\,G_{P'}\,E_{P\to P'} \;=\; G_{P},
+\]
+where $G_P$ is the CFT Gram matrix of the smeared $\tau$-fields on partition
+$P$. The naive $L^{2}$ rule $w_{J\mid I} = \sqrt{\ell(J)/\ell(I)}$ of
+Definition~\ref{def:lenref} corresponds to $h = 1/2$ --- it is the
+\emph{half-density} (square-root) weight appropriate for ordinary single-particle
+wavefunctions, not for CFT primaries of weight $h \ne 1/2$. This is the
+correct generalisation: for a primary of weight $h$, the geometry weight is
+$(\ell(J)/\ell(I))^{1-h}$, and the relevant Gram form is the CFT two-point
+function, not the diagonal $L^{2}$ form.
+\end{warning}
+
+\begin{remark}[Two coherent geometric refinements for one species]
+Putting Chat~4 and Chat~3 side-by-side: a single non-vacuum species $p$
+admits at least two geometrically natural coherent refinement rules:
+\begin{itemize}
+\item $h = 1/2$ (kinematic $L^{2}$ particle): $w = \sqrt{\ell(J)/\ell(I)}$,
+      isometric in the diagonal cell basis. Continuum $L^{2}(X)$.
+\item $h = h_p$ (CFT primary of weight $h_p$):
+      $w = (\ell(J)/\ell(I))^{1-h_p}$, isometric only against the CFT
+      two-point Gram. For Fibonacci $\tau$, $h_p = 2/5$ gives exponent
+      $3/5$.
+\end{itemize}
+Both are coherent under repeated subdivision; they are the same construction
+at $h=1/2$. The choice is not categorical -- it depends on whether one is
+modelling kinematic particles or primary fields.
+\end{remark}
+
+\begin{definition}[Geometry-enriched site object]\label{def:Ageom}
+Following Chat~3's reformulation, replace $Q$ by
+\[
+A_I^{\mathrm{geom}} \;:=\; \bigoplus_{\text{primaries } i} J_I^{(h_i)} \otimes a_i,
+\]
+where $J_I^{(h)}$ is a geometry-dependent jet/smearing space attached to
+cell $I$, transforming under refinement by Taylor/conformal-coordinate
+geometry weighted by $h$. The categorical fusion controls primary channels;
+descendants are reproduced by jet geometry plus Ward identities.
+\end{definition}
+
+\subsection{1D Hilbert space versus 2D Euclidean cobordism}
+
+\begin{warning}[The preholomorphicity conflation]\label{warn:preholo}
+Chat~3 initially writes a 2D ``preholomorphic equation''
+$\sum_{e\in\partial f} |e|\,e^{-2i\theta_e/5}\,\psi_e = 0$ around each
+plaquette $f$ for the spin-$2/5$ chiral Fibonacci field, but the Hilbert
+space at hand is on a \emph{1D spatial slice}. The clean separation:
+\begin{itemize}
+\item \textbf{Program A (purely 1D):} replace preholomorphicity by
+\emph{conformal/Virasoro covariance} of the directed system
+$\{\Hh_P^W, E_{P\to P'}\}$, i.e.\
+$L_{n,P'}E_{P\to P'} \approx E_{P\to P'}L_{n,P}$ and
+$[L_{m,P},L_{n,P}]\to (m-n)L_{m+n}+\tfrac{c}{12}m(m^{2}-1)\delta_{m+n,0}$ in
+the continuum limit.
+\item \textbf{Program B (2D Euclidean cobordism):} bulk amplitudes
+$Z(\Sigma):\Hh_{\partial_{\mathrm{in}}\Sigma}\to\Hh_{\partial_{\mathrm{out}}\Sigma}$
+on cellulated surfaces; preholomorphicity is a bulk condition on $Z$.
+\end{itemize}
+The two are different mathematical theories. Mixing them is a category
+error.
+\end{warning}
+
+\section{Critical evaluation of the source transcripts}\label{sec:critique}
+
+\subsection{Genuine reformulations across chats}
+
+\begin{itemize}[leftmargin=*]
+\item \textbf{The local cell object $Q$ is a modelling choice, not a
+      canonical object.} Earlier drafts of this summary defined
+      $Q := \bigoplus_{a\in\Irr(\Cc)} a$ as if it were the unique
+      categorical occupation object. In fact the chats use several distinct
+      $Q$'s: $\bigoplus_a a$ in chats~1--2; $\one\oplus p$ for the square-zero
+      one-species model in chat~4 \S1--13; site-dependent and
+      multiplicity-decorated $\bigoplus_a M_a\otimes a$ in chat~3 \S7.
+      Different $Q$'s give different Hilbert spaces and different allowed
+      refinements. \emph{Resolution adopted:} \S\ref{sec:local-cell-object}
+      now treats $Q$ as a free input (Definition~\ref{def:Q}, Warning~\ref{warn:Q-not-canonical});
+      Proposition~\ref{prop:conf-decomp} tracks multiplicities explicitly;
+      the partition Hilbert space (Definition~\ref{def:HP}) allows
+      site-dependent $A_I$.
+\item \textbf{Square-zero is a degenerate algebra branch, not a
+      categorically illegal ``rule''.}
+      Earlier drafts of this summary treated $p\cdot p = 0$ as an extraneous
+      hard-core occupancy constraint. Chats~3 \S1 and~4 \S14+ in fact
+      derive both branches of the multiplication equations for the local
+      algebra $A = \one\oplus p$ from unit + associativity + dagger-specialness
+      (\S\ref{sec:algobj}). The Chat~4 length-weighted refinement
+      (\S\ref{sec:square-zero}) corresponds to discarding the algebra-derived
+      $\Delta = m^{\dagger}/\sqrt\lambda$ in favour of a geometry-derived
+      isometry. The categorical content is: square-zero is one solution
+      branch (Theorem~\ref{thm:branches}, $a=b=0$, satisfying (A) but not
+      (S)); the non-degenerate Fibonacci-type branch is the other
+      ($a=\sqrt\varphi$, $b=\varphi^{-1/2}$, satisfying both).
+      Remark~\ref{rem:three-sq-zero} distinguishes the two distinct
+      \emph{constructions} that the chats both call ``square-zero''
+      (algebra-level branch vs.\ length-weighted kinematic Fock).
+\item \textbf{Empty-site vs splitting-compatible meaning of $\one\subset Q$.}
+      Chats~1--3 (mostly) treat $\one$ as ``empty''. Chat~4 \S4 derives a
+      strict no-go (Warning~\ref{warn:vac}): coherent $\tau\to\tau\otimes\tau$
+      splitting requires $E|_\one$ to have a nonzero
+      $v^{\one}_{\tau,\tau}$ component, equivalently algebra parameter $y\neq 0$
+      (informally: ``$\one$ is total vacuum charge containing unresolved
+      $\tau\tau$ pairs'', though that phrasing is categorically loose since
+      $\one$ itself is the simple unit). \emph{Resolution adopted:} use the
+      splitting-compatible reading
+      whenever splitting is needed; the empty-site reading is consistent
+      only for the length-weighted square-zero/number-preserving model
+      (\S\ref{sec:square-zero}).
+\item \textbf{Tree (binary $Q\to Q\otimes Q$) vs non-tree interpolation.}
+      Chats~2 and~4 work with binary tree-like refinements; Chat~1 §3
+      proposes a non-tree persistence-plus-pair-creation kernel; Chat~4
+      generalises to arbitrary $r$-child subdivisions with $Z$-weighted
+      geometric amplitudes. These are all internally valid frameworks; the
+      $Z$-weighted multi-child Fibonacci scheme (Proposition~\ref{prop:rchild})
+      is the most general.
+\item \textbf{Two distinct binary Fibonacci solutions.} Quantum-dimension
+      (PF, Lemma~\ref{lem:PF-isom}) and coassociative (Theorem~\ref{thm:coassoc})
+      give numerically different amplitudes. Chat~2 explicitly notes the
+      distinction; later texts (Chat~4) use only the coassociative one as
+      it arises from the special algebra $\Delta = \varphi^{-1}m^\dagger$.
+      Warning~\ref{warn:PF-coassoc} retains both for clarity.
+\item \textbf{Descendants as jets.} Chat~3's late reformulation makes
+      descendants geometric jets (Definition~\ref{def:Ageom}) rather than
+      independent categorical labels. This was not the framing of Chats~1--2.
+\item \textbf{1D vs 2D mixing.} Chat~3 retracts an earlier preholomorphic
+      claim (Warning~\ref{warn:preholo}).
+\item \textbf{Which CFT is ``Fibonacci''?} Chat~2 uses chiral $(G_2)_1$
+      ($c=14/5$, $h_\tau=2/5$). The Fibonacci anyon \emph{lattice} model
+      (the antiferromagnetic golden chain) flows to tricritical Ising
+      $M(4,5)$ ($c=7/10$). Warning~\ref{warn:fibCFTs} keeps these separate.
+\end{itemize}
+
+\subsection{Likely transcription artifacts}
+
+The source transcripts contain mangled fractions and ratios. Concrete
+instances actually present in the chats:
+\begin{itemize}
+\item ``$c=12$'' and ``$c=21$'' for $c=1/2$ (chat~1 throughout the
+      Ising/TL discussion).
+\item ``$c=145$'' for $c=14/5$ (chat~3, in passing reference to a Fibonacci
+      central charge).
+\item ``$116$'' for $1/16$ (chats~1--2, in $h_\sigma = 1/16$).
+\item ``$143/45$'' and ``$27$ for $2/7$'' were claimed in an earlier draft
+      of this document but do \emph{not} occur in any chat; they have been
+      removed. (Found by Reviewer~4.)
+\end{itemize}
+These
+have been silently corrected here. Formulas like
+$d_\sigma=2\cos(\pi/4)=\sqrt 2$ and $D=\sqrt{2+\varphi}$ have been
+re-derived from first principles to confirm the correction.
+
+\subsection{Statements judged unverifiable from the transcripts alone}
+
+All bibliographic attributions in the source chats are flagged
+\unchecked. In particular, claims involving:
+\begin{itemize}
+\item \emph{Koo--Saleur lattice Virasoro approximants}\unchecked,
+\item the \emph{Osborne--Stottmeister} convergence theorem for transverse-field
+      Ising scaling representations\unchecked,
+\item \emph{Pasquier's ADE lattice models}\unchecked,
+\item \emph{Huse}'s identification of ABF critical points with the
+      Friedan--Qiu--Shenker unitary minimal series\unchecked,
+\item the \emph{FRS algebra} statement that ``for diagonal Ising
+      $A = \one$''\unchecked,
+\item attributions to ``anyonic MERA literature''\unchecked,
+\end{itemize}
+are passed through as-is, with the flag, and should be checked at Stage~2.
+The mathematical claims that depend on these references (e.g.\ convergence
+of Koo--Saleur generators, identification of TL chain scaling limits) are
+restated below as \emph{unproven conjectures}, not as proven results.
+
+\subsection{Mathematical claims that compile from the transcripts}
+
+The following are independently verifiable from the algebra in this document
+(derivations included above):
+\begin{itemize}
+\item Configuration decomposition (Proposition~\ref{prop:conf-decomp}).
+\item Fibonacci arithmetic and the F-involution
+      (Lemmas~\ref{lem:fib-arith}, \ref{lem:F-invol}).
+\item PF and coassociative isometry (Lemma~\ref{lem:PF-isom},
+      Theorem~\ref{thm:coassoc}).
+\item Fibonacci-algebra associativity and specialness
+      (Lemmas~\ref{lem:fib-assoc}, \ref{lem:fib-special}).
+\item Length-weighted refinement isometry and $L^{2}$ continuum limit
+      (Lemma~\ref{lem:sqzero-isom}, Theorem~\ref{thm:L2}).
+\item TL operators on the dense $A_3$ Ising chain reduce to the critical
+      TFI chain (Theorem~\ref{thm:TFI}).
+\item Polar-decomposition canonical isometric section (Theorem~\ref{thm:polar}).
+\item Gram obstruction $\varphi^{-1}$ in non-tree pair-creation
+      interpolation (Lemma~\ref{lem:Gram}).
+\end{itemize}
+
+\section{Open conjectures (carried over from Chat~2 \S13 and Chat~3)}
+
+\begin{conjecture}[Categorical fine-graining is universal isometry]
+\label{conj:A}
+Every physically admissible finite-lattice fine-graining map is, at the
+categorical level, an isometry $E_{P\to P'}: A_P\hookrightarrow A_{P'}$.
+\end{conjecture}
+
+\begin{conjecture}[RG fixes amplitudes by polar decomposition]\label{conj:B}
+Given the full Wilsonian blocking map $B_{P\leftarrow P'}$, the canonical
+fine-graining amplitudes are determined by
+$E_{P\to P'} = B^{\dagger}(BB^{\dagger})^{-1/2}$ up to: (i) gauge choices of
+fusion bases; (ii) unitary rotations in degenerate retained operator
+subspaces; (iii) RG-scheme dependence in $B$.
+\end{conjecture}
+
+\begin{conjecture}[Topology gives channels; RG gives weights]\label{conj:C}
+The fusion category determines \emph{which} $E^{c}_{a,\alpha}$ may be
+non-zero; the RG/CFT data determines the finite-scale coefficients
+$\beta^{c}_{a,\alpha}(\rho)$; isometry determines the resulting amplitudes
+$A^{c}_{a,\alpha}$.
+\end{conjecture}
+
+\begin{conjecture}[Coherent continuum limit is operadic]\label{conj:D}
+A continuum limit compatible with arbitrary (non-dyadic) refinements is
+controlled by a coherent family $\eta^{(r)}:Q\to Q^{\otimes r}$ for all
+$r\ge 1$ rather than by a single binary map. This family has an operadic
+(or $A_\infty$-coalgebraic) structure, strict at topological fixed points
+and only up to local unitaries off them.
+\end{conjecture}
+
+\begin{conjecture}[Braiding for order-changing interpolation]\label{conj:E}
+Any fine-graining interpolation that allows particles to change spatial order
+requires $\Cc$ to be braided, with order-change components implemented by
+the braiding $c_{Q,Q}$.
+\end{conjecture}
+
+\begin{conjecture}[Koo--Saleur ascending convergence for TL/Ising]
+\label{conj:KS}
+On the dense $\sigma$-anyon chain of \S\ref{sec:ising-data}, the Koo--Saleur
+approximants built from $e_j - e_\infty$ and $[e_j, e_{j+1}]$ converge in
+the Ising scaling representation to two commuting Virasoro algebras with
+$c = \bar c = 1/2$.\unchecked\ \emph{Status: depends on
+Koo--Saleur and Osborne--Stottmeister references.}
+\end{conjecture}
+
+\begin{conjecture}[Refinement-tensor fixed state]\label{conj:fixed-state}
+The descending dual $\Aa^{*}$ of the local ascending channel has a unique
+local fixed density matrix $\rho$, satisfying $\Aa^{*}(\rho)=\rho$;
+correlation functions computed against $\rho$ reproduce the parent RCFT
+data $(c, h_i, C_{ijk})$.
+\end{conjecture}
+
+\section{Summary of the canonical objects}
+
+\begin{tcolorbox}[colback=blue!2!white,colframe=blue!50!black,title=Recapitulation: the principal objects]
+\begin{align*}
+\Cc &: \text{unitary fusion category with $\Irr(\Cc)$, fusion } N_{ab}^c, \text{ F-symbols, quantum dims } d_a.\\
+Q &\in \Cc: \text{a \emph{chosen} local cell object (Definition~\ref{def:Q}); not canonical.}\\
+&\phantom{=\;}\text{Common choices: $\bigoplus_a a$; $\one\oplus p$ for one species; }
+\bigoplus_a M_a\otimes a\text{ with multiplicities.}\\
+\Hh_N^{W} &= \Hom_\Cc(W, Q^{\otimes N})
+\;\cong\; \bigoplus_{(a_i)}\Bigl(\bigotimes_i M_{a_i}\Bigr)\otimes\Hom(W, a_1\otimes\cdots\otimes a_N).\\
+P &= \{I_1<\cdots<I_N\}: \text{ordered spatial partition; }
+A_P = A_{I_1}\otimes\cdots\otimes A_{I_N}\text{ ($A_I$ can depend on $I$).}\\
+E_{P\to P'} &: A_P\to A_{P'}, \quad E^{\dagger}E = \id, \quad
+E_{P'\to P''}E_{P\to P'}=E_{P\to P''}.\\
+B_{P\leftarrow P'} &= E_{P\to P'}^{\dagger}: \text{lossy blocking map}.\\
+\Aa(O) &= E^{\dagger}OE: \text{unital CP ascending channel.}\\
+\Hh_\infty^{W} &= \overline{\varinjlim_P \Hh_P^{W}}: \text{continuum Hilbert space.}\\
+\Delta &= \varphi^{-1}m^{\dagger}: \text{coassociative Fibonacci splitting.}\\
+e_i &= \sqrt 2\,P_i^{(\one)}: \text{Ising/TL projector with }
+ e_i^2 = \sqrt 2 e_i.
+\end{align*}
+\end{tcolorbox}
+
+\section{Formalisation roadmap (Chat~2 §12, retained)}
+
+\begin{itemize}[leftmargin=*]
+\item \textbf{Lean phase 1.} Finite-skeleton fusion-category model: labels,
+unit, fusion multiplicities, dagger; instantiate \texttt{FibLabel} and
+\texttt{IsingLabel}.
+\item \textbf{Lean phase 2.} Hilbert-space-as-Hom statements; prove
+Proposition~\ref{prop:conf-decomp}; polar-decomposition isometry
+(Theorem~\ref{thm:polar}); no-mixing scalar formula (Corollary~\ref{cor:nomix}).
+\item \textbf{Lean phase 3.} Fibonacci exact identities: $\varphi^2=\varphi+1$,
+$D^2=2+\varphi$, $F^{T}F=I$ and $F^{2}=I$ (Lemma~\ref{lem:F-invol}),
+PF isometry (Lemma~\ref{lem:PF-isom}), coassociativity theorem
+(Theorem~\ref{thm:coassoc}).
+\item \textbf{Julia phase.} Exploratory numerics: fusion rings, fusion-tree
+generation, F-matrices, local $\eta$ maps, ascending channels, eigenvalue
+spectra; demonstrate the charge-only failure to recover $b^{-2/5}$
+(Warning~\ref{warn:charge-only}).
+\item \textbf{Wolframscript phase.} Exact symbolic checks of the Fibonacci
+coassociativity quadratic and PF-normalisation identities.
+\end{itemize}
+
+\section*{Reference status}
+
+Every external reference in this document is flagged \unchecked. References
+are propagated verbatim from the source transcripts and have not been
+verified against external databases or canonical sources. Any Stage~2
+review should resolve, in particular:
+\begin{enumerate}[label=(\arabic*)]
+\item whether the $(G_2)_1$ chiral CFT has $c=14/5$ and primary $h_\tau=2/5$
+      with Fibonacci modular data;
+\item whether the Fibonacci antiferromagnetic chain (golden chain) has
+      tricritical Ising $M(4,5)$ continuum;
+\item whether the cited Koo--Saleur and Osborne--Stottmeister results cover
+      the TL/Ising case in the form stated, including the explicit
+      $\kappa = 1/(2\sqrt 2)$ scalar and the central-charge anomaly
+      $\langle\Omega,[L_2,L_{-2}]\Omega\rangle = 1/4$
+      (\S\ref{sec:KS-ising});
+\item whether the FRS construction gives algebra $A=\one$ for diagonal
+      Ising (as a Cardy-case statement);
+\item whether the ``Pasquier ADE lattice models'' / ``Huse ABF $\leftrightarrow$
+      Friedan--Qiu--Shenker'' identifications are stated in the form
+      assumed above.
+\end{enumerate}
+
+\section*{External references mentioned (all unchecked)}
+
+The following references appear in the chats and are propagated to the
+summary, all marked \unchecked. No bibliography keys are introduced; each is
+attributed informally.
+\begin{itemize}
+\item Koo, Saleur: lattice Virasoro approximants from XXZ/RSOS / TL chains
+      (chat~1 §10).\unchecked
+\item Osborne, Stottmeister: convergence of Koo--Saleur approximants in the
+      scaling representation, including the transverse-field Ising case
+      (chat~1 §10).\unchecked
+\item Pasquier: ADE lattice models / RSOS height models (chat~1 §1).\unchecked
+\item Huse: identification of ABF critical points with the Friedan--Qiu--Shenker
+      unitary minimal series $M(m, m+1)$ (chat~1 §13).\unchecked
+\item Fjelstad, Fuchs, Runkel, Schweigert (``FRS''): full RCFT correlators
+      from a special Frobenius algebra in the relevant module category;
+      $A = \one$ in the Cardy case (chat~1 §1).\unchecked
+\item Feiguin et al.\ (2007) and follow-ups: golden-chain Fibonacci
+      antiferromagnetic continuum at tricritical Ising $M(4,5)$, $c = 7/10$
+      (chat~2 §1, Warning~\ref{warn:fibCFTs}).\unchecked
+\item ``Anyonic MERA literature'': charge-compatible MERA tensors,
+      scaling-superoperator language (chat~1 §1.4).\unchecked
+\item String-net fixed-point wavefunction intuition (chat~2 §0).\unchecked
+\end{itemize}
+
+\end{document}
