@@ -16,16 +16,32 @@ TRIGGER: Any new term encountered in any addition; any aliased term in
 
 ## Status
 
-**P1.1 (this commit):** populated by mechanical extraction of every
-`\begin{definition}` and `\begin{convention}` in `summary.tex` (4 conv + 44
-def = 48 entries). "Canonical" payloads are copied **verbatim** (full
-environment, from `\begin{...}` through `\end{...}`) inside ```latex code
-fences to preserve LaTeX syntax exactly. "Source" gives the
-`\begin{...}` line in `summary.tex`. "Aliases" and "Translation map"
-fields are stubbed; they are populated in later Phase 1 steps:
+**P1.1:** populated by mechanical extraction of every `\begin{definition}`
+and `\begin{convention}` in `summary.tex` (4 conv + 44 def = 48
+entries). "Canonical" payloads are copied **verbatim** (full environment,
+from `\begin{...}` through `\end{...}`) inside ```latex code fences to
+preserve LaTeX syntax exactly. "Source" gives the `\begin{...}` line in
+`summary.tex`.
 
-- **P1.3:** Hilbert-space translation map (`def:Hlatt`, `def:HP`, plus
-  the mobile-Fock variant from MMA — see `stocktake/reports/opus-hilbert-bridge.md`).
+**P1.2:** ERRATA entry for the `lem:binary-Z` amplitudes-vs-probabilities
+bug (no `summary.tex` edit — the `\sqrt{}` fix was pre-baseline; see
+`ERRATA.md`). No GLOSSARY change.
+
+**P1.3 (this commit):** added one entry from **outside `summary.tex`**:
+`def:mobile-Fock`, the MMA Hilbert-space formulation, sourced from
+`stocktake/reports/opus-hilbert-bridge.md` (the in-repo authoritative
+description of MMA's framing; MMA itself imports in Phase 8). Declared
+the partition formulation [[def:HP]] as canonical (already so from P1.1;
+re-affirmed in the new entry's cross-references). Added cross-links in
+[[def:HP]], [[def:Hlatt]], [[def:indlim]] Notes so the four-way
+relationship is explicit. Translation-map fields stubbed "TBD pending
+P1.5" per the plan.
+
+Remaining Phase 1 work that populates stub fields:
+
+- **P1.5:** write the explicit translation map (already de-risked: bridge
+  report §2 has constructive bijections in both directions for all three
+  formulations).
 - **P1.6:** new `CONVENTIONS.md` entries derived from but not literally
   identical to `summary.tex` conventions (vacuum index, F-matrix gauge,
   multiplicity-free assumption, fusion-tree ordering, `N=0` boundary,
@@ -33,14 +49,12 @@ fields are stubbed; they are populated in later Phase 1 steps:
 - **P1.7:** CAD-Lean translation map (per-file mapping in
   `stocktake/reports/cad-lean.md` §5).
 - **P1.8:** MMA-Julia translation map (per `stocktake/reports/mma-julia.md` §5).
-- **P1.9:** definitional-gate audit (Opus subagent reads this file end-to-end
-  and flags any undefined term or internal inconsistency).
+- **P1.9:** definitional-gate audit (Opus subagent reads this file
+  end-to-end and flags any undefined term or internal inconsistency).
 
 Lemmas, propositions, theorems, corollaries, remarks, warnings, and
 examples in `summary.tex` are **not** in scope for P1.1 — only
-`\begin{definition}` and `\begin{convention}` environments. The
-unanimous `lem:binary-Z` amplitudes-vs-probabilities bug is filed for
-P1.2 (separate atomic commit + ERRATA entry).
+`\begin{definition}` and `\begin{convention}` environments.
 
 ## Schema for each entry
 
@@ -54,7 +68,9 @@ P1.2 (separate atomic commit + ERRATA entry).
 \end{definition}
 \`\`\`
 
-**Source:** `summary.tex:<line>`
+**Source:** `<tracked-file>:<line>` (typically `summary.tex:<line>` for
+  entries from §A; for entries from external sources in §B, the source
+  is an in-repo report or imported file)
 **Aliases:** <synonyms used in MMA, CAD, or the literature; or TBD>
 **Translation map:**
   - MMA: <equivalent or "TBD pending P1.8">
@@ -63,7 +79,28 @@ P1.2 (separate atomic commit + ERRATA entry).
 **Notes:** <pitfalls, related GLOSSARY entries via [[label]], etc.>
 ```
 
-Entries below are ordered by source-line in `summary.tex`.
+The entries are split into two sections:
+
+- **§A. Entries from `summary.tex`** — ordered by source-line in
+  `summary.tex`. Canonical payloads copied verbatim from
+  `\begin{definition}` / `\begin{convention}` environments.
+- **§B. Entries from outside `summary.tex`** — added when an
+  external-but-load-bearing definition must be in GLOSSARY before its
+  source project is imported (e.g. MMA's mobile-Fock framing imported
+  for P1.3, before MMA itself imports in Phase 8). Each such entry
+  names its in-repo source (typically a `stocktake/reports/` file that
+  quotes the external source verbatim) and explicitly notes that any
+  slug is GLOSSARY-internal, not a citable `\label` in the external
+  source. **Schema variant for §B:** an entry may have **multiple
+  `**Canonical (description):**` blocks** when the external source's
+  definition straddles prose and code (e.g. a LaTeX prose definition
+  plus a code-derived enumeration). In that case, each block carries a
+  parenthetical describing what the block contains and where it comes
+  from. §A entries always use a single `**Canonical:**` block.
+
+---
+
+## §A. Entries from `summary.tex` (source-line order)
 
 ---
 
@@ -364,9 +401,12 @@ The full $N$-site space is $\Hh_N = \bigoplus_{W\in\Irr(\Cc)} \Hh_N^{W}$.
     (not categorical); see `stocktake/reports/cad-lean.md` §5.
 **Notes:** Equivalent to [[def:HP]] when all $A_I = Q$ (per the remark
 following `def:HP`). The three Hilbert-space framings (this one,
-[[def:HP]], and MMA's mobile-Fock) all reconcile per
-`stocktake/reports/opus-hilbert-bridge.md`; the partition formulation
-[[def:HP]] is declared canonical.
+[[def:HP]], and MMA's mobile-Fock [[def:mobile-Fock]]) all reconcile
+per `stocktake/reports/opus-hilbert-bridge.md`; the partition
+formulation [[def:HP]] is declared canonical. Mobile-Fock
+[[def:mobile-Fock]] differs from this entry by additionally summing
+over particle number $N$ and total charge $c$ (not held as
+superselection labels) — see the bridge report §2.2.
 
 ---
 
@@ -453,9 +493,17 @@ A_P \;:=\; A_{I_1}\otimes A_{I_2}\otimes\cdots\otimes A_{I_N}, \qquad
 **Notes:** **This is the canonical Hilbert-space formulation per
 `stocktake/reports/opus-hilbert-bridge.md`**. Three equivalent framings:
 this one ([[def:HP]]); the fixed-lattice [[def:Hlatt]] (special case
-$A_I = Q$); and MMA's mobile-Fock (continuum direct limit
-[[def:indlim]]). [[def:Ageom]] is the geometry-enriched extension.
-P1.5 will write the explicit translation map into the relevant entries.
+$A_I = Q$); and MMA's mobile-Fock formulation [[def:mobile-Fock]]
+(special case: choose $A_I = Q_{\mathrm{full}} = \bigoplus_a a$ on
+every cell; mobile-Fock additionally sums over partition size $|P|$
+(running $0 \le |P| \le L$) and over total charge $c \in \Irr(\Cc)$).
+The continuum direct limit of this construction is [[def:indlim]].
+[[def:Ageom]] is the geometry-enriched extension. P1.5 will write the
+explicit translation map into the relevant entries. (Avoiding the
+notation "particle number $N$" here because P1.6(g) will lock $N$ to
+*tensor degree / lattice length / cell count* — `summary.tex`'s
+convention — whereas MMA uses $N$ for the non-vacuum-leg count;
+disambiguation pending.)
 
 ---
 
@@ -544,11 +592,12 @@ direct limit
   - CAD: TBD pending P1.7.
 **Notes:** Compatibility = associativity-of-refinement. Cf. [[def:HP]],
 [[def:refmap]]. The Hilbert-completion step is the load-bearing step
-analytically. The continuum limit here is the third of the three
-Hilbert-space framings reconciled in
-`stocktake/reports/opus-hilbert-bridge.md` (alongside the fixed-lattice
-[[def:Hlatt]] and the partition-canonical [[def:HP]]); MMA's mobile-Fock
-is its discrete analogue.
+analytically. The continuum limit here is the analytical completion of
+the partition-canonical [[def:HP]] tower; MMA's mobile-Fock
+[[def:mobile-Fock]] is the discrete (lattice-cut-off-$L$) analogue of
+the same direct sum structure. All three discrete framings ([[def:HP]],
+[[def:Hlatt]], [[def:mobile-Fock]]) and this inductive-limit closure
+reconcile per `stocktake/reports/opus-hilbert-bridge.md`.
 
 ---
 
@@ -1528,3 +1577,114 @@ finite-dimensional smearing space encoding derivative-descendant data
 per [[def:smear]] / Lemma `lem:moments`. The relevant Hilbert space for
 this enriched site object is constructed analogously to [[def:HP]] with
 $A_I = A_I^{\mathrm{geom}}$.
+
+---
+
+## §B. Entries from outside `summary.tex`
+
+Each entry below names its in-repo source explicitly. The slug is
+GLOSSARY-internal — it is **not** a citable `\label` in the external
+source.
+
+---
+
+## def:mobile-Fock — Mobile-Fock Hilbert space (MMA formulation)
+
+**Canonical (LaTeX quote from MMA `finegraining.tex`, as preserved in
+the bridge report):**
+
+```latex
+Let C be a fusion category with simple objects X_1 = 1, X_2, ..., X_d.
+We consider N hard-core anyons on an L-site lattice with open boundary
+conditions. The Hilbert space decomposes as
+    H_N(L) = ⊕_{positions x_1 < ... < x_N, labels a_1,...,a_N}
+             Mor(X_c, X_{a_1} ⊗ ... ⊗ X_{a_N})
+where the direct sum runs over all hard-core configurations and all
+label assignments from the non-vacuum simples.
+```
+
+**Canonical (full MMA basis structure, synthesised by the bridge report
+from the Julia code `hilbert.jl:75-98`):**
+
+```text
+H_MMA(L) = ⊕_{N=0}^{L} ⊕_{c ∈ simples(C)} ⊕_{config ∈ enumerate_configs_hc(L,N,C)}
+           ⊕_{fusion_tree of (config.labels) → c} ℂ.
+```
+
+Each `(config, fusion_tree, c)` is one basis vector; `Mor(X_c, …) =
+Hom_C(X_c, …)`.
+
+**Source:** `stocktake/reports/opus-hilbert-bridge.md:108-138` — the
+in-repo authoritative description of MMA's framing. The bridge report
+itself quotes `microscopic-mobile-anyons/tex/sections/finegraining.tex:8-13`
+verbatim (the first block above) and synthesises the second block from
+`microscopic-mobile-anyons/src/MobileAnyons/hilbert.jl:75-98`. MMA is
+scheduled to import into this repo in Phase 8; until then, the bridge
+report is the canonical in-repo source for this entry. **The slug
+`def:mobile-Fock` is GLOSSARY-internal; it is not the literal `\label`
+of any LaTeX environment in the MMA source.**
+**Aliases:** "MMA Hilbert space", "`H_MMA(L)`", "mobile anyons Fock
+space", "hard-core-anyon Fock space on an `L`-site lattice".
+**Translation map:**
+  - Summary.tex / partition: **TBD pending P1.5** (already de-risked:
+    mobile-Fock is a special case of [[def:HP]] with $A_I =
+    Q_{\mathrm{full}} = \bigoplus_a a$ on every cell, plus a direct sum
+    over particle number $N$ and total charge $c$; see bridge report
+    §2.3 for the constructive bijection in both directions).
+  - Summary.tex / N-tensor: **TBD pending P1.5** (mobile-Fock relates
+    to [[def:Hlatt]] by summing over $N$ and $c$; bridge §2.2).
+  - CAD: **TBD pending P1.7**.
+**Notes:** The third of the three discrete Hilbert-space framings
+reconciled in `stocktake/reports/opus-hilbert-bridge.md` (alongside the
+partition-canonical [[def:HP]] and the fixed-lattice [[def:Hlatt]]);
+the continuum direct-limit closure of the partition tower is
+[[def:indlim]]. Per the bridge verdict, all three discrete framings are
+equivalent and mutually inter-translatable; the partition formulation
+is strictly more general and therefore canonical.
+
+**Convention dependencies** (adapted from bridge report §1.3 line 136
+— the inline `(a)`–`(f)` enumeration there — with added forward-pointers
+to P1.6 `CONVENTIONS.md` items, GLOSSARY cross-links, and the LB-1
+reference; **not** a verbatim quote):
+
+1. **Vacuum at index 1** in `simples(C)` (per `config.jl:5,13`).
+   Forward-pointer: P1.6(a) vacuum-index convention.
+2. **Labels enumerate non-vacuum simples only** (Julia uses `2:d`
+   per `config.jl:36`). Forward-pointer: also P1.6(a) (consistent
+   indexing scheme).
+3. **Hard-core occupancy** enforced via `Combinations`, not
+   multisets (`config.jl:35`). Forward-pointer: not a CONVENTIONS
+   item per se; the hard-core constraint is part of the MMA model
+   definition. See also the [[def:splitbasis]] Notes on the latent
+   LB-1 multiplicity bug (bd `cft-anyons-q6h`), which is independent
+   of hard-core but lives in the same `hilbert.jl` enumerator.
+4. **Involutory F-matrix gauge** (TensorCategories.jl convention; MMA
+   compensates with Hermitian projectors `vv†/|v|²` in
+   `interaction.jl` and `braiding.jl`; documented in
+   `stocktake/reports/mma-julia.md:142-149`). Forward-pointer:
+   P1.6(b) F-matrix gauge convention.
+5. **Left-associated fusion-tree basis** (`hilbert.jl:13-15`).
+   Forward-pointer: P1.6(i) fusion-tree ordering convention.
+6. **Total charge $c$ summed over all simples**, **not** treated as
+   a superselection label (contrast with [[def:Hlatt]]/[[def:HP]],
+   which grade by $W \in \Irr(\Cc)$). This is a structural difference
+   absorbed by the translation map (P1.5), not a CONVENTIONS item.
+
+Also: the **`N = 0` boundary** in mobile-Fock agrees with [[def:Hlatt]]'s
+$N=0$ specialisation ($H_0^W = \delta_{W,1}\cdot\mathbb{C}$); see
+bridge report §3 ("Edge cases checked", first bullet), line 253.
+Partition formulation [[def:HP]] does
+**not** technically permit $|P| = 0$ (a partition covers `X`, requiring
+at least one cell). P1.6(j) will lift "empty partition / $N=0$
+boundary" to a CONVENTIONS entry so the three formulations agree at
+the absolute boundary.
+
+**LB-1 caveat (latent bug, blocked on Phase 8):** the MMA function
+`enumerate_fusion_trees` at
+`microscopic-mobile-anyons/src/MobileAnyons/hilbert.jl:42-68` undercounts
+the basis for fusion categories with $\dim\Hom(a\otimes b, c) > 1$.
+Filed as bd `cft-anyons-q6h`. The three currently-used categories
+([[def:fib]], [[def:ising]], sVec) are all multiplicity-free, so the
+bug is **latent for present scope** but blocks any future extension to
+extended Haagerup, certain quantum groups at non-prime levels, etc.
+See bridge report §3.5 line 263–269 for full discussion.
