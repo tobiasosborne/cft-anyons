@@ -11,6 +11,7 @@
 -- zero `axiom`.
 
 import Formalisation.Foundations.Configurations
+import Formalisation.Foundations.ConfigurationSpace
 import Formalisation.Foundations.DirectSumCoordinates
 import Formalisation.Foundations.SkeletalFusion
 import Formalisation.LinearAlgebra.Isometry
