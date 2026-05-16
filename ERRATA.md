@@ -923,3 +923,224 @@ Per `bd` `cft-anyons-h81` and orchestrator briefing.
   ERRATA + MIGRATION_LOG updates land in the same atomic commit.
 
 **Commit:** (filled below after commit lands)
+
+---
+
+## 2026-05-16: P3.3 — footnotes linking 6 undischarged `\unchecked` items to `RESEARCH_NOTES.md` acquisition queue
+
+**summary.tex location:** 6 sites, all per-atom (per user-locked
+granularity decision for Phase 3):
+
+1. **`koo-saleur`** at `summary.tex:2465` — canonical-enumeration entry
+   ``Koo, Saleur: lattice Virasoro approximants from XXZ/RSOS / TL
+   chains (chat~1 §10).'' inside the ``External references mentioned
+   (all unchecked)'' itemize at lines 2458--2481. Footnote anchor:
+   `aq:koo-saleur`.
+2. **`pasquier`** at `summary.tex:2469` — canonical-enumeration entry
+   ``Pasquier: ADE lattice models / RSOS height models (chat~1 §1).''
+   Footnote anchor: `aq:pasquier`.
+3. **`huse`** at `summary.tex:2471` — canonical-enumeration entry
+   ``Huse: identification of ABF critical points with the
+   Friedan--Qiu--Shenker unitary minimal series $M(m, m+1)$ (chat~1
+   §13).'' Footnote anchor: `aq:huse`.
+4. **`frs`** at `summary.tex:2474` — canonical-enumeration entry
+   ``Fjelstad, Fuchs, Runkel, Schweigert (``FRS''): full RCFT
+   correlators from a special Frobenius algebra in the relevant
+   module category; $A = \one$ in the Cardy case (chat~1 §1).''
+   Footnote anchor: `aq:frs`.
+5. **`anyonic-mera`** at `summary.tex:2479` — canonical-enumeration
+   entry ``\`\`Anyonic MERA literature'': charge-compatible MERA
+   tensors, scaling-superoperator language (chat~1 §1.4).'' Footnote
+   anchor: `aq:anyonic-mera`.
+6. **`g2-1-chiral-cft`** at `summary.tex:1866` — inside
+   `\begin{warning}[warn:fibCFTs]` at lines 1855--1869 (NOT inside the
+   canonical-enumeration itemize, because the atom has no `\item`
+   entry there). The `\unchecked` macro here is attached to the
+   ``Calculations in this document use the chiral $(G_2)_1$ convention
+   $h_\tau = 2/5$ whenever the Fibonacci CFT is invoked, following
+   Chat~2's stated choice.'' sentence. Placement reasoning: the
+   single `\unchecked` for this atom is at line 1866; per orchestrator
+   briefing, ``still place the footnote at the most natural per-atom
+   location (the single `\unchecked` you find) -- record reasoning.''
+   Footnote anchor: `aq:g2-1-chiral-cft`.
+
+Total: 6 footnotes, 6 anchors in `RESEARCH_NOTES.md`. Each footnote
+is minimal (one sentence) and points to the matching `RESEARCH_NOTES.md`
+acquisition-queue entry. No `\unchecked` macro is discharged; all 6
+remain in place.
+
+**Before** (`summary.tex` at commit `c607efa`, the post-P3.2.c
+baseline):
+
+Line 1866 (inside `warn:fibCFTs`):
+```latex
+Fibonacci CFT is invoked, following Chat~2's stated choice.\unchecked\
+```
+Line 2465 (canonical-enumeration item ``Koo, Saleur''):
+```latex
+      (chat~1 §10).\unchecked
+```
+Line 2469 (item ``Pasquier''):
+```latex
+\item Pasquier: ADE lattice models / RSOS height models (chat~1 §1).\unchecked
+```
+Line 2471 (item ``Huse'', continuation line):
+```latex
+      unitary minimal series $M(m, m+1)$ (chat~1 §13).\unchecked
+```
+Line 2474 (item ``FRS'', continuation line):
+```latex
+      $A = \one$ in the Cardy case (chat~1 §1).\unchecked
+```
+Line 2479 (item ``Anyonic MERA literature'', continuation line):
+```latex
+      scaling-superoperator language (chat~1 §1.4).\unchecked
+```
+
+**After** (this commit): each of the 6 lines above gains an inline
+`\footnote{...}` immediately after `\unchecked`, of the form:
+
+```latex
+\unchecked\footnote{<minimal acquisition-pointer text>}
+```
+
+with the minimal-text body per atom:
+
+1. `koo-saleur`: ``Literature DB has paper\#590 (2017 follow-up
+   applying the Koo--Saleur formula), but no local PDF of the
+   original 1994 Koo--Saleur paper; see \texttt{RESEARCH\_NOTES.md}
+   acquisition-queue entry \texttt{aq:koo-saleur} for the original
+   paper to acquire.'' — longer than the others because it must
+   distinguish the partial-discharge case from undischarged (resolves
+   bd `cft-anyons-qdd` PRD ↔ CITATION_INDEX asymmetry).
+2. `pasquier`: ``No local source; see \texttt{RESEARCH\_NOTES.md}
+   acquisition-queue entry \texttt{aq:pasquier} for the paper to
+   acquire.''
+3. `huse`: ``No local source; see \texttt{RESEARCH\_NOTES.md}
+   acquisition-queue entry \texttt{aq:huse} for the paper to acquire.''
+4. `frs`: ``No local source; see \texttt{RESEARCH\_NOTES.md}
+   acquisition-queue entry \texttt{aq:frs} for the papers to
+   acquire.''
+5. `anyonic-mera`: ``No local source; see \texttt{RESEARCH\_NOTES.md}
+   acquisition-queue entry \texttt{aq:anyonic-mera} for the papers to
+   acquire.''
+6. `g2-1-chiral-cft`: ``No local source for $(G_2)_1$ chiral CFT data;
+   see \texttt{RESEARCH\_NOTES.md} acquisition-queue entry
+   \texttt{aq:g2-1-chiral-cft} for the references to acquire.''
+
+For line 1866 the trailing `\ ` (forced-space) after `\unchecked` is
+preserved verbatim by inserting the `\footnote{...}` between
+`\unchecked` and `\ `: `\unchecked` → `\unchecked\footnote{...}` →
+followed by the original `\ `.
+
+All other characters of `summary.tex` are unchanged. No `\unchecked`
+flag is discharged; the bibliography block (P3.0 territory) is
+untouched; the blanket `\unchecked` declaration at line 2437 is
+untouched; the `\section*{Reference status}` enumerate at lines
+2441--2456 is untouched.
+
+**Atom-set coverage and orchestrator briefing reconciliation**
+(6 atoms, not 5 as the literal `MIGRATION_PLAN.md:173` text suggests):
+
+The plan literally lists ``FRS, Pasquier, Huse, Koo--Saleur original,
+$(G_2)_1$'' = 5 atoms. The orchestrator briefing for P3.3 expands
+this to 6 atoms by adding `anyonic-mera`, which `CITATION_INDEX.md`
+line 44 classifies as `undischarged` (no local PDF, no literature DB
+record, no AF node) — the same status as the other 5. Including
+`anyonic-mera` in P3.3 is the consistent reading: the plan's
+enumeration is exemplary, not exhaustive; the underlying criterion is
+``lacks local source.'' All 6 atoms now have a `RESEARCH_NOTES.md`
+acquisition-queue entry and a corresponding `summary.tex` footnote.
+
+**RESEARCH_NOTES.md update (substantive prose addition):** a new
+section ``Acquisition queue (Phase 3 undischarged citations)'' is
+inserted before the existing ``Latent bugs in source projects''
+section. Each of the 6 acquisition entries follows a uniform schema:
+(i) anchor `aq:<slug>`; (ii) cited claim with `summary.tex` line
+ranges; (iii) acquisition target (specific paper(s) with full
+bibliographic data: authors, title, journal, year, arXiv ID where
+known); (iv) expected discharge path (acquire → SHA256 → manifest →
+bibitem → P3.2-style discharge). The `aq:koo-saleur` entry has an
+additional paragraph addressing the PRD ↔ CITATION_INDEX asymmetry
+flagged by bd `cft-anyons-qdd`: paper\#590 (2017 follow-up applying
+the Koo--Saleur formula) is **not** a substitute for the 1994
+Koo--Saleur original; the original derives and proves the convergence
+result that `summary.tex` conj:KS attributes; paper\#590 only uses it
+numerically. The acquisition target is unambiguously the 1994
+original (Koo--Saleur, Nucl.\ Phys.\ B 426, arXiv:hep-th/9312156).
+
+**Source of correction:** N/A — this is **not a correction to a
+previously-asserted claim**. It is a **pure additive routing edit**:
+6 footnotes added at the 6 per-atom `\unchecked` sites pointing to
+6 corresponding `RESEARCH_NOTES.md` acquisition-queue anchors. No
+mathematical content of `summary.tex` is altered. The `\unchecked`
+flags remain `\unchecked`. The C-gate (≥ 2 source agreement) does
+not fire because no claim is discharged; the C-gate for the eventual
+P3.2-style discharge of each atom fires when each acquisition lands.
+Per `bd` `cft-anyons-qfg` (closed by this commit) and `cft-anyons-qdd`
+(closed by this commit). Plan step `MIGRATION_PLAN.md:173`.
+
+**Validation:**
+
+- **M** (mechanical): `pdflatex -interaction=nonstopmode
+  -halt-on-error -draftmode summary.tex` three-pass succeeds (rc=0
+  on all three passes). Steady-state (3-pass; both pre-edit baseline
+  at commit `c607efa` and post-edit converge identically to steady
+  state in 3 passes — the added `\footnote{...}` macros perturb the
+  `.aux` cross-reference table the same way the P3.2.a/b/c edits did):
+  log lines 1009 → 1011 (+2 lines, as expected from 6 footnote
+  insertions, several spread over multiple log lines each);
+  Underfull count 10 → 10 (unchanged); Overfull count 8 → 8
+  (unchanged); LaTeX-Warning count 0 → 0 (unchanged);
+  `Undefined`-class messages 0 → 0; `No \bibitem`-class messages 0;
+  `Citation undefined` messages 0; `Label(s) may have changed`
+  warnings 0 at steady state. **Page count: 33 → 33 (unchanged)** —
+  the 6 footnotes fit at the bottom of existing pages (line 1866 is
+  on the warn:fibCFTs page; lines 2465/2469/2471/2474/2479 are on the
+  ``External references mentioned'' page; no page break is forced).
+  PDF objects: 621 → 636 (+15 PDF objects ≈ 6 footnotes × 2.5
+  hyperlink targets each, as expected — each footnote adds a footnote
+  mark + footnote text destination).
+- **D** (definitional): `git diff summary.tex` shows exactly 6
+  deletions and 6 insertions (verified by
+  `git diff summary.tex | grep -c '^+[^+]' == 6` and the symmetric
+  deletion count). Each deletion is one of the 6 `\unchecked` lines
+  identified above; each insertion is the same line with an inline
+  `\footnote{<minimal acquisition-pointer text>}` appended immediately
+  after the `\unchecked` macro. The `\unchecked` macro itself is
+  preserved on every one of the 6 lines (no discharge). No GLOSSARY-
+  defined term is added or altered; `\footnote{...}` is a built-in
+  LaTeX primitive (no GLOSSARY entry required, no Law 1 fire); the
+  body text of the footnotes contains only acquisition-pointer prose
+  with no mathematical claim. The surrounding content (the
+  ``External references mentioned'' itemize, the warn:fibCFTs warning,
+  and the `\section*{Reference status}` enumerate immediately above)
+  is byte-verbatim outside the 6 inline-macro additions. **No claim
+  change** per `MIGRATION_PLAN.md:173` D-gate spec.
+- **R** (review): Core-tier per CLAUDE.md Rule 4 (substantive
+  `summary.tex` content change AND substantive `RESEARCH_NOTES.md`
+  prose addition). Hostile Opus reviewer subagent post-commit per
+  orchestrator policy. Reviewer should verify: (i) the 6 per-atom
+  footnote-insertion lines match the 6 actual per-atom `\unchecked`
+  macros in `summary.tex` (one per atom; not more, not fewer); (ii)
+  every `\unchecked` macro is preserved (no discharge); (iii) the
+  bibliography block at lines 2483--2518 (P3.0 territory) and the
+  blanket `\unchecked` declaration at line 2437 are untouched; (iv)
+  the 6 `RESEARCH_NOTES.md` acquisition-queue anchors `aq:<slug>`
+  match the 6 footnote bodies and the 6 `CITATION_INDEX.md` atom
+  slugs; (v) the `aq:koo-saleur` entry explicitly states that
+  paper\#590 is NOT a substitute for the 1994 original (resolves
+  `cft-anyons-qdd` PRD ↔ CITATION_INDEX asymmetry); (vi) the diff is
+  exactly 6 deletions + 6 insertions and purely additive in semantic
+  content; (vii) `pdflatex` builds clean at steady state (3 passes)
+  with page count unchanged.
+- **I** (integration): Three-pass `pdflatex` build is reproducible;
+  ERRATA + RESEARCH_NOTES + MIGRATION_LOG updates land in the same
+  atomic commit; bd `cft-anyons-qfg` and `cft-anyons-qdd` close in
+  the same commit.
+
+(C-gate intentionally not exercised: no claim is discharged. C-gate
+fires when each acquisition lands as a follow-on P3.2-style discharge,
+one per atom.)
+
+**Commit:** (filled below after commit lands)
