@@ -121,10 +121,10 @@ strict ordering is the only structure used.
 ```
 
 **Source:** `summary.tex:76`
-**Aliases:** TBD pending P1.7/P1.8.
+**Aliases:** TBD pending P1.8.
 **Translation map:**
   - MMA: TBD pending P1.8.
-  - CAD: TBD pending P1.7.
+  - CAD: not directly formalised — `conv:basics` is a notation block, not a definition. The dagger / adjoint substance maps to Mathlib's `star` typeclass via CAD's `LinearAlgebra/` infrastructure; the `\one` notation maps to `Foundations/ProjectDefinitions.lean::LocalOccupationModel.vacuum` (which is unconstrained — the user supplies the choice).
 **Notes:** The dagger/adjoint and vacuum/`\one` conventions are restated and
 extended in [[conv:1op]] (specifically for `A = \one\oplus p`). The
 "categorical unit object = vacuum simple" identification is load-bearing
@@ -164,7 +164,7 @@ correlators)\unchecked,
 **Aliases:** N/A (the entry itself is an aliases table).
 **Translation map:**
   - MMA: TBD pending P1.8.
-  - CAD: TBD pending P1.7.
+  - CAD: not formalised (acronym table — no mathematical content to formalise).
 **Notes:** The `\unchecked` on FRS reflects that the FRS construction is
 cited but not locally discharged — see `CITATION_INDEX.md`.
 
@@ -204,9 +204,7 @@ $(\,\cdot\,)^\dagger:\Hom(X,Y)\to\Hom(Y,X)$ satisfying $\langle f,g\rangle
 throughout per [[conv:unitary-default]]).
 **Translation map:**
   - MMA: TBD pending P1.8 (Julia FusionCategory struct).
-  - CAD: TBD pending P1.7 (Lean `FiniteSkeletalFusionData` — note the CAD
-    side is the *skeletal* coordinate slice, not the abstract categorical
-    definition; see `stocktake/reports/cad-lean.md` §4).
+  - CAD: `Foundations/SkeletalFusion.lean::FiniteSkeletalFusionData` (Phase 5 migration step P5.1). Coordinate-skeleton level: a finite label set, distinguished vacuum, integer multiplicity table. No associators, no duals, no Hom-spaces — the categorical content is supplied separately at instantiation. Per `stocktake/reports/cad-lean.md` §5 line 344 and §2.1 lines 35-48.
 **Notes:** This is the project's foundational definition; nearly every other
 entry depends on it. The unitary qualifier propagates via [[conv:unitary-default]].
 
@@ -230,7 +228,7 @@ in `summary.tex` itself.)
 **Aliases:** "unitarity assumption", "default unitarity".
 **Translation map:**
   - MMA: TBD pending P1.8.
-  - CAD: TBD pending P1.7.
+  - CAD: not formalised (notational convention — the unitarity assumption is implicit in CAD's Mathlib-borne dagger structures).
 **Notes:** This convention is the reason [[def:fuscat]] is usually invoked
 with implicit unitarity; see also [[def:fib]] and [[def:ising]] as the
 two recurring instantiations.
@@ -260,7 +258,7 @@ $N_{bc}^a \in\{0,1\}$ (the multiplicity-free case) the index $\mu$ is dropped.
   - MMA: TBD pending P1.8 (MMA's `Hom(c, X_{a1}\otimes\cdots\otimes X_{an})`
     bases use the same splitting-vertex convention; see
     `stocktake/reports/opus-hilbert-bridge.md` §2).
-  - CAD: TBD pending P1.7.
+  - CAD: not formalised at the categorical splitting-basis level. CAD's `FiniteFineGraining` (`LinearAlgebra/FineGraining.lean`, Phase 4 P4.11) works at the matrix-algebra level — basis is presumed but not named as a splitting basis. The Fibonacci splitting basis is implicit in `Fibonacci/Binary.lean::PFBinaryEta` (Phase 5 P5.10).
 **Notes:** The "$\mu$ dropped in the multiplicity-free case" remark is the
 implicit-vs-explicit multiplicity index distinction that powers the latent
 LB-1 bug in MMA (see `cft-anyons-q6h` in bd). All currently-used categories
@@ -298,8 +296,7 @@ literatures, with sign/normalisation differences).
     in general), whereas `summary.tex` implicitly assumes the unitary
     case. The translation rule must be documented at P1.6/P1.8; see
     `CLAUDE.md` hallucination-risk callouts.
-  - CAD: TBD pending P1.7 (Lean `FibF`; see `Fibonacci/Matrix.lean` per
-    `stocktake/reports/cad-lean.md` §5).
+  - CAD: not formalised abstractly. The specific Fibonacci instance is at `Fibonacci/Matrix.lean::FibF` (see [[def:fib-F]] CAD entry); CAD does not have a general categorical F-symbol structure (per `stocktake/reports/cad-lean.md` §5 'Notable gaps').
 **Notes:** Concrete instance [[def:fib-F]] for Fibonacci; [[def:ising-F]]
 for Ising. The unitary qualifier here is governed by [[conv:unitary-default]].
 
@@ -328,7 +325,7 @@ D \;:=\; \sqrt{\sum_{a\in\Irr(\Cc)} d_a^{2}}.
 dimension", "intrinsic dimension".
 **Translation map:**
   - MMA: TBD pending P1.8.
-  - CAD: TBD pending P1.7.
+  - CAD: Fibonacci-specific case in `Fibonacci/Basic.lean` (Phase 5 P5.7) — `d_τ = φ`, `D² = 2+φ` proved. The abstract `d_a d_b = Σ_c N^c_{ab} d_c, d_1 = 1` is not formalised as a general categorical statement (per `stocktake/reports/cad-lean.md` §5 'Notable gaps: §5 algebra objects').
 **Notes:** The "PF" acronym in [[conv:acro]] and the "PF amplitudes"
 [[def:PF]] both refer to "Perron--Frobenius" splittings derived from
 quantum dimensions. Concrete instances: Fibonacci $d_\tau = \varphi$
@@ -357,7 +354,7 @@ objects).
     $Q_{\mathrm{full}} = \bigoplus_a a$ default; see
     `stocktake/reports/opus-hilbert-bridge.md` §3 and the planned P1.6
     item (h) ("local cell object Q choice — five named options").
-  - CAD: TBD pending P1.7.
+  - CAD: `Foundations/ProjectDefinitions.lean::LocalOccupationModel` (Phase 5 P5.6). `LocalOccupationModel.vacuum : label` is unconstrained — the choice of `Q` (and which simple is vacuum) is supplied by the user at instantiation. For the canonical `Q_full` default (P1.6(h)), supply the full label set. Per `stocktake/reports/cad-lean.md` §5 line 358.
 **Notes:** This is one of the project's most-overloaded symbols. Five
 distinct natural choices are catalogued in `summary.tex` Remark
 `rem:Q-choices` ($Q_{\mathrm{full}}$, $Q_{\mathrm{restr}}$,
@@ -424,9 +421,7 @@ The full $N$-site space is $\Hh_N = \bigoplus_{W\in\Irr(\Cc)} \Hh_N^{W}$.
     - **Worked example**: Fibonacci $\Hh_2^\tau$ has $\dim = 3$ in
       both formulations; basis-vector-level bijection given in bridge
       report §5.1–§5.3 (`opus-hilbert-bridge.md:291-339`).
-  - CAD: TBD pending **P1.7**. Lean side is
-    `IndefiniteParticleSectorCoordinates` at the coordinate-skeleton level
-    (not categorical); see `stocktake/reports/cad-lean.md` §5.
+  - CAD: `Foundations/ProjectDefinitions.lean::IndefiniteParticleSectorCoordinates(sectorBasis)` (Phase 5 P5.6). **Coordinate-skeleton level**, not categorical Hom-space. User must supply `sectorBasis : Config label n → Type`; once supplied, the bijection is `IndefiniteParticleSectorCoordinates(sectorBasis) = Hom(W, Q^⊗N)` coordinatised by enumerating `(config, basis element of Hom-fibre over that config)`. Per `stocktake/reports/cad-lean.md` §5 line 358 and bridge report §3 'CAD Lean ↔ summary' row (`opus-hilbert-bridge.md:249`). Supporting CAD constructions on the same `H_N^W` skeleton: `Foundations/DirectSumCoordinates.lean` (Phase 5 P5.2) for the Σ↔Π sum equivalence; `Foundations/ConfigurationSpace.lean` (P5.4) for `summary.tex` §4.2 sector expansion; `Foundations/FockSpace.lean` (P5.5) for `summary.tex` §4.3 truncated-Fock-space view.
 **Notes:** Equivalent to [[def:HP]] when all $A_I = Q$ (per the remark
 following `def:HP`). The three discrete Hilbert-space framings (this
 one, [[def:HP]], and MMA's mobile-Fock [[def:mobile-Fock]]) all
@@ -462,7 +457,7 @@ multiplicity factor is trivial.
     uses $N$ for tensor degree / lattice length / cell count and lower-case
     $k$ (here) or $n$ for the count of non-vacuum legs, whereas MMA uses
     `N` for the latter. Disambiguation required at P1.6.
-  - CAD: TBD pending P1.7.
+  - CAD: `Foundations/Configurations.lean` (Phase 5 P5.3) — particle number defined in the coordinate skeleton. **Caveat per `stocktake/reports/cad-lean.md` §6**: Configurations.lean currently imports `Fibonacci.FusionRules`; must be reverse-decoupled before migration (P5.3 covers this).
 **Notes:** "Fusion fibre" is implicitly defined here; not a separate entry
 because the definition is contained in this body. Depends on
 [[def:Hlatt]] and [[def:Q]].
@@ -489,7 +484,7 @@ We write $|P| = N$ and $\ell(I)$ for the length of cell $I\in P$.
 **Translation map:**
   - MMA: TBD pending P1.8 (MMA's `LabelledConfig` is the partition +
     label data per `stocktake/reports/mma-julia.md` §5).
-  - CAD: TBD pending P1.7.
+  - CAD: not formalised. CAD has only the N-tensor (fixed-lattice) coordinate skeleton via [[def:Hlatt]]'s CAD entry; the partition data structure (per-cell objects, partition-refinement order) is not in CAD scope.
 **Notes:** Underlying the partition Hilbert space [[def:HP]] and the
 refinement infrastructure ([[def:refine]], [[def:refmap]], [[def:indlim]],
 [[def:blocking]]).
@@ -544,7 +539,7 @@ A_P \;:=\; A_{I_1}\otimes A_{I_2}\otimes\cdots\otimes A_{I_N}, \qquad
       basis-vector-level bijection to MMA's
       $(\text{config}, \text{fusion\_tree}, c)$ tuples given at
       bridge report §5.1–§5.2 (`opus-hilbert-bridge.md:291-325`).
-  - CAD: TBD pending **P1.7**.
+  - CAD: **not directly formalised** as the partition formulation. CAD has only the fixed-lattice `H_N^W` skeleton (via [[def:Hlatt]]'s CAD entry), which is the special case `|P| = N`, `A_I = Q` of [[def:HP]]. The per-cell `A_I` generality (required for blocked / coarse-grained refinements) is NOT in CAD scope.
 **Notes:** **This is the canonical Hilbert-space formulation per
 `stocktake/reports/opus-hilbert-bridge.md`**. Three equivalent framings:
 this one ([[def:HP]]); the fixed-lattice [[def:Hlatt]] (special case
@@ -579,7 +574,7 @@ $P_1,P_2$ admit a common refinement; hence $(P,\preceq)$ is a directed set.
 **Aliases:** "$P \preceq P'$", "subdivision".
 **Translation map:**
   - MMA: TBD pending P1.8.
-  - CAD: TBD pending P1.7.
+  - CAD: not formalised as a partition-refinement order. CAD's coherent-refinement structure (`LinearAlgebra/CoherentSystem.lean`, Phase 4 P4.12) implements the categorical compatible-family axioms abstractly but does not implement the partition combinatorics.
 **Notes:** The directed-set structure is what enables the inductive limit
 [[def:indlim]]. Implementation of $E_{P\to P'}$ is [[def:refmap]].
 
@@ -612,7 +607,7 @@ morphism".
 **Translation map:**
   - MMA: TBD pending P1.8 (`normalized_product_isometry` ↔ $E_{P\to P'}$
     per `stocktake/reports/mma-julia.md` §5).
-  - CAD: TBD pending P1.7.
+  - CAD: `LinearAlgebra/FineGraining.lean::FiniteFineGraining` (Phase 4 P4.11) — captures the `E†E = id` isometry condition + all channel properties (unital, *-preserving, completely positive). Works at the matrix-algebra level; instantiation requires choosing bases for source and target. Supporting infrastructure: `LinearAlgebra/Isometry.lean` (Phase 4 P4.2) for general isometry lemmas (`E^†E = I` ⇒ `E` is bijective onto its image, etc.); `LinearAlgebra/Postcompose.lean` (P4.8) and `LinearAlgebra/Component.lean` (P4.9) for compositional structure. The tensor-product structure of the cellwise-local condition is in `LinearAlgebra/Tensor.lean` (P4.4), `TensorPower.lean` (P4.5), `HeterogeneousTensor.lean` (P4.6). Per `stocktake/reports/cad-lean.md` §5 line 359 and §2.4.
 **Notes:** Concrete instances: [[def:lenref]] (length-weighted, the
 square-zero kinematic model); [[def:rchild]] (algebra-derived for
 Fibonacci); [[def:Jinterp]] (non-tree interpolation). The
@@ -666,7 +661,7 @@ direct limit
       refinement maps [[def:refmap]] (the inductive system must be
       compatible: $E_{P\to P}=\id$ and
       $E_{P'\to P''}E_{P\to P'}=E_{P\to P''}$).
-  - CAD: TBD pending P1.7.
+  - CAD: `LinearAlgebra/CoherentSystem.lean` (Phase 4 P4.12) — compatible-family axioms (`E_{P→P}=id`, `E_{P'→P''} ∘ E_{P→P'} = E_{P→P''}`) proved. Hilbert completion of the algebraic direct limit not in CAD scope (CAD is finite-dim coordinate-only). Per `stocktake/reports/cad-lean.md` §5 line 363.
 **Notes:** Compatibility = associativity-of-refinement. Cf. [[def:HP]],
 [[def:refmap]]. The Hilbert-completion step is the load-bearing step
 analytically. The continuum limit here is the analytical completion of
@@ -698,7 +693,7 @@ onto the embedded coarse subspace (a strict projection, not the identity).
 **Aliases:** "coarse-graining map", "$B_{P\leftarrow P'}$".
 **Translation map:**
   - MMA: TBD pending P1.8.
-  - CAD: TBD pending P1.7.
+  - CAD: the `B = E†` adjoint relationship is implicit in `LinearAlgebra/FineGraining.lean` (Phase 4 P4.11) via the isometry condition. Not separately formalised as a distinct `def:blocking` structure.
 **Notes:** The "strict projection, not the identity" remark is what makes
 $E \circ B$ a proper coarse-graining (non-injective on the fine side).
 The dual of [[def:refmap]]. Composed instances: [[def:ascending]].
@@ -725,8 +720,7 @@ $\ast$-preserving, and completely positive (it is a conjugation by an isometry).
 ascending channel".
 **Translation map:**
   - MMA: TBD pending P1.8.
-  - CAD: TBD pending P1.7 (Lean `Kraus channels` infrastructure in
-    `LinearAlgebra/`; cf. `stocktake/reports/cad-lean.md` §3).
+  - CAD: the ascending-channel construction `A(O) = E† O E` is the channel-property infrastructure in `LinearAlgebra/Trace.lean` (Phase 4 P4.7) and `LinearAlgebra/FineGraining.lean` (P4.11) — completely positive, unital, *-preserving. The 'charge-only' specialisation (`summary.tex warn:charge-only`) is in `LinearAlgebra/ChargeOnly.lean` (P4.14) + `DiagonalScaling.lean` (P4.13); the categorical 'charge-only fails CFT spectrum' Warning is documented but NOT a CAD theorem.
 **Notes:** Eigenoperators are [[def:scalop]]. The "charge-only" subcase
 of [[def:ascending]] (operator basis = charge projectors) is the
 restricted version warned about in `warn:charge-only`
@@ -761,9 +755,7 @@ then $(A,m,u)$ is called \emph{dagger-special} (or \emph{$\lambda$-special}).
 "Dagger-special" is also called "$\lambda$-special".
 **Translation map:**
   - MMA: TBD pending P1.8.
-  - CAD: TBD pending P1.7 (`Foundations/SkeletalFusion.lean` and the
-    algebra-object content of `Fibonacci/`; see
-    `stocktake/reports/cad-lean.md` §5).
+  - CAD: not formalised (per `stocktake/reports/cad-lean.md` §5 'Notable gaps: §5 algebra objects, comultiplication ∆ = m†/√λ: no Lean formalisation').
 **Notes:** **Critical hallucination-risk callout (CLAUDE.md):
 "dagger-special" ≠ "Frobenius-special".** Frobenius-special additionally
 requires the Frobenius identity, not assumed here. See `summary.tex`
@@ -791,7 +783,7 @@ $v^{p}_{p,p}\in\Hom(p,\,p\otimes p)$.
 ansatz".
 **Translation map:**
   - MMA: TBD pending P1.8.
-  - CAD: TBD pending P1.7.
+  - CAD: not formalised (notational convention for the algebra ansatz `A = \one ⊕ p`).
 **Notes:** $p = \tau$ is the Fibonacci instantiation per [[def:fib]];
 generically applies to any unitary fusion category with a simple $p$
 satisfying $p\otimes p \cong \one \oplus p$. The convention fixes the
@@ -825,7 +817,7 @@ amplitudes are dictated by cell-length geometry.
 refinement" (chat 4 §1--13).
 **Translation map:**
   - MMA: TBD pending P1.8.
-  - CAD: TBD pending P1.7.
+  - CAD: not formalised (per `stocktake/reports/cad-lean.md` §5 'Notable gaps: §6 square-zero worked example: not formalised').
 **Notes:** This is the chat-4 square-zero kinematic-Fock refinement (cf.
 [[def:algobj]] degenerate branch — the $a = b = 0$ algebra is associative
 but not dagger-special, so the canonical algebra-derived
@@ -857,8 +849,7 @@ Fibonacci is multiplicity-free: every $N_{ab}^{c}\in\{0,1\}$.
 minimal model; not used in this project).
 **Translation map:**
   - MMA: TBD pending P1.8.
-  - CAD: TBD pending P1.7 (Lean `Fibonacci/FusionRules.lean` per
-    `stocktake/reports/cad-lean.md` §5).
+  - CAD: `Fibonacci/FusionRules.lean::fibSkeletalFusionData` (Phase 5 P5.9) — the unique instance of [[def:fuscat]]'s CAD equivalent for Fibonacci. Per `stocktake/reports/cad-lean.md` §5 line 345: fusion rules complete; post-decoupling required for `Foundations/Configurations.lean` circular import (handled by P5.3 before P5.9). Peripheral: `Fibonacci/BraidMatrices.lean` (Phase 5 P5.13) proves the Fibonacci-specific braid-relation check (not a named claim in `summary.tex`, but covered for completeness — per `stocktake/reports/cad-lean.md` §5 line 352).
 **Notes:** Specific instance of [[def:fuscat]]. Multiplicity-free, so per
 P1.6(d) the latent LB-1 bug (`cft-anyons-q6h`) does not currently affect
 Fibonacci. The quantum dimension $d_\tau = \varphi$ uses [[def:phi]]. The
@@ -882,7 +873,7 @@ F-symbol is [[def:fib-F]]; the multiplication is [[def:fib-mult]].
 **Aliases:** "$\varphi$", "golden mean", "golden section".
 **Translation map:**
   - MMA: TBD pending P1.8.
-  - CAD: TBD pending P1.7.
+  - CAD: `Fibonacci/Basic.lean` (Phase 5 P5.7) — all golden-ratio identities from `summary.tex lem:fib-arith` proved (`φ^{-1} = φ − 1`, `φ^{-2} = 2 − φ`, `φ^{-2} + φ^{-1} = 1`, `2φ^{-2} + φ^{-3} = 1`). Per `stocktake/reports/cad-lean.md` §5 line 347.
 **Notes:** Identities Lemma `lem:fib-arith` (`summary.tex:1020`):
 $\varphi^{-1} = \varphi - 1$, $\varphi^{-2} = 2 - \varphi$,
 $\varphi^{-2} + \varphi^{-1} = 1$, $2\varphi^{-2} + \varphi^{-3} = 1$.
@@ -914,8 +905,7 @@ F^{\tau\tau\tau}_{\tau} \;=\;
     coincidentally (Lemma `lem:F-invol`: $F^2 = I$) but more generally
     the unitary-vs-involutory translation rule must be invoked. P1.6(b)
     will declare unitary as canonical.
-  - CAD: TBD pending P1.7 (Lean `Fibonacci/Matrix.lean` `FibF` per
-    `stocktake/reports/cad-lean.md` §5).
+  - CAD: `Fibonacci/Matrix.lean::FibF` (Phase 5 P5.8). The 2×2 matrix entries match `summary.tex Def 7.5` verbatim; `FibF_involutive` proves `F² = I`; `FibF_orthogonal` proves `F^T F = I`. Matches `summary.tex`'s unitary gauge (involutory coincides for Fibonacci per [P1.6(b)]). Per `stocktake/reports/cad-lean.md` §5 line 348.
 **Notes:** Specific instance of [[def:fsymbol]]. Real, symmetric, unitary,
 and involutory (Lemma `lem:F-invol`). Used in the algebra-parameter
 fixed-point equation `prop:assoc-F` and elsewhere.
@@ -945,7 +935,7 @@ $r_{\mathrm{PF}} = A^{\tau}_{\tau\tau} = \sqrt{\varphi}/D$.
 "$A^a_{bc}$".
 **Translation map:**
   - MMA: TBD pending P1.8.
-  - CAD: TBD pending P1.7.
+  - CAD: `Fibonacci/Binary.lean::PFBinaryEta` (Phase 5 P5.10) — the PF binary refinement amplitudes (and the PF isometry lemma `η†η = id_Q`). Per `stocktake/reports/cad-lean.md` §5 line 349.
 **Notes:** "PF" = Perron--Frobenius per [[conv:acro]]. Derived from
 [[def:qdim]] alone; the $D^2$ is the total quantum dimension squared.
 Compatible with [[def:fib]] data: Lemma `lem:PF-isom` (`summary.tex:1127`)
@@ -968,7 +958,7 @@ Definition~\ref{def:fib-F}).
 **Aliases:** "categorical coassociativity (for $\eta$)".
 **Translation map:**
   - MMA: TBD pending P1.8.
-  - CAD: TBD pending P1.7.
+  - CAD: `Fibonacci/Coassoc.lean` (Phase 5 P5.11). **Critical scope disambiguation**: CAD proves **scalar coassociativity** (the F-symbol fixed-point equation on algebra parameters `(a, b)` per [[conv:1op]]) — NOT the categorical equation `(η⊗id)η = (id⊗η)η`. This is the CLAUDE.md hallucination-risk callout #3 (scalar-vs-categorical coassoc overloading). P5.11's docstring must preserve this disambiguation. Per `stocktake/reports/cad-lean.md` §5 line 350 and §3 (which explicitly notes 'categorical proof gap explicitly noted').
 **Notes:** **Critical hallucination-risk callout (CLAUDE.md):
 "coassociativity" is overloaded.** This entry is for the *categorical*
 coassociativity of a splitting morphism $\eta$. By contrast, CAD's Lean
@@ -1011,7 +1001,7 @@ m^{\one}_{\tau\tau} = \sqrt{\varphi},\quad m^{\tau}_{\tau\tau} = \varphi^{-1/2}.
 algebra".
 **Translation map:**
   - MMA: TBD pending P1.8.
-  - CAD: TBD pending P1.7.
+  - CAD: not formalised (per `stocktake/reports/cad-lean.md` §5 'Notable gaps: §7.4 Fibonacci as dagger-special algebra; the uniqueness theorem: not formalised'). `Fibonacci/Coassoc.lean` covers only scalar coassociativity constraints.
 **Notes:** Concrete instance of [[def:algobj]] satisfying both
 associativity (Lemma `lem:fib-assoc`) and dagger-specialness with
 $\lambda = \varphi^2$ (Lemma `lem:fib-special`). The unique
@@ -1051,7 +1041,7 @@ with $\rho>0$ a density scale.
 "per-cell weight".
 **Translation map:**
   - MMA: TBD pending P1.8.
-  - CAD: TBD pending P1.7.
+  - CAD: not formalised (per `stocktake/reports/cad-lean.md` §5 'Notable gaps: §6 square-zero ...').
 **Notes:** The convolutional identities encode the multiplication
 structure constants of [[def:fib-mult]] (per the remark at
 `summary.tex:1479`); the exponential one-parameter solution is the
@@ -1084,7 +1074,7 @@ E_{I\to(J_1,\dots,J_r)}(c)
 "$E_{I\to(J_1,\dots,J_r)}$".
 **Translation map:**
   - MMA: TBD pending P1.8.
-  - CAD: TBD pending P1.7.
+  - CAD: not formalised (per `stocktake/reports/cad-lean.md` §5 'Notable gaps: §6 square-zero ...'). The general r-child Fibonacci refinement is built on `def:fib-mult` (also not in CAD scope).
 **Notes:** Concrete instance of [[def:refmap]]. Combines the algebra
 multiplication [[def:fib-mult]] with the geometric weights [[def:Zfunc]];
 Proposition `prop:rchild` (`summary.tex:1503`) verifies isometry + coherence.
@@ -1112,9 +1102,7 @@ total quantum dimension $D = \sqrt{1+2+1} = 2$.
 (the Temperley--Lieb--Jones category at the Ising point).
 **Translation map:**
   - MMA: TBD pending P1.8.
-  - CAD: TBD pending P1.7 (Lean `Ising/Basic.lean`; note CAD's Ising is
-    not yet connected to `FiniteSkeletalFusionData` per
-    `stocktake/reports/cad-lean.md` §4).
+  - CAD: `Ising/Basic.lean` (Phase 5 P5.15) — fusion table proved; conformal weights `Δ_σ = 1/8`, `Δ_ε = 1` proved. **Caveat per `stocktake/reports/cad-lean.md` §5 line 346 + §4 'State Assessment'**: CAD's Ising file is NOT currently connected to `FiniteSkeletalFusionData` (no `isingSkeletalFusionData` instance analogous to `fibSkeletalFusionData`). P5.15 must either add the connection or file a follow-up task.
 **Notes:** Specific instance of [[def:fuscat]]. Multiplicity-free per
 P1.6(d). Quantum dimensions via [[def:qdim]]. The F-symbol is
 [[def:ising-F]]. The dense $\sigma$-sector is [[def:dense]]; the
@@ -1142,7 +1130,7 @@ intermediate channels $\{\one,\psi\}$.
 **Aliases:** "Ising 6j-symbol", "$F^{\sigma\sigma\sigma}_\sigma$".
 **Translation map:**
   - MMA: TBD pending P1.8 (gauge caveats as for [[def:fib-F]]).
-  - CAD: TBD pending P1.7.
+  - CAD: not directly formalised. `Ising/Basic.lean` (Phase 5 P5.15) has the fusion table but not an explicit F-matrix struct (per `stocktake/reports/cad-lean.md` §5 — no Ising F-matrix row).
 **Notes:** Specific instance of [[def:fsymbol]]. Equals the
 2×2 Hadamard matrix up to normalisation.
 
@@ -1169,7 +1157,7 @@ $x_N=c$, and $x_i\subset x_{i-1}\otimes\sigma$.
 `lem:path-adj`), "Temperley--Lieb chain at $\delta = \sqrt 2$".
 **Translation map:**
   - MMA: TBD pending P1.8.
-  - CAD: TBD pending P1.7.
+  - CAD: not formalised (per `stocktake/reports/cad-lean.md` §5 'Notable gaps: §8.2–8.4 (TL generators, dense Ising chain, Koo–Saleur): not formalised').
 **Notes:** Specific configuration of [[def:Hlatt]] in $\Ising$. The
 fusion-path basis is the left-associated multiplicity-free splitting tree
 ([[def:splitbasis]]); P1.6(i) will lock this ordering as the canonical
@@ -1197,7 +1185,7 @@ explicit form), "Jones projection (scaled)".
 **Translation map:**
   - MMA: TBD pending P1.8 (MMA's `interaction_hamiltonian` $\sum_j P_j$
     ↔ $e_i / d_\sigma$ per `stocktake/reports/mma-julia.md` §5).
-  - CAD: TBD pending P1.7.
+  - CAD: not formalised (per `stocktake/reports/cad-lean.md` §5 'Notable gaps: §8.2–8.4 ...').
 **Notes:** $d_\sigma = \sqrt 2$ from [[def:ising]]. Theorem `thm:TL-rel`
 verifies the standard Temperley--Lieb relations.
 
@@ -1228,7 +1216,7 @@ v_{\mathrm{Ising}} \;=\; \frac{\pi\cdot\sqrt 2/2}{\pi/4} \;=\; 2\sqrt 2.
 **Aliases:** "$\kappa, v$", "Koo--Saleur constants".
 **Translation map:**
   - MMA: TBD pending P1.8.
-  - CAD: TBD pending P1.7.
+  - CAD: not formalised (per `stocktake/reports/cad-lean.md` §5 'Notable gaps: §9 Koo–Saleur lattice Virasoro approximants: not formalised').
 **Notes:** Underlying source (Koo--Saleur 1994) is flagged `\unchecked`
 in `summary.tex` per `CITATION_INDEX.md`. The $v$ here is sound velocity,
 distinct from "splitting vertex $v^c_{ab}$" in [[def:splitbasis]] —
@@ -1257,7 +1245,7 @@ For Ising, $\kappa = 1/(2\sqrt 2)$ and $c = 1/2$.
 **Aliases:** "$L_n^{(N)}, \bar L_n^{(N)}$", "lattice Virasoro generators".
 **Translation map:**
   - MMA: TBD pending P1.8.
-  - CAD: TBD pending P1.7.
+  - CAD: not formalised (per `stocktake/reports/cad-lean.md` §5 'Notable gaps: §9 ...').
 **Notes:** Body carries `\unchecked` as part of the definition itself —
 the Koo--Saleur convergence is in Conjecture `conj:KS` (defined at
 `summary.tex:2375-2376`; referenced at line 1735) per `summary.tex`'s
@@ -1285,7 +1273,7 @@ $\bar L$). Its \emph{scaling dimension} is $\Delta := h+\bar h$. In a
 **Aliases:** "primary field", "$h, \bar h$", "$\Delta$" (scaling dimension).
 **Translation map:**
   - MMA: TBD pending P1.8.
-  - CAD: TBD pending P1.7.
+  - CAD: Fibonacci-specific case in `Fibonacci/CFTWeights.lean` (Phase 5 P5.12) — `τ` chiral weight `2/5`, descendant weights proved. General 2D CFT primary structure (Virasoro-pair representation, conformal weights `(h, h̄)`) not formalised in CAD. Per `stocktake/reports/cad-lean.md` §5 line 351.
 **Notes:** Standard 2D CFT definition. Instances: [[def:isingcft]]
 (diagonal Ising primaries with weights $h_\one = 0$, $h_\sigma = 1/16$,
 $h_\psi = 1/2$); the chiral $(G_2)_1$ Fibonacci with $h_\tau = 2/5$
@@ -1310,7 +1298,7 @@ T(z)T(0) \;\sim\; \frac{c/2}{z^{4}} + \frac{2T(0)}{z^{2}} + \frac{\partial T(0)}
 **Aliases:** "$T(z)$", "energy--momentum tensor".
 **Translation map:**
   - MMA: TBD pending P1.8.
-  - CAD: TBD pending P1.7.
+  - CAD: not formalised (no general stress-tensor / OPE infrastructure in CAD per `stocktake/reports/cad-lean.md` §5 gaps; CFT data is per-instance only).
 **Notes:** Standard 2D CFT definition. Generates the [[def:primary]]
 algebra; $T = L_{-2}\one$ per Remark `rem:Virasoro` (line 2113).
 
@@ -1334,7 +1322,7 @@ with $C_{abc}$ the (normalisation-dependent) OPE coefficient.
 "operator-product expansion coefficient".
 **Translation map:**
   - MMA: TBD pending P1.8.
-  - CAD: TBD pending P1.7.
+  - CAD: not formalised. `Fibonacci/CFTWeights.lean` (Phase 5 P5.12) handles individual primaries' weights but not the general OPE coefficient structure (per `stocktake/reports/cad-lean.md` §5).
 **Notes:** Uses [[def:primary]]. Specific values for the diagonal Ising
 model in [[def:isingcft]] and (with $h_\tau = 2/5$) for chiral $(G_2)_1$
 Fibonacci.
@@ -1359,7 +1347,7 @@ field).
 **Aliases:** "$M(3,4)$", "Ising minimal model", "$c = 1/2$ minimal model".
 **Translation map:**
   - MMA: TBD pending P1.8.
-  - CAD: TBD pending P1.7.
+  - CAD: `Ising/Basic.lean` (Phase 5 P5.15) — `Δ_σ = 1/8`, `Δ_ε = 1` proved. Central charge `c = 1/2` asserted via the same file. Bulk-field labels `Σ, ε` (this entry's Notes) are distinct from categorical labels `σ, ψ` in CAD as well.
 **Notes:** Diagonal $\ne$ chiral. The categorical [[def:ising]] and this
 CFT data are different objects — the categorical Ising is the fusion
 category, this is the 2D CFT. The bulk field labels $\Sigma, \varepsilon$
@@ -1391,7 +1379,7 @@ Wilsonian/scheme-dependent.
 ansatz", "Wilsonian blocking coefficient".
 **Translation map:**
   - MMA: TBD pending P1.8.
-  - CAD: TBD pending P1.7.
+  - CAD: Fibonacci-specific RG-decorated amplitude formulas in `Fibonacci/RGNoMixing.lean` (Phase 5 P5.14) — proved for both rows of the F-matrix. Abstract polar-decomposition canonical-section framework in `LinearAlgebra/Polar.lean` (Phase 4 P4.3) + general no-mixing scalar formula in `LinearAlgebra/NoMixing.lean` (P4.10). Per `stocktake/reports/cad-lean.md` §5 lines 353, 360, 361.
 **Notes:** Exponents come from [[def:primary]] weights. Specific
 binary-blocking instance for Fibonacci-$(G_2)_1$ at Lemma `lem:fib-beta`.
 The canonical isometric refinement from this ansatz is via Theorem
@@ -1415,7 +1403,7 @@ $b$ is an eigenoperator $\Phi_i$ with eigenvalue $\lambda_i = b^{-\Delta_i}$
 **Aliases:** "eigenoperator", "scaling field".
 **Translation map:**
   - MMA: TBD pending P1.8.
-  - CAD: TBD pending P1.7.
+  - CAD: `LinearAlgebra/ChargeOnly.lean` (Phase 4 P4.14) + `LinearAlgebra/DiagonalScaling.lean` (P4.13) — eigenvalue structure of the charge-only specialisation proved. The 'charge-only fails CFT spectrum' Warning §8.5 (`summary.tex warn:charge-only`) is documented but NOT a CAD theorem.
 **Notes:** "Ascending channel" is [[def:ascending]]. Eigenvalues are
 controlled by [[def:primary]] scaling dimensions. Warning
 `warn:charge-only` (`summary.tex:1964`) is the key caveat: charge-only
@@ -1439,7 +1427,7 @@ preserved.
 **Aliases:** "$E_N$", "persistence", "even-sublattice embedding".
 **Translation map:**
   - MMA: TBD pending P1.8.
-  - CAD: TBD pending P1.7.
+  - CAD: not formalised (per `stocktake/reports/cad-lean.md` §5 'Notable gaps: §11 non-tree / pair-creation interpolation: not formalised').
 **Notes:** Building block for [[def:Jinterp]] (the non-tree
 interpolation kernel). Concrete instance of [[def:refmap]] restricted to
 the strict-persistence ansatz, before pair-creation [[def:pair-create]]
@@ -1473,7 +1461,7 @@ These satisfy $|A_{\tau,\one}|^{2}+|A_{\tau,\tau}|^{2}
 "$\one\to\tau\tau$ coevaluation".
 **Translation map:**
   - MMA: TBD pending P1.8.
-  - CAD: TBD pending P1.7.
+  - CAD: not formalised (per `stocktake/reports/cad-lean.md` §5 'Notable gaps: §11 ...').
 **Notes:** F-matrix coefficients come from [[def:fib-F]]; identity uses
 `lem:fib-arith` ($\varphi^{-2}+\varphi^{-1}=1$). Component of the
 non-tree interpolation kernel [[def:Jinterp]].
@@ -1501,7 +1489,7 @@ $\one\to\tau\tau$.''
 pair-creation kernel".
 **Translation map:**
   - MMA: TBD pending P1.8.
-  - CAD: TBD pending P1.7.
+  - CAD: not formalised (per `stocktake/reports/cad-lean.md` §5 'Notable gaps: §11 ...').
 **Notes:** Combines [[def:persist]] ($E_N$) with [[def:pair-create]]
 ($C_e$). Generically **not** an isometry (Lemma `lem:Gram`, the F-matrix
 $(1,1)$ entry $\varphi^{-1}$ produces a leading Gram-obstruction
@@ -1525,9 +1513,7 @@ polar-decomposition argument of Theorem~\ref{thm:polar}.
 correction".
 **Translation map:**
   - MMA: TBD pending P1.8.
-  - CAD: TBD pending P1.7 (CAD's `LinearAlgebra/Polar.lean` per
-    `stocktake/reports/cad-lean.md` §3 has the polar-decomposition
-    infrastructure).
+  - CAD: the polar-decomposition framework is in `LinearAlgebra/Polar.lean` (Phase 4 P4.3) — matrix algebra complete; **existence of positive square root NOT proved (this is a Mathlib gap at time of writing); the inverse-square-root matrix `B^{-1/2}` is assumed given as input to the polar-section theorems** (per `stocktake/reports/cad-lean.md` §2.4 line 190 and §4 lines 327–328). The specific [[def:Jinterp]] polar repair is NOT in CAD scope (def:Jinterp itself isn't formalised per `stocktake/reports/cad-lean.md` §5 '§11 not formalised').
 **Notes:** Repairs the Gram-obstructed [[def:Jinterp]] via Theorem
 `thm:polar`. Alternative repair: [[def:sidelobe]] (different design
 philosophy — local stencil, not non-local Gram).
@@ -1558,7 +1544,7 @@ order gives, with $|b|^{2}+2|a|^{2}=1$ (one-particle normalisation),
 repair".
 **Translation map:**
   - MMA: TBD pending P1.8.
-  - CAD: TBD pending P1.7.
+  - CAD: not formalised (per `stocktake/reports/cad-lean.md` §5 'Notable gaps: §11 ...').
 **Notes:** Alternative to [[def:polar-repair]] for the same Gram
 obstruction. Replaces the strict-persistence [[def:persist]] with a
 three-site stencil chosen so that next-neighbour overlaps cancel to
@@ -1586,7 +1572,7 @@ trivalent fusion.
 (in some literatures).
 **Translation map:**
   - MMA: TBD pending P1.8.
-  - CAD: TBD pending P1.7.
+  - CAD: not formalised (per `stocktake/reports/cad-lean.md` §5 'Notable gaps: §12 three-tensors from OPE: not formalised').
 **Notes:** Dual presentation of [[def:splitbasis]] (splitting vertex
 $v^a_{b,c;\mu}$ is the morphism in $\Hom_\Cc(a, b\otimes c)$ — same
 data after dualising). The multiplicity index $\mu$ is required for
@@ -1616,7 +1602,7 @@ Taylor expand $\Phi(x)$ about the centre $x_I$:
 primary".
 **Translation map:**
   - MMA: TBD pending P1.8.
-  - CAD: TBD pending P1.7.
+  - CAD: not formalised (no smeared-cell-field infrastructure in CAD per `stocktake/reports/cad-lean.md` §5).
 **Notes:** Uses [[def:primary]]. Derivative descendants appear as moments
 of the smearing geometry (Lemma `lem:moments`); the full Virasoro
 descendant tower requires the stress-tensor Ward identities
@@ -1646,7 +1632,7 @@ descendants are reproduced by jet geometry plus Ward identities.
 "multiplicity-decorated $Q$ with jet content".
 **Translation map:**
   - MMA: TBD pending P1.8.
-  - CAD: TBD pending P1.7.
+  - CAD: not formalised (the geometry-enriched extension is not in CAD scope per `stocktake/reports/cad-lean.md` §5).
 **Notes:** Geometry-enriched extension of [[def:Q]] (specifically, the
 multiplicity-decorated choice of Remark `rem:Q-choices`(3) with
 $M_a^{(I)} = J_I^{(h_a)}$). The "jet $J_I^{(h)}$" is the
@@ -1747,7 +1733,7 @@ space", "hard-core-anyon Fock space on an `L`-site lattice".
     [P1.6(b)] (relevant for any computation that uses F-symbol entry
     values; not relevant for the basis-element bijection itself, which
     is gauge-independent).
-  - **CAD**: TBD pending **P1.7**.
+  - **CAD**: not directly formalised — CAD has the `H_N^W` coordinate skeleton (via [[def:Hlatt]]'s CAD entry), which translates to mobile-Fock via the §2.2 bijection (vacuum-leg absorption) the same way `summary.tex`'s [[def:Hlatt]] does. No separate mobile-Fock instance in CAD.
 **Notes:** The third of the three discrete Hilbert-space framings
 reconciled in `stocktake/reports/opus-hilbert-bridge.md` (alongside the
 partition-canonical [[def:HP]] and the fixed-lattice [[def:Hlatt]]);
