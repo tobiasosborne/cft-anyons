@@ -15,3 +15,4 @@ import Formalisation.LinearAlgebra.Polar
 import Formalisation.LinearAlgebra.Tensor
 import Formalisation.LinearAlgebra.TensorPower
 import Formalisation.LinearAlgebra.HeterogeneousTensor
+import Formalisation.LinearAlgebra.Trace
