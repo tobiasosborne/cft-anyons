@@ -24,10 +24,12 @@ TRIGGER: Every atomic migration step. Initialised retroactively for
 | P0.4     | 2026-05-16 | 9dabdab  | Move chat1-4.md → archive/chats/ + add archive/README.md | M, I | mechanical | deep-storage warning README |
 | P0.5     | 2026-05-16 | 35d939b  | Move review_*.md → reviews/                         | M, I       | mechanical | reviews accessible (validators), not deep-storage |
 | P0.6     | —          | —        | SUBSUMED by P0.1 (.gitignore present from baseline) | —          | —         | see Deviations section |
-| P0.7     | 2026-05-16 | (this)   | Backfill P0.4/P0.5/P0.6 rows in MIGRATION_LOG       | M, I       | mechanical | log was initialised in P0.3; this catches up the table |
-| P0.8     |            |          | Draft PRD.md v0                                     |            |           |       |
-| P0.9     |            |          | Hostile Opus review of PRD v0                       |            |           |       |
-| P0.10    |            |          | README.md as PRD pointer; final P0 commit           |            |           |       |
+| P0.7     | 2026-05-16 | 637a8ec  | Backfill P0.4/P0.5/P0.6 rows in MIGRATION_LOG       | M, I       | mechanical | log was initialised in P0.3; this catches up the table |
+| P0.8-pre-a | 2026-05-16 | bb1b3fb | Bump PRD word cap in MIGRATION_PLAN §16 (800 → 1500) | M, I       | mechanical | per P0.9 reviewer recommendation |
+| P0.8-pre-b | 2026-05-16 | 64549da | Sync CLAUDE/AGENTS read-order rule with PRD ("1-3" → "1-4") | M, I | mechanical | per P0.9 C1 finding |
+| P0.8     | 2026-05-16 | 3f2a25e  | Ship PRD.md v0 (post-2-round hostile review)        | M, D, C, R | Opus × 2 (APPROVE WITH MINOR EDITS conditional, condition met) | bundled named-file gate fix (N-C1) + new stop conditions + Mi10 summary.tex description harmonise |
+| P0.9     | 2026-05-16 | (folded into P0.8) | Hostile Opus reviews of PRD v0 (2 rounds) | R       | self     | reports in stocktake/reports/opus-prd-v0-review.md + opus-prd-v0.1-review.md |
+| P0.10    | 2026-05-16 | (this)   | README.md as PRD pointer + final Phase 0 commit     | M, I       | mechanical (user-verbatim) | bd snapshot to JSONL + Phase 1 issue filed |
 
 ## Corrections
 
