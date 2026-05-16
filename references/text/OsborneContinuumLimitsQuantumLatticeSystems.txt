@@ -1,0 +1,1601 @@
+                                                                              Continuum Limits of Quantum Lattice Systems
+                                                                                                    Tobias J. Osborne1
+                                                         1
+                                                             Institut für Theoretische Physik, Leibniz Universität Hannover, Appelstr. 2, 30167 Hannover, Germany
+                                                             We describe a general procedure to give effective continuous descriptions of quantum lattice systems in
+                                                          terms of quantum fields. There are two key novelties of our method: firstly, it is framed in the hamiltonian
+                                                          setting and applies equally to distinguishable quantum spins, bosons, and fermions and, secondly, it works
+                                                          for arbitrary variational tensor network states and can easily produce computable non-gaussian quantum
+                                                          field states. Our construction extends the mean-field fluctuation formalism of Hepp and Lieb (developed
+                                                          later by Verbeure and coworkers) to identify emergent continuous large-scale degrees of freedom — the
+                                                          continuous degrees of freedom are not identified beforehand. We apply the construction to to tensor
+                                                          network states, including, matrix product states and projected entangled-pair states, where we recover
+                                                          their recently introduced continuous counterparts, and also for tree tensor networks and the multi-scale
+arXiv:1901.06124v1 [quant-ph] 18 Jan 2019
+
+
+
+
+                                                          entanglement renormalisation ansatz. Finally, extending the continuum limit to include dynamics we
+                                                          obtain a strict light cone for the propagation of information.
+
+
+                                               The modern understanding of quantum field theory                   partition function using the path integral. Effective large-
+                                            (QFT), emphasised by Wilson [1], is as an effective theory            lengthscale continuous degrees of freedom are then iden-
+                                            describing large lengthscale physics. Thus it has become a            tified and the path integral approximated by a continuum
+                                            powerful tool for the description of the behaviour of com-            field path integral. This procedure has been applied with
+                                            plex quantum systems, including, critical phenomena [2]               considerable success to a tremendous variety of lattice sys-
+                                            and topological order [3]. Quantum-field reasoning is es-             tems (see, e.g., [2, 25]). However, this approach does not
+                                            pecially powerful when the system is effectively modelled             apply so readily to systems efficiently described in terms of
+                                            by a weakly interacting QFT, enabling the full power of               tensor network states. Although there are now path-integral
+                                            perturbative methods to be unleashed. Unfortunately, how-             representations for several TNS classes [23, 26], it is not
+                                            ever, the QFT approach is not a universal panacea: when               clear how to use this representation to identify the relevant
+                                            one obtains a strongly coupled effective QFT description,             degrees of freedom for such a network. It is almost cer-
+                                            e.g., a nonabelian gauge theory, then perturbative methods            tainly a red herring to exploit a stationary phase argument
+                                            are not so easily applied and one must resort to numeri-              for the path integral representation here as this could easily
+                                            cal methods, largely obviating the simplifications afforded           identify auxiliary degrees of freedom which lead to triv-
+                                            by the effective continuous description [4]. In such cases            ial changes in the physical state. Indeed, the question of
+                                            a tensor network [5, 6] may afford a more parsimonious                identifying the operationally relevant degrees of freedom
+                                            representation for the physics of the system.                         for the description of the large-scale features of a complex
+                                               Tensor network states (TNS) have enjoyed, thanks to in-            quantum system has only recently been initiated [27, 28].
+                                            sights from quantum information theory in the study of en-               In this Letter we describe a construction which produces
+                                            tanglement, a recent renaissance allowing the analytic and            an effective continuous description of a quantum lattice
+                                            numerical investigation of many intriguing strongly cor-              system whether it be in a TNS or a gaussian state. The first
+                                            related phenomena, including, dynamics [7–9], fermions                step is to identify a classical mean-field like continuous de-
+                                            [10–13] without sign problems, the determination of spec-             scription, which we do by exploiting a generalised mean-
+                                            tral information [14], topological order [15–17], and dissi-          field approach along the lines of [29] and [30, 31]. The
+                                            pative quantum phenomena [18–20]. There are, however,                 operationally significant quantum fluctuations around this
+                                            many remaining challenges. One outstanding problem is                 classical state are then identified and represented in terms
+                                            that it is difficult to identify the correct effective continu-       of a family quantum fields in a systematic way. We achieve
+                                            ous degrees of freedom describing the experimentally rel-             this by generalising the quantum fluctuation algebra con-
+                                            evant long-range behaviour of a TNS [21–23]. Thus it is               struction originated by Hepp and Lieb [32] (later gener-
+                                            desirable to develop a more systematic and operationally              alised by Verbeure and coworkers [29, 33–41]) to produce
+                                            well-motivated procedure to obtain an effective continuous            a quantum field fluctuation algebra. The result of this con-
+                                            description. Such a method, if developed, would also po-              struction is a list of quantum-field data for the system: (i)
+                                            tentially contribute to the study of nonperturbative QFT be-          a quantum field “ground state” |Ωi; and (ii) a list of quan-
+                                            cause the TNS ansatz could then be systematically lifted to           tum fields for the fluctuations with a precise map to the
+                                            the continuous setting potentially giving new computable              corresponding lattice quantities. This construction may be
+                                            nongaussian vacua.                                                    applied to matrix product states, projected entangled-pair
+                                               One standard way to obtain an effective QFT descrip-               states, and tree-type tensor networks such as the multiscale
+                                            tion of a system is based on the use of the path-integral             entanglement renormalization ansatz. (When applied to
+                                            representation (see, e.g., [1, 24]): one first represents the         quasi-free lattice systems such as the lattice Klein-Gordon
+                                                                                                                                      2
+
+                                                                       spin chain. Thus the observable measured by this scatter-
+                                                                                                       z
+                                                                       ing experiment is, instead of σbx/ac , rather something like
+                                                                         (a)                         z
+                                                                                     P
+                                                                       φ (fx ) ≡ a j∈Z fx (aj)σj , where fx is the beam shape
+                                                                                                                                 2
+                                                                       (for example, a gaussian centred at x: fx (y) ≈ e−(y−x) ).
+                                                                       Thus the beam addresses approximately 1/a spins. Even
+                                                                       though the lattice spacing a of the quantum lattice sys-
+FIG. 1. An illustration of the continuum limit: measuring the          tem isn’t precisely known, we declare that φ(a) (fx ) cor-
+observable φ(a) (fx ). Here the quantum lattice is illustrated for     responds the same experimental setup, i.e., the “measure-
+several different values of the lattice spacing a. As a gets smaller   ment of the spin at location x”.
+any fixed measurement of the quantum spin centred on x will               Motivated by this example we declare the family of ob-
+necessarily address more and more spins. The continuum limit is        servables given by
+given by a limiting value φ(fx )                                                                             2
+                                                                                                            −1
+                                                                                                         X dX
+                                                                                        (a)
+                                                                                    φ         (f ) ≡ a             [f ]α (aj)λαj ,   (1)
+equation, one recovers the usual QFT continuum limit.)                                                   j∈Z α=0
+
+Extending the continuum limit to apply to dynamics we                  where f is a d2 -dimensional vector-valued function [43],
+obtain strict causality: information may not propagate out-            and all products and linear combinations thereof, to be
+side of a light-cone.                                                  the correct method to compare states on quantum lat-
+   Preliminaries.—Our construction applies to systems ar-              tices with different lattice spacings. That is, we say
+ranged on a lattice aZD embedded in RD , where a > 0                   ρa and ρa0 are close if tr(ρa φ(a) (f1 ) · · · φ(a) (fm )) ≈
+                                                                                    0              0
+is the lattice spacing. For simplicity we mostly restrict              tr(ρa0 φ(a ) (f1 ) · · · φ(a ) (fm )) for all possible choices of
+to one-dimensional quantum spin systems with a single                  local rapidly decaying continuous vector-valued functions
+distinguishable quantum spin Cd attached to each site.                 fl , l = 1, 2, . . . , m, with components [fl ]α (x), for α =
+(These assumptions entail no essential restrictions: all               0, 1, . . . d2 − 1.
+our subsequent constructions apply immediately to higher-                  The terminology “classical continuum limit” is justi-
+dimensional systems and even to irregular lattices em-                 fied upon noting the important fact that the operators
+bedded in RD .) Thus the Hilbert space for our sys-                    φ(a) (f ) commute with each other in the limit a → 0:
+tem
+N is morally     associated with the infinite tensor product           lima→0 k[φ(a) (f ), φ(a) (g)]k = 0. Thus, in the limit a →
+          d
+    j∈Z C   . Considerable   care should be exercised when             0, the observables φ(a) (f ) may be jointly measured; the
+working with such tensor products; the safest course of ac-            set of limiting observables forms a commutative algebra
+tion, and the one adopted here, is to work with the space              and therefore models an effective classical system [44].
+A(Z) of observables of the spin system instead [42].                       The classical continuum limit is then defined by the ex-
+   Let j ∈ Z and A ∈ A ≡ Md (C). Then we usually                       pectation values of φ(a) (f ) for a → 0, as f runs over all
+write Aj for the observable A localised at spin j : Aj ≡               possible “beam shapes”:
+I···j−2,j−1 ⊗ Aj ⊗ Ij+1,j+2,··· . We often require a basis for                    *m           +                   m
+                                                                                                                              !
+A: to this end let λα be an orthonormal hermitian operator                           Y
+                                                                                       φ(fl ) ≡ lim tr ρa
+                                                                                                                  Y
+                                                                                                                       (a)
+                                                                                                                      φ (fl ) ,      (2)
+basis for the single-site observables A (according to the                        l=1
+                                                                                                     a→0
+                                                                                                                      l=1
+Hilbert-Schmidt inner product).
+   The classical continuum limit.—The key to understand-               provided this limit exists. We say that {ρa }a∈R+ admits
+ing how to take a continuum limit is to work out an op-                a classical continuum limit if these expectation values are
+erationally meaningful way to compare states ρa and ρa0                finite for all rapidly decaying vector-valued functions fl
+associated with different lattice spacings a 6= a0 . Naively           [45]. Note the relation φ(f + g) = φ(f ) + φ(g).
+this is impossible unless a = a0 because the quantum spins                It is worth pausing to explore a couple of simple ex-
+typically live at different locations. The crucial idea here           amples to get a feeling for the classical continuum limit
+is to compare states not directly by the fidelity but by in-           construction. Consider the case where A = N         M2 (C),
+stead agreeing on a family of observables {Oa }a∈R+ , in-              i.e., our system is a chain of qubits, and ρa =        j∈Z %,
+dexed by a, which are understood to refer to the same ex-              where % is some single-qubit state. That is, ρa is
+periment, only discretised on a lattice with spacing a. If             a translation-invariant mean-field ansatz independent of
+ρa (Oa ) ≈ ρa0 (Oa0 ) for all observables Oa then we de-               lattice spacing.
+                                                                                    Qm In this case  Qm it is relatively easy to
+clare the two states to be close. A physical justification             show that h l=1 φ(fl )i = l=1 hφ(fl )i and hφ(f )i =
+                                                                       P3          α
+                                                                                        R
+for this notion is as follows. Imagine we have a quan-                    α=0 tr(λ %) [f ]α (x) dx.
+tum spin chain and we perform a neutron-type scatter-                     The second example is hardly different from the first,
+ing experiment (see Fig. 1 for an illustration) to measure,            except that we now we relax translation invariance and
+                                                                                   N                            1
+                                                                                                                  P3              α
+for example, the z -component of a spin at physical po-                set ρa =       j∈Z %(ja), with %(x) ≡ 2        α=0 rα (x)σ ,
+sition x. The impinging beam of neutrons, even if well                 where rα (x) = (1, r1 (x), r2 (x), r3 (x)) is some continu-
+collimated, will inevitably spread as it travels toward the            ous vector-valued function of x ∈ R and σ 0 ≡ I, σ 1 ≡
+                                                                                                                                      3
+
+                      −i
+( 01 10 ), σ 2 ≡ ( 0i Q            3
+                       0 m), and σ ≡ Q  ( 10 −1
+                                              0
+                                                ). In this case we       Analogous to the classical case, the quantum continuum
+                                           m
+again find that h l=1 φ(fl )i = l=1 hφ(fl )i. However,                limit is defined by the expectation values of φe(a) (f ) for
+                                   P3 R
+we now have that hφ(f )i = α=0 [f ]α (x)rα (x) dx.                    a → 0, as f runs over all rapidly decaying vector-valued
+    We now implicitly define the (vector) field operator              functions:
+φ(x) to be that object which gives φ(f ) according to the
+relation                                                                        m
+                                                                                           !                    m
+                                                                                                                                !
+                                                                                Y                               Y
+                            2
+                           dX −1 Z                                      hΩ|           b l ) |Ωi ≡ lim tr ρa
+                                                                                      φ(f                             e(a)
+                                                                                                                      φ      (fl ) , (5)
+                                                                                                   a→0
+                φ(f ) =            fα (x)[φ]α (x) dx,           (3)             l=1                             l=1
+
+                        α=0
+
+for all smearing funcitons f . For the first example                  provided this limit exists [46]. Thus {ρa }a∈R+ is said to
+above we find that φ(x) takes a constant definite value:              admit a quantum continuum limit if these expectation val-
+[φ]α (x) = tr(σ α %). In the second example the field                 ues are finite for all rapidly decaying functions fl . It is
+takes a nonconstant definite value: [φ]α (x) = rα (x), with           sometimes necessary in the sequel to relax this requirement
+r0 (x) = 1. In both cases the observable φ(x) takes some              and only demand that a subset of the limits exist, typically
+definite value.                                                       for operators admitting an interpretation as canonical field
+   However, the field operator φ(x) is not a simple func-             amplitude observables (in such a case we obtain a singular
+tion. We emphasise that φ(x) is a classical observable, i.e.          state, in the sense of operator algebras). This innocuous-
+a random variable, so that in the case where ρa yields a              seeming condition is deeply nontrivial; one of the main
+statistical ensemble in the classical continuum limit — an            contributions of this paper is to show that there are fam-
+example is ρa = 12 ρ0a + 12 ρ00a , with ρ0a and ρ00a taking differ-   ilies of tensor network states for which this condition is
+ent classical continuum limits — we see that φ(x) doesn’t             fulfilled.
+always take a definite value.                                            The expectation value in Eq. (5) is taken with respect
+   Fluctuations: the quantum continuum limit.—The clas-               to a pure state |Ωi; we now show how this state is con-
+sical continuum limit construction is essentially a law of            structed and justify the notation hΩ| · |Ωi for the lim-
+large numbers result: the operators φ(a) are the (weighted)           iting functional. Because lima→0 tr(ρa ) = 1 we have
+arithmetic mean of roughly 1/a independent observables                that the limiting functional is normalised: hΩ|I|Ωi = 1.
+so that if the sequence {ρa }a∈R+ is sufficiently well be-            Secondly, we inherit linearity   inthe limit: hΩ|(αφ(f )
+                                                                                                                                b    +
+haved we are guaranteed the existence of the limit. To see                                                     (a)
+                                                                      β φ(g))|Ωi = lima→0 tr ρa αφ (f ) + β φ (g)
+                                                                         b                                    e              e(a)
+any quantum structure in the continuum we need to anal-                                                                           
+yse and model the fluctuations around the mean value of               = α lima→0 tr ρa φe(a) (f ) + β lima→0 tr ρa φe(a) (g))
+the observables φ(a) (f ) as the lattice spacing is decreased.
+Such fluctuations are detected by observables of the form             = αhΩ|φ(f  b )|Ωi + βhΩ|φ(g)|Ωi
+                                                                                                    b        . Finally we have that
+                      2                                             the limiting functional is positive: hΩ|φ(f   b )† φ(f
+                                                                                                                           b )|Ωi =
+                        dX−1 X
+                                                                      lima→0 tr(ρa (φe(a) (f )† φe(a) (f ))) ≥ 0. (These arguments
+ φe(a) (f ) ≡ Zf (a) a             [f ]α (aj)λαj − hφ(f )iI ,
+                                                                      remain true for products of the fluctuation operators.) Thus
+                          α=0 j∈Z
+                                                                      the limiting object is a state. Further, we can always purify
+                                                            (4)
+                                                                      the limiting state to |Ωi, justifying the notation hΩ| · |Ωi.
+where Zf (a) is a field-strength renormalization chosen to
+amplify the fluctuations. Central limit theorem consider-                Using the state |Ωi we now describe the Hilbert space
+ations strongly suggests that                                         H of quantum field fluctuations: this is simply the
+                             √ these fluctuations will typ-           Hilbert  spacebuilt from |Ωi and all vectors of the form
+ically be on √ the order of a; so we tentatively choose               Q
+                                                                           m b
+Zf (a) = 1/ a in order to ensure the fluctuations remain                  l=1  φ(fl ) |Ωi. (It is a nontrivial fact that this construc-
+present in the limit a → 0. From the perspective of a                 tion leads to a separable Hilbert space.) In terms of these
+scattering experiment interpretation what we are doing is             vectors a fluctuation operator φ(f
+                                                                                                     b ) acts as
+increasing the sensitivity of our detection apparatus to am-
+plify the fluctuations due to microscopic features: if the                                  !
+                                                                                 m
+experimentalist leaves the sensitivity of the detector con-                      Y
+                                                                                       b l ) |Ωi ≡ φ(f b 1 ) · · · φ(f
+stant then this experiment will only be sensitive to the bulk
+                                                                       φ(f
+                                                                       b )             φ(f         b )φ(f          b m )|Ωi. (6)
+                                                                                 l=1
+classical fields φ(x) and the experimentalist is content with
+a classical model for the statistical fluctuations in φ(x) due
+to the ensemble of classical limits. If, however, the exper-            A remarkable consequence — similar to the original
+imentalist improves the                                               quantum fluctuation construction [29, 32] — of the fluc-
+                      √ detector to be sensitive to fluctua-
+tions of the order of a then, on top of the original statis-          tuation field construction is that the limiting objects obey
+tical fluctuations, additional fluctuations will emerge, now          the bosonic canonical commutation relations: as long as
+with a possibly quantum explanation. We now make this                 Zf (a)Zg (a) = 1/a we have that [φ(f b ), φ(g)]
+                                                                                                                  b     = hφ(f ∧
+precise.                                                              g)iI [47]. This surprising fact is proved as follows. Con-
+                                                                                                                                           4
+                                                                                          P3
+sider                                                               Θ(σ α , σ β ) ≡ 21 γ=0 rγ tr([σ α , σ β ]σ γ ). We assume, for
+ [φe(a) (f ), φe(a) (g)] = a2 Zf (a)Zg (a)
+                                           X
+                                             [f ∧ g]γ (aj)λγ        simplicity, that r = (0, 0, 0, 1). (The general case is dis-
+                                                              j
+                                                                    cussed in the Appendix.) In this case we find that µ0 = I,
+                                          j∈Z
+                                                                    µ1 = σ z , ν 1 = σ x , and ξ 1 = σ y . We thus recover stan-
+                     = φ(a) (f ∧ g).                                dard fock space with vacuum state |Ωi.
+                                                             (7)       The second example we study is that of
+This expression may be rewritten as a local fluctuation op-         aP sequence of matrix product states |ψa i                             =
+erator:                                                                 hωL | · · · Aza−1 Aza0 Aza1 · · · |ωR i| · · · z−1 z0√z1 · · · i with
+                                                                     the prescription A0a ≡ I + aQ and A1a ≡ aR, where Q
+[φe(a) (f ), φe(a) (g)] = hφ(f ∧ g)iI + Zf−1     e(a) (f ∧ g).
+                                           ∧g (a)φ                  and R are D × D complex matrices. In this case we again
+                                                           (8)      find that the classical limit is a trivial product. The theta
+Assuming that Zf−1        ∧g (a)  −→      0   we   have   that      matrix is identical to the product state case, and we obtain
+                                  a→0
+                                                                    the same quantum fluctuation operators. Thus the quantum
+[φe(a) (f ), φe(a) (g)] is given by a constant term plus an
+                                                                    field modelling the fluctuations around an MPS is precisely
+operator decaying to 0 on the hilbert space of fluctuations.
+                                                                    that of a single bosonic degree of freedom. However, in
+Thus, in any expectation value, we can replace any
+                                                                    contrast to the product state case, the continuum limit
+commutator [φ(f    b ), φ(g)]
+                         b     with the number hφ(f ∧ g)iI,         state |Ωi is not the fock vacuum and nor is it generically
+i.e.,                                                               gaussian. Indeed, it is precisely                 a continuous matrix
+                                                                                                            R∞
+                                                                                                                              b†
+                    [φ(f
+                     b ), φ(g)]
+                           b    = hφ(f ∧ g)iI.           (9)        product state |Ωi ≡ hωL |Pe −∞ I+R⊗ψ (s) ds |0i|ωR i,
+                                                                                                                  Q⊗
+
+                                                                    where |0i is the fock vacuum.
+We now identify this algebraic structure with the canonical
+                                                                       Our third example concerns tree tensor network states.
+commutation relations.
+                                                                    Here one obtains a continuum limit that coincides with a
+  To understand the algebraic properties of the operators
+                                                                    recently introduced limit investigated by Jones [48–51].
+φ(f
+b ) it is convenient (but not necessary) to specialise to
+                                                                    Further details of this example may be found in the Sup-
+the translation invariant case. Here we have that                   plementary Material.
+    hφ(f ∧ g)i = lim tr(ρa [λα , λβ ])([f ]α , [g]β ),       (10)      Dynamics of quantum fluctuations and strict causality
+                     a→0
+                                                                    .—Suppose we have a sequence ρa giving rise to a quantum
+                                                                    continuum limit and suppose, further, that we have a se-
+                     R
+where (f, g) =          f (x)g(x) dx. Form the hermitian
+antisymmetric matrix Θ with matrix elements [Θ]αβ ≡                 quence of hamiltonians Ha ≥ 0 such that tr(Ha ρa ) = 0,
+lima→0 tr(ρa [λα , λβ ]). The matrix                                ∀a. We can study the dynamics Ua (t) = eitHa this se-
+                                         PΘ induces an an-
+tisymmetric form Θ(A, B) ≡                  α,β aα bβ [Θ]αβ for
+                                                                    quence of hamiltonians generates for fluctuations around
+          Pd2 −1      α
+                                        Pd2 −1      β               the continuum limit as follows. If Ha is a sequence of
+A =          α=0 aα λ    and B =          α=0 bβ λ .     Apply-     nearest-neighbour hamiltonians for a quantum spin system
+ing the symplectic Gram-Schmidt procedure to this sym-              then simple dimensional analysis requires that we must
+plectic form produces a list of three hermitian operators           scale time via t 7→ t/a. Thus we study the dynamics
+                           2
+                      j D −2m
+{µj , ν j }m
+           j=1 and {ξ }j=1       such that Θ(µj , ν k ) = iδ jk     generated by the unitary Ua (t/a) in the continuum limit.
+and Θ(ξ j , M ) = 0 for any M which is a linear combi-              It is natural to expect that there is a continuum hamilto-
+nation of µj and ν j . Let f be a function with rapid de-           nian H b which generates the limiting dynamics. A useful
+cay and define [aj ]α (x) ≡ f (x) tr(λα µj ), [bj ]α (x) ≡          mnemonic to derive this hamiltonian is that we can iden-
+f (x) tr(λα ν j ), and [cj ]α (x) ≡ f (x) tr(λα ξ j ) We then       tify λαj ≡ Zλ−1     e(a) (δαβ δ(ja)).
+                                                                                      α φ
+
+define ϕ bj (f ) ≡ φ(a
+                    b j ) and π bj (f ) ≡ φ(b
+                                           b j ), and ξbj (f ) ≡       Rather astonishingly it turns out (see the Supplemen-
+φ(cj ). According to Eq. (9) we then have that
+b                                                                   tary Material for details) that the dynamics generated by
+                                                                    H b obeys strict causality: there is an exact lightcone for the
+               [ϕ        bk (g)] = i(f , g)δ jk I.
+                bj (f ), π                                  (11)    propagation of information through the continuous system.
+Both of the operators ϕ bj and π
+                               bj are hermitian. Finally, we        This is a consequence of the Lieb-Robinson bound [52–
+implicitly define the quantum field operator ϕbj (x) via            54]: we have that there is a universal constant c for all A
+                           Z                                        and B such that
+                bj (f ) ≡ f (x)ϕ
+                ϕ                  bj (x) dx,            (12)                           b ), e−itH φ(g)e
+                                                                                       [φ(f        b b  itH
+                                                                                                            ]=0
+                                                                                                                 b
+                                                                                                                                       (13)
+and similarly for π
+                  bj (x). In the case where the original            whenever dist(supp(f ), supp(g)) < ct. However, we
+lattice system was fermionic we obtain the canonical an-            don’t generally obtain Poincaré invariance of the quantum
+ticommutation relations instead.                                    continuum limit unless the excitation structure of H ex-
+   Let’s now apply the quantum continuum limit construc-            hibits more structure (rotation invariance is typically bro-
+tion to some examples.
+                N         The first is the product-state ex-        ken in most lattice models — an effect that persists in the
+ample ρa =        j∈Z  %.  We first construct the matrix            continuum limit.)
+                                                                                                                                    5
+
+  As a simple application of this prescription we  N study        [6] J. C. Bridgeman and C. T. Chubb, J. Phys. A 50, 223001
+the continuum limit of the product states ρa =         |0ih0|         (2017).
+with corresponding hamiltonian     given by   the ferromag-       [7] G. Vidal, Phys. Rev. Lett. 93, 040502 (2003), quant-
+netic XY model, i.e., Ha = a1 j I − σjx σj+1 x
+                                                  − σjy σj+1
+                                                         y            ph/0310089.
+                                 P
+                                                             .
+                                x
+                                     √   (a)             y        [8] J. Haegeman, J. I. Cirac, T. J. Osborne, I. Pižorn, H. Ver-
+Following the identification σj ≡ aϕ    e (δ(ja)), σj ≡               schelde, and F. Verstraete, Phys. Rev. Lett. 107, 070601
+√ (a)                  z
+                             √ e(a)
+  aπ (δ(ja)), and σj ≡ aξ (δ(ja)) we find
+    e                                                                 (2011), arXiv:1103.0936.
+             Z                                                    [9] T. J. Osborne, Phys. Rev. Lett. 97, 157202 (2006), quant-
+        H = ϕ(x)∂                                                     ph/0508031.
+                         x ϕ(x) +πb (x)∂x π
+                                          b (x) dx.      (14)
+         b       b         b
+                                                                 [10] P. Corboz and G. Vidal, Phys. Rev. B 80, 165129 (2009),
+We thus recover the result that, in the heisenberg picture,           arXiv:0907.3184.
+                                                                 [11] P. Corboz, G. Evenbly, F. Verstraete, and G. Vidal, Phys.
+the fluctuation field obeys the wave equation:
+                                                                      Rev. A 81, 010303 (2010), arXiv:0904.4151.
+                 ∂tt ϕ(x,
+                     b t) = ∂xx ϕ(x,
+                                b t).                    (15)    [12] P. Corboz, R. Orús, B. Bauer, and G. Vidal, Phys. Rev. B
+                                                                      81, 165104 (2010), arXiv:0912.064.
+Solutions to this equation obey strict causality, in accor-      [13] C. V. Kraus, N. Schuch, F. Verstraete, and J. I. Cirac, Phys.
+dance with the argument above.                                        Rev. A 81, 052338 (2010), arXiv:0904.4667.
+   Conclusions.—We have introduced a procedure, based            [14] J. Haegeman, B. Pirvu, D. J. Weir, J. I. Cirac, T. J. Osborne,
+on the fluctuation construction of Hepp and Lieb, Ver-                H. Verschelde, and F. Verstraete, Phys. Rev. B 85, 100408
+beure and coworkers, which takes a sequence of states of a            (2012), arXiv:1103.2286.
+quantum lattice system and produces a corresponding list         [15] M. Aguado and G. Vidal, Phys. Rev. Lett. 100, 070404
+of quantum field data for the limiting state. This method             (2008), arXiv:0712.0348.
+was applied to several natural tensor network classes yield-     [16] O. Buerschaper, M. Aguado, and G. Vidal, Phys. Rev. B 79,
+ing their well-known (and not so well-known) continuous               085119 (2009), arXiv:0809.2393.
+                                                                 [17] R. König, B. W. Reichardt, and G. Vidal, Phys. Rev. B 79,
+analogues. It would be interesting to compare the contin-             195123 (2009), arXiv:0806.4583.
+uum limit here with the projective construction of Kijowski      [18] F. Verstraete, J. J. Garcı́a-Ripoll, and J. I. Cirac, Phys. Rev.
+[55, 56], developed further by Thiemann and coworkers                 Lett. 93, 207204 (2004), quant-ph/0406426.
+[57–60], and also with the continuum limit described by          [19] M. Zwolak and G. Vidal, Phys. Rev. Lett. 93, 207205
+Jones [48–50] in the study of Thompson’s groups F , T ,               (2003), cond-mat/0406440.
+and V . Indeed, for the case of Thompson’s group T it turns      [20] C. V. Kraus and T. J. Osborne, Phys. Rev. A 86, 5 (2012).
+out the continuum limit described here coincides with the        [21] F. Verstraete and J. I. Cirac, Phys. Rev. Lett. 104, 190405
+natural limit for fields (this will be the subject of a forth-        (2010).
+coming paper), see also [61] for recent progress in this di-     [22] J. Haegeman, T. J. Osborne, H. Verschelde,                  and
+rection in the context of (1 + 1)-dimensional gauge theo-             F. Verstraete, Phys. Rev. Lett. 110, 100402 (2013),
+                                                                      arXiv:1102.5524.
+ries.
+                                                                 [23] D. Jennings, C. Brockt, J. Haegeman, T. J. Osborne, and
+   Numerous helpful discussions with Cédric Bény, Mar-              F. Verstraete, New J. Phys. 17, 063039 (2015).
+cus Cramer, Andrew Doherty, Terry Farrelly, Steve Flam-          [24] A. Auerbach, Interacting electrons and quantum magnetism
+mia, Jutho Haegeman, Gerard Milburn, Terry Rudolph,                   (Springer-Verlag, New York, 1994) pp. xiii+255.
+Tom Stace, Frank Verstraete, Michael Walter, and Rein-           [25] E. Fradkin, Field theories of condensed matter physics, 2nd
+hard Werner are gratefully acknowledged. This work was                ed. (Cambridge University Press, Cambridge, 2013).
+supported in part by the ERC grants QFTCMPS and SIQS,            [26] C. Brockt, J. Haegeman, D. Jennings, T. J. Osborne, and
+the DFG through SFB 1227 (DQ-mat), the RTG 1991, and                  F. Verstraete, “The continuum limit of a tensor network: a
+the cluster of excellence EXC 201 Quantum Engineering                 path integral representation,” (2012), arXiv:1210.5401.
+and Space-Time Research.                                         [27] C. Bény and T. J. Osborne, “Renormalisation as an inference
+                                                                      problem,” (2013), arXiv:1310.3188.
+                                                                 [28] C. Bény, New J. Phys. 19, 013013 (2017).
+                                                                 [29] A. F. Verbeure, Many-Body Boson Systems (Springer, Lon-
+                                                                      don, 2011) pp. x+189.
+                                                                 [30] G. A. Raggio and R. F. Werner, Helv. Phys. Acta 62, 980
+ [1] K. G. Wilson, Rev. Modern Phys. 47, 773 (1975).
+                                                                      (1989).
+ [2] S. Sachdev, Quantum phase transitions, 2nd ed. (Cambridge
+                                                                 [31] G. A. Raggio and R. F. Werner, Helv. Phys. Acta 64, 633
+     University Press, Cambridge, 2011) pp. xviii+501.
+                                                                      (1991).
+ [3] X.-G. Wen, Quantum Field Theory of Many-Body Systems:
+                                                                 [32] K. Hepp and E. H. Lieb, Helv. Phys. Acta 46, 573 (1973).
+     From the Origin of Sound to an Origin of Light and Elec-
+                                                                 [33] D. Goderis, A. Verbeure, and P. Vets, in Mathematical
+     trons (Oxford University Press, 2007).
+                                                                      methods in statistical mechanics (Leuven, 1988), Leuven
+ [4] Note that there are very powerful general methods based
+                                                                      Notes Math. Theoret. Phys. Ser. A Math. Phys., Vol. 1 (Leu-
+     on the supersymmetric method [62], and yet others on the
+                                                                      ven Univ. Press, Leuven, 1989) pp. 31–47.
+     AdS/CFT correspondence [63], that can be exploited in the
+                                                                 [34] D. Goderis and P. Vets, Comm. Math. Phys. 122, 249
+     nonperturbative regime.
+                                                                      (1989).
+ [5] R. Orús, Ann. Phys. 349, 117 (2014).
+                                                                                                                                             6
+
+[35] D. Goderis, A. Verbeure, and P. Vets, Comm. Math. Phys.                      then defined to be the vector with components [u ∧ v]γ =
+     128, 533 (1990).                                                             Pd2 −1               αβ
+                                                                                     α,β=0 [u]α [v]β f    γ . Thus the wedge product f ∧ g of
+[36] D. Goderis, A. Verbeure, and P. Vets, Probab. Theory Re-                     two vector-valued functions is the vector-valued function
+     lated Fields 82, 527 (1989).                                                 f (x) ∧ g(x).
+[37] D. Goderis, A. Verbeure, and P. Vets, in Quantum probabil-              [48] V. F. R. Jones, “Scale invariant transfer matrices and Hamil-
+     ity and applications, V (Heidelberg, 1988), Lecture Notes in                 tionians,” (2017), arXiv:1706.00515.
+     Math., Vol. 1442 (Springer, Berlin, 1990) pp. 178–193.                  [49] V. F. R. Jones, “Some unitary representations of Thomp-
+[38] D. Goderis, A. Verbeure, and P. Vets, J. Math. Phys. 29,                     son’s groups F and T,” (2014), arXiv:1412.7740.
+     2581 (1988).                                                            [50] V. F. R. Jones, “A no-go theorem for the continuum limit of
+[39] D. Goderis, A. Verbeure, and P. Vets, J. Statist. Phys. 56,                  a periodic quantum spin chain,” (2016), arXiv:1607.08769.
+     721 (1989).                                                             [51] T. J. Osborne and D. E. Stiegemann, “Dynamics for holo-
+[40] T. Michoel, B. Momont, and A. Verbeure, Rep. Math. Phys.                     graphic codes,” (2017), arXiv:1706.08823.
+     41, 361 (1998).                                                         [52] E. H. Lieb and D. W. Robinson, Comm. Math. Phys. 28, 251
+[41] M. Requardt, J. Math. Phys. 43, 351 (2002).                                  (1972).
+[42] Let d ∈ N and x ∈ ZD and write Ax ∼             = Md (C), where         [53] O. Bratteli and D. W. Robinson, Operator algebras and
+     Md (C) is the algebra of d × d complex matrices. Then for                    quantum statistical mechanics. 2, 2nd ed., Texts and
+     any finite subset Λ ⊂ ZD let A(Λ) be the tensor product of                   Monographs in Physics (Springer-Verlag, Berlin, 1997) pp.
+     Ax over all x ∈ Λ. For Λ1 ⊂ Λ2 identify A(Λ1 ) with the                      xiv+519.
+     subalgebra A(Λ1 ) ⊗ IΛ2 \Λ1 ⊂ A(Λ2 ). For infinite Λ ⊂ ZD               [54] B. Nachtergaele and R. Sims, in Entropy and the quantum,
+     denote by A(Λ) the C ∗ -closure of the increasing family of                  Contemp. Math., Vol. 529 (Amer. Math. Soc., Providence,
+     finite-dimensional algebras A(Λf ) with Λf ⊂ Λ. The quasi-                   RI, 2010) pp. 141–176.
+     local algebra is then A(ZD ).                                           [55] J. Kijowski and A. Okołów, J. Math. Phys. 58, 062303
+[43] Suppose that v is a d dimensional vector. We exploit the                     (2017).
+     notation [v]α , α = 0, 1, . . . , d − 1 for the components of the       [56] A. Okołów, Class. Quant. Grav. 30, 195003 (2013).
+     vector.                                                                 [57] S. Lanéry and T. Thiemann, J. Geom. Phys. 111, 6 (2017).
+[44] If, instead, we worked with a lattice of fermions instead of            [58] S. Lanéry and T. Thiemann, J. Geom. Phys. 116, 10 (2017).
+                                                           (a)
+     quantum spins we would see that the operators φA (f ) an-               [59] S. Lanéry and T. Thiemann, J. Geom. Phys. 123, 98 (2018).
+     ticommute with each other in the limit a → 0, i.e., they give           [60] S. Lanéry and T. Thiemann, J. Geom. Phys. 123, 127 (2018).
+     a representation of the grassmann numbers.                              [61] A. Brothier and A. Stottmeister, (2019), arXiv:1901.04940.
+[45] By “rapidly decaying function” we mean tempered distribu-               [62] K. Efetov, Supersymmetry in disorder and chaos (Cam-
+     tion.                                                                        bridge University Press, Cambridge, 1997) pp. xiv+441.
+[46] Here the order of the products matters; we henceforth                   [63] S. Sachdev, “Condensed matter and AdS/CFT,” (2010),
+     take
+     Qm all product symbols as running from left to right:                        arXiv:1002.2947.
+        l=1 Ml ≡ M1 M2 · · · Mm .                                            [64] F. Verstraete, M. M. Wolf, D. Perez-Garcia, and J. I. Cirac,
+[47] The wedge product between two vector-valued functions f                      Phys. Rev. Lett. 96, 220601 (2006).
+     and g is defined as follows. First write λα λβ = 12 dαβ γ λγ +          [65] B. M. McCoy, C. A. Tracy, and T. T. Wu, Phys. Rev. Lett.
+      i αβ     γ                                                                  38, 793 (1977).
+     2f     γ λ for the structure constants of the operator ba-
+     sis λ , where dαβ γ (respectively, f αβ γ ) are the com-
+           α                                                                 [66] G. Vidal, Phys. Rev. Lett. 99, 220405 (2007), cond-
+     pletely symmetric (respectively, antisymmetric) structure                    mat/0512165.
+     constants. The wedge product of two vectors u and v is
+
+
+
+
+                                                      The spacetime continuum limit
+
+  So far the continuum limit construction has been limited to the discussion of kinematics, i.e., we only discussed the
+Hilbert-space structure for the continuous limit. In this appendix we extend the continuum limit construction to accom-
+modate dynamics.
+  The natural setting here is then that of a quantum lattice system in D dimensions with hamiltonian
+                                                                     X
+                                                             Ha ≡            hj,k (a),                                                    (16)
+                                                                     hj,ki
+
+
+where the sum is over all neighbouring spins. We allow the hamiltonian to possibly depend on the lattice spacing a,
+however, the norm khj,k (a)k is required to be bounded by a constant for all sites j and k in the lattice.
+  As we’ll see later, such an identification leads to a definition of the dynamics for the continuum limit which obeys strict
+causality. This argument is essentially conditioned on the existence of a spacetime quantum continuum limit which is
+                                                                                                                                        7
+
+defined in the following. First introduce the classical spacetime discretised field operators via
+                                                  2
+                                                 dX −1 X Z ∞
+                                 (a)
+                               φ (f ) ≡ a   D+1
+                                                                fα (at, aj)e−itHa λαj eitHa dt,                                     (17)
+                                                     α=0 j∈ZD       −∞
+
+where now f is a rapidly decaying function on spacetime MD+1 ≡ R × RD . We say that the sequence {ρa }a∈R+ admits
+a classical spacetime continuum limit if
+                                         *m       +            m
+                                                                         !
+                                          Y                    Y
+                                                                   (a)
+                                            φ(fl ) ≡ lim tr ρa   φ (fl )                                     (18)
+                                                                a→0
+                                              l=1                             j=l
+
+for all rapidly decaying fl on MD+1 .
+  We define the spacetime quantum fluctuation operators via
+                                                 2
+                                                                                                   
+                                        Z ∞      dX −1 X
+                   φe(a) (f ) ≡ Zf (a)     aD+1          fα (at, aj)e−itHa λαj eitHa dt − hφ(f )iI .                              (19)
+                                            −∞          α=0 j∈ZD
+
+                                                                                                           e(a) (f ) for
+Correspondingly, the quantum spacetime continuum limit is defined by the expectation values of products of φ
+a → 0, as f runs over all rapidly decaying functions on MD+1 :
+                                         m
+                                                  !                  m
+                                                                                !
+                                         Y                          Y
+                                                                          (a)
+                                   hΩ|      φ(fl ) |Ωi ≡ lim tr ρa
+                                             b                          φ (fl ) ,
+                                                                        e                                          (20)
+                                                                    a→0
+                                             l=1                                    l=1
+
+provided this limit exists. (At this point it is worth noting that we can also obtain continuum limits for dynamics generated
+by discrete groups, e.g., quantum cellular automata, by replacing the integral over t with a sum.)
+
+
+                                         Strict causality for the quantum continuum limit
+
+  In this appendix we argue that the dynamics of the quantum continuum limit obey strict causality. What we show is that
+the continuum limit of any tensor network (or indeed, of any equilibrium state) with a local parent hamiltonian satisfies
+the following causality condition: there exists a constant velocity c such that for all f and g are two functions on MD+1
+whose supports are spacelike separated (with respect to the velocity c) we have that
+                                                            [φ(f
+                                                             b ), φ(g)]
+                                                                  b     = 0.                                                        (21)
+  To obtain this result we exploit the Lieb-Robinson bound (see, e.g., [54] and references therein)
+                                         k[A(t), B]k∞ ≤ C0 kAk∞ kBk∞ e−τ d(A,B)+`|t|                                                (22)
+where
+                                                       A(t) ≡ e−itHa AeitHa ,                                                       (23)
+d(A, B) is the number of edges in the shortest path through the lattice connecting the supports supp(A) and supp(B),
+and C0 , `, and τ are constants depending only sup khj,k (a)k∞ and the maximum vertex degree of the lattice.
+  Consider
+                                           2
+                                          dX −1 X Z ∞ Z ∞
+  (a)       (a)
+[φ (f ), φ (g)] ≡ a
+ e         e            2D+2
+                             Zf (a)Zg (a)                      fα (as, aj)gβ (at, ak)[e−isHa λαj eisHa , e−itHa λβk eitHa ] dsdt.
+                                             α,β=0 j,k∈ZD      −∞    −∞
+                                                                                                                                    (24)
+We can bound this quantity according to
+                                                     2
+                                                    dX −1    X Z ∞Z ∞
+k[φe(a) (f ), φe(a) (g)]k∞ ≤ a2D+2 Zf (a)Zg (a)                                |fα (as, aj)||gβ (at, ak)|k[e−i(s−t)Ha λαj ei(s−t)Ha , λβk ]k∞ dsdt
+                                                    α,β=0 j,k∈ZD    −∞    −∞
+
+                                                        2
+                                                       dX −1   X Z ∞Z ∞
+                        ≤ C0 a   2D+2
+                                        Zf (a)Zg (a)                                |fα (as, aj)||gβ (at, ak)|e−τ d(j,k)+`|s−t| dsdt,
+                                                       α,β=0 j,k∈ZD      −∞   −∞
+
+                                                                                                                                    (25)
+                                                                                                                                              8
+
+where we’ve absorbed the constant maxα kλα k∞ into C0 . Changing variables we find
+                                                     X Z ∞Z ∞                                   −τ d(xj ,yk )+`|s0 −t0 |
+ k[φe(a) (f ), φe(a) (g)]k∞ ≤ C0 d4 a2D Zf (a)Zg (a)              f ? (s0 , xj )g ? (t0 , yk )e           a              ds0 dt0 , (26)
+                                                             xj ,yk ∈aZD    −∞        −∞
+
+where
+                                    f ? (t, x) = max |fα (t, x)|,            g ? (t, x) = max |gα (t, x)|,                                  (27)
+                                                       α                                         α
+
+and
+                                                                        D
+                                                                        X
+                                                           d(x, y) =          |xα − yα |                                                    (28)
+                                                                        α=1
+
+is the 1-norm distance between the vectors x, y ∈ RD .
+   Suppose now that the support of f is spacelike separated with respect to the support of g , i.e., supp(g) lies outside the
+lightcone of supp(f ). This means that
+                                                            inf     d(x, y) > c|s − t|,                                                     (29)
+                                                       x∈supp(f )
+                                                       y∈supp(g)
+
+where c = `/τ . Note that in our setting the lightcones are diamond shaped (i.e., the “speed of light” varies with direction).
+This means that
+                           c|s − t| − d(x, y) < 0,            (s, x) ∈ supp(f ) and (t, y) ∈ supp(g).                                       (30)
+that is,
+                                                τ
+                            (ec|s−t|−d(x,y) ) a ≤ 1,         (s, x) ∈ supp(f ) and (t, y) ∈ supp(g),                                        (31)
+Thus we conclude that
+                             −τ d(x,y)+`|s−t|
+                 lim a−m e           a          = 0,       m ∈ Z+ ,        (s, x) ∈ supp(f ),            and (t, y) ∈ supp(g),              (32)
+                 a→0
+
+From this we have that
+                                                                        Z             Z
+                                                                                                         −τ d(x,y)+`|s−t|
+        lim k[φe(a) (f ), φe(a) (g)]k∞ ≤ d4 C0 kf k∞ kgk∞ lim                                    a−m e           a          dsdxdtdy = 0.   (33)
+        a→0                                                       a→0      supp(f )    supp(g)
+
+where m is determined by the largest integer such that Zf (a)Zg (a) ≤ a−m . Therefore we conclude that
+                                                              [φ(f
+                                                               b ), φ(g)]
+                                                                    b     = 0.                                                              (34)
+  Obviously the existence of a spacetime continuum limit is a rather demanding restriction, but there is one general
+setting where it is fulfilled, namely the case where ρa is an equilibrium state for Ha , i.e., either the ground state or a
+thermal state. (More generally, we expect that the causality argument will work when {ρa (t)}a∈R+ consists of a finite
+density of excitations on top of the equilibrium state.
+
+
+                                                                    Examples
+
+                                                               Product state case
+                                                                           N
+  Here we consider the case where our sequence ρa is a product, i.e., ρa =   j∈Z %, where % is some constant single-
+                    1
+                      P3       α
+qubit state % ≡ 2 α=0 rα σ . Because the identity factorises out of the continuum limit it is somewhat convenient
+to adopt a 3-vector notation where r = (r0 , r) and σ = (σ 0 , σ), with σ 0 ≡ I and σ ≡ [( 01 10 ) , ( 0i −i      1 0
+                                                                                                          0 ) , ( 0 −1 )]
+                1
+so that % = 2 (I + r · σ). We find for the Θ matrix (omitting the identity) the expression [Θ]jk = Θ(σ , σ k ) ≡
+                                                                                                             j
+
+1
+  P3              j   k l
+                               P3
+2    l=1 rl tr([σ , σ ]σ ) = i   l=1 rl jkl , which gives
+                                                                     
+                                                           0   rz −ry
+                                                  Θ = i −rz 0    rx  .                                            (35)
+                                                           ry −rx 0
+                                                                                                                        9
+
+We assume that krk =6 0 (in the case where krk = 0 the continuum limit is trivial and there are no quantum fluctuations).
+The symplectic Gram-Schmidt procedure produces the following three vectors (here we assume that rj 6= 0, j = 1, 2, 3;
+there are obvious modifications in the general case):
+                                                                    
+                                                      1          r y
+                                          e= q                 −rx  ,
+                                                  rx + ry2 krk
+                                                    2
+                                                                  0
+                                                                         
+                                                      1          −rx rz
+                                          f=q                   −ry rz  , and                                      (36)
+                                                  rx2 + ry2 krk rx2 + ry2
+                                                      
+                                                 1 rx 
+                                          v=           ry .
+                                                krk r
+                                                               z
+
+Using these three vectors we construct the operators
+                                      ry                 rx
+                           µ= q                σx − q             σy ,
+                                  rx + ry krk
+                                    2     2           rx + ry krk
+                                                       2    2
+
+                                                                                      q
+                                       −rx rz                      −ry rz                  rx2 + ry2
+                           ν=q                 σ −q   x
+                                                                    σ +         y
+                                                                                                       σz ,   and    (37)
+                                 rx2 + ry2 krk        rx2 + ry2 krk                        krk
+                                rx x         ry y      rz z
+                            ξ=       σ +          σ +      σ ,
+                               krk 2        krk 2     krk2
+which satisfy Θ(µ, ν) = 1 and Θ(ν, ξ) = Θ(µ, ξ) = 0. We construct the classical operators via
+                                                      Z
+                                      hϕ(f )i ≡ tr(µ%) f (x) dx = 0,
+                                                      Z
+                                      hπ(f )i ≡ tr(ν%) f (x) dx = 0, and                                             (38)
+                                                Z
+                                      hξ(f )i ≡ f (x) dx,
+
+R exploit the fact that the expectation value of any product factorises to infer that ϕ(f ) = π(f ) = 0 and ξ(f ) =
+and
+  f (x) dx so that the classical field operators are given by ϕ(x) = π(x) = 0 and ξ(x) = 1.
+  The quantum field operators according to the fluctuation field construction are derived from
+                                                        X
+                                    e(a) (f ) ≡ aZµ (a)
+                                    ϕ                       f (aj)µj ,
+                                                             j∈Z
+                                                             X
+                                      (a)
+                                  π         (f ) ≡ aZν (a)         f (aj)νj ,   and
+                                                                                                                     (39)
+                                  e
+                                                             j∈Z
+                                                             X                         Z
+                                  ξe(a) (f ) ≡ aZξ (a)             f (aj)ξj − Zξ (a)        f (x) dx I.
+                                                             j∈Z
+                                      √
+We note that the choice ZA (a) ≡ 1/ a for all A is sufficient to ensure that the limit Eq. (5) always exists. The quantum
+limit factorises because the operator ξ(f
+                                      b ) always commutes with ϕ(f
+                                                                 b ) and π b (f ). Accordingly we obtain a representation
+of the canonical commutation relations
+                                                           Z
+                                           [ϕ(f
+                                            b ), π
+                                                 b (g)] = i f (x)g(x) dx I.                                           (40)
+
+               b ) = √1 (ϕ(f
+When we define ψ(f       b ) + iπ
+                                b (f )) for all f we obtain the standard commutation relations
+                       2
+
+                                                       b ), ψb† (g)] = (f, g)I
+                                                      [ψ(f                                                           (41)
+and learn that the vector |Ωi is annihilated by ψ(f
+                                                b ) for all f :
+
+                                                             ψ(f
+                                                             b )|Ωi = 0,                                             (42)
+                                                                                                                               10
+
+thus we identify the quantum continuum limit as that of a single bosonic field in one spatial dimension. Note that,
+regardless of the value of r, we obtain the same continuum limit description for the quantum fluctuations. The physical
+intuition for this is relatively simple to explain: the state ρa is actually a pure state of the classical continuum limit for
+all r 6= 0. (This seemingly paradoxical statement is easily justified: in the classical continuum limit we are focussing
+on a tiny subset of all observables; when restricting to a reduced set of observables it is the case that mixed states in the
+bulk of state space can end up on the boundary of the effective state space for the reduced set of observables, and hence
+be effectively pure.) When we study quantum fluctuations we are focussing on an infinitesimal neighbourhood of the
+classical reference state. The local neighbourhood of any vector r 6= 0 looks the same as any other: it is generically R3 .
+The only difference is that the symplectic structure on the tangent space is rotated, and the identification of the canonical
+field operators is correspondingly rotated.
+   For a quantum spin chain comprised       of a chain of D-dimensional quantum spins we generically find the quantum
+continuum limit is given by D2 bosonic quantum fields, D − 1 classical fields, and the identity field. The explanation for
+                                  
+this is relatively easy to understand: first work in the eigenbasis |ji of ρ and construct the single-site hermitian operator
+basis λ(jk) ≡ 21 (|jihk| + |kihj|), j, k = 1, 2, . . . , D. Next form the Θ matrix with matrix elements
+                                                     [Θ]jk;j 0 k0 = δj 0 k δjk0 (rj − rk ),                                   (43)
+where rj is the j th eigenvalue of ρ. Writing Θ in bra-ket form we find
+                                                     X
+                                               Θ=        (rj − rk )|jkihkj|.                                                  (44)
+                                                                 j6=k
+
+In the generic case where all the differences rj − rk 6= 0, j 6= k , the kernel of such a matrix is given by all vectors of
+the form |jji. Thus the rank of such an antisymmetric matrix is generically D2 − D and hence there are D2 canonically
+                                             bj ) | j = 1, 2, . . . , D2 } obeying the standard canonical commutation relations.
+                                                                        
+conjugate pairs of fluctuation fields {(ϕ
+                                        bj , π
+
+
+                                                              Matrix product states
+
+  In this subsection we study the continuum limit of the matrix product state (MPS) class. We find that our continuum limit
+construction produces the continuous matrix product state class [21]. An infinite chain of spin- 12 particles is considered
+for simplicity; the extension to the general case is sketched afterward.
+  Our states ρa are given by the sequence
+                                                                  ρa = |ψa ihψa |,                                            (45)
+of translation invariant states, where
+                                           1
+                                           X
+                           |ψa i =                        hωL | · · · Aza−1 Aza0 Aza1 · · · |ωR i| · · · z−1 z0 z1 · · · i,   (46)
+                                     ···z−1 z0 z1 ···=0
+
+with the prescription
+                                                              A0a = I + aQ,            and
+                                                                    √                                                         (47)
+                                                              A1a = aR.
+  Define the transfer operator
+                                                                        1
+                                                                        X
+                                                            Ea (·) =          (Aza )† (·)Aza .                                (48)
+                                                                        z=0
+
+Expectation values of local observables M are computed according to
+                    hM i = lim hωR |Ea(n) (FaM (Ea(n) (|ωL ihωL |)))|ωR i/hωR |Ea(2n+1) (|ωL ihωL |)|ωR i,                    (49)
+                            n→∞
+
+where
+                                                                  1
+                                                                                                    0
+                                                                  X
+                                               FaM (·) =                hz|M |z 0 i(Aza )† (·)Aza .                           (50)
+                                                                z,z 0 =0
+                                                                                                                          11
+
+  The state |ψa i is invariant under the gauge transformation
+                                                                      √        1
+                                                            Az 7→         XAz √ .                                       (51)
+                                                                               X
+With a judicious choice of X we can always arrange for Ea (I) = I whence the expression for expectation values is
+simplified to
+                                                           hM i = tr(ρa FaM (I)),                                       (52)
+where Ea× (ρa ) = ρa and
+                                                                      1
+                                                                      X
+                                                          Ea× (·) =         Aza (·)(Aza )† .                            (53)
+                                                                      z=0
+
+  The condition Ea (I) = I implies that, to first order in a, Q + Q† + R† R = 0, so that
+                                                                     1
+                                                            Q = −iK − R† R.                                             (54)
+                                                                     2
+In this case we find that
+                                                          Ea = I + aL + O(a2 ),                                         (55)
+where
+                                                             1
+                                            L(·) = −i[K, ·] − {R† R, ·} + R(·)R† .                                      (56)
+                                                             2
+In this way we see that for n . 1/a:
+
+                                                             Ea(n) (·) ≈ eanL (·).                                      (57)
+  We find the classical limit by first computing
+                                                1
+                                                                                       0
+                                                X
+lim hMx ia = lim tr(ρa FaM (I)) = lim                 hz|M |z 0 i tr(ρa (Aza )† Aza )
+a→0            a→0                       a→0
+                                               z,z 0 =0
+                                  √                                                                                             3
+            = lim h0|M |0i +          a[h0|M |1i tr(ρa R) + h1|M |0i tr(ρa R† )] + a[h1|M |1i − h0|M |0i] tr(ρa R† R) + O(a 2 )
+               a→0
+            = h0|M |0i.
+                                                                                                                        (58)
+The correlation functions of the classical continuum limit are inferred from
+                                                                                               M0
+                            lim hMx My0 ia = lim tr(ρa FaMx (Eab(y−x)/ac ((Fa y (I)))))
+                            a→0                     a→0
+                                                                                                   √
+                                                = lim h0|M 0 |0i tr(ρa FaMx (Eab(y−x)/ac (I))) + O( a)
+                                                  a→0
+                                                                                       √
+                                                = lim h0|M 0 |0i tr(ρa FaMx (I)) + O( a)                                (59)
+                                                  a→0
+                                                                                 √
+                                                = lim h0|M |0ih0|M 0 |0i + O( a)
+                                                    a→0
+                                                = h0|M |0ih0|M 0 |0i.
+All the higher-order correlation functions factorise similarly. Thus the classical continuum limit gives us a pure factorised
+state. The continuum-limit fields are then simply given by φx (x) = 0 = φy (x) and φz (x) = 1.
+   To construct the quantum continuum limit we need to calculate the Θ matrix:
+                                                                     
+                                                               0 1 0
+                                                    Θ = i −1 0 0 .                                                     (60)
+                                                               0 0 0
+                                                                                                                                    12
+
+The quantum field operators are then, according to the fluctuation construction, derived from
+                                                    X
+                                e(a) (f ) ≡ Zσx (a)
+                                ϕ                       f (aj)σjx ,
+                                                                j∈Z
+                                                                X
+                                  π   (a)
+                                            (f ) ≡ Zσy (a)            f (aj)σjy ,    and
+                                                                                                                                   (61)
+                                  e
+                                                                j∈Z
+                                                                X                             Z
+                                  ξe(a) (f ) ≡ Zσz (a)                f (aj)σjz − Zσz (a)         f (x) dx I.
+                                                                j∈Z
+                                    √
+We note that the choice ZA (a) ≡ a for all A is again sufficient to ensure that the limit Eq. (5) always exists. The quantum
+limit factorises with respect to ξb because, again, the operator ξ(f
+                                                                 b ) always commutes with ϕ(f   b ) and π b (f ). Accordingly
+we obtain a representation of the canonical commutation relations
+                                                               Z
+                                             [ϕ(f
+                                              b ), π b (g)] = i f (x)g(x) dx I.                                          (62)
+
+               b ) = √1 (ϕ(f
+When we define ψ(f       b ) + iπ
+                                b (f )) for all f we again obtain the standard commutation relations
+                       2
+
+                                                            b ), ψb† (g)] = (f, g)I.
+                                                           [ψ(f                                                                    (63)
+However, in contrast to the product-state case, the vector |Ωi is not annihilated by ψ(f
+                                                                                     b ) for all f . Instead, we find that
+|Ωi exhibits nontrivial nongaussian correlations. For example, assume that supp(f ) ∩ supp(g) = ∅ and that the support
+of g lies to the right of that of f .
+                                              X
+                      hψb† (f )ψ(g)i
+                               b      = lim a    f (aj)g(ak)hσj+ σk− ia ,
+                                            a→0
+                                                   j,k∈Z
+                                                   X                                 σ+                     −
+                                      = lim a              f (aj)g(ak) tr(ρa Fa j (Eab(k−j)/ac (Faσk (I))))
+                                            a→0
+                                                   j,k∈Z
+                                             √ X                    σ+                          1
+                                      = lim a a  f (aj)g(ak) tr(ρa Fa j (Eab(k−j)/ac (R)) + O(a 2 )                                (64)
+                                            a→0
+                                                      j,k∈Z
+                                                                                                                      1
+                                                    X
+                                      = lim a2              f (aj)g(ak) tr(ρa R† (Eab(k−j)/ac (R)) + O(a 2 )
+                                            a→0
+                                                    j,k∈Z
+                                            Z
+                                      =         f (x)g(y) tr(ρss R† e(y−x)L (R)) dxdy,
+
+where L× (ρss ) = 0. The constraint on the supports of f and g can be lifted upon noticing that
+                                                          X                   (a)
+                                  hψb† (f )ψ(g)i
+                                           b     = lim a       f (aj)g(ak)C2 (j, k),
+                                                                a→0
+                                                                        j,k∈Z
+                                                                Z                                                                  (65)
+                                                            =       f (x)g(y)C2 (x, y) dxdy,
+
+where
+                               (a)                  +      −
+                                                                                    √
+                              C2 (bx/ac, by/ac) = hσbx/ac σby/ac ia = C2 (x, y) + O( a),                                           (66)
+with
+                                                    (
+                                                     tr(ρss R† e(y−x)L (R)),                      x < y,
+                                        C2 (x, y) =                                                                                (67)
+                                                     tr(ρss Re(x−y)L (R† )),                      x > y.
+  Similarly, we obtain the expression
+                                                                Z
+                  hψb# (f1 )ψb# (f2 ) · · · ψb# (fn )i =            f1 (x1 ) · · · fn (xn )Cn (x#            #
+                                                                                                1 , . . . , xn ) dx1 · · · dxn ,   (68)
+
+where A# stands for either A or A† and
+                          Cn (x#            #             # (x1 −x2 )L
+                               1 , . . . , xn ) ≡ tr(ρss R e           (R# e(x2 −x3 )L (· · · R# ) · · · )),                       (69)
+                                                                                                                                        13
+
+for x1 ≤ x2 ≤ · · · ≤ xn . The n-point correlation function is extended symmetrically to all other values of the tu-
+ple (x1 , . . . , xn ), i.e., Cn (x#            #           #                  #
+                                   1 , . . . , xn ) = Cn (xπ −1 (1) , . . . , xπ −1 (n) ), where π is the permutation that brings the tuple
+(x1 , . . . , xn ) into ascending order.
+   We can now obtain a representation of the quantum field operator ψ(x)              b     by taking for f a sequence of functions tending
+to a delta function, e.g., f ≡ {χα (x)}, with
+                                                               (
+                                                                  1/α,           x ∈ [−α, α]
+                                                     χα (x) =                                                                          (70)
+                                                                  0,             |x| > α.
+In this way we obtain the n-point correlation functions
+                         hψb# (x1 ), . . . , ψb# (xn )) ≡ tr(ρss R1# e(x1 −x2 )L (R2# e(x2 −x3 )L (· · · Rn# ) · · · )).              (71)
+
+
+                                                      Projected entangled-pair states
+
+   In this subsection we investigate the continuum limit of a nontrivial two-dimensional tensor network, namely, the Pro-
+jected entangled-pair states (PEPS). Rather than detail the general derivation, we focus on one tractable example [64]
+which exemplifies the features of the generic case. This example relies on a mapping to the classical Ising model and
+allows us exploit classical results for the Ising model. Unfortunately there are still several open mathematical questions
+concerning the detailed properties of the Ising model, some of which we require for the continuum limit construction.
+Thus the discussion in this subsection must be regarded as at a physical level of rigour.
+   Consider an infinite two-dimensional lattice of spin- 12 particles. Initialise the lattice in the state |ωi =
+                                                                                                                 N
+                                                                                                                   j∈Z2 |+i,
+                1                                                                   2
+where |+i = 2 (|1i + | − 1i). Let hj,k be the operator acting on sites j, k ∈ Z as
+               √
+
+                                                  hj,k |zj ij |zk ik = −zj zk |zj ij |zk ik .                                         (72)
+Using these operators we build
+                                                                      X
+                                                               H=             hj,k .                                                  (73)
+                                                                      hj,ki
+
+Now construct the state
+                                                                   1   β
+                                                          |φβ i ≡ √ e− 2 H |ωi,                                                       (74)
+                                                                    Z
+               P βP          z z
+where Z =         ze
+                        hj,ki j k is the partition function for the classical Ising model at inverse temperature β . One can
+
+check that hφβ |φβ i = 1. It turns out [64] that |φβ i is a PEPS with bond dimension 2. This construction has appeared in
+the literature in various guises.
+  All of the n-point correlation functions are determined in terms of classical expectation values. Firstly, the 1-point
+functions are given by
+                                                               1 X β Phj,ki zj zk
+                                              hφβ |σlz |φβ i =       zl e           .                                   (75)
+                                                               Z z
+Similarly,
+                                                             1 X β Phl,mi zl zm β Phj,ki zj zk
+                                          hφβ |σlx |φβ i =       e             e               ,                                      (76)
+                                                             Z z
+and
+                                                             i X β Phl,mi zl zm β Phj,ki zj zk
+                                       hφβ |σly |φβ i = −        zl e          e               .                                      (77)
+                                                             Z z
+The calculation of n-point functions proceeds similarly.
+  The correlation length for the class |φβ i is determined by the correlation length of the classical Ising model. In order to
+construct the sequence |ψa i for the continuum limit construction we need to determine the appropriate lengthscale a(β)
+corresponding to inverse temperature β . This lengthscale converges to zero as the critical inverse temperature
+                                                                   √
+                                                           ln(1 + 2)
+                                                      βc =                                                               (78)
+                                                                 2
+                                                                                                                          14
+
+is approached. We calculate a(β) by first working out the correlation length ξ for the classical Ising model as βc is
+approached from above/below. The value of ξ is well known:
+                                                           1
+                                                     ξ∼       ,                                                  (79)
+                                                         1−t
+with t = sinh4 (2β). Thus we find
+                                                  a(β) = a0 (1 − sinh4 (2β)),                                           (80)
+where a0 is an initial lattice spacing.
+ Now we proceed to the classical continuum limit construction: define for A ∈ M2 (C)
+                                             (a)
+                                                          X
+                                           φA (f ) = a2       f (aj)Aj .                                                (81)
+                                                                        j∈Z2
+
+Taking the limit β → βc we find the expectation values
+                                      (a)
+                                                                                  X
+                                    φA (f ) = lim a2 hψa |Aj |ψa i                        f (aj)
+                                                    a→0
+                                                                                  j∈Z2
+                                                                        Z                                             (82)
+                                                =       lim hφβ |Aj |φβ i   f (x, y) dxdy.
+                                                      β→βc
+
+We now discuss the quantity limβ→βc hφβ |Aj |φβ i. For the case where Aj = σjz or σjy the spin-flip symmetry |ψβ i =
+        x
+N
+  j∈Z2 σj |ψβ i implies that
+
+                                            lim hφβ |σjz |φβ i = lim hφβ |σjy |φβ i = 0.                                (83)
+                                        β→βc                           β→βc
+
+The expectation value of σjx is a little more involved. Here we see that the classical observable
+                                                               Y
+                                                     Sjx (z) =    eβzj zk                                               (84)
+                                                                        hj,ki
+
+which determines hφβ |σlx |φβ i is given, at β → βc by
+                                                  Y                √
+                                                             ln(1+ 2)             Yq               √ zj zk
+                                    Sjx (z) =            e       2    zj zk
+                                                                              =            1+       2 .                 (85)
+                                                 hj,ki                            hj,ki
+
+We note that, crucially, Sj (z) is a positive and bounded quantity so that the following limit (assumed to exist) is nonzero
+                                                    rx = lim hφβ |σjx |φβ i > 0.                                        (86)
+                                                              β→βc
+
+We now have enough information to calculate the Θ matrix; we find that [Θ]jk = limβ→βc hφβ |[σ j , σ k ]|φβ i which, in
+matrix form, is
+                                                                    
+                                                          0 0 0
+                                                 Θ = i 0 0 rx  .                                                (87)
+                                                          0 −rx 0
+                                                                             √                 √
+The symplectic Gram-Schmidt process immediately delivers ξ = σ x , µ = − rx σ z , and ν = rx σ y .
+  The quantum continuum limit is determined by the scaling limit of the classical Ising model. Thus the result of the
+continuum limit construction depends on the way the critical point is approached. In this case we obtain a different
+quantum continuum limit if we approach Tc from above than if we approach it from below. This phenomena is not at all
+unusual in continuum limits: when approaching a critical point one can obtain many different limits depending on how
+many relevant operators there are.
+  The quantum field operators are then, according to the fluctuation construction, derived from
+                                                 X
+                             ϕe(a) (f ) ≡ Zµ (a)    f (aj)µj ,
+                                                     j∈Z2
+                                                     X
+                              e (a) (f ) ≡ Zν (a)
+                              π                               f (aj)νj ,        and
+                                                                                                                        (88)
+                                                     j∈Z2
+                                                     X                                     Z
+                              ξe(a) (f ) ≡ Zξ (a)             f (aj)ξj − rx Zξ (a)             f (x, y) dxdy I.
+                                                     j∈Z2
+                                                                                                                                 15
+
+The choice of Zµ (a) is now dictated by two constraints: (i) the limits Eq. (5) should all exist; and (ii) the pair
+(ϕe(a) (f ), π
+             e (a) (f )) should, in the limit a → 0, obey the canonical commutation relations. There is a tension between
+these two requirements and, in the case where there is an incompatibility between these two requirements we are content
+to relax the first requirement to apply only to the n-point functions of the field strength operator ϕ  e(a) (f ) and fix π
+                                                                                                                          e (a) (f )
+by the second requirement.
+   Let’s now investigate what scaling Zµ (a) will ensure the existence of the n-point functions. Actually we won’t discuss
+this problem in full generality and only study the 2-point function case as the n-point case is no more complicated.
+Consider
+                                                                       X
+                          lim tr ρa ϕe(a) (f )ϕ
+                                              e(a) (g) = lim rx2 Zµ2 (a)   f (aj)g(ak)hψa |σjz σkz |ψa i
+                     a→0                               a→0
+                                                                          j,k∈Z2
+                                                                              X                                                (89)
+                                                    = lim rx2 Zµ2 (a)               f (aj)g(ak)hψa |σ0z σk−j
+                                                                                                         z
+                                                                                                             |ψa i.
+                                                       a→0
+                                                                          j,k∈Z2
+
+Now, it is known [65] that, for all (x, y) ∈ R2 , the following (rotation invariant) limit exists
+                                                                  1
+                                          G± (x, y) = lim a− 4 hσ(0,0)
+                                                                 z      z
+                                                                       σ(bx/ac,by/ac) i.                                       (90)
+                                                        a→0
+                                                                          15
+Exploiting this information we see that, if we choose Zµ (a) = a 8 , we obtain a well-defined limit
+                                                          15
+                                                               X
+                               e(a) (f )ϕ
+                     lim tr ρa ϕ        e(a) (g) = lim rx2 a 4       f (aj)g(ak)hψa |σjz σkz |ψa i
+                      a→0                               a→0
+                                                                       j,k∈Z2
+                                                                                                 1
+                                                                       X
+                                                     = lim rx2 a4              f (aj)g(ak)a− 4 hψa |σ0z σk−j
+                                                                                                         z
+                                                                                                             |ψa i
+                                                        a→0
+                                                                      j,k∈Z2
+                                                                       X                                                       (91)
+                                                     = lim rx2 a4              f (aj)g(ak)G± (a(k − j))
+                                                       a→0
+                                                                      j,k∈Z2
+                                                             Z
+                                                     = rx2       f (x)g(y)G± (y − x) dxdy.
+
+                                                                                                  e(a) exist. In order to
+It is known [65] that with this choice of Zµ (a) all higher-order correlation functions involving ϕ
+maintain the canonical commutation relations we are then forced to choose
+                                                                                             1
+                                           Zµ (a)Zν (a) = a2 ,         i.e.    Zν (a) = a 8 .                                  (92)
+Thus we obtain two possible quantum continuum limits |Ω± i for the Ising PEPS, with
+                                                hΩ± |ϕ(0)
+                                                     b ϕ(x)|Ω
+                                                          b   ± i = G± (x).                                                    (93)
+Because the functions Zµ (a) and Zν (a) differ there is an arbitrariness in the construction of annihilation and creation field
+operators.
+
+
+                                                    Tree tensor network states
+
+   Here we apply the continuum limit construction to a sequences of states derived from tree tensor networks (TTN), a
+class of states arising from the application of the Kadanoff block-spin renormalisation group. Again, for simplicity, we
+focus on a one-dimensional chain of d-dimensional quantum spins; there is no difficulty in generalising these results to
+higher dimensions. Remarkably, the construction described here also works essentially without modification in the more
+general case of the multiscale entanglement renormalisation ansatz (MERA) [66].
+   Our TTN is defined as follows. First fix an isometry V : Cd ⊗ Cd → Cd and build the larger isometry
+                                                             O
+                                                       V≡        V                                                  (94)
+                                                                   k∈2Z
+
+on the spin chain. The matrix elements of the action of V on operators are given by
+                                                                        3
+                                                                        X
+                                                 V µ α ⊗ µβ V † =              v αβ γ µγ ,                                     (95)
+                                                                        γ=0
+                                                                                                                     16
+
+where µα is a complete orthonormal basis of operators with respect to the Hilbert-Schmidt inner product: (µα , µβ ) ≡
+1
+d
+  tr(µα † µβ ) = δ αβ . We typically assume that µ0 ≡ I. Our subsequent discussion is simplified somewhat when we make
+the additional assumption that V is symmetric, i.e.,
+                                                                 V SWAP = V,                                       (96)
+where
+                                                                       X
+                                                           SWAP =            |kjihjk|.                             (97)
+                                                                        jk
+
+  Using V we construct the CP map
+                                                1        1
+                                         E(M ) ≡ VM V † + VT M T † V † ,                                           (98)
+                                                2        2
+where T is the “shift right” automorphism:
+                                      T | · · · i|ai−1 |bi0 |ci1 | · · · i = | · · · i|ai0 |bi1 |ci2 | · · · i.    (99)
+The channel E is then used to prepare the sequence of states
+                                                              ρ` ≡ (E × )(`) (ρ0 ),                               (100)
+          ×
+where E       (σ) ≡ 12 V † σV + 21 T † V † σVT   and
+                                                                     O
+                                                             ρ0 ≡          |ω0 ihω0 |.                            (101)
+                                                                     j∈Z
+
+  A special role is played by the primary operators which are defined by
+                                                     (
+                                                       λφj/2,j/2+1 , j even,
+                                        E(φj,j+1 ) =                                                              (102)
+                                                       λφ(j−1)/2,j/2 j odd,
+written, compactly,
+                                                       E(φj,j+1 ) = λφbj/2c,bj/2c+1 .                             (103)
+The operators φ can be found by solving the eigenvalue equation
+                                     1             1
+                               A(φ) ≡ V φV † ⊗ I + V ⊗ V (I ⊗ φ ⊗ I)V † ⊗ V † = λφ,                             (104)
+                                     2             2
+where the CP map A is called the ascending operator. In the symmetric case a subclass of the primary operators can be
+constructed in terms of ψ , given by
+                                                     AL (ψ) ≡ V (ψ ⊗ I)V † = λψ,                                  (105)
+where the CP map AL is called the left ascending operator. Given such a ψ , we can build a primary operator φ simply via
+                                                                  φ ≡ ψ ⊗ I.                                      (106)
+We call these operators the simple primary operators.
+ The matrix elements of the primary operator eigenvector equation are given by
+                                1 X                            1X
+                                        φα,β v α,β γ δ0,γ 0 +         φα,β v 0,α γ v β,0 γ 0 = λφγ,γ 0 ,          (107)
+                                2 α,β,γ                        2 α,β
+                                                                                            P
+which is compactly summarised in vector form by A|φi = λ|φi, where |φi = α,β φα,β |αi|βi, and
+                                       X 1                          1
+                                                                                       
+                               A=                  v α,β α0 δ0,β 0 + v 0,α α0 v β,0 β 0 |α0 β 0 ihαβ|.            (108)
+                                    α,β,α0 ,β 0
+                                                 2                   2
+
+Generically there is a unique eigenvector with eigenvalue 1, namely, φ = I ⊗ I and the remaining eigenvectors all have
+eigenvalue |λ| < 1. We henceforth assume we are in this generic case. Because A is not generically a normal matrix
+we must exploit the Jordan canonical form to diagonalise it. To simplify our discussion somewhat we assume that the
+                                                                                                                                    17
+
+matrix is diagonalisable (it turns out that all nontrivial Jordan blocks are averaged away by the continuum limit procedure
+anyway). Thus we have the eigenvalue decomposition
+                                                            X
+                                                      A=       λγ |φγ ihξγ |.                                         (109)
+                                                                      γ
+
+   Expectation values for local observables with respect to the sequence ρ` can now be found as follows. Suppose we are
+interested in some observable A which, for concreteness, acts only on sites j and j + 1. Then, exploiting the completeness
+(but not orthonormality!) of the eigenbasis φαj,j+1 of Eq. (104), we deduce that there are aα such that
+                                                                            4
+                                                                           dX −1
+                                                          Aj,j+1 =                 aα φαj,j+1 .                                  (110)
+                                                                           α=0
+
+The expectation value of Aj,j+1 then follows from
+                                          hAj,j+1 i` = tr(ρ` Aj,j+1 ) = tr(ρ0 E (`) (Aj,j+1 ))
+                                                             4
+                                                            dX −1
+                                                                                                                                 (111)
+                                                        =           aα λ`α tr(ρ0 φαbj/2` c,bj/2` c+1 ).
+                                                            α=0
+
+In the generic case where λ0 is the only eigenvalue with |λ0 | = 1 we deduce that
+                                                       lim hAj,j+1 i` = a0 tr(ρ0 φ00,1 ).                                        (112)
+                                                    `→∞
+
+Since φα is a complete basis we shift our attention to this set of operators rather than the operator basis µα ⊗ µβ .
+  The n-point correlation functions for ρ` may be computed similarly. Suppose that j1 < j2 < · · · < jn are the locations
+of the n operators involved in a n-point correlator. Note first that if |jk+1 − jk | > 3 for all k = 1, 2, . . . , n − 1, then
+                                            n
+                                                         !     n
+                                           Y                  Y
+                                                αk
+                                      E        φjk ,jk +1 =       λαk φαbjkk /2c,bjk /2c+1 .                                 (113)
+                                                 k=1                        k=1
+                      `+1
+If |jk+1 − jk | ≥ 2         for all k = 1, 2, . . . , n − 1 then the correlator is exactly a product:
+                                                 * n              +      n
+                                                     Y                 Y
+                                                          αk
+                                                        φjk ,jk +1 =        λ`αk tr(ρ0 φαk ).                                    (114)
+                                                  k=1                  `      k=1
+                                                        `+1
+The correlation length of the state ρ` is ξ` = 2              . A key role in the calculation of the n-point functions is played by the
+fusion maps Fe and Fo , defined by
+                                                                                
+                                                Fe (φα ⊗ φβ ) = E E φα0,1 ⊗ φβ2,3                                                (115)
+and
+                                                                              
+                                               Fo (φα ⊗ φβ ) = E E φα0,1 ⊗ φβ3,4 .                                               (116)
+The action of the maps Fe and Fo may be represented in terms of the primary operators as
+                                                                        
+                                                    γ †
+                                    Feαβ γ ≡ tr (ξ0,1  ) E E φα0,1 ⊗ φβ2,3                                                       (117)
+and
+                                                                                
+                                                           γ †
+                                             Foαβ γ ≡ tr (ξ0,1 ) E E φα0,1 ⊗ φβ3,4     .                                         (118)
+Using the fusion maps we can calculate the lattice 2-point function
+                                                              tr(ρ` φαj,j+1 φβk,k+1 ).                                           (119)
+Supposing that j < k and |k − j| < 2` , and using translation invariance, we reduce our problem to calculating
+                                             tr(ρ` φαj,j+1 φβk,k+1 ) = tr(ρ` φα0,1 φβk−j,k−j+1 ).                                (120)
+Let m ≥ 0 be such that
+                                                       k − j = 2m + 2m−1 r1 + r0 ,                                               (121)
+                                                                                                                                      18
+
+                                 r
+where 0 ≤ r0 < 2m−2 and r1 = b 2m−1 c ∈ {0, 1}. Thus
+                                tr(ρ` φα0,1 φβk−j,k−j+1 ) = (λα λβ )m−1 tr(ρ`−m+1 φα0,1 φβ2+r1 ,3+r1 ).                             (122)
+There are two cases:
+                                                     (
+                                                      (λα λβ )m−1 (λγ )`−m−1 Feαβ γ tr(ρ0 φγ0,1 ),             r1 = 0,
+                       tr(ρ` φα0,1 φβk−j,k−j+1 ) =                                                                                  (123)
+                                                      (λα λβ )m−1 (λγ )`−m−1 Foαβ γ tr(ρ0 φγ0,1 ),             r1 = 1.
+  Define the following scaling function. Write for x ∈ R
+                                                     bx/ac = 2m + 2m−1 r1 + r0 .                                                    (124)
+Note the dependence of the values of m and r1 on x:
+                                                          m(x) = blog2 (x/a)c                                                       (125)
+and
+                                                  r1 (x) = bbx/ac2−m(x/a)+1 − 2c.                                                   (126)
+Define
+                        (a)
+                     Cαβ (x) ≡ tr(ρ` φα0,1 φβbx/ac,bx/ac+1 ) = (λα λβ )m−1 (λγ )`−m−1 Faαβ γ (x) tr(ρ0 φγ0,1 ),                     (127)
+where
+                                                  (
+                                                   Feαβ γ ,       bbx/ac2−blog2 (x/a)c+1 − 2c = 0,
+                                   Faαβ γ (x) =                                                                                     (128)
+                                                   Foαβ γ ,       bbx/ac2−blog2 (x/a)c+1 − 2c = 1.
+The function Faαβ γ (x) enjoys a discrete scaling invariance:
+                                                         Faαβ γ (2x) = Faαβ γ (x).                                                  (129)
+                                                            (a)
+  We are interested in the scaling, for fixed x, of Cαβ (x) as a → 0. Write µ = λα λβ and notice that
+             µm = em log(µ) = eblog2 (x/a)c log(µ) = elog2 (x/a) log(µ) µblog2 (x/a)c−log2 (x/a) = Ma (x)(x/a)log2 (µ) ,            (130)
+where the function Ma (x) oscillates between 1 and 1/µ. This function also has a discrete scale invariance:
+                                                           Ma (2x) = Ma (x).                                                        (131)
+Thus for fixed |x| ≤ 1 we see that
+                                                           |µm | ∼ a− log2 (µ) .                                                    (132)
+                                                                  a→0
+
+Similarly,
+        λ`−m
+         γ   = e(`−m) log(λγ ) = e(blog2 (1/a)c−blog2 (x/a)c) log(λγ ) = e− log2 (x) log(λγ ) Na (x) = Na (x)x− log2 (λγ ) ,        (133)
+where
+                                      Na (x) = λγ(blog2 (1/a)c−log2 (1/a))−(blog2 (x/a)c−log2 (x/a)) .                              (134)
+Note that Na (x) oscillates between λγ and λ1γ and also shares the discrete scale invariance property:
+                                                            Na (2x) = Na (x).                                                       (135)
+For fixed |x| ≤ 1 it follows that
+                                                            |λ`−m
+                                                              γ   | ∼ O(1).                                                         (136)
+                                                                     a→0
+
+Putting this together we learn that, for fixed |x| ≤ 1,
+                                                 a− log2 (λα )−log2 (λβ ) log2 (λα )+log2 (λβ )−log2 (λγ ) αβ
+               tr(ρ` φα0,1 φβbx/ac,bx/ac+1 ) =                           x                                Ga γ (x) tr(ρ0 φγ0,1 ),   (137)
+                                                       λα λβ λγ
+where
+                                                 Gαβ                     αβ
+                                                  a γ (x) = Ma (x)Na (x)Fa γ (x).                                                   (138)
+                                                                                                                                          19
+
+The correlation function scales as
+                                                    (a)
+                                                 |Cαβ (x)| ∼ a− log2 (λα ) a− log2 (λβ ) .                                              (139)
+                                                               a→0
+
+Notice that along the subsequence aj = 2−j
+                                                                      blog2 (x)c−log2 (x)
+                                                               λα λβ
+                                          Gαβ
+                                           aj γ (x) =                                         F αβ γ (x)                                (140)
+                                                                λγ
+where
+                                                  (
+                                                   Feαβ γ ,             bbxc2−blog2 (x)c+1 − 2c = 0,
+                                     F αβ γ (x) =                                                                                       (141)
+                                                   Foαβ γ ,             bbxc2−blog2 (x)c+1 − 2c = 1.
+
+Note that along the subsequence aj = 2−j the quantity Gαβ
+                                                       a γ (x) doesn’t depend on a.
+ Hence we obtain the limit
+                                                                     1
+     lim alog2 (λα )+log2 (λβ ) tr(ρ` φα0,1 φβbx/ac,bx/ac+1 ) =            xlog2 (λα )+log2 (λβ )−log2 (λγ ) Gαβ γ (x) tr(ρ0 φγ0,1 ).   (142)
+     a→0                                                          λα λβ λγ
+
+
+                                                      The classical continuum limit
+
+  The structure of a tree tensor network is covariant with respect to a discrete scaling of the position coordinate by a factor
+of a 2: after such a scaling we have again a valid TTN for the lattice. This leads to certain peculiarities for the n-point
+functions in the limit where the lattice spacing goes to 0: the correlation functions do not tend to a continuous limit but
+oscillate around some value. This is due to the functions Ma (x) and Na (x). To overcome this we simply restrict to a
+convergent subsequence, specifically, aj ≡ 2−j , j = 0, 1, 2, . . .. Thus, from now on, any limit of the form
+                                                                        lim                                                             (143)
+                                                                        a→0
+
+is to be interpreted as the limit
+                                                                        lim                                                             (144)
+                                                                        j→∞
+
+along the subsequence a ≡ aj = 2−j .
+  (One could imagine instead using a modified prescription for the sequence ρ`(a) , e.g.,
+                                                       Z a/2
+                                                  1                        ds
+                                         ρa ≡                 ρblog2 (1/s)c .                                                           (145)
+                                               log(2) a                    s
+This definition is equivalent to smearing out the field operators over a lattice with lattice spacing chosen at random from
+the interval [a/2, a]. This does lead to a limit but, unfortunately, the resulting expressions for the correlation functions are
+somewhat awkward.)
+                                                                                       Pd4 −1
+  The classical continuum limit is now straightforward to describe: let Aj,j+1 = α=0 aα φαj,j+1 .
+                                                                   X
+                            hφα (f )i ≡ 2 lim hφ(a)
+                                                 α (f )i = lim a        f (aj) tr(ρblog2 (1/a)c φαj,j+1 )
+                                             a→0                     a→0
+                                                                              j∈Z
+                                                   X
+                                        = lim a           λblog
+                                                           α
+                                                                2 (1/a)c
+                                                                         f (aj) tr(ρ0 φαj,j+1 )
+                                           a→0
+                                                   j∈Z
+                                                   X                                                                                    (146)
+                                        = lim a           f (aj) tr(ρ0 φ00,1 )δα,0
+                                           a→0
+                                                   j∈Z
+                                                                Z ∞
+                                        = δα,0 tr(ρ0 φ00,1 )            f (x) dx.
+                                                                  −∞
+
+In the generic case all the classical n-point functions factorise.
+                                                                                                                                    20
+
+                                                       The quantum continuum limit
+
+  The correlation functions for the quantum continuum limit are essentially determined by the 2-point functions.
+  Firstly, the theta matrix is constructed for the simple primary operators via
+                                             [Θ]α,β = lim hω0 |A(`) ([ψ α , ψ β ])|ω0 i,                                          (147)
+                                                            `→∞
+
+where the {ψ α } is the set of all the simple primary operators. If we want to include all the other primary operators in the
+continuum limit the expression is a little more complicated:
+                                         1
+                                 [Θ]α,β =   lim tr(ρ0 E (`) ([φα0,1 , φβ−1,0 + φβ0,1 + φβ1,2 ])).                                 (148)
+                                         3 `→∞
+Applying the symplectic Gram-Schmidt process produces the canonical discretised field operators:
+                                                   X γ                     Z a
+                                                                  γ
+                           ϕe(a)
+                             γ   (f ) ≡ 2Z µ γ (a)   (µ  j −  hµ  j ji I )     sf (sj) ds,
+                                                            j∈Z                        a/2
+
+                                                           X                          Z a
+                               eγ(a) (f ) ≡ 2Zν γ (a)
+                               π                                  (νjγ − hνjγ iIj )          sf (sj) ds,   and                    (149)
+                                                            j∈Z                        a/2
+
+                                                           X                         Z a
+                               ξeγ(a) (f ) ≡ 2Zξγ (a)            (ξjγ − hξjγ iIj )           sf (sj) ds.
+                                                           j∈Z                        a/2
+
+In general the canonical discretised field operators will be linear combinations of the primary operators associated with
+different eigenvalues of the ascending operator.
+   To simplify the discussion of the 2-point function we simply assume that the canonical field operators ϕ    e(a) (f ) are
+                                                          γ
+directly associated with simple primary operators, i.e., µj is a simple primary operator. (This turns out to be the case in
+many examples). The general case is only slightly more involved.
+   Let Zψα (a) = alog2 (λα )+1 . Then
+              (a)
+                                            X
+   hϕe(a)
+      α (f )ϕeβ (g)i = 4a2 Zψα (a)Zψβ (a)        f (aj)g(ak)hψjα ψkβ i
+                                                 j,k
+                                                     X                       (a)
+                           log2 (λα )+log2 (λβ )+2
+                     = 4a                                  f (aj)g(ak)Cαβ (a(k − j))                                              (150)
+                                                     j,k
+
+                         4 tr(ρ0 φγ0,1 )
+                                           Z ∞Z ∞
+                     −→                                    f (x)g(y)(y − x)log2 (λα )+log2 (λβ )−log2 (λγ ) Gαβ γ (y − x) dxdy.
+                     a→0   λα λβ λγ         −∞       −∞
+
+
+
+                                                             A simple example
+
+  Here we apply the quantum continuum limit construction to the following simple example:
+                                                       V = |0ihψp | + |1ihφ+ |,                                                   (151)
+where
+                                     √               p                         1
+                           |ψp i =       p|00i +               and |φ+ i = √ (|01i + |10i).
+                                                      1 − p|11i,                                                     (152)
+                                                                                2
+The intuition behind this choice is as follows. In this state there is only one type of excitation (labelled “1”). The first
+vector in the isometry describes the nontrivial fusion of two excitations: two excitations can fuse to produce the vacuum
+and the second vector describes how a single excitation behaves under changes of scale.
+  The sequence of states
+                                                            ρ` ≡ (E × )(`) (ρ0 ),                                                 (153)
+with |ω0 i = |0i given by this prescription can alternatively be described as follows: one can think of the action of term
+|ψp ih0| in V † as nucleating a pair of magnons with probability (1 − p)/2 and the term |φ+ ih1| as a scale transformation
+of the magnon. Thus we have magnons being created at the rate (1 − p)/2 which then spreading throughout the chain as
+we zoom in.
+                                                                                                                          21
+
+  The simple scaling operators are given by
+                              ψ 0 = I,   ψ 1 = 1/2−p
+                                               3/2−p
+                                                     I + σz ,             ψ2 = σx,        and ψ 3 = σ y .              (154)
+The corresponding eigenvalues are
+                                                                    √     √                         √     √
+                                                                        p+ 1−p                          p− 1−p
+                          λ0 = 1,    λ1 = p−(1−p)
+                                             2
+                                                  ,       λ2 =           √
+                                                                           2
+                                                                               ,        and λ3 =         √
+                                                                                                           2
+                                                                                                               .       (155)
+ The right eigenvector with eigenvalue 1 of the ascending operator is
+                                                         I + p0 σ z
+                                                   ρ0 =              .                                                 (156)
+                                                            2
+where
+                                                         p − 1/2
+                                                    p0 =            .                                                  (157)
+                                                         3/2 − p
+ As usual the classical fields are then
+                                                           X
+                                              φ(a)
+                                               α (f ) = a     f (aj)ψjα .                                              (158)
+                                                                    j∈Z
+
+with expectation values in the limit a → 0:
+                                                   X                                         Z
+                               hφα (f )i = lim a         f (aj)hψjα i`=b1/ac = δ0,α              f (x) dx.             (159)
+                                           a→0
+                                                   j∈Z
+
+The theta matrix for the simple scaling operators is given by
+                                                                       0 0 0 0
+                                                                                
+                                                                      0 0 0 0 
+                                     [Θ]αβ = tr(ρ0 [ψ α , ψ β ]) ≡ 4i             .                                   (160)
+                                                                       0 0 0 p0 
+                                                                       0 0 −p0 0
+Hence we introduce the quantum fluctuation fields
+                                                                    X
+                                          e(a) (f ) = Zϕ (a)
+                                          ϕ                               f (aj)σjx ,     and
+                                                                    j∈Z
+                                                                    X                                                  (161)
+                                          e (a) (f ) = Zπ (a)
+                                          π                               f (aj)σjy .
+                                                                    j∈Z
+
+The commutation relations are determined by
+                                                                                X
+                                  e(a) (f ), π
+                                 [ϕ          e (a) (g)] = 2iZϕ (a)Zπ (a)                f (aj)g(aj)σjz .               (162)
+                                                                                j∈Z
+
+We therefore choose
+                                                                       a
+                                                     Zϕ (a)Zπ (a) =                                                    (163)
+                                                                       p0
+to ensure that, in the limit a → 0, we recover the usual canonical commutation relations.
+   We still have the freedom to choose Zϕ (a) to ensure that the n-point correlation functions for ϕ(x)
+                                                                                                    b    exist. We detail the
+calculation for the 2-point function, which, in turn, ensures the existence for the general case. Consider
+                                                          X
+                           hϕe(a) (f )ϕ
+                                      e(a) (g)i = Zϕ2 (a)   f (aj)g(ak) tr(ρa σjx σkx )
+                                                         j,k∈Z
+                                                         X
+                                            = Zϕ2 (a)            f (aj)g(ak) tr(ρa σ0x σk−j
+                                                                                        x
+                                                                                            )
+                                                         j,k∈Z
+                                                          X
+                                            = Zϕ2 (a)              f (aj)g(a(k 0 + j)) tr(ρa σ0x σkx0 )                (164)
+                                                         j,k0 ∈Z
+                                                          X
+                                            = Zϕ2 (a)              f (aj)g(a(k 0 + j))C (a) (ak 0 )
+                                                         j,k0 ∈Z
+                                                         X         X
+                                            = Zϕ2 (a)                       f (aj)g(a(k 0 + j))C (a) (ak 0 ),
+                                                         j∈Z |k0 |≤b1/ac
+                                                                                                                         22
+
+where, for fixed z = ak ,
+                                         C (a) (z) ≡ tr(ρa σ0x σbz/ac
+                                                                x
+                                                                      ) ∼ a−2 log2 (λ2 ) ,                             (165)
+                                                                             a→0
+
+so that C(z) ≡ a2 log2 (λ2 ) C (a) (z) has a well-defined limit. To ensure that the limit exists we therefore choose
+                                                                                  √   √       1
+                                          Zϕ (a) = alog2 (λ2 )+1 ≡ alog2 ( p+ 1−p)+ 2                                  (166)
+to give
+                                                                X        X
+                        e(a) (f )ϕ
+                       hϕ        e(a) (g)i = a2 log2 (λ2 )+2                      f (aj)g(a(k 0 + j))C (a) (ak 0 )
+                                                                j∈Z |k0 |≤b1/ac
+                                                     X      X
+                                           =a    2
+                                                                       f (aj)g(a(k 0 + j))C(ak 0 )                     (167)
+                                                     j∈Z |k0 |≤b1/ac
+                                                 Z ∞           Z 1
+                                           −→             dx         dy f (x)g(x + y)C(y).
+                                           a→0       −∞         −1
+
+Consequently,
+                                                                         √   √         1
+                                                          a− log2 ( p+ 1−p)+ 2
+                                                 Zπ (a) =                      .                                       (168)
+                                                                    p0
+

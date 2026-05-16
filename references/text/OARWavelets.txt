@@ -1,0 +1,541 @@
+                                                                           Operator-algebraic renormalization and wavelets
+                                                              Alexander Stottmeister,1 Vincenzo Morinelli,2 Gerardo Morsella,3 and Yoh Tanimoto3
+                                                          1
+                                                           Institute of Theoretical Physics, University of Hannover, Appelstraße 2, 30167 Hannover, Germany
+                                                          2
+                                                           Department of Mathematics, FAU Erlangen-Nürnberg, Cauerstraße 11, 91058 Erlangen, Germany
+                                                   3
+                                                     Department of Mathematics, University of Rome “Tor Vergata”, Via della Ricerca Scientifica 1, 00133 Roma, Italy
+                                                                                                (Dated: October 27, 2021)
+                                                           We report on a rigorous operator-algebraic renormalization group scheme and construct the free field
+                                                         with a continuous action of translations as the scaling limit of Hamiltonian lattice systems using wavelet
+                                                         theory. A renormalization group step is determined by the scaling equation identifying lattice observ-
+                                                         ables with the continuum field smeared by compactly supported wavelets. Causality follows from Lieb-
+                                                         Robinson bounds for harmonic lattice systems. The scheme is related with the multi-scale entanglement
+                                                         renormalization ansatz and augments the semi-continuum limit of quantum systems.
+arXiv:2002.01442v2 [math-ph] 26 Oct 2021
+
+
+
+
+                                                                 INTRODUCTION                                                1                 1                        3+
+                                                                                                                                                                          √
+                                                                                                                                                                          √ 3
+                                                                                                                             √                √
+                                                                                                                              2                 2                        4 2
+                                                                                                                                                                  √
+                                                                                                                                                                1+√ 3
+                                                                                                                                                                 4 2              √
+                                           Lattice regularization is a standard procedure to define con-                                                                        3−√ 3
+                                                                                                                                                                                 4 2
+
+                                           tinuum quantum field theories [1] which has led to extraor-                0.0
+                                                                                                                      0
+                                                                                                                            0.2   0.4   0.6     0.8   1.0
+                                                                                                                                                      1     0
+                                                                                                                                                            0                                   3
+                                                                                                                                                                                                3
+                                           dinary results in the ab-initio determination of the Hadron
+                                                                                                                                                                                          √
+                                                                                                                                                                                        1−√ 3
+                                                                                                                                                            RG step                      4 2
+                                           mass spectrum [2] and may serve as a starting point for the
+                                           quantum simulation of quantum field theories [3]. While
+                                           interacting models have been rigorously constructed in the
+                                           classical works of Glimm-Jaffe and others [4] , the lattice                0.0   0.2   0.4   0.6     0.8   1.0   0             1              2      3
+
+                                           and continuum theories are often related indirectly in terms
+                                                                                                                      0                               1     0                                   3
+
+
+                                           of correlation functions.
+                                           A recent attempt to build a continuum conformal field                  FIG. 1: Illustration of the decomposition of lattice sites for
+                                           theory (CFT) by embedding a quantum spin chain from                  d = 1 by an RG step determined by the scaling equation (5): On
+                                           coarser to finer lattices, coined the semi-continuum limit            the left: The block-spin RG and its weights. On the right: The
+                                                                                                                  wavelet-based RG with weights determined by the low-pass
+                                           and inspired by block-spin renormalization, resulted in
+                                                                                                                            filter of Daubechies’ D4 scaling function.
+                                           a discontinuous action of symmetries, even the transla-
+                                           tions [5–8]. Here, we explain how this deficiency can be
+                                           remedied by utilizing an observable-based, i.e. operator-
+                                           algebraic, approach to the Wilson-Kadanoff renormaliza-              dimensions as we explicitly demonstrate for scalar lattice
+                                           tion group (RG) [9–11] for lattice field theories [12, 13].          fields. Moreover, our approach yields a rigorous proof that
+                                           As an important, instructive example [14, 15], we construct          spacetime locality (in the sense of the Haag-Kastler axioms
+                                           the massive continuum free field with its continuous action          [26]) in the continuum follows from Lieb-Robinson bounds
+                                           of spacetime translations via the scaling limit of lattice sys-      [27–31].
+                                           tems in their ground states approaching the unstable, mass-          As real-space RG schemes have received rapidly growing
+                                           less fix point ([16] for details and proofs). More recently,         interest in recent years, especially in the context of ten-
+                                           the presented method has been extended to CFTs based on              sor networks [32] and the multi-scale entanglement renor-
+                                           free fermions [17] invoking the Koo-Saleur formula [18].             malization ansatz (MERA) [33–35], we show as an impor-
+                                           Our RG is defined in terms of compactly supported, regu-             tant application that our approach yields a rigorous analytic
+                                           lar wavelets [19] allowing for simultaneous control of lo-           MERA in any dimension d which is not restricted to crit-
+                                           cality properties in real and momentum space. We take                ical (massless) models [36, 37]. The discrete dimension
+                                           inspiration from renormalization in classical systems [20]           of the d + 1-dimensional tensor network of the MERA is
+                                           and use a scaling function and its multiresolution analy-            identified with the sequence of scales the given quantum
+                                           sis to define a RG step: While block-spin renormalization            system is observed at.
+                                           would correspond to a step function, we use a Daubechies             The letter is organized as follows. First, we outline our
+                                           scaling function (see Figure 1), cf. [21, 22]. Thereby we            general renormalization scheme. Then, we apply it to lat-
+                                           avoid the obstacles encountered in [5, 7, 8] to implement            tice scalar fields by constructing explicit renormalization
+                                           continuous symmetries in the scaling limit, cf. [23]. Map-           maps in terms of compactly supported wavelets, and we
+                                           ping observables from coarser to finer lattices results in a         discuss the connection with the MERA. Finally, in the ex-
+                                           real-space RG dual to coarse graining the Hamiltonian or             ample of the free scalar field, we show that imposing a suit-
+                                           density matrices, e.g. the density matrix renormalization            able renormalization condition on lattice ground states at
+                                           group (DMRG) [15, 24, 25]. Our method applies in all                 different scales, we fully recover the continuum massive
+                                                                                                                                                2
+
+field in the scaling limit including the action of spacetime                                                     .          ..           ..
+                                                                                                            ..               .            .
+translations. The letter closes with an outlook on possible                                             (N +2)       . . . ω (N +2) ΦN +2 , ΠN +2
+future developments.                                                                                   ω0                   ∞
+                                                                                                             N +2                          N +1
+                                                                                                            EN +1                         αN +2
+                                                                                        (N +1) . . .    (N +1)       . . . ω (N +1) ΦN +1 , ΠN +1
+    OPERATOR-ALGEBRAIC RENORMALIZATION                                                ω0               ω1                   ∞
+                                                                                         N +1                N +1                          N
+                                                                                        EN                  EN                            αN +1
+As discussed in [13], the RG approach to the lattice approx-              (N )
+                                                                         ω0      . . . ω (N )   . . . ω (N )         . . . ω (N )   ΦN , ΠN
+imation of continuum theories can be rephrased in terms of                              1               2                   ∞
+observables, that is operator algebras, as follows. We fix
+a family of lattices ΛN in Rd with lattice constant εN =                  FIG. 2: Wilson’s triangle of renormalization: Vertical lines
+2−N ε, and consider a sequence of Hamiltonian quantum                   represent renormalization steps, either by coarse graining states
+                         (N )                                              (E ’s) or by refining fields (α’s). Horizontal lines represent
+systems {AN , HN , H0 } indexed by the scale N . At                       sequences of renormalized states considered on the algebra
+each scale N , we have an algebra of observables AN gener-              generated by fields and momenta at a fixed scale (right column).
+ated by (bounded functions of) basic time-zero lattice fields
+                                                          (N )
+ΦN (x), their momenta ΠN (x), and a Hamiltonian H0
+both acting on the Hilbert space HN . The quantum state at                         WAVELETS AND THE SCALAR FIELD
+                                                   (N )
+each scale is initially given by a density matrix ρ0 , e.g. in
+                                                                        We now apply the above framework to lattice scalar fields,
+                              (N )    (N )       (N )
+terms of a Hamiltonian: ρ0 = (Z0 )−1 e−H0 . The RG
+connects systems at different scales via (coarse graining)              setting up a specific renormalization scheme involving
+quantum operations, mapping density matrices on the finer               compactly supported wavelets [19, 41]. To avoid in-
+system to the coarser system                                            frared divergence at finite scale, we take lattices ΛN =
+            (N +M )         (N )                                        εN {−LN , ..., LN − 1}d representing a discretization of
+  ENN +M(ρ0           ) = ρM ,        ENN +1 ◦ ENN+1
+                                                  +2
+                                                     = ENN +2 ,   (1)   the torus [−L, L)d = TdL (periodic boundary conditions,
+         (N )
+where ρM corresponds to the (M times) renormalized                      LN ≡ −LN , with εN LN = L fixed). We denote by
+                  (N )                                                  ΓN = Lπ {−LN , ..., LN − 1}d the dual momentum space
+Hamiltonian HM at scale N . Because quantum states
+                                                                        lattices. The kinematical setup of the lattice scalar field
+ρ are positive, linear maps ω : AN → C, by ω(A) =
+                                                                        systems is given by the Fock space HN , built from the ac-
+tr(ρA), and the field correlation functions are given by
+                                                                        tion of momentum-space creation and annihilation opera-
+hΦN (x) . . . ΠN (y)i(N ) := ω (N ) (ΦN (x) . . . Π(y)), we
+can state (1) as:                                                       tors aN (k), a†N (k) on the vacuum vector ΩN subject to the
+                (N +M )            (N +M )               (N )           canonical commutation relations (CCR), [aN (k), a†N (l)] =
+    ENN +M (ω0            ) = ω0                N
+                                             ◦ αN +M = ωM ,       (2)   (2LN )d δk,l , and by the algebra AN generated by the local
+where αN                                                N +M            (dimensionless) canonical lattice field for x ∈ ΛN :
+           +M : AN → AN +M is the dual of EN                  (the
+         N
+                                       (N )        (N )
+ascending superoperators [34]). ω0 and ωM character-
+                                                                                                 X †
+                                                                           ΦN (x) = √2(2L  1
+                                                                                              )d
+                                                                                                      [aN (k)e−ikx + aN (k)eikx ],
+ize the initial and renormalized states on AN correspond-                                       N
+                                                                                                       k∈ΓN
+         (N )          (N )
+ing to ρ0 and ρM . We call the collection αN            N
+                                                          +M , the      and its momentum (with a similar formula) satisfying:
+scaling maps or renormalization group. The structure is                 [ΦN (x), ΠN (y)] = iδx,y . The scaling maps αN   N
+                                                                                                                           0 : AN →
+neatly summarized by an adaptation of Wilson’s triangle                 AN 0 are the most important input in our framework deter-
+of renormalization [10, p. 790] in Figure 2. If the limit               mining the existence and structure of the continuum limit.
+                            (N )
+ω∞(N )
+       := limM →∞ ωM exists (in a suitable sense), the                  Our choice using wavelets is motivated by the block-spin
+sequence ω∞   (N )
+                   , called the scaling limit of the inital states      case and its locality properties in real space corresponding
+  (N )
+ω0 , is stable under coarse graining:                                   to the smearing of continuum fields with the simplest mem-
+         ENN +M (ω∞(N +M )      (N )
+                           ) = ω∞    ,    N < N 0.      (3)             ber of the Daubechies’ wavelet, the Haar wavelet χ[0,1)
+                                                                        (see Figure 1). But, as the approximation of momenta re-
+Employing operator-algebraic techniques (see [16] for de-               quires higher regularity, the latter does not suffice as ex-
+tails), we obtain a Hilbert space H∞ and an algebra A∞                  plained below.
+generated by continuum fields Φ, Π, acting on it. Fol-                  Scaling maps from a scaling function. We consider an or-
+lowing [5, 6, 12, 13, 38] we call A∞ the semi-continuum                 thonormal scaling function s that satisfies the scaling equa-
+limit, see also [39, 40]. Moreover, we have isometries                  tion [19, 42, 43]:
+V∞N
+      : HN → H∞ and a state Ω ∈ H∞ realizing the                                                X         d
+correlations of the scaling limit ω = hΩ, . Ωi. The finite-                            s(x) =       hn 2 2 s(2x − n),             (5)
+scale fields ΦN , ΠN are embedded in the continuum fields                                           n∈Zd
+Φ, Π through α∞  N
+                    : AN → A∞ :
+                                                                        such that its integer translates s(· − n) are orthonormal.
+   N          N    N          (N )        N
+  α∞ (ΦN (x))V∞ = V∞ ΦN (x), ω∞    = ω ◦ α∞ . (4)                       To build local operators, we further take s compactly sup-
+                                                                                                                                        3
+
+ported and normalized by ŝ(0) = 1. Such an s gener-                     implementing the redistribution of field values according to
+ates an orthonormal, compactly supported wavelet basis in                the low-pass filter hn , the scaling map αN N
+                                                                                                                       +1 decomposes
+L2 (Rd ), and the sum (5) is necessarily finite (hn is a finite          into MERA form [13, 33–35, 38]:
+                                               d
+low-pass filter [19]). We denote by sx(ε) = ε− 2 s(ε−1 (·−x))                      αNN                                 ∗
+                                                                                       +1 (·) = UN +1 (· ⊗ 1N +1\N)UN +1 ,        (9)
+the scaling function localized near x ∈ εZ at length scale
+                                             d
+                                                                         Here, · ⊗ 1N +1\N is the tensor product with the identity on
+ε, periodized on the torus TdL . With the scaling relation (5)                                                           (a)
+                                                                         the ancillary Fock space, HN +1 = HN ⊗ HN +1 , and the
+in mind, we define αN  N
+                         +1 using the low-pass filter hn :                                         N +1
+                                                                         dual quantum channel EN = TrH(a) (UN +1 (·)UN +1 ) is
+                                                                                                                      ∗
+                       − 12
+                            X
+    N
+                                hn ΦN +1 (x + nεN +1 ), (6)
+                                                                                                               N +1
+   αN +1 (ΦN (x)) = 2                                                    given by a twisted partial trace on the ancillary. From (9),
+                             n∈Zd                                        we find that UN +1 serves as MERA disentangler recovered
+and similarly for ΠN . Now, the associated semi-continuum                from the isometries, VNN+1 : HN → HN +1 , between Fock
+limit algebra A∞ can be identified with the algebra gener-               spaces resulting from coarse-graining stability (3):
+ated by continuum fields smeared with the functions s(ε  N)
+                                                                                             Ω∞(N +1)
+                                                                                                      = VNN+1 Ω(N  )
+                                                                                                                                 (10)
+                                                       x                                                        ∞ ,
+over all scales N : The map,
+                                   Z                                     where Ω(N ∞ is the vector implementing the scaling limit
+                                                                                      )
+                              − 12
+   ΦN (x) 7→ α∞ (ΦN (x)) = εN dy Φ(y)s(ε
+                N
+                                             x
+                                               N)
+                                                  (y), (7)               ω∞ at scale N . The embedding into the continuum
+                                                                           (N )
+
+                                                                         Hilbert space H∞ can be explicitly computed from (4).
+identifies the lattice fields at scale N with the continuum              Summarizing, we observe that one layer of MERA isome-
+fields smeared with s(ε  x
+                           N)
+                              (and analogously for ΠN (x)).              tries and disentanglers is recovered from αN   N
+                                                                                                                          +1 and the
+The RG elements αN 0 defined by (6) have two intriguing
+                       N
+                                                                         scaling limit ω∞ . This structure is further elucidated by
+                                                                                          (N )
+
+properties: First, the lattice field Φ(N ) (x) at one scale is           the action of the isometries VNN+1 on coherent or Glauber
+decomposed into a linear combination of the fields at the                states, cN (f, g) = ei(ΦN (f )+ΠN (g)) Ω(N
+                                                                                                                 ∞ , using the iden-
+                                                                                                                    )
+successive scale. Second, the embedding (7) into the con-                tification (7) (see Figure 3). In this sense, our operator-
+tinuum field theory is compatible with this decomposition,
+             +1 = α∞ , realizing the correct CCR:
+  N +1     N         N
+α∞     ◦ αN
+   N               N                                                                                  UN +1
+[α∞   (ΦN (x)), α∞   (ΠN (y))] = [Φ(s(ε  x
+                                           N)
+                                              ), Π(s(ε
+                                                     y
+                                                       N)
+                                                          )] = iδx,y .
+                                                           (εN +1 )
+Furthermore, we have Φ(s(ε         N)
+                                         P
+                                 x    ) = n∈εN hn Φ(sx−nε       N +1
+                                                                     )                    N
+                                                                                         IN                          N
+                                                                                                                    IN
+                                                                                            +1                         +1
+(linearity and (5)) with an analogous formula for Π. This
+means that the lattice fields and their realization in terms of
+the continuum field have the same algebraic structure.                   FIG. 3: Illustration of the analytic MERA in d = 1 induced by
+Concrete choice of a scaling function. The simplest scal-                  the wavelet scaling maps. From bottom to top: the first layer
+ing function, χ[0,1) , corresponds to the block-spin renor-               represents the isometric embedding IN N
+                                                                                                                  +1 and the second layer
+malization (6) (see Figure 1). By taking a more regular                  represents the action of the (dis)entangler UN +1 at scale N + 1.
+scaling function, e.g. K s with K ≥ 2 of Daubechies’ D2K
+wavelet family, we achieve that the smeared continuum                    algebraic RG scheme produces an analytic MERA. Specif-
+momentum Π(K s(ε       x
+                         N)
+                            ) is a well-defined operator (techni-        ically, the scaling limits of free lattice ground states, which
+                                                       1
+cally s needs to be in the Sobolev space H 2 ). In addi-                 we construct below, exhibit a structure similar to an an-
+tion, the compact support of K s leads to locality in real               alytic MERA in arbitrary dimensions and off criticality
+space, i.e. the lattice fields ΦN (x), ΠN (x) can be used                [36, 44–46].
+to approximate local operators in the continuum because
+Φ(s(ε x
+        N)
+           ), Π(sx(εN ) ) are spatially localized in compact re-
+gions. In comparison with the block-spin renormaliza-                    SCALING LIMITS OF HARMONIC LATTICE SYSTEMS
+tion we trade some locality (the support of the Daubechies
+scaling function K s is larger than the support of χ[0,1) )              We are now in a position to apply the RG αN     N
+                                                                                                                           0 defined by
+
+for higher regularity improving approximations. With this                (6) to find the ground-state scaling limits of the free lattice
+price, we gain the continuum realization of ΠN (x), and                  Hamiltonian on HN :
+we recover the correlation functions and space-time sym-
+                                                                                                                               !
+                                                                             (N )
+                                                                                          X                     X
+metries (translations) in the scaling limit (see below).                  H0 = ε−1      1
+                                                                                             Π2N |x+µ2N Φ2N |x − ΦN |x ΦN |y , (11)
+                                                                                                              
+                                                                                     N 2
+Connection with multi-scale entanglement renormaliza-                                   x∈ΛN                   hx,yi⊂ΛN
+tion. Considering the embedding IN               N
+                                                  +1 (ΦN (x))       =    where µN ≥ 2d is a “mass” parameter. The ground state
+    1
+2 ΦN +1 (x) resulting from identifying ΛN as a sublat-
+  −2                                                                      (N )    (N )
+                                                                         Ω0 of H0 can be encoded into the expectation ω0 on
+                                                                                                                             (N )
+
+tice of ΛN +1 , and the Bogoliubov unitary,                              AN determined by the two-point functions:
+                                                                           (N )
+                          X                                                                            X
+   UN +1 ΦN +1 (x) =           hn ΦN +1 (x+nεN +1 )UN +1 , (8)            ω0 (ΦN (x)ΦN (y)) = (2L1N )d        1
+                                                                                                         2εN γµ (k)
+                                                                                                                    eik(x−y) , (12)
+                                                                                                                     N
+                        n∈Zd                                                                              k∈ΓN
+                                                                                                                                  4
+
+with the dispersion relation γµ2N (k) = ε−2    2
+                                          N (µN − 2d) +             and similarly for ΠN , uniformly on bounded intervals of
+2−2
+        d                                                           t ∈ R, with the free continuum Hamiltonian H on the torus
+        j=1 (1 − cos(εN kj )), and analogous formulae for
+     P
+  N
+ (N )                          (N )                                 TdL . Since γm is the free, massive relativistic dispersion
+ω0 (ΦN (x)ΠN (y)) and ω0 (ΠN (x)ΠN (y)), the latter                 relation, we know that the dynamics generated by H has
+being most singular.                                                propagation speed c = 1 and, thus, the scaling limit theory
+Scaling limit of the ground states. We choose (12) as our           satisfies Einstein causality, i.e., eitH α∞N
+                                                                                                                 (ΦN (x))e−itH and
+initial states to generate a sequence of renormalized states          isH N
+                                                                    e α∞ (ΦN (x))e       −isH
+                                                                                               commute if the support of s(ε  N)
+                                                                                                                                 at
+  (N )                                                                                                                      x
+ωM at each scale N (Figure 2). To avoid the RG-fixed                time t and the support of sy at time s are spacelike sep-
+                                                                                                    (εN )
+points µ2N = 2d (massless, unstable) and µ2N = ∞ (ultralo-          arated on the torus. A more lattice-intrinsic and model-
+cal, stable) and hit the unstable manifold of the relevant          independent way to conclude recovery of causality in the
+Φ2 -operator, we impose the renormalization condition,              scaling limit is via Lieb-Robinson bounds [28, 29]. Con-
+                  lim ε−2     2
+                        N (µN − 2d) = m ,
+                                            2
+                                                        (13)        sidering the extension of the finite-scale time translations
+                   N →∞                                                (N )       (N )         (N )
+                                                                    σt = eitH0 (·)e−itH0 to A∞ by (9), said bounds for
+for some m > 0. This leads to the massive continuum                 harmonic lattice systems [30] imply:
+dispersion, limM →∞ γµN +M (k)2 = m2 +k 2 = γm (k)2 , and
+the scaling limit (using (6) & (12), and similar for ΠN ):
+                                                                                             h               i
+                                                                                                 (N )
+                                                                                        lim σt (A), B = 0,                    (15)
+                                 X |ŝ(εN ) (k)|2                                     N →∞
+   (N )
+  ωm,∞  (ΦN (x)ΦN (y)) = (2L)1
+                               d     2εN γm (k)
+                                                  eik(x−y) , (14)
+                                 k∈Γ∞
+                                                                    exponentially fast and uniformly for |t| ≤ T with
+                                                                    (bounded) A, B ∈ A∞ localized in sets SA , SB ⊂ TdL
+where Γ∞ = Lπ Zd is the momentum space of the torus                 such that dist(x, SA ) ≥ c0 T for all x ∈ SB , for some
+TdL . Since the two-point function of the momentum ΠN               c0 > 1. Because c0 > 1, the causality implied by (15)
+is the most singular, the limit states are well defined for         is not strict likely due to a non-optimal bound on the
+scaling functions with sufficient momentum-space decay,             Lieb-Robinson velocity [28]. Another important feature
+which holds for scaling functions K s, K ≥ 2, built                 of our approximation of dynamics (or symmetries in gen-
+from Daubechies’ D2K wavelet family [19]. Formu-                    eral) is the possibility for uniform error bounds in time and
+las (14), multiplied by εN , ε−1 N respectively, agree with         within a fixed range of field and momentum amplitudes at
+the two point functions of the usual continuum mass-m               a given scale N : For the free continuum time evolution
+ground state in finite volume L of the continuum smeared            σt = eitH (·)e−itH we have [16]:
+field operators Φ(s(εx
+                       N)
+                          ), Π(s(ε
+                                 x
+                                   N)
+                                      ). Therefore, the semi-
+                                                                                                    γ (k)21 |γ (k)−γ (k)|
+continuum limit algebra A∞ can be identified with a subal-                 (N 0 )
+                                                                                                                            , (16)
+                                                                                                       m       µ 0     m
+                                                                      k(σt −σt )(A)ψk≤C sup                     N
+
+gebra of the algebra Am,L generated by the massive con-                                       k∈Γ∞
+                                                                                                           (1+εN |k|)δ
+
+tinuum free field (m > 0) on TdL , acting on the usual
+continuum Fock space. Because of localization and com-              for exponentials A = α∞
+                                                                                          N
+                                                                                            (ei(ΦN (x)+ΠN (y)) ) of fields and
+                                                                                                            −1          1
+pleteness of the wavelet basis associated with the scaling          momenta on coherent states ψ = c(εN 2 s(ε u
+                                                                                                                N)
+                                                                                                                   , εN2 s(ε
+                                                                                                                          v
+                                                                                                                             N)
+                                                                                                                                ) at
+function s [19, 41], all field operators Φ(f ), Π(g) smeared        scale N . C only depends on N, εN , m, T for |t| ≤ T , and
+with smooth compactly supported functions can be approx-            s. While the specific form of these bounds reflects the free-
+imated, in an appropriate sense, by operators from A∞ .             field situation, our general method to obtain such uniform
+Translations, dynamics, locality and Lieb-Robinson                  bounds at fixed approximation scale N is not restricted to
+bounds. Our construction provides an explicit method to             this situation (cf. conclusion).
+circumvent the no-go results of [5, 7] concerning the im-
+plementation of continuous symmetries. In particular, the
+continuousSextension of spatial translations by discrete vec-                    CONCLUSIONS AND OUTLOOK
+tors a ∈ N ΛN (dyadic translations as enforced by the
+dyadic lattice refinements) acting on A∞ to translations by         Our results show that the existence and properties of con-
+arbitrary vectors a ∈ TdL is a consequence of the manifest          tinuum limits depend decisively on the choice of a renor-
+continuous translations invariance of the two-point func-           malization scheme. Correctly choosing the initial states al-
+tion (14), and the generators of translations are the usual         lows us to reconstruct the continuum field theory from the
+momentum operators. The thermodynamical limit of (14),              lattice approximation through the semi-continuum limit.
+L → ∞, exists by a Riemann-sum argument and yields the              For the free massive scalar field, our renormalization
+two-point functions of the free, massive vacuum in infinite         scheme, given by compactly supported wavelets, yields
+volume (see [16]), which is fully Poincaré invariant. Let          continuous spacetime translations, avoiding the apparent
+us also explicitly address the convergence of the lattice dy-       no-go results stated in [5, 7]. Obtaining a similar conver-
+                                           (N )
+namics generated by the Hamiltonian H0 of (11) to their             gence statement for Lorentz transformations or even con-
+continuum limit: From γµN → γm we deduce                            formal transformations requires further work [17]. Apart
+    0
+ N itH0  N
+          (N 0 )
+                      (N )       N 0 →∞                             from the question of approximation of symmetries, our
+V∞ e    αN 0 (ΦN (x))Ω∞    → eitH V∞
+                                   N
+                                     ΦN (x)Ω(N
+                                            ∞ ,
+                                               )
+                                                                    method proves ((14) and (16)) that time-dependent and
+                                                                                                                                  5
+
+spatially translated correlation functions of the continuum
+field theory for any insertions of fields and momenta, AN =
+ΦN (x1 )...ΠN (xn ) and BN = ΦN (xn+1 )...ΠN (xn+m ), at
+                                                                  [1] R. Fernández, J. Fröhlich, and A. D. Sokal, Random walks,
+any scale N are approximated by the correlation functions             critical phenomena, and triviality in quantum field theory,
+of the lattice models (suppressing scaling maps αN N
+                                                     0 , α∞ ):
+                                                          N
+                                                                      Texts and Monographs in Physics (Springer, Berlin, 1992).
+                                                                  [2] S. Duerr, Z. Fodor, J. Frison, C. Hoelbling, R. Hoffmann,
+    (N 0 )    (N 0 )                           N 0 →∞                 S. D. Katz, S. Krieg, T. Kurth, L. Lellouch, T. Lippert, K. K.
+ |ω0     (AN σ(t,x) (BN ))−ω(AN σ(t,x)(BN ))| → 0, (17)               Szabo, and G. Vulvert, Ab-Initio Determination of Light
+                                                                      Hadron Masses, Science 322, 1224 (2008).
+                                                                  [3] S. P. Jordan, K. S. M. Lee, and J. Preskill, Quantum Al-
+                       (N 0 )
+where σ(t,x) and σ(t,x) are the continuum respectively dis-           gorithms for Quantum Field Theories, Science 336, 1130
+crete spacetime translations for (t, x) ∈ R ×ΛN . We point            (2012), 1111.3633.
+out that the convergence in (17) only mildly depends on           [4] J. Glimm and A. Jaffe, Quantum Field Theory and Statisti-
+                                                                      cal Mechanics: Expositions (Birkhäuser, Boston, 1985).
+the choice of scaling function s (requiring sufficient reg-
+                                                                  [5] V. F. R. Jones, A No-Go Theorem for the Continuum Limit
+ularity). This presents a significant conceptual and pre-             of a Periodic Quantum Spin Chain, Communications in
+sumably computational difference in comparison with a re-             Mathematical Physics 357, 295 (2018).
+lated construction using wavelet theory [46] focusing on          [6] V. F. R. Jones, Scale invariant transfer matrices and Hamil-
+locality in one-particle space and relying on a continuous            tionians, Journal of Physics A: Mathematical and Theoreti-
+adaptation of the choice of scaling function to achieve a             cal 51, 104001 (2018).
+given accuracy goal for the approximation of equal-time           [7] A. Kliesch and R. Koenig, Continuum limits of homoge-
+correlation function similar to (17). An application of the           neous binary trees and the Thompson group, Physical Re-
+wavelet method to (free) lattice fermions has lead to sim-            view Letters 124, 010601 (2020).
+ilar results as those presented here [17, 47]. Our gen-           [8] T. J. Osborne and D. E. Stiegemann, Quantum fields for
+                                                                      unitary representations of Thompson’s groups F and T,
+eral framework can also include interacting lattice systems,
+                                                                      Preprint, arXiv:1903.00318 (2019).
+e.g. Φ4 -models, although we will need approximations by          [9] L. P. Kadanoff, Scaling laws for Ising models near Tc ,
+analytical and numerical expansion or perturbative meth-              Physics Physique Fizika 2, 263 (1966).
+ods [25, 48, 49]. Moreover, Lieb-Robinson bounds for an-         [10] K. G. Wilson, The renormalization group: Critical phenom-
+harmonic lattice systems [31] offer a possibility to obtain           ena and the Kondo problem, Reviews of Modern Physics 47,
+spacetime locality directly from the lattice [28, 29]. In view        773 (1975).
+of the classical results by Glimm-Jaffe and others [4] on        [11] M. E. Fisher, Renormalization group theory: Its basis
+P (Φ)-models in d = 1, our method is directly applicable              and formulation in statistical physics, Reviews of Modern
+to those using a low-pass filter implementing momentum-               Physics 70, 653 (1998).
+space cutoffs [16] thereby providing the same regularized        [12] A. Brothier and A. Stottmeister, Operator-algebraic Con-
+continuum fields as in [50], and we expect a possible ex-             struction of Gauge Theories and Jones’ Actions of Thomp-
+                                                                      son’s Groups, Communications in Mathematical Physics
+tension to the wavelet setting. Therefore, it would be in-            376, 841 (2020), https://arxiv.org/abs/1901.04940.
+teresting whether the convergence to the scaling limit can       [13] A. Brothier and A. Stottmeister, Canonical Quantization of
+be shown exploiting the results in [51] supplemented by               1+1-dimensional Yang-Mills Theory: An Operator Alge-
+explicit error bounds similar to (16).                                braic Approach, arXiv: 1907.05549 (2019).
+Helpful discussions with T. Osborne, A. Abdesselam and           [14] S. R. White and R. M. Noack, Real-space quantum
+M. Fröb are acknowledged by AS. We would also like                   renormalization groups, Physical Review Letters 68, 3487
+to thank the unknown referees for their careful consider-             (1992).
+ation of our manuscript thereby improving the clarity of         [15] S. R. White, Density matrix formulation for quantum renor-
+                                                                      malization groups, Physical review letters 69, 2863 (1992).
+the presentation. VM and GM are partially supported by
+                                                                 [16] V. Morinelli, G. Morsella, A. Stottmeister, and Y. Tanimoto,
+the European Research Council Advanced Grant 669240                   Scaling limits of lattice quantum fields by wavelets, Com-
+QUEST. AS was supported by the Humboldt Foundation                    munications in Mathematical Physics 10.1007/s00220-021-
+through a Feodor Lynen Return Fellowship. VM was tito-                04152-5 (2021), http://arxiv.org/abs/2010.11121v1.
+lare di un Assegno di Ricerca dell’Istituto Nazionale di         [17] T. J. Osborne and A. Stottmeister, Conformal field theory
+Alta Matematica (INdAM fellowship). YT is supported                   from lattice fermions, arXiv: 2107.13834 (2021).
+by the Programma per giovani ricercatori, anno 2014 “Rita        [18] W. M. Koo and H. Saleur, Representations of the Virasoro
+Levi Montalcini” of the Italian Ministry of Education, Uni-           algebra from lattice models, Nuclear Physics B 426, 459
+versity and Research. VM, GM and YT also acknowl-                     (1994), arXiv preprint hep-th/9312156.
+edge the MIUR Excellence Department Project awarded to           [19] I. Daubechies, Ten Lectures on Wavelets, CBMS-NSF Re-
+                                                                      gional Conference Series in Applied Mathematics, Vol. 61
+the Department of Mathematics, University of Rome “Tor
+                                                                      (SIAM, 1992).
+Vergata”, CUP E83C18000100006 and the University of              [20] G. Battle, Wavelets and Renormalization, Series in Approx-
+Rome “Tor Vergata” funding scheme “Beyond Borders”,                   imations and Decompositions, Vol. 10 (World World Scien-
+CUP E84I19002200005.
+                                                                                                                                      6
+
+     tific Publishing Company, 1999).                                 [35] R. N. C. Pfeifer, G. Evenbly, and G. Vidal, Entanglement
+[21] G. K. Brennen, P. Rohde, B. C. Sanders, and S. Singh, Mul-            renormalization, scale invariance, and quantum criticality,
+     tiscale quantum simulation of quantum field theory using              Physical Review A: Atomic, Molecular, and Optical Physics
+     wavelets, Physical Review A: Atomic, Molecular, and Op-               79, 040301 (2009).
+     tical Physics 92, 032315 (2015).                                 [36] G. Evenbly and S. R. White, Entanglement Renormalization
+[22] G. Evenbly and G. Vidal, Entanglement renormalization in              and Wavelets, Physical Review Letters 116, 140403 (2016).
+     free bosonic systems: real-space versus momentum-space           [37] G. Evenbly and S. R. White, Representation and design of
+     renormalization group transforms, New Journal of Physics              wavelets using unitary circuits, Physical Review A: Atomic,
+     12, 025007 (2010).                                                    Molecular, and Optical Physics 97, 052314 (2018).
+[23] M. S. Zini and Z. Wang, Conformal Field Theories as Scal-        [38] A. Milsted and T. J. Osborne, Quantum Yang-Mills theory:
+     ing Limit of Anyonic Chains, Communications in Mathe-                 An overview of a program, Physical Review D: Particles and
+     matical Physics 363, 877 (2018).                                      Fields 98, 014505 (2018).
+[24] S. R. White, Density-matrix algorithms for quantum renor-        [39] J. Kijowski, Symplectic geometry and second quantization,
+     malization groups, Physical Review B 48, 10345 (1993).                Reports on Mathematical Physics 11, 97 (1977).
+[25] U. Schollwöck, The density-matrix renormalization group,        [40] J. Kijowski and A. Okołów, A modification of the projective
+     Reviews of Modern Physics 77, 259 (2005).                             construction of quantum states for field theories, Journal of
+[26] R. Haag, Local Quantum Physics: Fields, Particles, Alge-              Mathematical Physics 58, 062303 (2017).
+     bras, 2nd ed., Texts and Monographs in Physics (Springer         [41] Y. Meyer, Wavelets and operators, Cambridge studies in ad-
+     Verlag, 1996).                                                        vanced mathematics, Vol. 37 (Cambridge University Press,
+[27] E. H. Lieb and D. W. Robinson, The finite group velocity              1989).
+     of quantum spin systems, Communications in Mathematical          [42] S. G. Mallat, Multiresolution approximations and wavelet
+     Physics 28, 425 (1972).                                               orthonormal bases of L2 (R), Transactions of the American
+[28] M. Cramer, A. Serafini, and J. Eisert, Locality of dy-                Mathematical Society 315, 69 (1989).
+     namics in general harmonic quantum systems, in Quan-             [43] Y. Meyer, Principe d’incertitude, bases hilbertiennes et
+     tum information and many body quantum systems, Publi-                 algebres d’operateurs, in Séminaire Bourbaki : Vol-
+     cations of the Scuola Normale Superiore, CRM, Vol. 8,                 ume 1985/86, Exposés 651-668, Astérisque No. 145–146
+     edited by M. Ericsson and S. Montangero (2008) pp. 51–                (Société mathématique de France, 1987) pp. 209–223.
+     72, http://arxiv.org/abs/0803.0890.                              [44] J. Haegeman, B. Swingle, M. Walter, J. Cotler, G. Even-
+[29] T. J. Osborne, Continuum Limits of Quantum Lat-                       bly, and V. B. Scholz, Rigorous free-fermion entanglement
+     tice Systems, Preprint, arXiv:1901.06124               (2019),        renormalization from wavelet theory, Physical Review X 8,
+     http://arxiv.org/abs/1901.06124v1.                                    011003 (2018).
+[30] B. Nachtergaele, H. Raz, B. Schlein, and R. Sims, Lieb-          [45] F. Witteveen, V. Scholz, B. Swingle, and M. Walter, Quan-
+     Robinson bounds for harmonic and anharmonic lattice sys-              tum circuit approximations and entanglement renormaliza-
+     tems, Communications in Mathematical Physics 286, 1073                tion for the Dirac field in 1+1 dimensions, Preprint, arXiv:
+     (2009).                                                               1905.08821 (2019), 1905.08821v1.
+[31] B. Nachtergaele, R. Sims, and A. Young, Quasi-locality           [46] F. Witteveen and M. Walter, Wavelet construction of
+     bounds for quantum lattice systems. I. Lieb-Robinson                  bosonic entanglement renormalization circuits, SciPost
+     bounds, quasi-local maps, and spectral flow automorphisms,            Phys. 10, 143 (2021), https://arxiv.org/pdf/2004.11952v1.
+     Journal of Mathematical Physics 60, 061101 (2019).               [47] T. J. Osborne and A. Stottmeister, Quantum Simulation of
+[32] J. I. Cirac and F. Verstraete, Renormalization and tensor             Conformal Field Theory, arXiv: 2109.14214 (2021).
+     product states in spin chains and lattices, Journal of Physics   [48] C. Borgs, Confinement, deconfinement and freezing in lat-
+     A: Mathematical and Theoretical 42, 504004 (2009).                    tice Yang-Mills theories with continuous time, Communica-
+[33] G. Vidal, A Class of Quantum Many-Body States That                    tions in Mathematical Physics 116, 309 (1988).
+     Can Be Efficiently Simulated, Physical Review Letters 101,       [49] D. Brydges, Lectures on the renormalisation group (Ameri-
+     110501 (2008).                                                        can Mathematical Society, 2009) Chap. 1, pp. 7–94.
+[34] G. Evenbly and G. Vidal, Algorithms for entanglement             [50] J. Glimm and A. Jaffe, A λφ42 Quantum Field Theory with-
+     renormalization, Physical Review B: Condensed Matter and              out Cutoffs. I, Physical Review 176, 1945 (1968).
+     Materials Physics 79, 144108 (2009).                             [51] J. Glimm and A. Jaffe, The λφ42 quantum field theory with-
+                                                                           out cutoffs, III. The physical vacuum, Acta Mathematica
+                                                                           125, 203 (1970).
+
