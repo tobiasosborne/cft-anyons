@@ -13,7 +13,193 @@ TRIGGER: Every \cite{}, \unchecked, or bibliographic mention added to
       discharge (Phase 3).
 -->
 
-*Stub. First population expected in `MIGRATION_PLAN.md` step P2.8.*
+## Generation metadata
+
+- Generator: `scripts/build-citation-index.py` (P2.8).
+- Source `summary.tex` SHA256: `fa4d2059f3fb577ebe9e84ace2ab0ee6ef2b6d0cec7cde60d53da7951b0bfe63`.
+- Source `references/manifest/SOURCES.md` SHA256: `6445790c3df1e47cb0af23b30fc419f29ffc57ef0866da47ca00e73263ad0878`.
+- AF externals source (pre-Phase-7 sibling): `/home/tobiasosborne/Projects/cft-anyons-deprecated/af/master/externals` (5 externals at run time).
+- AF entries reference the sibling repo `/home/tobiasosborne/Projects/cft-anyons-deprecated` and will need refreshing post-Phase-7 import.
+- `\unchecked` macros in summary.tex: 26 total (lines 37, 53, 101, 497, 1734, 1769, 1789, 1866, 2300, 2302, 2304, 2305, 2307, 2309, 2310, 2380, 2437, 2461, 2465, 2468, 2469, 2471, 2474, 2477, 2479, 2480). One is the macro definition (`\newcommand`); the rest flag citations or claims.
+- Re-run command: `python3 scripts/build-citation-index.py`.
+
+## Citation atom unit
+
+summary.tex has no formal LaTeX bibliography: no `\bibitem`, no `\begin{thebibliography}`, no `\cite{}` macros. External references appear as inline prose attributions flagged with the project-defined `\unchecked` macro (defined at `summary.tex:37`).
+
+The canonical atom set is the explicit enumeration at `summary.tex:2458-2481` (the section ``External references mentioned (all unchecked)''), which lists every external reference the author intends to be tracked, plus one extra inline-only atom ((G_2)_1) called out elsewhere. One CITATION_INDEX entry per logical reference, with all summary.tex line numbers where it appears recorded as back-references. This deduplicates the 26 `\unchecked` macros and the various inline prose mentions into 9 logical citations.
+
+Per-citation discharge status is one of: `discharged` (local PDF in `references/` present); `partial` (literature DB record or AF node present, no local PDF); `undischarged` (no source). This is **citation-provenance** status only — *mathematical-claim* discharge (does the source actually support the claim?) is Phase 3.
+
+## Summary table
+
+| Slug | Discharge | references/ (SRC-*) | literature/ (paper id / bib_key) | AF nodes | summary.tex lines |
+|---|---|---|---|---|---|
+| `koo-saleur` | partial | — | paper#590 | — | 1729, 1731, 1737, 1768, 2302, 2314, 2375, 2377, 2381, 2446, 2464, 2466 |
+| `osborne-stottmeister` | discharged | SRC-OAR-FERMIONS, SRC-OAR-WAVELETS, SRC-OSBORNE-CONTINUUM | Stottmeister2022Anyon, paper#520, paper#521 | — | 2303, 2381, 2446, 2466 |
+| `pasquier` | undischarged | — | — | — | 2305, 2453, 2469 |
+| `huse` | undischarged | — | — | — | 2306, 2307, 2453, 2454, 2470 |
+| `frs` | undischarged | — | — | — | 100, 497, 515, 2308, 2451, 2472 |
+| `feiguin-golden-chain` | discharged | SRC-GOLDEN-CHAIN | FeiguinTrebstLudwigTroyerKitaevWangFreedman2007, Trebst2008 | — | 1860, 2274, 2444, 2475 |
+| `anyonic-mera` | undischarged | — | — | — | 2310 |
+| `string-net` | discharged | SRC-STRING-NET | paper#324 | — | 1304, 2480 |
+| `g2-1-chiral-cft` | undischarged | — | — | — | 1858, 1865, 1867, 1888, 1944, 2272, 2442 |
+
+## Per-citation entries
+
+Schema: each entry follows the per-citation schema declared previously in this file (see ``Per-citation schema'' section below). Sorted alphabetically by slug for determinism.
+
+### `anyonic-mera` — ``Anyonic MERA literature'' — charge-compatible MERA tensors, scaling-superoperator language
+
+**summary.tex location(s):** lines 2310
+  (canonical enumeration entry at `summary.tex:2478`)
+**Currently flagged:** `\unchecked` (per summary.tex's blanket
+  `Every external reference in this document is flagged \unchecked`
+  declaration at line 2437).
+**Local PDF in `references/`:** none
+**Literature DB record (`literature/db/papers.sqlite`):** none
+**Lean proof:** none (Phase 5 import pending).
+**AF node:** none (mapping deferred to Phase 7 import).
+**Discharge status:** undischarged
+**Notes:** Bibliographic pointer with no named source. summary.tex defers to a body of literature without specific attribution. No local PDF; the lit DB has no paper indexed simultaneously under MERA and anyonic-chain keywords.
+
+### `feiguin-golden-chain` — Feiguin et al.\ (2007) and follow-ups — golden-chain Fibonacci antiferromagnetic continuum at tricritical Ising M(4,5), c=7/10
+
+**summary.tex location(s):** lines 1860, 2274, 2444, 2475
+  (canonical enumeration entry at `summary.tex:2475`)
+**Currently flagged:** `\unchecked` (per summary.tex's blanket
+  `Every external reference in this document is flagged \unchecked`
+  declaration at line 2437).
+**Local PDF in `references/`:** `SRC-GOLDEN-CHAIN`
+  - `SRC-GOLDEN-CHAIN` → `references/GoldenChainFeiguinEtAl.pdf` (extracted: `references/text/GoldenChainFeiguinEtAl.txt`)
+**Literature DB record (`literature/db/papers.sqlite`):**
+  - `FeiguinTrebstLudwigTroyerKitaevWangFreedman2007` (id=31, 2006 arXiv:cond-mat/0612341) — Feiguin, Trebst, Ludwig, Troyer, Kitaev, Wang, Freedman: *Interacting anyons in topological quantum liquids: The golden chain*
+  - `Trebst2008` (id=36, 2008 arXiv:0801.4602) — Trebst, Ardonne, Feiguin, Huse, Ludwig, Troyer: *Collective states of interacting Fibonacci anyons*
+**Lean proof:** none (Phase 5 import pending).
+**AF node:** none (mapping deferred to Phase 7 import).
+**Discharge status:** discharged
+**Notes:** Local PDF present (SRC-GOLDEN-CHAIN). summary.tex Warning warn:fibCFTs (line 1851) distinguishes the (G_2)_1 chiral CFT (h_tau=2/5) from the M(4,5) tricritical Ising scenario.
+
+### `frs` — Fjelstad, Fuchs, Runkel, Schweigert (``FRS'') — full RCFT correlators from a special Frobenius algebra; A = 1 in the Cardy case
+
+**summary.tex location(s):** lines 100, 497, 515, 2308, 2451, 2472
+  (canonical enumeration entry at `summary.tex:2472`)
+**Currently flagged:** `\unchecked` (per summary.tex's blanket
+  `Every external reference in this document is flagged \unchecked`
+  declaration at line 2437).
+**Local PDF in `references/`:** none
+**Literature DB record (`literature/db/papers.sqlite`):** none
+**Lean proof:** none (Phase 5 import pending).
+**AF node:** none (mapping deferred to Phase 7 import).
+**Discharge status:** undischarged
+**Notes:** Per CLAUDE.md Hallucination-risk callouts: no local source. summary.tex's warn:not-Frobenius (line 511) clarifies that FRS is retained as analogy not equivalence; dagger-special != Frobenius-special.
+
+### `g2-1-chiral-cft` — (G_2)_1 chiral CFT — c=14/5, primary h_tau=2/5; cited as the simplest chiral CFT with Fibonacci modular data
+
+**summary.tex location(s):** lines 1858, 1865, 1867, 1888, 1944, 2272, 2442
+  (canonical enumeration entry at `summary.tex:1858`)
+**Currently flagged:** `\unchecked` (per summary.tex's blanket
+  `Every external reference in this document is flagged \unchecked`
+  declaration at line 2437).
+**Local PDF in `references/`:** none
+**Literature DB record (`literature/db/papers.sqlite`):** none
+**Lean proof:** none (Phase 5 import pending).
+**AF node:** none (mapping deferred to Phase 7 import).
+**Discharge status:** undischarged
+**Notes:** Per CLAUDE.md Hallucination-risk callouts: (G_2)_1 has no local PDF; flagged in summary.tex warn:fibCFTs (line 1851) and called out in the Reference status section's Stage~2 question list (line 2442). No bibliographic attribution beyond ``standard''.
+
+### `huse` — Huse — identification of ABF critical points with Friedan--Qiu--Shenker unitary minimal series M(m, m+1)
+
+**summary.tex location(s):** lines 2306, 2307, 2453, 2454, 2470
+  (canonical enumeration entry at `summary.tex:2470`)
+**Currently flagged:** `\unchecked` (per summary.tex's blanket
+  `Every external reference in this document is flagged \unchecked`
+  declaration at line 2437).
+**Local PDF in `references/`:** none
+**Literature DB record (`literature/db/papers.sqlite`):** none
+**Lean proof:** none (Phase 5 import pending).
+**AF node:** none (mapping deferred to Phase 7 import).
+**Discharge status:** undischarged
+**Notes:** Per CLAUDE.md Hallucination-risk callouts: no local source for either the Huse identification or the Friedan-Qiu-Shenker original. Listed in acquisition queue.
+
+### `koo-saleur` — Koo, Saleur — lattice Virasoro approximants from XXZ/RSOS / TL chains
+
+**summary.tex location(s):** lines 1729, 1731, 1737, 1768, 2302, 2314, 2375, 2377, 2381, 2446, 2464, 2466
+  (canonical enumeration entry at `summary.tex:2464`)
+**Currently flagged:** `\unchecked` (per summary.tex's blanket
+  `Every external reference in this document is flagged \unchecked`
+  declaration at line 2437).
+**Local PDF in `references/`:** none
+**Literature DB record (`literature/db/papers.sqlite`):**
+  - `paper#590` (id=590, 2017 arXiv:1706.01436) — : *Extraction of conformal data in critical quantum spin chains using the Koo-Saleur formula*
+**Lean proof:** none (Phase 5 import pending).
+**AF node:** none (mapping deferred to Phase 7 import).
+**Discharge status:** partial
+**Notes:** Original 1994 paper has no local PDF (acquisition queue, RESEARCH_NOTES). Lit DB has the 2017 follow-up applying the formula. Convergence results referenced here are flagged in summary.tex Conjecture conj:KS.
+
+### `osborne-stottmeister` — Osborne, Stottmeister — convergence of Koo--Saleur approximants in the scaling representation (including transverse-field Ising)
+
+**summary.tex location(s):** lines 2303, 2381, 2446, 2466
+  (canonical enumeration entry at `summary.tex:2466`)
+**Currently flagged:** `\unchecked` (per summary.tex's blanket
+  `Every external reference in this document is flagged \unchecked`
+  declaration at line 2437).
+**Local PDF in `references/`:** `SRC-OAR-FERMIONS`, `SRC-OAR-WAVELETS`, `SRC-OSBORNE-CONTINUUM`
+  - `SRC-OAR-FERMIONS` → `references/CFTFromLatticeFermions.pdf` (extracted: `references/text/CFTFromLatticeFermions.txt`)
+  - `SRC-OAR-WAVELETS` → `references/OARWavelets.pdf` (extracted: `references/text/OARWavelets.txt`)
+  - `SRC-OSBORNE-CONTINUUM` → `references/OsborneContinuumLimitsQuantumLatticeSystems.pdf` (extracted: `references/text/OsborneContinuumLimitsQuantumLatticeSystems.txt`)
+**Literature DB record (`literature/db/papers.sqlite`):**
+  - `Stottmeister2022Anyon` (id=38, 2022 arXiv:2201.11562) — Stottmeister: *Anyon braiding and the renormalization group*
+  - `paper#520` (id=520, 2020 arXiv:2002.01442) — Alexander Stottmeister, Vincenzo Morinelli, Gerardo Morsella, Yoh Tanimoto: *Operator-algebraic renormalization and wavelets*
+  - `paper#521` (id=521, 2021 arXiv:2107.13834) — T. Osborne, Alexander Stottmeister: *Conformal field theory from lattice fermions*
+**Lean proof:** none (Phase 5 import pending).
+**AF node:** none (mapping deferred to Phase 7 import).
+**Discharge status:** discharged
+**Notes:** Local PDFs cover the OAR / wavelets and lattice-fermion-CFT pieces. The specific dense-Ising Koo-Saleur convergence statement summary.tex asserts (conj:KS) requires per-claim discharge in Phase 3.
+
+### `pasquier` — Pasquier — ADE lattice models / RSOS height models
+
+**summary.tex location(s):** lines 2305, 2453, 2469
+  (canonical enumeration entry at `summary.tex:2469`)
+**Currently flagged:** `\unchecked` (per summary.tex's blanket
+  `Every external reference in this document is flagged \unchecked`
+  declaration at line 2437).
+**Local PDF in `references/`:** none
+**Literature DB record (`literature/db/papers.sqlite`):** none
+**Lean proof:** none (Phase 5 import pending).
+**AF node:** none (mapping deferred to Phase 7 import).
+**Discharge status:** undischarged
+**Notes:** Per CLAUDE.md Hallucination-risk callouts: no local source. Pasquier 1987 ADE lattice models are in the acquisition queue.
+
+### `string-net` — String-net fixed-point wavefunction intuition (Levin--Wen)
+
+**summary.tex location(s):** lines 1304, 2480
+  (canonical enumeration entry at `summary.tex:2480`)
+**Currently flagged:** `\unchecked` (per summary.tex's blanket
+  `Every external reference in this document is flagged \unchecked`
+  declaration at line 2437).
+**Local PDF in `references/`:** `SRC-STRING-NET`
+  - `SRC-STRING-NET` → `references/StringNetCondMat0510613.pdf` (extracted: `references/text/StringNetCondMat0510613.txt`)
+**Literature DB record (`literature/db/papers.sqlite`):**
+  - `paper#324` (id=324, 2005 arXiv:cond-mat/0404617) — : *String-net condensation: A physical mechanism for topological phases*
+**Lean proof:** none (Phase 5 import pending).
+**AF node:** none (mapping deferred to Phase 7 import).
+**Discharge status:** discharged
+**Notes:** Local PDF present (SRC-STRING-NET, Levin-Wen string-net condensation cond-mat/0510613).
+
+## AF externals not mapped to a citation atom
+
+The following AF nodes exist in the sibling repo's `/home/tobiasosborne/Projects/cft-anyons-deprecated/af/master/externals` directory but do not attach to any citation atom above. They typically discharge internal mathematical facts (F-matrix entries, golden ratio, fusion-tree basis identities) used in summary.tex without bibliographic attribution — i.e., they are **fact-discharge** AF nodes rather than **citation-discharge** nodes. Listed here for completeness; Phase 7 will revisit whether any of these should be promoted to citation atoms.
+
+| AF node id | Name | Source |
+|---|---|---|
+| `1d3850ad49490ed9` | Master provenance ledger | MASTER_PROVENANCE.md; project claim ledger and acceptance gate |
+| `25219171cfc535b9` | Source manifest | references/manifest/SOURCES.md; local source manifest with SHA256 hashes and extracted-text paths |
+| `478d5e0abc028c88` | Trebst Fibonacci F matrix local text | references/text/FibonacciAnyonModels.txt:297-304 displays F_tau^{tau tau tau} with entries phi^-1, phi^-1/2, -phi^-1 and… |
+| `6e701135c915e3a7` | Penneys binary fusion-tree basis and Fibonacci distinct-simple relation | references/text/PenneysUnitaryFusionCategories.md:532 fixes orthogonal bases; :610 gives Fib simple objects and tau tens… |
+| `c52680400f530ad7` | Fibonacci golden ratio local text | references/text/FibonacciAnyonModels.txt:304 and references/text/TrebstShortIntroductionFibonacciAnyons.txt:325 state wh… |
+
+---
 
 ## Per-citation schema
 
@@ -28,3 +214,4 @@ TRIGGER: Every \cite{}, \unchecked, or bibliographic mention added to
 **Discharge status:** discharged | partial | undischarged
 **Notes:**
 ```
+
