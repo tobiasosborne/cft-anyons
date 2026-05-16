@@ -25,7 +25,14 @@ Read order for any task:
 6. `stocktake/README.md` *only* if you need the inheritance picture from
    the three source projects
 
-If you have not read 1–3, you must refuse to add mathematical content.
+If you have not read 1–4, you must refuse to add mathematical content.
+(Per PRD's hardening: this gate is enforced by filing a bd issue
+blocked on "Pre-read PRD/GLOSSARY/CONVENTIONS/CLAUDE.md required"
+rather than silently skipping work. "Mathematical content" includes
+new claims, definitions, lemmas, proofs, equations, F-matrix entries,
+gauge choices, citation footnotes, or prose asserting any of these.
+Phase-0 exception: while GLOSSARY is empty, adding GLOSSARY entries
+IS the permitted form of mathematical-content addition.)
 
 ---
 
