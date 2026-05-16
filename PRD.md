@@ -4,16 +4,18 @@
 ROLE: Entry-point document. First thing any new agent reads. Defines mission,
       scope, canonical artifacts, read order, validation methodology, stop
       conditions, known limitations, pre-read warnings.
-UPDATE POLICY: Three planned refreshes — v0 (P0.8, this), v1 (P1.11 after
-      GLOSSARY + CONVENTIONS exist), final (P11.4). Out-of-schedule
+UPDATE POLICY: Three planned refreshes — v0 (P0.8), v1 (P1.11 after
+      GLOSSARY + CONVENTIONS exist, this), final (P11.4). Out-of-schedule
       substantive edits require hostile-review-gated commits per CLAUDE.md
       Rule 4.
 TRIGGER: Any change to mission, scope, canonical-artifacts list, read order,
       methodology, pre-read warnings, or known limitations.
 -->
 
-**Version: v0 (drafted P0.8, hostile-reviewed P0.9, 2026-05-16). Status:
-scaffold; Phase 0 of MIGRATION_PLAN.md in progress.**
+**Version: v1 (P1.11 refresh, 2026-05-16). Status: Phase 1 (definitional
+bedrock) complete; Phase 2 (provenance infrastructure / validator imports)
+unblocked pending user read-and-approve of the P1.9 audit at
+`stocktake/reports/opus-glossary-audit.md` (verdict: APPROVE FOR PHASE 2).**
 
 If your question is about *scope* / *what*, this PRD is canonical.
 For *how to work* / *process*, see `CLAUDE.md`.
@@ -29,11 +31,14 @@ spaces of mobile anyons modelled by unitary fusion categories, with
 isometric refinement maps to OAR (operator-algebraic-renormalisation)
 continuum limits. The Hilbert spaces are realised through **three
 equivalent framings** (partition `H_P^W`, mobile-Fock, N-tensor
-`H_N^W`) — see the translation map (to be built at MIGRATION_PLAN P1.4)
-in GLOSSARY. The repo consolidates three prior projects whose combined
-value was significant but whose definitions had drifted silently. The
-dominant work-mode here is **accretive consolidation**: add knowledge
-in small, validated, atomic steps; harmonise on the way.
+`H_N^W`) — translation map locked at MIGRATION_PLAN P1.5; see
+GLOSSARY entries [[def:HP]], [[def:Hlatt]], [[def:indlim]],
+[[def:mobile-Fock]] and the bridge synthesis at
+`stocktake/reports/opus-hilbert-bridge.md`. The repo consolidates
+three prior projects whose combined value was significant but whose
+definitions had drifted silently. The dominant work-mode here is
+**accretive consolidation**: add knowledge in small, validated, atomic
+steps; harmonise on the way.
 
 ## Read order for any agent
 
@@ -57,9 +62,13 @@ these. "Refuse" means: file a bd issue describing the proposed work,
 mark it blocked on "Pre-read PRD/GLOSSARY/CONVENTIONS/CLAUDE.md
 required," and stop.
 
-**Phase-0 exception (lifts at P1.10):** while GLOSSARY is empty,
-adding GLOSSARY entries IS the permitted form of mathematical-content
-addition, subject to per-entry validation per MIGRATION_PLAN P1.1.
+**Phase-0 exception (lifted at P1.10 — historical note):** the v0 PRD
+allowed adding GLOSSARY entries as the permitted form of
+mathematical-content addition while GLOSSARY was empty (P1.1 era).
+GLOSSARY is now populated (49 entries, P1.9 audit: APPROVE FOR
+PHASE 2); the exception no longer applies. New GLOSSARY/CONVENTIONS
+entries from external imports (Phase 5 / Phase 8) follow Law 1 + Rule
+11 normally.
 
 ## Scope: in
 
@@ -85,24 +94,64 @@ additions (CONVENTIONS, ERRATA, translation maps) are governed by
 
 ## Canonical artifacts
 
-**Status (Phase 0):** most artifacts below are scaffolded stubs (see
-`MIGRATION_LOG.md` for population status). **"GLOSSARY entry absent"
-means STOP and ask, not "free to invent."**
+**Status (Phase 1 complete):** `GLOSSARY.md`, `CONVENTIONS.md`,
+`ERRATA.md`, `PROVENANCE.md` are now populated baselines (P1.1–P1.10);
+the P1.9 audit verified definitional integrity end-to-end. `summary.tex`
+is the inherited baseline (unchanged in Phase 1; pre-baseline
+`lem:binary-Z` fix recorded in ERRATA). `CITATION_INDEX.md` remains
+pre-Phase-3 (discharge of `\unchecked` flags scheduled there).
+`references/`, `literature/`, `Formalisation/`, `src/MobileAnyons/`,
+`scripts/` remain pre-Phase-2/5/8 (skeleton only). **"GLOSSARY entry
+absent" means STOP and ask, not "free to invent."**
 
 - **`summary.tex`** — guiding conceptual mathematical statement. Edits ONLY via `ERRATA.md`-tracked atomic commits.
-- **`GLOSSARY.md`** — every term used in canonical material is defined here.
-- **`CONVENTIONS.md`** — vacuum index, F-matrix gauge, dagger, indexing.
-- **`ERRATA.md`** — append-only log of corrections to `summary.tex`.
+- **`GLOSSARY.md`** — 49 entries (48 §A from `summary.tex` + 1 §B for MMA's mobile-Fock formulation). Every term used in canonical material is defined here.
+- **`CONVENTIONS.md`** — 10 lettered entries (a)–(j): vacuum index, F-matrix gauge, dagger, multiplicity-free, complex conjugation, TikZ (deferred), particle-number disambiguation, local cell object Q, fusion-tree ordering, N=0 boundary.
+- **`ERRATA.md`** — append-only log of corrections to `summary.tex` (1 entry at Phase 1 close: `lem:binary-Z`).
+- **`PROVENANCE.md`** — every canonical / imported file with source path + SHA256 + provenance chain. Phase 1 baseline populated at P1.10.
 - **`RESEARCH_NOTES.md`** — open questions, deferred decisions, acquisition queue.
 - **`MIGRATION_LOG.md`** — per-step commit log of the consolidation.
-- **`PROVENANCE.md`** — every imported file with source path + SHA256 at import.
-- **`CITATION_INDEX.md`** — every `summary.tex` citation → discharge status.
+- **`CITATION_INDEX.md`** — every `summary.tex` citation → discharge status. Pre-Phase-3.
 - **`Formalisation/`** — Lean 4. Invariants (post-Phase 5): `lake build` passes; zero `sorry`; zero `axiom`.
 - **`src/MobileAnyons/`** — Julia computational backend. Invariant (post-Phase 8): `Pkg.test()` passes.
 - **`scripts/{julia,wolfram}/`** — independent triple-check scripts, one per Lean module.
 - **`references/`** — local PDFs with SHA256-verified extractions; `references/manifest/SOURCES.md` is the index.
 - **`literature/`** — bibliography DB (630 papers, SQLite-backed).
 - **`reviews/`** — hostile audits of canonical content.
+
+### GLOSSARY entries to internalise, by task class
+
+When starting a task, an agent must internalise the GLOSSARY entries
+load-bearing for that task class (these are recommendations; the
+Law 1 / Rule 11 obligation is on every term you use, not just these):
+
+- **Mathematical content additions (any phase):** [[def:fuscat]],
+  [[def:HP]], [[def:Hlatt]], [[def:indlim]], [[def:mobile-Fock]],
+  [[def:partition]], [[def:refmap]], [[def:Q]], [[def:fsymbol]],
+  [[def:algobj]], [[conv:basics]] plus the CONVENTIONS items the
+  content depends on (vacuum index [P1.6(a)], F-matrix gauge
+  [P1.6(b)], multiplicity-free assumption [P1.6(d)]).
+- **Lean migration (Phase 5):** [[def:fuscat]], [[def:Q]], [[def:fib]],
+  [[def:phi]], [[def:fib-F]], [[def:fib-mult]], [[def:coassoc]],
+  [[def:PF]], [[def:ising]], [[def:ising-F]], [[def:isingcft]],
+  [[def:primary]] (Fibonacci weights), [[def:RG-amp]] (NoMixing
+  framework), [[def:polar-repair]] (Mathlib gap — `B^{-1/2}` is
+  assumed given as input).
+- **Julia migration (Phase 8):** [[def:partition]] (←`LabelledConfig`),
+  [[def:refmap]] (←`normalized_product_isometry`), [[def:TL-cat]]
+  (←`interaction_hamiltonian` Σ P_j), [[def:fsymbol]] (←`FSymbolCache`,
+  involutory gauge), [[def:fib-F]] / [[def:ising-F]],
+  [[def:splitbasis]] (LB-1 caveat in `enumerate_fusion_trees`).
+- **Triple-check scripts (Phase 7 / Phase 9):** task-specific; choose
+  per Lean module mirrored.
+- **Literature work (Phase 2 / Phase 3):** [[conv:acro]] for the
+  `\unchecked` FRS flag context; consult `CITATION_INDEX.md` for the
+  per-`\unchecked` discharge status; literature DB schema in
+  `literature/db/papers.sqlite`.
+
+Per Law 1 (CLAUDE.md): every term you actually use in new content
+must already be in GLOSSARY — the above lists are starting-points, not
+exhaustive permissions.
 
 ## Validation gates for new content
 
@@ -113,6 +162,32 @@ Five gates (M / D / C / R / I) defined in `stocktake/MIGRATION_PLAN.md` §0.3.
 - **C** cross-reference (≥2 independent sources agree) — any newly canonical claim
 - **R** reviewer subagent (independent of the author; required for substantive additions = any commit adding mathematical content, code, conventions, GLOSSARY entries, ERRATA entries, new sections, or substantive prose; see CLAUDE.md Rule 4 for tier-based effort budgets and the mechanical-exemption list)
 - **I** idempotent — any file move or hash-tracked import
+
+**Concrete examples from Phase 1** (see `MIGRATION_LOG.md` for the full
+per-step record):
+
+- **R-gate audit** (definitional bedrock): the P1.9 audit at
+  `stocktake/reports/opus-glossary-audit.md` is the canonical example.
+  A hostile Opus 4.7 subagent read GLOSSARY + CONVENTIONS end-to-end
+  and produced a verdict (APPROVE FOR PHASE 2 with 8 MINOR/NIT findings,
+  5 MINOR applied in the same commit per the review→fix→atomic-commit
+  pattern of CLAUDE.md Rule 4).
+- **D-gate** (byte-verbatim canonical bodies): every §A GLOSSARY entry
+  has its `**Canonical:**` LaTeX block matched against the cited
+  `summary.tex:<line>`. P1.7/P1.8/P1.9 reviewers each independently
+  verified 48/48 PASS. The replay logic is reproducible: walk each
+  `## def:` / `## conv:` header in §A, parse its `**Canonical:**` LaTeX
+  block, compare against `summary.tex:<source-line>` from the entry's
+  `**Source:**` field.
+- **C-gate** (≥2 source agreement): the `lem:binary-Z` ERRATA entry
+  (P1.2) cites three independent reviewers concurring (R1 Issue 1,
+  R2 Issue 11, R3 Issue 17); the bridge report `opus-hilbert-bridge.md`
+  (P1.4-early) cross-references `summary.tex` § 2, MMA's `finegraining.tex`
+  + `hilbert.jl`, and CAD's `ProjectDefinitions.lean` per Translation
+  rule.
+- **R-gate per content step**: every substantive P-step (P1.1 / P1.2 /
+  P1.3 / P1.5 / P1.6 / P1.7 / P1.8) carried an Opus 4.7 reviewer
+  subagent verdict; reports at `stocktake/reports/opus-*-review.md`.
 
 ## Commit discipline
 
@@ -127,15 +202,22 @@ mutation-prove the tests catch regressions). See CLAUDE.md Rule 5.
 
 Before touching imported content, internalise CLAUDE.md's Hallucination-risk
 callouts. Specifically: **vacuum-index convention** is the historical
-STL-1 bug across MMA archive/v0; the **F-matrix gauge** is involutory
-in `TensorCategories.jl` and unitary in `summary.tex` (translation
-required); **"coassociativity"** is overloaded (scalar version proved in
-CAD Lean vs categorical `(η⊗id)η = (id⊗η)η` unproven anywhere);
+STL-1 bug across MMA archive/v0 (locked at [P1.6(a)]); the **F-matrix
+gauge** is involutory in `TensorCategories.jl` and unitary in
+`summary.tex` (translation rule at [P1.6(b)]); **"coassociativity"** is
+overloaded (scalar version proved in CAD Lean vs categorical
+`(η⊗id)η = (id⊗η)η` unproven anywhere — see [[def:coassoc]] Notes);
 **"dagger-special" ≠ "Frobenius-special"** (an earlier `summary.tex`
-draft confused them; do not regress); the **three Hilbert-space framings**
-require an explicit translation map (P1.4); `archive/chats/` is deep
-storage — do not read; the **Lean 0-sorry / 0-axiom invariant** is
-load-bearing.
+draft confused them; do not regress — see [[def:algobj]] Notes); the
+**three Hilbert-space framings** are reconciled per `opus-hilbert-bridge.md`
+and the four entries [[def:HP]] / [[def:Hlatt]] / [[def:indlim]] /
+[[def:mobile-Fock]] (P1.5); `archive/chats/` is deep storage — do not
+read; the **Lean 0-sorry / 0-axiom invariant** is load-bearing.
+
+The P1.9 audit verified that **all 8 CLAUDE.md hallucination-risk
+callouts** fire where expected in GLOSSARY / CONVENTIONS — see
+`stocktake/reports/opus-glossary-audit.md` Priority 5 for the
+callout-by-callout firing-site index.
 
 ## Stop conditions
 
@@ -160,12 +242,27 @@ the consolidation plan.
 ## Known limitations
 
 - Categorical coassociativity not formalised anywhere; scalar version
-  proved in CAD Lean and to be migrated in Phase 5.
-- Koo–Saleur lattice-Virasoro convergence stated as conjecture; not formalised.
+  proved in CAD Lean and to be migrated in Phase 5. See [[def:coassoc]]
+  Notes for the scalar-vs-categorical disambiguation (CLAUDE.md
+  hallucination-risk callout #3).
+- Koo–Saleur lattice-Virasoro convergence stated as conjecture; not
+  formalised. The body of [[def:KS-Ln]] preserves the verbatim
+  `\unchecked` token from `summary.tex` per `CITATION_INDEX.md`.
 - No local PDF for FRS, Pasquier, Huse, Koo–Saleur 1994 original,
   (G₂)₁ — see `RESEARCH_NOTES.md` acquisition queue.
-- Three Hilbert-space framings: translation map to be built at P1.4
-  (currently absent).
+- Three Hilbert-space framings: translation map locked at P1.5
+  (`40c0a22`); see [[def:HP]], [[def:Hlatt]], [[def:indlim]],
+  [[def:mobile-Fock]] and `stocktake/reports/opus-hilbert-bridge.md`.
+- LB-1 (latent): MMA `enumerate_fusion_trees` undercounts the basis
+  for fusion categories with `dim Hom(a⊗b, c) > 1` — bd issue
+  `cft-anyons-q6h`. Latent for present scope (all three currently-used
+  categories are multiplicity-free); blocks any future extension to
+  e.g. extended Haagerup. See [[def:splitbasis]] Notes.
+- LB-2/LB-3/LB-4 (Phase-2/8-gated): follow-ups filed during Phase 1
+  review — `cft-anyons-2ae` (add MMA test for dense Ising c=1/2),
+  `cft-anyons-pvu` (audit GLOSSARY for fabricated TensorCategories
+  API names), `cft-anyons-d7w` (re-validate
+  `archive/mma-archive-v0-snapshot/` cited paths post-import).
 - Continuum CFT spectrum / full identification of continuum QFT: open
   science question.
 - See `CITATION_INDEX.md` for `\unchecked` flag status.
