@@ -21,3 +21,4 @@ import Formalisation.LinearAlgebra.Component
 import Formalisation.LinearAlgebra.NoMixing
 import Formalisation.LinearAlgebra.FineGraining
 import Formalisation.LinearAlgebra.CoherentSystem
+import Formalisation.LinearAlgebra.DiagonalScaling
