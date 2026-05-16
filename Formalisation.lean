@@ -24,6 +24,7 @@ import Formalisation.Fibonacci.Coassoc
 import Formalisation.Fibonacci.FusionRules
 import Formalisation.Fibonacci.Matrix
 import Formalisation.Fibonacci.RGNoMixing
+import Formalisation.Ising.Basic
 import Formalisation.LinearAlgebra.Isometry
 import Formalisation.LinearAlgebra.Polar
 import Formalisation.LinearAlgebra.Tensor

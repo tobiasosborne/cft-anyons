@@ -227,6 +227,60 @@ collapses at that point.
 
 ---
 
+## Deferred decisions
+
+Decisions intentionally postponed during a migration step, with the
+rationale recorded so the deferral does not silently atrophy into a
+forgotten gap. Each entry: (i) what was deferred, (ii) why this step
+chose to defer, (iii) the tracking bd issue, (iv) the unblocking
+condition.
+
+Anchor naming convention: `DD-N`, monotonically incrementing.
+
+### DD-1: `isingSkeletalFusionData` instance not added to `Ising/Basic.lean`
+
+**Deferred from:** P5.15 (port `cft-anyons-deprecated/Formalisation/Ising/Basic.lean`).
+
+**What:** The GLOSSARY pre-binding for `def:ising` at `GLOSSARY.md:1279`
+flags a CAVEAT: CAD's Ising file is not connected to
+`Foundations.FiniteSkeletalFusionData` (no `isingSkeletalFusionData`
+instance analogous to `Fibonacci/FusionRules.lean::fibSkeletalFusionData`
+at body line 325 of that file). `MIGRATION_PLAN.md:226` offers either
+(a) add the connection as part of P5.15, or (b) record a follow-up task.
+Orchestrator chose option (b); this commit ports the CAD file verbatim
+and DEFERS the connection.
+
+**Why deferred (per orchestrator brief):** Consistent with the
+established Phase-5 defer-non-essential pattern
+(`cft-anyons-5tm.3` deferred decls from P5.5 + P5.6). Option (a) would
+require adding new mathematical content beyond the verbatim CAD port that
+P5.15 is scoped to.
+
+**Deferred work (estimated ~25 LOC additive in
+`Formalisation/Ising/Basic.lean`):**
+- `def isingSkeletalFusionData : Foundations.FiniteSkeletalFusionData where
+  Label := IsingLabel; unit := one; fusionMultiplicity := fusionMultiplicity;
+  leftUnit := ...; rightUnit := ...`. Both `leftUnit` and `rightUnit`
+  fields dischargeable by `fin_cases a <;> fin_cases c <;> simp
+  [fusionMultiplicity]` per the `fibSkeletalFusionData` precedent.
+- `theorem isingSkeletalFusionData_multiplicityFree`, follows from the
+  existing `fusion_multiplicity_le_one`.
+- `theorem isingSkeletalFusionData_left_total`, `_right_total`, follow
+  from `FiniteSkeletalFusionData.total_leftUnit / total_rightUnit`
+  (P5.1 SkeletalFusion.lean).
+
+**Tracking:** bd issue `cft-anyons-5tm.25` ("Add isingSkeletalFusionData
+instance to Ising/Basic.lean (P5.15 deferral)"), filed in the same commit
+as this entry.
+
+**Unblocking condition:** No external dependency. The deferred work is
+purely Lean code addition; can be undertaken at any time after P5.15
+lands. Naturally falls into a future P5.x / P5.16 cleanup pass, or can
+be batched with other Ising-block additions (e.g., the deferred
+`Ising/FSymbol.lean` realising `def:ising-F`).
+
+---
+
 ## Latent bugs in source projects
 
 ### LB-1: MMA `enumerate_fusion_trees` is incomplete for non-multiplicity-free fusion categories
