@@ -11,3 +11,4 @@
 -- zero `axiom`.
 
 import Formalisation.LinearAlgebra.Isometry
+import Formalisation.LinearAlgebra.Polar
