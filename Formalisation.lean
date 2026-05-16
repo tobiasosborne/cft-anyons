@@ -17,6 +17,7 @@ import Formalisation.Foundations.FockSpace
 import Formalisation.Foundations.ProjectDefinitions
 import Formalisation.Foundations.SkeletalFusion
 import Formalisation.Fibonacci.Basic
+import Formalisation.Fibonacci.Binary
 import Formalisation.Fibonacci.FusionRules
 import Formalisation.Fibonacci.Matrix
 import Formalisation.LinearAlgebra.Isometry
