@@ -13,3 +13,4 @@
 import Formalisation.LinearAlgebra.Isometry
 import Formalisation.LinearAlgebra.Polar
 import Formalisation.LinearAlgebra.Tensor
+import Formalisation.LinearAlgebra.TensorPower
