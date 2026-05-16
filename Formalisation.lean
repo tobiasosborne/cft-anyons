@@ -13,6 +13,7 @@
 import Formalisation.Foundations.Configurations
 import Formalisation.Foundations.ConfigurationSpace
 import Formalisation.Foundations.DirectSumCoordinates
+import Formalisation.Foundations.FockSpace
 import Formalisation.Foundations.SkeletalFusion
 import Formalisation.LinearAlgebra.Isometry
 import Formalisation.LinearAlgebra.Polar
