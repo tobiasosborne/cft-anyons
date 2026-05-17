@@ -61,11 +61,11 @@ using LinearAlgebra, Combinatorics, SparseArrays
 include("config.jl")
 include("hilbert.jl")
 include("fsymbols.jl")
-# include("operators.jl")       # P8.4: deferred to P8.5
-# include("interaction.jl")     # P8.4: deferred to P8.5
-# include("braiding.jl")        # P8.4: deferred to P8.5
-# include("paircreation.jl")    # P8.4: deferred to P8.5
-# include("wavelets.jl")        # P8.4: deferred to P8.5
+include("operators.jl")
+include("interaction.jl")
+include("braiding.jl")
+include("paircreation.jl")
+include("wavelets.jl")
 # include("finegraining.jl")    # P8.4: deferred to P8.6
 # include("virasoro.jl")        # P8.4: deferred to P8.7
 
@@ -73,13 +73,13 @@ export LabelledConfig, enumerate_configs_hc
 export FusionTree, AnyonBasis, build_basis, enumerate_fusion_trees
 export FSymbolCache, build_fsymbol_cache, f_matrix, f_symbol
 export fusion_channels, left_intermediates, right_intermediates
-# export hopping_hamiltonian, hopping_hamiltonian_sector, free_fermion_energies         # P8.4: deferred to P8.5
-# export interaction_hamiltonian, interaction_hamiltonian_sector                        # P8.4: deferred to P8.5
-# export RSymbolCache, build_rsymbol_cache, build_rsymbol_cache_manual                  # P8.4: deferred to P8.5
-# export braiding_hamiltonian, braiding_hamiltonian_sector, tv_model_spectrum           # P8.4: deferred to P8.5
-# export dual_pairs, pair_creation_operator, pair_hamiltonian                           # P8.4: deferred to P8.5
-# export daubechies_filter, one_particle_scaling_map, one_particle_scaling_map_haar     # P8.4: deferred to P8.5
-# export fine_graining_isometry_svec                                                    # P8.4: deferred to P8.5
+export hopping_hamiltonian, hopping_hamiltonian_sector, free_fermion_energies
+export interaction_hamiltonian, interaction_hamiltonian_sector
+export RSymbolCache, build_rsymbol_cache, build_rsymbol_cache_manual
+export braiding_hamiltonian, braiding_hamiltonian_sector, tv_model_spectrum
+export dual_pairs, pair_creation_operator, pair_hamiltonian
+export daubechies_filter, one_particle_scaling_map, one_particle_scaling_map_haar
+export fine_graining_isometry_svec
 # export fine_graining_isometry, trivial_embedding, normalized_product_isometry         # P8.4: deferred to P8.6
 # export categorical_determinant_isometry  # partial correction only (non-abelian)      # P8.4: deferred to P8.6
 # export fine_graining_isometry_svec  # Slater lift (single-species only)               # P8.4: deferred to P8.6 (duplicate of line 27)
