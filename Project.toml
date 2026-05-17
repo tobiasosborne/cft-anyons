@@ -1,0 +1,70 @@
+name = "MobileAnyons"
+uuid = "f8a2c3d1-4e5b-6a7c-8d9e-0f1234567890"
+version = "0.1.0"
+
+[deps]
+Combinatorics = "861a8166-3701-5b0c-9a16-15d98fcdc6aa"
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+Oscar = "f1435218-dba5-11e9-1e4d-f1a5fab5fc13"
+TensorCategories = "258c694e-7338-4d4d-b524-4851272a75cf"
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+# ============================================================
+# Package identity decision (P8.3 — added 2026-05-17)
+# ============================================================
+# Option (A) chosen: keep MMA's `name = "MobileAnyons"` + UUID
+# byte-identical. The Julia package hosted in cft-anyons IS
+# MobileAnyons — `using MobileAnyons` continues to work, and the
+# Phase-8 import preserves MMA's package identity. No fork of
+# the package identity is needed; cft-anyons absorbs MMA's
+# computational backend in-place (Options B/C — rename / strip
+# packaging — were rejected: no independent versioning required
+# and packaging semantics are wanted for `Pkg.test()`).
+# ============================================================
+# [compat] rationale (P8.0b — added 2026-05-17)
+# ============================================================
+# - TensorCategories = "0.5"
+#     TC.jl 0.5.x is MMA's tested pin. Specifically TC.jl 0.5.3
+#     (Manifest tree-sha 591655388467dd84356425f16d584319809306ec)
+#     verified at depot path /home/tobiasosborne/.julia/packages/
+#     TensorCategories/fnMHT/ — see stocktake/reports/opus-tcjl-
+#     api-audit.md (P8.0a, 3c53c60) for the 12 GLOSSARY citation
+#     sites audited (27 EXISTS / 0 FABRICATED / 3 AMBIGUOUS —
+#     all three AMBIGUOUS are the `FusionCategory` dangling-
+#     export class-name issue, bd-tracked) and
+#     stocktake/reports/opus-tcjl-conventions-bridge.md (P8.1c,
+#     5407ff5) for the 10-CONVENTIONS-letter conformance report.
+#     Gauge handling: TC.jl stores involutory F-symbols
+#     (`F^2 = I`); canonical cft-anyons convention is unitary
+#     gauge ([P1.6(b)], CONVENTIONS.md:129-184). For current
+#     Fibonacci/Ising multiplicity-free scope the storage is
+#     either involutory-and-unitary by coincidence (Ising
+#     Hadamard) or involutory-not-unitary with MMA consuming
+#     it via gauge-aware Hermitian-projector / spectral-
+#     decomposition patterns (`interaction.jl:138-167` +
+#     `braiding.jl:167-263`) that produce correct results
+#     without per-call unitary translation.
+# - Oscar = "1.6"
+#     TC.jl pulls Oscar transitively. Pinning matches MMA's pin.
+#     Oscar provides re-exports (`dim`, `matrix`, etc.) consumed
+#     by both TC.jl and MMA `src/MobileAnyons/`.
+# - julia = "1.10"
+#     LTS line for stability through Phase 9-11. Note that
+#     MMA's Manifest.toml records `julia_version = "1.12.2"`
+#     (resolver-side); the `[compat]` floor remains 1.10 to
+#     keep the LTS-compatibility commitment explicit.
+# Out-of-scope drift surfaces (flag-on-extension, not blockers
+# for Fibonacci/Ising current scope):
+#   - 3+-channel categories: TC.jl involutory storage requires
+#     the explicit Gram-orthogonalisation translation rule
+#     (gold-standard implementation at `braiding.jl:247-252`).
+#   - non-multiplicity-free categories: MMA's
+#     `enumerate_fusion_trees` has a multiplicity-collapse
+#     latent at `braiding.jl:43` and 4 other sites — LB-1,
+#     bd `cft-anyons-q6h`.
+# ============================================================
+
+[compat]
+Oscar = "1.6"
+TensorCategories = "0.5"
+julia = "1.10"
