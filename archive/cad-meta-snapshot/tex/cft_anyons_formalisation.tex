@@ -1,0 +1,1544 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{longtable}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue,
+  urlcolor=blue
+}
+
+\newtheorem{definition}{Definition}[section]
+\newtheorem{theorem}[definition]{Theorem}
+\newtheorem{lemma}[definition]{Lemma}
+\newtheorem{proposition}[definition]{Proposition}
+\newtheorem{conjecture}[definition]{Conjecture}
+\newtheorem{warning}[definition]{Warning}
+
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\Irr}{Irr}
+
+\title{Formal Definitions, Results, and Provenance for Categorical Fine Graining}
+\author{CFT Anyons Formalisation Workspace}
+\date{May 14, 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This document is the self-contained mathematical record for the
+formalisation project. Every external mathematical input is tied to a local
+source file. Every result is labelled as proved, ready for adversarial
+verification, in progress, or conjectural. A result is not accepted merely
+because it appears in the handoff document; acceptance requires local source
+provenance, a proof-tree entry in the Adversarial Proof Framework, and where
+applicable three independent checks in Lean, Julia, and WolframScript.
+\end{abstract}
+
+\tableofcontents
+
+\section{Status and Ground Rules}
+
+\begin{definition}[Acceptance gate]
+A statement is accepted only after all applicable items below have been
+recorded.
+\begin{enumerate}[label=\arabic*.]
+\item A local source string locator for every external definition, equation,
+or claim.
+\item A proof-tree node in the Adversarial Proof Framework.
+\item A Lean proof whenever the claim is within the current formal scope.
+\item A Julia check for numerical or finite examples.
+\item A WolframScript check for exact symbolic algebra when the claim is
+algebraic.
+\item A fresh adversarial verifier subagent has accepted the proof-tree node.
+\end{enumerate}
+\end{definition}
+
+\begin{warning}[Theorem targets are not theorems yet]
+Statements labelled ``target'' or ``conjecture'' are not claimed as proved.
+They are included so that the document contains the full mathematical surface
+area of the project.
+\end{warning}
+
+\section{Local Source Provenance}
+
+\begin{longtable}{p{0.23\linewidth}p{0.67\linewidth}}
+\textbf{Source identifier} & \textbf{Local source and use} \\
+\hline
+\texttt{SRC-FIB-TREBST-LOCAL} &
+\texttt{references/FibonacciAnyonModels.pdf}; extracted text in
+\texttt{references/text/FibonacciAnyonModels.txt}. Used for Fibonacci fusion
+rules, quantum dimension, the standard Fibonacci \(F\)-matrix, and finite
+Fibonacci \(R\)- and braid-matrix data. \\
+\texttt{SRC-FIB-TREBST-ARXIV} &
+\texttt{references/TrebstShortIntroductionFibonacciAnyons.pdf}; extracted
+text in \texttt{references/text/TrebstShortIntroductionFibonacciAnyons.txt}.
+Used as a second local source for the golden-ratio quantum dimension. \\
+\texttt{SRC-GOLDEN-CHAIN} &
+\texttt{references/GoldenChainFeiguinEtAl.pdf}; extracted text in
+\texttt{references/text/GoldenChainFeiguinEtAl.txt}. Used for the same
+Fibonacci \(F\)-matrix. \\
+\texttt{SRC-KZ-FIB} &
+\texttt{references/IsingLikeFibonacciAnyonsKZ.pdf}; extracted text in
+\texttt{references/text/IsingLikeFibonacciAnyonsKZ.txt}. Used for the
+conformal weight \(h_\tau=2/5\). The extracted text loses the fraction slash
+in the table row, so the row was checked visually against the local PDF page:
+the spin-1 field has \(h=2/5\). \\
+\texttt{SRC-TL-JONES} &
+\texttt{references/TemperleyLiebRootsJonesQuotient.pdf}; extracted text in
+\texttt{references/text/TemperleyLiebRootsJonesQuotient.txt}. Used for the
+Temperley--Lieb and Jones quotient background. \\
+\texttt{SRC-ISING-CHAIN} &
+\texttt{references/PoilblancOneDimensionalItinerantInteractingAnyons.pdf};
+extracted text in
+\texttt{references/text/PoilblancOneDimensionalItinerantInteractingAnyons.txt}.
+Used for Ising labels, fusion rules, and the nonchiral dimensions
+\(\Delta_\sigma=1/8\), \(\Delta_\psi=1\). \\
+\texttt{SRC-STRING-NET} &
+\texttt{references/StringNetCondMat0510613.pdf}; extracted text in
+\texttt{references/text/StringNetCondMat0510613.txt}. Used for string-net
+fixed-point data: \(F\)-symbols and quantum dimensions. \\
+\texttt{SRC-PENNEYS-UFC} &
+\texttt{references/text/PenneysUnitaryFusionCategories.md}. Used for unitary
+fusion category background, direct sums, orthogonal direct sums, and polar
+decomposition language. \\
+\texttt{SRC-DEFECT-FOCK} &
+\texttt{references/GaugingDefectsQuantumSpinSystems.pdf}; extracted text in
+\texttt{references/text/GaugingDefectsQuantumSpinSystems.txt}. Used for
+fusion category definitions, Fock-space direct sums, and fusion-tree Hilbert
+spaces. \\
+\texttt{SRC-OAR-FERMIONS} and \texttt{SRC-OAR-WAVELETS} &
+Local extracted texts in \texttt{references/text/}. Used for
+operator-algebraic renormalization and isometric wavelet refinement maps. \\
+\end{longtable}
+
+\section{Categorical Background}
+
+\begin{definition}[Fusion category, local working form]
+Over the complex numbers, a fusion category is treated as a rigid semisimple
+tensor category with finitely many isomorphism classes of simple objects and a
+simple tensor unit. The local sources are
+\texttt{references/text/GaugingDefectsQuantumSpinSystems.txt:400} and
+\texttt{:404}.
+\end{definition}
+
+\begin{definition}[Unitary fusion category, local working form]
+A unitary fusion category is a fusion category with a dagger operation on
+morphisms and a compatible unitary monoidal structure. Orthogonal direct sums
+have isometric inclusions whose adjoints are projections. The local sources
+are \texttt{references/text/PenneysUnitaryFusionCategories.md:219},
+\texttt{:319}, \texttt{:456}, and \texttt{:458}.
+\end{definition}
+
+\begin{definition}[Skeletal finite model]
+For Lean formalisation, the initial model consists of a finite type of simple
+labels, a distinguished unit label, and natural-number fusion multiplicities
+\[
+N_{ab}^{c}\in \mathbb{N}.
+\]
+The local skeletal-data source states that one chooses a finite set of simple
+objects with a distinguished unit and finite-dimensional fusion spaces. The
+Lean file \texttt{Formalisation/Foundations/SkeletalFusion.lean} formalises
+only the finite label/multiplicity skeleton with left and right unit laws:
+\[
+N_{\mathbf 1 a}^{c}=\delta_{a,c},\qquad
+N_{a\mathbf 1}^{c}=\delta_{a,c}.
+\]
+It also proves that the total unit fusion multiplicity is \(1\) on either
+side. AF node \texttt{1.2.7} has been accepted by verifier
+\texttt{verifier-finite-skeletal-fusion-data-001}. This does not construct a
+fusion category, associators, \(F\)-symbols, pentagon equations, duals,
+Hilbert morphism spaces, or categorical reconstruction.
+\end{definition}
+
+\begin{definition}[Local occupation object]
+Let \(\mathcal C\) be the finite skeletal model. Define
+\[
+Q:=\bigoplus_{a\in\Irr(\mathcal C)} a.
+\]
+The vacuum summand represents an empty site. For \(N\) ordered sites, define
+\[
+Q^{\otimes N}:=\underbrace{Q\otimes \cdots \otimes Q}_{N\text{ factors}}.
+\]
+Status: the categorical direct-sum object is still a target. The accepted
+finite coordinate skeleton is a finite label type with a distinguished vacuum
+label; the summand labels of \(Q\) are represented by that label type, and the
+summand labels of \(Q^{\otimes N}\) are ordered configurations
+\(\mathrm{Fin}(N)\to A\). This is formalised as
+\texttt{LocalOccupationModel} and \texttt{LocalOccupationTensorSummand} in
+\texttt{Formalisation/Foundations/ProjectDefinitions.lean}.
+\end{definition}
+
+\begin{definition}[Indefinite-particle Hilbert space]
+For a total charge \(W\in\Irr(\mathcal C)\), define
+\[
+\mathcal H_N^W:=\Hom_{\mathcal C}(W,Q^{\otimes N}).
+\]
+If \(\mathcal C\) is only a fusion category, this is a finite-dimensional
+complex vector space. If \(\mathcal C\) is unitary, it is treated as a Hilbert
+space after choosing the standard inner products on fusion-tree bases.
+Status: the categorical Hom-space definition remains a target. The accepted
+finite coordinate skeleton assumes a finite coordinate basis for every
+configuration-sector \(\Hom(W,a_1\otimes\cdots\otimes a_N)\). The flattened
+coordinates of the resulting fixed sector are formalised as
+\texttt{IndefiniteParticleSectorCoordinates}, with component coordinates and
+pairing preservation inherited from the configuration-space coordinate
+expansion.
+\end{definition}
+
+\begin{definition}[Particle number]
+For a configuration \(\vec a=(a_1,\ldots,a_N)\), define its particle number by
+\[
+\#\{i:a_i\ne \mathbf 1\}.
+\]
+Thus \(\mathcal H_N^W\) contains sectors with particle number from \(0\) to
+\(N\). In the finite Lean model, an ordered configuration of length \(N\) is a
+function \(\mathrm{Fin}(N)\to A\), where \(A\) is the finite label type.
+\end{definition}
+
+\section{General Theorem Targets}
+
+\begin{theorem}[Finite ordered configuration combinatorics]
+Let \(A\) be a finite label set and let \(N\) be a natural number. The set of
+ordered configurations \(\mathrm{Fin}(N)\to A\) has cardinality
+\[
+|A|^N.
+\]
+If a vacuum label is chosen, the particle number of any configuration is at
+most \(N\). The constant vacuum configuration has particle number \(0\), and a
+constant non-vacuum configuration has particle number \(N\). For Fibonacci
+labels \(\{\mathbf 1,\tau\}\), the number of configurations is \(2^N\).
+These finite combinatorial statements are proved in
+\texttt{Formalisation/Foundations/Configurations.lean}; Julia and
+WolframScript check Fibonacci configuration counts and particle sectors through
+\(N=8\). AF node \texttt{1.2.1} has been accepted by verifier
+\texttt{verifier-config-001}. This theorem does not prove the categorical
+Hom-space expansion below.
+\end{theorem}
+
+\begin{theorem}[Finite direct-sum coordinate model]
+Let \(I\) be a finite set and let \(K_i\) be a finite coordinate basis for
+the \(i\)-th component. The space of flattened complex coordinates
+\[
+\{x:\coprod_{i\in I}K_i\to \mathbb C\}
+\]
+is complex-linearly equivalent to the dependent family of component coordinate
+spaces
+\[
+\prod_{i\in I}\{x_i:K_i\to\mathbb C\}.
+\]
+The equivalence sends \(x\) to the family \(x_i(k)=x(i,k)\), and its inverse
+sends a family \(x_i\) to the flattened function \((i,k)\mapsto x_i(k)\).
+It also satisfies
+\[
+\left|\coprod_{i\in I}K_i\right|=\sum_{i\in I}|K_i|
+\]
+and preserves the standard finite coordinate pairing
+\[
+\sum_{i\in I}\sum_{k\in K_i}\overline{x_i(k)}\,y_i(k)
+=
+\sum_{(i,k)\in\coprod_i K_i}\overline{x(i,k)}\,y(i,k).
+\]
+This is proved in
+\texttt{Formalisation/Foundations/DirectSumCoordinates.lean}; Julia and
+WolframScript check exact rational complex examples. AF node \texttt{1.2.2}
+has been accepted by verifier \texttt{verifier-dirsum-coord-001}. This result
+is only the finite coordinate skeleton obtained after bases have been chosen
+in the summands; it does not construct categorical biproducts, \(Q\), tensor
+powers, Hom functors, dagger categories, or fusion-category basis provenance.
+\end{theorem}
+
+\begin{theorem}[Finite direct-sum projection equations]
+In the same finite coordinate model, write
+\[
+\iota_i:\{x_i:K_i\to\mathbb C\}\to
+\{x:\coprod_{j\in I}K_j\to\mathbb C\}
+\]
+for the inclusion that places component coordinates into the \(i\)-th block,
+and write
+\[
+\pi_i:\{x:\coprod_{j\in I}K_j\to\mathbb C\}\to
+\{x_i:K_i\to\mathbb C\}
+\]
+for the projection onto the \(i\)-th block. Then
+\[
+\pi_i\iota_i=\operatorname{id},
+\qquad
+\pi_i\iota_j=0\quad(i\ne j),
+\qquad
+\sum_{i\in I}\iota_i\pi_i=\operatorname{id}.
+\]
+This is the finite coordinate analogue of Penneys'
+\(\pi_i\circ\iota_j=\delta_{i=j}\operatorname{id}\) and
+\(\sum_i\iota_i\circ\pi_i=\operatorname{id}\) equations. It is proved in
+\texttt{Formalisation/Foundations/DirectSumCoordinates.lean}; Julia and
+WolframScript check exact finite matrix examples. AF node \texttt{1.2.3} has
+been accepted by verifier \texttt{verifier-dirsum-proj-001}. This result does
+not construct categorical biproducts or the direct-sum universal property.
+\end{theorem}
+
+\begin{theorem}[Finite orthogonal direct-sum coordinates]
+In the finite coordinate model, equip every component and the flattened direct
+sum with the standard complex coordinate pairing. Then each component
+inclusion \(\iota_i\) is isometric:
+\[
+\langle \iota_i x,\iota_i y\rangle
+=
+\langle x,y\rangle .
+\]
+The coordinate range map \(P_i=\iota_i\pi_i\) satisfies
+\[
+P_i^2=P_i,
+\qquad
+P_iP_j=0\quad(i\ne j).
+\]
+Moreover, component projection is the coordinate adjoint of component
+inclusion:
+\[
+\langle \iota_i x,y\rangle
+=
+\langle x,\pi_i y\rangle,
+\qquad
+\langle y,\iota_i x\rangle
+=
+\langle \pi_i y,x\rangle,
+\]
+and therefore the coordinate range projection is self-adjoint for the
+pairing:
+\[
+\langle P_i x,y\rangle=\langle x,P_i y\rangle .
+\]
+This is the finite coordinate analogue of Penneys' statement that orthogonal
+direct-sum inclusions are isometries and the maps
+\(\iota_i\iota_i^\dagger\) are mutually orthogonal projections. It is proved
+in \texttt{Formalisation/Foundations/DirectSumCoordinates.lean}; Julia and
+WolframScript check exact finite matrix and pairing examples. AF nodes
+\texttt{1.2.4} and \texttt{1.2.8} have been accepted by verifiers
+\texttt{verifier-dirsum-orth-001} and
+\texttt{verifier-dirsum-adjoint-coord-001}. This result does not construct
+categorical adjoints or orthogonal direct sums.
+\end{theorem}
+
+\begin{theorem}[Finite configuration-space coordinate expansion]
+Let \(A\) be a finite label set and let
+\[
+\operatorname{Config}(A,N)=\{\,c:\operatorname{Fin}(N)\to A\,\}
+\]
+be the finite set of ordered configurations. Suppose that every
+configuration \(c\) has been assigned a finite coordinate basis \(B_c\). The
+space of flattened complex coordinates
+\[
+\{x:\coprod_{c\in\operatorname{Config}(A,N)}B_c\to\mathbb C\}
+\]
+is complex-linearly equivalent to the dependent family of component
+coordinate spaces
+\[
+\prod_{c\in\operatorname{Config}(A,N)}\{x_c:B_c\to\mathbb C\}.
+\]
+The equivalence sends \(x\) to the family \(x_c(b)=x(c,b)\). Its coordinate
+cardinality satisfies
+\[
+\left|\coprod_{c\in\operatorname{Config}(A,N)}B_c\right|
+=\sum_{c\in\operatorname{Config}(A,N)}|B_c|.
+\]
+If all sectors have the same finite basis \(B\), then
+\[
+\left|\coprod_{c\in\operatorname{Config}(A,N)}B\right|
+=|A|^N\,|B|.
+\]
+The equivalence preserves the standard finite coordinate pairing:
+\[
+\sum_c\sum_{b\in B_c}\overline{x_c(b)}\,y_c(b)
+=
+\sum_{(c,b)}\overline{x(c,b)}\,y(c,b).
+\]
+For Fibonacci labels \(A=\{\mathbf 1,\tau\}\), the constant-sector
+cardinality is \(2^N|B|\). Lean proves these statements in
+\texttt{Formalisation/Foundations/ConfigurationSpace.lean} using the accepted
+configuration and direct-sum coordinate results. Julia and WolframScript
+check exact Fibonacci \(N=3\) examples with dependent sector sizes and
+rational complex pairings. AF node \texttt{1.2.5} has been accepted by
+verifier \texttt{verifier-config-space-coord-001}. This theorem is only the
+finite, basis-dependent coordinate skeleton after sector bases have been
+supplied; it does not construct categorical Hom spaces, \(Q^{\otimes N}\),
+tensor products, canonical Hom isomorphisms, categorical direct sums, or
+unitarity in a fusion category.
+\end{theorem}
+
+\begin{theorem}[Finite coordinate skeleton of \(Q\) and \(\mathcal H_N^W\)]
+Let \(A\) be a finite label type with a distinguished vacuum label. In the
+finite coordinate model, the summands of \(Q\) are indexed by \(A\), and the
+summands of \(Q^{\otimes N}\) are indexed by functions
+\[
+\mathrm{Fin}(N)\to A.
+\]
+Hence there are \(|A|^N\) label summands in \(Q^{\otimes N}\), and the constant
+vacuum configuration has particle number \(0\). After choosing a finite basis
+for each sector \(\Hom(W,a_1\otimes\cdots\otimes a_N)\), the fixed sector
+\(\mathcal H_N^W\) has flattened coordinates over all configuration-sector
+basis vectors. These coordinates expand to component coordinates over
+configurations, and the standard finite coordinate pairing is preserved.
+
+Lean proves these statements in
+\texttt{Formalisation/Foundations/ProjectDefinitions.lean}. Julia and
+WolframScript check the Fibonacci two-label instance, the \(Q^{\otimes 4}\)
+label count, vacuum and all-\(\tau\) particle numbers, flattened coordinate
+dimension, unflattening, and pairing preservation. AF node \texttt{1.2.6} has
+been accepted by verifier \texttt{verifier-project-q-hilb-coord-001}. This is
+only a finite, basis-dependent coordinate skeleton; it does not construct
+categorical direct sums, tensor powers, Hom functors, canonical categorical
+isomorphisms, or fusion-category Hilbert-space semantics.
+\end{theorem}
+
+\begin{theorem}[Finite truncated distinguishable-Fock coordinates]
+Let \(B\) be a finite local coordinate basis and let \(M\) be a nonnegative
+integer. The finite truncation of distinguishable Fock coordinates through
+particle number \(M\) has basis
+\[
+\coprod_{n=0}^{M}\{\,w:\operatorname{Fin}(n)\to B\,\}.
+\]
+Equivalently, a basis vector is a particle number \(n\le M\) together with an
+ordered word of length \(n\) in the local basis. Flattened coordinates on this
+coproduct are complex-linearly equivalent to the family of fixed-particle
+number coordinate vectors. The basis cardinality is
+\[
+\left|\coprod_{n=0}^{M}\{w:\operatorname{Fin}(n)\to B\}\right|
+=\sum_{n=0}^{M}|B|^n.
+\]
+The zero-particle sector has one basis vector, and the one-particle sector has
+\(|B|\) basis vectors. The flattening by particle number preserves the
+standard finite coordinate pairing. For the Fibonacci two-label local basis,
+the cardinality is \(\sum_{n=0}^{M}2^n\).
+
+This is the finite coordinate truncation of the locally sourced
+distinguishable-Fock construction as a direct sum over particle number, with a
+one-dimensional zero-particle vacuum sector. Lean proves the finite statements
+in \texttt{Formalisation/Foundations/FockSpace.lean}. Julia and WolframScript
+check exact finite counts and rational complex pairings. AF node
+\texttt{1.2.9} has been accepted by verifier
+\texttt{verifier-truncated-fock-coord-001}. This result does not construct an
+infinite direct sum, a Hilbert-space completion, tensor-product Hilbert
+spaces, exchange-symmetry quotients, categorical Hom spaces, or physical
+Fock-space semantics.
+\end{theorem}
+
+\begin{theorem}[Configuration-space expansion target]
+There should be a canonical isomorphism
+\[
+\mathcal H_N^W\cong
+\bigoplus_{(a_1,\ldots,a_N)}
+\Hom_{\mathcal C}(W,a_1\otimes\cdots\otimes a_N).
+\]
+If the category is unitary and the direct-sum inclusions are isometries, this
+isomorphism should be unitary. Status: pending. The finite configuration-space
+coordinate theorem above proves only the basis-dependent vector-space
+skeleton of this target after sector bases have been supplied.
+\end{theorem}
+
+\begin{theorem}[Finite Fibonacci braid matrix relation]
+Let
+\[
+B_{12}=\begin{pmatrix}q^2&0\\0&-q\end{pmatrix},
+\qquad
+B_{23}=c\begin{pmatrix}-1&q s\\q s&q^2\end{pmatrix}.
+\]
+If
+\[
+c(q+1)=q,\qquad qs^2=q^2+q+1,
+\]
+then
+\[
+B_{12}B_{23}B_{12}=B_{23}B_{12}B_{23}.
+\]
+This is the algebraic core of the sourced Fibonacci relation with
+\[
+q=\exp(-2\pi i/5),\qquad
+\phi=(1+\sqrt5)/2,\qquad
+s=\sqrt{\phi},\qquad
+c=q/(q+1),
+\]
+where the source writes \(B_{23}=q(q+1)^{-1}
+\begin{pmatrix}-1&q\sqrt\phi\\q\sqrt\phi&q^2\end{pmatrix}\) and
+\(B_{12}B_{23}B_{12}-B_{23}B_{12}B_{23}=0\).
+Lean proves the parameterised algebra in
+\texttt{Formalisation/Fibonacci/BraidMatrices.lean}; Julia checks the
+specialisation numerically at high precision; WolframScript checks it exactly.
+AF node \texttt{1.3.10} has been accepted by verifier
+\texttt{verifier-fib-braid-001}. This result is not a categorical braid group
+representation theorem.
+\end{theorem}
+
+\begin{theorem}[Finite braid-matrix unitarity by conjugation]
+Let \(I\) be a finite index set and let \(F,R\in M_I(\mathbb C)\). Assume
+\[
+F^\dagger F=I,\qquad FF^\dagger=I,\qquad
+R^\dagger R=I,\qquad RR^\dagger=I.
+\]
+Define
+\[
+B=F R F^\dagger .
+\]
+Then
+\[
+B^\dagger B=I,\qquad BB^\dagger=I.
+\]
+This is the finite matrix algebra behind the locally sourced statements that
+fusion-tree changes are represented by unitary \(F\)-matrices, braidings give
+unitary \(R\)-matrices that are diagonal in a suitable basis, and a braid
+matrix is
+\[
+B=F R F^{-1}.
+\]
+For the sourced five-dimensional Fibonacci adjacent-label basis, the matrix
+\(F\) has three \(1\)'s and the nontrivial Fibonacci block
+\[
+\begin{pmatrix}\phi^{-1}&\phi^{-1/2}\\
+\phi^{-1/2}&-\phi^{-1}\end{pmatrix},
+\]
+and
+\[
+R=\operatorname{diag}\bigl(e^{4\pi i/5},e^{-3\pi i/5},e^{-3\pi i/5},
+e^{4\pi i/5},e^{-3\pi i/5}\bigr).
+\]
+Lean proves the generic finite-matrix theorem in
+\texttt{Formalisation/LinearAlgebra/Isometry.lean}. Julia checks this
+five-dimensional sourced specialisation numerically at high precision, and
+WolframScript checks it exactly. AF node \texttt{1.3.11} has been accepted by
+verifier \texttt{verifier-fib-braid-unitary-001}. The extracted text around
+one displayed formula is OCR-ambiguous, so the local PDF page and the later
+extracted line giving \(B=FRF^{-1}\) were both used. This theorem does not
+construct categorical braidings, conformal blocks, mapping-class-group
+representations, or analytic monodromy.
+\end{theorem}
+
+\begin{theorem}[Braid group action target]
+If \(\mathcal C\) is braided, the neighbouring exchange maps induced by
+\[
+c_{Q,Q}:Q\otimes Q\to Q\otimes Q
+\]
+should satisfy
+\[
+B_iB_{i+1}B_i=B_{i+1}B_iB_{i+1},\qquad
+B_iB_j=B_jB_i\quad |i-j|\geq 2.
+\]
+Status: pending.
+\end{theorem}
+
+\begin{definition}[Fine-graining isometry]
+For \(M>N\), a fine-graining map is a morphism or finite matrix
+\[
+E_{N\to M}:Q^{\otimes N}\to Q^{\otimes M}
+\]
+such that
+\[
+E_{N\to M}^{\dagger}E_{N\to M}=\operatorname{id}_{Q^{\otimes N}}.
+\]
+For a charge sector \(W\), the induced map is
+\[
+V_{N\to M}^W(f)=E_{N\to M}\circ f.
+\]
+In finite coordinate form, after bases have been chosen, this definition is
+formalised as a structure consisting of a matrix \(E\) and the equation
+\[
+E^\dagger E=I.
+\]
+The Lean structure is \texttt{FiniteFineGraining} in
+\texttt{Formalisation/LinearAlgebra/FineGraining.lean}. It packages the
+validated finite consequences: ascending unitality, postcomposition Gram
+preservation, state-embedding trace preservation, expectation preservation,
+ascending adjoint preservation
+\[
+E^\dagger O^\dagger E=(E^\dagger O E)^\dagger,
+\]
+logical-lift retraction, logical lift of the identity
+\[
+(E I)E^\dagger=EE^\dagger,
+\]
+and the code projection identities for \(EE^\dagger\). AF node \texttt{1.4.12}
+has been accepted by verifier
+\texttt{verifier-finite-fine-graining-def-001}; AF node \texttt{1.4.14} has
+been accepted by verifier \texttt{verifier-finite-fg-star-lift-001} for the
+packaged adjoint-preservation and logical-identity consequences. This is only
+the finite coordinate definition; it does not construct \(Q^{\otimes N}\),
+categorical morphisms, Hom-sector semantics, categorical channel semantics, or
+physical fine-graining maps in a fusion category.
+\end{definition}
+
+\begin{theorem}[Postcomposition isometry target]
+If \(E^\dagger E=\operatorname{id}\), then
+\(V^W(f)=E\circ f\) is an isometry for every \(W\). Conversely, if all
+simple-sector maps \(V^W\) are isometries and the Hom functor separates
+morphisms, then \(E^\dagger E=\operatorname{id}\). Status: the finite-matrix
+forward direction is proved in
+\texttt{Formalisation/LinearAlgebra/Postcompose.lean}: if \(E^\dagger E=I\),
+then
+\[
+(EF)^\dagger(EG)=F^\dagger G.
+\]
+AF node \texttt{1.4.4} is accepted for this coordinate matrix theorem.
+The finite square-test converse is also proved: if
+\[
+(EF)^\dagger(EG)=F^\dagger G
+\]
+for every pair of square coarse-coordinate matrices \(F,G\), then
+\[
+E^\dagger E=I.
+\]
+Indeed, take \(F=I\) and \(G=I\). AF node \texttt{1.4.8} is accepted for
+this finite matrix converse. The full categorical converse using
+semisimplicity and a separating Hom functor, and the categorical Hom-sector
+semantics, remain pending.
+\end{theorem}
+
+\begin{theorem}[Component orthogonality target]
+For decompositions
+\[
+Q^{\otimes N}\cong \bigoplus_{\vec a}A_{\vec a},
+\qquad
+Q^{\otimes M}\cong \bigoplus_{\vec b}B_{\vec b},
+\]
+define
+\[
+E_{\vec b,\vec a}:=\pi_{\vec b}E\iota_{\vec a}.
+\]
+Then \(E\) is an isometry exactly when
+\[
+\sum_{\vec b}E_{\vec b,\vec a}^{\dagger}E_{\vec b,\vec a'}
+=\delta_{\vec a,\vec a'}\operatorname{id}_{A_{\vec a}}.
+\]
+Status: the scalar finite-matrix version is proved in
+\texttt{Formalisation/LinearAlgebra/Component.lean}: for a matrix \(E\),
+\[
+E^\dagger E=I
+\quad\Longleftrightarrow\quad
+\sum_b \overline{E_{b,a}}E_{b,a'}=\delta_{a,a'}.
+\]
+AF node \texttt{1.4.2} is accepted only for this coordinate matrix theorem.
+Block Hom spaces and categorical direct-sum semantics remain pending.
+\end{theorem}
+
+\begin{theorem}[Block tensor isometry target]
+Let \(M>N\), let the fine sites be partitioned into ordered blocks of sizes
+\(r_i\geq 1\), and let
+\[
+\eta_i:Q\to Q^{\otimes r_i}
+\]
+be isometries. Then
+\[
+E_{N\to M}^{\mathrm{block}}=\eta_1\otimes\cdots\otimes\eta_N
+\]
+is an isometry. Status: the two-factor finite-matrix version is proved in
+\texttt{Formalisation/LinearAlgebra/Tensor.lean}: if \(E_1^\dagger E_1=I\)
+and \(E_2^\dagger E_2=I\), then
+\[
+(E_1\otimes E_2)^\dagger(E_1\otimes E_2)=I.
+\]
+AF node \texttt{1.4.3} is accepted only for this Kronecker product theorem.
+The same Lean file also proves the heterogeneous three-factor finite matrix
+case: if \(E_1^\dagger E_1=I\), \(E_2^\dagger E_2=I\), and
+\(E_3^\dagger E_3=I\), then
+\[
+((E_1\otimes E_2)\otimes E_3)^\dagger
+((E_1\otimes E_2)\otimes E_3)=I.
+\]
+AF node \texttt{1.4.10} has been accepted by verifier
+\texttt{verifier-tensor-three-het-001}.
+The fixed-local-map induction is proved in
+\texttt{Formalisation/LinearAlgebra/TensorPower.lean}: if \(E^\dagger E=I\),
+then every finite Kronecker tensor power \(E^{\otimes N}\) is an isometry.
+Julia and WolframScript check exact rational examples through \(N=6\).
+AF node \texttt{1.4.7} has been accepted by verifier
+\texttt{verifier-tensor-power-001}.
+The arbitrary heterogeneous finite-coordinate induction is proved in
+\texttt{Formalisation/LinearAlgebra/HeterogeneousTensor.lean}. For any
+natural number \(N\), finite dependent families of fine and coarse coordinate
+index types, and local matrices \(E_i\) with \(E_i^\dagger E_i=I\), the
+recursively ordered heterogeneous Kronecker product satisfies
+\[
+\bigl(E_0\otimes E_1\otimes\cdots\otimes E_{N-1}\bigr)^\dagger
+\bigl(E_0\otimes E_1\otimes\cdots\otimes E_{N-1}\bigr)=I.
+\]
+AF node \texttt{1.4.16} has been accepted by verifier
+\texttt{verifier-het-tensor-n-001}. Categorical tensor products, canonical
+associators, ordered partition semantics, and construction of local maps from
+fusion-category data remain pending.
+\end{theorem}
+
+\begin{theorem}[Unitary dressing target]
+If \(U_M:Q^{\otimes M}\to Q^{\otimes M}\) is unitary and each \(\eta_i\) is
+isometric, then
+\[
+E_{N\to M}=U_M(\eta_1\otimes\cdots\otimes\eta_N)
+\]
+is isometric. Status: the finite-matrix calculation
+\((UE)^\dagger(UE)=I\) from \(U^\dagger U=I\) and \(E^\dagger E=I\) is proved
+in \texttt{Formalisation/LinearAlgebra/Isometry.lean}. The node has been
+accepted by verifier \texttt{verifier-mat-dress-001} only for this
+finite-matrix calculation. For three heterogeneous factors, the Lean file
+\texttt{Formalisation/LinearAlgebra/Tensor.lean} also proves that if
+\(U\) is unitary on the three-factor fine product, then
+\[
+\bigl(U((E_1\otimes E_2)\otimes E_3)\bigr)^\dagger
+U((E_1\otimes E_2)\otimes E_3)=I.
+\]
+AF node \texttt{1.4.11} has been accepted by verifier
+\texttt{verifier-dressed-three-tensor-001}.
+For fixed-local-map tensor powers, the Lean file
+\texttt{Formalisation/LinearAlgebra/TensorPower.lean} proves that if
+\(E^\dagger E=I\), \(E^{\otimes N}\) is the recursively defined Kronecker
+tensor power, and \(U\) is unitary on the fine tensor-power coordinate space,
+then
+\[
+\bigl(U E^{\otimes N}\bigr)^\dagger\bigl(U E^{\otimes N}\bigr)=I.
+\]
+Julia and WolframScript check exact rational rectangular examples with a
+nontrivial reversal permutation unitary through \(N=4\). AF node
+\texttt{1.4.15} has been accepted by verifier
+\texttt{verifier-dressed-tensor-power-001}.
+The heterogeneous finite-coordinate theorem in
+\texttt{Formalisation/LinearAlgebra/HeterogeneousTensor.lean} also proves the
+arbitrary \(N\)-factor dressed case over the ordered recursive tensor index:
+if \(U\) is unitary on the fine tensor-product coordinate space, then
+\[
+\bigl(U(E_0\otimes\cdots\otimes E_{N-1})\bigr)^\dagger
+U(E_0\otimes\cdots\otimes E_{N-1})=I.
+\]
+This is part of AF node \texttt{1.4.16}. Full categorical unitary dressing,
+ordered partition semantics, and physical construction of \(U\) remain
+pending.
+\end{theorem}
+
+\section{Finite-Dimensional Linear Algebra}
+
+\begin{theorem}[Polar section target]
+Let \(B:H_{\mathrm{fine}}\to H_{\mathrm{coarse}}\) be a full-rank linear map
+between finite-dimensional Hilbert spaces. Define
+\[
+E:=B^\dagger(BB^\dagger)^{-1/2}.
+\]
+Then \(E^\dagger E=\operatorname{id}_{H_{\mathrm{coarse}}}\). Status: the
+conditional finite-matrix algebra is proved in
+\texttt{Formalisation/LinearAlgebra/Polar.lean}. If a matrix \(R\) satisfies
+\[
+R^\dagger(BB^\dagger)R=I,
+\]
+then \(E=B^\dagger R\) satisfies \(E^\dagger E=I\). AF node \texttt{1.4.5}
+is accepted only for this conditional statement; existence and positivity of
+\((BB^\dagger)^{-1/2}\) remain pending.
+
+There is also an accepted diagonal special case. Suppose \(BB^\dagger\) is
+diagonal in the chosen coarse basis, with diagonal entries \(g_\mu>0\). Define
+\[
+R_{\mu\mu'}=
+\begin{cases}
+(\sqrt{g_\mu})^{-1}, & \mu=\mu',\\
+0, & \mu\ne\mu'.
+\end{cases}
+\]
+Then \(R^\dagger=R\),
+\[
+R^\dagger(BB^\dagger)R=I,
+\]
+and \(B^\dagger R\) is an isometry. Lean defines this matrix as
+\texttt{diagonalInvSqrt} and proves the inverse-square-root condition and
+isometry in \texttt{Formalisation/LinearAlgebra/Polar.lean}. Julia checks the
+diagonal case \(g=(4,9)\), and WolframScript checks the same case exactly. AF
+node \texttt{1.4.13} has been accepted by verifier
+\texttt{verifier-polar-diag-sqrt-001}. This does not prove the general
+positive matrix square-root theorem, full polar decomposition existence, the
+full-rank criterion, or categorical Hilbert-space semantics.
+\end{theorem}
+
+\begin{theorem}[Amplitude formula target]
+For orthonormal bases, write
+\[
+B|\nu\rangle_{\mathrm{fine}}
+=\sum_\mu \beta_{\mu\nu}|\mu\rangle_{\mathrm{coarse}}
+\]
+and
+\[
+G_{\mu\mu'}=\sum_\nu
+\beta_{\mu\nu}\overline{\beta_{\mu'\nu}}.
+\]
+Then \(E|\mu\rangle=\sum_\nu A_{\nu\mu}|\nu\rangle\) with
+\[
+A_{\nu\mu}=\sum_{\mu'}
+\overline{\beta_{\mu'\nu}}\,(G^{-1/2})_{\mu'\mu}.
+\]
+If \(\mu\) does not mix with other coarse labels, then
+\[
+A_\nu^\mu=
+\frac{\overline{\beta_{\mu\nu}}}
+{\sqrt{\sum_{\nu'}|\beta_{\mu\nu'}|^2}}.
+\]
+Status: \texttt{Formalisation/LinearAlgebra/Polar.lean} proves the coordinate
+entry formula for \(E=B^\dagger R\), with \(R\) standing for the
+inverse-square-root factor. The finite one-row no-mixing corollary is proved
+in \texttt{Formalisation/LinearAlgebra/NoMixing.lean}: for a blocking row
+\(\beta_\nu\), the matrix \(B^\dagger R\) has entries
+\[
+\frac{\overline{\beta_\nu}}
+{\sqrt{\sum_{\nu'}|\beta_{\nu'}|^2}}
+\]
+and is an isometry when the denominator is nonzero. AF node \texttt{1.4.9} is
+accepted for exactly this finite matrix corollary. Full square-root and polar
+decomposition semantics remain pending.
+\end{theorem}
+
+\begin{theorem}[Ascending channel target]
+For an isometry \(V\), the observable map
+\[
+\mathsf A(O)=V^\dagger O V
+\]
+is unital, completely positive, star-preserving, and expectation-value
+preserving against embedded states. The finite matrix unital, star-preserving,
+and retraction identities are formalised in
+\texttt{Formalisation/LinearAlgebra/Isometry.lean}. The finite matrix trace
+identities
+\[
+\operatorname{tr}(E\rho E^\dagger)=\operatorname{tr}(\rho)
+\quad\text{when }E^\dagger E=\mathbf 1
+\]
+and
+\[
+\operatorname{tr}\bigl((E\rho E^\dagger)O\bigr)
+=\operatorname{tr}\bigl(\rho(E^\dagger O E)\bigr)
+\]
+are formalised in \texttt{Formalisation/LinearAlgebra/Trace.lean}. The same
+file proves the square-form identity
+\[
+K^\dagger(X^\dagger X)K=(XK)^\dagger(XK),
+\]
+which is a finite-dimensional positivity witness. More generally, call a
+finite matrix \(O\) Gram-form positive if there is a finite witness index set
+and a matrix \(X\), possibly rectangular, with
+\[
+O=X^\dagger X.
+\]
+If \(O\) is a fine observable with such a witness, then
+\[
+E^\dagger O E=(XE)^\dagger(XE),
+\]
+so the ascending congruence preserves this Gram-form witness. In Mathlib's
+finite quadratic-form definition of positive semidefinite matrices, the same
+file proves the order-theoretic implication
+\[
+O\geq 0\quad\Longrightarrow\quad E^\dagger O E\geq 0.
+\]
+This is the ordinary finite matrix fact that a positive semidefinite matrix
+remains positive semidefinite after congruence by \(E\). For every finite
+auxiliary coordinate set \(R\), the same file also proves the amplified
+finite statement
+\[
+O\geq 0\quad\Longrightarrow\quad
+(I_R\otimes E)^\dagger O(I_R\otimes E)\geq 0
+\]
+for matrices \(O\) on \(R\times\text{fine}\). This proves amplified
+positivity for the one-Kraus congruence \(I_R\otimes E\). If
+\(\{K_i\}_{i\in S}\) is any finite family of matrices with common source and
+target, then the finite congruence sums also preserve positivity:
+\[
+O\geq 0\quad\Longrightarrow\quad
+\sum_{i\in S}K_i^\dagger O K_i\geq 0
+\]
+and, for every finite auxiliary coordinate set \(R\),
+\[
+O\geq 0\quad\Longrightarrow\quad
+\sum_{i\in S}(I_R\otimes K_i)^\dagger O(I_R\otimes K_i)\geq 0.
+\]
+For a finite family of matrices \(\{K_i\}_{i\in S}\), define
+\[
+\mathsf A(O)=\sum_{i\in S}K_i^\dagger O K_i,\qquad
+\mathsf S(\rho)=\sum_{i\in S}K_i\rho K_i^\dagger.
+\]
+If
+\[
+\sum_{i\in S}K_i^\dagger K_i=I,
+\]
+then
+\[
+\mathsf A(I)=I,\qquad
+\operatorname{tr}(\mathsf S(\rho))=\operatorname{tr}(\rho).
+\]
+For every finite family, the same finite matrix formalisation proves
+\[
+\mathsf A(O^\dagger)=\mathsf A(O)^\dagger
+\]
+and
+\[
+\operatorname{tr}(\mathsf S(\rho)O)
+=\operatorname{tr}(\rho\,\mathsf A(O)).
+\]
+This is finite-dimensional matrix algebra. It does not assert that a
+particular physical refining channel has a sourced Kraus representation. For
+the logical lift
+\[
+\mathsf L(O)=VOV^\dagger,
+\]
+the finite matrix formalisation also proves
+\[
+\mathsf L(I)=VV^\dagger,\qquad
+(VV^\dagger)^2=VV^\dagger,\qquad
+(VV^\dagger)^\dagger=VV^\dagger.
+\]
+Thus the lifted coarse identity is the code-subspace projection in the finite
+matrix sense, not the full fine identity. Status: AF nodes \texttt{1.5.1},
+\texttt{1.5.2}, \texttt{1.5.8}, \texttt{1.5.9}, \texttt{1.5.11}, and
+\texttt{1.5.12}, \texttt{1.5.13}, and \texttt{1.5.14} are accepted for these finite-matrix
+identities only. Full categorical channel semantics, categorical subobject
+semantics, full spectral projection theory, and a sourced physical
+Kraus-representation theorem remain pending.
+\end{theorem}
+
+\section{Fibonacci Data}
+
+\begin{definition}[Fibonacci labels and fusion rules]
+The Fibonacci model has two simple labels, \(\mathbf 1\) and \(\tau\), with
+\[
+\mathbf 1\otimes\mathbf 1=\mathbf 1,\quad
+\mathbf 1\otimes\tau=\tau,\quad
+\tau\otimes\mathbf 1=\tau,\quad
+\tau\otimes\tau=\mathbf 1\oplus\tau.
+\]
+Local source: \texttt{references/text/FibonacciAnyonModels.txt:128},
+\texttt{:129}, and \texttt{:133}. Status: formalised in
+\texttt{Formalisation/Fibonacci/FusionRules.lean}. AF node \texttt{1.3.8}
+has been accepted by verifier \texttt{verifier-fib-fusion-001} only for the
+finite multiplicity table. The same file instantiates the finite skeletal
+fusion-data structure from AF node \texttt{1.2.7} and proves the
+multiplicity-free condition and unit total multiplicities for this Fibonacci
+table.
+\end{definition}
+
+\begin{definition}[Golden ratio and total quantum dimension]
+Define
+\[
+\varphi:=\frac{1+\sqrt 5}{2},\qquad d_{\mathbf 1}=1,\qquad d_\tau=\varphi.
+\]
+Define
+\[
+D^2:=1+\varphi^2.
+\]
+Local sources: \texttt{references/text/FibonacciAnyonModels.txt:216},
+\texttt{:218}, \texttt{:304}, and
+\texttt{references/text/TrebstShortIntroductionFibonacciAnyons.txt:217},
+\texttt{:325}.
+\end{definition}
+
+\begin{theorem}[Fibonacci constant identities]
+The following identities hold:
+\[
+\varphi^2=\varphi+1,\qquad
+\varphi^{-1}=\varphi-1,\qquad
+\varphi^{-2}+\varphi^{-1}=1,\qquad
+D^2=2+\varphi.
+\]
+Status: Adversarial Proof Framework node \texttt{1.3.1} submitted for
+verification and accepted by verifier \texttt{verifier-fib-alg-001}. Lean,
+Julia, and WolframScript checks pass. The accepted scope is the real-number
+algebra claim about \(\varphi\) and \(D^2\), not a broader category-theoretic
+Fibonacci theorem.
+\end{theorem}
+
+\begin{proof}
+The Lean proof is in \texttt{Formalisation/Fibonacci/Basic.lean}. It unfolds
+\(\varphi\), uses \((\sqrt 5)^2=5\), and solves the real algebra. Julia checks
+the equations numerically at 256-bit precision. WolframScript checks the same
+equations by exact symbolic simplification.
+\end{proof}
+
+\begin{definition}[Fibonacci \(F\)-matrix]
+The nontrivial \(F\)-matrix used initially is
+\[
+F^{\tau\tau\tau}_\tau=
+\begin{pmatrix}
+\varphi^{-1} & \varphi^{-1/2}\\
+\varphi^{-1/2} & -\varphi^{-1}
+\end{pmatrix}.
+\]
+Local sources: \texttt{references/text/FibonacciAnyonModels.txt:272},
+\texttt{:297}, \texttt{:301}, \texttt{:304}, and
+\texttt{references/text/GoldenChainFeiguinEtAl.txt:109}.
+\end{definition}
+
+\begin{theorem}[Fibonacci \(F\)-matrix exact identities]
+The matrix above satisfies
+\[
+F^\dagger F=I,\qquad F^2=I.
+\]
+Status: ready for adversarial verification in node \texttt{1.3.2}; Lean,
+Julia, and WolframScript checks pass for the parameterised theorem
+\(\begin{psmallmatrix}a&b\\ b&-a\end{psmallmatrix}\) under \(a^2+b^2=1\).
+The node has been accepted by verifier \texttt{verifier-fib-mat-001} as a
+real matrix algebra claim. The categorical meaning of the \(F\)-move is not
+included in that acceptance.
+\end{theorem}
+
+\begin{definition}[General binary Fibonacci map]
+Let \(Q=\mathbf 1\oplus\tau\). A binary map
+\[
+\eta:Q\to Q\otimes Q
+\]
+has coefficients
+\[
+\eta_{\mathbf 1}=xv^{\mathbf 1}_{\mathbf 1\mathbf 1}
++yv^{\mathbf 1}_{\tau\tau}
+\]
+and
+\[
+\eta_\tau=pv^\tau_{\tau\mathbf 1}
++qv^\tau_{\mathbf 1\tau}
++rv^\tau_{\tau\tau}.
+\]
+\end{definition}
+
+\begin{theorem}[Binary Fibonacci isometry target]
+The map \(\eta\) is an isometry exactly when
+\[
+|x|^2+|y|^2=1,\qquad |p|^2+|q|^2+|r|^2=1.
+\]
+There is no cross-condition between the \(\mathbf 1\) and \(\tau\) sectors
+because \(\Hom(\mathbf 1,\tau)=0\). Status: ready for adversarial
+verification in node \texttt{1.3.6} for the coordinate matrix theorem after
+choosing the orthogonal binary fusion-tree basis. The Lean proof is in
+\texttt{Formalisation/Fibonacci/Binary.lean}. The node has been accepted by
+verifier \texttt{verifier-fib-binary-001} only at this coordinate-matrix
+level.
+\end{theorem}
+
+\begin{definition}[Perron--Frobenius binary amplitudes]
+For a finite fusion channel \(a\to b\otimes c\), the project handoff proposes
+the topological one-step coefficient
+\[
+A^a_{bc}=\sqrt{\frac{d_b d_c}{d_aD^2}},
+\]
+where \(d_a\) is the positive Frobenius--Perron dimension and
+\[
+D^2=\sum_x d_x^2.
+\]
+For Fibonacci labels \(d_{\mathbf 1}=1\), \(d_\tau=\varphi\), and
+\(D^2=1+\varphi^2\). On the five allowed binary channels this gives
+\[
+\eta_{\mathbf 1}^{\mathrm{PF}}=
+\frac1D v^{\mathbf 1}_{\mathbf 1\mathbf 1}
++\frac{\varphi}{D}v^{\mathbf 1}_{\tau\tau}
+\]
+and
+\[
+\eta_\tau^{\mathrm{PF}}=
+\frac1D v^\tau_{\tau\mathbf 1}
++\frac1D v^\tau_{\mathbf 1\tau}
++\frac{\sqrt\varphi}{D}v^\tau_{\tau\tau}.
+\]
+\end{definition}
+
+\begin{theorem}[Perron--Frobenius normalisation]
+In the finite skeletal Fibonacci model, the dimension vector
+\[
+d_{\mathbf 1}=1,\qquad d_\tau=\varphi
+\]
+is an eigenvector of the \(\tau\)-fusion matrix with eigenvalue \(\varphi\).
+The five coefficient equalities from
+\(A^a_{bc}=\sqrt{d_b d_c/(d_aD^2)}\) are
+\[
+A^{\mathbf 1}_{\mathbf 1\mathbf 1}=\frac1D,\quad
+A^{\mathbf 1}_{\tau\tau}=\frac{\varphi}{D},\quad
+A^\tau_{\tau\mathbf 1}=\frac1D,\quad
+A^\tau_{\mathbf 1\tau}=\frac1D,\quad
+A^\tau_{\tau\tau}=\frac{\sqrt\varphi}{D}.
+\]
+The scalar normalisations are
+\[
+\frac{1}{D^2}+\frac{\varphi^2}{D^2}=1,\qquad
+\frac1{D^2}+\frac1{D^2}+\frac{\varphi}{D^2}=1.
+\]
+Combined with the binary coordinate isometry theorem, these identities prove
+that the \(5\times 2\) coordinate matrix for
+\(\eta^{\mathrm{PF}}\) satisfies
+\[
+(\eta^{\mathrm{PF}})^\dagger\eta^{\mathrm{PF}}=I.
+\]
+The scalar identities are accepted in AF node \texttt{1.3.3}. The
+coordinate-level matrix isometry is accepted in AF node \texttt{1.3.13} by
+verifier \texttt{verifier-fib-pf-binary-001}. The finite Fibonacci
+dimension-formula coefficient calculation is accepted in AF node
+\texttt{1.3.15} by verifier
+\texttt{verifier-fib-pf-dim-amp-001}. This does not prove the arbitrary
+fusion-category amplitude theorem, categorical Perron--Frobenius naturality,
+string-net fixed-point semantics, or construction of the fusion-tree basis.
+\end{theorem}
+
+\begin{definition}[Coassociative candidate]
+The positive real candidate is
+\[
+\eta_{\mathbf 1}^{\mathrm{coassoc}}=
+\varphi^{-1}v^{\mathbf 1}_{\mathbf 1\mathbf 1}
++\varphi^{-1/2}v^{\mathbf 1}_{\tau\tau}
+\]
+and
+\[
+\eta_\tau^{\mathrm{coassoc}}=
+\varphi^{-1}v^\tau_{\tau\mathbf 1}
++\varphi^{-1}v^\tau_{\mathbf 1\tau}
++\varphi^{-3/2}v^\tau_{\tau\tau}.
+\]
+Status: scalar equations pass Julia and WolframScript; the full associator
+proof is pending. The scalar equations and displayed two-component
+\(F\)-comparison vector are proved in
+\texttt{Formalisation/Fibonacci/Coassoc.lean}; this is ready for adversarial
+verification in node \texttt{1.3.4}. The node has been accepted by verifier
+\texttt{verifier-coassoc-scalar-001} only at this scalar level. It does not
+prove categorical coassociativity, uniqueness, or associator semantics.
+\end{definition}
+
+\begin{theorem}[Positive scalar coassociative solution]
+Let \(x,y,r\) be positive real numbers. Suppose
+\[
+x^2+y^2=1,\qquad 2x^2+r^2=1,
+\]
+and
+\[
+r^2=\varphi^{-3/2}xy.
+\]
+Then
+\[
+x=\varphi^{-1},\qquad y=\varphi^{-1/2},\qquad r=\varphi^{-3/2}.
+\]
+In Lean the coefficient \(\varphi^{-3/2}\) is represented as
+\(\varphi^{-1}\varphi^{-1/2}\), and \(r=\varphi^{-3/2}\) is represented by
+\(r=\varphi^{-1}\varphi^{-1/2}\). Lean now proves the scalar identities
+\[
+\varphi^{-1/2}=(\sqrt\varphi)^{-1},\qquad
+\varphi^{-3/2}=\varphi^{-1}(\sqrt\varphi)^{-1},
+\]
+and the squared positive-root form
+\[
+r^2=(\varphi^{-1})^3,\qquad r=\sqrt{(\varphi^{-1})^3}
+\]
+for the positive candidate \(r\). The proof is in
+\texttt{Formalisation/Fibonacci/Coassoc.lean}; Julia checks the eliminated
+polynomial roots and fractional-power identities numerically at high
+precision; WolframScript checks the exact quantified uniqueness implication
+and fractional-power identities. AF node \texttt{1.3.12} has been accepted by
+verifier \texttt{verifier-coassoc-unique-001}; AF node \texttt{1.3.16} has
+been accepted by verifier \texttt{verifier-coassoc-frac-pow-001}. This
+remains only scalar algebra and does not prove categorical coassociativity,
+associator semantics, fusion-tree basis comparison, or existence of a
+categorical map.
+\end{theorem}
+
+\begin{theorem}[Coordinate isometry of the strict binary candidate]
+Use the fixed binary coordinate basis whose rows are the five allowed
+channels
+\[
+\mathbf 1\to\mathbf 1\mathbf 1,\quad
+\mathbf 1\to\tau\tau,\quad
+\tau\to\tau\mathbf 1,\quad
+\tau\to\mathbf 1\tau,\quad
+\tau\to\tau\tau,
+\]
+and whose columns are the two input labels \(\mathbf 1,\tau\).  The
+coefficient choice displayed in \texttt{handoff.md} section 9.6 is the matrix
+\[
+\eta_{\mathrm{coassoc}}=
+\begin{pmatrix}
+\varphi^{-1} & 0\\
+\varphi^{-1/2} & 0\\
+0 & \varphi^{-1}\\
+0 & \varphi^{-1}\\
+0 & \varphi^{-3/2}
+\end{pmatrix}.
+\]
+It satisfies
+\[
+\eta_{\mathrm{coassoc}}^{\dagger}\eta_{\mathrm{coassoc}}=I_2.
+\]
+Lean defines this matrix as \texttt{CoassocBinaryEta} and proves
+\texttt{CoassocBinaryEta.conjTranspose * CoassocBinaryEta = 1} in
+\texttt{Formalisation/Fibonacci/Coassoc.lean}, using the binary coordinate
+isometry theorem in \texttt{Formalisation/Fibonacci/Binary.lean} and the
+scalar norm equalities above. Julia checks the four entries of the Gram
+matrix numerically at high precision, and WolframScript checks the exact
+symbolic identity. AF node \texttt{1.3.17} has been accepted by verifier
+\texttt{verifier-coassoc-binary-iso-001}. This is only a fixed-basis
+coordinate isometry; it does not prove categorical coassociativity,
+associator semantics, fusion-tree basis comparison, or existence of a
+categorical map.
+\end{theorem}
+
+\section{Renormalization Input and Scaling Operators}
+
+\begin{definition}[Conformal weight input]
+The local paper \texttt{references/IsingLikeFibonacciAnyonsKZ.pdf} identifies
+the Fibonacci anyon field \(\tau\) with the spin-1 field in the level-3
+\(SU(2)\) Wess--Zumino--Witten model, and its table of primary-field
+conformal weights gives the spin-1 field the chiral conformal weight
+\[
+h_\tau=\frac{2}{5}.
+\]
+For a diagonal theory in which the left and right chiral weights are both
+\(h_\tau\), the scaling dimension is their sum:
+\[
+\Delta_\tau=h_\tau+\overline h_\tau=\frac{2}{5}+\frac{2}{5}=\frac{4}{5}.
+\]
+This addition convention is sourced locally from
+\texttt{references/text/PoilblancOneDimensionalItinerantInteractingAnyons.txt}.
+The chiral exponent arithmetic used later for the Fibonacci renormalization
+coefficients is
+\[
+h_{\mathbf 1}-2h_\tau=0-2\cdot\frac25=-\frac45,
+\qquad
+h_\tau-2h_\tau=\frac25-2\cdot\frac25=-\frac25.
+\]
+Squaring these powers in the normalisation denominators gives
+\[
+2\left(h_{\mathbf 1}-2h_\tau\right)=-\frac85,
+\qquad
+2\left(h_\tau-2h_\tau\right)=-\frac45.
+\]
+The exact rational equalities are proved in
+\texttt{Formalisation/Fibonacci/CFTWeights.lean} and checked in Julia and
+WolframScript. AF node \texttt{1.5.5} has been accepted by verifier
+\texttt{verifier-cft-weight-001}. AF node \texttt{1.5.7} has been accepted by
+verifier \texttt{verifier-cft-rg-exp-001} for the exponent arithmetic. These
+formal results do not prove the Wess--Zumino--Witten construction, extraction
+of the source table, Wilsonian renormalization coefficients, physical operator
+product constants, or a physical renormalization eigenvalue.
+
+The handoff scaling-operator section also uses the rational exponent
+convention
+\[
+\lambda_\tau=b^{-2/5},\qquad
+\lambda_{\tau,n}=b^{-(2/5+n)},\qquad
+\lambda_{\mathbf 1,n}=b^{-n},\qquad
+\lambda_\tau^{\mathrm{diag}}=b^{-4/5}.
+\]
+Lean proves the corresponding rational exponents
+\[
+-\frac25,\qquad -\left(\frac25+n\right),\qquad -n,\qquad -\frac45
+\]
+in \texttt{Formalisation/Fibonacci/CFTWeights.lean}, and Julia and
+WolframScript check the same equalities through \(n=6\). AF node
+\texttt{1.5.15} has been accepted by verifier
+\texttt{verifier-cft-desc-exp-001}. This is only arithmetic for supplied
+weights and descendant labels; it does not construct descendant states,
+define real powers \(b^{-w}\), prove diagonal renormalization, or construct
+physical scaling eigenoperators.
+\end{definition}
+
+\begin{definition}[Blocking coefficients]
+For a scale factor \(b>1\), set \(\rho=b^{-1}\). The local blocking
+coefficients are treated as input data:
+\[
+\beta^{\mathbf 1}_{\mathbf 1\mathbf 1}=u_0,\quad
+\beta^{\mathbf 1}_{\tau\tau}=u_I\rho^{-4/5},
+\]
+\[
+\beta^\tau_{\tau\mathbf 1}=j_L,\quad
+\beta^\tau_{\mathbf 1\tau}=j_R,\quad
+\beta^\tau_{\tau\tau}=u_\tau\rho^{-2/5}.
+\]
+The constants \(u_0,u_I,j_L,j_R,u_\tau\) are Wilsonian
+renormalization input data; they are not determined by scaling dimensions
+alone.
+\end{definition}
+
+\begin{theorem}[Fibonacci renormalization amplitude target]
+Assuming the coefficients above, the no-mixing polar formula gives
+\[
+\eta_{\mathbf 1}^{\mathrm{RG}}(\rho)=
+\frac{\overline{u_0}v^{\mathbf 1}_{\mathbf 1\mathbf 1}
++\overline{u_I}\rho^{-4/5}v^{\mathbf 1}_{\tau\tau}}
+{\sqrt{|u_0|^2+|u_I|^2\rho^{-8/5}}}
+\]
+and
+\[
+\eta_\tau^{\mathrm{RG}}(\rho)=
+\frac{\overline{j_L}v^\tau_{\tau\mathbf 1}
++\overline{j_R}v^\tau_{\mathbf 1\tau}
++\overline{u_\tau}\rho^{-2/5}v^\tau_{\tau\tau}}
+{\sqrt{|j_L|^2+|j_R|^2+|u_\tau|^2\rho^{-4/5}}}.
+\]
+Status: computational checks in Julia and WolframScript pass for
+normalisation and for the finite one-row polar entry formula. The Lean file
+\texttt{Formalisation/Fibonacci/RGNoMixing.lean} formalises the two rows as
+finite no-mixing vectors
+\[
+(u_0,u_I s_{\mathrm{vac}}),\qquad
+(j_L,j_R,u_\tau s_\tau),
+\]
+where \(s_{\mathrm{vac}}\) and \(s_\tau\) stand for the supplied powers
+\(\rho^{-4/5}\) and \(\rho^{-2/5}\). It proves the displayed denominator
+formulas, the normalized-conjugate entries, and row normalisation whenever
+the denominator is nonzero. It also proves that the squared norm of the
+\(\tau\tau\) amplitude in the tau row is
+\[
+\frac{|u_\tau|^2s_\tau^2}
+{|j_L|^2+|j_R|^2+|u_\tau|^2s_\tau^2},
+\]
+which becomes the handoff probability
+\[
+P(\tau\to\tau\tau)=
+\frac{|u_\tau|^2\rho^{-4/5}}
+{|j_L|^2+|j_R|^2+|u_\tau|^2\rho^{-4/5}}
+\]
+after the supplied substitution \(s_\tau^2=\rho^{-4/5}\). Lean proves that
+this quantity is nonnegative and at most \(1\) when the denominator is
+positive. AF node \texttt{1.3.14} has been accepted by
+verifier \texttt{verifier-fib-rg-nomix-rows-001}. The scalar no-mixing
+normalisation theorem is accepted in AF node \texttt{1.3.7}; the one-row
+polar-section formula is accepted in AF node \texttt{1.4.9}; the probability
+formula is accepted in AF node \texttt{1.5.16}. The full
+polar-decomposition theorem, Wilsonian derivation of the renormalization
+coefficients, physical operator product constants, fractional-power analysis,
+plotting, physical probability derivation, and categorical basis semantics
+remain separate targets.
+\end{theorem}
+
+\begin{theorem}[Conditional diagonal scaling]
+Let \(I\) be a finite set of scaling labels. For each \(i\in I\), let
+\(e_i\) be the coordinate vector with value \(1\) at \(i\) and \(0\)
+elsewhere. If a linear map \(R\) is diagonal in this basis with entries
+\(\lambda_i\), so that
+\[
+(Rx)_j=\lambda_j x_j,
+\]
+then
+\[
+R e_i=\lambda_i e_i.
+\]
+In particular, if the entries are stipulated to be
+\(\lambda_i=b^{-w_i}\), then \(e_i\) is an eigenvector with eigenvalue
+\(b^{-w_i}\). The Lean file
+\texttt{Formalisation/LinearAlgebra/DiagonalScaling.lean} proves this
+statement, with Julia and WolframScript checks for the chiral pattern
+\(w_i=h_i\) and the nonchiral pattern \(w_i=\Delta_i\). Status: AF node
+\texttt{1.5.3} is accepted only for this conditional diagonal
+linear-algebra statement. The rational scaling exponents for the Fibonacci
+primary, descendant, and diagonal nonchiral examples are accepted separately
+in AF node \texttt{1.5.15}. These results do not prove real-power analysis,
+the diagonalisation of a physical renormalization group map, or the
+charge-only negative example.
+\end{theorem}
+
+\begin{warning}[Charge-only data do not determine the full scaling spectrum]
+The two-dimensional charge-only operator space \(\End(Q)\) does not generally
+recover all conformal field theory scaling operators. To recover the full
+spectrum, labels must include data such as primary field, descendant level,
+and mixing sector.
+
+A concrete finite counterexample is as follows. In the span of two charge
+projectors, write
+\[
+u=(1,1),\qquad c=(1,-1).
+\]
+For any complex number \(a\), define the charge-only linear map that is
+diagonal in the basis \(\{u,c\}\) by
+\[
+R_a u=u,\qquad R_a c=a\,c.
+\]
+In the charge-projector coordinates this map is
+\[
+R_a=
+\begin{pmatrix}
+(1+a)/2 & (1-a)/2\\
+(1-a)/2 & (1+a)/2
+\end{pmatrix}.
+\]
+Thus the charge contrast eigenvalue is the chosen amplitude \(a\). Taking
+\(a=1/2\) and \(b=32\) gives \(b^{-2/5}=1/4\), so the charge contrast
+eigenvalue is not forced to equal \(b^{-2/5}\). The Lean file
+\texttt{Formalisation/LinearAlgebra/ChargeOnly.lean} proves this finite
+example, and Julia and WolframScript check it numerically and exactly. Status:
+AF node \texttt{1.5.4} is accepted only for this concrete finite
+counterexample.
+\end{warning}
+
+\section{Temperley--Lieb and Ising Secondary Target}
+
+\begin{definition}[Ising-type fusion rules]
+The secondary test category has simple labels
+\(\mathbf 1,\sigma,\epsilon\). The local physics source writes the third
+label as \(\psi\); in this document \(\epsilon\) means that same label. The
+fusion rules are
+\[
+\sigma\otimes\sigma=\mathbf 1\oplus\epsilon,\quad
+\sigma\otimes\epsilon=\sigma,\quad
+\epsilon\otimes\epsilon=\mathbf 1.
+\]
+Together with the unit rule
+\[
+\mathbf 1\otimes a=a=a\otimes \mathbf 1,
+\]
+these rules are multiplicity-free except that \(\sigma\otimes\sigma\) has two
+simple summands. The local sources are
+\texttt{references/text/PenneysUnitaryFusionCategories.md:647},
+\texttt{:649}, and
+\texttt{references/text/PoilblancOneDimensionalItinerantInteractingAnyons.txt:177}
+through \texttt{:188}.
+\end{definition}
+
+\begin{theorem}[Finite Ising toy exponent and normalisation]
+Use the nonchiral Ising dimensions
+\[
+\Delta_\sigma=\frac18,\qquad \Delta_\epsilon=1.
+\]
+Then the exponent for the channel
+\[
+\sigma\otimes\sigma\to\epsilon
+\]
+is
+\[
+\Delta_\epsilon-2\Delta_\sigma
+=1-2\cdot\frac18=\frac34.
+\]
+For a real parameter \(t\), the squared numerator norm of the toy vector with
+coefficients
+\[
+\frac{1}{\sqrt 2},\qquad
+\frac{1}{\sqrt 2},\qquad
+\frac{t}{2}
+\]
+is
+\[
+\left(\frac1{\sqrt2}\right)^2+
+\left(\frac1{\sqrt2}\right)^2+
+\left(\frac{t}{2}\right)^2
+=1+\frac{t^2}{4}.
+\]
+Thus division by \(\sqrt{1+t^2/4}\) scalar-normalises the toy vector whenever
+the source fusion-tree basis vectors are orthonormal. In the handoff
+application \(t=\rho^{3/4}\), giving the denominator
+\(\sqrt{1+\rho^{3/2}/4}\). The Lean proof is in
+\texttt{Formalisation/Ising/Basic.lean}; Julia and WolframScript check the
+finite table and rational arithmetic. AF node \texttt{1.8} has been accepted
+by verifier \texttt{verifier-ising-toy-001}. This theorem does not construct
+the full Ising category, a Temperley--Lieb quotient, Ising \(F\)-symbols,
+operator product expansions, a conformal-field-theory spectrum, or a physical
+renormalization map.
+\end{theorem}
+
+\section{Continuum Structure and Conjectures}
+
+\begin{definition}[Direct-limit continuum Hilbert space]
+A coherent family of refinements satisfies
+\[
+E_{N\to N}=\operatorname{id},\qquad
+E_{M\to L}E_{N\to M}=E_{N\to L}.
+\]
+The continuum charge-sector Hilbert space is the completed direct limit
+\[
+\mathcal H_\infty^W=\overline{\varinjlim_N\mathcal H_N^W}.
+\]
+Status: the completed direct-limit Hilbert space remains pending. The finite
+coherence algebra for ascending observables and logical lifts is formalised
+below.
+\end{definition}
+
+\begin{theorem}[Coherent finite ascending channels and logical lifts]
+Let \(I\) be a finite coordinate set. Suppose that, for \(n\leq m\), matrices
+\[
+E_{n,m}\in M_I(\mathbb C)
+\]
+satisfy
+\[
+E_{n,n}=I,\qquad E_{m,l}E_{n,m}=E_{n,l}\quad(n\leq m\leq l),
+\]
+and
+\[
+E_{n,m}^\dagger E_{n,m}=I.
+\]
+Define the finite ascending observable map by
+\[
+A_{n,m}(O)=E_{n,m}^\dagger O E_{n,m}.
+\]
+Define the finite logical-lift map by
+\[
+L_{n,m}(O)=E_{n,m} O E_{n,m}^\dagger.
+\]
+Then
+\[
+A_{n,m}(I)=I
+\]
+and, for \(n\leq m\leq l\),
+\[
+A_{n,m}(A_{m,l}(O))=A_{n,l}(O).
+\]
+The logical-lift maps satisfy
+\[
+L_{n,n}(O)=O
+\]
+and, for \(n\leq m\leq l\),
+\[
+L_{m,l}(L_{n,m}(O))=L_{n,l}(O).
+\]
+The Lean file \texttt{Formalisation/LinearAlgebra/CoherentSystem.lean}
+proves this finite matrix theorem. Julia and WolframScript check exact
+rational rotation examples. AF node \texttt{1.5.6} has been accepted by
+verifier \texttt{verifier-coherent-asc-001}, and AF node \texttt{1.5.10} has
+been accepted by verifier \texttt{verifier-coherent-lift-001}. This theorem
+does not construct a completed direct limit, a continuum Hilbert space, a
+continuum algebra, a categorical fine-graining system, or nonconstant growing
+Hilbert spaces.
+\end{theorem}
+
+\begin{conjecture}[Coherent subdivision family]
+A physically correct continuum fine-graining scheme should use a coherent
+family
+\[
+\eta^{(r)}:Q\to Q^{\otimes r},\qquad r=1,2,3,\ldots,
+\]
+compatible with arbitrary ordered subdivisions.
+\end{conjecture}
+
+\begin{conjecture}[Topological fixed points]
+For topological fixed points, the coherent family can be expressed using
+\(F\)-symbols, quantum dimensions, and local string-net identities.
+\end{conjecture}
+
+\begin{conjecture}[Renormalization away from fixed points]
+Away from topological fixed points, the coherent family is determined by the
+full Wilsonian renormalization trajectory, not by the fusion category alone.
+\end{conjecture}
+
+\begin{conjecture}[Universal isometry]
+Every physically admissible finite-lattice fine-graining map is, at the
+categorical level, an isometry
+\[
+E_{N\to M}:Q^{\otimes N}\hookrightarrow Q^{\otimes M}.
+\]
+\end{conjecture}
+
+\begin{conjecture}[Topology and weights]
+The fusion category determines which fine-graining channels may be nonzero.
+Renormalization data determine the finite-scale coefficients. Isometry then
+determines the normalised amplitudes.
+\end{conjecture}
+
+\begin{conjecture}[Braiding and order changes]
+If a fine-graining interpolation allows particles to exchange spatial order,
+then the category must be braided, and the order-change components must use
+the braiding. Without braiding, fine-graining maps should preserve order or
+avoid crossings.
+\end{conjecture}
+
+\section{Current Machine-Checked Artefacts}
+
+\begin{itemize}
+\item Lean project: \texttt{lakefile.lean}, \texttt{lean-toolchain}, and
+\texttt{Formalisation/}.
+\item Lean build command: \texttt{lake build}.
+\item Julia check: \texttt{scripts/julia/fibonacci\_checks.jl}.
+\item WolframScript check: \texttt{scripts/wolfram/fibonacci\_exact.wls}.
+\item Command log: \texttt{results/CHECKS.md}.
+\item Master provenance ledger: \texttt{MASTER\_PROVENANCE.md}.
+\end{itemize}
+
+\end{document}
