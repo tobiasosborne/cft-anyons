@@ -1118,3 +1118,79 @@ Scope:
   infrastructure works; the per-Lean-file 3-way C-gates require the
   matching `.wls` scripts (e.g. `fibonacci_exact.wls`,
   `fibonacci_matrix_exact.wls`) which run as part of P6.6.
+
+## 2026-05-17: Phase 6 P6.5 — Julia full-suite rerun (25 scripts, canonical repo)
+
+Phase 6 infrastructure-only validation (NOT an AF-node-acceptance
+entry); scales up the P6.3 single-script Julia smoke test to the
+full suite. Re-confirms that all 25 Julia cross-check scripts ported
+in P6.1 (commit `8b680b2`) execute cleanly in the canonical repo
+(`cft-anyons/`) under Julia 1.12.3. The single-script smoke test
+was P6.3 (`direct_sum_orthogonal_checks.jl`); this is the all-25
+rerun mandated by `MIGRATION_PLAN.md:243`.
+
+Pre-rerun environment:
+- Julia version: 1.12.3
+- Project: none — repo root has no `Project.toml`; scripts run
+  against the user-default `~/.julia/environments/v1.12/Project.toml`
+  as fallback. All 25 scripts use only the LinearAlgebra standard
+  library (17 carry an explicit `using LinearAlgebra`; the remaining 8
+  do not import any non-stdlib package — verified via
+  `grep -E '^(using|import) ' scripts/julia/*.jl | sort -u`).
+- Packages added during this run: none.
+
+Commands run from repository root:
+
+```text
+for f in scripts/julia/*.jl; do
+  timeout 300 julia "$f"
+done
+```
+
+Per-script outcomes (alphabetical):
+
+| Script | Pass? | Outcome (final printed line) | Wall (s) |
+|---|---|---|---|
+| `cft_weight_checks.jl` | yes | `all CFT weight checks passed` | 0.4 |
+| `charge_only_negative_checks.jl` | yes | `all charge-only negative checks passed` | 0.8 |
+| `coassoc_unique_checks.jl` | yes | `all scalar coassociative uniqueness checks passed` | 0.7 |
+| `coherent_system_checks.jl` | yes | `all coherent system checks passed` | 0.9 |
+| `component_orthogonality_checks.jl` | yes | `all component orthogonality checks passed` | 1.2 |
+| `configuration_checks.jl` | yes | `all configuration checks passed` | 1.7 |
+| `configuration_space_checks.jl` | yes | `all configuration-space coordinate checks passed` | 1.9 |
+| `diagonal_scaling_checks.jl` | yes | `all diagonal scaling checks passed` | 0.8 |
+| `direct_sum_coordinate_checks.jl` | yes | `all direct-sum coordinate checks passed` | 1.5 |
+| `direct_sum_orthogonal_checks.jl` | yes | `all orthogonal direct-sum coordinate checks passed` | 1.3 |
+| `direct_sum_projection_checks.jl` | yes | `all direct-sum projection checks passed` | 1.4 |
+| `fibonacci_braid_checks.jl` | yes | `all Fibonacci braid matrix checks passed` | 1.0 |
+| `fibonacci_braid_unitarity_checks.jl` | yes | `all Fibonacci braid unitarity checks passed` | 2.5 |
+| `fibonacci_checks.jl` | yes | `all Julia Fibonacci checks passed` | 4.9 |
+| `fine_graining_definition_checks.jl` | yes | `all fine-graining definition checks passed` | 1.5 |
+| `fusion_rules_checks.jl` | yes | `all Fibonacci fusion-rule checks passed` | 0.7 |
+| `ising_toy_checks.jl` | yes | `all Ising toy checks passed` | 1.1 |
+| `linear_algebra_checks.jl` | yes | `all finite-matrix linear algebra checks passed` | 1.4 |
+| `linear_algebra_trace_checks.jl` | yes | `all finite-matrix trace checks passed` | 2.4 |
+| `polar_section_checks.jl` | yes | `all polar section checks passed` | 2.1 |
+| `postcompose_isometry_checks.jl` | yes | `all postcomposition isometry checks passed` | 1.2 |
+| `project_definition_checks.jl` | yes | `all project definition checks passed` | 1.9 |
+| `tensor_isometry_checks.jl` | yes | `all tensor isometry checks passed` | 1.3 |
+| `tensor_power_checks.jl` | yes | `all tensor power checks passed` | 0.9 |
+| `truncated_fock_checks.jl` | yes | `all truncated Fock coordinate checks passed` | 0.7 |
+
+Aggregate: **25 / 25 PASS**, 0 FAIL. Total wall time for the loop:
+~37 s (sum of per-script ~36 s plus negligible shell overhead). All
+exit codes 0. No timeouts triggered (per-script ceiling was 300 s;
+worst single script was `fibonacci_checks.jl` at 4.9 s).
+
+Scope:
+- Phase 6 infrastructure validation only. Re-confirms that the 25
+  ported Julia scripts execute cleanly in the canonical-repo
+  environment. These scripts were originally validated at CAD on
+  2026-05-14/15 (see earlier dated sections in this file); this is
+  a re-run on the canonical repo's byte-identical port (P6.1 SHA256
+  manifest at commit `8b680b2`).
+- Does NOT close any of the 9 Wolfram cross-check follow-ups
+  (`cft-anyons-5tm.{9,11,13,15,17,19,21,23,26}`) — those require the
+  matching Wolfram leg run at P6.6.
+- Does NOT change the AF-node acceptance state for any leaf; this
+  entry is an infrastructure log, not a new acceptance record.
