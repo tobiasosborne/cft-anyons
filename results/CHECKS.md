@@ -1032,3 +1032,41 @@ Scope:
 - AF verifier: node `1.4.6` accepted by `verifier-wp4-summary-001` on
   2026-05-14. The acceptance scope is only a proof-tree summary of the
   validated WP4 finite-matrix leaves; it adds no new mathematical content.
+
+## 2026-05-17: Phase 6 P6.3 — Julia infrastructure smoke test (canonical repo)
+
+Phase 6 infrastructure-only smoke test (NOT an AF-node-acceptance
+entry). Validates that the Julia cross-check scripts ported in P6.1
+(commit `8b680b2`) execute cleanly in the canonical repo
+(`cft-anyons/`) under Julia 1.12.3. Smallest script chosen per
+`MIGRATION_PLAN.md:241` and named explicitly there:
+`direct_sum_orthogonal_checks.jl` (LinearAlgebra stdlib only; no
+project environment required).
+
+Commands run from repository root:
+
+```text
+julia scripts/julia/direct_sum_orthogonal_checks.jl
+```
+
+Outcome:
+- Julia: passed. Script printed `all orthogonal direct-sum coordinate
+  checks passed` and exited 0. The assertions inside (inclusion–projection
+  orthogonality `Π_i ∘ ι_j = δ_{ij} · I`, identity reconstruction
+  `∑_j ι_j Π_j = I`, off-diagonal zeroing) all succeeded on the test
+  data (`sizes = [1, 2, 3]`, `total_dim = 6`).
+- No `Pkg.instantiate` required: script imports only the LinearAlgebra
+  standard library. No `Project.toml` exists at repo root and none is
+  needed for this script.
+
+Scope:
+- Phase 6 infrastructure validation only. The script's mathematical
+  content was previously validated at CAD on 2026-05-14 (see the
+  `## 2026-05-14: Foundations Direct-Sum Block` section above); this
+  rerun confirms the byte-identical ported file (per P6.1 SHA256
+  manifest at commit `8b680b2`) executes successfully in the
+  canonical-repo environment.
+- Does NOT close any of the 9 Wolfram cross-check follow-up bd issues
+  (`cft-anyons-5tm.{9,11,13,15,17,19,21,23,26}`); those are blocked-by
+  `cft-anyons-bh3` (P6.6: re-run all 25 Wolfram scripts), which
+  requires TIB VPN.
