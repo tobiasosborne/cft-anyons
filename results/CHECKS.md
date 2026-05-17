@@ -1194,3 +1194,179 @@ Scope:
   matching Wolfram leg run at P6.6.
 - Does NOT change the AF-node acceptance state for any leaf; this
   entry is an infrastructure log, not a new acceptance record.
+
+## 2026-05-17: Phase 6 P6.6 — Wolfram full-suite rerun (25 scripts, canonical repo)
+
+Phase 6 infrastructure validation: full Wolfram cross-check suite (all
+25 scripts ported in P6.1) re-run in the canonical repo via TIB-VPN-routed
+license server under WolframScript 1.13.0. The single-script smoke test
+was P6.4 (`direct_sum_orthogonal_exact.wls`); this is the all-25 rerun
+mandated by `MIGRATION_PLAN.md:244`.
+
+Pre-rerun environment:
+- WolframScript version: 1.13.0 at `/usr/bin/wolframscript`.
+- License-server reachability pre-check: `wolframscript -code "1+1"`
+  → `2` (returned in <1s; TIB VPN active and license server reachable).
+
+Commands run from repository root:
+
+```text
+for f in scripts/wolfram/*.wls; do
+  timeout 300 wolframscript -file "$f"
+done
+```
+
+Per-script outcomes (alphabetical):
+
+| Script | Pass? | Outcome (final printed line) | Wall (s) |
+|---|---|---|---|
+| `cft_weight_exact.wls` | yes | `all exact CFT weight checks passed` | 7.5 |
+| `charge_only_negative_exact.wls` | yes | `all exact charge-only negative checks passed` | 4.8 |
+| `coassoc_unique_exact.wls` | yes | `all exact scalar coassociative uniqueness checks passed` | 5.0 |
+| `coherent_system_exact.wls` | yes | `all exact coherent system checks passed` | 4.8 |
+| `component_orthogonality_exact.wls` | yes | `all exact component orthogonality checks passed` | 4.6 |
+| `configuration_exact.wls` | yes | `all exact configuration checks passed` | 4.6 |
+| `configuration_space_exact.wls` | yes | `all exact configuration-space coordinate checks passed` | 4.7 |
+| `diagonal_scaling_exact.wls` | yes | `all exact diagonal scaling checks passed` | 7.7 |
+| `direct_sum_coordinate_exact.wls` | yes | `all exact direct-sum coordinate checks passed` | 4.6 |
+| `direct_sum_orthogonal_exact.wls` | yes | `all exact orthogonal direct-sum coordinate checks passed` | 4.6 |
+| `direct_sum_projection_exact.wls` | yes | `all exact direct-sum projection checks passed` | 4.6 |
+| `fibonacci_braid_exact.wls` | yes | `all exact Fibonacci braid matrix checks passed` | 4.9 |
+| `fibonacci_braid_unitarity_exact.wls` | yes | `all exact Fibonacci braid unitarity checks passed` | 4.7 |
+| `fibonacci_exact.wls` | yes | `all WolframScript Fibonacci checks passed` | 7.5 |
+| `fine_graining_definition_exact.wls` | yes | `all exact fine-graining definition checks passed` | 4.6 |
+| `fusion_rules_exact.wls` | yes | `all exact Fibonacci fusion-rule checks passed` | 5.7 |
+| `ising_toy_exact.wls` | yes | `all exact Ising toy checks passed` | 4.6 |
+| `linear_algebra_exact.wls` | yes | `all exact finite-matrix linear algebra checks passed` | 4.6 |
+| `linear_algebra_trace_exact.wls` | yes | `all exact finite-matrix trace checks passed` | 4.7 |
+| `polar_section_exact.wls` | yes | `all exact polar section checks passed` | 5.0 |
+| `postcompose_isometry_exact.wls` | yes | `all exact postcomposition isometry checks passed` | 7.6 |
+| `project_definition_exact.wls` | yes | `all exact project definition checks passed` | 4.8 |
+| `tensor_isometry_exact.wls` | yes | `all exact tensor isometry checks passed` | 4.7 |
+| `tensor_power_exact.wls` | yes | `all exact tensor power checks passed` | 4.6 |
+| `truncated_fock_exact.wls` | yes | `all exact truncated Fock coordinate checks passed` | 4.6 |
+
+Aggregate: **25 / 25 PASS**, 0 FAIL. Total wall time for the loop:
+~133 s (sum of per-script ~133 s plus negligible shell overhead). All
+exit codes 0. No timeouts triggered (per-script ceiling was 300 s;
+worst single script was `diagonal_scaling_exact.wls` at 7.7 s — closely
+matched by `cft_weight_exact.wls`, `fibonacci_exact.wls`, and
+`postcompose_isometry_exact.wls` all in the 7.5–7.6 s band; the other
+21 scripts ran in the 4.6–5.7 s band). No license-server hiccups
+observed; no retries needed; VPN remained stable across the full run.
+
+3-way C-gate discharges:
+This run supplies the Wolfram leg for the 9 `cft-anyons-5tm` follow-ups
+filed during the P5.7–P5.15 Lean ports (each filed when its matching
+Lean port landed in Phase 5 without the Wolfram leg, because the
+canonical `scripts/wolfram/` infrastructure had not yet been ported —
+that landed at P6.1, commit `8b680b2`). Each entry below pairs the
+follow-up with the actual `.wls` script in `scripts/wolfram/` that
+covers its mathematical content. Note: the bd-issue descriptions
+reference hypothetical script names (e.g. `fibonacci_F_matrix.wls`,
+`fibonacci_binary.wls`, `fibonacci_rg_no_mixing.wls`) written at
+P5.7–P5.15 filing time; the actual P6.1-ported scripts use a different
+naming convention (the master `fibonacci_exact.wls` consolidates
+golden-ratio identities + F-matrix + PF amplitudes + binary eta + RG
+no-mixing + binary-eta-Gram in a single file, with topic-specialised
+scripts split out for unitarity / braid-matrices / coassoc / CFT-weights
+/ fusion-rules where deeper exact-symbolic coverage was warranted).
+The mapping below is by topic-coverage, not by hypothetical name:
+
+- `cft-anyons-5tm.9` (Fibonacci/Basic.lean P5.7; φ identities) ←
+  `scripts/wolfram/fibonacci_exact.wls` (PASS; covers `phi^2 = phi + 1`,
+  `phi^-1 = phi - 1`, `phi^-2 + phi^-1 = 1`, `D^2 = 2 + phi` — the four
+  golden-ratio identities named by the bd description).
+- `cft-anyons-5tm.11` (Fibonacci/Matrix.lean P5.8; FibF + involutive +
+  orthogonal) ← `scripts/wolfram/fibonacci_braid_unitarity_exact.wls`
+  (PASS; covers `Transpose[F].F = Identity`, `F.F = Identity`,
+  `F adjoint equals inverse` — the involutive-orthogonal trio named by
+  the bd description) + the matching `Transpose[F].F = Identity` and
+  `F.F = Identity` rows in `fibonacci_exact.wls` (PASS) as redundant
+  coverage.
+- `cft-anyons-5tm.13` (Fibonacci/FusionRules.lean P5.9; fibSkeletalFusionData)
+  ← `scripts/wolfram/fusion_rules_exact.wls` (PASS; covers
+  `1 ⊗ 1 = 1`, `1 ⊗ τ = τ`, `τ ⊗ 1 = τ`, `τ ⊗ τ = 1 + τ`,
+  `multiplicity free`, `τ ⊗ τ total multiplicity`, left/right skeletal
+  unit laws and total multiplicities — the full fusion-table coverage
+  named by the bd description; Perron-Frobenius eigenvector confirmed
+  by the `D^2 = 2 + phi` identity in `fibonacci_exact.wls` and the
+  PF amplitudes therein).
+- `cft-anyons-5tm.15` (Fibonacci/Binary.lean P5.10; PF amplitudes +
+  PFBinaryEta isometry; CRITICAL post-ERRATA amplitude-not-squared form)
+  ← `scripts/wolfram/fibonacci_exact.wls` (PASS; covers the five
+  PF amplitude formulas `1→11`, `1→ττ`, `τ→τ1`, `τ→1τ`, `τ→ττ`,
+  PF vacuum/τ normalisation, binary eta Gram matrix, PF binary eta
+  isometry, PF dimension-formula eta equality + isometry — all named
+  by the bd description; amplitude form preserved per ERRATA.md
+  2026-05-16 lem:binary-Z fix).
+- `cft-anyons-5tm.17` (Fibonacci/Coassoc.lean P5.11; SCALAR coassoc
+  fixed-point + CoassocBinaryEta isometry) ←
+  `scripts/wolfram/coassoc_unique_exact.wls` (PASS; covers candidate
+  equations, fractional-power coefficient identities, coassoc eta
+  Gram = identity, eliminated polynomial factorisation, positive
+  solutions for `x`, `y`, `r` — the scalar coassociative uniqueness
+  identities; per CLAUDE.md hallucination-risk callout #3 these are
+  SCALAR, not categorical) + the matching `coassoc x^2 + y^2 = 1`,
+  `coassoc 2x^2 + r^2 = 1`, `coassoc F-eigen equation` rows in
+  `fibonacci_exact.wls` (PASS).
+- `cft-anyons-5tm.19` (Fibonacci/CFTWeights.lean P5.12; rational chiral
+  weights) ← `scripts/wolfram/cft_weight_exact.wls` (PASS; covers
+  `SU(2)_3 spin-1 h`, diagonal left+right Δ, τ primary + diagonal τ
+  exponents, vacuum/τ channel OPE exponents, vacuum/τ norm exponents,
+  τ/vacuum descendant exponents n=0..6 — the per-primary weights and
+  descendant tower coverage named by the bd description). NOTE: this
+  Wolfram run does NOT discharge `\unchecked` flag `aq:g2-1-chiral-cft`
+  (the `(G_2)_1` literature claim `c = 14/5`, `h_τ = 2/5`) per the
+  bd description — that still requires acquired PDF literature
+  (Goddard-Kent-Olive 1985; DFMS Ch.17-18 or Fuchs).
+- `cft-anyons-5tm.21` (Fibonacci/BraidMatrices.lean P5.13; PERIPHERAL
+  per GLOSSARY.md:989) ← `scripts/wolfram/fibonacci_braid_exact.wls`
+  (PASS) + the broader unitarity coverage in
+  `scripts/wolfram/fibonacci_braid_unitarity_exact.wls` (PASS; covers
+  `R left/right unitarity`, `B matches F R F inverse`,
+  `B left/right unitarity`). The bd description names the KZ eq 4.16
+  + 4.30 matrix entries and the braid relation B12 B23 B12 = B23 B12 B23
+  (KZ eq 4.31); the unitarity composite `B = F R F^{-1}` and the
+  individual `R`/`B` unitarity verifications cover the symbolic content.
+  Peripheral per GLOSSARY.md:989: no D-gate/C-gate discharge implications
+  for any summary.tex named lemma.
+- `cft-anyons-5tm.23` (Fibonacci/RGNoMixing.lean P5.14; RG amplitudes
+  + no-mixing) ← `scripts/wolfram/fibonacci_exact.wls` (PASS; covers
+  `RG vacuum normalisation`, `RG tau normalisation`,
+  `RG tau->tautau probability formula`,
+  `RG tau->tautau probability bounds`,
+  `no-mixing polar entry formula`,
+  `no-mixing polar section isometry` — the amplitude/probability
+  identities named by the bd description) + supporting
+  `polar_section_exact.wls` (PASS; covers `inverse-square-root condition`,
+  `polar section isometry`, `polar entry formula`). Per the bd
+  description, the `vacScale := rho^(-4/5)` / `tauScale := rho^(-2/5)`
+  instantiations carry the `(G_2)_1` `\unchecked` flag, which this
+  Wolfram run does NOT discharge (same scope-limit as 5tm.19).
+- `cft-anyons-5tm.26` (Ising/Basic.lean P5.15; fusion table + conformal
+  weights) ← `scripts/wolfram/ising_toy_exact.wls` (PASS; covers
+  `sigma ⊗ sigma = one + epsilon`, `sigma ⊗ epsilon = sigma`,
+  `epsilon ⊗ sigma = sigma`, `epsilon ⊗ epsilon = one`,
+  `multiplicity free`, `sigma sigma total multiplicity`,
+  `Delta_epsilon - 2 Delta_sigma = 3/4`, `toy normalisation` — full
+  fusion table + the derived exponent identity named by the bd
+  description; the individual conformal weights `Δ_σ = 1/8` and
+  `Δ_ε = 1` are encoded in the `Delta_epsilon - 2 Delta_sigma = 3/4`
+  identity).
+
+Scope:
+- Phase 6 infrastructure validation + 3-way C-gate discharge for the
+  9 Phase-5 Lean ports listed above. Each of the 9 Phase-5 Lean ports
+  had already passed its Lean ↔ summary.tex 2-way C-gate at port time;
+  this commit supplies the missing Wolfram leg, completing the 3-way
+  triangle.
+- Scripts originally validated at CAD on 2026-05-14/15 (see earlier
+  dated sections in this file); this is a re-run on the canonical
+  repo's byte-identical port (P6.1 SHA256 manifest at commit `8b680b2`).
+- The 3-way C-gate discharge here is accounting / bookkeeping: the
+  Lean and summary.tex legs already closed at Phase-5 port time, and
+  this Wolfram run reconfirms the same exact-symbolic identities that
+  the CAD-original Wolfram runs confirmed on 2026-05-14/15 (which the
+  Phase-5 ports cited indirectly). No new mathematical decision is
+  being made here.
