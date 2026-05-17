@@ -180,7 +180,11 @@ gauge translation produces silently-wrong inner products.
 under this convention, with the involutory-coincidence noted in
 [[def:fib-F]]'s Notes); [[def:mobile-Fock]] convention dep #4; all
 four Hilbert-space Translation maps cite "F-matrix gauge [P1.6(b)]"
-or "F-matrix gauge translation [P1.6(b)]".
+or "F-matrix gauge translation [P1.6(b)]"; [[def:rsymbol]] Notes #3
+(R-symbol gauge inherits from F-symbol gauge transitively via the
+`B = F R F` composite); [[def:braid-H]] Notes #3 (the Hermitian
+braiding-Hamiltonian construction sits on top of the R/B-symbol
+gauge handling and therefore inherits [P1.6(b)] transitively).
 
 ---
 
