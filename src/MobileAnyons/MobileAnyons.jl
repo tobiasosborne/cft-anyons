@@ -66,7 +66,7 @@ include("interaction.jl")
 include("braiding.jl")
 include("paircreation.jl")
 include("wavelets.jl")
-# include("finegraining.jl")    # P8.4: deferred to P8.6
+include("finegraining.jl")    # P8.6: partial port (categorical_determinant_isometry excluded)
 # include("virasoro.jl")        # P8.4: deferred to P8.7
 
 export LabelledConfig, enumerate_configs_hc
@@ -80,9 +80,9 @@ export braiding_hamiltonian, braiding_hamiltonian_sector, tv_model_spectrum
 export dual_pairs, pair_creation_operator, pair_hamiltonian
 export daubechies_filter, one_particle_scaling_map, one_particle_scaling_map_haar
 export fine_graining_isometry_svec
-# export fine_graining_isometry, trivial_embedding, normalized_product_isometry         # P8.4: deferred to P8.6
-# export categorical_determinant_isometry  # partial correction only (non-abelian)      # P8.4: deferred to P8.6
-# export fine_graining_isometry_svec  # Slater lift (single-species only)               # P8.4: deferred to P8.6 (duplicate of line 27)
+export fine_graining_isometry, trivial_embedding, normalized_product_isometry           # P8.6: imported (3 of 4 finegraining.jl public functions)
+# export categorical_determinant_isometry  # partial correction only (non-abelian)      # P8.6: EXCLUDED — see src/MobileAnyons/finegraining.jl exclusion notice
+# export fine_graining_isometry_svec  # Slater lift (single-species only)               # P8.6: skipped — duplicate of line 82 (wavelets.jl is the primary definition site; MMA's finegraining.jl re-export at MMA MobileAnyons.jl:30 is a benign Julia duplicate)
 # export bond_projectors_dense, hamiltonian_fourier_modes, virasoro_commutator_check    # P8.4: deferred to P8.7
 
 end # module
