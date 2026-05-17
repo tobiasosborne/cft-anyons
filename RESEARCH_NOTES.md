@@ -239,6 +239,8 @@ Anchor naming convention: `DD-N`, monotonically incrementing.
 
 ### DD-1: `isingSkeletalFusionData` instance not added to `Ising/Basic.lean`
 
+**DISCHARGED:** P5.18 — `def isingSkeletalFusionData : Foundations.FiniteSkeletalFusionData` + 3 derived theorems (`_multiplicityFree`, `_left_total`, `_right_total`) added to `Formalisation/Ising/Basic.lean` following the P5.9 `fibSkeletalFusionData` pattern at `Formalisation/Fibonacci/FusionRules.lean:325-349`. bd `cft-anyons-5tm.25` CLOSED at P5.18. See the P5.18 commit body for SHA256s, mutation proof, and reviewer notes. Historical body preserved below as accounting record.
+
 **Deferred from:** P5.15 (port `cft-anyons-deprecated/Formalisation/Ising/Basic.lean`).
 
 **What:** The GLOSSARY pre-binding for `def:ising` at `GLOSSARY.md:1279`

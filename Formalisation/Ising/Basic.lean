@@ -1,4 +1,5 @@
 import Mathlib
+import Formalisation.Foundations.SkeletalFusion
 
 /-!
 Finite skeletal Ising fusion rules and the scalar toy exponent.
@@ -249,41 +250,48 @@ named theorems in this file. The CAVEAT clause of the translation-map
 line is deferred to a follow-up per orchestrator option (b). The
 toyNormalisation pair (3 declarations) carries no GLOSSARY pre-binding.
 
-FiniteSkeletalFusionData connection deferred per orchestrator option (b)
+FiniteSkeletalFusionData connection — DISCHARGED at P5.18
 =========================================================================
 
-The GLOSSARY pre-binding at `GLOSSARY.md:1279` (reproduced verbatim above)
-flags a CAVEAT: CAD's Ising file is not currently connected to
+**Historical context (P5.15):** The GLOSSARY pre-binding at
+`GLOSSARY.md:1279` (reproduced verbatim above) flags a CAVEAT: at the
+time of P5.15, CAD's Ising file was not connected to
 `Foundations.FiniteSkeletalFusionData` (no `isingSkeletalFusionData`
 instance analogous to `Fibonacci/FusionRules.lean::fibSkeletalFusionData`
-at body line 325 of that file). MIGRATION_PLAN.md:226 explicitly offers
+at body line 325 of that file). MIGRATION_PLAN.md:226 explicitly offered
 two paths:
 
   > Either (a) add the connection as part of this step, or (b) record a
   > follow-up task in `RESEARCH_NOTES.md`.
 
-The orchestrator has CHOSEN OPTION (b) for this commit. Rationale
-(per orchestrator brief): consistent with the established Phase-5
-defer-non-essential pattern (`cft-anyons-5tm.3` deferred decls from
-P5.5 + P5.6); option (a) would require adding new mathematical content
-beyond the verbatim CAD port that this step is scoped to.
+The orchestrator CHOSE OPTION (b) at P5.15. Rationale (per orchestrator
+brief): consistent with the established Phase-5 defer-non-essential
+pattern (`cft-anyons-5tm.3` deferred decls from P5.5 + P5.6); option (a)
+would have required adding new mathematical content beyond the verbatim
+CAD port that P5.15 was scoped to.
 
-Follow-up tracking:
-* bd issue `cft-anyons-5tm.25` ("Add isingSkeletalFusionData instance
-  to Ising/Basic.lean (P5.15 deferral)"), filed in this same commit.
-* `RESEARCH_NOTES.md` §"Deferred decisions" entry `DD-1`, added in this
-  same commit.
-
-The deferred work will be a small additive port (estimated ~25 LOC in this
-file, with no changes to the existing decls): the structure-valued
-`def isingSkeletalFusionData : Foundations.FiniteSkeletalFusionData where
-Label := IsingLabel; unit := one; fusionMultiplicity := fusionMultiplicity;
-leftUnit := ...; rightUnit := ...` plus the three derived theorems
-`_multiplicityFree`, `_left_total`, `_right_total`. Both `leftUnit` and
-`rightUnit` fields are dischargeable by `fin_cases a <;> fin_cases c <;>
-simp [fusionMultiplicity]` per the `fibSkeletalFusionData` precedent. The
-derived totals follow from `FiniteSkeletalFusionData.total_leftUnit /
+**DISCHARGED at P5.18** (see git log for commit hash; see `bd close
+cft-anyons-5tm.25` reason for hash). The deferred work has been added
+to this file: the structure-valued `def isingSkeletalFusionData :
+Foundations.FiniteSkeletalFusionData` (body line ~369) instantiates
+`Label := IsingLabel`, `unit := one`,
+`fusionMultiplicity := fusionMultiplicity`; the `leftUnit` and
+`rightUnit` fields are discharged by `fin_cases a <;> fin_cases c <;>
+simp [fusionMultiplicity]` (matches the `fibSkeletalFusionData`
+precedent exactly). The three derived theorems
+`isingSkeletalFusionData_multiplicityFree`,
+`isingSkeletalFusionData_left_total`, and
+`isingSkeletalFusionData_right_total` (body lines ~382, ~387, ~392)
+follow respectively from `fusion_multiplicity_le_one` (body line 359)
+and from `FiniteSkeletalFusionData.total_leftUnit /
 total_rightUnit` (P5.1 SkeletalFusion.lean).
+
+Follow-up tracking (status updated at P5.18):
+* bd issue `cft-anyons-5tm.25` ("Add isingSkeletalFusionData instance
+  to Ising/Basic.lean (P5.15 deferral)") — **CLOSED at P5.18**.
+* `RESEARCH_NOTES.md` §"Deferred decisions" entry `DD-1` —
+  **DISCHARGED at P5.18** (one-line flag added; historical body
+  preserved as accounting record).
 
 Provenance
 ==========
@@ -363,6 +371,32 @@ theorem fusion_multiplicity_le_one (a b c : IsingLabel) :
 theorem fusion_sigma_sigma_total_multiplicity :
     (∑ c : IsingLabel, fusionMultiplicity sigma sigma c) = 2 := by
   decide
+
+def isingSkeletalFusionData : Foundations.FiniteSkeletalFusionData where
+  Label := IsingLabel
+  unit := one
+  fusionMultiplicity := fusionMultiplicity
+  leftUnit := by
+    intro a c
+    fin_cases a <;> fin_cases c <;> simp [fusionMultiplicity]
+  rightUnit := by
+    intro a c
+    fin_cases a <;> fin_cases c <;> simp [fusionMultiplicity]
+
+theorem isingSkeletalFusionData_multiplicityFree :
+    isingSkeletalFusionData.MultiplicityFree := by
+  intro a b c
+  exact fusion_multiplicity_le_one a b c
+
+theorem isingSkeletalFusionData_left_total (a : IsingLabel) :
+    isingSkeletalFusionData.totalFusionMultiplicity
+      isingSkeletalFusionData.unit a = 1 :=
+  isingSkeletalFusionData.total_leftUnit a
+
+theorem isingSkeletalFusionData_right_total (a : IsingLabel) :
+    isingSkeletalFusionData.totalFusionMultiplicity
+      a isingSkeletalFusionData.unit = 1 :=
+  isingSkeletalFusionData.total_rightUnit a
 
 def DeltaSigma : ℚ := 1 / 8
 
