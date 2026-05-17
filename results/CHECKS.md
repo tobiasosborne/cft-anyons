@@ -1070,3 +1070,51 @@ Scope:
   (`cft-anyons-5tm.{9,11,13,15,17,19,21,23,26}`); those are blocked-by
   `cft-anyons-bh3` (P6.6: re-run all 25 Wolfram scripts), which
   requires TIB VPN.
+
+## 2026-05-17: Phase 6 P6.4 — Wolfram infrastructure smoke test (canonical repo)
+
+Phase 6 infrastructure-only smoke test (NOT an AF-node-acceptance
+entry); the Wolfram companion to P6.3. Validates that the Wolfram
+cross-check scripts ported in P6.1 (commit `8b680b2`) execute cleanly
+in the canonical repo (`cft-anyons/`) via the TIB-VPN-routed Wolfram
+license server under WolframScript 1.13.0 (`/usr/bin/wolframscript`).
+
+Script chosen per `MIGRATION_PLAN.md:242` matched to P6.3's Julia leg:
+`scripts/wolfram/direct_sum_orthogonal_exact.wls` (SHA256
+`84a6daed9e1379a5828b7b7690a42ddaf5d88a13fd2a09a12c41bd59c57e0398` per
+the P6.1 manifest, unchanged in this commit).
+
+Commands run from repository root:
+
+```text
+wolframscript -file scripts/wolfram/direct_sum_orthogonal_exact.wls
+```
+
+Outcome:
+- WolframScript: passed. Script printed `all exact orthogonal
+  direct-sum coordinate checks passed` and exited 0; wall time 9.013s
+  (license server reachable via TIB VPN).
+- Exact symbolic checks (richer than the P6.3 Julia leg): inclusion
+  isometry `ι_i^* ι_i = I_{sizes[i]}`, projection-is-adjoint
+  `ι_i^* = Π_i`, range idempotence `(ι_i Π_i)² = ι_i Π_i`, range
+  self-adjointness `(ι_i Π_i)^* = ι_i Π_i`, adjoint pairing
+  `⟨ι_i v, w⟩ = ⟨v, Π_i w⟩` on the symbolic ambient vector
+  `{1 + 2 I, -3 + I, 5/2 - 4 I, 7, -2 - 3 I, 11/3 + I/2}`, range
+  self-adjoint pairing, and pairwise range orthogonality
+  `(ι_i Π_i)(ι_j Π_j) = 0` for `i ≠ j`. All assertions passed exactly
+  (no floating-point tolerance).
+
+Scope:
+- Phase 6 infrastructure validation only. The script's mathematical
+  content was previously validated at CAD on 2026-05-14 (see the
+  `## 2026-05-14: Foundations Direct-Sum Block` section above); this
+  rerun confirms the byte-identical ported file (per P6.1 SHA256
+  manifest at commit `8b680b2`) executes successfully in the
+  canonical-repo environment with live license-server access.
+- Does NOT close any of the 9 Wolfram cross-check follow-up bd issues
+  (`cft-anyons-5tm.{9,11,13,15,17,19,21,23,26}`); those are still
+  blocked-by `cft-anyons-bh3` (P6.6: re-run all 25 Wolfram scripts).
+  This single-script smoke test only validates that the Wolfram
+  infrastructure works; the per-Lean-file 3-way C-gates require the
+  matching `.wls` scripts (e.g. `fibonacci_exact.wls`,
+  `fibonacci_matrix_exact.wls`) which run as part of P6.6.
