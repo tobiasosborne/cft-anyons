@@ -983,6 +983,85 @@ With this P7.6 commit:
 
 ---
 
+## Phase 8 — MMA Julia computational backend (TC.jl heightened-care discipline applied)
+
+**Decision record.** Per user directive at Phase-7 close (2026-05-17):
+TC.jl as a Julia dependency brings elevated definitional-drift risk;
+apply maximum care (memory `feedback-phase8-tensorcategories-care`).
+Revised plan added P8.0a (LB-3 audit precondition), P8.0b (TC.jl
+version-pin rationale), escalated P8.1 to two-reviewer with sibling
+P8.1c report on TC.jl's own conventions, R-symbol GLOSSARY decision
+(P8.1.5 USER ESCALATION resolved at `cft-anyons-ycc`), per-file
+gauge-translation discipline at P8.4+, and `Pkg.test()` instead of
+direct-invocation (user decision at P8.8). MMA Julia files ported
+byte-identical from `/home/tobiasosborne/Projects/microscopic-mobile-anyons/src/MobileAnyons/`
+(at the SHA256s recorded in the manifest below) + per-file GLOSSARY
+docstring headers + 2 partial ports with exclusion notices
+(`categorical_determinant_isometry` at P8.6, `virasoro_commutator_check`
+at P8.7). Test suite: 18 MMA tests + 1 synthetic `runtests.jl` driver.
+`Pkg.test("MobileAnyons")` final result: **10586/10591 PASS (99.95%)**;
+5 non-pass items all triaged as **bucket (β) PRE-EXISTING MMA**
+(verified reproducible in MMA's own env via 3 independent comparison
+commands); filed as `cft-anyons-bnu` P3 non-blocking.
+
+### Phase 8 artifacts (file manifest)
+
+| Phase-step | Path | SHA256 | Source | Provenance chain |
+|---|---|---|---|---|
+| **P8.0a** | `stocktake/reports/opus-tcjl-api-audit.md` (148 lines) | `dad39204d79014dc15cd08152448f87340d37d0485462447540efcf2c24f6743` | (this repo) — authored by Opus 4.7 P8.0a implementer; LB-3 discharge | P8.0a commit `3c53c60`; hostile reviewer APPROVE 10/10 PASS; 27 EXISTS / 0 FABRICATED / 0 PARAPHRASED / 3 AMBIGUOUS (`FusionCategory` dangling export tracked at `cft-anyons-b6b`) |
+| **P8.1a** | `stocktake/reports/opus-mma-julia-bridge.md` (668 lines) | `9c67366d0b4d2d31c51923967ac3e53443c260f96e6e0ce5cae05d185e89574b` | (this repo) — authored by Opus 4.7 P8.1a implementer | P8.1a commit `f0b0e42`; hostile P8.1b reviewer APPROVE WITH MINOR 12/12 PASS (deep D-gate clean for 7 spot-checked slugs); YELLOW verdict; 5 P3/P4 follow-ups filed |
+| **P8.1.5** | `GLOSSARY.md` §B new entries | (folded into GLOSSARY.md commit) | (this repo) — Opus 4.7 P8.1.5 implementer; user-authorised | P8.1.5 commit `da39a21`; +2 §B entries (`def:rsymbol` lines 2093-2349, `def:braid-H` lines 2353-2589); hostile P8.1.5b reviewer APPROVE WITH MINOR 14/14 PASS (gauge characterization independently verified via 4 mutually-reinforcing pieces of evidence) |
+| **P8.1c** | `stocktake/reports/opus-tcjl-conventions-bridge.md` (517 lines) | `f6d00c1dbc313ea2c18636d1a69696baf16e71560dade066e24da7a01eb4ae08` | (this repo) — authored by Opus 4.7 P8.1c implementer | P8.1c commit `5407ff5`; covers all 10 CONVENTIONS [P1.6(*)] letters + R-symbol storage extension; drift surface LOW (4 no-differences / 1 different-but-handled-in-scope / 2 TC.jl-more-permissive / 4 N/A / 1 documented extension); 0 open questions |
+| **P8.3** | `Project.toml` | `77ebf14e5a3e95931e0ae70d0e9b9ae37898817bb1a35340f7ed70f3b1bbb40b` | `cft-anyons-deprecated/microscopic-mobile-anyons/Project.toml` (P8.3) + SparseArrays addition (P8.8 user-authorised) | P8.3 commit `cc3f33c` (initial import + TC.jl-pin rationale comment); P8.8 commit `315c9dc` (+SparseArrays to [deps] under stricter Pkg.test sandbox); MMA-equivalent except SparseArrays declaration |
+| **P8.3** | `Manifest.toml` | `e9e42574d348b097ebacd0f690ac5d04a276cc29c0fb3451226de3c9d33f7a5c` | MMA byte-identical | P8.3 commit `cc3f33c`; Manifest stayed byte-identical through P8.8 (SparseArrays was already in transitive tree, explicit [deps] declaration only exposed it to sandbox) |
+| **P8.4** | `src/MobileAnyons/MobileAnyons.jl` (95 LOC) | `84002c4dbf4ba8c33fcac2d7475bb769f89abe62a35451685b04f091be5aa742` | MMA `src/MobileAnyons/MobileAnyons.jl` + docstring header + include/export uncomment-state | P8.4-P8.7 commits incrementally uncommented `include`/`export` lines as each wave landed; post-P8.7 state: 10 active includes / 0 deferred |
+| **P8.4** | `src/MobileAnyons/config.jl` (89 LOC) | `a5073d427a6db8d46e119ac048c94a6b5eeba1b00a8bb44dfdc716766de3f301` | MMA byte-identical body + docstring header | P8.4 commit `f08daf4`; realises `[[def:partition]]`; reviewer APPROVE 14/14 PASS deep-D-gate clean |
+| **P8.4** | `src/MobileAnyons/hilbert.jl` (174 LOC) | `1e7fb0271160f4b8261536074035eab8dd291e2a262d26c477c7a33e5024face` | MMA byte-identical body + docstring header + LB-1 marker (5-line TODO at lines 113-117, immediately above `enumerate_fusion_trees`) | P8.4 commit `f08daf4`; realises `[[def:splitbasis]]` + `[[def:mobile-Fock]]`; LB-1 latent (cft-anyons-q6h) |
+| **P8.4** | `src/MobileAnyons/fsymbols.jl` (251 LOC) | `8009c3ca2425af4f24ddb8a035c2acf7e82b42b070294ac19a6db5830b25daa0` | MMA byte-identical body + docstring header | P8.4 commit `f08daf4`; realises `[[def:fsymbol]]` + `[[def:fib-F]]`; TC.jl interface (`six_j_symbols`, `dim`, etc.); gauge handling deferred to consumer per CONVENTIONS [P1.6(b)] |
+| **P8.5** | `src/MobileAnyons/operators.jl` (240 LOC) | `7722f155c37ee3789e4c4c3706ab235540db079c082207f519fa88a837fd0a2e` | MMA byte-identical body + docstring header | P8.5 commit `f9591aa`; tight-binding consumer of `[[def:mobile-Fock]]`; gauge N/A |
+| **P8.5** | `src/MobileAnyons/interaction.jl` (324 LOC) | `aaadeecc2f0b54c9267c400500198ba9c0ec2a601ddefff782083f5f53c1eae4` | MMA byte-identical body + docstring header | P8.5 commit `f9591aa`; realises `[[def:TL-cat]]`; **gauge GOLD STANDARD** — Hermitian-projector workaround P_H = vv†/|v|² (the [P1.6(b)] Translation rule implementation) |
+| **P8.5** | `src/MobileAnyons/braiding.jl` (604 LOC) | `a3bae54faa4d279bc0bd937712d35998c60584178ca432d510395d91374dc29c` | MMA byte-identical body + docstring header | P8.5 commit `f9591aa`; realises `[[def:rsymbol]]` + `[[def:braid-H]]` (new P8.1.5 slugs) + `[[def:fsymbol]]` + `[[def:fib-F]]`; **second gauge GOLD STANDARD** — R-symbols scalar per channel; gauge inheritance via composite `B = F R F` per [P1.6(b)]; spectral-decomposition Hermitian-projector workaround |
+| **P8.5** | `src/MobileAnyons/paircreation.jl` (330 LOC) | `b576885af23b5da8710978f72c5e01f73c58ea4157758b9e8b346f16f955c223` | MMA byte-identical body + docstring header + port-time gauge comment at dst:255-263 | P8.5 commit `f9591aa`; realises `[[def:pair-create]]` + `[[def:fuscat]]` rigid-duals + `[[def:fib-F]]`; **third F-symbol consumer** (cft-anyons-xvq discharged inline) — gauge-coincident in current scope per [P1.6(b)] |
+| **P8.5** | `src/MobileAnyons/wavelets.jl` (276 LOC) | `6417fc9e8c9377cf43cfc5b82adf9ed7c1b5afad224c155227a2d6d56e2c436c` | MMA byte-identical body + docstring header | P8.5 commit `f9591aa`; realises `[[def:polar-repair]]` (Löwdin orthogonalisation `S = R'*R; S_inv_sqrt = ...; R_iso = R * S_inv_sqrt` literally at dst:184-187) + `[[def:refmap]]` |
+| **P8.6** | `src/MobileAnyons/finegraining.jl` (509 LOC; src 558 → dst 509) | `7419d92e3b1ff53a5503f09c864ef777505a9303688a68e732f0e70b66bc1d11` | MMA + docstring header + exclusion notice at dst:393-509 | P8.6 commit `b953230`; **PARTIAL PORT**: kept `fine_graining_isometry` + `trivial_embedding` (`[[def:persist]]`) + `normalized_product_isometry` (`[[def:refmap]]` primary) + `_enumerate_fine_configs!`; **EXCLUDED** `categorical_determinant_isometry` + 6 sole-caller helpers (`_build_braiding_matrices`, `_bond_sigma_element`, `_add_catdet_elements!`, `_sum_permutations!`, `_recurse_perms!`, `_braiding_for_permutation`) — flagged "partial correction only" in MMA; exclusion exclusivity load-bearingly verified; reviewer APPROVE WITH MINOR 13/13 PASS; cft-anyons-874 discharged inline |
+| **P8.7** | `src/MobileAnyons/virasoro.jl` (420 LOC; src 140 → dst 420) | `006bedfbbffced89a3d642158471884f05947e3a61c6c1ca482321c4cca6e4a7` | MMA + docstring header + exclusion notice at dst:301-420 | P8.7 commit `ae3bc0f`; **PARTIAL PORT**: kept `bond_projectors_dense` (`[[def:TL-cat]]`) + `hamiltonian_fourier_modes` (`[[def:KS-Ln]]` primary + `[[def:KS-scalars]]` implicit, OBC sine-transform variant); **EXCLUDED** `virasoro_commutator_check` (NaN stub — returns `c_estimate = NaN`); RESEARCH_NOTES.md DD-2 entry added at lines 284-342 (disposition tracked); cft-anyons-qki discharged inline; reviewer APPROVE WITH MINOR 12/12 PASS |
+| **P8.8** | `src/MobileAnyons.jl` (32 LOC, no-op stub `module MobileAnyons; end`) | `2d10b20cd3235876da35751f2e5eec94b8b7562f4afb93f46107d779caff002b` | (this repo) — P8.8 shim | P8.8 commit `315c9dc`; thin Pkg.test entry-point shim; subdirectory-layout requires it; mathematically empty (no math content); inner-module loads via per-test-file `include + using .MobileAnyons` |
+| **P8.8** | `test/runtests.jl` (125 LOC synthetic) | `cc0c2c556cdb5f78e6518d4aaabb4be96d8493f8e698646232d3397d4cbde841` | (this repo) — P8.8 synthetic Pkg.test driver | P8.8 commit `315c9dc`; MMA has NO runtests.jl (each test file run standalone); this driver iterates over the 18 test files via anonymous-module-per-file pattern to avoid binding-clash redefinitions; 30-line preamble documents synthetic nature |
+| **P8.8** | `test/test_*.jl` (18 files, total ~4053 LOC) | (per-file SHAs at MIGRATION_LOG P8.8 row + CHECKS.md P8.8 entry) | MMA `test/` byte-identical | P8.8 commit `315c9dc`; all 18 source SHA256s match MMA; `Pkg.test()` result 10586/10591 PASS in 589.6s wall; 5 non-pass items all bucket (β) PRE-EXISTING MMA (3-way comparison: full file, isolated testset, direct-invocation); filed as `cft-anyons-bnu` P3 |
+
+### Phase 8 epistemic record
+
+**`Pkg.test("MobileAnyons")` final result** (verbatim from P8.8 v3 invocation at commit `315c9dc`):
+- **10586 tests passed / 2 failed / 3 errored / 10591 total**
+- **Runtime**: 589.6s (~9m50s) wall
+- **Per-file**: 17 of 18 test files all-pass; only `test_categories.jl` (6P/2F/2E) and `test_braiding_nonabelian.jl` (46P/0F/1E) have non-pass items
+- **All 5 non-pass items triaged as bucket (β) PRE-EXISTING MMA** via 3 independent comparison commands in MMA's own env:
+  - Fibonacci `Int(dim)` MethodError at test_categories.jl:17-18 (`MethodError: no method matching Int64(::AbsSimpleNumFieldElem)`) — reproduces identically in MMA env
+  - Ising `decompose(σ⊗σ)` length mismatch (gets 1, expected 2) at test_categories.jl:35 — reproduces identically
+  - Ising `decompose(ψ⊗ψ)` length mismatch (gets 2, expected 1) at test_categories.jl:39 — reproduces identically
+  - Verlinde(QQBar, 3) `KeyError: key (3, 3, 3) not found` at test_braiding_nonabelian.jl:207-214 — reproduces identically
+- **All filed as `cft-anyons-bnu` P3** (non-blocking; pre-existing MMA issues, not port-introduced)
+
+### Phase 8 harmonisation notes
+
+- **P8.0a (LB-3 discharge)**: TC.jl 0.5.3 source at depot `/home/tobiasosborne/.julia/packages/TensorCategories/fnMHT/` (Manifest tree-sha `591655388467dd84356425f16d584319809306ec`). 27/30 GLOSSARY TC.jl-citation EXISTS; 3 AMBIGUOUS (`FusionCategory` dangling-export — TC.jl exports the umbrella name at `src/TensorCategoryFramework/SixJCategory/FusionCategory.jl:191` but the operational type returned by `fibonacci_category()` / `ising_category()` is `SixJCategory`); bd-deferred to `cft-anyons-b6b` per AMBIGUOUS-rule decision A (dangling-export hazard is compile-time error, not silent wrongness).
+- **P8.1.5 R-symbol gauge framing (LOAD-BEARING)**: R-symbols stored as scalar `MatElem` per `(i,j,k)` channel (TC.jl `Array{MatElem,3}` field at `FusionCategory.jl:12`); gauge-invariant up to channel-basis ambiguity which TC.jl/MMA resolve consistently. Only the composite `B = F R F` inherits the F-symbol gauge per [P1.6(b)]. **No new CONVENTIONS letter** added — [P1.6(b)] sweep-status extended at P8.2 to enumerate `[[def:rsymbol]]` Notes #3 and `[[def:braid-H]]` Notes #3 as the new transitively-invoking slugs. Independently verified by P8.1.5b reviewer via 4 mutually-reinforcing pieces of evidence (TC.jl storage layout; MMA extraction is scalar-per-channel; `B = F R F` literal in `braiding.jl:7`; hexagon coupling at construction-time not use-time).
+- **P8.6 + P8.7 exclusions**: load-bearing exclusivity verified (all 7 P8.6-excluded helpers + 1 P8.7-excluded function have zero live-code references in cft-anyons `src/MobileAnyons/*.jl` post-port). MMA-v0-snapshot archive pointer at `archive/mma-archive-v0-snapshot/` (currently `.gitkeep` placeholder; Phase-10 unblock). Phase-10 reevaluation paths documented in exclusion notices.
+- **P8.8 user-decisions** (resolved 2026-05-17 P8.8 escalation): (a) **Problem A** (testing entry-point) — `Pkg.test()` over direct-invocation; Project.toml gets `SparseArrays` declaration (one-line correctness fix; diverges from MMA's pin but MMA never runs `Pkg.test`, only direct-include from parent env where Oscar's transitive SparseArrays satisfies); (b) **Problem B** (Ising failures) — run MMA's own tests first to triage. Triage result: bucket (β) PRE-EXISTING MMA confirmed; filed `cft-anyons-bnu` P3.
+
+### Phase 8 close
+
+With this P8.9 commit:
+- **Phase-8 epic `cft-anyons-ca5`** manually closed (children independently named, no `ca5.<N>` suffix per HANDOFF gotcha #37 — applied at Phase-7 close precedent).
+- All 11 Phase-8 P-step children closed across 9 atomic commits (`3c53c60` P8.0a, `f0b0e42` P8.1a, `da39a21` P8.1.5, `5407ff5` P8.1c, `514df55` P8.2, `cc3f33c` P8.3+P8.0b, `f08daf4` P8.4, `f9591aa` P8.5, `b953230` P8.6, `ae3bc0f` P8.7, `315c9dc` P8.8, this commit P8.9).
+- 7 substantive bd follow-ups discharged inline (cft-anyons-ycc P8.1.5 USER ESCALATION; cft-anyons-pvu LB-3; cft-anyons-xvq P8.5 gauge comment; cft-anyons-874 P8.6 mooted; cft-anyons-qki P8.7 disposition; cft-anyons-1m7 P8.2 no-op; cft-anyons-6yn P8.0b folded into P8.3).
+- 5 Phase-8-residual P3/P4 follow-ups remain OPEN as non-blockers: `cft-anyons-bnu` (5 known-MMA test failures), `cft-anyons-kaj` (TC.jl `r_symbol` upstream bug awareness), `cft-anyons-b6b` (FusionCategory dangling-export GLOSSARY decision), `cft-anyons-68n` (brief exception-file list update — docs only).
+- **`summary.tex`, `ERRATA.md` UNCHANGED** throughout Phase 8 — no canonical math content touched. **GLOSSARY.md** extended with 2 new §B entries (`def:rsymbol`, `def:braid-H`) + 1 cross-link in `def:fuscat` Notes. **CONVENTIONS.md** extended with [P1.6(b)] sweep-status enumeration only. **RESEARCH_NOTES.md** extended with DD-2 entry (P8.7).
+- **`Formalisation/` UNCHANGED** throughout Phase 8 — Lean invariant (`lake build` green at 8467 jobs from P6.7 close `f84bc11`, 0 sorry, 0 axiom, Mathlib pin `d6dab93`) preserved by construction (verified by `git log --oneline 8ed4aa7..HEAD -- 'Formalisation/' lakefile.lean lean-toolchain lake-manifest.json` returns empty).
+- Phase 9 (MMA `finegraining.tex` consolidation — HIGH-RISK NEW MATH integration) is now unblocked. `MIGRATION_PLAN.md` P9.1 prescribes the entry point: Opus deep-dive on `finegraining.tex` against `summary.tex` §6 / §10 / §11 to determine (a) new construction, (b) special case of §11, (c) rephrasing of §10 polar section, or (d) inconsistent.
+
+---
+
 ## Schema for each entry (future Phase 2+ imports)
 
 ```
