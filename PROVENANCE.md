@@ -850,6 +850,139 @@ commit completes the parallel auto-close for Phase 6.
 
 ---
 
+## Phase 7 — af workspace consolidation (option b: fresh-init + port + leave unvalidated) + CAD meta archive + af-quickref docs
+
+**Decision record (P7.1 → P7.2c):** the user chose **option (b)** for the
+`af` workspace: a **fresh** `af init` in this repo, with every CAD node
+ported with a statement made natively correct for this repo (GLOSSARY
+/ CONVENTIONS / PROVENANCE / current `Formalisation/` paths) and **every
+node left unvalidated**. The CAD `af/master/` workspace at
+`/home/tobiasosborne/Projects/cft-anyons-deprecated/af/master/` (561
+ledger events, 67 nodes with 58 validated leaves + 1 archived + 8 pending
+parents) was used as the **source of node statements only**; the
+validation history was deliberately discarded so the new tree is
+natively this-repo and not entangled with CAD's epistemic state. The
+historical CAD workspace remains intact at its original path (untouched
+by this Phase) and the synthesis at `stocktake/reports/cad-af.md`
+preserves its description; the new `af/master/` workspace in this repo
+starts from a fresh `af init` at this Phase.
+
+### Phase 7 artifacts (file manifest)
+
+| Phase-step | Path (in this repo) | SHA256 | Source | Provenance chain |
+|---|---|---|---|---|
+| **P7.2a** | `stocktake/reports/af-port-mapping.md` (2803 lines) | `3e363fd8f322b5f06f706f8f9f57323b0143e7105ecd211796581e9553fe7d79` | (this repo) — authored by Opus 4.7 implementer; sourced from CAD `af status` dump | P7.2a commit `c48e5e9`; hostile P7.2b reviewer APPROVE 12/12 PASS (deep D-gate clean for 4 governance nodes); cosmetic slug-count minor applied inline |
+| **P7.2c** | `af/master/meta.json` | `4e3043229142b64d998563bc543ce034e0a2251af5d404995e3afcb8ce8850df` | `af init` output (af v0.1.3) | P7.2c commit `946b646`; `af init --conjecture "<root statement from P7.2a mapping>"` |
+| **P7.2c** | `af/master/ledger/000001.json` (first event: `proof_initialized`) | `d3513e2281b0be626215257b35db2944b6f180c949cbb443559ff84f10db972c` | `af init` output | P7.2c commit `946b646` |
+| **P7.2c** | `af/master/ledger/000101.json` (last event of the port: 67th refine/release) | `29a3fe3f621e92021c2c409f19e8a91b732734e18973b4acf2080ba6eee9c07f` | `af refine` / `af release` output | P7.2c commit `946b646`; 101 ledger events total: 1 `proof_initialized` + 67 `node_created` + 23 `def_added` + 5 `nodes_claimed` + 5 `nodes_released` |
+| **P7.2c** | `af/master/externals/010ad8c244254a9b.json` | `9c3fb91378394208d39195f59c3ded07efa66a593822a45184bab0c3caa9ba20` | CAD `af/master/externals/<hex>.json` (mirrored) | P7.2c commit `946b646`; CAD content_hash NOT preserved (af v0.1.3 recomputes on add); name+source verbatim from CAD |
+| **P7.2c** | `af/master/externals/3bca3f36cdd355da.json` | `05a9849aba257959a5e5dd7c3123a421e0285156803434906edfeec41e8fc140` | CAD `af/master/externals/<hex>.json` (mirrored) | P7.2c commit `946b646`; same provenance pattern |
+| **P7.2c** | `af/master/externals/6c8ba186c260544f.json` | `6175f537fc7c6efc8948fabc7c5e173ae2aadb5d638bd1b7f115b4bdd1d1b2fa` | CAD `af/master/externals/<hex>.json` (mirrored) | P7.2c commit `946b646`; same provenance pattern |
+| **P7.2c** | `af/master/externals/916348d5440c5f13.json` | `1a83d5c8fc8b1153b97659ae66e84ac5416b07586e8574fd05f27677a5e3cb62` | CAD `af/master/externals/<hex>.json` (mirrored) | P7.2c commit `946b646`; same provenance pattern |
+| **P7.2c** | `af/master/externals/dc282b437c1835b0.json` | `6aab831e87477da4ffc1b1ade0e8c7561f532d42b6791cb9b4988daa90cdde79` | CAD `af/master/externals/<hex>.json` (mirrored) | P7.2c commit `946b646`; same provenance pattern |
+| **P7.3** | `archive/cad-meta-snapshot/handoff.md` | `a11d5a0e25bc05f51d2a2916ef38b6cb4a3aeaf0f9266c435f1b92c4ef702f71` | `cft-anyons-deprecated/handoff.md` | P7.3 commit `947e7a0`; byte-identical `cp`; non-canonical (see `archive/cad-meta-snapshot/README.md`) |
+| **P7.3** | `archive/cad-meta-snapshot/MASTER_PROVENANCE.md` | `2f2a89debcaf0de27baedd44a53d060c9ab8da96b1544744b81712c2fa1969d1` | `cft-anyons-deprecated/MASTER_PROVENANCE.md` | P7.3 commit `947e7a0`; byte-identical `cp`; **superseded by this file** for canonical provenance |
+| **P7.3** | `archive/cad-meta-snapshot/NEXT_AGENT_HANDOFF.md` | `24edea56f31d505dce27be84318336bea2de0ebc28c7093d1b8dfc94eba57b9a` | `cft-anyons-deprecated/NEXT_AGENT_HANDOFF.md` | P7.3 commit `947e7a0`; byte-identical `cp`; non-canonical |
+| **P7.3** | `archive/cad-meta-snapshot/FORMALISATION_PLAN.md` | `70f08801111d1b6b46eeda127ece80013d6cb9a8de78209b32bed116d642861d` | `cft-anyons-deprecated/FORMALISATION_PLAN.md` | P7.3 commit `947e7a0`; byte-identical `cp`; superseded by `stocktake/MIGRATION_PLAN.md` |
+| **P7.4** | `archive/cad-meta-snapshot/tex/cft_anyons_formalisation.tex` | `2d5d95ffc11102b26c7ceb4ac083ae18f2e8e06fcf85671a9304a43eafd01d02` | `cft-anyons-deprecated/tex/cft_anyons_formalisation.tex` | P7.4 commit `947e7a0`; byte-identical `cp`; superseded by `summary.tex` for canonical mathematical statement |
+| **P7.4** | `archive/cad-meta-snapshot/tex/cft_anyons_formalisation.pdf` | `cb9f1e89c98977c042b69534df0e5d65a90416edd32daba289f2d4529224c38a` | `cft-anyons-deprecated/tex/cft_anyons_formalisation.pdf` | P7.4 commit `947e7a0`; byte-identical `cp`; superseded by `summary.pdf` |
+| **P7.3** | `archive/cad-meta-snapshot/README.md` (86 lines) | `6a45f5b6900a9e78bb914c9805cb2fb0d35a7a3980fd69499ccc7590791266c6` | (this repo) — authored by Opus 4.7 implementer | P7.3 commit `947e7a0`; declares the archived files as non-canonical; cross-references the 6-file SHA256 manifest + the af workspace + the synthesis reports |
+| **P7.5** | `docs/af-quickref.md` | `f5c0d4cc046766a2366a692634a341116f5760c87295cb91c26642f8e29c8678` | `stocktake/reports/af-cli-reference.md` (this repo; pre-existing from stocktake) | P7.5 commit `947e7a0`; byte-identical `cp`; promotes the af CLI reference from a stocktake report to a top-level `docs/` entry per `MIGRATION_PLAN.md` P7.5 |
+
+### Phase 7 epistemic-state record (af workspace)
+
+`af progress` at this commit reports:
+
+```
+Completion: 0% (0/67 nodes validated or admitted)
+By State:
+  Pending:   67
+  Validated: 0
+  Admitted:  0
+  Refuted:   0
+  Archived:  0
+Blockers:
+  Open challenges:     0
+  Pending definitions: 0
+```
+
+This matches the user directive ("leave every node unvalidated") exactly.
+Node 1.3.5 (CAD's only `archived` node, FIB-RG-NORM-001 superseded by
+1.4.9 + 1.5.16) is stored as `pending` here per the directive; the
+"(ARCHIVED)" prefix is preserved in the statement prose only.
+
+### Phase 7 harmonisation notes (per-step)
+
+- **P7.2a — port mapping** (commit `c48e5e9`; mapping report 2803 lines).
+  Mapping categories: 50 verbatim-preserve (math untouched, only
+  provenance reroute), 8 minor reword (parent WP statements), 4
+  substantial reword (root + WP1 + WP6 + WP7 governance — re-targeting
+  from CAD `handoff.md` / `MASTER_PROVENANCE.md` to this repo's
+  `summary.tex` / `PROVENANCE.md` / `CITATION_INDEX.md` / `CLAUDE.md`
+  Rule 4 reviewer-gating / Rule 9 no-CI), 5 drift flags (CLAUDE.md
+  hallucination-risk callouts: vacuum-index / F-matrix-gauge /
+  coassoc-scalar-vs-categorical / multiplicity-free / particle-number
+  disambiguation). 37 distinct existing GLOSSARY slugs cited, zero
+  invented (verified `comm -23 mapping_slugs glossary_slugs` empty by
+  P7.2b reviewer). 28 `Formalisation/*.lean` paths cited, all PRESENT
+  via `test -f`. 50 script paths cited (25 Julia + 25 Wolfram), all
+  PRESENT. Notable: node 1.3.4 FIB-COASSOC-001 needed substantive
+  reword — CAD said "Lean coassociativity proof remains pending" but
+  Phase-5 ported `Formalisation/Fibonacci/Coassoc.lean` with the
+  scalar proof (categorical coassoc remains the open gap per
+  [[def:coassoc]] Notes + CLAUDE.md hallucination-risk callout #3);
+  node 1.7 WP7 retrospectively complete (this repo's `summary.tex`
+  IS the self-contained pdflatex doc CAD's WP7 targeted).
+- **P7.2b — hostile review** (folded inline into P7.2a commit per
+  P0.9-into-P0.8 precedent). Opus 4.7 verdict: **APPROVE 12/12 PASS**;
+  deep D-gate clean for all 4 governance nodes; 1 cosmetic minor
+  (slug count 60→37) applied inline.
+- **P7.2c — workspace populate** (commit `946b646`; 110 files changed;
+  Option-B shorthand resolution: 21 full + 25 verbatim + 21 reroute = 67).
+  Multi-substitution: only node 1.4.9 (2 X→Y pairs, both applied).
+  One anomaly: node 1.5.5 substitution X-key uses "WZW" acronym but
+  Original spells out "Wess-Zumino-Witten" — replace() was a no-op,
+  node stored verbatim; mathematics unaffected. Filed bd `cft-anyons-crg`
+  (P7.2d) as a future cosmetic-fix follow-up.
+- **P7.2c — GLOSSARY-slug citation gate** (no GLOSSARY.md edit). af
+  v0.1.3 enforces a citation-parser gate: any `[[def:foo]]` reference
+  in a node statement requires a registered `def`. 23 `def_added`
+  ledger events register stubs (one per distinct GLOSSARY slug cited
+  across the 67 statements). These stubs are **ledger-only** — they
+  do not edit `GLOSSARY.md` and do not introduce new mathematical
+  content; they are literal `[[slug]] → "see GLOSSARY.md ## slug"`
+  pointers so af's parser accepts the citations.
+- **P7.3 + P7.4 + P7.5 — archive + docs** (commit `947e7a0`; 7
+  source→destination SHA256 pairs all verified equal). The
+  `archive/cad-meta-snapshot/README.md` (86 lines, this commit) is the
+  in-archive non-canonicality declaration: archived files are
+  historical context, not authoritative for definitions. The
+  `archive/cad-meta-snapshot/.gitkeep` removed in this P7.6 commit
+  (directory now has real content; per HANDOFF gotcha #50).
+
+### Phase 7 close
+
+With this P7.6 commit:
+- Phase-7 epic `cft-anyons-n64` close: all 6 Phase-7 P-step children
+  closed (P7.2a `cft-anyons-9nt`; P7.2b `cft-anyons-skg`; P7.2c
+  `cft-anyons-i4g`; P7.3+P7.4 `cft-anyons-w5f`; P7.5 `cft-anyons-bcs`;
+  P7.6 `cft-anyons-9bq` closed in this commit). Per HANDOFF Lesson 11
+  the epic does NOT auto-close (children are independently named, not
+  `n64.<N>` suffixed) — manually closed in this commit.
+- bd `cft-anyons-crg` (P7.2d cosmetic-fix follow-up) remains OPEN as
+  a Phase-7-completion-residual P2 issue (not a blocker; cosmetic).
+- `summary.tex`, `GLOSSARY.md`, `CONVENTIONS.md`, `ERRATA.md` UNCHANGED
+  throughout Phase 7 — no canonical math content touched. `Formalisation/`
+  UNCHANGED — Lean invariant (`lake build` green at 8467 jobs, 0 sorry,
+  0 axiom, Mathlib pin `d6dab93`) preserved by construction (no Lean
+  files touched in Phase 7).
+- Phase 8 (MMA Julia computational backend) is now unblocked.
+  `MIGRATION_PLAN.md` P8.1 prescribes the entry point: an Opus
+  definitional-bridge-audit subagent on MMA's 10 Julia files,
+  outputting to `stocktake/reports/opus-mma-julia-bridge.md`.
+
+---
+
 ## Schema for each entry (future Phase 2+ imports)
 
 ```
