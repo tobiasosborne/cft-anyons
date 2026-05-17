@@ -21,8 +21,12 @@ import Formalisation.Fibonacci.Binary
 import Formalisation.Fibonacci.BraidMatrices
 import Formalisation.Fibonacci.CFTWeights
 import Formalisation.Fibonacci.Coassoc
+import Formalisation.Fibonacci.ConfigurationSpace
+import Formalisation.Fibonacci.Configurations
+import Formalisation.Fibonacci.FockSpace
 import Formalisation.Fibonacci.FusionRules
 import Formalisation.Fibonacci.Matrix
+import Formalisation.Fibonacci.ProjectDefinitions
 import Formalisation.Fibonacci.RGNoMixing
 import Formalisation.Ising.Basic
 import Formalisation.LinearAlgebra.Isometry
