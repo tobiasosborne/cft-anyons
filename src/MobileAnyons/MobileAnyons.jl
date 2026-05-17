@@ -53,6 +53,12 @@ module MobileAnyons
 # Likewise the export lines for symbols defined by not-yet-ported
 # files are commented out — exports must point at defined symbols
 # for `using MobileAnyons` to be clean.
+#
+# Update P8.7 (2026-05-17): all 10 functional include()s are
+# now active (Phase-8 per-file imports COMPLETE); finegraining.jl
+# and virasoro.jl are PARTIAL ports per MIGRATION_PLAN P8.6/P8.7
+# (categorical_determinant_isometry + virasoro_commutator_check
+# excluded — see in-file exclusion notice blocks for details).
 # ============================================================
 
 using TensorCategories, Oscar
@@ -67,7 +73,7 @@ include("braiding.jl")
 include("paircreation.jl")
 include("wavelets.jl")
 include("finegraining.jl")    # P8.6: partial port (categorical_determinant_isometry excluded)
-# include("virasoro.jl")        # P8.4: deferred to P8.7
+include("virasoro.jl")        # P8.7: partial port (virasoro_commutator_check NaN-stub excluded)
 
 export LabelledConfig, enumerate_configs_hc
 export FusionTree, AnyonBasis, build_basis, enumerate_fusion_trees
@@ -83,6 +89,7 @@ export fine_graining_isometry_svec
 export fine_graining_isometry, trivial_embedding, normalized_product_isometry           # P8.6: imported (3 of 4 finegraining.jl public functions)
 # export categorical_determinant_isometry  # partial correction only (non-abelian)      # P8.6: EXCLUDED — see src/MobileAnyons/finegraining.jl exclusion notice
 # export fine_graining_isometry_svec  # Slater lift (single-species only)               # P8.6: skipped — duplicate of line 82 (wavelets.jl is the primary definition site; MMA's finegraining.jl re-export at MMA MobileAnyons.jl:30 is a benign Julia duplicate)
-# export bond_projectors_dense, hamiltonian_fourier_modes, virasoro_commutator_check    # P8.4: deferred to P8.7
+export bond_projectors_dense, hamiltonian_fourier_modes                                  # P8.7: imported (2 of 3 virasoro.jl public functions)
+# export virasoro_commutator_check  # NaN-stub                                            # P8.7: EXCLUDED — see src/MobileAnyons/virasoro.jl exclusion notice + RESEARCH_NOTES.md DD-2
 
 end # module

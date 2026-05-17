@@ -281,6 +281,64 @@ lands. Naturally falls into a future P5.x / P5.16 cleanup pass, or can
 be batched with other Ising-block additions (e.g., the deferred
 `Ising/FSymbol.lean` realising `def:ising-F`).
 
+### DD-2: `virasoro_commutator_check` disposition — complete or formally archive WONTPORT
+
+**Deferred from:** P8.7 (port `microscopic-mobile-anyons/src/MobileAnyons/virasoro.jl`).
+
+**What:** MMA's `virasoro_commutator_check` (originally at MMA
+`src/MobileAnyons/virasoro.jl` lines 95-140) is excluded at P8.7 per
+`MIGRATION_PLAN.md:275` ("`virasoro.jl`: import everything except
+`virasoro_commutator_check` (returns `c_estimate=NaN`, a stub). Add a
+`RESEARCH_NOTES.md` task to either complete or remove it."). The
+function returns `c_estimate = NaN` — the central-charge extraction
+algorithm is deliberately not implemented; the in-source comment
+defers to the Cardy finite-size fit performed in MMA's
+`test/test_golden_chain_cft.jl`. The function ships nowhere at P8.7;
+the exclusion notice in destination `src/MobileAnyons/virasoro.jl`
+points back here for the binary disposition decision.
+
+**Why deferred (per orchestrator brief at P8.7):** The decision is
+research-level, not port-level. Either path requires non-trivial work
+(option (i) is NEW MATH per CLAUDE.md Law 1; option (ii) is a
+PROVENANCE-level architectural declaration). Neither is in P8.7 scope
+(which is mechanical per-file import). Decision deferred to
+Phase-9-or-later; not blocking Phase-8 close.
+
+**Options:**
+- **(i) Complete the implementation.** Would require proper OBC chiral /
+  antichiral separation per the canonical [[def:KS-Ln]] formula:
+  augment MMA to compute the separate $L_n^{(N)}$ and
+  $\bar L_n^{(N)}$ via PBC complex exponentials (NEW MATH — must
+  escalate per CLAUDE.md Law 1), or derive the correct OBC analog of
+  the commutator-based $c$-extraction (likely also NEW MATH; per the
+  in-file comment at MMA line 136 the "OBC commutator structure is
+  more complex"). MAJOR new code; mathematical content addition.
+- **(ii) Formally archive as WONTPORT.** Defer to the Cardy
+  finite-size fit in `test/test_golden_chain_cft.jl` as the
+  canonical $c$-extraction path; add a brief in `PROVENANCE.md`
+  documenting the architectural reason (`hamiltonian_fourier_modes`
+  + Cardy finite-size fit ARE the complete $c$-extraction pipeline
+  for this project's purposes; algebraic commutator-based extraction
+  is alternative-path, not required).
+
+**Tracking:**
+- bd `cft-anyons-qki` (P3 follow-up filed at P8.1a, DISCHARGED inline
+  at P8.7 — the RESEARCH_NOTES entry it tracked is this DD-2).
+- bd `cft-anyons-5pc` (P8.7 implementer, closed at P8.7).
+- Audit: `stocktake/reports/opus-mma-julia-bridge.md` §virasoro.jl
+  lines 420-453 (P8.1a verdict).
+
+**Suggested timeline:** Phase-9-or-later. A natural decision point is
+when Phase 9 (MMA `finegraining.tex` consolidation) opens the NEW
+MATH integration channel — at that point option (i) becomes a
+candidate "additional new-math piece" alongside Phase 9's main scope;
+absent any such expansion, default to option (ii) at Phase 11 final
+consistency sweep.
+
+**Unblocking condition:** No external dependency. Decision can be
+taken any time; both options are tractable from the current state of
+the repo.
+
 ---
 
 ## Latent bugs in source projects
