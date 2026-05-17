@@ -253,6 +253,11 @@ throughout per [[conv:unitary-default]]).
   - CAD: `Foundations/SkeletalFusion.lean::FiniteSkeletalFusionData` (Phase 5 migration step P5.1). Coordinate-skeleton level: a finite label set, distinguished vacuum, integer multiplicity table. No associators, no duals, no Hom-spaces — the categorical content is supplied separately at instantiation. Per `stocktake/reports/cad-lean.md` §5 line 344 and §2.1 lines 35-48.
 **Notes:** This is the project's foundational definition; nearly every other
 entry depends on it. The unitary qualifier propagates via [[conv:unitary-default]].
+The canonical body specifies a *non-braided* fusion category — no
+braiding/exchange data is included; see [[def:rsymbol]] (added at
+P8.1.5) for the braiding-primitive extension realised by MMA's
+`braiding.jl` and consumed by [[def:braid-H]] (the Hermitian braiding
+Hamiltonian).
 
 ---
 
@@ -1931,6 +1936,14 @@ $A_I = A_I^{\mathrm{geom}}$.
 
 ## §B. Entries from outside `summary.tex`
 
+**Status:** 3 entries — `def:mobile-Fock` (P1.3, the MMA Hilbert-space
+framing), `def:rsymbol` (P8.1.5, the R-symbol braiding primitive),
+`def:braid-H` (P8.1.5, the Hermitian braiding-Hamiltonian
+construction). The latter two were added at P8.1.5 following the
+P8.1a/P8.1b reviewer-flagged GLOSSARY coverage gap for MMA's
+`braiding.jl` exports and the resulting user escalation
+(bd `cft-anyons-ycc`).
+
 Each entry below names its in-repo source explicitly. The slug is
 GLOSSARY-internal — it is **not** a citable `\label` in the external
 source.
@@ -2074,3 +2087,506 @@ Filed as bd `cft-anyons-q6h`. The three currently-used categories
 bug is **latent for present scope** but blocks any future extension to
 extended Haagerup, certain quantum groups at non-prime levels, etc.
 See bridge report §3.5 line 263–269 for full discussion.
+
+---
+
+## def:rsymbol — R-symbol (braiding primitive)
+
+**Canonical (prose definition from the Trebst–Troyer–Wang–Ludwig
+introduction, in-repo extraction; math notation re-typeset from
+fragmented PDF-OCR subscripts/superscripts at
+`references/text/TrebstShortIntroductionFibonacciAnyons.txt:355-369`
+into linear ASCII — prose-content byte-verbatim, layout normalised):**
+
+```text
+All the braiding matrices can be obtained from the R-matrices combined with
+F-matrices. Let V_c^{a,b} be the ground state manifold of two anyons of types
+a, b with total charge c. Let us assume all spaces V_c^{a,b} are
+one-dimensional, and e_c^{a,b} be its fusion tree basis.
+
+When anyons a and b are braided by R^{a,b}, the state e_c^{a,b} in V_c^{a,b}
+is changed into a state R^{a,b} e_c^{a,b} in V_c^{b,a}. Since both
+R^{a,b} e_c^{a,b} and e_c^{b,a} are non-zero vectors in a one-dimensional
+Hilbert space V_c^{b,a}, they are equal up to a phase, denoted as R_c^{b,a},
+i.e., R^{a,b} e_c^{a,b} = R_c^{b,a} e_c^{b,a}. Here, R_c^{b,a} is a phase,
+but in general, R_c^{b,a} is a unitary matrix. We should mention that in
+general R_c^{b,a} is not the inverse of R_c^{a,b}. Their product involves
+the twists of particles.
+```
+
+The combined operation of an F-move followed by an R-move is denoted
+by the braid-matrix `B = F_c^{a\tau\tau} R^{\tau,\tau} F_c^{a\tau\tau}`
+(Trebst eq. (2.8)). The hexagon equation (Trebst eq. (2.5))
+constrains R-symbols against F-symbols via
+`R_c^{\tau,\tau} (F^{\tau\tau\tau}_\tau)_{ca} R_a^{\tau,\tau} =
+\sum_b (F^{\tau\tau\tau}_\tau)_{cb} R_b^{\tau,\tau}
+(F^{\tau\tau\tau}_\tau)_{ba}`; for Fibonacci this fixes
+`R^{\tau,\tau}_\one = e^{+4\pi i/5}`,
+`R^{\tau,\tau}_\tau = e^{-3\pi i/5}` (Trebst eq. (2.7)).
+
+**Canonical (MMA wrapper — `braiding.jl` head comment + struct
+definition, verbatim from
+`microscopic-mobile-anyons/src/MobileAnyons/braiding.jl:1-22`):**
+
+```julia
+# Braiding (R-matrix) Hamiltonian for mobile anyons.
+#
+# The braiding operator σ_{p,p+1} braids anyons p and p+1.
+# R^{a,b}_c is the braiding phase in fusion channel c.
+#
+# For abelian categories (sVec): R is a scalar per pair, σ is diagonal.
+# For non-abelian (Fibonacci, Ising): σ = F × diag(R) × F at bonds p ≥ 2
+# (using F² = I in the involutory gauge).
+#
+# The Hermitian braiding Hamiltonian is H = λ Σ (σ + σ†).
+# For real R-phases (sVec): reduces to H = 2λ Σ R nⱼnⱼ₊₁.
+# For complex R-phases (Fibonacci): σ + σ† = F × 2Re(diag(R)) × F.
+
+"""
+    RSymbolCache
+
+Cached R-symbol data. Stores R^{a,b}_c for each fusion channel c.
+"""
+struct RSymbolCache
+    # R^{a,b}_c → complex phase (one per allowed fusion channel)
+    r_values::Dict{Tuple{Int,Int,Int}, ComplexF64}
+end
+```
+
+**Canonical (TC.jl primitive, verbatim from
+`/home/tobiasosborne/.julia/packages/TensorCategories/fnMHT/src/TensorCategoryFramework/SixJCategory/FusionCategory.jl:239-249`
+— the morphism-level constructor invoked by MMA at
+`braiding.jl:35` via `braiding(S[i], S[j])`):**
+
+```julia
+function braiding(X::SixJObject, Y::SixJObject) 
+    C = parent(X)
+    if is_simple(X) && is_simple(Y)
+        i = findfirst(e -> e != 0, X.components)
+        j = findfirst(e -> e != 0, Y.components)
+
+        if ! all(isassigned(C.braiding, i,j,k) for k ∈ 1:C.simples)
+            r_symbol = get_attribute(C, :r_symbol)
+            C.braiding[i,j,:] = [r_symbol(i,j,k) for k ∈ 1:C.simples]
+        end
+        return morphism(X⊗Y,Y⊗X, C.braiding[i,j,:])
+    end
+```
+
+The `SixJCategory.braiding` field is declared as
+`braiding::Array{MatElem,3}` (same file, line 12) — i.e., a
+three-index array of matrix elements indexed by `(i, j, k)` for
+simples `S[i] ⊗ S[j] → S[k]`. Existence of the field is the TC.jl
+predicate for "the category is braided": `is_braided(C::SixJCategory)
+= isdefined(C, :braiding)` (line 482).
+
+**Source:** the three Canonical blocks are sourced from
+(1) `references/text/TrebstShortIntroductionFibonacciAnyons.txt:355-369`
+(prose); the same definition appears at `references/text/FibonacciAnyonModels.txt:334-348`
+(Feiguin–Trebst–Troyer–Wang–Ludwig, the longer "Anyonic chains" exposition
+of the same R-matrix material — SHA256-distinct file, content overlaps);
+(2) `microscopic-mobile-anyons/src/MobileAnyons/braiding.jl:1-22` (head
+comment + struct, MMA wrapper of TC.jl; full file SHA256
+`d92ffdc696672d9ca44a800aacb52b1788bb8c0f0ec1072bc9253469045decd0`,
+394 LOC, per P8.1a bridge audit `stocktake/reports/opus-mma-julia-bridge.md:257`);
+(3) `/home/tobiasosborne/.julia/packages/TensorCategories/fnMHT/src/TensorCategoryFramework/SixJCategory/FusionCategory.jl:239-249`
+(TC.jl 0.5.3, the underlying braiding-morphism constructor; field at
+line 12, predicate at line 482, raw-symbol accessor `r_symbol(C, i,
+j, k)` at lines 461–467). MMA is scheduled to import into this repo
+at Phase 8 P8.3+; TC.jl is the upstream dep pinned at 0.5.3 (per
+MMA `Manifest.toml`, P8.0a verified). The slug `def:rsymbol` is
+GLOSSARY-internal; it is not the literal `\label` of any LaTeX
+environment in the external sources.
+
+**Aliases:** "R-matrix" (Trebst); "$R^{a,b}_c$" / "$R_c^{a,b}$"
+(literature, with index-order conventions varying — see Notes);
+"braiding phase" (MMA `braiding.jl` head comment); "braiding morphism
+c_{X,Y}" (TC.jl `braiding(X,Y)` returns the morphism `X⊗Y → Y⊗X`);
+"B-matrix" (literature, when referring to the *composite* `B = F R F`,
+not the bare R-symbol — see Trebst eq. (2.8)).
+
+**Translation map:**
+  - **MMA**: `RSymbolCache` struct (`braiding.jl:19-22`) storing
+    `r_values::Dict{Tuple{Int,Int,Int}, ComplexF64}` keyed
+    `(i, j, k) → R^{a,b}_c`; built by `build_rsymbol_cache(C)`
+    (`braiding.jl:30-49`) via TC.jl's `braiding(S[i], S[j])` morphism
+    (line 35) and `matrix(b)` extraction (line 36); manual constructor
+    `build_rsymbol_cache_manual(r_dict)` (`braiding.jl:57-59`) for
+    consumer-supplied entries (used in
+    `microscopic-mobile-anyons/test/test_braiding_nonabelian.jl` to
+    inject the Fibonacci-specific values
+    `R^{\tau,\tau}_\one = e^{+4\pi i/5}`,
+    `R^{\tau,\tau}_\tau = e^{-3\pi i/5}` from Trebst eq. (2.7)). Per
+    bridge report `stocktake/reports/opus-mma-julia-bridge.md:268-270`.
+  - **CAD**: not formalised. CAD's Lean fusion-category content
+    (`Foundations/SkeletalFusion.lean`, `Fibonacci/`, `Ising/`)
+    covers fusion data + F-symbols (Phase 5 P5.1–P5.18) but does
+    not include braiding morphisms or the R-symbol. Per Phase-4/5
+    file inventory at `stocktake/reports/cad-lean.md` §5 — no
+    `Braiding.lean` or `R*.lean` files exist in CAD's `Formalisation/`
+    tree.
+  - **TC.jl** (pinned 0.5.3 per MMA `Manifest.toml`, P8.0a verified):
+    `braiding(X::SixJObject, Y::SixJObject)` constructs the
+    braiding morphism `X⊗Y → Y⊗X`
+    (`TensorCategoryFramework/SixJCategory/FusionCategory.jl:239-269`);
+    raw entries stored in the `SixJCategory.braiding::Array{MatElem,3}`
+    field (line 12), set via `set_braiding!(F, braiding)` (lines
+    108–110), accessed via `r_symbol(C::SixJCategory, i::Int, j::Int,
+    k::Int)` (lines 461–467); predicate `is_braided(C) = isdefined(C,
+    :braiding)` (line 482); hexagon-axiom checker
+    `hexagon_axiom(X, Y, Z)` /
+    `hexagon_axiom(C::Category, log::Bool = false)` at
+    `TensorCategoryFramework/TensorAxioms/HexagonAxion.jl:6-17, 57`
+    (verifies the braid–associator consistency at the morphism
+    level, both for symbolic categories via equality and numeric
+    categories via `hexagon_axiom_numeric` lines 19–26); reverse
+    braiding `reverse_braiding(C::SixJCategory)` at line 1244;
+    twist data stored separately in `SixJCategory.twist::Vector`
+    (line 15). All symbols verified to EXIST in TC.jl 0.5.3 (P8.0a
+    methodology applied at P8.1a; see
+    `stocktake/reports/opus-mma-julia-bridge.md:260-262`).
+  - **summary.tex**: not canonically defined. The braiding is
+    *mentioned* in
+    `summary.tex:1665` (the proof sketch of the Temperley–Lieb braid
+    relation, referring to the "braid-like relation" via
+    `F^{\sigma\sigma\sigma}_\sigma`) and at
+    `summary.tex:2085, 2110` (passing references to "braiding
+    phases" and braided categories in the conjectural Phase-9
+    fine-graining material), and as the conjectural assumption of
+    `summary.tex:2369–2373` `conj:E` (`Braiding for order-changing
+    interpolation`), which asserts that any fine-graining
+    interpolation allowing particles to change spatial order requires
+    $\Cc$ to be braided with order-change components implemented by
+    `c_{Q,Q}`. None of these is a canonical R-symbol definition —
+    consistent with [[def:fuscat]]'s non-braided framing.
+
+**Notes:** Load-bearing details:
+
+1. **Index-order convention.** MMA stores `R^{a,b}_c` keyed by
+   `(i, j, k)` where `(i, j) = (a, b)` simples-indices and `k = c`
+   the fusion channel (`braiding.jl:21`'s `r_values` Dict +
+   `braiding.jl:43`'s extraction). Trebst's notation in the prose
+   quote uses `R_c^{a,b}` for the same quantity (the lower index
+   `c` is the channel; the upper pair `(a, b)` are the two anyons
+   being braided). MMA's keyed-on-`(i,j,k)` ordering is
+   `(a, b, c)` — matching the upper-then-lower visual reading of
+   Trebst's `R_c^{a,b}` but storing the channel last. **No
+   semantic conflict**, but agents importing MMA `r_values` Dict
+   keys into prose must respect this `(a, b, c) ↔ R_c^{a,b}` reading.
+
+2. **Hexagon equation status (TC.jl).** TC.jl provides
+   `hexagon_axiom(X, Y, Z)` as a *verifier* (returns `Bool`), not as
+   a generator that solves for R-symbols. The R-symbols themselves
+   come from the category-construction site:
+   `fibonacci_category()` / `ising_category()` / etc. set them via
+   `set_braiding!` (typically populated from the literature-known
+   solution; for Fibonacci the Trebst (2.7) values
+   `R^{\tau,\tau}_\one = e^{+4\pi i/5}`,
+   `R^{\tau,\tau}_\tau = e^{-3\pi i/5}` are baked in). The hexagon
+   axiom is *checkable* at category construction time but not
+   *assumed* by any downstream code — MMA never invokes
+   `hexagon_axiom`; verification is the user's responsibility (or
+   the TC.jl test suite's).
+
+3. **Gauge handling — R-symbols are NOT independently gauged.**
+   Unlike the F-matrix (which has the canonical
+   unitary-vs-involutory ambiguity locked at [P1.6(b)] — see
+   `CONVENTIONS.md` and [[def:fsymbol]]), the R-symbol itself is a
+   scalar phase per fusion channel and is gauge-invariant up to the
+   overall basis-choice ambiguity in the channel-basis (which is
+   resolved consistently by MMA's
+   `left_intermediates`/`right_intermediates` helpers and by TC.jl's
+   `r_symbol(C, i, j, k)` accessor reading from the
+   `C.braiding[i,j,k]` cell). Per
+   `stocktake/reports/opus-mma-julia-bridge.md:269` ("R is a phase
+   per channel, gauge-invariant up to overall basis-choice
+   ambiguity in the channel-basis ... **No drift**"). **However**,
+   the *composite* braid-matrix `B = F R F` (Trebst eq. (2.8) and
+   MMA's per-bond `σ` for `p ≥ 2` at `braiding.jl:7`) DOES inherit
+   the F-matrix gauge — the involutory `F²=I` identity that MMA
+   relies on at `braiding.jl:7-8` is the involutory-gauge identity
+   `F^{-1} = F` (not the unitary-gauge identity `F^{-1} = F^\dagger`).
+   Translation rule [P1.6(b)] therefore applies *transitively* to
+   any computation that uses `B` numerically (e.g., the per-bond
+   `σ` matrix-elements at `braiding.jl:_bond_braiding_element`,
+   lines 185–263); in current Fibonacci/Ising multiplicity-free
+   scope, [P1.6(b)]'s involutory-and-unitary coincidence means no
+   explicit translation is needed. This delegation to [P1.6(b)] is
+   why no new CONVENTIONS letter is added at P8.1.5 — R-symbol
+   gauge is downstream of F-symbol gauge, not independent.
+
+4. **Multiplicity handling (LB-1 secondary).** MMA's
+   `build_rsymbol_cache` at `braiding.jl:40-44` iterates
+   multiplicity-aware (`mult > 0` check at line 41; `row += mult` at
+   line 44) but extracts a single scalar per `(i, j, k)` at line 43
+   (inline comment "For multiplicity-free: $R^{i,j}_k$ is the
+   `(row+1, row+1)` entry"). For non-multiplicity-free categories
+   the R-symbol generalises to a unitary matrix on the multiplicity
+   space (cf. Trebst's prose quote: "in general, $R_c^{b,a}$ is a
+   unitary matrix"), but MMA collapses it to a scalar. Same LB-1
+   pattern as `enumerate_fusion_trees` in
+   [[def:splitbasis]] / [[def:mobile-Fock]] LB-1 caveat. In current
+   scope ([[def:fib]], [[def:ising]], sVec — all multiplicity-free
+   per [P1.6(d)]) this is safe; flag-on-extension to extended
+   Haagerup etc. See bridge report
+   `stocktake/reports/opus-mma-julia-bridge.md:281` and bd
+   `cft-anyons-q6h` (LB-1 master) + this entry's downstream sites
+   in [[def:braid-H]].
+
+5. **Twists are separate.** TC.jl stores twists as a separate
+   `SixJCategory.twist::Vector` field (line 15) distinct from
+   `braiding`. The R-symbol does NOT encode twist data; twists are
+   a separate piece of pivotal-/ribbon-category structure. MMA does
+   not currently consume twists in `braiding.jl`. Out of scope for
+   this entry.
+
+6. **Connection to [[def:fuscat]].** [[def:fuscat]] specifies a
+   *non-braided* fusion category — its canonical body (lines
+   207–234) has no braiding/exchange data. The R-symbol is the
+   primitive datum that promotes a fusion category to a *braided*
+   fusion category (in TC.jl terms: a `SixJCategory` whose
+   `braiding` field is `isdefined`); the project's three currently-used
+   categories ([[def:fib]], [[def:ising]], sVec) all happen to be
+   braided. The hexagon equation is the consistency condition for
+   the braiding to be compatible with the F-symbol associator. See
+   the cross-link added at [[def:fuscat]] Notes (P8.1.5).
+
+---
+
+## def:braid-H — Hermitian braiding Hamiltonian (neighbour-exchange construction)
+
+**Canonical (construction from MMA's `braiding.jl` head comment +
+sector-restricted constructor signature, verbatim from
+`microscopic-mobile-anyons/src/MobileAnyons/braiding.jl:1-12, 61-71`):**
+
+```julia
+# Braiding (R-matrix) Hamiltonian for mobile anyons.
+#
+# The braiding operator σ_{p,p+1} braids anyons p and p+1.
+# R^{a,b}_c is the braiding phase in fusion channel c.
+#
+# For abelian categories (sVec): R is a scalar per pair, σ is diagonal.
+# For non-abelian (Fibonacci, Ising): σ = F × diag(R) × F at bonds p ≥ 2
+# (using F² = I in the involutory gauge).
+#
+# The Hermitian braiding Hamiltonian is H = λ Σ (σ + σ†).
+# For real R-phases (sVec): reduces to H = 2λ Σ R nⱼnⱼ₊₁.
+# For complex R-phases (Fibonacci): σ + σ† = F × 2Re(diag(R)) × F.
+"""
+    braiding_hamiltonian_sector(basis::AnyonBasis, fcache::FSymbolCache,
+                                rcache::RSymbolCache, N::Int, c::Int; λ=1.0)
+        -> SparseMatrixCSC{ComplexF64}
+
+Build Hermitian braiding Hamiltonian H = λ Σ (σ + σ†) restricted to (N, c) sector.
+
+For non-abelian categories, σ at bond p involves F-moves:
+- Bond 1: σ diagonal with entries R^{a₁,a₂}_e
+- Bond p ≥ 2: σ = F × diag(R) × F (involutory gauge, F² = I)
+"""
+```
+
+**Canonical (gauge-aware Hermitian decomposition implemented in the
+internal worker, verbatim from
+`microscopic-mobile-anyons/src/MobileAnyons/braiding.jl:167-184`):**
+
+```julia
+"""
+Compute Hermitian braiding (σ+σ†) matrix elements at bond p.
+
+Uses the spectral decomposition:
+    σ + σ† = Σ_f 2Re(R_f) × P_f^{phys}
+where P_f^{phys} are orthogonal projectors (Σ_f P_f = I).
+
+For bond 1 (innermost): diagonal with entries 2Re(R^{a,b}_e).
+For bond p ≥ 2: decompose as
+    σ+σ† = 2Re(R_last)·I + Σ_{f≠last} [2Re(R_f) - 2Re(R_last)] · P_H(f)
+where P_H(f) = v_f v_f†/|v_f|² is the Hermitian projector from the F-matrix
+column. This uses orthogonal complements (P + (I-P) = I) rather than
+independent column projectors, avoiding non-orthogonality issues in the
+involutory gauge.
+
+Returns: vector of (bra_intermediate_value, amplitude) pairs.
+The amplitude is already for σ+σ† (Hermitian); caller should NOT add σ†.
+"""
+```
+
+The Gram-matrix orthogonalisation branch (3+-channel case) implements
+the explicit involutory→unitary translation of [P1.6(b)] as
+`M = F * G_inv * Diagonal(R_re) * F'` with `G = F' * F`,
+`G_inv = inv(G)` (verbatim from `braiding.jl:247-252`).
+
+**Source:** the two Canonical blocks are sourced from
+`microscopic-mobile-anyons/src/MobileAnyons/braiding.jl` —
+(1) lines 1-12 (head comment) + 61-71 (docstring of the principal
+sector-restricted constructor); (2) lines 167-184 (docstring of
+internal `_bond_braiding_element` with the spectral decomposition).
+Full file SHA256
+`d92ffdc696672d9ca44a800aacb52b1788bb8c0f0ec1072bc9253469045decd0`,
+394 LOC. Cross-references: bridge audit
+`stocktake/reports/opus-mma-julia-bridge.md:268-275` (per-export
+GLOSSARY mapping table) and lines 279, 289 (CONVENTIONS conformance
+for `def:braid-H`'s realisation: "(b) F-matrix gauge: ✓ CANONICAL
+HANDLING — extensively documented (lines 7-12, 70, 167-180);
+spectral-decomposition orthogonal-complement workaround for 2-channel;
+explicit Gram-matrix orthogonalisation for 3+-channel"). The slug
+`def:braid-H` is GLOSSARY-internal; it is not the literal `\label` of
+any LaTeX environment in `summary.tex` or any external source.
+
+**Aliases:** "R-matrix Hamiltonian" (MMA `braiding.jl:1`); "braiding
+Hamiltonian" (MMA function names `braiding_hamiltonian`,
+`braiding_hamiltonian_sector`); "neighbour-exchange Hamiltonian"
+(the construction is the sum over adjacent-pair braidings); not used
+in `summary.tex` (the closest is `conj:E` `summary.tex:2369–2373`'s
+hypothetical "order-changing interpolation" via the braiding morphism
+`c_{Q,Q}`, which is a different object — `c_{Q,Q}` is the morphism;
+this entry's `σ_{p,p+1}` is its bond-`p` representation on the
+mobile-anyon basis).
+
+**Translation map:**
+  - **MMA**: four exported functions in
+    `microscopic-mobile-anyons/src/MobileAnyons/braiding.jl`,
+    forming the 4-argument-non-abelian and 2/3-argument-abelian
+    interfaces:
+    - `braiding_hamiltonian(basis::AnyonBasis, fcache::FSymbolCache,
+      rcache::RSymbolCache; λ=1.0)` (lines 132-165) — full Hilbert
+      space, non-abelian (F-symbols + R-symbols);
+    - `braiding_hamiltonian_sector(basis, fcache, rcache, N, c; λ=1.0)`
+      (lines 72-123) — restricted to the `(N, c)` sector via
+      `basis.sector_ranges`, non-abelian;
+    - `braiding_hamiltonian(basis::AnyonBasis, rcache::RSymbolCache;
+      λ=1.0)` (lines 302-318) — abelian shortcut (sVec-only), σ is
+      diagonal, F-symbols skipped entirely;
+    - `braiding_hamiltonian_sector(basis, rcache, N, c; λ=1.0)`
+      (lines 273-295) — abelian sector-restricted.
+    Internal workers: `_bond_braiding_element` (lines 185-263, the
+    gauge-aware Hermitian-projector spectral decomposition);
+    `_braiding_diagonal_abelian` (lines 324-344, the
+    `λ × 2Re(R^{a,b}_c)` diagonal for sVec). Per bridge report
+    `stocktake/reports/opus-mma-julia-bridge.md:271-274`.
+  - **CAD**: not formalised. CAD's `Formalisation/` does not contain
+    any braiding-Hamiltonian Lean file (consistent with [[def:rsymbol]]
+    Translation map's CAD entry — braiding is absent from CAD entirely).
+  - **TC.jl** (0.5.3): TC.jl provides the categorical primitives
+    (`braiding` morphism, `r_symbol` accessor, `hexagon_axiom`
+    verifier — see [[def:rsymbol]] Translation map) but does not
+    provide a Hamiltonian construction. The Hermitian-sum-over-bonds
+    construction `H = λ Σᵢ (σᵢ + σᵢ†)` is MMA-specific (built on top
+    of TC.jl primitives); no TC.jl symbol realises it.
+  - **summary.tex**: no canonical definition. Closest related material
+    is [[def:TL-cat]] (the Temperley–Lieb Hamiltonian
+    `H = Σ_j P_j^{(\one)}` summing vacuum-channel projectors over
+    adjacent-pair bonds — structurally analogous "sum-over-bonds"
+    pattern but with vacuum-projectors instead of R-symbol-derived
+    `(σ + σ†)` per-bond elements; the two are NOT the same Hamiltonian
+    — TL is a fusion-side construction, this entry's `def:braid-H`
+    is a braiding-side construction). The conjectural `conj:E`
+    (`summary.tex:2369–2373`) is the closest *prose* mention of a
+    braiding-driven dynamics in `summary.tex`, but it is a structural
+    conjecture about fine-graining, not a Hamiltonian definition.
+
+**Notes:** Load-bearing details:
+
+1. **Derivation from R-symbols.** The per-bond operator is
+   `σ_{p,p+1}` = the braiding of anyons at positions `p` and `p+1`
+   when they sit at adjacent occupied sites (gated by the
+   nearest-neighbour check
+   `ket.config.positions[p] + 1 == ket.config.positions[p + 1]` at
+   `braiding.jl:100, 148, 332`). For bond `p = 1` (innermost vertex,
+   no F-move needed), `σ_1` is diagonal with entries `R^{a_1, a_2}_e`
+   where `e = inters[1]` is the first intermediate charge — see
+   `_bond_braiding_element` lines 187-193. For bond `p ≥ 2`, the
+   braiding takes place between two non-leaf anyons in the fusion
+   tree, requiring an F-move to re-bracket and read off the R-symbol:
+   `σ = F × diag(R) × F` per `braiding.jl:7-8` head comment. The
+   Hamiltonian is then the Hermitian sum
+   `H = λ \sum_p (σ_p + σ_p^\dagger)` over all valid (adjacent-occupied)
+   bonds. See [[def:rsymbol]] for the R-symbol primitive consumed
+   here.
+
+2. **Hermitian Hermiticity preserved by construction.** The
+   per-bond `(σ + σ^\dagger)` is manifestly Hermitian. MMA's
+   `_bond_braiding_element` returns the `(σ + σ^\dagger)` elements
+   directly (line 103 / 150 / 183: "amplitude is already for σ+σ†
+   (Hermitian); caller should NOT add σ†"). Caller code at
+   `braiding.jl:113-117` and `:155-159` accumulates these into the
+   sparse matrix without separately adding the adjoint. The
+   Hermiticity is therefore an invariant of the construction
+   `H = λ Σ_p (σ_p + σ_p^\dagger)`, not a post-construction
+   symmetrisation.
+
+3. **Gauge handling via spectral decomposition with orthogonal
+   complements.** The non-trivial gauge issue is that TC.jl's
+   `F`-matrix is involutory (`F^2 = I`) and not unitary (per
+   [P1.6(b)] `CONVENTIONS.md`). The naive computation
+   `σ = F × diag(R) × F^{-1} = F × diag(R) × F` (using `F^2 = I`)
+   produces non-Hermitian per-bond `σ` whose conjugate must be added
+   carefully to avoid double-counting. The internal worker
+   `_bond_braiding_element` resolves this by computing
+   `σ + σ^\dagger` *directly* via the spectral decomposition
+   `σ + σ^\dagger = Σ_f 2\text{Re}(R_f) \cdot P_f^{phys}` with
+   `\sum_f P_f^{phys} = I` (see Canonical block 2 above). Two
+   sub-cases:
+   - **2-channel case** (Fibonacci, Ising `σ⊗σ`): uses
+     `P_1 = v v^\dagger / |v|^2` (vacuum-column projector) and
+     `P_2^{phys} = I - P_1` (orthogonal complement); the resulting
+     `M` is mathematically the Hermitian `σ + σ^\dagger`. See
+     `braiding.jl:234-245`.
+   - **3+-channel case** (general non-multiplicity-free categories;
+     not in current scope but supported): orthogonalises the
+     F-columns via Gram matrix `G = F^\dagger F`, computes
+     `M = F G^{-1} \text{diag}(2\text{Re}(R)) F^\dagger`. **This is
+     the explicit involutory→unitary translation rule of [P1.6(b)]**
+     applied at the matrix-element level; see `braiding.jl:247-252`
+     and bridge report
+     `stocktake/reports/opus-mma-julia-bridge.md:279`.
+   No new CONVENTIONS letter is needed — gauge handling is fully
+   downstream of [P1.6(b)] (the F-matrix-gauge convention) via
+   `B = F R F`, and MMA's spectral-decomposition workaround is the
+   canonical implementation of [P1.6(b)]'s Translation rule. See
+   also [[def:rsymbol]] Notes #3 (R-symbols themselves are NOT
+   independently gauged; only the composite `B` inherits the
+   F-symbol gauge).
+
+4. **Reduction to known abelian limit.** For `sVec` (super-vector
+   spaces over `Z/2`, the abelian fusion category), each
+   `R^{a,b}_c` is a real scalar `±1` per pair, `σ` is diagonal, and
+   the Hamiltonian reduces to `H = 2λ Σ_j R \cdot n_j n_{j+1}` (per
+   `braiding.jl:11` head comment) — i.e., a textbook
+   nearest-neighbour density-density interaction on the
+   particle-occupation basis. The abelian-shortcut entry points
+   (`braiding_hamiltonian(basis, rcache)` 2-arg,
+   `braiding_hamiltonian_sector(basis, rcache, N, c)` 4-arg) skip
+   F-symbols entirely and use
+   `_braiding_diagonal_abelian` (lines 324-344). The
+   `tv_model_spectrum(L, N; t, V)` function in the same file
+   (lines 354-394) provides the textbook-fermion oracle for
+   cross-validation; this oracle is *not* a `def:braid-H`
+   realisation — it is built directly from
+   `H = -t Σ (c^\dagger_j c_{j+1} + h.c.) + V Σ n_j n_{j+1}` in the
+   occupation basis and serves as the reference for
+   `test_braiding_svec.jl` consistency tests at Phase 8 P8.8.
+
+5. **Relation to [[def:TL-cat]].** Structurally analogous
+   ("sum-over-adjacent-bonds Hamiltonian on the mobile-anyon
+   basis") but algebraically distinct: [[def:TL-cat]] uses
+   vacuum-channel projectors `P_j^{(\one)}` derived from the
+   F-symbol vacuum-column (fusion-side data, no braiding), while
+   `def:braid-H` uses R-symbol-derived `(σ + σ^\dagger)` per-bond
+   elements (braiding-side data). They live on the same Hilbert
+   space ([[def:mobile-Fock]] or [[def:Hlatt]] depending on framing)
+   but realise different physics. Per bridge report
+   `stocktake/reports/opus-mma-julia-bridge.md:271`: "Not a
+   [[def:TL-cat]] realisation."
+
+6. **LB-1 secondary exposure.** Inherits LB-1 transitively through
+   both `fcache` (F-symbol multiplicity collapse) and `rcache`
+   (R-symbol multiplicity collapse — see [[def:rsymbol]] Notes #4).
+   In current Fibonacci/Ising/sVec scope (multiplicity-free per
+   [P1.6(d)]) this is safe; flag-on-extension. See bd
+   `cft-anyons-q6h` (LB-1 master).
+
+7. **Particle-number disambiguation [P1.6(g)].** MMA uses `N` for
+   particle count (= our `n`); `braiding_hamiltonian_sector(...,
+   N::Int, c::Int; λ=1.0)`'s `N` argument is the particle-number
+   sector, NOT the lattice length. Port docstrings at Phase 8 P8.5
+   must declare this convention reading explicitly.
