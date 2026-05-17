@@ -623,6 +623,233 @@ pre-binding discharge + 2-way C-gates) is now complete.
 
 ---
 
+## Phase 6 imports — triple-check scripts (`scripts/{julia,wolfram}/`, `results/CHECKS.md`)
+
+Phase 6 ports the 51-file CAD triple-check infrastructure from
+`cft-anyons-deprecated/scripts/{julia,wolfram}/` and
+`cft-anyons-deprecated/results/CHECKS.md` into this repo. The
+infrastructure consists of 25 Julia cross-check scripts (one per
+abstract Lean module + the fusion-category and CFT-weight modules)
++ 25 Wolfram exact-symbolic counterparts (same coverage, exact
+arithmetic rather than floating-point) + the dated `CHECKS.md`
+historical pass log carrying the 2026-05-14 / 2026-05-15 CAD-original
+run records. Together with the Lean files ported in Phases 4 and 5,
+these scripts supply the **3-way C-gate** (Lean / Julia / Wolfram)
+discipline declared by `CLAUDE.md` Rule 5 (port-and-verify mode) +
+`CONVENTIONS.md` for the cross-validation triangle.
+
+P6.1+P6.2 (commit `8b680b2`) was a MECHANICAL `cp -a` port — `diff -r`
+empty across all three trees / files, full 51-file SHA256 manifest
+recorded in the commit body. P6.3 / P6.4 ran one Julia / one Wolfram
+script as infrastructure smoke tests (commits `f42a0c1` / `4c2c0b1`).
+P6.5 / P6.6 scaled to all 25 of each (commits `2a3eb44` / `6da4aab`),
+appending dated `CHECKS.md` sections per `MIGRATION_PLAN.md:243-244`
+append-don't-overwrite rule. P6.7 (this commit) aggregates the
+per-file SHA256s + per-step rerun records + `CHECKS.md` growth into
+this Phase-6 block.
+
+**Source root:** `/home/tobiasosborne/Projects/cft-anyons-deprecated/{scripts/julia,scripts/wolfram,results}/`
+(51 files; pre-existing in the source repo, no in-source edits
+performed in this consolidation).
+
+**Destination root:** `scripts/{julia,wolfram}/` + `results/CHECKS.md`
+in this repo (the `scripts/julia/`, `scripts/wolfram/`, and `results/`
+directories pre-existed at P6.1 with `.gitkeep` placeholders; those
+placeholders were removed in the P6.1+P6.2 commit when real content
+arrived).
+
+**Per-file SHA256 manifest.** Source and destination hashes are
+identical at import time (mechanical `cp -a`; `diff -r` empty across
+both script trees and the `CHECKS.md` file). For the 50 script files
+the hash remains stable post-import through this commit (verified by
+`sha256sum scripts/julia/*.jl scripts/wolfram/*.wls` at P6.7 — 50/50
+match the P6.1 manifest exactly, NO drift). For `results/CHECKS.md`
+the **at-import** hash is recorded below (canonical PROVENANCE record
+matching the Phase-5 convention); subsequent dated-section appends at
+P6.3/P6.4/P6.5/P6.6 mutate the live file but are tracked separately
+in the growth log further down.
+
+| P-step | Destination | Source = Destination SHA256 (at P6.1 import) |
+| --- | --- | --- |
+| P6.1 | `scripts/julia/cft_weight_checks.jl`              | `dc3e6d53b3a0e9bca73c9383d034972a2ffa22719f4e26587db3f93be19f48ce` |
+| P6.1 | `scripts/julia/charge_only_negative_checks.jl`    | `d87fe325bc61da047e0bf07d2b97efb225f66fd90e77560c250cb2a622e99ee1` |
+| P6.1 | `scripts/julia/coassoc_unique_checks.jl`          | `531678a0413ff3f639cbd453d7f519566fce7dd074621843d96188d4d881a6d3` |
+| P6.1 | `scripts/julia/coherent_system_checks.jl`         | `2c986715e209b47cb50f730c873401813d81590d454bd6b5f49554efdf8cf0fb` |
+| P6.1 | `scripts/julia/component_orthogonality_checks.jl` | `66a11bbdfc868837d8e01a41f63f4b713e54a97be04ff4ab8f86611df0f5772f` |
+| P6.1 | `scripts/julia/configuration_checks.jl`           | `1b38dde1027597dc9b1f709c0f7f24eedbb0adb1569bc2bbc88299059b6cbc40` |
+| P6.1 | `scripts/julia/configuration_space_checks.jl`     | `85d6fe80a33406eba5dcc93e8fa4a0588868709531bfacc1b7b22ce913cea29a` |
+| P6.1 | `scripts/julia/diagonal_scaling_checks.jl`        | `989893995d5088b34fe643ef4514ca6f4df0349a1ee020a13d5f56a4c9741d20` |
+| P6.1 | `scripts/julia/direct_sum_coordinate_checks.jl`   | `42f3f7ea6b58f723933afcf062c6daec9338ce197d7b6ef7ecd7949895f7a46d` |
+| P6.1 | `scripts/julia/direct_sum_orthogonal_checks.jl`   | `579cfea294fb1268dfb7ef62e21607152a4505f5af8478b89d669988f7c6ebad` |
+| P6.1 | `scripts/julia/direct_sum_projection_checks.jl`   | `9d82cd07bc86f819e3822cecc3cbfbe00ab3143934e4e19a543a313477b01c74` |
+| P6.1 | `scripts/julia/fibonacci_braid_checks.jl`         | `e18883a4851e5143fe75389c3041435121a69542d51c7d843dc5a9c2cea767ab` |
+| P6.1 | `scripts/julia/fibonacci_braid_unitarity_checks.jl` | `89d84df4d0a3746d25bdbf83f2c885a73638f8d9b187ee73c98ff32b6abddf38` |
+| P6.1 | `scripts/julia/fibonacci_checks.jl`               | `a3653656bfeb9f2ab1df970d6bf57258cb070a37ebf8fae3e4223b2fd9fe85a5` |
+| P6.1 | `scripts/julia/fine_graining_definition_checks.jl` | `a883b81fda445a0a3f134fd3d84e6201ca224e8326ce97f1609c51ba1eaba153` |
+| P6.1 | `scripts/julia/fusion_rules_checks.jl`            | `94ad2f5efc246e9a3a342951f58ca780168ea1eb4fc3cfc7f9eebbc5ea1d0a03` |
+| P6.1 | `scripts/julia/ising_toy_checks.jl`               | `71f2a7fd6c9764459f52c0f783af4787812f865a94f1c4218b6224380d2728eb` |
+| P6.1 | `scripts/julia/linear_algebra_checks.jl`          | `fb37c1a8b2a4fe9aceab6b915a2d303c5cc9304e9d6b9d497ae001784de3360b` |
+| P6.1 | `scripts/julia/linear_algebra_trace_checks.jl`    | `cf19b2aef003a15bcadbda81d34d3337ceac545fea77e2ac2b0e3874fcbbb8ea` |
+| P6.1 | `scripts/julia/polar_section_checks.jl`           | `1670155218eb57f7d8d60fd8af5812b77bacc43dd64f74a546c3aef678304dc9` |
+| P6.1 | `scripts/julia/postcompose_isometry_checks.jl`    | `2a8df527f01110b9a808a381ae86b2add858f54f31b08ff5eb91adf1e78c43af` |
+| P6.1 | `scripts/julia/project_definition_checks.jl`      | `d9d102e7a3d1ae0cb8d25d2f6ee83c8f359eef0bdfdeaaf01e23e559bb9c4eae` |
+| P6.1 | `scripts/julia/tensor_isometry_checks.jl`         | `e8df456e032386ab34d4fbea34238faf9c0ae0417e2c2ad777cd5e5ff85ae9fd` |
+| P6.1 | `scripts/julia/tensor_power_checks.jl`            | `d64754812ae46e4c628314feae8b85a3e8917a6668cf3dd7b3ec8681545769b0` |
+| P6.1 | `scripts/julia/truncated_fock_checks.jl`          | `9847904e756567a1d8c20f61e8ceda6f0c9f9394fb946220eb9a3f52009b0a15` |
+| P6.1 | `scripts/wolfram/cft_weight_exact.wls`            | `8f07d9a0d31ff24c6a25445518faac69e6bd3fcc4e9f1c3ad46cfa172e63d797` |
+| P6.1 | `scripts/wolfram/charge_only_negative_exact.wls`  | `e4343272c46ef71e485df981350c5c862b6086014591100ecd39bd644384200d` |
+| P6.1 | `scripts/wolfram/coassoc_unique_exact.wls`        | `15f70edd37afc2af4f98c1f7d70bc3ecd8b6d3d2a4cfd09802bb18a7c3474017` |
+| P6.1 | `scripts/wolfram/coherent_system_exact.wls`       | `f32cfca02bb165189e2e30222473f8a12d30a826186f74c63a48db4013ccb8b5` |
+| P6.1 | `scripts/wolfram/component_orthogonality_exact.wls` | `c6275497d4e381a4f298c69c16e457352ee0daf40cb16300d0b97ef6fb26519b` |
+| P6.1 | `scripts/wolfram/configuration_exact.wls`         | `6d84f5dbd7185773d74931b32a23fc1f9229e99ccd06dede4e269fd448442b56` |
+| P6.1 | `scripts/wolfram/configuration_space_exact.wls`   | `83fbd54e2ec49cc3f1717d68a24fffd72cf4c2eb295a19245093e51207456933` |
+| P6.1 | `scripts/wolfram/diagonal_scaling_exact.wls`      | `dc9f28e4b63e1d01fb160e4bb5212badf98cf7216e3deb089c6447ee2de998cc` |
+| P6.1 | `scripts/wolfram/direct_sum_coordinate_exact.wls` | `00debe972601203b8279670516b45fb71463da44b95a0d3d7c1663efc2956979` |
+| P6.1 | `scripts/wolfram/direct_sum_orthogonal_exact.wls` | `84a6daed9e1379a5828b7b7690a42ddaf5d88a13fd2a09a12c41bd59c57e0398` |
+| P6.1 | `scripts/wolfram/direct_sum_projection_exact.wls` | `78a74546b4dce8d960ebb431fbad507e6095622d40ae6de34376b21bafcea247` |
+| P6.1 | `scripts/wolfram/fibonacci_braid_exact.wls`       | `a5a9c88bb35fee476ed304deeae08d50e82c245e45afd12cbbbbee43f99a58f2` |
+| P6.1 | `scripts/wolfram/fibonacci_braid_unitarity_exact.wls` | `898bb795c8692e2fc4a59c9ed654718af13fd13aaf9325f9165f0e06946d1a38` |
+| P6.1 | `scripts/wolfram/fibonacci_exact.wls`             | `e036cd0e18b1fc3274d927196a5f553124a099fa529a787d1f451ab4b68b7d2e` |
+| P6.1 | `scripts/wolfram/fine_graining_definition_exact.wls` | `7a510d9e096e4c4a7d0608633fdbdb71e0b0a8d9f781a6e2d56d2ee9bd950f82` |
+| P6.1 | `scripts/wolfram/fusion_rules_exact.wls`          | `230e3213fc49baa1fa07bd04f19bae083376e0723ed7959ffa51042c091c28f8` |
+| P6.1 | `scripts/wolfram/ising_toy_exact.wls`             | `5e4fc6be86c9661d62c535be290e45986a3f9df6d6014a3c3c7478ba2f0aa122` |
+| P6.1 | `scripts/wolfram/linear_algebra_exact.wls`        | `66bbb539ed219e343f3df9b6d9ed4de6cc972a7bfdac3aa1b03e4b9d7bf57fac` |
+| P6.1 | `scripts/wolfram/linear_algebra_trace_exact.wls`  | `7e277bae8ca3cb576e647f77479e1e8ef4148c27e8974315c9be3dfac8418e47` |
+| P6.1 | `scripts/wolfram/polar_section_exact.wls`         | `f874808b025a75d920c689481b28a638d3e9f0268bdddc953a24df3faf96cbae` |
+| P6.1 | `scripts/wolfram/postcompose_isometry_exact.wls`  | `e95616b7b629b15274b3505dddb8cc3179d55f3f086b53004a3afea7d34eeb42` |
+| P6.1 | `scripts/wolfram/project_definition_exact.wls`    | `597c58987681beda976e212c71fb8d499397698f89e22f9df202d4e7e7954355` |
+| P6.1 | `scripts/wolfram/tensor_isometry_exact.wls`       | `7e8d048c769aa9befc2156e960fde95de6e6ca39b42bb370439120f023bec1bf` |
+| P6.1 | `scripts/wolfram/tensor_power_exact.wls`          | `fa84e55310b3b61aa3a1c156fbf5c7ce7e667fdb259235dcb0f77dc0df7ba2b6` |
+| P6.1 | `scripts/wolfram/truncated_fock_exact.wls`        | `1546fe79da9cde814d83ddc414f6b26e775d601bb5d5d761db1f949b90f401d1` |
+| P6.2 | `results/CHECKS.md` (at-import, 1034 lines)       | `4aec2fd0c7874ca97ba5031fd1d84560bac341f7b7a96f4a4af9e5629fef826c` |
+
+**Phase-6 rerun records.** Each rerun appended a dated section to
+`results/CHECKS.md`; together they constitute the canonical-repo
+re-validation of the ported infrastructure (the CAD originals were
+last validated 2026-05-14 / 2026-05-15 per the at-import `CHECKS.md`).
+
+| Step | Date | Scope | Aggregate result | Wall time | Commit |
+| --- | --- | --- | --- | --- | --- |
+| P6.3 | 2026-05-17 | 1 Julia smoke (`direct_sum_orthogonal_checks.jl`)             | 1/1 PASS, exit 0  | <1s    | `f42a0c1` |
+| P6.4 | 2026-05-17 | 1 Wolfram smoke (`direct_sum_orthogonal_exact.wls`) via TIB VPN | 1/1 PASS, exit 0  | 9.013s | `4c2c0b1` |
+| P6.5 | 2026-05-17 | 25 Julia full-suite (`for f in scripts/julia/*.jl; do julia "$f"`) | 25/25 PASS, exit 0 | ~37s   | `2a3eb44` |
+| P6.6 | 2026-05-17 | 25 Wolfram full-suite (`for f in scripts/wolfram/*.wls; do wolframscript -file "$f"`) via TIB VPN | 25/25 PASS, exit 0 | ~133s  | `6da4aab` |
+
+**Aggregate across the four reruns: 52 script invocations, 52 PASS,
+0 FAIL, 0 timeouts, 0 retries, 0 license-server hiccups.** Every
+script emitted its expected `all <name> passed` (Julia) or
+`all exact <name> passed` (Wolfram) final-line confirmation; no
+floating-point tolerance accepted on the Wolfram leg (exact-symbolic
+arithmetic throughout).
+
+**`results/CHECKS.md` growth log.**
+
+| Stage | Line count | Delta | Section header appended |
+| --- | --- | --- | --- |
+| P6.2 import       | 1034 | (baseline)   | (carry-over from CAD; 19 dated sections) |
+| Post-P6.3 append  | 1073 | +39          | `## 2026-05-17: Phase 6 P6.3 — Julia infrastructure smoke test (canonical repo)` (CHECKS.md line 1036) |
+| Post-P6.4 append  | 1120 | +47          | `## 2026-05-17: Phase 6 P6.4 — Wolfram infrastructure smoke test (canonical repo)` (CHECKS.md line 1074) |
+| Post-P6.5 append  | 1196 | +76          | `## 2026-05-17: Phase 6 P6.5 — Julia full-suite rerun (25 scripts, canonical repo)` (CHECKS.md line 1122) |
+| Post-P6.6 append  | 1372 | +176         | `## 2026-05-17: Phase 6 P6.6 — Wolfram full-suite rerun (25 scripts, canonical repo)` (CHECKS.md line 1198) |
+
+Cumulative Phase-6 delta: **+338 lines (1034 → 1372)**; the pre-import
+historical record (1034 lines) is preserved intact per the
+`MIGRATION_PLAN.md:243-244` append-don't-overwrite rule. The current
+working-tree SHA256 of `results/CHECKS.md` is
+`9d3e9db2937b38f041666616a7e026b675055cde5f70f7524cc2215248dc1a7e`
+(this commit; differs from the at-import hash `4aec2fd0…` by exactly
+the four appended dated sections).
+
+**Harmonisation applied.** Five distinct patterns:
+
+(i) *Mechanical port at P6.1+P6.2*: `cp -a` from
+`cft-anyons-deprecated/`; `diff -r` empty across both script trees
+and the CHECKS.md file. All 51 source/destination SHA256s identical
+at import time per the manifest above; 50/50 still match at this
+commit (only `results/CHECKS.md` has changed by design — see growth
+log).
+
+(ii) *Infrastructure smoke tests at P6.3 + P6.4*: P6.3 confirmed the
+Julia stdlib `LinearAlgebra` suffices for the smallest script (no
+`Project.toml` required at repo root; canonical state preserved).
+P6.4 confirmed the TIB-VPN-routed Wolfram license server is reachable
+for `wolframscript -file` invocations (pre-check `wolframscript -code
+"1+1"` → `2` returned in <1s before each VPN-requiring run).
+
+(iii) *Full-suite reruns at P6.5 + P6.6*: each appended one
+per-script pass-status table to `results/CHECKS.md` (P6.5 +76 lines;
+P6.6 +176 lines — larger because the Wolfram section additionally
+documents the 9 Phase-5 follow-up C-gate discharges). No failures
+across 50 script runs.
+
+(iv) *3-way C-gate discharge at P6.6 for 9 Phase-5 follow-ups*: when
+the Phase-5 Lean ports landed (P5.7–P5.15), 9 of them carried a
+Wolfram-leg deferral filed as `cft-anyons-5tm.{9,11,13,15,17,19,21,23,26}`
+because the canonical `scripts/wolfram/` infrastructure had not yet
+been ported (that landed at P6.1, commit `8b680b2`). P6.6 supplied
+the missing Wolfram leg by running the matching scripts (`fibonacci_exact.wls`
+for `.9`/`.15`/`.23`; `fibonacci_braid_unitarity_exact.wls` for `.11`;
+`fusion_rules_exact.wls` for `.13`; `coassoc_unique_exact.wls` for
+`.17`; `cft_weight_exact.wls` for `.19`; `fibonacci_braid_exact.wls`
++ `fibonacci_braid_unitarity_exact.wls` for `.21`;
+`polar_section_exact.wls` (supporting) for `.23`; `ising_toy_exact.wls`
+for `.26`); mapping is by topic-coverage since the bd-issue
+descriptions used hypothetical script names at filing time (e.g.
+`fibonacci_F_matrix.wls`) that don't match the actual P6.1 naming
+convention. Full mapping table recorded in `results/CHECKS.md`
+§ P6.6. All 9 followups closed; Phase-5 epic `cft-anyons-5tm`
+auto-closed at the same commit (5tm.26 was its last open child).
+
+(v) *Aggregation at P6.7* (this commit): pure docs operation; no
+script reruns, no `lake build`, no semantic content.
+
+**Validation passed per Phase-6 step.** P6.1+P6.2: M, I (diff -r
+empty; SHA256 manifest byte-identical; cp -a idempotent). P6.3, P6.4,
+P6.5, P6.6: M (per-script pass-strings + exit 0; CHECKS.md append
+text-only), I (re-running produces same outputs; appending another
+dated section is the next-day operation). P6.7 (this commit): M, I
+(mechanical aggregation; SHA256s recomputed at this commit and
+verified against P6.1 manifest = 50/50 match for the script files;
+CHECKS.md at-import-vs-current hashes both recorded).
+
+**Mutation-proof per phase.** The triple-check infrastructure IS the
+mutation-proof discipline for Phases 4/5 — Lean ports' `lake build`
+catches Lean semantic edits, Julia scripts catch numerical drift
+in the implementation, Wolfram scripts catch symbolic drift in the
+exact-arithmetic identities. P6's reruns confirmed all 50 ported
+scripts execute correctly in the canonical repo (no syntactic or
+environmental drift introduced by the `cp -a` migration).
+
+**Verifier (re-runnable).** All 50 script SHA256s above are
+computable from the working tree at this commit:
+```bash
+sha256sum scripts/julia/*.jl scripts/wolfram/*.wls
+# (compare against the per-row hashes in the manifest above;
+#  50/50 should match exactly. The 51st row,
+#  results/CHECKS.md, records the AT-IMPORT hash and is
+#  EXPECTED to differ from the current working-tree hash by
+#  the four appended dated sections — see growth log.)
+```
+
+**Cross-validation at this commit (P6.7).** All 50 script-file
+SHA256s recomputed at this commit match the SHA256s recorded in
+the P6.1+P6.2 commit body (commit `8b680b2`) verbatim. No drift
+detected on the script files. `results/CHECKS.md` has drifted from
+`4aec2fd0…` (at-import, 1034 lines) to
+`9d3e9db2937b38f041666616a7e026b675055cde5f70f7524cc2215248dc1a7e`
+(this commit, 1372 lines) by exactly the four appended dated
+sections per the growth log — drift is expected and append-only.
+
+**Phase 6 close.** With P6.7 (this commit), all 7 P-step children of
+`bd cft-anyons-cb1` are closed (P6.1, P6.2, P6.3, P6.4, P6.5, P6.6,
+P6.7); the Phase 6 epic `cft-anyons-cb1` auto-closes as `cft-anyons-s3o`
+(P6.7) was its last open child (per HANDOFF gotcha #37). The earlier
+P6.6 commit (`6da4aab`) already auto-closed Phase 5's epic
+`cft-anyons-5tm` (by closing its last open child, `5tm.26`); this
+commit completes the parallel auto-close for Phase 6.
+
+---
+
 ## Schema for each entry (future Phase 2+ imports)
 
 ```
