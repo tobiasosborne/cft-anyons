@@ -1370,3 +1370,225 @@ Scope:
   the CAD-original Wolfram runs confirmed on 2026-05-14/15 (which the
   Phase-5 ports cited indirectly). No new mathematical decision is
   being made here.
+
+---
+
+## 2026-05-17 — Phase 8, Step P8.8: `Pkg.test("MobileAnyons")` v3 — 10586/10591 PASS
+
+**Step:** P8.8 — test/ directory import + `Pkg.test()` entry-point
+wiring + run + result documentation. bd `cft-anyons-80h`.
+
+**Source.** 18 test files copied byte-identical from MMA
+`/home/tobiasosborne/Projects/microscopic-mobile-anyons/test/` (per
+the P8.0 byte-identical port convention preserved through P8.4–P8.7).
+1 synthetic file `test/runtests.jl` (Pkg.test driver — NOT in MMA,
+explicitly flagged synthetic in its preamble) and 1 shim
+`src/MobileAnyons.jl` (no-op `module MobileAnyons; end` stub
+satisfying Julia's package-loader contract that `src/<Name>.jl`
+exists and contains a single top-level module declaration).
+
+**Project.toml change.** Single dep added: `SparseArrays =
+"2f01184e-e22b-5df5-ae63-d93ebab69eaf"` (stdlib UUID). MMA gets away
+without declaring it because `using SparseArrays` at
+`src/MobileAnyons/MobileAnyons.jl:65` resolves transitively in MMA's
+dev-include workflow (Oscar → … → SparseArrays loaded via the
+project env). `Pkg.test()` builds a sandbox sub-env from `[deps]`
+alone, so the explicit declaration is required. User-authorised at
+the 2026-05-17 P8.8 escalation. Manifest.toml SHA256 unchanged
+(`e9e42574…`) — `Pkg.instantiate` after the addition emits a "deps
+changed since manifest" warning but does NOT re-resolve any
+package version, because SparseArrays was already present in the
+Manifest tree as a transitive dep.
+
+**Shim file form (`src/MobileAnyons.jl`).** No-op stub chosen:
+
+```julia
+module MobileAnyons
+end
+```
+
+Three forms were considered (bare `include`, outer-wraps-inner
+double-module, no-op stub); the no-op stub is the chosen form
+because every MMA test file already self-bootstraps with
+`include("../src/MobileAnyons/MobileAnyons.jl"); using .MobileAnyons`
+and the bare-include form raises `UndefVarError: include not defined
+in Base.__toplevel__` (Julia's package-loader requires the entry
+file to contain exactly one top-level `module … end`). The full
+provenance rationale is in the file's docstring header.
+
+**Runtests.jl driver pattern (synthetic).** Each test file is
+evaluated inside a freshly-created anonymous `Module(:Anon_<i>_<name>)`
+rather than into `Main`. Reason: each test file's `include +
+using .MobileAnyons` redefines `Main.MobileAnyons` on every iteration
+when included sequentially into `Main`; this leaves stale bindings
+from previous iterations and causes `UndefVarError: <symbol> not
+defined in Main` with the "two or more modules export different
+bindings" hint. Verified by spike at P8.8 v3:
+`build_rsymbol_cache` resolves after the first `include +
+using .MobileAnyons` and becomes ambiguous after the second. The
+anonymous-module per file pattern is the inline equivalent of
+`SafeTestsets.jl`'s `@safetestset`; we inline it to avoid the
+dependency. Each anonymous module is bootstrapped with `using Base,
+Core, Test` and a per-module `include` closure
+(`const include = (path) -> Base.include(m, path)`) because `Module`
+constructor produces a bare module that does NOT bring `Base.include`
+into its own namespace, so the test file's `include("../src/…")`
+would otherwise raise `UndefVarError: include not defined`.
+
+**Run command.**
+`julia --project=. -e 'using Pkg; Pkg.test("MobileAnyons")'`.
+
+**Result.** **10586 passed / 2 failed / 3 errored / 10591 total —
+9 min 49.6 s wall.** All 5 non-passing items are pre-existing MMA
+defects (bucket β, verified by reproducing each in MMA's own env;
+see Ising-failure-triage section below) — none port-introduced.
+
+### Per-file pass/fail table
+
+| File | Pass | Fail | Error | Total | Time | Notes |
+|---|---:|---:|---:|---:|---:|---|
+| `test_braiding_nonabelian.jl` | 46 | 0 | 1 | 47 | 1m53.8s | (β) Verlinde(QQBar,3) KeyError (3,3,3) at L207-214 — MMA-reproducible |
+| `test_braiding_svec.jl` | 236 | 0 | 0 | 236 | 9.1s | |
+| `test_categorical_lift.jl` | 3058 | 0 | 0 | 3058 | 42.6s | |
+| `test_categories.jl` | 6 | 2 | 2 | 10 | 3.6s | (β) Fibonacci `Int(dim(…))` MethodError L17-18 (2 err); (β) Ising decompose-length L35,L39 (2 fail); both MMA-reproducible |
+| `test_convergence.jl` | 33 | 0 | 0 | 33 | 3m38.0s | longest single test (Daubechies single-particle convergence at L=4,8) |
+| `test_fibonacci_spectra.jl` | 181 | 0 | 0 | 181 | 3.1s | |
+| `test_finegraining_fibonacci.jl` | 5136 | 0 | 0 | 5136 | 12.1s | largest test count |
+| `test_finegraining_svec.jl` | 793 | 0 | 0 | 793 | 1m35.4s | |
+| `test_fsymbols.jl` | 20 | 0 | 0 | 20 | 30.0s | |
+| `test_golden_chain.jl` | 19 | 0 | 0 | 19 | 1.6s | |
+| `test_golden_chain_cft.jl` | 50 | 0 | 0 | 50 | 4.3s | |
+| `test_hilbert.jl` | 9 | 0 | 0 | 9 | 0.9s | |
+| `test_lift_audition.jl` | 20 | 0 | 0 | 20 | 16.6s | |
+| `test_lift_investigations.jl` | 6 | 0 | 0 | 6 | 3.9s | |
+| `test_number_changing_finegraining.jl` | 127 | 0 | 0 | 127 | 11.3s | |
+| `test_paircreation.jl` | 622 | 0 | 0 | 622 | 14.7s | |
+| `test_svec.jl` | 96 | 0 | 0 | 96 | 5.6s | |
+| `test_virasoro.jl` | 128 | 0 | 0 | 128 | 3.0s | |
+| **Totals** | **10586** | **2** | **3** | **10591** | **9m49.6s** | 99.95% pass |
+
+### Ising-failure-triage (Step 1 of P8.8 brief — MMA-comparison spike)
+
+To resolve whether the 4 `test_categories.jl` non-passing items
+(2 Fibonacci errors + 2 Ising failures) and the 1 `test_braiding_nonabelian.jl`
+error are PORT-INTRODUCED (bucket α) vs PRE-EXISTING MMA (bucket β)
+vs DIFFERENT-DRIFT (bucket γ), the same test files were run in MMA's
+own env:
+
+1. `cd /home/tobiasosborne/Projects/microscopic-mobile-anyons &&
+    julia --project=. -e 'include("test/test_categories.jl")'`
+    → ERRORS identically at L17-18 with `MethodError: no method
+    matching Int64(::AbsSimpleNumFieldElem)` (Fibonacci Int(dim) lines).
+    The Fibonacci-testset error halts `include` propagation, so MMA
+    does NOT reach the Ising/sVec testsets via this path. Captured at
+    `/tmp/p88_mma_test_categories.txt`.
+
+2. Isolated MMA spike on the Ising testset alone (extracted L25-40
+    of `test_categories.jl` into a free script):
+    `julia --project=. -e '<inlined Ising testset>'`
+    → FAILS identically: `decompose(σ⊗σ)` returns
+    `Tuple{SixJObject, Int64}[(𝟙, 1)]` (length 1, missing the χ component
+    expected by `σ⊗σ = 1 ⊕ ψ`); `decompose(ψ⊗ψ)` returns
+    `[(𝟙, 1), (χ, 1)]` (length 2, has the extraneous χ component
+    expected away by `ψ⊗ψ = 1`). Captured at
+    `/tmp/p88_mma_ising_isolated.txt`.
+
+3. `cd /home/tobiasosborne/Projects/microscopic-mobile-anyons &&
+    julia --project=. test/test_braiding_nonabelian.jl`
+    → ERRORS identically at L207-214 with `KeyError: key (3, 3, 3) not
+    found` (Verlinde(QQBar, 3) R-symbol extraction). Captured at
+    `/tmp/p88_mma_braid_nonab.txt`.
+
+**Verdict: bucket (β) — ALL 5 non-passing items are PRE-EXISTING MMA
+defects.** None are port-introduced; none are TC.jl/Oscar revision
+drifts caused by our pin changes (we did not change the TC.jl or
+Oscar pin; only added SparseArrays to [deps]). Likely root causes:
+
+- **(β.1) + (β.5)** [Fibonacci Int(dim), Verlinde KeyError] — appear
+  to be TensorCategories.jl 0.5.x / Oscar 1.6.x API drift (Int
+  conversion from AbsSimpleNumFieldElem; r_values key structure for
+  Verlinde categories). May relate to the FusionCategory dangling-export
+  AMBIGUOUS class tracked at bd `cft-anyons-09q`.
+
+- **(β.2) + (β.3) + (β.4)** [Ising decompose-length] — appear to be a
+  labelling-convention mismatch between MMA's test assumption and
+  TC.jl's `ising_category()` `simples` ordering: TC.jl's `S[2]` may
+  be the fermion ψ (so `ψ⊗ψ = 1` matches the actual `[(𝟙, 1)]`) and
+  `S[3]` may be σ (so `σ⊗σ = 1 ⊕ ψ` matches the actual
+  `[(𝟙, 1), (χ, 1)]` where χ is TC.jl's fermion label). MMA's test
+  was written to a different convention.
+
+All 5 items are filed as **bd `cft-anyons-bnu`** (P3 follow-up,
+non-blocking — Phase 8 declares the port complete with these
+triaged). Link to LB-2 `cft-anyons-2ae` (also a pre-existing MMA
+test gap) as adjacent context.
+
+### Project.toml change (single-line diff, P8.8)
+
+| Line | Direction | Content |
+|---|---|---|
+| 5 | unchanged | `[deps]` |
+| 6 | unchanged | `Combinatorics = "861a8166-…"` |
+| 7 | unchanged | `LinearAlgebra = "37e2e46d-…"` |
+| 8 | unchanged | `Oscar = "f1435218-…"` |
+| 9-17 | **added** | comment block + `SparseArrays = "2f01184e-e22b-5df5-ae63-d93ebab69eaf"` |
+| 18 | unchanged | `TensorCategories = "258c694e-…"` |
+| 19 | unchanged | `Test = "8dfed614-…"` |
+
+Manifest.toml SHA256 unchanged (`e9e42574d348b097ebacd0f690ac5d04a276cc29c0fb3451226de3c9d33f7a5c`) — verified pre-/post-`Pkg.instantiate`.
+
+### Files added at P8.8
+
+| Path | SHA256 | Bytes | Source | Status |
+|---|---|---:|---|---|
+| `test/runtests.jl` | `cc0c2c556cdb5f78e6518d4aaabb4be96d8493f8e698646232d3397d4cbde841` | (synthetic) | NONE — synthetic Pkg.test driver | NEW — flagged synthetic in preamble |
+| `src/MobileAnyons.jl` | `2d10b20cd3235876da35751f2e5eec94b8b7562f4afb93f46107d779caff002b` | (synthetic) | NONE — synthetic package-loader stub | NEW — flagged synthetic in docstring |
+
+### 18 test-file SHA256 manifest (source byte-identical)
+
+All 18 MMA test files SHA256-verified byte-identical to source
+(`/home/tobiasosborne/Projects/microscopic-mobile-anyons/test/`):
+
+| File | SHA256 |
+|---|---|
+| `test_braiding_nonabelian.jl` | `05b245e1f49addde2e1d67fd24f36ee85575cb37ba101543583c33f029a95a4a` |
+| `test_braiding_svec.jl` | `af91601d6356c5a561baa9581fdd3def70641244f5a740b8c6a2058a74e865b4` |
+| `test_categorical_lift.jl` | `384c8d6a378ab4225bf682a1099edf83ef0d33233efaab3f99ac4c35aaca3fd1` |
+| `test_categories.jl` | `5c5a3b0e56b0725b42936d6225060e38188d068a15ad2668342ad8fe16767ae9` |
+| `test_convergence.jl` | `f61d53c3bef7f2203feca95d3ee252476b64d27321b80dcbb715248a0474d0fe` |
+| `test_fibonacci_spectra.jl` | `bb5236ab5956dcdbee177ad66bd78e075e1e4f772d1dbe29f5a35d87c496b78e` |
+| `test_finegraining_fibonacci.jl` | `3673826e4c6b2f6a11bab14d920dbebe5fdcd66d2dc81e945ff1f626bdbb6a94` |
+| `test_finegraining_svec.jl` | `e9cad394fc33c19afec3dd343910e94d7ae62afc505d60cc08d50642f7a18695` |
+| `test_fsymbols.jl` | `128947c45a9ef6d7e8eacea7474d0e4ef6528e1126dcb229bc2bf17ab8f943b0` |
+| `test_golden_chain.jl` | `bfb78ff3b445a36341a41dca5fbe92e3a22ab9ee1eab1e8f0158ad42ad9150f2` |
+| `test_golden_chain_cft.jl` | `9c91071e52d71fdd8448e67d4f8f3593702c291c2d0a5b17dfafed1d455bb75e` |
+| `test_hilbert.jl` | `14262d948c573fc37bc99d01fcc2aa8be183e36c431687ffcdd3aecb07b9b530` |
+| `test_lift_audition.jl` | `f18eec41628b320100cb81a208ca53fd76a5e328fd30740b7bdebec91e09c062` |
+| `test_lift_investigations.jl` | `5c1fa8f0fe0c12933a07cd123576cf1b214e3b4de0a1bcf841dddeadbd4b0cc1` |
+| `test_number_changing_finegraining.jl` | `ffa6ca7e02d517ae2ce11f93ad0aababe1b4a81eb00e86ef90cd4649593359ff` |
+| `test_paircreation.jl` | `2bb8c6e1c9c081fe86543164eceedf86893a8b75103d6b8603fb7aed1526ca38` |
+| `test_svec.jl` | `2a69cd457b9812c338fcf5d2cb1e5352edcae8032034b63148950606bb6f9d78` |
+| `test_virasoro.jl` | `60aacff83111a0ed6bfe7ac0292794f373a7e3c1a39fc5d702589823d99c4c8d` |
+
+### bd activity (P8.8)
+
+- Closes: `cft-anyons-80h` (P8.8 import test/ + run Pkg.test + record).
+- Files (P3, non-blocking): `cft-anyons-bnu` (5 pre-existing MMA test
+  defects — Fibonacci `Int(dim)`, Ising decompose-length, Verlinde
+  KeyError; bucket β; investigation deferred).
+
+### Scope
+
+- Phase 8 testing-canonical-entry-point decision is now sealed
+  (`Pkg.test("MobileAnyons")` is the canonical run command, per user
+  decision 2026-05-17).
+- No new mathematical content. No new GLOSSARY slugs realised. The
+  36 slugs realised by P8.4–P8.7's `src/MobileAnyons/` port now
+  carry a 10586-assertion test-suite witness against TC.jl 0.5.x +
+  Oscar 1.6.x + Julia 1.12.
+- 5 non-passing items are isolated to PRE-EXISTING MMA defects, not
+  port issues; tracked at bd `cft-anyons-bnu` for Phase-9+ follow-up.
+- Test-runner artifacts: `/tmp/p88_v3e_test_output.txt` (full run log,
+  1265 lines), `/tmp/p88_mma_test_categories.txt` (MMA comparison),
+  `/tmp/p88_mma_ising_isolated.txt` (MMA Ising spike),
+  `/tmp/p88_mma_braid_nonab.txt` (MMA braid spike).
