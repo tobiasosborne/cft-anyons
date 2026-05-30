@@ -1,0 +1,137 @@
+% SHARD-ID: CA-31-GAUSSIAN-CURRENT-SYMBOL-EQUIVALENCE
+% SHARD-TITLE: Gaussian Current-Symbol Equivalence in One Dimension
+% SHARD-SUMMARY: Bridges the A4 real-space energy current to the CA-26 boost-time symbol for the nearest-neighbour scalar Gaussian chain.
+% SHARD-SUMMARY: Checks only the translation-invariant integrated-current symbol, with the CA-29/CA-30 current orientation fixed explicitly.
+% SHARD-SUMMARY: Leaves finite open-chain wave packets, dGamma(k), and continuum convergence as pending proof obligations.
+% SHARD-KEYWORDS: Gaussian boson, energy current, boost-time symbol, Klein-Gordon, translation invariant, one dimension
+
+\section{Gaussian Current-Symbol Equivalence in One Dimension}
+\label{sec:gaussian-current-symbol-equivalence}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: checked translation-invariant symbol bridge.}  This shard adds
+the first bridge between the finite real-space current convention and the
+momentum-symbol layer.  It is deliberately one-dimensional and
+nearest-neighbour.  The checked statement is the equality of the
+translation-invariant integrated-current symbol with the CA-26 boost-time
+symbol for the scalar Klein-Gordon coefficients.  No finite open-chain momentum
+operator, no finite periodic first moment, no \(\mathrm d\Gamma(k)\) theorem,
+and no continuum convergence statement is claimed.
+
+Dependencies: CA-24, CA-26, CA-29--CA-30, and CONVENTIONS.md (j), (k), (l).
+
+% Convention: CONVENTIONS.md:196--239 -- finite periodic symbol checks do not
+%   define periodic first moments or finite coordinate generators.
+% Convention: CONVENTIONS.md:260--269 -- boost-time symbol
+%   (1/2) partial_a omega(k)^2 and its sign convention.
+% Convention: CONVENTIONS.md:379--384 -- open-chain current orientation
+%   J_{j+1/2}=i[e_j,e_{j+1}] and continuity sign.
+% Source: report/sections/26_gaussian_boson_generator_algebra.tex:133--150 --
+%   boost-time residual and symbol target.
+% Source: report/sections/30_gaussian_boson_1d_stress_candidates.tex:81--111 --
+%   finite open-chain T_01 current candidate and continuity equation.
+% Checked: src/GaussianBosonCurrents.jl:162--192 -- integrated current-symbol
+%   helper and Klein-Gordon wrapper.
+% Checked: test/runtests.jl:306--343 -- "Gaussian boson current-symbol
+%   equivalence" invariant tests.
+
+\subsection{Real-Space Current Orientation}
+
+The finite open-chain A4 witness fixes the local current on an open bond by
+\[
+  J_{j+1/2}=i[e_j,e_{j+1}]
+\]
+with endpoint currents zero.  For a nearest-neighbour scalar chain with bond
+coefficient \(b\), the checked closed form is
+\[
+  J_{j+1/2}
+  =
+  \frac b2\bigl(q_{j+1}p_j-q_jp_{j+1}\bigr).
+\]
+This sign is not adjustable in this shard: it is the CONVENTIONS.md (l)
+orientation already used in the open-chain continuity test.
+
+To compare with the boost-time symbol, pass from the local edge current to the
+first-moment integrated current density.  In uniform spacing \(\epsilon\), the
+nearest-neighbour first-moment coefficient contributes the spacing factor
+\(\epsilon\).  The translation-invariant integrated current therefore has
+symbol
+\[
+  \mathcal J_\epsilon(k)
+  =
+  -\epsilon b\sin(\epsilon k).
+\]
+This is a Fourier-symbol identity for the infinite or translation-invariant
+nearest-neighbour expression.  It does not introduce a periodic coordinate
+branch and does not construct an open finite-chain momentum operator.
+
+\subsection{Klein-Gordon Equality}
+
+For the one-dimensional nearest-neighbour lattice Klein-Gordon coefficients,
+\[
+  b=-\epsilon^{-2},
+  \qquad
+  \omega_{\epsilon,m}(k)^2
+  =
+  m^2+2\epsilon^{-2}(1-\cos(\epsilon k)).
+\]
+The integrated-current symbol becomes
+\[
+  \mathcal J_\epsilon(k)
+  =
+  \frac{\sin(\epsilon k)}{\epsilon}.
+\]
+The CA-26 boost-time symbol is
+\[
+  B_\epsilon(k)
+  =
+  \frac12\partial_k\omega_{\epsilon,m}(k)^2
+  =
+  \frac{\sin(\epsilon k)}{\epsilon}.
+\]
+Thus, at this checked symbol level,
+\[
+  \mathcal J_\epsilon(k)=B_\epsilon(k).
+\]
+The mass drops out because the current and the derivative of the onsite mass
+term are both insensitive to \(m^2\).
+
+\subsection{Julia Witness}
+
+The helper
+\[
+  \texttt{nearest\_neighbor\_integrated\_energy\_current\_symbol}
+\]
+implements
+\[
+  -\epsilon b\sin(\epsilon k)
+\]
+for one-dimensional data only.  The Klein-Gordon wrapper inserts
+\(b=-\epsilon^{-2}\).  The tests compare that wrapper against
+\[
+  \texttt{kg\_lattice\_boost\_time\_symbol}
+\]
+for several momenta and spacings.  They also include a sign sentinel:
+for positive \(k\) and the Klein-Gordon negative bond, the current symbol is
+positive and agrees with the boost-time target; reversing the bond sign gives a
+negative symbol and fails the target comparison.  A small-spacing check compares
+the current symbol with the centered continuum momentum representative \(k\)
+near zero using the existing Gaussian small-spacing tolerance.
+
+\subsection{Open Obligations}
+
+This shard closes only the first symbol-level bridge.  The following remain
+pending:
+\[
+\begin{array}{ll}
+1.&\text{a finite open-chain wave-packet comparison with boundary residuals,}\\
+2.&\text{an identification with the one-particle }\mathrm d\Gamma(k)
+      \text{ momentum target,}\\
+3.&\text{a periodic first-moment construction, which still needs a branch
+      policy,}\\
+4.&\text{a scaling or continuum convergence theorem.}
+\end{array}
+\]
+Any compiler output citing this shard must therefore say ``current-symbol
+equality'' rather than ``finite-chain momentum'' or ``continuum stress tensor''.

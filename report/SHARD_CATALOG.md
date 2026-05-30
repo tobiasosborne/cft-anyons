@@ -279,3 +279,12 @@ single ~200-line source file it points to.
 - Summary: Promotes only the finite open-chain energy-current component T_01 to a checked seed via the A4 continuity witness.
 - Summary: Keeps T_10 and T_11 as future momentum-density and momentum-current targets, not as consequences of symmetry or tracelessness.
 - Keywords: Gaussian boson, stress-energy candidate, energy current, momentum density, open chain, continuity equation
+
+## `CA-31-GAUSSIAN-CURRENT-SYMBOL-EQUIVALENCE`
+
+- Source: `report/sections/31_gaussian_current_symbol_equivalence.tex`
+- Title: Gaussian Current-Symbol Equivalence in One Dimension
+- Summary: Bridges the A4 real-space energy current to the CA-26 boost-time symbol for the nearest-neighbour scalar Gaussian chain.
+- Summary: Checks only the translation-invariant integrated-current symbol, with the CA-29/CA-30 current orientation fixed explicitly.
+- Summary: Leaves finite open-chain wave packets, dGamma(k), and continuum convergence as pending proof obligations.
+- Keywords: Gaussian boson, energy current, boost-time symbol, Klein-Gordon, translation invariant, one dimension

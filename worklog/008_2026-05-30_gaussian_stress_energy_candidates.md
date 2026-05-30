@@ -1,5 +1,60 @@
 # Worklog chunk 008 — 2026-05-30
 
+## S3 current-symbol equivalence bridge — 2026-05-30
+
+### Context
+
+S3 asked for the first bridge between the A4 real-space \(T_{01}\) current and
+the CA-26 flat momentum-symbol/boost-time layer.  The danger was overclaiming an
+open-chain momentum generator or periodic first moment.
+
+### What changed
+
+- Delegated S3 to worker `019e79be-23a4-7641-8544-9e982559ba02` (`Faraday`) and
+  reviewed the patch.
+- Added `nearest_neighbor_integrated_energy_current_symbol` and a
+  Klein-Gordon wrapper in `src/GaussianBosonCurrents.jl`.
+- Added the "Gaussian boson current-symbol equivalence" Julia tests.
+- Added CA-31,
+  `report/sections/31_gaussian_current_symbol_equivalence.tex`.
+- Updated report maps, CA-28 helper surface, CA-30 acceptance boundary,
+  `INDEX.md`, CA-23 roadmap, and `report.pdf`.
+
+### Why these choices
+
+- The checked invariant is narrow and sign-sensitive:
+  \[
+    -\epsilon b\sin(\epsilon k)
+    =
+    \frac{\sin(\epsilon k)}{\epsilon}
+  \]
+  for the Klein-Gordon nearest-neighbour bond \(b=-\epsilon^{-2}\), matching
+  the CA-26 boost-time symbol.
+- This uses no periodic coordinate and no finite first moment, so it does not
+  violate the C4/J1 periodic-branch boundary.
+
+### Frictions / dead ends
+
+- The result is only a translation-invariant symbol bridge.  The finite
+  open-chain wave-packet comparison with \(\mathrm d\Gamma(k)\), boundary
+  residuals, and continuum convergence remain open.
+
+### Acceptance
+
+- Parent reviewed the sign convention: the existing A4 orientation needs no
+  sign flip; reversing the bond sign fails the target comparison.
+- `julia --project=. -e 'using Pkg; Pkg.test()'` passed.
+- `make check-report-shards` passed.
+- `make report` passed.
+- `git diff --check` passed.
+
+### Pointers
+
+- Code: `src/GaussianBosonCurrents.jl`.
+- Tests: `test/runtests.jl` testset "Gaussian boson current-symbol
+  equivalence".
+- Report shard: CA-31.
+
 ## S2 one-dimensional stress-energy candidate shard — 2026-05-30
 
 ### Context

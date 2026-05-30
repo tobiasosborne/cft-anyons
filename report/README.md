@@ -48,6 +48,7 @@ before treating report edits as complete.
 | 28 | `CA-28-GAUSSIAN-BOSON-NUMERICAL-SUITE` | `report/sections/28_gaussian_boson_numerical_suite.tex` | Numerical Verification Suite for Gaussian Boson Examples |
 | 29 | `CA-29-GAUSSIAN-BOSON-REAL-SPACE-DENSITY` | `report/sections/29_gaussian_boson_real_space_density.tex` | Gaussian Boson Real-Space Energy Density |
 | 30 | `CA-30-GAUSSIAN-BOSON-1D-STRESS-CANDIDATES` | `report/sections/30_gaussian_boson_1d_stress_candidates.tex` | One-Dimensional Gaussian Boson Stress-Energy Candidates |
+| 31 | `CA-31-GAUSSIAN-CURRENT-SYMBOL-EQUIVALENCE` | `report/sections/31_gaussian_current_symbol_equivalence.tex` | Gaussian Current-Symbol Equivalence in One Dimension |
 
 ## Adding a shard
 

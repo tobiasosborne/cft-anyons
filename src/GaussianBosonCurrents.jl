@@ -160,6 +160,38 @@ function open_chain_gaussian_energy_current_closed_form_matrix(
 end
 
 """
+    nearest_neighbor_integrated_energy_current_symbol(k; bond, spacing = 1)
+
+Return the one-component translation-invariant symbol of the integrated A4
+nearest-neighbour current in the CONVENTIONS.md (l) orientation.
+
+For ``J_{j+1/2} = (bond / 2) * (q_{j+1}p_j - q_j p_{j+1})``, the first-moment
+spacing factor gives ``-spacing * bond * sin(spacing * k)``.  This is a symbol
+identity only; it does not define a finite periodic coordinate or an open-chain
+momentum generator.
+"""
+function nearest_neighbor_integrated_energy_current_symbol(k; bond, spacing = 1)
+    _check_k_vector(k)
+    length(k) == 1 ||
+        error("nearest-neighbour integrated current symbol is currently 1D only, got dimension $(length(k))")
+    spacing > 0 || error("spacing must be positive, got $spacing")
+    bond_coeff = _check_real_parameter("bond", bond)
+    return [-float(spacing) * bond_coeff * sin(float(spacing) * float(k[1]))]
+end
+
+"""
+    kg_nearest_neighbor_integrated_energy_current_symbol(k; spacing = 1)
+
+Return the integrated-current symbol for the 1D nearest-neighbour lattice
+Klein-Gordon bond ``-spacing^-2``.
+"""
+function kg_nearest_neighbor_integrated_energy_current_symbol(k; spacing = 1)
+    spacing > 0 || error("spacing must be positive, got $spacing")
+    return nearest_neighbor_integrated_energy_current_symbol(k;
+        bond = -1 / float(spacing)^2, spacing)
+end
+
+"""
     open_chain_gaussian_energy_continuity_residuals(num_sites; onsite, bond)
 
 Return matrices for

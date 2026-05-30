@@ -41,7 +41,7 @@ Protocol:
 | A4 | Complete | `019e79aa-6791-78b0-8cbc-5d97538e9936` (`Hypatia`) | Added finite open-chain Gaussian energy-current helpers/tests for the local `T_01` candidate; `T_11` remains pending. |
 | S1 | Complete | `019e79b4-eb8c-7193-a6a0-3aaf60ed8178` (`Kierkegaard`) | Audited CA-29 against S1 and found the density shard already satisfies the step; no report edits needed. |
 | S2 | Complete | `019e79b7-67f8-75f3-bab1-61384f352692` (`Planck`) | Added CA-30 1+1 lattice stress-energy candidate shard with checked `T_01` seed and proposal-level `T_10/T_11`. |
-| S3 | Pending | - | Current-vs-symbol equivalence checks. |
+| S3 | Complete | `019e79be-23a4-7641-8544-9e982559ba02` (`Faraday`) | Added CA-31 and tests for the 1D nearest-neighbour integrated-current symbol matching the KG boost-time symbol. |
 | S4 | Pending | - | Higher-dimensional cell-current proposal shard. |
 | S5 | Pending | - | Stress-energy numerical suite. |
 
@@ -227,3 +227,18 @@ Protocol:
   as the pending S3 current-vs-symbol comparison target, and defines \(T_{11}\)
   only operationally as a future momentum-current witness.  `make
   check-report-shards`, `make report`, and `git diff --check` passed.
+- 2026-05-30: S2 pushed as `d7430e3`.  S3 delegated to worker
+  `019e79be-23a4-7641-8544-9e982559ba02` (`Faraday`).  Target is the first
+  checked bridge between the A4 real-space energy current and the CA-26
+  boost-time/momentum-symbol layer, preferably a nearest-neighbour current
+  symbol identity plus low-energy agreement, with periodic first moments and
+  open-chain `dGamma(k)` equivalence left unclaimed unless actually proved.
+- 2026-05-30: S3 reviewed by parent and accepted after adding a CA-23 roadmap
+  synchronization.  The landed invariant is
+  `nearest_neighbor_integrated_energy_current_symbol(k; bond=-epsilon^-2) =
+  kg_lattice_boost_time_symbol(k)` in 1D, plus a small-spacing check against
+  centered continuum momentum and a sign sentinel.  The result is explicitly a
+  translation-invariant symbol bridge only: no periodic coordinate, finite
+  open-chain momentum generator, `dGamma(k)` equivalence, or continuum
+  convergence claim.  `Pkg.test()`, `make check-report-shards`, `make report`,
+  and `git diff --check` passed.

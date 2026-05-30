@@ -303,6 +303,45 @@ end
     @test_throws ErrorException CftAnyons.kg_lattice_boost_time_symbol([0.0]; spacing = 0)
 end
 
+@testset "Gaussian boson current-symbol equivalence" begin
+    for spacing in (1.0, 0.4, 0.125)
+        bond = -1 / spacing^2
+        for k in ([-0.7], [-0.2], [0.0], [0.35], [1.1])
+            current_symbol = CftAnyons.nearest_neighbor_integrated_energy_current_symbol(k;
+                bond, spacing)
+            kg_current_symbol = CftAnyons.kg_nearest_neighbor_integrated_energy_current_symbol(k;
+                spacing)
+            boost_time_symbol = CftAnyons.kg_lattice_boost_time_symbol(k; spacing)
+
+            @test gaussian_symbol_isapprox(current_symbol, kg_current_symbol)
+            @test gaussian_symbol_isapprox(current_symbol, boost_time_symbol)
+        end
+    end
+
+    spacing = 0.3
+    k = [0.8]
+    positive_orientation = CftAnyons.kg_nearest_neighbor_integrated_energy_current_symbol(k;
+        spacing)
+    reversed_bond_symbol = CftAnyons.nearest_neighbor_integrated_energy_current_symbol(k;
+        bond = 1 / spacing^2, spacing)
+
+    @test positive_orientation[1] > 0
+    @test reversed_bond_symbol[1] < 0
+    @test gaussian_symbol_isapprox(positive_orientation, CftAnyons.kg_lattice_boost_time_symbol(k; spacing))
+    @test !gaussian_symbol_isapprox(reversed_bond_symbol, CftAnyons.kg_lattice_boost_time_symbol(k; spacing))
+
+    for spacing in (0.05, 0.025), k in ([-0.9], [-0.25], [0.4], [0.85])
+        @test gaussian_small_spacing_isapprox(
+            CftAnyons.kg_nearest_neighbor_integrated_energy_current_symbol(k; spacing),
+            k)
+    end
+
+    @test_throws ErrorException CftAnyons.nearest_neighbor_integrated_energy_current_symbol([0.1, 0.2];
+        bond = -1, spacing = 1)
+    @test_throws ErrorException CftAnyons.nearest_neighbor_integrated_energy_current_symbol([0.1];
+        bond = -1, spacing = 0)
+end
+
 @testset "Gaussian boson finite-difference boost-time oracle" begin
     cases = [
         (
