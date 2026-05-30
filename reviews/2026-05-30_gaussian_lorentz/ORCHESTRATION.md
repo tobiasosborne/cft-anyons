@@ -42,7 +42,7 @@ Protocol:
 | S1 | Complete | `019e79b4-eb8c-7193-a6a0-3aaf60ed8178` (`Kierkegaard`) | Audited CA-29 against S1 and found the density shard already satisfies the step; no report edits needed. |
 | S2 | Complete | `019e79b7-67f8-75f3-bab1-61384f352692` (`Planck`) | Added CA-30 1+1 lattice stress-energy candidate shard with checked `T_01` seed and proposal-level `T_10/T_11`. |
 | S3 | Complete | `019e79be-23a4-7641-8544-9e982559ba02` (`Faraday`) | Added CA-31 and tests for the 1D nearest-neighbour integrated-current symbol matching the KG boost-time symbol. |
-| S4 | Pending | - | Higher-dimensional cell-current proposal shard. |
+| S4 | Complete | `019e79c6-cc6d-7d70-b7ff-5d1e1deaf713` (`Wegener`) | Added CA-32 higher-dimensional cell-current proposal shard with oriented support data as compiler input. |
 | S5 | Pending | - | Stress-energy numerical suite. |
 
 ## Running Notes
@@ -242,3 +242,15 @@ Protocol:
   open-chain momentum generator, `dGamma(k)` equivalence, or continuum
   convergence claim.  `Pkg.test()`, `make check-report-shards`, `make report`,
   and `git diff --check` passed.
+- 2026-05-30: S3 committed and pushed as `005d52c`.  S4 delegated to worker
+  `019e79c6-cc6d-7d70-b7ff-5d1e1deaf713` (`Wegener`).  Target is a CA-32
+  proposal shard for `d=2,3` cell/face current data: energy continuity,
+  momentum-density and stress-current witnesses, rotation/antisymmetry
+  diagnostics, trace/improvement diagnostics, and boundary alternatives, with
+  orientation treated as compiler input rather than an unproved convention.
+- 2026-05-30: S4 reviewed by parent and accepted.  CA-32 is report-only and
+  keeps oriented cells/faces, incidence signs, boundary faces, energy fluxes,
+  momentum densities, and stress currents as compiler payload data.  It does
+  not edit CONVENTIONS.md, claim convergence, infer `T_a0` from `T_0a`, or
+  assume symmetric stress.  `make check-report-shards`, `make report`, and
+  `git diff --check` passed.

@@ -1,5 +1,51 @@
 # Worklog chunk 008 — 2026-05-30
 
+## S4 higher-dimensional cell-current proposal — 2026-05-30
+
+### Context
+
+S4 asked for the \(d=2,3\) stress-current problem to be stated with oriented
+cells/faces, local energy currents, momentum densities, stress components,
+rotations, and boundary policies.  This needed to stay proposal-level because
+no higher-dimensional current convention or tests exist yet.
+
+### What changed
+
+- Delegated S4 to worker `019e79c6-cc6d-7d70-b7ff-5d1e1deaf713` (`Wegener`) and
+  reviewed the report-only patch.
+- Added CA-32,
+  `report/sections/32_gaussian_higher_dimensional_cell_currents.tex`.
+- Updated `report.tex`, `report/README.md`, `report/SHARD_CATALOG.md`, CA-23,
+  and rebuilt `report.pdf`.
+
+### Why these choices
+
+- The shard treats orientations, incidence signs, boundary faces, energy
+  fluxes, momentum densities, and stress currents as compiler payload data.
+  That avoids silently installing a global higher-dimensional convention.
+- The proposal separates \(T_{0a}\), \(T_{a0}\), and \(T_{ab}\): energy flux
+  does not define momentum density, and symmetric stress is a future witness.
+
+### Frictions / dead ends
+
+- No code or tests were added.  The next numerical step must supply actual
+  finite open-boundary continuity witnesses or a sourced periodic coordinate
+  construction before any higher-dimensional current claim is checked.
+
+### Acceptance
+
+- Parent verified that CA-32 makes no convergence claim, no `T_{a0}=T_{0a}`
+  identification, and no stress-symmetry assumption.
+- `make check-report-shards` passed.
+- `make report` passed.
+- `git diff --check` passed.
+
+### Pointers
+
+- Report shard: CA-32.
+- Prior stress-energy shards: CA-29--CA-31.
+- Higher-dimensional caveat source: CA-13.
+
 ## S3 current-symbol equivalence bridge — 2026-05-30
 
 ### Context

@@ -1,0 +1,213 @@
+% SHARD-ID: CA-32-GAUSSIAN-HIGHER-DIMENSIONAL-CELL-CURRENTS
+% SHARD-TITLE: Higher-Dimensional Gaussian Cell-Current Proposal
+% SHARD-SUMMARY: Proposes a compiler-input specification for d=2,3 Gaussian cell currents using oriented cells, faces, and incidence signs.
+% SHARD-SUMMARY: Separates energy flux, momentum density, and stress witnesses instead of inferring T_a0 from T_0a or assuming symmetric stress.
+% SHARD-SUMMARY: Records rotation, trace, improvement, and open-versus-periodic boundary diagnostics as future numerical targets, not convergence claims.
+% SHARD-KEYWORDS: Gaussian boson, higher dimensions, cell current, stress tensor, rotation, boundary terms, compiler input
+
+\section{Higher-Dimensional Gaussian Cell-Current Proposal}
+\label{sec:gaussian-higher-dimensional-cell-currents}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: proposal and compiler-input specification.}  This shard states
+the support data and local equations a higher-dimensional Gaussian
+stress-energy candidate must carry in \(d=2,3\).  It is not a theorem, does not
+define a global orientation convention, and makes no convergence claim.
+
+Dependencies: CA-13, CA-23, CA-29--CA-31, and CONVENTIONS.md (j), (k), (l).
+
+% Source: references/qft/SOURCES.md:59--90 -- registered Weinberg A1 anchor ranges and improvement-status boundary.
+% Source: references/qft/SOURCES.md:94--97 -- targeted OCR is an anchor convenience; exact signs/indices need page-image checks.
+% Source: references/qft/Weinberg1995/Weinberg1995_QFT1_A1_ocr.txt:260--280 -- translations give conserved currents grouped as the energy-momentum tensor and integrated translation generators.
+% Source: references/qft/Weinberg1995/Weinberg1995_QFT1_A1_ocr.txt:357--361 -- canonical raised tensor need not be symmetric.
+% Source: references/qft/Weinberg1995/Weinberg1995_QFT1_A1_ocr.txt:572--589 -- Belinfante tensor is conserved, has the same integrated translations, and is symmetric.
+% Source: references/qft/Weinberg1995/Weinberg1995_QFT1_A1_ocr.txt:590--633 -- Lorentz generators from the symmetric tensor, including rotations and boosts.
+% Source: references/qft/Weinberg1995/Weinberg1995_QFT1_A1_ocr.txt:675--684 -- Lorentz commutator proof caveat for boost generators with auxiliary fields.
+% Convention: CONVENTIONS.md:196--239 -- finite periodic Gaussian checks do not define periodic first moments or finite coordinate generators.
+% Convention: CONVENTIONS.md:260--277 -- flat-symbol boost-time target and non-identification with sourced OAR or mass-shell representations.
+% Convention: CONVENTIONS.md:312--347 -- Poincare vector fields translated to self-adjoint commutator signs.
+% Convention: CONVENTIONS.md:349--421 -- Gaussian density split, boundary, subtraction, and improvement policies.
+% Source: report/sections/13_position_dependent_bulk_generators.tex:65--94 -- boosts start from energy density, while rotations require momentum-density witnesses.
+% Source: report/sections/13_position_dependent_bulk_generators.tex:96--105 -- compiler needs geometry and no orientation/convergence convention is fixed there.
+% Source: report/sections/29_gaussian_boson_real_space_density.tex:26--42 -- physical density h_x versus integrated cell energy e_x.
+% Source: report/sections/29_gaussian_boson_real_space_density.tex:93--105 -- open-boundary and periodic first-moment policies.
+% Source: report/sections/29_gaussian_boson_real_space_density.tex:122--151 -- improvement terms shift first moments by edge and boundary terms.
+% Source: report/sections/30_gaussian_boson_1d_stress_candidates.tex:83--146 -- T_00, T_01, T_10, and T_11 candidate roles in one dimension.
+% Source: report/sections/30_gaussian_boson_1d_stress_candidates.tex:184--194 -- pending momentum-density, stress-current, and continuum witnesses.
+% Source: report/sections/31_gaussian_current_symbol_equivalence.tex:55--98 -- one-dimensional current-symbol equality and its limited status.
+% Source: report/sections/31_gaussian_current_symbol_equivalence.tex:122--137 -- finite-chain momentum, periodic first moments, and convergence remain open.
+
+\subsection{Compiler Input: Oriented Support Data}
+
+For each finite or infinite hypercubic support in \(d=2\) or \(d=3\), the
+compiler input must include an oriented incidence structure:
+\[
+\mathcal C,\qquad \mathcal F,\qquad
+\sigma(c,f)\in\{-1,0,+1\}.
+\]
+Here \(\mathcal C\) is the set of energy cells, attached to sites \(x_c\in
+\epsilon\mathbb Z^d\).  The set \(\mathcal F\) contains oriented codimension-one
+faces.  In \(d=2\), these faces are oriented edges between neighbouring square
+cells.  In \(d=3\), they are oriented plaquettes between neighbouring cube
+cells.  If an interior face \(f\) is oriented from its minus cell \(c_-(f)\) to
+its plus cell \(c_+(f)\), set
+\[
+  \sigma(c_-(f),f)=+1,\qquad
+  \sigma(c_+(f),f)=-1,
+\]
+and set \(\sigma(c,f)=0\) for all other cells.  This sign convention is local
+input for this proposal, not a repository-wide orientation convention.
+
+Boundary faces are separate data.  For an open box, \(\mathcal F_\partial\)
+contains oriented exterior faces with only one adjacent cell; their incidence
+sign is recorded as \(\sigma_\partial(c,f)=+1\) for outward flux.  Setting a
+boundary flux to zero is then a named boundary condition, not an omitted term.
+For a periodic support, exterior faces are absent, but any first moment or
+coordinate-weighted test still needs the branch or Fourier policy required by
+CONVENTIONS.md (j).
+
+\subsection{Energy Density and Energy Flux}
+
+The energy component starts from CA-29:
+\[
+  T_{00}^{\mathrm{lat}}(c):=h_c,\qquad
+  e_c:=\epsilon^d h_c,\qquad
+  H_\epsilon=\sum_{c\in\mathcal C}e_c .
+\]
+All finite commutator identities use the integrated cell energy \(e_c\).
+
+An energy-current candidate is face data
+\[
+  J_0(f)\quad (f\in\mathcal F),
+\]
+with optional boundary data \(J^\partial_0(f)\) on \(f\in\mathcal F_\partial\).
+If \(f\) has normal direction \(a\), then \(J_0(f)\) is the proposed lattice
+\(T_{0a}\) flux through that oriented face.  The required energy-continuity
+witness is the cell equation
+\[
+  i[H_\epsilon,e_c]
+  +
+  \sum_{f\in\mathcal F}\sigma(c,f)J_0(f)
+  +
+  \sum_{f\in\mathcal F_\partial}\sigma_\partial(c,f)J^\partial_0(f)
+  =0 .
+\]
+For an open no-leak boundary this specializes to \(J^\partial_0(f)=0\).  For a
+driven or truncated-region diagnostic, the same displayed equation records the
+boundary residual explicitly.  This shard does not propose a universal formula
+for \(J_0(f)\); a later numerical suite must derive or solve for it from the
+chosen Gaussian density and then test the equation above.
+
+\subsection{Momentum Densities and Stress Currents}
+
+The momentum-density components are additional witnesses:
+\[
+  M_a(c)\quad (a=1,\ldots,d),
+  \qquad
+  P_a^{\mathrm{lat}}=\sum_c M_a(c).
+\]
+They are not inferred from the energy flux \(J_0(f)\).  The reason is already
+visible in CA-30: \(T_{10}\) was kept as a momentum-density target, not as a
+consequence of \(T_{01}\).  In higher dimensions this separation is mandatory
+because rotations require \(M_a\) before angular momentum even has a candidate
+density.
+
+For each chosen momentum density \(M_a(c)\), the stress components are its
+currents.  If \(f\) has normal direction \(b\), write
+\[
+  S_a(f)\equiv T_{ab}^{\mathrm{lat}}(f).
+\]
+The required momentum-continuity witness is
+\[
+  i[H_\epsilon,M_a(c)]
+  +
+  \sum_{f\in\mathcal F}\sigma(c,f)S_a(f)
+  +
+  \sum_{f\in\mathcal F_\partial}\sigma_\partial(c,f)S^\partial_a(f)
+  =0
+\]
+for every \(a\) and every cell \(c\).  Until \(M_a\) and \(S_a\) are supplied
+with this witness, there is no lattice \(T_{a0}\) or \(T_{ab}\) claim.
+
+\subsection{Boost and Symbol Diagnostics}
+
+The boost first moment can be formed from the integrated energy cells:
+\[
+  K_a^{\mathrm{lat}}:=\sum_c x_c^a e_c .
+\]
+Using the energy-continuity equation, \(i[H_\epsilon,K_a^{\mathrm{lat}}]\)
+reduces by discrete summation by parts to the integrated \(a\)-normal energy
+flux plus boundary terms.  The higher-dimensional analogue of CA-31 is then a
+test, not an assumption:
+\[
+  \text{integrated }T_{0a}\text{ symbol}
+  \quad\stackrel{?}{=}\quad
+  \frac12\partial_a\omega(k)^2 .
+\]
+Only after this equality is checked in the relevant local or symbol regime may
+it be compared with the flat one-particle momentum target \(k_a\) and the
+residuals of CA-26--CA-27.  Passing the symbol equality would still not prove a
+continuum stress tensor.
+
+\subsection{Rotation and Antisymmetric-Stress Residual}
+
+For \(a<b\), a rotation candidate requires the momentum-density witnesses:
+\[
+  J_{ab}^{\mathrm{lat}}
+  :=
+  \sum_c \bigl(x_c^aM_b(c)-x_c^bM_a(c)\bigr).
+\]
+This formula is unavailable if only \(T_{00}\) and \(T_{0a}\) have been supplied.
+Applying the momentum-continuity equation gives a discrete summation-by-parts
+diagnostic of the form
+\[
+  i[H_\epsilon,J_{ab}^{\mathrm{lat}}]
+  =
+  \epsilon\sum_{f\perp a} S_b(f)
+  -
+  \epsilon\sum_{f\perp b} S_a(f)
+  +
+  \text{boundary terms},
+\]
+with the displayed sign tied to the incidence convention above.  In continuum
+language this is the antisymmetric-stress obstruction: rotation conservation
+targets \(T_{ab}=T_{ba}\), after boundary terms and any spin/improvement data
+have been named.  Weinberg's registered anchors motivate that a symmetric
+Belinfante tensor can carry the same integrated translations, but the canonical
+tensor need not be symmetric.  Therefore stress symmetry is a target or
+witness, not an assumption baked into the lattice proposal.
+
+\subsection{Trace, Improvement, and Boundary Alternatives}
+
+Trace diagnostics are also target-dependent.  A compiler may report the
+diagonal stress combination built from \(h_c\) and the \(S_a(f)\), but it must
+name the continuum target and metric/sign convention before calling it a trace
+residual.  No massless-CFT tracelessness test, massive Klein-Gordon trace test,
+or improvement formula is imported here.
+
+The CA-29 improvement policy remains active:
+\[
+  h'_c=h_c+(\nabla_\epsilon\cdot b)_c .
+\]
+Any such change must name the edge or face field \(b\), the discrete divergence,
+and the boundary convention.  It must also recompute \(J_0\), \(M_a\), \(S_a\),
+and the first-moment boundary terms; improvements are not silent gauge moves for
+boosts or rotations.
+
+Two boundary regimes are admissible compiler inputs:
+\[
+\begin{array}{ll}
+\text{open box} &
+  \text{use explicit }\mathcal F_\partial\text{ terms and test endpoint/face
+  residuals},\\
+\text{periodic box} &
+  \text{use no boundary faces, but fix a coordinate branch, sawtooth,}\\
+  &\text{or Fourier-interpolation policy before any first-moment test}.
+\end{array}
+\]
+The existing Gaussian numerical layer is periodic-symbol first.  The next
+stress-energy numerical suite, S5 in the action plan, should therefore start
+with open-boundary local continuity tests or with a separately sourced periodic
+coordinate construction, and should include anisotropic/doubler failure
+witnesses at the current-density level.

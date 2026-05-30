@@ -288,3 +288,12 @@ single ~200-line source file it points to.
 - Summary: Checks only the translation-invariant integrated-current symbol, with the CA-29/CA-30 current orientation fixed explicitly.
 - Summary: Leaves finite open-chain wave packets, dGamma(k), and continuum convergence as pending proof obligations.
 - Keywords: Gaussian boson, energy current, boost-time symbol, Klein-Gordon, translation invariant, one dimension
+
+## `CA-32-GAUSSIAN-HIGHER-DIMENSIONAL-CELL-CURRENTS`
+
+- Source: `report/sections/32_gaussian_higher_dimensional_cell_currents.tex`
+- Title: Higher-Dimensional Gaussian Cell-Current Proposal
+- Summary: Proposes a compiler-input specification for d=2,3 Gaussian cell currents using oriented cells, faces, and incidence signs.
+- Summary: Separates energy flux, momentum density, and stress witnesses instead of inferring T_a0 from T_0a or assuming symmetric stress.
+- Summary: Records rotation, trace, improvement, and open-versus-periodic boundary diagnostics as future numerical targets, not convergence claims.
+- Keywords: Gaussian boson, higher dimensions, cell current, stress tensor, rotation, boundary terms, compiler input
