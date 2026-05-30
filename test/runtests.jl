@@ -152,6 +152,27 @@ gaussian_symbol_isapprox(actual, expected) = isapprox(actual, expected; atol = C
 gaussian_eigenvalue_isapprox(actual, expected) = isapprox(actual, expected; atol = CftAnyons.GAUSSIAN_EIGENVALUE_ATOL, rtol = CftAnyons.GAUSSIAN_EIGENVALUE_RTOL)
 gaussian_small_spacing_isapprox(actual, expected) = isapprox(actual, expected; atol = CftAnyons.GAUSSIAN_SMALL_SPACING_RESIDUAL_ATOL, rtol = CftAnyons.GAUSSIAN_SMALL_SPACING_RESIDUAL_RTOL)
 
+periodic_label_momentum(label, sizes; spacing = 1) =
+    [2 * pi * label[axis] / (spacing * sizes[axis]) for axis in eachindex(sizes)]
+
+function assert_periodic_fourier_eigenvectors(coefficients, sizes, labels; spacing = 1, radius = 1)
+    @test all(L -> L > 2radius, sizes)
+    stiffness = CftAnyons.periodic_stiffness_matrix(coefficients, sizes)
+    for label in labels
+        fourier_vector = CftAnyons.periodic_fourier_vector(sizes, label)
+        momentum = periodic_label_momentum(label, sizes; spacing)
+        symbol = CftAnyons.scalar_quadratic_symbol(coefficients, momentum; spacing)
+
+        @test gaussian_eigenvalue_isapprox(norm(fourier_vector), 1)
+        @test gaussian_eigenvalue_isapprox(stiffness * fourier_vector, symbol * fourier_vector)
+    end
+end
+
+raw_periodic_symbol(coefficients, label, sizes) =
+    sum(coeff * cis(2 * pi * sum(offset[axis] * label[axis] / sizes[axis]
+                                 for axis in eachindex(sizes)))
+        for (offset, coeff) in coefficients)
+
 @testset "Gaussian boson numerical tolerance policy" begin
     @test CftAnyons.GAUSSIAN_SYMBOL_IMAG_ATOL == 1e-10
     @test CftAnyons.GAUSSIAN_SYMBOL_IMAG_RTOL == 1e-10
@@ -250,6 +271,36 @@ end
         @test gaussian_eigenvalue_isapprox(stiffness, stiffness')
         @test gaussian_eigenvalue_isapprox(spectrum, symbols)
     end
+
+    spacing = 0.4
+    off_axis = [
+        ([0, 0], 2.0),
+        ([1, 0], -0.3), ([-1, 0], -0.3),
+        ([0, 1], -0.2), ([0, -1], -0.2),
+        ([1, 1], 0.17), ([-1, -1], 0.17),
+    ]
+    fourier_cases = [
+        (CftAnyons.kg_nearest_neighbor_coefficients(1; mass = 0.8, spacing), [5], [[0], [1], [4]]),
+        (off_axis, [4, 5], [[0, 0], [1, 2], [3, 4]]),
+        (CftAnyons.kg_nearest_neighbor_coefficients(3; mass = 0.8, spacing), [3, 4, 5],
+            [[1, 0, 2], [2, 3, 4]]),
+    ]
+
+    for (coeffs, sizes, labels) in fourier_cases
+        assert_periodic_fourier_eigenvectors(coeffs, sizes, labels; spacing, radius = 1)
+    end
+
+    # One-sided shift sentinel: not a scalar Gaussian Hamiltonian, but it pins
+    # the finite Fourier offset direction that symmetric kernels cannot detect.
+    one_sided = [([0], 0.0), ([1], 1.0)]
+    label = [1]
+    shift_vector = CftAnyons.periodic_fourier_vector([5], label)
+    shift_symbol = raw_periodic_symbol(one_sided, label, [5])
+    shift_matrix = CftAnyons.periodic_stiffness_matrix(one_sided, [5])
+    @test gaussian_eigenvalue_isapprox(shift_matrix * shift_vector, shift_symbol * shift_vector)
+    @test !gaussian_eigenvalue_isapprox(shift_matrix * shift_vector, conj(shift_symbol) * shift_vector)
+    @test_throws ErrorException CftAnyons.periodic_fourier_vector([3], [0, 1])
+    @test_throws ErrorException CftAnyons.periodic_fourier_vector([3], [0.5])
 end
 
 @testset "Gaussian boson massless doubler coefficient rejection" begin

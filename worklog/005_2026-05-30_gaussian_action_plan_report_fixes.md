@@ -1,5 +1,37 @@
 # Worklog chunk 005 — 2026-05-30
 
+## Session log — 2026-05-30 — Action-plan J2 Fourier eigenvectors
+
+### Context
+
+J2 strengthens the finite periodic suite so sorted spectra cannot hide Fourier
+phase or offset-direction mistakes.
+
+### What changed
+
+- Delegated J2 to worker `019e7956-628b-7152-aba9-e962d2f24b2a` (`Raman`).
+- Added `periodic_fourier_vector(sizes, label)`.
+- Added assigned-eigenvector tests, including mixed odd/even sizes, an off-axis
+  symmetric pair, and a one-sided direction sentinel.
+- Updated CA-28, `INDEX.md`, and CONVENTIONS.md (j).
+
+### Why these choices
+
+- The physical scalar tests remain real symmetric, while the one-sided sentinel
+  pins the implementation convention \(y=x+r\).  The worker mutation check
+  flipped this to \(x-r\), and the sentinel failed as intended.
+
+### Acceptance
+
+- `make ci-before-push` passed.
+- `git diff --check` passed.
+
+### Pointers
+
+- Action plan: `reviews/2026-05-30_gaussian_lorentz/ACTION_PLAN.md` (J2).
+- Files: `src/GaussianBosonNumerics.jl`, `test/runtests.jl`, CA-28,
+  CONVENTIONS.md (j), `INDEX.md`.
+
 ## Session log — 2026-05-30 — Action-plan J1 centered momentum labels
 
 ### Context

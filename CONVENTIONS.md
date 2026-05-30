@@ -219,9 +219,13 @@ documented Gaussian API even though current coefficient formulas only contain
 Finite periodic numerical checks use momenta
 `k_a = 2 pi n_a / (epsilon L_a)` and the real-space stiffness matrix
 `V_{xy} = sum_r V_r 1_{y=x+r mod L}`; its eigenvalue oracle is the list of
-symbol values on this Brillouin grid.  These finite periodic checks are
-symbol/eigenvalue checks only.  They do not introduce finite matrices
-`X_a, P_b` satisfying the exact differential commutator
+symbol values on this Brillouin grid.  The finite Fourier vector for integer
+dual label `n` has components
+`|Lambda|^{-1/2} exp(2 pi i sum_a n_a x_a / L_a)` in zero-based site
+coordinates, so the `x+r` stiffness convention gives eigenvalue
+`sum_r V_r exp(2 pi i n.r / L)`.  These finite periodic checks are
+symbol/eigenvector/eigenvalue checks only.  They do not introduce finite
+matrices `X_a, P_b` satisfying the exact differential commutator
 `[X_a,P_b]=i delta_ab`; in finite dimension the trace of a commutator is zero,
 while the trace of `i delta_ab I` is not.  Any finite periodic first-moment,
 position-coordinate, or momentum-coordinate generator test must first name a
@@ -292,7 +296,8 @@ theorem), `:1626`--`:1628` (massless zero-mode warning),
 `references/cft/Schottenloher2008/Schottenloher2008.md:4186`--`:4244`
 (free bosonic QFT/Klein-Gordon/Poincare-covariant construction, including the
 natural Poincare action); `src/GaussianBosonNumerics.jl:102`--`:130`
-(`centered_periodic_momentum_grid`);
+(`centered_periodic_momentum_grid`), `:139`--`:160`
+(`periodic_fourier_vector`);
 `src/GaussianBosons.jl:9`--`:25` (Gaussian tolerance constants and real-symbol
 validator), `src/GaussianBosonNumerics.jl:168`--`:180` (minima-count
 validator),

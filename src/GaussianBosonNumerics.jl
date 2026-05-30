@@ -140,6 +140,28 @@ function periodic_symbol_values(coefficients, sizes; spacing = 1)
 end
 
 """
+    periodic_fourier_vector(sizes, label)
+
+Return the normalized finite periodic Fourier vector with integer dual label
+``label`` in the same Cartesian site order as `periodic_stiffness_matrix`.
+For label ``n`` and site ``x`` with zero-based coordinates, the entry is
+``|Λ|^-1/2 exp(2π i sum_a n_a x_a / L_a)``.
+"""
+function periodic_fourier_vector(sizes, label)
+    _check_periodic_sizes(sizes)
+    length(label) == length(sizes) || error("Fourier label $label has dimension $(length(label)); expected $(length(sizes))")
+    all(n -> n isa Integer, label) || error("Fourier label entries must be integers, got $label")
+
+    dims = Tuple(Int.(sizes))
+    dual_label = Tuple(Int.(label))
+    normalization = inv(sqrt(prod(dims)))
+    return [normalization *
+            cis(2 * pi * sum(dual_label[axis] * (Tuple(site)[axis] - 1) / dims[axis]
+                             for axis in eachindex(dims)))
+            for site in vec(collect(CartesianIndices(dims)))]
+end
+
+"""
     periodic_stiffness_matrix(coefficients, sizes)
 
 Build the finite periodic stiffness matrix whose Fourier eigenvalues are the

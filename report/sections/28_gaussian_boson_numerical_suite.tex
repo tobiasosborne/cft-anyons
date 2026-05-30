@@ -19,11 +19,11 @@ finite periodic checks below do not assert an exact differential
 \([X_a,P_b]=i\delta_{ab}\) commutator.
 
 The current finite-periodic numerical surface is deliberately narrow: it checks
-symbol values, finite stiffness spectra, periodic minima counts, and the
-implemented coefficient residuals/Hessians.  It also checks centered periodic
-momentum labels for branch-aware low-energy windows.  It does not test finite
-boost generators, finite rotation generators, coordinate-generator
-commutators, or full generator closure.
+symbol values, finite stiffness spectra, assigned Fourier eigenvectors,
+periodic minima counts, and the implemented coefficient residuals/Hessians.  It
+also checks centered periodic momentum labels for branch-aware low-energy
+windows.  It does not test finite boost generators, finite rotation generators,
+coordinate-generator commutators, or full generator closure.
 
 Dependencies: CA-24--CA-27, INDEX.md, and CONVENTIONS.md (j).
 
@@ -31,8 +31,8 @@ Dependencies: CA-24--CA-27, INDEX.md, and CONVENTIONS.md (j).
 % Source: literature/md/2010.11121/2010.11121.md:598 -- lattice scalar Hamiltonian.
 % Source: literature/md/2010.11121/2010.11121.md:623 -- lattice Klein-Gordon dispersion.
 % Source: literature/md/2010.11121/2010.11121.md:1626--1628 -- massless fields require a zero-mode policy.
-% Checked: src/GaussianBosons.jl:9--25 and :97--136; src/GaussianBosonNumerics.jl:88--130 and :147--180.
-% Checked: test/runtests.jl:151--167, :178--238, and :241--262.
+% Checked: src/GaussianBosons.jl:9--25 and :97--136; src/GaussianBosonNumerics.jl:88--203.
+% Checked: test/runtests.jl:151--174, :197--259, and :262--313.
 
 \subsection{Why These Tests}
 
@@ -84,12 +84,20 @@ one has the exact identity
   =
   \omega_\epsilon(k)^2\varphi_k(x).
 \]
-Therefore the sorted eigenvalues of the finite stiffness matrix must equal the
-sorted symbol values on the periodic Brillouin grid.  This is the finite
-Fourier invariant checked in Julia for \(d=1,2,3\).  It is not a finite
-periodic first-moment or momentum-coordinate commutator test; those require a
-branch, sawtooth, Fourier-interpolation, or other coordinate convention before
-they can become numerical claims.
+Therefore each dual label \(n\) gives a tested eigenvector with its assigned
+symbol value, and the sorted eigenvalues of the finite stiffness matrix must
+equal the sorted symbol values on the periodic Brillouin grid.  These finite
+Fourier invariants are checked in Julia for \(d=1,2,3\), including mixed
+odd/even sizes with every \(L_a>2R\) and an off-axis symmetric pair
+\((1,1),(-1,-1)\).  They are not finite periodic first-moment or
+momentum-coordinate commutator tests; those require a branch, sawtooth,
+Fourier-interpolation, or other coordinate convention before they can become
+numerical claims.
+
+The eigenvector suite also includes a one-sided shift sentinel to pin the
+implementation direction \(y=x+r\).  That sentinel is not a scalar Gaussian
+Hamiltonian claim; the physical Gaussian coefficient checks remain real
+symmetric.
 
 The eigenvalue oracle deliberately keeps the uncentered grid helper, because
 the tested symbol spectra are branch-insensitive.  The separate centered grid
@@ -156,6 +164,8 @@ The checked helper layer is:
   & \text{uncentered spectrum grid},\\
 \begin{gathered}\texttt{centered\_periodic}\\\texttt{\_momentum\_grid}\end{gathered}
   & \text{centered labels and momenta},\\
+\texttt{periodic\_fourier\_vector}
+  & \text{Fourier vector for a dual label},\\
 \texttt{periodic\_symbol\_values}
   & \text{finite Brillouin-grid eigenvalue oracle},\\
 \texttt{count\_periodic\_symbol\_minima}
@@ -171,9 +181,9 @@ rotation, or their commutator table.
 Proposed next suite additions, none claimed as achieved here, are:
 \[
 \begin{array}{ll}
-1.&\text{finite Fourier eigenvectors, not only eigenvalues},\\
-2.&\text{sampled symbol residuals on shrinking low-energy windows},\\
-3.&\text{comparison of open-boundary first moments with periodic symbol tests}.
+1.&\text{sampled symbol residuals on shrinking low-energy windows},\\
+2.&\text{comparison of open-boundary first moments with periodic symbol tests},\\
+3.&\text{independent finite-difference derivative oracles}.
 \end{array}
 \]
 Any finite periodic coordinate-generator version of the second or third item

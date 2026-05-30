@@ -30,7 +30,7 @@ Protocol:
 | R4 | Complete | `019e7947-8ec3-77b1-88fc-7c98019df9be` (`Volta`) | Qualified CA-13 angular-momentum density as continuum mnemonic and deferred lattice rotation formula until current conventions exist. |
 | R5 | Complete | `019e794b-6426-7381-973c-b2852c96284f` (`Nietzsche`) | Narrowed CA-28 finite-periodic coverage to symbols, stiffness spectra, minima counts, and implemented coefficient residuals/Hessians. |
 | J1 | Complete | `019e794e-7fb9-70c0-a1f7-1a71d4926fbf` (`Kuhn`) | Added centered periodic momentum labels for branch-aware low-energy windows, with even/odd tests and convention note. |
-| J2 | Pending | - | Fourier eigenvector tests. |
+| J2 | Complete | `019e7956-628b-7152-aba9-e962d2f24b2a` (`Raman`) | Added finite Fourier vector helper and assigned-eigenvalue tests, including direction sentinel. |
 | J3 | Pending | - | Independent finite-difference derivative oracle. |
 | J4 | Pending | - | Structural coefficient validation. |
 | J5 | Pending | - | Positivity and patch/minimum witnesses. |
@@ -113,3 +113,10 @@ Protocol:
 - 2026-05-30: J1 reviewed by parent and accepted after adding the centered
   momentum-label branch to CONVENTIONS.md (j).  `make ci-before-push` and
   `git diff --check` passed.
+- 2026-05-30: J1 pushed as `0784384`.  J2 delegated to worker
+  `019e7956-628b-7152-aba9-e962d2f24b2a` (`Raman`) with write scope
+  Gaussian numerics helper/tests, CA-28, and `INDEX.md`.
+- 2026-05-30: J2 reviewed by parent and accepted after adding the finite Fourier
+  phase convention to CONVENTIONS.md (j).  Worker mutation check flipped `x+r`
+  to `x-r` and the new direction sentinel failed as intended.  `make
+  ci-before-push` and `git diff --check` passed.
