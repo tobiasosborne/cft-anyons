@@ -1,53 +1,61 @@
-# cft-anyons — ARCHIVED
+# cft-anyons
 
-**This repository has been wound down.** As of **2026-05-30**, the previous
-"consolidation" effort (a sharded LaTeX statement, a Lean 4 formalisation, a
-Julia computational backend, and a large process/provenance scaffold) was judged
-to have **marginal-to-nonexistent value** and was archived wholesale.
+A reproducible research lab book pursuing one concrete goal — the **north star**:
 
-## The only thing here worth keeping: the papers
+> Given a (unitary) fusion or modular tensor category (together with whatever
+> additional data is needed — OPE coefficients / conformal data), construct a
+> family of **microscopic (lattice) models and their symmetry generators** whose
+> continuum limit **provably** yields a mathematically rigorous QFT/CFT that
+> **(i)** realises the input category data and **(ii)** carries a **full
+> projective unitary representation** of the symmetries.
 
-The literature round — finding, fetching, and extracting the relevant sources —
-is real, reusable value. It is **kept and live**:
+The working belief is that this is achievable at least for **rational CFTs**, and
+perhaps for all QFTs. The two non-negotiable success criteria are **provability**
+of the continuum limit (rigorous, not heuristic) and **fidelity** (the realised
+content faithfully reproduces the input category; the symmetry rep is full and
+projective-unitary).
 
-- **`references/`** — curated, hand-named anyon/CFT source PDFs with text
-  extractions and a provenance manifest (`references/manifest/`).
-- **`literature/`** — the bibliography work: `references.bib`, the markdown
-  extractions under `literature/md/` (~330 papers), the `papers.sqlite` seed +
-  schema under `literature/db/`, and `SURVEY.md` / `SYNTHESIS.md`.
+This is a **programme, not a finished theory**. It is a working notebook with
+strict provenance: every definition, convention, claim, and number points to a
+local source, a checked derivation, a reproducible run, or an explicitly marked
+open question.
 
-> A larger raw-PDF backup of the literature (from sibling source projects) is
-> kept **locally only** under `literature/_imported/` and is git-ignored — it is
-> reacquirable from arXiv and is not pushed.
+## How it's organised
 
-## Everything else is dead
+- **`report.tex` + `report/sections/*.tex`** — the lab book, written as
+  self-contained **~200-line shards**. `report/SHARD_CATALOG.md` is the
+  searchable map (grep by keyword → stable shard ID → one short file);
+  `report/README.md` is the include-order map.
+- **`references/` + `literature/`** — the kept papers, the project's ground
+  truth (curated PDFs + extractions + manifest; bib + ~330 markdown extractions
+  + bibliography DB seed + survey/synthesis). Carried over from the prior effort.
+- **`src/` + `test/`** — Julia package for reproducible checks (`make test`).
+- **`worklog/`** — the project's institutional memory across sessions and agents
+  (there is no issue tracker — read the latest chunk for current state).
+- **`CONVENTIONS.md`**, **`INDEX.md`** — convention choices; script/run manifest.
+- **`archive/legacy-consolidation/`** — the dead previous project, kept for
+  history only. **Not canonical**; do not build on it.
 
-All former math/code/process content lives under
-**`archive/legacy-consolidation/`** (plus the older `archive/` snapshots). It is
-retained for history only. See `archive/legacy-consolidation/ARCHIVED.md`.
-**Do not extend it, cite it as canonical, or treat it as a foundation.**
+## Build & check (local only — no CI)
 
-## If you (a human or agent) want to start real work here
+```bash
+make check-report-shards    # deterministic shard-structure guard (the gate)
+make report                 # build report.pdf via latexmk
+make test                   # Julia invariant checks (Pkg.test)
+make ci-before-push         # all of the above, skipping absent tools
+```
 
-Start from zero. Do **not** resurrect the abandoned process. The lesson learned,
-distilled from the sibling project `arithmetic-quantum-mechanics` (which is
-pleasant to work in), is a light, fast, accretive workflow:
+## Working here
 
-1. **Work in small shards.** One self-contained ~200-line unit per idea, with a
-   short header (id, title, 1–2 line summary, keywords) so it is findable.
-2. **Cite local ground truth inline.** Every nontrivial claim points to a local
-   file + line range (the papers above are exactly this ground truth). If a
-   source isn't local, fetch it into `references/` first or mark the gap.
-3. **Prefer a mechanical check + a red-green invariant test** over human/LLM
-   review ceremony. A deterministic script and a build are the gate.
-4. **No heavy apparatus.** No reviewer-gating tiers, no five-gate (M/D/C/R/I)
-   ceremony, no GLOSSARY hard-gate, no beads, no migration log, no remote CI.
-   Keep the governing docs short.
-
-See `AGENTS.md` for the agent-facing version of this stance.
+Agents: read **`AGENTS.md`** (authoritative) top to bottom every session. It is a
+light, provenanced, accretive workflow — three Laws (ground truth before claims ·
+conventions before derivations · reproducibility is part of the result) plus
+numbered Rules. Deliberately **no beads, no multi-gate validation, no mandatory
+reviewer-gating, no CI** — the heavy apparatus of the previous project was
+archived on purpose.
 
 ## License
 
 Original text/code under AGPL-3.0 (`LICENSE`). Third-party papers under
-`references/` and `literature/` retain their original licenses; provenance is
-recorded in the manifests.
+`references/` and `literature/` retain their original licenses; provenance is in
+the manifests.
