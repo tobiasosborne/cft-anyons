@@ -159,3 +159,34 @@ identified across active/passive conventions.
 CA-12 local derivation; `test/runtests.jl` lattice current coefficient check.
 **Sweep status:** CA-10--CA-17 use this convention; no periodic-boundary or
 higher-dimensional orientation convention is fixed yet.
+
+## (i) Galilean symmetry candidates and mass density
+**Choice:** Galilean follow-up shards use Newtonian coordinates
+`(t,x_1,...,x_d)` and vector fields
+`H = partial_t`, `P_a = partial_a`, `G_a = t partial_a`, and
+`J_ab = x_a partial_b - x_b partial_a` for `1 <= a < b <= d`.  With this
+active vector-field convention,
+`[H,G_a] = P_a`,
+`[J_ab,P_c] = delta_{bc} P_a - delta_{ac} P_b`, and the same rotation law holds
+for `G_c`.  The unextended vector-field bracket has `[G_a,P_b]=0`.  The
+projective quantum layer may require a mass central extension; in the checked
+canonical-commutator convention, a one-particle boost at `t=0` is represented by
+`m X_a` and obeys `[mX_a,P_b] = i m delta_{ab}`.  Therefore Galilean lattice
+boost candidates are first moments of a conserved mass/particle-number density,
+not first moments of the energy density.  The Lorentzian lattice boost ansatz
+`sum_x x_a h_x` from (h) is not reused for Galilean boosts unless an additional
+nonrelativistic source or derivation identifies energy and mass density in the
+model.
+**Reasoning:** Schottenloher records the Galilei group as the classical symmetry
+for free nonrelativistic particles and supplies the projective-representation
+and central-extension framework.  The detailed bracket table here is a local
+vector-field derivation checked by the Julia test suite.  The mass central
+coefficient is checked only as a canonical-commutator calculation; this
+repository still lacks a registered source specifically for the named Bargmann
+mass extension of the Galilei group.
+**Source:** `references/cft/Schottenloher2008/Schottenloher2008.md:1440`--`:1447`
+(Galilei group example), `:1524`--`:1532` (unitary/projective representations),
+`:1548`--`:1577` (central-extension lift), `:4040`--`:4050` (Stone convention);
+`test/runtests.jl` testsets "Galilei vector-field brackets" and "Galilei mass
+central coefficient"; CA-18--CA-22.
+**Sweep status:** CA-18--CA-22 use this convention.

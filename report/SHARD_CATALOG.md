@@ -163,3 +163,48 @@ single ~200-line source file it points to.
 - Summary: Records boundary cases: black-box Hamiltonians, open chains, nonuniform spacing, periodic chains, square lattices, and Koo-Saleur modes.
 - Summary: Lists the next source acquisitions and derivations needed before promoting the programme beyond proposal status.
 - Keywords: examples, research queue, open chain, periodic chain, square lattice, Koo-Saleur, Weinberg, source acquisition
+
+## `CA-18-GALILEAN-SYMMETRY-MOTIVATION`
+
+- Source: `report/sections/18_galilean_symmetry_motivation.tex`
+- Title: Why Galilean Symmetry Is a Different Lattice Target
+- Summary: Opens the Galilean follow-up block by separating nonrelativistic spacetime symmetry from the Lorentzian energy-moment boost ansatz.
+- Summary: Records the local source boundary: Galilei symmetry and projective-unitary lifting are sourced, while the named Bargmann mass extension remains a source gap.
+- Summary: Identifies conserved mass or particle-number density as extra compiler input required for Galilean boost candidates.
+- Keywords: Galilei group, Galilean symmetry, nonrelativistic symmetry, mass density, particle number, Bargmann source gap
+
+## `CA-19-GALILEAN-VECTOR-FIELD-ALGEBRA`
+
+- Source: `report/sections/19_galilean_vector_field_algebra.tex`
+- Title: The Galilei Algebra as Newtonian Vector Fields
+- Summary: Derives the unextended Galilei Lie algebra from vector fields on Newtonian spacetime with absolute time.
+- Summary: Fixes the sign convention for time translations, spatial translations, boosts, and rotations, with representative brackets checked in Julia.
+- Summary: Separates the unextended vector-field algebra from the projective mass-central extension treated in CA-20.
+- Keywords: Galilei algebra, Newtonian spacetime, vector fields, boosts, rotations, Lie bracket, checked derivation
+
+## `CA-20-GALILEAN-PROJECTIVE-MASS`
+
+- Source: `report/sections/20_galilean_projective_mass.tex`
+- Title: Projective Galilean Symmetry and the Mass Central Term
+- Summary: Explains why the projective-representation layer is unavoidable for Galilean quantum symmetry.
+- Summary: Derives the mass central coefficient from the canonical commutator [mX_a,P_b]=i m delta_ab on a common core.
+- Summary: Records the source gap for a registered Bargmann mass-extension reference while keeping the local coefficient checked.
+- Keywords: Galilean projective representation, mass central extension, Bargmann source gap, canonical commutator, Stone theorem
+
+## `CA-21-LATTICE-GALILEAN-BOOSTS`
+
+- Source: `report/sections/21_lattice_galilean_boosts.tex`
+- Title: Lattice Galilean Boosts from Mass-Density First Moments
+- Summary: Derives the Galilean lattice boost candidate as a first moment of conserved mass or particle-number density, not energy density.
+- Summary: Uses a discrete continuity equation to derive the current-sum candidate for momentum, with coefficients checked in Julia.
+- Summary: Separates exact finite-lattice conservation from the stronger continuum claim of Galilean covariance.
+- Keywords: Galilean lattice boost, mass density, particle number, continuity equation, current, momentum candidate
+
+## `CA-22-GALILEAN-COMPILER-INTERFACE`
+
+- Source: `report/sections/22_galilean_compiler_interface.tex`
+- Title: Compiler Rules and Examples for Galilean Targets
+- Summary: Extends the lattice-symmetry compiler with Galilean-specific inputs: mass density, conserved charge, current witness, and central-extension data.
+- Summary: Gives small successful and failed examples showing why a Hamiltonian density alone cannot compile Galilean boosts.
+- Summary: Records the next source and proof obligations before Galilean lattice candidates can be promoted to continuum symmetry claims.
+- Keywords: Galilean compiler, mass density, current witness, central extension, examples, compile error

@@ -1,0 +1,129 @@
+% SHARD-ID: CA-19-GALILEAN-VECTOR-FIELD-ALGEBRA
+% SHARD-TITLE: The Galilei Algebra as Newtonian Vector Fields
+% SHARD-SUMMARY: Derives the unextended Galilei Lie algebra from vector fields on Newtonian spacetime with absolute time.
+% SHARD-SUMMARY: Fixes the sign convention for time translations, spatial translations, boosts, and rotations, with representative brackets checked in Julia.
+% SHARD-SUMMARY: Separates the unextended vector-field algebra from the projective mass-central extension treated in CA-20.
+% SHARD-KEYWORDS: Galilei algebra, Newtonian spacetime, vector fields, boosts, rotations, Lie bracket, checked derivation
+
+\section{The Galilei Algebra as Newtonian Vector Fields}
+\label{sec:galilean-vector-field-algebra}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: checked local derivation.}  The source anchor is that the
+Galilei group is the nonrelativistic free-particle symmetry group.  The bracket
+table below is derived here from vector fields and checked by the Julia test
+suite.
+
+Dependencies: CA-18 and CONVENTIONS.md (i).
+
+% Source: references/cft/Schottenloher2008/Schottenloher2008.md:1443 -- Galilei group for free particles in classical nonrelativistic mechanics.
+% Checked: test/runtests.jl, "Galilei vector-field brackets".
+
+\subsection{Generators}
+
+Use Newtonian spacetime coordinates
+\[
+  (t,x_1,\ldots,x_d).
+\]
+The convention fixed in CONVENTIONS.md (i) is:
+\[
+\begin{array}{rcll}
+  H   &=& \partial_t, &\text{time translation},\\
+  P_a &=& \partial_a, &\text{spatial translation},\\
+  G_a &=& t\,\partial_a, &\text{Galilean boost},\\
+  J_{ab} &=& x_a\partial_b-x_b\partial_a,\quad a<b,
+       &\text{spatial rotation}.
+\end{array}
+\]
+Here \(a,b,c\in\{1,\ldots,d\}\).  The boost vector field says that a boost
+changes position by a velocity times time while leaving absolute time fixed.
+
+\subsection{Translation and Boost Brackets}
+
+The translation fields have constant coefficients, hence
+\[
+  [H,P_a]=0,\qquad [P_a,P_b]=0.
+\]
+Since \(G_a=t\partial_a\),
+\[
+\begin{aligned}
+  [H,G_a]
+    &= [\partial_t,t\partial_a]\\
+    &= \partial_t(t)\partial_a\\
+    &= P_a.
+\end{aligned}
+\]
+The reverse bracket is therefore \([G_a,H]=-P_a\).  Spatial translations do not
+differentiate the coefficient \(t\), so
+\[
+  [P_a,G_b]=0,\qquad [G_a,G_b]=0.
+\]
+This is the unextended vector-field algebra.  It is not yet the projective
+quantum algebra; CA-20 adds the central term that is invisible to vector fields
+on spacetime.
+
+\subsection{Rotation on Vectors}
+
+For \(J_{ab}=x_a\partial_b-x_b\partial_a\), compute against a translation:
+\[
+\begin{aligned}
+  [J_{ab},P_c]
+  &=
+    -\partial_c(x_a)\partial_b
+    +\partial_c(x_b)\partial_a\\
+  &=
+    \delta_{bc}P_a-\delta_{ac}P_b.
+\end{aligned}
+\]
+The same calculation applies to boosts because \(J_{ab}\) does not act on \(t\):
+\[
+  [J_{ab},G_c]
+  =
+  \delta_{bc}G_a-\delta_{ac}G_b.
+\]
+Thus both \(P_c\) and \(G_c\) transform as spatial vectors.
+
+\subsection{Rotation-Rotation Bracket}
+
+For two rotations, expanding the vector-field bracket gives
+\[
+\begin{aligned}
+  [J_{ab},J_{cd}]
+  &=
+    \delta_{bc}J_{ad}
+    -\delta_{ac}J_{bd}\\
+  &\quad
+    +\delta_{ad}J_{bc}
+    -\delta_{bd}J_{ac},
+\end{aligned}
+\]
+with the convention \(J_{ba}=-J_{ab}\) and \(J_{aa}=0\).  In \(d=3\), one
+representative checked bracket is
+\[
+  [J_{12},J_{23}]=J_{13}.
+\]
+
+\subsection{Checked Representatives}
+
+The test suite pins the signs with the following representative outcomes:
+\[
+\begin{array}{rcl}
+  [H,G_1]&=&P_1,\\
+  {}[G_1,H]&=&-P_1,\\
+  {}[J_{12},P_1]&=&-P_2,\\
+  {}[J_{12},P_2]&=&P_1,\\
+  {}[J_{12},G_1]&=&-G_2,\\
+  {}[J_{12},J_{23}]&=&J_{13}.
+\end{array}
+\]
+It also checks that \([P_1,G_2]=0\) and \([G_1,G_2]=0\) in the unextended
+vector-field algebra.
+
+\subsection{Boundary}
+
+The signs here are signs for vector fields.  A quantum model uses self-adjoint
+generators and unitary flows, so translating this table into operator
+commutators requires the Stone convention and the chosen \(i[A,B]\) observable
+action.  The report therefore cites this shard for the geometric algebra and
+CA-20 for the central quantum coefficient.

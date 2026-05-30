@@ -1,0 +1,172 @@
+% SHARD-ID: CA-22-GALILEAN-COMPILER-INTERFACE
+% SHARD-TITLE: Compiler Rules and Examples for Galilean Targets
+% SHARD-SUMMARY: Extends the lattice-symmetry compiler with Galilean-specific inputs: mass density, conserved charge, current witness, and central-extension data.
+% SHARD-SUMMARY: Gives small successful and failed examples showing why a Hamiltonian density alone cannot compile Galilean boosts.
+% SHARD-SUMMARY: Records the next source and proof obligations before Galilean lattice candidates can be promoted to continuum symmetry claims.
+% SHARD-KEYWORDS: Galilean compiler, mass density, current witness, central extension, examples, compile error
+
+\section{Compiler Rules and Examples for Galilean Targets}
+\label{sec:galilean-compiler-interface}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: compiler specification shard.}  This shard does not implement
+the compiler.  It specifies the extra fields a Galilean target requires, using
+the checked algebra and first-moment derivations from CA-19--CA-21.
+
+Dependencies: CA-08, CA-16, and CA-18--CA-21.
+
+% Source: references/cft/Schottenloher2008/Schottenloher2008.md:1443 -- Galilei group for free particles in classical nonrelativistic mechanics.
+% Source: references/cft/Schottenloher2008/Schottenloher2008.md:1618 -- central-extension lift for projective representations.
+% Source: literature/md/cond-mat_9906453/cond-mat_9906453.md:39 -- Galilean-invariant interacting fermions of mass m.
+% Source: literature/md/cond-mat_9906453/cond-mat_9906453.md:41 -- center-of-mass interpretation.
+% Source: literature/md/2010.11121/2010.11121.md:228 -- continuum time-zero net includes strongly continuous spatial/time translation representation.
+% Checked: test/runtests.jl, "Galilei vector-field brackets", "Galilei mass central coefficient", and "first-moment continuity current coefficients".
+
+\subsection{Target Declaration}
+
+A Galilean compiler target is a structured request:
+\[
+  \operatorname{Target}(\mathrm{Gal}(d),\ \mathrm{projective},\ \mathrm{mass}).
+\]
+It asks for:
+\[
+\begin{array}{ll}
+H & \text{time translation},\\
+P_a & \text{spatial translations / momenta},\\
+J_{ab} & \text{rotations},\\
+G_a & \text{Galilean boosts},\\
+M & \text{central mass generator}.
+\end{array}
+\]
+The finite candidate layer is allowed to output formulas and witnesses.  It is
+not allowed to assert continuum Galilean covariance without scaling-limit
+evidence.
+
+\subsection{Required Input Slots}
+
+Compared with CA-16, the Galilean target adds the following required slots:
+\[
+\begin{array}{ll}
+\mu_x\text{ or }n_x
+  & \text{local mass or particle-number density},\\
+M=\sum_x\mu_x
+  & \text{conserved total mass/number},\\
+{}[H,M]=0
+  & \text{finite commutator witness},\\
+J_{x,e}
+  & \text{current witness for a discrete continuity equation},\\
+m\text{ or }M
+  & \text{central charge/operator for the projective representation},\\
+\text{boundary policy}
+  & \text{open, periodic with branch, or thermodynamic-limit handling}.
+\end{array}
+\]
+If any of the first four are absent, boosts and momenta for a Galilean target
+are underdetermined.
+
+\subsection{Generated Candidates}
+
+For an open chain, the deterministic candidate formulas are
+\[
+  G^{\mathrm{lat}}(0)=\sum_j x_j\mu_j,
+\]
+and, when a continuity witness is supplied,
+\[
+  P^{\mathrm{lat}}
+  :=
+  i[H,G^{\mathrm{lat}}(0)]
+  =
+  \sum_{j=1}^{N-1}(x_{j+1}-x_j)J_{j+1/2}
+  \quad+\quad\text{boundary terms}.
+\]
+Rotations in higher dimension require momentum or current-density data:
+\[
+  J_{ab}^{\mathrm{lat}}
+  \approx
+  \sum_x(x_a p_b(x)-x_b p_a(x)).
+\]
+Thus rotations are second-stage candidates: first compile current/momentum
+density, then form the spatial first moment.
+
+\subsection{Example 1: One Free Particle}
+
+Input:
+\[
+  \mathcal H=L^2(\mathbb R^d),\qquad
+  H=\frac{P^2}{2m},\qquad
+  [X_a,P_b]=i\delta_{ab}I.
+\]
+Output at \(t=0\):
+\[
+  G_a=mX_a,\qquad
+  [G_a,P_b]=im\delta_{ab}I,\qquad
+  i[H,G_a]=P_a.
+\]
+Status: checked formal derivation on a common core, with unbounded-operator
+domain work deferred.
+
+\subsection{Example 2: Number-Conserving Open Chain}
+
+Input:
+\[
+  H,\quad n_j,\quad [H,\sum_j n_j]=0,\quad
+  i[H,n_j]=J_{j-1/2}-J_{j+1/2}.
+\]
+For identical mass \(m\),
+\[
+  \mu_j=mn_j,\qquad
+  G^{\mathrm{lat}}(0)=m\sum_j x_jn_j.
+\]
+The compiler may output the current-sum momentum candidate with coefficient
+\(m(x_{j+1}-x_j)\).  It must still mark continuum Galilean covariance as a proof
+obligation.
+
+\subsection{Example 3: Hamiltonian Density Only}
+
+Input:
+\[
+  H=\sum_j h_j
+\]
+with no \(n_j\), no \(\mu_j\), and no current witness.  For a Lorentzian target,
+CA-12 permits the energy-moment proposal.  For a Galilean target, the compiler
+must return:
+\[
+  \texttt{CompileError: missing mass/number density and continuity witness.}
+\]
+Using \(\sum_jx_jh_j\) here would be a convention bug.
+
+\subsection{Example 4: Spin Chain with No Particle Number}
+
+A spin chain may have a perfectly good Hamiltonian density and exact lattice
+translations.  Unless a conserved density is explicitly declared as mass or
+particle number, it does not compile as a Galilean particle system.  The correct
+output is either a failed Galilean target or a different target declaration.
+
+\subsection{Example 5: Direct Sum of Mass Sectors}
+
+For
+\[
+  \mathcal H=\mathcal H_{m_1}\oplus\mathcal H_{m_2},
+\]
+the central generator is not one scalar if \(m_1\ne m_2\).  It is
+\[
+  M=m_1I_{\mathcal H_{m_1}}\oplus m_2I_{\mathcal H_{m_2}}.
+\]
+The compiler can carry the OR carrier, but an irreducible fixed-mass sector
+selection is a separate projection/sector step in the sense of CA-06.
+
+\subsection{Next Obligations}
+
+The next Galilean work needs:
+\[
+\begin{array}{ll}
+1.&\text{a registered source for the standard mass central extension},\\
+2.&\text{model examples with explicit lattice number-current continuity},\\
+3.&\text{finite commutator tests for those models},\\
+4.&\text{scaling maps proving that current sums converge to continuum momenta},\\
+5.&\text{a decision on periodic boundary branch conventions.}
+\end{array}
+\]
+Only after these are present should the compiler promote Galilean lattice
+candidates from formulas to continuum symmetry evidence.

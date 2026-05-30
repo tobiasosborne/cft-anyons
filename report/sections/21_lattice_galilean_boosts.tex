@@ -1,0 +1,115 @@
+% SHARD-ID: CA-21-LATTICE-GALILEAN-BOOSTS
+% SHARD-TITLE: Lattice Galilean Boosts from Mass-Density First Moments
+% SHARD-SUMMARY: Derives the Galilean lattice boost candidate as a first moment of conserved mass or particle-number density, not energy density.
+% SHARD-SUMMARY: Uses a discrete continuity equation to derive the current-sum candidate for momentum, with coefficients checked in Julia.
+% SHARD-SUMMARY: Separates exact finite-lattice conservation from the stronger continuum claim of Galilean covariance.
+% SHARD-KEYWORDS: Galilean lattice boost, mass density, particle number, continuity equation, current, momentum candidate
+
+\section{Lattice Galilean Boosts from Mass-Density First Moments}
+\label{sec:lattice-galilean-boosts}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: proposal plus checked local derivation.}  Local sources support
+Galilean invariance as a physical assumption in nonrelativistic fermion models
+and give examples where conservation laws produce continuity equations.  The
+finite open-chain first-moment formula below is a local derivation checked by
+the Julia test suite.
+
+Dependencies: CA-18--CA-20 and CONVENTIONS.md (h), (i).
+
+% Source: literature/md/cond-mat_9906453/cond-mat_9906453.md:39 -- interacting fermions of mass m with Galilean invariance in zero magnetic field.
+% Source: literature/md/cond-mat_9906453/cond-mat_9906453.md:41 -- center of mass accelerated by a uniform electric field while relative motion is unaffected.
+% Source: literature/md/cond-mat_9906453/cond-mat_9906453.md:662 -- current density with 1/m factor in a nonrelativistic model.
+% Source: literature/md/cond-mat_9906453/cond-mat_9906453.md:664 -- spin conservation implies a continuity equation as an operator equation.
+% Source: literature/md/cond-mat_9906453/cond-mat_9906453.md:682 -- continuity equation and gauge invariance imply transverse response constraints.
+% Source: literature/md/cond-mat_9906453/cond-mat_9906453.md:716 -- Ward identity from the continuity equation.
+% Checked: test/runtests.jl, "first-moment continuity current coefficients".
+
+\subsection{Input Data}
+
+Let \(\Lambda=\{1,\ldots,N\}\) be a finite open chain with positions \(x_j\).
+A Galilean lattice candidate needs, in addition to the Hamiltonian, a conserved
+mass or particle-number density:
+\[
+  M=\sum_j \mu_j,
+  \qquad
+  [H,M]=0.
+\]
+For identical particles of mass \(m\), a common special case is
+\[
+  \mu_j=m n_j,
+\]
+where \(n_j\) is a number density.
+
+The time-zero Galilean boost candidate is the first mass moment
+\[
+  G^{\mathrm{lat}}(0)=\sum_j x_j\mu_j.
+\]
+This is the Galilean analogue of \(mX\), not the Lorentzian energy moment
+\(\sum_j x_jh_j\).
+
+\subsection{Discrete Continuity Assumption}
+
+Assume a nearest-neighbour open-chain continuity equation with bond currents
+\(J_{j+1/2}\):
+\[
+  i[H,\mu_j]=J_{j-1/2}-J_{j+1/2},
+\]
+where endpoint currents are either absent or treated as boundary terms.  This
+assumption is model data.  It does not follow merely from writing
+\(H=\sum_jh_j\).
+
+\subsection{First-Moment Derivation}
+
+Multiply the continuity equation by \(x_j\) and sum:
+\[
+\begin{aligned}
+  i\left[H,\sum_j x_j\mu_j\right]
+  &=
+    \sum_j x_j(J_{j-1/2}-J_{j+1/2})\\
+  &=
+    \sum_{j=1}^{N-1}(x_{j+1}-x_j)J_{j+1/2}
+    \quad+\quad\text{boundary terms}.
+\end{aligned}
+\]
+For a unit-spaced open chain away from endpoints,
+\[
+  i[H,G^{\mathrm{lat}}(0)]
+  \simeq
+  \sum_{j=1}^{N-1}J_{j+1/2}.
+\]
+This is the lattice momentum candidate associated with the Galilean boost.
+For nonuniform positions the coefficients are the spacings
+\[
+  \Delta x_j=x_{j+1}-x_j,
+\]
+and the test suite records a coefficient check for this shard.
+
+\subsection{Relation to Center of Mass}
+
+The local paired-fermion source uses Galilean invariance to explain a response
+in terms of center-of-mass acceleration while relative motion is unaffected.
+That is exactly the intuition this shard turns into compiler data:
+\[
+  \text{Galilean boost} \quad\leadsto\quad
+  \text{center-of-mass / mass-first-moment generator}.
+\]
+The source does not prove the lattice formula above.  It supports the physical
+role of center-of-mass motion under Galilean invariance; the lattice identity is
+the checked local derivation.
+
+\subsection{What Is and Is Not Proven}
+
+The finite identity proves only that, given a local continuity equation, the
+time derivative of the mass first moment is a current sum.  It does not prove:
+\[
+\begin{array}{ll}
+1.&\text{that the current sum converges to continuum momentum},\\
+2.&\text{that the finite lattice has exact Galilei symmetry},\\
+3.&\text{that the mass current equals momentum density in every model},\\
+4.&\text{that boundary terms vanish without a stated boundary condition}.
+\end{array}
+\]
+Those are acceptance-test obligations for later shards or model-specific
+examples.

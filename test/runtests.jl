@@ -113,3 +113,37 @@ end
     @test CftAnyons.nearest_neighbor_boost_current_coefficients([0, 1, 3, 6]) == [1, 2, 3]
     @test_throws ErrorException CftAnyons.nearest_neighbor_boost_current_coefficients([0])
 end
+
+@testset "Galilei vector-field brackets" begin
+    H = (:H, 0, 0)
+    P(a) = (:P, a, 0)
+    G(a) = (:G, a, 0)
+    J(a, b) = a < b ? (:J, a, b) : (:J, b, a)
+    bracket(a, b) = CftAnyons.galilei_vector_field_bracket(a, b, 3)
+
+    @test bracket(P(1), P(2)) == Dict{Tuple{Symbol, Int, Int}, Int}()
+    @test bracket(G(1), G(2)) == Dict{Tuple{Symbol, Int, Int}, Int}()
+    @test bracket(P(1), G(2)) == Dict{Tuple{Symbol, Int, Int}, Int}()
+    @test bracket(H, G(1)) == Dict(P(1) => 1)
+    @test bracket(G(1), H) == Dict(P(1) => -1)
+    @test bracket(J(1, 2), P(1)) == Dict(P(2) => -1)
+    @test bracket(J(1, 2), P(2)) == Dict(P(1) => 1)
+    @test bracket(J(1, 2), G(1)) == Dict(G(2) => -1)
+    @test bracket(J(1, 2), J(2, 3)) == Dict(J(1, 3) => 1)
+    @test_throws ErrorException CftAnyons.galilei_vector_field_bracket((:J, 2, 1), H, 3)
+    @test_throws ErrorException CftAnyons.galilei_vector_field_bracket(P(4), H, 3)
+end
+
+@testset "Galilei mass central coefficient" begin
+    @test CftAnyons.galilei_mass_central_coefficient(7, 1, 1) == 7
+    @test CftAnyons.galilei_mass_central_coefficient(7, 1, 2) == 0
+    @test CftAnyons.galilei_mass_central_coefficient(2.5, 3, 3) == 2.5
+    @test_throws ErrorException CftAnyons.galilei_mass_central_coefficient(1, 0, 1)
+    @test_throws ErrorException CftAnyons.galilei_mass_central_coefficient(1, 1, 0)
+end
+
+@testset "first-moment continuity current coefficients" begin
+    @test CftAnyons.first_moment_continuity_current_coefficients(0:4) == ones(Int, 4)
+    @test CftAnyons.first_moment_continuity_current_coefficients([-1, 0, 2, 5]) == [1, 2, 3]
+    @test_throws ErrorException CftAnyons.first_moment_continuity_current_coefficients([0])
+end

@@ -1,5 +1,72 @@
 # Worklog chunk 002 — 2026-05-30
 
+## Session log — 2026-05-30 — CA-18--CA-22 Galilean lattice-symmetry follow-up
+
+### Context
+
+Tobias asked for follow-up shards on Galilean symmetries in the same rigorous
+style as the lattice Poincare/bulk-symmetry block.  The main convention risk was
+silently reusing the Lorentzian boost ansatz \(K\sim\sum_x xh_x\) for a
+nonrelativistic target.
+
+### What changed
+
+- Added five Galilean shards:
+  - **CA-18** motivates Galilean symmetry as a distinct nonrelativistic lattice
+    target and records the local source gap for the named Bargmann mass
+    extension.
+  - **CA-19** derives the unextended Galilei vector-field algebra on Newtonian
+    spacetime and pins representative bracket signs.
+  - **CA-20** derives the mass central coefficient
+    \([mX_a,P_b]=im\delta_{ab}I\) from the canonical commutator, while keeping
+    the named extension as a source-acquisition target.
+  - **CA-21** derives the lattice Galilean boost candidate as a first moment of
+    mass/particle-number density and uses a discrete continuity equation to get
+    the current-sum momentum candidate.
+  - **CA-22** extends the compiler interface with Galilean-specific required
+    inputs and small success/failure examples.
+- Added CONVENTIONS.md (i): Galilei vector-field signs, mass-central coefficient
+  convention, and the rule that Galilean boosts use conserved mass/number
+  density rather than energy density.
+- Added `src/GalileiAlgebras.jl` with checked helpers for Galilei vector-field
+  brackets, the mass central coefficient, and first-moment continuity-current
+  coefficients.
+- Updated `report.tex`, report maps/catalog, `INDEX.md`, and rebuilt
+  `report.pdf`.
+
+### Why these choices
+
+- A source-scout subagent found local support for the Galilei group as a
+  nonrelativistic symmetry and for generic projective/central-extension lifting,
+  but no local source for the Galilei mass central extension specifically.
+  Therefore the mass term is presented as a checked canonical calculation, not
+  as a sourced named Bargmann-group claim.
+- The compiler now has a clear failure mode: a Hamiltonian density alone can
+  support the Lorentzian energy-moment proposal, but not Galilean boosts.
+
+### Frictions / dead ends
+
+- The first report build exposed a LaTeX optional-argument parse when a table row
+  began with `[G_1,H]`; adding an empty group prefix fixed it.
+- A helper initially used `bargmann` in its name despite the source gap.  It was
+  renamed to `galilei_mass_central_coefficient` to match the provenance boundary.
+
+### Acceptance
+
+- `julia --project=. -e 'using Pkg; Pkg.test()'`: PASS, including Galilei
+  vector-field, mass-central, and continuity-current coefficient checks.
+- `make check-report-shards`: PASS, 23 shards included, labelled, cataloged,
+  all <= 280 lines.
+- `make report`: PASS, `report.pdf` rebuilt.
+
+### Pointers
+
+- Shards: CA-18--CA-22.
+- Code/tests: `src/GalileiAlgebras.jl`, `test/runtests.jl`.
+- Sources: Schottenloher for Galilei as nonrelativistic symmetry and generic
+  projective/central-extension lifting; `cond-mat_9906453` for Galilean
+  invariance/center-of-mass and continuity-equation anchors.
+
 ## Session log — 2026-05-30 — CA-10--CA-17 lattice bulk-symmetry candidates
 
 ### Context

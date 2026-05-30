@@ -1,0 +1,119 @@
+% SHARD-ID: CA-18-GALILEAN-SYMMETRY-MOTIVATION
+% SHARD-TITLE: Why Galilean Symmetry Is a Different Lattice Target
+% SHARD-SUMMARY: Opens the Galilean follow-up block by separating nonrelativistic spacetime symmetry from the Lorentzian energy-moment boost ansatz.
+% SHARD-SUMMARY: Records the local source boundary: Galilei symmetry and projective-unitary lifting are sourced, while the named Bargmann mass extension remains a source gap.
+% SHARD-SUMMARY: Identifies conserved mass or particle-number density as extra compiler input required for Galilean boost candidates.
+% SHARD-KEYWORDS: Galilei group, Galilean symmetry, nonrelativistic symmetry, mass density, particle number, Bargmann source gap
+
+\section{Why Galilean Symmetry Is a Different Lattice Target}
+\label{sec:galilean-symmetry-motivation}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: sourced boundary plus proposal shard.}  The Galilei group as a
+classical nonrelativistic symmetry group is sourced locally.  The general
+projective-representation and central-extension mechanism is sourced locally.
+The specific mass central extension of the Galilei group is not yet sourced in
+this repository; CA-20 treats its coefficient as a checked canonical-commutator
+derivation, not as a literature claim about a named group.
+
+Dependencies: CA-05 for projective symmetries via central extensions, CA-10--CA-17
+for the Lorentzian lattice-symmetry programme, and CONVENTIONS.md (i).
+
+% Source: references/cft/Schottenloher2008/Schottenloher2008.md:1440 -- examples of classical systems with a symmetry group.
+% Source: references/cft/Schottenloher2008/Schottenloher2008.md:1443 -- Galilei group for free particles in classical nonrelativistic mechanics.
+% Source: references/cft/Schottenloher2008/Schottenloher2008.md:1524 -- unitary representation of a topological group.
+% Source: references/cft/Schottenloher2008/Schottenloher2008.md:1528 -- projective representation into U(P).
+% Source: references/cft/Schottenloher2008/Schottenloher2008.md:1570 -- central extension by U(1) for a projective representation.
+% Source: references/cft/Schottenloher2008/Schottenloher2008.md:1618 -- topological central-extension lift.
+% Source: references/cft/Schottenloher2008/Schottenloher2008.md:1622 -- quantization as a central extension by U(1) of a covering group.
+
+\subsection{The New Target}
+
+The previous block targeted Lorentz-invariant continuum systems.  Its first
+lattice intuition was:
+\[
+  \text{Lorentz boost} \simeq \text{position-dependent time translation},
+  \qquad
+  K^{\mathrm{Lor}}_a\sim\sum_x x_a h_x.
+\]
+That is appropriate only when the continuum target mixes space and time in the
+Lorentzian way and the boost is controlled by the energy density.
+
+The nonrelativistic target is different.  Schottenloher lists the Galilei group
+as the symmetry group for free particles in classical nonrelativistic mechanics.
+For the lab-book compiler this means that a Galilean target is not obtained by
+renaming the Poincare block.  It has absolute time, spatial translations,
+rotations, and boosts whose quantum implementation may be projective.
+
+\subsection{Immediate Consequence for Lattices}
+
+The Lorentzian boost ansatz used only the Hamiltonian density \(h_x\).  A
+Galilean boost needs more input.  At time \(t=0\), the familiar nonrelativistic
+one-particle expression is controlled by the mass-weighted position, not by the
+energy-weighted position:
+\[
+  G_a(0)\sim mX_a.
+\]
+For a many-body lattice this suggests a mass-density or particle-number-density
+first moment:
+\[
+  G_a^{\mathrm{lat}}(0)
+  \sim
+  \sum_{x\in\Lambda} x_a\,\mu_x,
+  \qquad
+  \mu_x = m\,n_x
+  \quad\text{when the particles have common mass }m.
+\]
+This is a proposal-level lattice formula until the model supplies the density
+\(\mu_x\), the conservation law, and the continuity/current relation.
+
+\subsection{Compiler Implication}
+
+The compiler rule is therefore stricter than in CA-16:
+\[
+\begin{array}{ll}
+\text{Lorentzian candidate layer:}
+  &(\Lambda,x,\{h_x\})\text{ may generate }K_a\sim\sum_x x_a h_x,\\[2mm]
+\text{Galilean candidate layer:}
+  &(\Lambda,x,\{h_x\})\text{ is not enough.}
+\end{array}
+\]
+For Galilean boosts the input must also name:
+\[
+  \{\mu_x\}\text{ or }\{n_x\},\qquad
+  M=\sum_x\mu_x,\qquad
+  [H,M]=0,
+\]
+plus, for a momentum candidate, a current witness for the discrete continuity
+equation.  If those data are absent, the compiler must fail loudly rather than
+silently using the energy first moment.
+
+\subsection{Why Projective Data Matter Earlier}
+
+In the Hilbert-space grammar, projective symmetries were handled by passing to a
+central extension.  Galilean symmetry is the first lattice target where that
+choice becomes operational: the mass parameter is expected to sit in the
+projective/central part of the quantum representation.  Locally we can support
+only this precise statement:
+\[
+  \text{projective quantum symmetries are represented by unitary representations
+  of central extensions.}
+\]
+The stronger statement identifying the Galilei extension by its standard
+literature name remains a source-acquisition task.
+
+\subsection{Boundary for CA-18--CA-22}
+
+The follow-up block does four things:
+\[
+\begin{array}{ll}
+\text{CA-19} & \text{derives the unextended Galilei vector-field algebra},\\
+\text{CA-20} & \text{derives the mass central coefficient on a canonical core},\\
+\text{CA-21} & \text{derives the lattice first-moment continuity formula},\\
+\text{CA-22} & \text{turns the data into compiler rules and small examples}.
+\end{array}
+\]
+No shard in this block claims that a finite lattice has exact Galilean symmetry
+unless the corresponding finite-dimensional representation and commutator
+checks are actually supplied.

@@ -1,0 +1,126 @@
+% SHARD-ID: CA-20-GALILEAN-PROJECTIVE-MASS
+% SHARD-TITLE: Projective Galilean Symmetry and the Mass Central Term
+% SHARD-SUMMARY: Explains why the projective-representation layer is unavoidable for Galilean quantum symmetry.
+% SHARD-SUMMARY: Derives the mass central coefficient from the canonical commutator [mX_a,P_b]=i m delta_ab on a common core.
+% SHARD-SUMMARY: Records the source gap for a registered Bargmann mass-extension reference while keeping the local coefficient checked.
+% SHARD-KEYWORDS: Galilean projective representation, mass central extension, Bargmann source gap, canonical commutator, Stone theorem
+
+\section{Projective Galilean Symmetry and the Mass Central Term}
+\label{sec:galilean-projective-mass}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: sourced projective framework plus checked local derivation.}
+Schottenloher supplies the representation-theoretic framework: projective
+symmetries need not lift to the original group, but lift through a central
+extension.  The coefficient \(m\delta_{ab}\) below is a local canonical
+commutator derivation checked in Julia.  A local source specifically identifying
+the Galilei mass central extension by its standard name has not yet been
+registered.
+
+Dependencies: CA-05, CA-18, CA-19, and CONVENTIONS.md (f), (i).
+
+% Source: references/cft/Schottenloher2008/Schottenloher2008.md:1524 -- unitary representation.
+% Source: references/cft/Schottenloher2008/Schottenloher2008.md:1528 -- projective representation.
+% Source: references/cft/Schottenloher2008/Schottenloher2008.md:1548 -- lifting projective representations question.
+% Source: references/cft/Schottenloher2008/Schottenloher2008.md:1554 -- no lift to G in general; central extension of the universal cover.
+% Source: references/cft/Schottenloher2008/Schottenloher2008.md:1570 -- central extension by U(1).
+% Source: references/cft/Schottenloher2008/Schottenloher2008.md:1618 -- topological central-extension lift.
+% Source: references/cft/Schottenloher2008/Schottenloher2008.md:1622 -- quantization as a central extension by U(1).
+% Source: references/cft/Schottenloher2008/Schottenloher2008.md:2289 -- Bargmann theorem hypothesis for lifting projective representations.
+% Source: references/cft/Schottenloher2008/Schottenloher2008.md:2293 -- projective representation lift under Bargmann theorem hypothesis.
+% Checked: test/runtests.jl, "Galilei mass central coefficient".
+
+\subsection{Why This Belongs in the Grammar}
+
+CA-05 made a conservative grammar choice: a projective symmetry is represented
+by an honest unitary representation of a named central extension
+\[
+  1\longrightarrow U(1)\longrightarrow E\longrightarrow G\longrightarrow 1.
+\]
+For Galilean symmetry this is not a decorative detail.  The central parameter is
+physically interpreted as mass in the canonical nonrelativistic model, and it
+controls how boosts and momenta compose at the quantum level.
+
+\subsection{Canonical One-Particle Calculation}
+
+Work formally on a common invariant core where the position and momentum
+operators obey
+\[
+  [X_a,P_b]=i\delta_{ab}I.
+\]
+For a particle of mass \(m\), the time-zero boost generator is represented by
+\[
+  G_a(0)=mX_a.
+\]
+Then
+\[
+\begin{aligned}
+  [G_a(0),P_b]
+    &= [mX_a,P_b]\\
+    = m[X_a,P_b]\\
+    = i\,m\,\delta_{ab}I.
+\end{aligned}
+\]
+The Julia check records exactly the real coefficient \(m\delta_{ab}\).
+
+\subsection{Compatibility with Time Evolution}
+
+For the free Hamiltonian
+\[
+  H=\frac{1}{2m}\sum_b P_b^2,
+\]
+the same canonical commutator gives
+\[
+\begin{aligned}
+  [H,mX_a]
+  &= \frac{1}{2}\sum_b [P_b^2,X_a]\\
+  = \frac{1}{2}\sum_b\bigl(P_b[P_b,X_a]+[P_b,X_a]P_b\bigr)\\
+  &= \frac{1}{2}\bigl(-iP_a-iP_a\bigr)
+  = -iP_a.
+\end{aligned}
+\]
+Thus
+\[
+  i[H,G_a(0)]=P_a.
+\]
+This matches the CA-19 vector-field relation \([H,G_a]=P_a\) after applying the
+self-adjoint-generator convention used for observable evolution.
+
+\subsection{Central Extension Versus Vector Fields}
+
+The unextended vector-field algebra had \([G_a,P_b]=0\).  The canonical quantum
+calculation has instead
+\[
+  [G_a,P_b]=i\,m\,\delta_{ab}I.
+\]
+The additional term is central: it is a scalar multiple of the identity on a
+fixed-mass sector.  This is the algebraic reason the compiler must attach a
+central-extension witness to Galilean symmetry data rather than store only the
+spacetime vector fields.
+
+\subsection{Source Gap}
+
+The local source collection includes Bargmann's theorem about lifting projective
+representations under a Lie-algebra cohomology hypothesis, and it includes the
+general central-extension theorem for projective representations.  It does not
+yet include a registered source for the standard mass central extension of the
+Galilei group.  Until that source is acquired, this shard uses the cautious name
+\emph{mass central term} and cites the checked canonical calculation as its
+local evidence.
+
+\subsection{Compiler Payload}
+
+A Galilean projective symmetry record must therefore include:
+\[
+\begin{array}{ll}
+\text{base group/algebra} & \text{Galilei target from CA-19},\\
+\text{central generator} & M\text{ or }I\text{ on a fixed-mass sector},\\
+\text{central charge} & m\text{ or a mass operator},\\
+\text{raw commutator witness} & [G_a,P_b]=i\delta_{ab}M,\\
+\text{sign convention} & \text{conversion to }i[A,B]\text{ stated explicitly}.
+\end{array}
+\]
+An OR of sectors with different masses can still be a Hilbert direct sum, but
+the central element must then be represented as a block-diagonal operator rather
+than a single scalar charge.

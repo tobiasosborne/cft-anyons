@@ -35,6 +35,11 @@ before treating report edits as complete.
 | 15 | `CA-15-LATTICE-SYMMETRY-ACCEPTANCE-TESTS` | `report/sections/15_lattice_symmetry_acceptance_tests.tex` | Acceptance Tests for Lattice Symmetry Candidates |
 | 16 | `CA-16-LATTICE-SYMMETRY-COMPILER-INTERFACE` | `report/sections/16_lattice_symmetry_compiler_interface.tex` | A Compiler Interface for Lattice Symmetry Candidates |
 | 17 | `CA-17-LATTICE-SYMMETRY-EXAMPLES-QUEUE` | `report/sections/17_lattice_symmetry_examples_queue.tex` | Small Examples and the Lattice-Symmetry Research Queue |
+| 18 | `CA-18-GALILEAN-SYMMETRY-MOTIVATION` | `report/sections/18_galilean_symmetry_motivation.tex` | Why Galilean Symmetry Is a Different Lattice Target |
+| 19 | `CA-19-GALILEAN-VECTOR-FIELD-ALGEBRA` | `report/sections/19_galilean_vector_field_algebra.tex` | The Galilei Algebra as Newtonian Vector Fields |
+| 20 | `CA-20-GALILEAN-PROJECTIVE-MASS` | `report/sections/20_galilean_projective_mass.tex` | Projective Galilean Symmetry and the Mass Central Term |
+| 21 | `CA-21-LATTICE-GALILEAN-BOOSTS` | `report/sections/21_lattice_galilean_boosts.tex` | Lattice Galilean Boosts from Mass-Density First Moments |
+| 22 | `CA-22-GALILEAN-COMPILER-INTERFACE` | `report/sections/22_galilean_compiler_interface.tex` | Compiler Rules and Examples for Galilean Targets |
 
 ## Adding a shard
 

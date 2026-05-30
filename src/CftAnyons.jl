@@ -162,6 +162,8 @@ function poincare_vector_field_bracket(a::PoincareBasisKey, b::PoincareBasisKey,
     return out
 end
 
+include("GalileiAlgebras.jl")
+
 """
     nearest_neighbor_boost_current_coefficients(positions) -> Vector
 
