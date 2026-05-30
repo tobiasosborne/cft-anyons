@@ -1,5 +1,40 @@
 # Worklog chunk 003 — 2026-05-30
 
+## Session log — 2026-05-30 — Gaussian Lorentz action plan
+
+### Context
+
+Tobias asked for a delegated subagent to turn the independent Gaussian Lorentz
+reviews into a granular action plan, with future steps scoped to roughly
+50--100 changed lines where practical.
+
+### What changed
+
+- Added `reviews/2026-05-30_gaussian_lorentz/ACTION_PLAN.md`.
+- Updated the review directory README to list the action plan.
+
+### Why these choices
+
+- The plan keeps the review findings actionable without immediately editing the
+  report.  It separates convention repairs, report-only containment fixes,
+  Julia/test hardening, source acquisition, and stress-energy proposal shards.
+
+### Frictions / dead ends
+
+- The planner took longer than the first wait cycle, but completed with the
+  requested single-file write target.
+
+### Acceptance
+
+- The action plan exists in the review bundle and includes per-step goals,
+  files, prerequisites, concrete edits, checks, size estimates, and
+  dependencies.
+
+### Pointers
+
+- Action plan:
+  `reviews/2026-05-30_gaussian_lorentz/ACTION_PLAN.md`.
+
 ## Session log — 2026-05-30 — Independent Gaussian Lorentz reviews
 
 ### Context
