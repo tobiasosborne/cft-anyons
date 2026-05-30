@@ -1,5 +1,36 @@
 # Worklog chunk 002 — 2026-05-30
 
+## Session log — 2026-05-30 — Correction: Fock and exchange statistics are representation-sector data
+
+### Context
+
+Tobias corrected the compiler framing: Fock space should not be a special grammar
+form, and symmetric/antisymmetric statistics should not be specialised grammar
+either.  Fock is a derived graded representation built from tensor powers, while
+symmetric and antisymmetric sectors are consequences of choosing irreps of the
+exchange representation.
+
+### What changed
+
+- Updated CONVENTIONS.md (f): Fock-style notation is derived, not primitive
+  grammar; it denotes the graded Hilbert direct sum of tensor-power
+  representation sectors.
+- Revised CA-03: the full Fock space is explicitly the completion of ordinary
+  tensor-power expressions; exchange \emph{sector selection}, not symmetry in
+  general, is what comes later.
+- Revised CA-05: the full-Fock action is a derived graded representation, not a
+  new grammar constructor.
+- Revised CA-07: Bose/Fermi are the trivial/sign irrep choices for the \(S_n\)
+  exchange representation; the projector comes from the chosen character.
+- Revised CA-08: the surface language now has only `0`, `1`, atoms, `OR`,
+  `AND`, and generic `Sector_{G,chi}`.  Fock/truncation are derived macros;
+  symmetric/antisymmetric sectors are examples of exchange-irrep projection.
+
+### Acceptance
+
+- `make ci-before-push`: PASS after the correction (shard guard + report build
+  + Julia tests, 23 tests total).
+
 ## Session log — 2026-05-30 — CA-08 Hilbert-space compiler scope/spec
 
 ### Context
@@ -14,14 +45,13 @@ ordinary exchange-statistics sectors.
 
 - Added **CA-08** (`report/sections/08_hilbert_space_compiler_spec.tex`):
   - defines a partial compile judgement with successful and failed outcomes;
-  - fixes the first surface language: `0`, `1`, atom, `OR`, `AND`, `Fock`,
-    finite truncation, symmetric/antisymmetric exchange sectors, and finite
-    invariant sectors;
+  - fixes the first surface language: `0`, `1`, atom, `OR`, `AND`, and generic
+    finite representation sectors;
   - gives constructor rules for carriers, gradings, symmetry propagation,
     finite dimensions, sector projections, quotient witnesses, and observable
     policies;
   - works through six examples: maybe qubit, two distinguishable qubits,
-    truncated distinguishable Fock, two-qubit exchange sectors, a finite
+    derived tensor-power closure, two-qubit exchange-irrep sectors, a finite
     invariant quotient, and an incompatible-projective-symmetry compile error;
   - records implementation acceptance criteria and a hard boundary excluding
     fusion-category data, anyonic braid data, Hamiltonians, continuum limits,

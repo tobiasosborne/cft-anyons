@@ -85,7 +85,15 @@ degree-$0$ sector $\mathbb C$ is the \emph{vacuum}. This is the
 \emph{Boltzmann} Fock space (standard terminology, not anchored in a local
 source), namely the Hilbert completion of the tensor algebra
 $T(H)=\bigoplus_n H^{\otimes n}$. It is \emph{not} the symmetric (bosonic)
-or antisymmetric (fermionic) Fock space; see ``Symmetries come later'' below.
+or antisymmetric (fermionic) Fock space; see ``Exchange sectors come later''
+below.
+
+\paragraph{Compiler status.}
+In the compiler grammar this is not an additional primitive constructor.  It is
+the Hilbert completion of the ordinary tensor-power expressions
+\(\one,H,H^{\hotimes2},\ldots\): a countable OR over all finite AND powers.  If a
+one-particle symmetry representation is present, CA-05 makes this same object a
+graded direct-sum representation.
 
 \paragraph{Theorem (Fock is a Hilbert space).}
 $\Fock(H)$ is a Hilbert space; (i) the algebraic direct sum
@@ -129,12 +137,13 @@ $T_{\le M}$) are precisely the finite-support / finite-$M$ restrictions of this
 object; that is the exact harmonisation: \texttt{AQM-70} is the
 $\bigoplus^{\mathrm{alg}}$/finite-$M$ truncation of $\Fock$.
 
-\subsection{Symmetries Come Later (the Deferred Quotient)}
+\subsection{Exchange Sectors Come Later}
 
-The full Fock space is the carrier on which exchange symmetry acts; it is not
-itself a (anti)symmetric space. For each $n$ the permutation group $S_n$ acts
-unitarily on $H^{\hotimes n}$ by permuting tensor slots. Bosonic and fermionic Fock
-spaces are then the images of the per-sector orthogonal projectors
+The full Fock space already carries symmetry representations when \(H\) does:
+internal symmetries act sectorwise by tensor powers (CA-05), and for each \(n\)
+the permutation group \(S_n\) acts unitarily on \(H^{\hotimes n}\) by permuting
+tensor slots.  What is deferred is the \emph{sector selection}.  Bosonic and
+fermionic Fock spaces are the images of the per-sector orthogonal projectors
 \[
   \Gamma_{\mathrm s}(H)=P_{\mathrm{sym}}\,\Fock(H)
   \quad(\text{symmetric / Bose}),

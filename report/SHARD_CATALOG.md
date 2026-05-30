@@ -51,7 +51,7 @@ single ~200-line source file it points to.
 
 - Source: `report/sections/05_symmetry_decorated_grammar.tex`
 - Title: Symmetry-Decorated Many-Particle Grammar
-- Summary: Adds ordinary and projective-unitary symmetry data to atoms and propagates it through OR, AND, and full Fock constructions.
+- Summary: Adds ordinary and projective-unitary symmetry data to atoms and propagates it through OR, AND, and the derived full-Fock representation.
 - Summary: Uses central extensions as the pre-work representation of projective symmetries, avoiding unsourced cocycle arithmetic in the grammar.
 - Summary: Records the compatibility requirements needed before multiple atomic Hilbert spaces can share a single compiled symmetry action.
 - Keywords: symmetry, unitary representation, projective representation, central extension, tensor product, direct sum, Fock
@@ -69,7 +69,7 @@ single ~200-line source file it points to.
 
 - Source: `report/sections/07_exchange_statistics_layer.tex`
 - Title: Exchange Symmetry and Statistics as Sector Selection
-- Summary: Applies the sector machinery to the permutation action on tensor slots, recovering symmetric and antisymmetric Fock sectors from the full distinguishable carrier.
+- Summary: Applies the sector machinery to the permutation action on tensor slots, with symmetric and antisymmetric sectors arising from chosen irreps of S_n.
 - Summary: Keeps internal symmetries separate from exchange symmetry and records how the two actions coexist on n-particle sectors.
 - Summary: Defers para-statistics and genuinely anyonic braid statistics until their source, convention, and projector data are fixed.
 - Keywords: exchange symmetry, statistics, symmetric Fock, antisymmetric Fock, permutation group, sector projector, anyonic deferral
@@ -80,5 +80,5 @@ single ~200-line source file it points to.
 - Title: Scoping the Hilbert-Space Compiler
 - Summary: Specifies the first partial compiler from typed grammar expressions to Hilbert carriers, gradings, observable-algebra policies, symmetry data, and sector witnesses.
 - Summary: Gives deterministic constructor rules and finite-dimensional invariants that can be checked before any categorical anyon data enters.
-- Summary: Works through small examples: maybe qubits, distinguishable pairs, truncated Fock space, exchange sectors, invariant quotients, and a required compile error.
+- Summary: Works through small examples: maybe qubits, distinguishable pairs, derived tensor-power closure, exchange-irrep sectors, invariant quotients, and a required compile error.
 - Keywords: Hilbert-space compiler, compiler specification, examples, dimensions, observable policy, compile error, symmetric sector, invariant quotient

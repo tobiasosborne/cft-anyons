@@ -2,7 +2,7 @@
 % SHARD-TITLE: Scoping the Hilbert-Space Compiler
 % SHARD-SUMMARY: Specifies the first partial compiler from typed grammar expressions to Hilbert carriers, gradings, observable-algebra policies, symmetry data, and sector witnesses.
 % SHARD-SUMMARY: Gives deterministic constructor rules and finite-dimensional invariants that can be checked before any categorical anyon data enters.
-% SHARD-SUMMARY: Works through small examples: maybe qubits, distinguishable pairs, truncated Fock space, exchange sectors, invariant quotients, and a required compile error.
+% SHARD-SUMMARY: Works through small examples: maybe qubits, distinguishable pairs, derived tensor-power closure, exchange-irrep sectors, invariant quotients, and a required compile error.
 % SHARD-KEYWORDS: Hilbert-space compiler, compiler specification, examples, dimensions, observable policy, compile error, symmetric sector, invariant quotient
 
 \section{Scoping the Hilbert-Space Compiler}
@@ -11,29 +11,19 @@
 \subsection{Status, Sources, and Dependencies}
 
 \textbf{Status: specification shard.}  This shard turns CA-04's contract into a
-first partial compiler specification.  It is not an implementation claim for
-arbitrary QFTs.  Its scope is the pre-work grammar of CA-02--CA-07: finite
-Hilbert carriers, full/distinguishable Fock completions, unitary/projective
-symmetry decorations via central extensions, and projection-defined sectors.
+first partial compiler specification.  Its scope is the pre-work grammar of
+CA-02--CA-07: finite Hilbert carriers, derived all-tensor-power completions,
+unitary/projective symmetries via central extensions, and irrep/projection sectors.
 
-% Source: literature/md/1910.10619/1910.10619.md:39
-%   Fock presentations often mix exchange symmetry and indefinite particle number.
-% Source: literature/md/1910.10619/1910.10619.md:41
-%   distinguishable Fock first; Bose/Fermi by imposing exchange equivalence.
-% Source: literature/md/1910.10619/1910.10619.md:57
-%   distinguishable Fock as direct sum of tensor powers.
-% Source: literature/md/1910.10619/1910.10619.md:59
-%   zero-particle vacuum sector is C.
-% Source: references/cft/Schottenloher2008/Schottenloher2008.md:1524
-%   unitary representation = continuous homomorphism G -> U(H).
-% Source: references/cft/Schottenloher2008/Schottenloher2008.md:1528
-%   projective representation = continuous homomorphism G -> U(P).
-% Source: references/cft/Schottenloher2008/Schottenloher2008.md:1570
-%   projective representation determines a central extension and a lift.
-% Source: references/text/PenneysUnitaryFusionCategories.md:219
-%   orthogonal direct sums give isometries and mutually orthogonal projections.
-% Source: references/text/PenneysUnitaryFusionCategories.md:235
-%   orthogonal projections satisfy p^2=p=p^\dagger and split by an isometry.
+% Source: literature/md/1910.10619/1910.10619.md:39 -- Fock presentations often mix exchange symmetry and indefinite particle number.
+% Source: literature/md/1910.10619/1910.10619.md:41 -- distinguishable Fock first; Bose/Fermi by imposing exchange equivalence.
+% Source: literature/md/1910.10619/1910.10619.md:57 -- distinguishable Fock as direct sum of tensor powers.
+% Source: literature/md/1910.10619/1910.10619.md:59 -- zero-particle vacuum sector is C.
+% Source: references/cft/Schottenloher2008/Schottenloher2008.md:1524 -- unitary representation = continuous homomorphism G -> U(H).
+% Source: references/cft/Schottenloher2008/Schottenloher2008.md:1528 -- projective representation = continuous homomorphism G -> U(P).
+% Source: references/cft/Schottenloher2008/Schottenloher2008.md:1570 -- projective representation determines a central extension and a lift.
+% Source: references/text/PenneysUnitaryFusionCategories.md:219 -- orthogonal direct sums give isometries and mutually orthogonal projections.
+% Source: references/text/PenneysUnitaryFusionCategories.md:235 -- orthogonal projections satisfy p^2=p=p^\dagger and split by an isometry.
 % Checked: test/runtests.jl, finite C2 invariant projector and two-qubit exchange projectors.
 
 \subsection{Compile Judgement}
@@ -49,14 +39,11 @@ judgement has the form
   \Gamma;\Pi \vdash E \Uparrow \mathsf{reason}.
 \]
 The failure result is part of the specification: incompatible symmetry data,
-missing observable policy for an observable claim, or an ill-typed sector
-constructor must stop compilation instead of producing a carrier with silently
-missing structure.
+missing observable policy, or an ill-typed sector constructor must stop compilation.
 
 The atom table entry for \(x\) has at least a Hilbert space \(K_x\), a degree
-\(d_x\in\mathbb N\) (usually \(1\)), and evidence metadata.  It may also contain
-unitary symmetry data \(U_x:G\to U(K_x)\), or projective data represented by a
-named central extension as in CA-05.
+\(d_x\in\mathbb N\) (usually \(1\)), evidence metadata, and optionally symmetry
+data \(U_x:G\to U(K_x)\) or a named projective central extension as in CA-05.
 
 \subsection{Surface Language for the First Compiler}
 
@@ -65,19 +52,26 @@ The first surface language is deliberately small:
 \begin{aligned}
 E ::= {}& 0 \mid \one \mid x
        \mid \operatorname{OR}(E,F)
-       \mid \operatorname{AND}(E,F)\\
-     & \mid \operatorname{Fock}(x)
-       \mid \operatorname{Trunc}_{\le M}(x)
-       \mid \operatorname{Sym}_n(x)
-       \mid \operatorname{Alt}_n(x)
-       \mid \operatorname{Inv}_G(E).
+       \mid \operatorname{AND}(E,F)
+       \mid \operatorname{Sector}_{G,\chi}(E).
 \end{aligned}
 \]
-\(\operatorname{Fock}(x)\) and \(\operatorname{Trunc}_{\le M}(x)\) are only
-well typed when \(x\) denotes a one-particle carrier.  \(\operatorname{Sym}_n\)
-and \(\operatorname{Alt}_n\) mean sector selection inside \(K_x^{\hotimes n}\),
-not new tensor products.  \(\operatorname{Inv}_G(E)\) is currently checked only
-for finite \(G\) with an explicit finite unitary representation image.
+Here \(G\) acts on the compiled carrier and \(\chi\) is a one-dimensional unitary
+character; invariants are the case \(\chi=1\).  Fock, finite truncation,
+symmetric sectors, and antisymmetric sectors are derived from OR/AND,
+representation propagation, and the generic sector operation.
+
+For a one-particle atom \(x\), define tensor-power expressions recursively by
+\[
+  x^{[0]}:=\one,\qquad x^{[m+1]}:=\operatorname{AND}(x^{[m]},x).
+\]
+Then
+\[
+  \mathsf T_{\le M}(x):=\operatorname{OR}_{m=0}^{M}x^{[m]},\qquad
+  \mathsf T_{\infty}(x):=\text{Hilbert completion of } \operatorname{OR}_{m\ge0}x^{[m]}.
+\]
+\(\mathsf T_{\infty}(x)\) is the usual full/distinguishable Fock space
+\(\hoplus_{m\ge0}K_x^{\hotimes m}\), but as a derived graded representation.
 
 \subsection{Constructor Rules}
 
@@ -104,37 +98,38 @@ If the symmetry objects are not the same, the carrier may still compile, but the
 symmetry output is rejected unless the requested output was explicitly
 carrier-only.
 
-For a one-particle atom \(x\),
+For the derived tensor-power closures,
 \[
-H_{\operatorname{Fock}(x)}=\hoplus_{m\ge0}K_x^{\hotimes m},\qquad
-H_{\operatorname{Trunc}_{\le M}(x)}=\bigoplus_{m=0}^{M}K_x^{\otimes m}.
+H_{\mathsf T_{\infty}(x)}=\hoplus_{m\ge0}K_x^{\hotimes m},\qquad
+H_{\mathsf T_{\le M}(x)}=\bigoplus_{m=0}^{M}K_x^{\otimes m}.
 \]
 For finite examples the compiler may report dimensions:
 \[
 \begin{aligned}
 \dim\operatorname{OR} &= \dim H_E+\dim H_F,\\
 \dim\operatorname{AND} &= (\dim H_E)(\dim H_F),\\
-\dim\operatorname{Trunc}_{\le M}(x) &= \sum_{m=0}^{M}(\dim K_x)^m .
+\dim\mathsf T_{\le M}(x) &= \sum_{m=0}^{M}(\dim K_x)^m .
 \end{aligned}
 \]
-These follow from choosing orthonormal bases: disjoint union gives a basis of a
-direct sum; ordered pairs of basis vectors give a basis of a tensor product; and
-the truncation is a finite direct sum of tensor powers.
+These follow from choosing orthonormal bases: disjoint union gives direct-sum
+bases, ordered pairs give tensor-product bases, and truncation is a finite sum.
 
-Sector constructors return projection witnesses.  For finite \(G\),
+Sector constructors return projection witnesses supplied by representation data.
+For finite \(G\), a unitary character \(\chi:G\to U(1)\), and representation
+\(U_E:G\to U(H_E)\), set
 \[
-P_G=|G|^{-1}\sum_{g\in G}U_E(g),\qquad
-H_{\operatorname{Inv}_G(E)}=\Ran(P_G),\qquad
-Q_E=H_E/\Span\{U_E(g)v-v\}.
+P_{\chi}=|G|^{-1}\sum_{g\in G}\overline{\chi(g)}\,U_E(g),\qquad
+H_{\operatorname{Sector}_{G,\chi}(E)}=\Ran(P_{\chi}).
 \]
-For exchange sectors on \(K^{\hotimes n}\),
+The quotient relation is generated by \(U_E(g)v-\chi(g)v\).  The invariant
+sector is \(\chi=1\).  For exchange sectors on \(K^{\hotimes n}\), \(G=S_n\) and
+\(U_E=\Pi_n\); the trivial and sign characters give
 \[
 P_{{\rm s},n}=n!^{-1}\sum_{\sigma\in S_n}\Pi_n(\sigma),\qquad
 P_{{\rm a},n}=n!^{-1}\sum_{\sigma\in S_n}\operatorname{sgn}(\sigma)\Pi_n(\sigma).
 \]
 The observable algebra is never inferred from these formulas.  It is the policy
-slot \(\Pi_{\rm obs}\): carrier-only, full \(\BH(H)\), block-preserving,
-tensor-local, invariant, or compressed \(P\BH(H)P\).
+slot \(\Pi_{\rm obs}\): carrier-only, full, block, tensor-local, invariant, or compressed.
 
 \subsection{Example 1: A Maybe Qubit}
 
@@ -170,9 +165,13 @@ subalgebra generated by
 whereas the full policy is \(\BH(Q\otimes Q)\).  The compiler records which one
 was requested; it does not identify them by syntax alone.
 
-\subsection{Example 3: Truncated Distinguishable Fock}
+\subsection{Example 3: Derived Tensor-Power Closure}
 
-Compile \(E_3=\operatorname{Trunc}_{\le2}(Q)\).  The output carrier is
+Compile the macro-expanded expression
+\[
+  E_3=\mathsf T_{\le2}(Q)=\operatorname{OR}(\one,\operatorname{OR}(Q,\operatorname{AND}(Q,Q))).
+\]
+The output carrier is
 \[
   H_{E_3}=\mathbb C\oplus Q\oplus(Q\otimes Q),
 \]
@@ -186,29 +185,30 @@ If \(U:G\to U(Q)\) is supplied, symmetry propagation gives
   U_{E_3}(g)=1_{\mathbb C}\oplus U(g)\oplus (U(g)\otimes U(g)).
 \]
 No Bose/Fermi relation has been imposed yet; this is still the distinguishable
-carrier.
+graded representation.
 
-\subsection{Example 4: Two-Qubit Exchange Sectors}
+\subsection{Example 4: Two-Qubit Exchange-Irrep Sectors}
 
 Let \(S\) be the swap on \(Q\otimes Q\).  Since
 \[
 S(e_0e_0)=e_0e_0,\quad S(e_1e_1)=e_1e_1,\quad
 S(e_0e_1)=e_1e_0,\quad S(e_1e_0)=e_0e_1,
 \]
-where \(e_ie_j\) abbreviates \(e_i\otimes e_j\), the projectors
+where \(e_ie_j\) abbreviates \(e_i\otimes e_j\), the exchange representation of
+\(S_2\) has two one-dimensional irrep characters, trivial and sign, supplying
+projectors with ranges:
 \[
   P_{\rm s}=\frac12(I+S),\qquad P_{\rm a}=\frac12(I-S)
 \]
-have ranges
 \[
   \Ran(P_{\rm s})=\Span\{e_0e_0,\ (e_0e_1+e_1e_0)/\sqrt2,\ e_1e_1\},
 \]
 \[
   \Ran(P_{\rm a})=\Span\{(e_0e_1-e_1e_0)/\sqrt2\}.
 \]
-Thus the compiler reports \(\dim\operatorname{Sym}_2(Q)=3\) and
-\(\dim\operatorname{Alt}_2(Q)=1\).  The Julia test suite checks the projection,
-orthogonality, trace/dimension, and basis-vector claims for this example.
+Thus the compiler reports dimensions \(3\) and \(1\) for the trivial- and
+sign-irrep sectors.  The Julia test suite checks the projection, orthogonality,
+trace/dimension, and basis-vector claims for this example.
 
 \subsection{Example 5: A Finite Invariant Quotient}
 
@@ -222,6 +222,8 @@ Its range is \(\Span\{(1,1)\}\), and its kernel is
 \[
   \mathbb C^2/\Span\{(1,-1)\}\cong \Span\{(1,1)\}.
 \]
+This is \(\operatorname{Sector}_{C_2,1}(H)\), the trivial-irrep sector of the
+\(C_2\) representation.
 The invariant observable algebra on the original carrier consists of the
 operators commuting with \(S\), while the compressed algebra on the invariant
 line is one-dimensional.  These are different observable policies even in this
@@ -250,14 +252,14 @@ CONVENTIONS.md (f).
 D24 &:& \Gamma;\Pi\vdash E\Downarrow(H_E,\{H_{E,n}\},\Alg_E,U_E,P_E,Q_E,\mathsf{Ev}_E)
         \text{ or } \Gamma;\Pi\vdash E\Uparrow\mathsf{reason}.\\
 D25 &:& E::=0\mid\one\mid x\mid\operatorname{OR}\mid\operatorname{AND}
-        \mid\operatorname{Fock}\mid\operatorname{Trunc}\mid
-        \operatorname{Sym}\mid\operatorname{Alt}\mid\operatorname{Inv}.\\
-D26 &:& \operatorname{Trunc}_{\le M}(x)=\bigoplus_{m=0}^{M}K_x^{\otimes m}.\\
-D27 &:& \operatorname{Inv}_G(E):\ P_G=|G|^{-1}\sum_gU_E(g),\
-        H=\Ran(P_G),\ Q=H_E/\Span\{U_E(g)v-v\}.\\
+        \mid\operatorname{Sector}_{G,\chi}.\\
+D26 &:& \mathsf T_{\le M}(x)=\operatorname{OR}_{m=0}^{M}x^{[m]},\quad
+        H_{\mathsf T_{\le M}}=\bigoplus_{m=0}^{M}K_x^{\otimes m}.\\
+D27 &:& P_{\chi}=|G|^{-1}\sum_g\overline{\chi(g)}U_E(g),\quad
+        H_{\operatorname{Sector}_{G,\chi}}=\Ran(P_{\chi}).\\
 T15 &:& \text{Finite dimensions obey sum, product, and } \sum_{m=0}^{M}d^m
         \text{ by explicit basis constructions.}\\
-T16 &:& \text{Sector constructors output projection/subspace/quotient witnesses, not just dimensions.}\\
+T16 &:& \text{Irrep/character choices supply projection/subspace/quotient witnesses.}\\
 T17 &:& \text{Compiler failure is a specified outcome when requested structure is ill typed or unsupported.}
 \end{array}
 \]

@@ -1,6 +1,6 @@
 % SHARD-ID: CA-07-EXCHANGE-STATISTICS-LAYER
 % SHARD-TITLE: Exchange Symmetry and Statistics as Sector Selection
-% SHARD-SUMMARY: Applies the sector machinery to the permutation action on tensor slots, recovering symmetric and antisymmetric Fock sectors from the full distinguishable carrier.
+% SHARD-SUMMARY: Applies the sector machinery to the permutation action on tensor slots, with symmetric and antisymmetric sectors arising from chosen irreps of S_n.
 % SHARD-SUMMARY: Keeps internal symmetries separate from exchange symmetry and records how the two actions coexist on n-particle sectors.
 % SHARD-SUMMARY: Defers para-statistics and genuinely anyonic braid statistics until their source, convention, and projector data are fixed.
 % SHARD-KEYWORDS: exchange symmetry, statistics, symmetric Fock, antisymmetric Fock, permutation group, sector projector, anyonic deferral
@@ -11,9 +11,9 @@
 \subsection{Sources and Dependencies}
 
 This shard discharges part of the deferral in CA-03: ordinary Bose/Fermi
-statistics are treated as sector selections on the full distinguishable Fock
-carrier.  It depends on CA-05 for internal symmetry propagation and CA-06 for
-projection/subspace/quotient semantics.
+statistics are treated as choices of irreducible exchange-symmetry sectors on
+the full distinguishable Fock carrier.  It depends on CA-05 for internal
+symmetry propagation and CA-06 for projection/subspace/quotient semantics.
 
 % Source: literature/md/1910.10619/1910.10619.md:39
 %   Fock presentations often mix exchange symmetry and indefinite particle number.
@@ -53,15 +53,30 @@ The two actions commute:
 Thus internal charge sectors and exchange-statistics sectors can be imposed in
 either order in the ordinary tensor-slot setting.
 
-\subsection{Bose and Fermi Projectors}
+\subsection{Irrep-Labeled Exchange Projectors}
 
-For finite \(S_n\), CA-06 gives averaging projectors.  The symmetric projector is
+The representation \(\Pi_n:S_n\to U(H^{\hotimes n})\) is the primary datum.
+Sector projections are supplied by irreducible representation data of \(S_n\),
+not by specialised grammar constructors.  For a one-dimensional unitary
+character \(\chi:S_n\to U(1)\), CA-06 applied to the twisted representation
+\(\overline{\chi}\,\Pi_n\) gives
+\[
+  P_{\chi,n}
+  =
+  \frac1{n!}\sum_{\sigma\in S_n}\overline{\chi(\sigma)}\,\Pi_n(\sigma),
+\]
+whose range is the \(\chi\)-sector
+\[
+  \{w\in H^{\hotimes n}:\Pi_n(\sigma)w=\chi(\sigma)w\ \forall\sigma\in S_n\}.
+\]
+For the trivial character \(1\), this is the symmetric projector:
 \[
   P_{\mathrm s,n}
   =
   \frac1{n!}\sum_{\sigma\in S_n}\Pi_n(\sigma),
 \]
-and the antisymmetric projector is
+and for the sign character \(\operatorname{sgn}\), this is the antisymmetric
+projector:
 \[
   P_{\mathrm a,n}
   =
@@ -77,36 +92,29 @@ The corresponding Fock sectors are
   \Gamma_{\mathrm s}(H)=\hoplus_{n\ge0}\Ran(P_{\mathrm s,n}),\qquad
   \Gamma_{\mathrm a}(H)=\hoplus_{n\ge0}\Ran(P_{\mathrm a,n}).
 \]
-This makes precise the CA-03 statement that full/distinguishable Fock is the
-carrier and Bose/Fermi spaces are later sector choices.
+Thus ``Bose'' and ``Fermi'' name the trivial- and sign-irrep choices for ordinary
+exchange symmetry.  The compiler should record the selected irrep/character and
+the resulting projection, not a special Bose/Fermi syntax node.
 
 \subsection{Quotient Presentations}
 
-The symmetric sector can also be presented as a quotient of the full tensor
-algebra by the closed linear span of relations
+For a one-dimensional character \(\chi\), the sector can also be presented as a
+quotient of the full tensor algebra by the closed linear span of relations
 \[
-  v_1\otimes\cdots\otimes v_n
-  -
-  v_{\sigma^{-1}(1)}\otimes\cdots\otimes v_{\sigma^{-1}(n)}.
+  \Pi_n(\sigma)v-\chi(\sigma)v.
 \]
-The antisymmetric sector uses the signed relations
-\[
-  v_1\otimes\cdots\otimes v_n
-  -
-  \operatorname{sgn}(\sigma)
-  v_{\sigma^{-1}(1)}\otimes\cdots\otimes v_{\sigma^{-1}(n)}.
-\]
-In the compiler, these quotient presentations are secondary: the primary sector
-object is the orthogonal projector, because it fixes the inherited Hilbert
-structure and the compressed observable algebra.
+The trivial character recovers symmetric relations; the sign character recovers
+antisymmetric signed relations.  In the compiler, these quotient presentations
+are secondary: the primary sector object is the orthogonal projector, because it
+fixes the inherited Hilbert structure and the compressed observable algebra.
 
 \subsection{Para and Anyonic Boundaries}
 
-Para-statistics would require selecting other irreducible \(S_n\)-isotypic
-components, hence central idempotents or matrix-block projectors for the group
-algebra of \(S_n\).  This shard records that as a proposal, not as a completed
-construction; a later shard must source the representation convention and the
-projector normalization before using it.
+Higher-dimensional irreducible \(S_n\)-sectors require central idempotents or
+matrix-block projectors for the group algebra of \(S_n\).  This is exactly the
+same representation/irrep principle, but this shard records it as a proposal
+rather than a completed construction; a later shard must source the convention
+and projector normalization before using it.
 
 Genuinely anyonic exchange is not an \(S_n\)-projection problem on ordinary tensor
 slots.  It involves braid-group or categorical data and, in this project, must be
@@ -121,11 +129,11 @@ and \(F/R\)-symbols.  No braid-statistics projector is defined here.
 \begin{array}{rcl}
 D21 &:& U_n(g)=U(g)^{\hotimes n}\quad\text{(internal symmetry on }H^{\hotimes n}).\\
 D22 &:& \Pi_n:S_n\to U(H^{\hotimes n})\quad\text{permutes tensor slots}.\\
-D23 &:& P_{\mathrm s,n}=n!^{-1}\sum_{\sigma}\Pi_n(\sigma),\quad
-        P_{\mathrm a,n}=n!^{-1}\sum_{\sigma}\operatorname{sgn}(\sigma)\Pi_n(\sigma).\\
+D23 &:& P_{\chi,n}=n!^{-1}\sum_{\sigma}\overline{\chi(\sigma)}\Pi_n(\sigma)
+        \quad(\chi\text{ a one-dimensional }S_n\text{ character}).\\
 L3 &:& \Pi_n(\sigma)U_n(g)=U_n(g)\Pi_n(\sigma).\\
-L4 &:& P_{\mathrm s,n},P_{\mathrm a,n}\text{ are orthogonal projections by CA-06 finite averaging.}\\
-T13 &:& \Gamma_{\mathrm s},\Gamma_{\mathrm a}\text{ are sector selections inside full Fock.}\\
+L4 &:& P_{\chi,n}\text{ is an orthogonal projection by CA-06 finite averaging.}\\
+T13 &:& \Gamma_{\mathrm s},\Gamma_{\mathrm a}\text{ are the trivial/sign irrep sectors inside full Fock.}\\
 T14 &:& \text{Anyonic exchange remains deferred to categorical braid data.}
 \end{array}
 \]
@@ -133,12 +141,10 @@ T14 &:& \text{Anyonic exchange remains deferred to categorical braid data.}
 
 \subsection{Compiler Consequence}
 
-The compiler now has its first nontrivial sector family:
-\[
-  \mathsf{Compile}(\operatorname{Bose}(\Fock(H)))
-  =
-  (\Gamma_{\mathrm s}(H),\ P_{\mathrm s},\ \text{chosen compressed algebra},\ldots)
-\]
-and similarly for \(\operatorname{Fermi}\).  The sector constructor is separate
-from Fock itself, preserving the separation of indefinite particle number from
-exchange symmetry.
+The compiler now has its first nontrivial sector family: given the exchange
+representation \(\Pi_n:S_n\to U(H^{\hotimes n})\), a selected irrep character
+\(\chi\) supplies \(P_{\chi,n}\), its range, its quotient relations, and the
+chosen compressed observable algebra.  There is no primitive
+\(\operatorname{Bose}\), \(\operatorname{Fermi}\), or \(\operatorname{Fock}\)
+grammar node in this account; Fock is the derived graded representation of CA-05,
+and Bose/Fermi are names for particular irrep choices of exchange symmetry.

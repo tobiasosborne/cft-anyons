@@ -1,6 +1,6 @@
 % SHARD-ID: CA-05-SYMMETRY-DECORATED-GRAMMAR
 % SHARD-TITLE: Symmetry-Decorated Many-Particle Grammar
-% SHARD-SUMMARY: Adds ordinary and projective-unitary symmetry data to atoms and propagates it through OR, AND, and full Fock constructions.
+% SHARD-SUMMARY: Adds ordinary and projective-unitary symmetry data to atoms and propagates it through OR, AND, and the derived full-Fock representation.
 % SHARD-SUMMARY: Uses central extensions as the pre-work representation of projective symmetries, avoiding unsourced cocycle arithmetic in the grammar.
 % SHARD-SUMMARY: Records the compatibility requirements needed before multiple atomic Hilbert spaces can share a single compiled symmetry action.
 % SHARD-KEYWORDS: symmetry, unitary representation, projective representation, central extension, tensor product, direct sum, Fock
@@ -66,10 +66,10 @@ diagonal actions.  If two atoms use different groups, different central
 extensions, or incompatible projective multipliers, the compiler must stop and
 ask for a common symmetry object before forming a single \(U_E\).
 
-\subsection{Propagation Through Full Fock}
+\subsection{The Derived Full-Fock Representation}
 
-For an ordinary unitary representation \(U:G\to U(H)\), define the full-Fock
-action
+For an ordinary unitary representation \(U:G\to U(H)\), the full-Fock object is
+itself a graded representation:
 \[
   \Fock(U)(g)
   =
@@ -78,11 +78,12 @@ action
   \Fock(H)=\hoplus_{n\ge0}H^{\hotimes n},
 \]
 with \(U(g)^{\hotimes0}=\operatorname{id}_{\mathbb C}\).  This preserves the
-particle-number grading.  In this pre-work shard, no Shale--Stinespring-type
-implementability theorem is claimed for general canonical field algebras; the
-formula is only the sectorwise tensor-power representation on the full Fock
-carrier.  Implementing a one-particle unitary on a chosen CAR/CCR observable
-algebra is a separate field-algebra question.
+particle-number grading.  This is not a new grammar constructor: it is the
+direct sum of the tensor-power representations already produced by OR and AND,
+completed as in CA-03.  In this pre-work shard, no Shale--Stinespring-type
+implementability theorem is claimed for general canonical field algebras.
+Implementing a one-particle unitary on a chosen CAR/CCR observable algebra is a
+separate field-algebra question.
 
 \subsection{Intertwiners and Symmetry-Preserving Compilation}
 
