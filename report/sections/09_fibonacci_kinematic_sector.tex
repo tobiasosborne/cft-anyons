@@ -1,0 +1,200 @@
+% SHARD-ID: CA-09-FIBONACCI-KINEMATIC-SECTOR
+% SHARD-TITLE: Fibonacci Kinematics as a Fusion-Rule Sector
+% SHARD-SUMMARY: Shows that the Fibonacci fusion-path Hilbert spaces are obtained kinematically from one physical tau atom plus a fusion-rule admissibility projector.
+% SHARD-SUMMARY: Derives the Fibonacci dimension recurrence from the left-associated path-basis sector and checks the path-count invariant in Julia.
+% SHARD-SUMMARY: Records why full Fibonacci anyons require a tensor-category compiler with F/R-symbol coherence, not only a Hilbert-space compiler.
+% SHARD-KEYWORDS: Fibonacci, fusion path, sector projector, tau atom, admissibility, tensor category compiler, F-move, coherence
+
+\section{Fibonacci Kinematics as a Fusion-Rule Sector}
+\label{sec:fibonacci-kinematic-sector}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: checked kinematic shard.}  This shard confirms the side
+conjecture: before braiding, Hamiltonians, or continuum limits, the Fibonacci
+fusion-path Hilbert spaces are a sector construction from one physical atom
+\(\tau\).  The vacuum \(\one\) is still present as the tensor unit and as a charge
+label; it is not a second physical particle atom.
+
+Dependencies: CA-02 for AND/OR/vacuum, CA-06 for projection/subspace semantics,
+CA-08 for compiler output slots, and CONVENTIONS.md (c) for the left-associated
+kinematic path basis.
+
+% Source: references/text/FibonacciAnyonModels.txt:123 -- fusion-rule integers are called fusion rules.
+% Source: references/text/FibonacciAnyonModels.txt:126 -- the trivial particle fuses without changing type.
+% Source: references/text/FibonacciAnyonModels.txt:128 -- Fibonacci particle types are 1 and tau.
+% Source: references/text/FibonacciAnyonModels.txt:131 -- 1 tensor tau = tau.
+% Source: references/text/FibonacciAnyonModels.txt:132 -- tau tensor 1 = tau.
+% Source: references/text/FibonacciAnyonModels.txt:133 -- tau tensor tau = 1 plus tau.
+% Source: references/text/FibonacciAnyonModels.txt:148 -- fusion paths label fusion trees by particle types.
+% Source: references/text/FibonacciAnyonModels.txt:149 -- trivalent labels must be admissible by fusion rules.
+% Source: references/text/FibonacciAnyonModels.txt:199 -- degeneracy is counted by fusion-tree labelings.
+% Source: references/text/FibonacciAnyonModels.txt:201 -- n tau anyons with total charge tau.
+% Source: references/text/FibonacciAnyonModels.txt:202 -- F0 = 0 and F1 = 1.
+% Source: references/text/FibonacciAnyonModels.txt:203 -- Fn+1 = Fn + Fn-1.
+% Source: references/text/FibonacciAnyonModels.txt:227 -- each fusion order is represented by a fusion tree.
+% Source: references/text/FibonacciAnyonModels.txt:228 -- admissible labelings constitute a basis.
+% Source: references/text/FibonacciAnyonModels.txt:230 -- changing fusion tree is an F-move.
+% Source: references/text/FibonacciAnyonModels.txt:251 -- pentagons are the consistency equations.
+% Source: references/text/FibonacciAnyonModels.txt:261 -- fusion-tree basis decomposes as direct sum of tensor products.
+% Source: references/text/PenneysUnitaryFusionCategories.md:610 -- Fib has simples 1,tau and tau tensor tau = 1 plus tau.
+% Source: references/text/PenneysUnitaryFusionCategories.md:631 -- id_{tau tensor tau} decomposes into minimal central projections.
+% Checked: test/runtests.jl, "Fibonacci fusion path counts".
+
+\subsection{One Physical Atom, Two Charge Labels}
+
+The physical input word is \(n\) copies of one anyon type:
+\[
+  \tau,\tau,\ldots,\tau .
+\]
+The charge labels used to describe intermediate fusion outcomes are
+\[
+  L=\{\one,\tau\}.
+\]
+Thus the proposed slogan is correct only with this distinction:
+\[
+  \text{one physical atom } \tau
+  \quad+\quad
+  \text{charge labels } \{\one,\tau\}
+  \quad+\quad
+  \text{fusion-rule sector selection}.
+\]
+The vacuum \(\one\) is required because it is both the tensor unit and a possible
+total charge.  It is not an additional non-vacuum particle species.
+
+\subsection{Ambient Path Space and Admissibility Projector}
+
+Use the left-associated path basis fixed in CONVENTIONS.md (c).  For \(n\)
+physical \(\tau\)-atoms and total charge \(c\in\{\one,\tau\}\), define the
+ambient word space
+\[
+  W_{n,c}
+  =
+  \ell^2\{(x_0,\ldots,x_n):x_i\in\{\one,\tau\},\ x_0=\one,\ x_n=c\}.
+\]
+The basis vector \(\ket{x_0,\ldots,x_n}\) records the cumulative charge after
+successively fusing the first \(i\) copies of \(\tau\).
+
+The Fibonacci fusion rules needed here are
+\[
+  \one\otimes\tau=\tau,\qquad
+  \tau\otimes\one=\tau,\qquad
+  \tau\otimes\tau=\one\oplus\tau.
+\]
+Let \(N_{ab}^{c}\in\{0,1\}\) be these multiplicity-free fusion coefficients.
+Define the diagonal operator
+\[
+  P_{n,c}\ket{x_0,\ldots,x_n}
+  =
+  \left(\prod_{i=1}^{n}N_{x_{i-1},\tau}^{x_i}\right)
+  \ket{x_0,\ldots,x_n}.
+\]
+Since every diagonal entry is \(0\) or \(1\), \(P_{n,c}=P_{n,c}^*=P_{n,c}^2\).
+The kinematic Fibonacci Hilbert space is therefore the sector
+\[
+  H^{\mathrm{Fib}}_{n,c}:=\Ran(P_{n,c})\subseteq W_{n,c}.
+\]
+This is exactly the CA-06 projection/subspace semantics, but the projector is
+not supplied by a group character.  It is supplied by categorical fusion-rule
+admissibility.
+
+\subsection{Dimension Recurrence}
+
+Let
+\[
+  a_n=\dim H^{\mathrm{Fib}}_{n,\one},\qquad
+  b_n=\dim H^{\mathrm{Fib}}_{n,\tau}.
+\]
+At \(n=0\), no physical \(\tau\)-atom has been fused, so
+\[
+  a_0=1,\qquad b_0=0.
+\]
+Adding one more \(\tau\) gives the transition equations
+\[
+  a_{n+1}=b_n,\qquad b_{n+1}=a_n+b_n.
+\]
+The first equation says total charge \(\one\) can only come from
+\(\tau\otimes\tau\to\one\).  The second says total charge \(\tau\) can come from
+\(\one\otimes\tau\to\tau\) or from \(\tau\otimes\tau\to\tau\).  Hence
+\[
+  b_{n+1}=b_n+b_{n-1},\qquad b_0=0,\quad b_1=1.
+\]
+Thus the total-\(\tau\) sector dimensions are Fibonacci numbers:
+\[
+  0,1,1,2,3,5,8,\ldots .
+\]
+The Julia test suite checks the pair sequence
+\[
+  (a_n,b_n)=(1,0),(0,1),(1,1),(1,2),(2,3),(3,5),(5,8),(8,13)
+\]
+for \(0\le n\le7\), including the recurrence.
+
+\subsection{Small Examples}
+
+\paragraph{\(n=1\).}
+For total charge \(\tau\), the ambient basis is \(\ket{\one,\tau}\), and it is
+admissible.  Thus \(H^{\mathrm{Fib}}_{1,\tau}\cong\mathbb C\).
+
+\paragraph{\(n=2\).}
+The admissible paths are
+\[
+  \ket{\one,\tau,\one}\in H^{\mathrm{Fib}}_{2,\one},\qquad
+  \ket{\one,\tau,\tau}\in H^{\mathrm{Fib}}_{2,\tau}.
+\]
+This is the kinematic content of
+\(\tau\otimes\tau=\one\oplus\tau\).
+
+\paragraph{\(n=3\).}
+The total-\(\tau\) ambient basis has two admissible paths:
+\[
+  \ket{\one,\tau,\one,\tau},\qquad
+  \ket{\one,\tau,\tau,\tau}.
+\]
+The forbidden word \(\ket{\one,\one,\tau,\tau}\), for example, is killed because
+\(N_{\one,\tau}^{\one}=0\).  Therefore
+\(\dim H^{\mathrm{Fib}}_{3,\tau}=2\).
+
+\subsection{Compiler Consequence}
+
+This is the first example where the Hilbert-space compiler wants category data.
+At the carrier level, it can compile the ambient finite word space \(W_{n,c}\)
+and the diagonal sector projection \(P_{n,c}\).  But producing \(P_{n,c}\) from
+the expression ``\(n\) copies of \(\tau\)'' requires the fusion coefficients
+\(N_{ab}^c\).  That is already tensor-category input, not ordinary
+Hilbert-space grammar.
+
+Moreover, the source makes clear that different fusion orders give different
+fusion-tree bases and are related by \(F\)-moves.  Therefore a full Fibonacci
+compiler must eventually output not only
+\[
+  H^{\mathrm{Fib}}_{n,c}
+\]
+but also the coherent recoupling data that identifies different bracketings:
+the \(F\)-symbols satisfying the pentagon equations, and later the \(R\)-symbols
+for braiding.  The current shard is only kinematic: it builds the admissible
+sector and counts it.
+
+\subsection{Lamport Dependency Skeleton}
+
+{\small
+\[
+\setlength{\arraycolsep}{2pt}
+\begin{array}{rcl}
+D28 &:& L=\{\one,\tau\},\quad
+        \one\otimes\tau=\tau,\quad \tau\otimes\tau=\one\oplus\tau.\\
+D29 &:& W_{n,c}=\ell^2\{(x_0,\ldots,x_n):x_0=\one,\ x_n=c,\ x_i\in L\}.\\
+D30 &:& P_{n,c}\ket{x}=\prod_i N_{x_{i-1},\tau}^{x_i}\ket{x}.\\
+D31 &:& H^{\mathrm{Fib}}_{n,c}=\Ran(P_{n,c}).\\
+L5 &:& P_{n,c}=P_{n,c}^*=P_{n,c}^2.\\
+T18 &:& \dim H^{\mathrm{Fib}}_{n,\tau}\text{ obeys }b_{n+1}=b_n+b_{n-1},
+        \ b_0=0,\ b_1=1.\\
+T19 &:& \text{Full Fibonacci compilation needs }F\text{-coherent tensor-category data.}
+\end{array}
+\]
+}
+
+\subsection{Boundary}
+
+This shard does not fix the Fibonacci \(F\)-matrix gauge, any \(R\)-symbols,
+braid representations, golden-chain Hamiltonians, or a continuum limit.  It only
+realises the fusion-path Hilbert spaces kinematically as admissibility sectors.

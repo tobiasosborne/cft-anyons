@@ -26,6 +26,7 @@ before treating report edits as complete.
 | 6 | `CA-06-SECTORS-PROJECTIONS-QUOTIENTS` | `report/sections/06_sectors_projections_quotients.tex` | Sectors, Projections, Subspaces, and Quotients |
 | 7 | `CA-07-EXCHANGE-STATISTICS-LAYER` | `report/sections/07_exchange_statistics_layer.tex` | Exchange Symmetry and Statistics as Sector Selection |
 | 8 | `CA-08-HILBERT-SPACE-COMPILER-SPEC` | `report/sections/08_hilbert_space_compiler_spec.tex` | Scoping the Hilbert-Space Compiler |
+| 9 | `CA-09-FIBONACCI-KINEMATIC-SECTOR` | `report/sections/09_fibonacci_kinematic_sector.tex` | Fibonacci Kinematics as a Fusion-Rule Sector |
 
 ## Adding a shard
 

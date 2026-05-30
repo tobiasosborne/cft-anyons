@@ -66,11 +66,22 @@ gauges gives silently-wrong inner products (TensorCategories.jl is involutory).
 **Sweep status:** —
 
 ## (c) Fusion-tree bracketing and label order
-**Choice:** NOT YET FIXED.
-**Reasoning:** left- vs right-associated trees relate by an F-move; entries must
-be stated in one convention.
-**Source:** —
-**Sweep status:** —
+**Choice (kinematic path basis — FIXED, CA-09):** Fibonacci path-count examples
+use the left-associated fusion tree. For `n` physical `tau` atoms, write
+`x_0 = 1` and let `x_i in {1,tau}` be the cumulative charge after successively
+fusing the first `i` atoms from left to right; fixing `x_n = c` fixes the total
+charge sector. This is only a basis convention for kinematic sector counting.
+**Choice (coherence / F-symbol level — NOT YET FIXED):** no `F`-symbol gauge,
+`R`-symbol gauge, or canonical identification of different fusion-tree bases is
+fixed yet.
+**Reasoning:** the path-count recurrence uses only one chosen fusion tree and
+the fusion-rule admissibility projector. Different fusion orders are related by
+F-moves, so the tensor-category compiler will need coherent `F`-data before it
+can identify or transform between such bases.
+**Source:** `references/text/FibonacciAnyonModels.txt:227`--`:235` (different
+fusion orders give fusion-tree bases related by an F-move); CA-09.
+**Sweep status:** CA-09 uses the kinematic path-basis convention; no shard may
+use this as an `F/R` convention.
 
 ## (d) CFT normalizations
 **Choice:** NOT YET FIXED.

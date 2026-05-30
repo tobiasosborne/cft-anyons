@@ -82,3 +82,12 @@ single ~200-line source file it points to.
 - Summary: Gives deterministic constructor rules and finite-dimensional invariants that can be checked before any categorical anyon data enters.
 - Summary: Works through small examples: maybe qubits, distinguishable pairs, derived tensor-power closure, exchange-irrep sectors, invariant quotients, and a required compile error.
 - Keywords: Hilbert-space compiler, compiler specification, examples, dimensions, observable policy, compile error, symmetric sector, invariant quotient
+
+## `CA-09-FIBONACCI-KINEMATIC-SECTOR`
+
+- Source: `report/sections/09_fibonacci_kinematic_sector.tex`
+- Title: Fibonacci Kinematics as a Fusion-Rule Sector
+- Summary: Shows that the Fibonacci fusion-path Hilbert spaces are obtained kinematically from one physical tau atom plus a fusion-rule admissibility projector.
+- Summary: Derives the Fibonacci dimension recurrence from the left-associated path-basis sector and checks the path-count invariant in Julia.
+- Summary: Records why full Fibonacci anyons require a tensor-category compiler with F/R-symbol coherence, not only a Hilbert-space compiler.
+- Keywords: Fibonacci, fusion path, sector projector, tau atom, admissibility, tensor category compiler, F-move, coherence

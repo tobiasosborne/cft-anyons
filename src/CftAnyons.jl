@@ -56,4 +56,30 @@ function is_orthogonal_projection(P; atol = 1e-12)
     return isapprox(P, P'; atol) && isapprox(P * P, P; atol)
 end
 
+"""
+    fibonacci_fusion_path_counts(max_n) -> Vector{Tuple{Int, Int}}
+
+Count left-associated admissible fusion paths for ``n`` Fibonacci ``τ`` anyons.
+
+The returned entry at index ``n + 1`` is ``(one_count, tau_count)``, the number
+of paths with total charge ``1`` and ``τ`` after fusing ``n`` copies of ``τ``.
+The recurrence is the fusion-rule transition
+``1 ⊗ τ = τ`` and ``τ ⊗ τ = 1 ⊕ τ``.
+"""
+function fibonacci_fusion_path_counts(max_n::Integer)
+    max_n < 0 && error("max_n must be nonnegative, got $max_n")
+
+    counts = Vector{Tuple{Int, Int}}(undef, max_n + 1)
+    one_count = 1
+    tau_count = 0
+    counts[1] = (one_count, tau_count)
+
+    for n in 1:max_n
+        one_count, tau_count = tau_count, one_count + tau_count
+        counts[n + 1] = (one_count, tau_count)
+    end
+
+    return counts
+end
+
 end # module CftAnyons

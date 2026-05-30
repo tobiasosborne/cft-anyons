@@ -70,3 +70,25 @@ end
     @test P_antisymmetric * antisymmetric_cross ≈ antisymmetric_cross
     @test P_antisymmetric * e00 ≈ zeros(ComplexF64, 4)
 end
+
+@testset "Fibonacci fusion path counts" begin
+    counts = CftAnyons.fibonacci_fusion_path_counts(7)
+
+    @test counts == [
+        (1, 0),
+        (0, 1),
+        (1, 1),
+        (1, 2),
+        (2, 3),
+        (3, 5),
+        (5, 8),
+        (8, 13),
+    ]
+
+    one_counts = first.(counts)
+    tau_counts = last.(counts)
+    @test tau_counts[1:7] == [0, 1, 1, 2, 3, 5, 8]
+    @test one_counts[2:end] == tau_counts[1:end-1]
+    @test tau_counts[3:end] == tau_counts[2:end-1] .+ tau_counts[1:end-2]
+    @test_throws ErrorException CftAnyons.fibonacci_fusion_path_counts(-1)
+end

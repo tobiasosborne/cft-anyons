@@ -1,5 +1,45 @@
 # Worklog chunk 002 — 2026-05-30
 
+## Session log — 2026-05-30 — CA-09 Fibonacci kinematics as a fusion-rule sector
+
+### Context
+
+Tobias asked to check and then add the side quest: Fibonacci should be
+kinematically realisable in the grammar from one physical `tau` atom plus a sector
+selection rule.  He also wanted this to foreshadow the eventual upgrade from a
+Hilbert-space compiler to a tensor-category compiler that handles coherences.
+
+### What changed
+
+- Added **CA-09** (`report/sections/09_fibonacci_kinematic_sector.tex`):
+  - distinguishes the one physical atom `tau` from the charge labels `{1,tau}`;
+  - defines the left-associated ambient path space `W_{n,c}`;
+  - defines the diagonal admissibility projector from the Fibonacci fusion rule;
+  - proves the projector is orthogonal and derives the Fibonacci recurrence for
+    total-`tau` sector dimensions;
+  - gives small examples for `n=1,2,3`;
+  - records why full Fibonacci anyon compilation needs `F`-coherent
+    tensor-category data, not only Hilbert carrier grammar.
+- Updated CONVENTIONS.md (c): fixed a left-associated fusion-path basis for
+  kinematic counting only; explicitly did not fix any `F/R` gauge.
+- Added `fibonacci_fusion_path_counts(max_n)` in `src/CftAnyons.jl` and a Julia
+  invariant test for the path-count sequence and recurrence.
+- Updated `report.tex`, report maps/catalog, and `INDEX.md`.
+
+### Why these choices
+
+- The correct statement is: one physical atom `tau`, plus the vacuum/charge label
+  `1`, plus a fusion-rule admissibility projector.  Treating `1` as a second
+  non-vacuum atom would obscure the categorical meaning.
+- The Hilbert-space compiler can carry the resulting projection once supplied,
+  but generating it from `tau^n` requires fusion coefficients.  That is already
+  tensor-category input.
+
+### Acceptance
+
+- `make ci-before-push`: PASS after CA-09 (shard guard + report build + Julia
+  tests, 28 tests total).
+
 ## Session log — 2026-05-30 — Correction: Fock and exchange statistics are representation-sector data
 
 ### Context
