@@ -209,27 +209,42 @@ Finite periodic numerical checks use momenta
 symbol values on this Brillouin grid.  The low-energy Hessian residual is
 `1/2 Hessian(omega^2)(0) - c^2 I`, equivalently
 `-epsilon^2/2 sum_r r_a r_b V_r - c^2 delta_ab`.
-At the one-particle symbol level, use `X_a=i partial_{k_a}` and the time-zero
-Lorentz-boost candidate
+At the one-particle local-symbol level, CA-24--CA-26 work on the flat momentum
+space `L^2(U, dk)` on a smooth patch `U`, or on the analogous flat finite
+momentum grid for numerical symbol checks.  Thus `X_a=i partial_{k_a}` is the
+flat-measure differential operator, and the time-zero Lorentz-boost candidate is
+the flat-measure symmetric formula
 `K_a = 1/2 (X_a omega + omega X_a)`.  Then
 `i[H,K_a]` has multiplication symbol `1/2 partial_a omega(k)^2`; the continuum
 Klein-Gordon condition with speed `c=1` is that this tends to `k_a`, equivalently
 `omega(k)^2 = m^2 + |k|^2 + higher irrelevant lattice corrections` near
 `k=0`.  The speed-`c` variant replaces this by `c^2 k_a`.  These commutator
 signs use the vector-field-to-Stone-generator map in (k).
+
+This is not yet identified with the weighted OAR one-particle Hilbert space
+`\mathfrak h_L`, whose sourced scalar product uses
+`gamma_m^{-1/2} q + i gamma_m^{1/2} p`, nor with Schottenloher's sourced
+mass-shell/free-boson Poincare representation.  No unitary equivalence or
+intertwining theorem between the flat local-symbol formula and either sourced
+representation is claimed until it is derived locally or cited from a registered
+source.
 **Reasoning:** The source base already proves/records free scalar lattice fields,
 their dispersion, and the Klein-Gordon/free-field scaling limit for the standard
 nearest-neighbour model.  The one-particle boost-symbol calculation is a local
 derivation that turns the Lorentz algebra, with the sign map in (k), into
 explicit differential conditions on `omega^2`, hence on the Hamiltonian
-coefficients.
+coefficients.  The boost formula is measure-sensitive, so the current safe
+status is a flat local symbol algebra rather than the sourced OAR or mass-shell
+Poincare theorem.
 **Source:** `literature/md/2010.11121/2010.11121.md:51`--`:58` (harmonic lattice
 Hamiltonian and scaling-limit claims), `:598`--`:610` (lattice Hamiltonian,
 dispersion, and ground-state two-point function), `:614`--`:623`
-(renormalized mass and lattice Klein-Gordon dispersion), `:676`--`:681`
-(Klein-Gordon dynamics, speed 1, translations), `:1037`--`:1046` (continuum
-free scalar time evolution and theorem), `references/cft/Schottenloher2008/Schottenloher2008.md:4186`--`:4244`
-(free bosonic QFT/Klein-Gordon/Poincare-covariant construction);
+(renormalized mass and lattice Klein-Gordon dispersion), `:648`--`:681` (OAR
+continuum one-particle scalar product, flat Fock realization, dynamics, speed 1,
+and translations), `:1037`--`:1046` (continuum free scalar time evolution and
+theorem), `references/cft/Schottenloher2008/Schottenloher2008.md:4186`--`:4244`
+(free bosonic QFT/Klein-Gordon/Poincare-covariant construction, including the
+natural Poincare action);
 `test/runtests.jl` testsets "Gaussian boson Klein-Gordon symbols" and
 "Gaussian boson boost-time symbols", "Gaussian boson Lorentz Hessian examples",
 and "Gaussian boson finite periodic examples"; CA-23--CA-28.

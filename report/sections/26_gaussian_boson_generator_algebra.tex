@@ -10,10 +10,11 @@
 
 \subsection{Status, Sources, and Dependencies}
 
-\textbf{Status: checked local derivation on a common core.}  The Poincare
+\textbf{Status: checked flat local derivation on a common core.}  The Poincare
 target, Stone convention, and free-boson Fock realization are sourced.  The
 commutator identities in this shard are local differential-operator derivations
-on a smooth momentum-space core.
+on a flat \(L^2(dk)\) smooth momentum-space core, not yet a sourced OAR or
+mass-shell Poincare representation theorem.
 
 Dependencies: CA-11, CA-24--CA-25, and CONVENTIONS.md (h), (j), (k).
 
@@ -22,18 +23,20 @@ Dependencies: CA-11, CA-24--CA-25, and CONVENTIONS.md (h), (j), (k).
 % Source: references/cft/Schottenloher2008/Schottenloher2008.md:4106 -- unitary Poincare representation.
 % Source: references/cft/Schottenloher2008/Schottenloher2008.md:4113--4117 -- translation generators P_mu and P_0=H.
 % Source: references/cft/Schottenloher2008/Schottenloher2008.md:4244 -- free bosonic QFT carries a natural Poincare action on Fock space.
+% Source: literature/md/2010.11121/2010.11121.md:648--681 -- OAR scalar product, flat Fock realization, and implemented Klein-Gordon dynamics.
+% Convention: CONVENTIONS.md (j) -- flat L^2(dk) status of the CA-24--CA-26 local symbol algebra.
 % Convention: CONVENTIONS.md (k) -- vector-field to self-adjoint-generator sign map.
 % Checked: test/runtests.jl, "Gaussian boson boost-time symbols".
 
 \subsection{Momentum Core}
 
 Work on a connected smooth momentum patch \(\mathcal U\) where
-\(\omega(k)>0\).  Let
+\(\omega(k)>0\), with the flat measure \(dk\).  Let
 \[
-  \mathcal D_0=C_c^\infty(\mathcal U)
+  \mathcal D_0=C_c^\infty(\mathcal U)\subset L^2(\mathcal U,dk)
 \]
 or the corresponding trigonometric-polynomial core on a finite periodic
-Brillouin grid.  Define
+Brillouin grid with flat counting measure.  Define
 \[
   X_a=i\partial_{k_a},
   \qquad
@@ -55,7 +58,10 @@ These are written in the self-adjoint sign convention of CONVENTIONS.md (k);
 in particular \(J_{ab}\) is the Gaussian rotation sign, not the raw lowered-index
 CA-11 vector field \(M_{ab}\).
 All commutators below are identities on \(\mathcal D_0\); promoting them to
-self-adjoint generator statements is a separate domain theorem.
+self-adjoint generator statements is a separate domain theorem.  Promoting this
+flat formula to the OAR one-particle Hilbert space or Schottenloher's
+mass-shell/free-boson Poincare representation additionally requires a sourced
+or locally derived unitary intertwiner.
 
 \subsection{Exact Translation and Rotation Brackets}
 
@@ -176,6 +182,7 @@ the many-body candidates are
 \]
 with a separate vacuum-energy convention if absolute Hamiltonian values are
 used.  Commutators of second quantizations reproduce second quantizations of
-the one-particle commutators on the finite-particle core.  Thus the compiler can
-perform the first Lorentz tests at one-particle level and then lift the checked
-residuals to the Gaussian Fock space.
+the one-particle commutators on the finite-particle core of this flat symbol
+Fock model.  Thus the compiler can perform the first Lorentz tests at
+one-particle level here, while the OAR/mass-shell Poincare bridge remains an
+open proof obligation.

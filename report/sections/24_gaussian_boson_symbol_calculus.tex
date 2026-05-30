@@ -10,10 +10,11 @@
 
 \subsection{Status, Sources, and Dependencies}
 
-\textbf{Status: sourced model class plus checked local derivation.}  The
+\textbf{Status: sourced model class plus checked flat local derivation.}  The
 standard lattice scalar-field Hamiltonian and dispersion are sourced.  The
-boost-time residual calculation is a local one-particle derivation checked by
-Julia.
+boost-time residual calculation is a local one-particle derivation on flat
+\(L^2(dk)\), checked by Julia.  It is not yet a sourced OAR or mass-shell
+Poincare representation theorem.
 
 Dependencies: CA-11, CA-12, CA-23, and CONVENTIONS.md (h), (j), (k).
 
@@ -21,8 +22,11 @@ Dependencies: CA-11, CA-12, CA-23, and CONVENTIONS.md (h), (j), (k).
 % Source: literature/md/2010.11121/2010.11121.md:603 -- lattice dispersion gamma_mu_N.
 % Source: literature/md/2010.11121/2010.11121.md:614 -- physical mass convention mu_N^2 = epsilon_N^2 m^2 + 2d.
 % Source: literature/md/2010.11121/2010.11121.md:623 -- lattice Klein-Gordon dispersion gamma_m^(N)(k)^2.
+% Source: literature/md/2010.11121/2010.11121.md:648--681 -- sourced OAR one-particle scalar product, flat Fock realization, dynamics, speed 1, and translations.
 % Source: literature/md/2010.11121/2010.11121.md:676 -- continuum dynamics satisfies the Klein-Gordon equation.
 % Source: literature/md/2010.11121/2010.11121.md:681 -- Klein-Gordon propagation speed 1 and spatial translations.
+% Source: references/cft/Schottenloher2008/Schottenloher2008.md:4244 -- sourced free-boson construction has a natural Poincare action on Fock space.
+% Convention: CONVENTIONS.md (j) -- CA-24--CA-26 use flat L^2(dk) local symbol algebra, not yet the sourced OAR/mass-shell theorem.
 % Convention: CONVENTIONS.md (k) -- self-adjoint Poincare commutator signs.
 % Checked: test/runtests.jl, "Gaussian boson Klein-Gordon symbols" and "Gaussian boson boost-time symbols".
 
@@ -80,18 +84,22 @@ For fixed physical \(k\) and \(\epsilon\to0\),
 
 \subsection{Momentum-Space Position}
 
-After diagonalization, the one-particle Hamiltonian is multiplication by
-\(\omega(k)\).  Let
+After diagonalization, this shard uses the flat local momentum space
+\(L^2(\mathcal U,dk)\).  The one-particle Hamiltonian is multiplication by
+\(\omega(k)\), and
 \[
   X_a=i\partial_{k_a}
 \]
-on a common smooth core in momentum space.  The time-zero boost candidate
-corresponding to the energy first moment is the symmetrized operator
+on a common smooth core.  The time-zero boost candidate corresponding to the
+energy first moment is the flat-measure symmetrized operator
 \[
   K_a=\frac{1}{2}(X_a\omega+\omega X_a).
 \]
 The symmetrization is the one-particle version of taking a self-adjoint first
-moment of the energy density.
+moment of the energy density.  If the one-particle scalar product is changed,
+the adjoint and hence the boost formula must be rederived; no unitary
+equivalence with the OAR weighted space or Schottenloher mass-shell realization
+is asserted here.
 
 \subsection{Boost-Time Residual}
 

@@ -19,7 +19,7 @@ Protocol:
 | Step | Status | Subagent | Result / notes |
 | --- | --- | --- | --- |
 | C1 | Complete | `019e790c-6ac9-7990-9e43-9be09e34ca34` (`Confucius`) | Added convention (k) and updated CA-11, CA-24, CA-26; parent tightened inverse-flow wording before landing. |
-| C2 | Pending | - | Gaussian one-particle measure and boost formula status. |
+| C2 | Complete | `019e7914-909d-71f0-87d4-711abd3494dd` (`Boyle`) | CA-24--CA-26 now explicitly use flat local-symbol `L^2(dk)` algebra; OAR/mass-shell bridge remains an open proof obligation. |
 | C3 | Pending | - | Mass, positivity, and zero-mode policy. |
 | C4 | Pending | - | Smooth low-energy patches vs finite periodic grids. |
 | C5 | Pending | - | Numerical tolerance and validator conventions. |
@@ -55,4 +55,9 @@ Protocol:
 - 2026-05-30: C1 reviewed by parent.  The worker patch was accepted after
   replacing an ambiguous "anti-homomorphism at the unitary level" phrase with
   the explicit inverse-flow/Stone-generator convention.  Landing checks passed:
+  `make check-report-shards`, `make report`, and `git diff --check`.
+- 2026-05-30: C1 pushed as `021cd6f`.  C2 delegated to worker
+  `019e7914-909d-71f0-87d4-711abd3494dd` (`Boyle`) with write scope
+  `CONVENTIONS.md`, CA-24, CA-25, and CA-26.
+- 2026-05-30: C2 reviewed by parent and accepted.  Landing checks passed:
   `make check-report-shards`, `make report`, and `git diff --check`.
