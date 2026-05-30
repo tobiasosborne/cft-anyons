@@ -1,0 +1,2097 @@
+%% LyX 2.0.4 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[oneside,english, 11pt, letter]{amsart}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\usepackage[margin=35mm]{geometry}
+%\geometry{verbose,tmargin=3cm,bmargin=3cm,lmargin=3cm,rmargin=3cm}
+\usepackage{textcomp}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{esint}
+\usepackage{color}
+\usepackage[dvips]{graphicx}
+\usepackage{epsfig}
+
+\newcommand{\lra}[1]{\left\langle #1 \right\rangle}
+\newcommand{\biglra}[1]{\big\langle #1 \big\rangle}
+\newcommand{\Biglra}[1]{\Big\langle #1 \Big\rangle}
+
+\newcommand{\ee}{\epsilon}
+\newcommand{\iy}{\infty}
+\newcommand{\fr}{\frac}
+\newcommand{\dd}{\partial}
+\newcommand{\ddbar}{\bar{\partial}}
+\newcommand{\cV}{\mathcal{V}}
+\newcommand{\cE}{\mathcal{E}}
+\newcommand{\cG}{\mathcal{G}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\HH}{\mathbb{H}}
+\newcommand{\red}{\textcolor{red}}
+%\newcommand{\med}{\mathcal{M}}
+%\newcommand{\medstar}{\mathcal{M}^*}
+\newcommand{\potker}{\mathsf{a}}
+\newcommand{\Cker}{\mathsf{K}}
+\newcommand{\mass}{\mathfrak{m}}
+\newcommand{\ud}{\mathrm{d}}
+\newcommand{\bN}{\mathbb{N}}
+\newcommand{\bZ}{\mathbb{Z}}
+\newcommand{\bQ}{\mathbb{Q}}
+\newcommand{\bR}{\mathbb{R}}
+\newcommand{\bC}{\mathbb{C}}
+\newcommand{\bH}{\mathbb{H}}
+\newcommand{\EX}{\mathbb{E}}
+\newcommand{\PR}{\mathbb{P}}
+\newcommand{\ii}{\mathrm{i}} % other options: {\imath} {\mathfrak{i}}
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\id}{\mathrm{id}}
+\newcommand{\diamed}{{\diamond/m}}
+%\newcommand{\clballdiamed}[1]{\left\{ z \big| \|z\|_1 \leq #1 \right\}}
+%\newcommand{\clballdiamed}[1]{\left\{ z : \|z\|_1 \leq #1 \right\}}
+\newcommand{\balldiamed}[1]{B_\diamed(#1)}
+\newcommand{\clballdiamed}[1]{\overline{B}_\diamed(#1)}
+
+\renewcommand{\Im}{\operatorname{Im}}
+\renewcommand{\Re}{\operatorname{Re}}
+\let \le \leqslant
+\let \leq \leqslant
+\let \ge \geqslant
+\let \geq \geqslant
+\let \epsilon \varepsilon
+
+\makeatletter
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+\numberwithin{equation}{section}
+\numberwithin{figure}{section}
+\theoremstyle{plain}
+\newtheorem{thm}{\protect\theoremname}
+  \theoremstyle{remark}
+  \newtheorem*{claim*}{\protect\claimname}
+  \theoremstyle{plain}
+  \newtheorem{prop}[thm]{\protect\propositionname}
+  \theoremstyle{remark}
+  \newtheorem{rem}[thm]{\protect\remarkname}
+  \theoremstyle{definition}
+  \newtheorem{defn}[thm]{\protect\definitionname}
+  \theoremstyle{plain}
+  \newtheorem{lem}[thm]{\protect\lemmaname}
+\numberwithin{thm}{section}
+
+\newtheorem*{prop*}{Proposition}
+\newtheorem*{thm*}{Theorem}
+\newtheorem*{lem*}{Lemma}
+
+\makeatother
+
+\usepackage{babel}
+  \providecommand{\claimname}{Claim}
+  \providecommand{\definitionname}{Definition}
+  \providecommand{\lemmaname}{Lemma}
+  \providecommand{\propositionname}{Proposition}
+  \providecommand{\remarkname}{Remark}
+	\providecommand{\theoremname}{Theorem}
+
+\begin{document}
+
+\title[Virasoro algebra and discrete GFF]{Lattice Representations of the Virasoro Algebra I: Discrete Gaussian Free Field}
+\author{Cl\'ement Hongler, Fredrik Johansson Viklund, Kalle Kyt\"ol\"a}
+
+\begin{abstract}
+Most two-dimensional massless field theories carry representations of the Virasoro
+algebra as consequences of their conformal symmetry.
+Recently, conformal symmetry has been rigorously established for scaling limits of
+lattice models by means of discrete complex analysis, which efficiently expresses the
+integrability of these models.
+
+In this paper we study the discrete Gaussian free field
+on the square grid. We show that the lattice integrability of this model gives explicit representations
+of the Virasoro algebra acting on the Gibbs measures of the model. Thus, somewhat
+surprisingly, the algebraic structure of Conformal Field Theory
+describing the scaling limit of the model is already present on
+lattice level.
+\end{abstract}
+\maketitle
+
+\tableofcontents
+
+\section{Introduction and preliminaries}
+
+
+\subsection{Statistical mechanics and Conformal Field Theory }
+Physical arguments suggest that 2D lattice models at continuous phase
+transitions have conformally invariant scaling limits that can be
+described by Conformal Field Theories (CFTs). The 2D CFTs are exactly
+solvable: they can be studied in terms of representations of the Virasoro
+algebra. One can in particular obtain exact formulae for the (conjectural)
+scaling limits of correlations, partition functions, and critical exponents
+of a large family of 2D lattice models. See, e.g.,
+\cite{belavin-polyakov-zamolodchikov-i, belavin-polyakov-zamolodchikov-ii, di-francesco-mathieu-senechal}
+and the references in the latter.
+
+While CFT has been tremendously successful and allowed for the derivation
+of deep and spectacular conjectures about lattice models, it usually
+lends itself only to a non-rigorous approach to statistical mechanics.
+Indeed, one needs to assume that the fields of the models
+have conformally invariant scaling limits and that they can be described
+within the framework of certain quantum field theories. In the special
+case of the Gaussian free field, the field can be studied rigorously
+and representations can be found in the continuum at the level of insertions
+\cite{gawedzki, kang-makarov}.
+
+An alternative approach to conformal invariance was introduced by
+Schramm, with his discovery of the SLE$_\kappa$ processes \cite{schramm-sle}. The idea here
+is to consider random curves that arise in the lattice models and to
+describe their scaling limits using Loewner's differential equation. This
+approach has been carried out rigorously for random curves in
+the following models: critical percolation \cite{smirnov-percolation}, loop-erased random
+walk and uniform spanning trees \cite{lsw-lerw}, the FK-Ising model
+\cite{smirnov-ising}, and the discrete Gaussian free field
+\cite{schramm-sheffield-gff-i}. Besides describing scaling limits of discrete
+interfaces (and so scaling limits of many natural observables), the SLE process
+is amenable to calculations and SLE
+techniques have been successfully applied to produce rigorous proofs
+of a number of the conjectures of CFT. More systematic connections between
+SLE and CFT have been studied by a number of authors, with various degrees of
+rigor, see, e.g., \cite{bauer-bernard-i, werner-friedrich-i, bauer-bernard-ii,
+cardy-doyon-riva, kytola-local_mgales_virasoro, kang-makarov}.
+
+Still, we are far from having a complete correspondence and, overall, it is
+fair to say that the application of CFT to statistical
+mechanics remains somewhat mysterious from a mathematical perspective. One
+of the difficulties is to pass to the scaling limits: one has to identify
+fields on lattice level, and to assume (or prove) that they have conformally
+invariant scaling limits described by a local action.
+Moreover, the fields do not always admit a probabilistic interpretation.
+A natural approach to improve the understanding is to try
+to find precursors of various CFT objects on the lattice level, and to see
+what relations they satisfy.
+
+\subsection{Exactly solvable lattice models}
+A number of two-dimensional lattice models are considered exactly
+solvable. Typically, this means that relations such as the Yang-Baxter
+equations or discrete holomorphicity are present on the discrete level.
+This implies in particular that the partition function or the correlation
+functions of these models admit exact formulae. In fact, this is how most of the rigorous results about
+lattice models were derived in the 20th century. See, e.g., \cite{baxter, jimbo-miwa} and references therein.
+
+%\red {{[}Ising, 6-vertex,
+%dimers{]}}.
+
+Recent mathematical progress has allowed for rigorous proofs that
+a number of exactly solvable lattice models (in the discrete sense)
+have conformally invariant scaling limits, and to rigorously derive
+exact formulae for their correlation functions (predicted by exactly
+solved CFTs). The central tool to establish conformal invariance
+of these lattice models is their discrete holomorphicity relations,
+allowing for the use of discrete complex analysis techniques,
+see, e.g., \cite{kenyon-ci, smirnov-percolation, smirnov-ising, chi-ising}.
+
+Once the (lattice) exact solvability has been used to prove conformal
+invariance in the limit, one can try to use conformal invariance
+to reveal the algebraic structure of the Virasoro algebra, and in
+this way connect the lattice solvability with the CFT solvability.
+For this, one can either connect the model with SLE or the (continuum) Gaussian
+free field and use the techniques described above, or try to find
+lattice precursors of CFT objects \cite{benoist-hongler, dubedat-def}.
+A natural question thus arises:
+\begin{itemize}
+\item Is there a direct connection between the exact solvability on the discrete
+level and the one on the continuum level?
+\end{itemize}
+We will show that, surprisingly, the answer is positive in two natural cases. On the square lattice for the discrete Gaussian free field (discrete GFF) and the critical Ising model, the
+same algebraic structures that arise in the continuum as consequences
+of the conformal symmetry are already present on discrete level as
+consequences of discrete holomorphicity. In this paper we will give the proofs for the discrete GFF and in a companion paper those for the Ising model.
+
+This question has been investigated in the physics literature in the case of the 8-vertex model (using the Corner transfer
+matrix)  and the Ising model, see \cite{itoyama-thacker, koo-saleur} and the references in the latter. However, our results are the first in which discrete holomorphicity is connected with the Virasoro algebra and our
+approach gives the exact Virasoro algebras (and not deformations thereof)
+with the right physical content, that is, the correct central charge. Moreover,
+the action of the operators takes place on the level of Gibbs measures, and this gives concrete insight into the role of CFT for the description of probabilistic
+lattice models.
+
+Our constructions can be modified to cover the case of the discrete GFF in a half plane with Dirichlet boundary condition. This corresponds to boundary CFT (cf., e.g., \cite{cardy-i}): besides the two commuting bulk representations, we recover in the vicinity of the boundary a representation of the Virasoro algebra with correct central charge, ``mixing'' the analytic and antianalytic sectors.
+
+
+\subsection{Measure-theoretic framework}
+An advantage of considering lattice models before
+the scaling limit is that measure-theoretic questions become much
+easier to deal with.
+\begin{itemize}
+\setlength{\itemsep}{0.5em}
+
+\item We consider \emph{complex Gibbs measures} on an infinite graph $\mathcal{L}$
+(typically $\mathcal{L}$ is a square grid), that is, assignments of a (finite)
+complex Borel measure $\mu\big|_{\mathcal{G}}$ on $\mathbb{R}^{\mathcal{G}}$
+to the finite subgraphs $\mathcal{G}\subset\mathcal{L}$ satisfying
+the following compatibility condition: for $\mathcal{G}\subset\mathcal{G}'$,
+integrating $\mu\big|_{\mathcal{G}'}$ over $\mathbb{R}^{\mathcal{G}'\setminus\mathcal{G}}$
+gives $\mu\big|_{\mathcal{G}}$.
+
+\item If $\mu$ and $\nu$ are complex Gibbs measures on $\mathcal{L}$,
+we say that $\nu$ is \emph{a change of measure} of $\mu$ if $\nu\big|_{\mathcal{G}}$
+is absolutely continuous with respect to $\mu\big|_{\mathcal{G}}$
+for all finite $\mathcal{G}\subset\mathcal{L}$.
+\item For a linear space of complex Gibbs measures $\mathcal{M}$, we call
+a linear operator $T:\mathcal{M}\to\mathcal{M}$ such $T\mu$ is a
+change of measure of $\mu$ a \emph{change of measure operator}.
+\end{itemize}
+
+Our main results are constructions of explicit families of change
+of measure operators acting on the Gibbs measures of the model while
+forming exact representations of the Virasoro algebra that arises in CFT.
+In the statements of the results, we furthermore use the following terminology:
+\begin{itemize}
+% KALLE: Do we really need to define symmetric/antisymmetric here?
+\item We call a complex Gibbs measure $\mu$ \emph{symmetric}
+%(and antisymmetric, respectively)
+if for any $\mathcal{G}$ and any Borel set $\mathcal{A}\subset\mathbb{R}^{\mathcal{G}}$,
+we have $\mu\big|_{\mathcal{G}}\left(-\mathcal{A}\right)=\mu\big|_{\mathcal{G}}\left(\mathcal{A}\right)$.
+We call $\mu$ \emph{antisymmetric} if
+$\mu\big|_{\mathcal{G}}\left(-\mathcal{A}\right)=-\mu\big|_{\mathcal{G}}\left(\mathcal{A}\right)$.
+\item A change of measure operator $T$ is said to be \emph{parity preserving} (resp.
+\emph{parity reversing}) if it maps
+symmetric Gibbs measures to symmetric (resp. antisymmetric) Gibbs measures and
+antisymmetric Gibbs measures to antisymmetric (resp. symmetric) Gibbs measures.
+\item The \emph{complex conjugate} of a complex Gibbs measure $\mu$ is the Gibbs measure
+$\overline{\mu}$ determined by
+$\overline{\mu}\big|_{\mathcal{G}}\left(\mathcal{A}\right)
+= \overline{\mu\big|_{\mathcal{G}}\left(\mathcal{A}\right)}$
+for all Borel sets $\mathcal{A}\subset\mathbb{R}^{\mathcal{G}}$.
+\item The \emph{complex conjugate} of a change of measure operator $T$ is the
+change of measure operator $\bar{T}$ determined by
+$\bar{T} \mu = \overline{T \overline{\mu}}$. Note that $\bar{T}$ is still a
+$\bC$-linear operator.
+\end{itemize}
+
+
+\subsection{Discrete GFF}
+
+The central object of this paper is the discrete Gaussian free field
+(GFF) which we will consider on the square grid $\ZZ^2$.
+The discrete GFF on the infinite square grid $\mathbb{Z}^{2}$ is defined only up
+to an additive constant, see, e.g., \cite{funaki}.
+To resolve this ambiguity we choose to
+consider the (whole-plane) discrete Gaussian free field \emph{pinned at $0$}, that is,
+conditioned to vanish at the origin.
+An alternative essentially equivalent approach would be to define a discrete gradient
+Gaussian field %$\nabla_e\phi$
+on the edges. %and integrate it,
+%For more details, see, e.g., \cite{funaki}.
+
+%\begin{itemize}
+%\setlength{\itemsep}{0.5em}
+%\item
+The discrete GFF on a finite connected graph $\mathcal{G}$ with Dirichlet boundary
+condition on $\partial\mathcal{G}\neq\emptyset$ is a collection of centered real Gaussian random
+variables $\left(\phi(x)\right)_{x \in \mathcal{G}}$ with covariances given by the Green's kernel
+of $\mathcal{G}$, that is, $\mathbb{E}\left[\phi(x) \phi(y) \right]$
+is the expected number of visits to $y$ of a simple random walk $(X_t)_{t=0}^\tau$ on $\mathcal{G}$
+started from $x$ and stopped at the time $\tau$ of hitting $\dd \mathcal{G}$.
+See, for instance, \cite{sheffield-gff-ptrf} or \cite[Chapter 9]{janson}.
+This definition also works for some infinite graphs, including a case that we will also
+treat explicitly: the upper half plane square lattice $\bH = \bZ \times \bN$ with
+boundary $\partial \bH = \bZ \times \set{0}$.
+
+%\item
+When $\mathcal{G}$
+is a finite subgraph of $\bZ^2$, the discrete GFF $\phi$ can equivalently be defined
+as a Gaussian vector of $\mathbb{R}^{\mathcal{G}}$
+with density proportional to $\exp\left\{-\frac{1}{2}E(\phi)\right\}$,
+where $ E(\phi) := \frac{1}{4} \sum_{x\sim y} \left( \phi(x) - \phi(y) \right)^{2} $
+is the Dirichlet energy, the sum being over all pairs of adjacent vertices
+$x,y\in\mathcal{G}\cup\partial\mathcal{G}$, and we set $\phi\equiv0$
+on $\partial\mathcal{G}$.
+
+%\item
+Simple random walk is recurrent on the infinite square grid $\bZ^2$, and so the Green's function as defined above diverges;
+an ``infra-red'' regularization is needed. We will use the massive regularization: the discrete GFF
+on $\bZ^2$ with mass $\mass > 0$ is a collections of centered real Gaussian random
+variables $\left(\phi_\mass(x)\right)_{x \in \bZ^2}$ with covariances given by the
+following massive regularization of the Green's kernel
+$ G_\mass(x,y) = \sum_{t=0}^\infty (1+\mass^2)^{-1-t} \; \PR_{X_0=x} \left[ X_t=y \right] $, % \, \big| \, X_0=x
+where $(X_t)_{t\in\bN}$ is simple random walk on $\bZ^2$.
+
+\begin{itemize}
+\item The \emph{pinned discrete GFF on the infinite square grid} is a collection of centered
+real Gaussian random variables $\left(\phi(x)\right)_{x \in \bZ^2}$ obtained as
+the massless limit of the pinned massive discrete GFFs as
+\[ \phi = \lim_{\mass \searrow 0} \Big( \phi_\mass - \phi_\mass(0) \Big) .\]
+\end{itemize}
+
+%\item
+The pinned discrete GFF could also be defined as the infinite-volume limit of the
+discrete GFFs conditioned to vanish at the origin, that is, the limit as $N\rightarrow \infty$ of
+discrete GFF on finite subgraphs $\Lambda_N \subset \ZZ^2$ with boundary conditions
+$0$ on $\dd \Lambda_N \cup \{0\}$, such that the increasing sequence of finite subgraphs
+exhausts the whole lattice $\ZZ^2$.
+% $\Lambda_N \uparrow \ZZ^2$.
+%(a particularly convenient choice is on any finite  $R_{N}\setminus\left\{ 0\right\} $, where $R_{N}$
+%is the box $\left[-N,N\right]^{2}\cap\mathbb{Z}^{2}$ with $0$ boundary
+%conditions on $\left\{ 0\right\} \cup\partial R_{N}$, as $N\to\infty$.
+%This gives a centered Gaussian random field $\phi=\left(\phi(z)\right)_{z\in\ZZ^2}$ on $\ZZ^2$ with covariance %kernel
+%given by $\mathbb{E}\left[\phi(z) \phi(w)\right] = \potker(z) + \potker(w) - \potker(z-w)$,
+%where $\potker$ is the potential kernel for random walk on $\ZZ^2$, see Section~\ref{sect:monomials}
+%below and \cite{lawler-limic} for more details.
+%; that is, $[\Delta \potker](z) = -\delta_{0}(z)$, where $\Delta$ is the discrete Laplacian on $\ZZ^2$
+%defined below in Section~\ref{sect:monomials}.
+
+\begin{itemize}
+\item{We denote by $\mu_{\mathrm{GFF}}$ the Gibbs measure of the discrete
+GFF on $\mathbb{Z}^{2}$, pinned at $0$. For a finite $\mathcal{G}=\{x_1,\ldots, x_k\} \subset \ZZ^2$ and $f:\mathbb{R}^{\mathcal{G}}  \to \mathbb{C}$, we denote by $\lra{f(\phi \big|_{\mathcal{G}})}$ the expectation $\mathbb{E} \left[ f(\phi(x_1), \ldots , \phi(x_k)) \right]$ under the measure $\mu_{\mathrm{GFF}}$.
+%, assuming it exists.
+(Typically we consider a \emph{correlation function} and take $f=\phi\left(x_{j_1}\right)\cdots\phi\left(x_{j_m}\right)$ for $x_{j_1}, \ldots, x_{j_m} \in \mathcal{G}$ not necessarily distinct.)
+Similarly, if $\nu$ is a change of measure of
+$\mu_{\mathrm{GFF}}$, we write $\lra{ f(\phi \big|_{\mathcal{G}}) }_\nu$ for the integral
+of $f$ with respect to $\nu\big|_{\mathcal{G}}$ (or with respect to $\nu\big|_{\mathcal{G}'}$ for
+any $\mathcal{G}' \supset \mathcal{G}$). }
+\end{itemize}
+
+
+
+\subsection{Main result}
+
+Our main result about the discrete Gaussian free field on the full plane is the following,
+the more precise version of which will be stated as Theorem \ref{Ln-GFF} in Section \ref{sugawara}.
+\begin{thm*}
+%\label{thm:gff-virasoro-full-plane}
+Let $\mu_{\mathrm{GFF}}$ be
+the Gibbs measure of the discrete Gaussian free field on $\mathbb{Z}^{2}$,
+pinned at $0$.
+%There exists a space $\mathcal{S}$ of symmetric changes
+%of measure of $\mu_{\mathrm{GFF}}$ and explicit change of measure
+%operators $L_{n}:\mathcal{S}\to\mathcal{S}$ for $n\in\mathbb{Z}$
+There exists a space $\mathcal{M}$ of changes of measure of $\mu_{\mathrm{GFF}}$
+and explicit parity preserving change of measure operators
+$L_{n}:\mathcal{M}\to\mathcal{M}$ for $n\in\mathbb{Z}$
+such that $\left(L_{n}\right)_{n\in\mathbb{Z}}$ yields a representation
+of the Virasoro algebra of central charge $c=1$:
+\[ \left[L_{m},L_{n}\right]
+= \left(m-n\right)L_{m+n}+\frac{c}{12}\left(m^{3}-m\right) \delta_{m+n,0} \, \mathrm{Id}. \]
+Each operator $L_{n}$ has a complex conjugate $\bar{L}_{n}$ and
+$\left(L_{n}\right)_{n\in\mathbb{Z}}$ and $\left(\bar{L}_{n}\right)_{n\in\mathbb{Z}}$
+yield two commuting representations of the Virasoro algebra with central charge $c=1$.
+\end{thm*}
+This result is an exact discrete analogue of the classical result
+that the Gaussian free field is described by a CFT of central charge
+$c=1$, %(for a mathematical statement,
+see for instance \cite{gawedzki, kang-makarov}.
+Through the CFT--SLE correspondence \cite{bauer-bernard-i, kang-makarov},
+the parameter for the corresponding SLE$_\kappa$ is $\kappa=4$; and indeed,
+the level lines of a discrete GFF with appropriate boundary conditions have been shown to converge to chordal SLE${}_4$
+in the lattice size scaling limit \cite{schramm-sheffield-gff-i}.
+
+It is interesting and quite surprising that the central charge can already be seen on lattice level.
+
+\subsection{Further results}
+Similar ideas can be carried out in other settings, too.
+
+In particular, we shall use a Coulomb gas construction to build representations of the Virasoro algebra with other central charges, see Section~\ref{sect:coulomb-gas} for precise statements. (We remark, however, that only the representations with $c=1$ preserve the symmetry of the GFF with respect to multiplication by $-1$.)
+
+We also construct representations for the discrete GFF in the upper half-plane with Dirichlet boundary condition, see Theorem~\ref{thm:half-plane}.
+
+
+
+
+%, further discussion at the end of the paper.
+%
+%\paragraph*{Ising model}
+%
+%\paragraph*{Dimers}
+%
+%\paragraph*{Coulomb gas}
+%
+%\paragraph*{Half-plane}
+
+
+\subsection{Overview of construction}
+
+Let us give an overview of the proof of Theorem \ref{thm:gff-virasoro-full-plane}
+and reduce it to a number of statements to be proven in the rest
+of the paper:
+\begin{itemize}
+\setlength{\itemsep}{0.5em}
+\item We construct discrete \emph{current modes} (Section~\ref{sect:monomials}), which
+are lattice analogs of $\oint \partial \phi(z) z^{n} \ud z$, $n \in \mathbb{Z}$.
+\item The discrete current modes act on field insertions by discrete contour
+integrals (Lemma~\ref{prop:contour-integral-current-mode}).
+\item We define a space of complex Gibbs measures $\mathcal{M}$ containing $\mu_\mathrm{GFF}$ (Definition
+\ref{def:space-gibbs-measures}).
+\item{The discrete current modes lift to change of measure operators
+$\left(a_{n}:\mathcal{M}\to\mathcal{M}\right)_{n\in\mathbb{Z}}$
+(Proposition \ref{prop:current-mode-operators}).}
+\item We show that the commutation relations of the $\left(a_{n}\right)_{n\in\mathbb{Z}}$ are those of the Heisenberg algebra
+(Theorem~\ref{thm:heisenberg}).
+\item We define the Virasoro generators $\left(L_{n}:\mathcal{M}\to\mathcal{M}\right)_{n\in\mathbb{Z}}$
+from the discrete current mode operators using the Sugawara construction
+(Proposition~\ref{prop:Virasoro-mode-operators}).
+\item The construction extends to the antianalytic sector, yielding
+two commuting representations of the Virasoro algebra (Proposition~\ref{prop:anti-analytic-sector-an}, Theorem~\ref{prop:sugawara-construction}).
+\end{itemize}
+Let us denote by $\mathbb{Z}_{*}^{2}$ the dual of $\mathbb{Z}^{2}$,
+by $\mathbb{Z}_{\diamond}^{2}$ the diamond graph %{[}correct name?{]}
+$\mathbb{Z}^{2}\cup\mathbb{Z}_{*}^{2}$, and by $\mathbb{Z}_{m}^{2}$
+the medial graph of $\mathbb{Z}^{2}$ (the set of midedges of $\mathbb{Z}^{2}$), see Figure \ref{fig: square lattice}.
+The lattice representation of Theorem \ref{thm:gff-virasoro-full-plane}
+relies on the construction of discrete currents and monomials that
+live on these graphs.
+\begin{figure}
+\begin{center}
+\begin{minipage}{10cm}\epsfig{file=pics-lattice_Virasoro.1, width=10cm}
+\end{minipage}
+\end{center}
+\caption{The Figure illustrates the square lattice $\mathbb{Z}^2$ and its dual $\mathbb{Z}^2_*$.
+The medial lattice $\mathbb{Z}^2_m$ consists of midpoints of edges, and
+the diamond graph $\mathbb{Z}^2_\diamond$ consists of points of the square lattice and its dual.}
+\label{fig: square lattice}
+\end{figure}
+\begin{prop*}[{Sections \ref{sect:monomials}} and \ref{sect:current-modes}]
+% KALLE: What?
+For $k\in\mathbb{Z}$, there exist natural discrete analogues $\left[\partial\phi\right]:\mathbb{Z}_{m}^{2}\to\mathbb{C}$,
+$z^{\left[k\right]}:\mathbb{Z}_{\diamond}^{2}\cup\mathbb{Z}_{m}^{2}\to\mathbb{C}$,
+and $\oint_{\left[\gamma\right]}\left[\partial\phi\right](z) z^{\left[k\right]} \ud z$
+of the current $\partial\phi$, the monomial functions $z \mapsto z^{k}$,
+and the contour integrals $\oint_{\gamma}\partial\phi(z) z^{k} \ud z$, respectively,
+such that the following holds: If
+\[ J(z):= [\dd \phi](z) \]
+is the discrete current, then
+\[ z^{\left[0\right]} \equiv 1 \qquad \text{ and } \qquad
+ \left\langle J(z) \phi(x) \right\rangle = \frac{1}{2\pi} \left( z^{\left[-1\right]}-(z-x)^{\left[-1\right]} \right)
+\]
+for $z\in\mathbb{Z}_{m}^{2},x \in \mathbb{Z}^{2}$. Moreover, we have
+\[
+2 \ii \times \oint_{\left[\gamma\right]} \left\langle J(w) J(z) \right\rangle z^{\left[k\right]} \ud z
+\; = \; k \, w^{\left[k-1\right]}, \]
+for all $k\in\mathbb{Z}$, $w\in\mathbb{Z}_{m}^{2}$, whenever $[\gamma]$ is a sufficiently large closed simple
+positively oriented discrete contour.
+\end{prop*}
+Let us now
+define the space of Gibbs measures relevant to our framework.
+\begin{defn}
+\label{def:space-gibbs-measures}
+We define $\mathcal{M}$ to be the vector space of complex Gibbs measures $\mu$ such that:
+\begin{itemize}
+\item{The Gibbs measure $\mu \in \mathcal{M}$ is a change of measure of $\mu_{\rm{GFF}}$;}
+\item{For every finite $\mathcal{G} \subset \ZZ^2$, the Radon-Nikodym derivative of $\mu\big|_{\mathcal{G}}$ with respect
+to $\mu_{\rm{GFF}}\big|_{\mathcal{G}}$, denoted by $g_{\mathcal{G}}^{\mu}$,
+lies in $L^p(\mu_{\rm{GFF}}\big|_{\mathcal{G}})$ for every $p < \infty$.}
+\end{itemize}
+We also define the subspaces $\mathcal{S} \subset \mathcal{M}$ and
+$\mathcal{A} \subset \mathcal{M}$ of symmetric and antisymmetric measures
+in $\mathcal{M}$, respectively. In other words, $\mathcal{S}$ and $\mathcal{A}$
+consist of the measures in $\mathcal{M}$ with even and odd Radon-Nikodym derivatives
+$g_{\mathcal{G}}^{\mu}$, respectively.
+\end{defn}
+%\begin{rem}
+%The space $\mathcal{S}$ is the natural stable ``physical'' subspace of $\mathcal{M}$ that contains $\mu_{\rm{GFF}}$.
+%\end{rem}
+
+\begin{rem}\label{rem:denseness-of-polynomials}
+For each $\mathcal{G}$, the linear span of polynomials in the Gaussian
+variables $\{\phi(z): \, z \in \mathcal{G}\},$ is dense in
+$L^p\left(\mu_{\rm{GFF}} \big|_{\mathcal{G}} \right)$ for every $0 \le p < \infty$,
+see, e.g., \cite[Theorem~2.11]{janson}.
+%A consequence is that it will be enough to check commutation relations for insertions
+%of the current modes into polynomial correlations in Section~\ref{sect:current-modes}.
+\end{rem}
+
+\begin{lem*}[Lemma~\ref{prop:contour-integral-current-mode}]For any (not necessarily distinct)
+$x_{1},\ldots,x_{m}\in\mathbb{Z}^{2}$ and every $n\in\mathbb{Z}$ the discrete
+current mode $\mathfrak{a}_n$ acting on field insertions by the contour integral
+\[ \lra{ \mathfrak{a}_n \phi\left(x_{1}\right)\cdots\phi\left(x_{m}\right)}
+ = \frac{1}{\sqrt{\pi}}\oint_{\left[\gamma\right]}\left\langle J\left(z\right)\phi\left(x_{1}\right)\cdots\phi\left(x_{m}\right)\right\rangle z^{\left[n\right]}\mathrm{d}z \]
+is independent of the choice of the contour $[\gamma]$ provided
+that $[\gamma]$ encircles a large enough neighborhood of origin in the positive direction.
+%it separates $\{0, x_1, \ldots, x_k\}$ from $\infty$.
+
+More generally, the product of discrete current modes acting on field insertions by contour integrals
+\begin{multline*}
+\lra{\mathfrak{a}_{n_j}\cdots\mathfrak{a}_{n_1} \phi\left(x_{1}\right)\cdots\phi\left(x_{m}\right) }\\
+:= \frac{1}{\pi^{j/2}}\oint_{\left[\gamma_{j}\right]} \cdots \oint_{\left[\gamma_{1}\right]} \lra{ J(w_j) \cdots J(w_1)\phi\left(x_{1}\right)\cdots\phi\left(x_{m}\right)} w_1^{\left[n_1\right]} \cdots w_j^{\left[n_j\right]} dw_1 \cdots dw_j
+\end{multline*}
+is independent on the choice of sequence of discrete contours $[\gamma_1] , [\gamma_2], \ldots, [\gamma_j]$
+provided the contours encircle sufficiently large neighborhoods of the origin and are radially ordered:
+for $l<k$ the contour $[\gamma_l]$ (corresponding to $\mathfrak{a}_{n_l}$)
+is contained in the set encircled by the contour $[\gamma_k]$ (corresponding to $\mathfrak{a}_{n_k}$).
+\end{lem*}
+%We will always assume that integration contours corresponding to discrete current modes are radially ordered.
+\begin{rem}
+For any given realization, the contour integral
+$\oint_{\left[\gamma\right]}J\left(z\right)z^{[n]}\mathrm{d} z$
+does depend on the contour $[\gamma]$, but the expected value against any insertion
+$\phi\left(x_{1}\right)\cdots\phi\left(x_{n}\right)$ is the same
+for all positively oriented discrete contours $[\gamma]$ enclosing
+a large enough neighborhood of the origin.
+\end{rem}
+
+By Lemma~\ref{prop:contour-integral-current-mode}, the insertions
+of $\oint_{\left[\gamma\right]}J\left(z\right)z^{[n]}d z$ (and the corresponding products)
+into correlation functions of the discrete GFF (and its changes of measure) are well-defined provided
+we take a large enough contour $[\gamma]$ (or radially ordered sequence of contours). We show that the
+current modes $(\mathfrak{a}_n)_{n\in \ZZ}$ (and their products) lift to unique change of measure
+operators $\left(a_{n}\right)_{n\in\mathbb{Z}}$ which act on $\mathcal{M}$ and which can be though of as formal adjoint operators to the $\mathfrak{a}_n$. (This point of view is behind the use of $\mathfrak{a}_{-n}$ in the definition of $a_n$ below.) These change of
+measure operators are the building blocks used in the construction
+of the operators $\left(L_{n}\right)_{n\in\mathbb{Z}}$ of Theorem
+\ref{thm:gff-virasoro-full-plane}.
+\begin{prop*}[Proposition~\ref{prop:current-mode-operators}]
+For each $n\in\mathbb{Z}$, there
+exists a unique operator $a_{-n}:\mathcal{M}\to\mathcal{M}$
+%, with $a_{-n}\mathcal{S}\subset\mathcal{A}$ and $a_{-n}\mathcal{A}\subset\mathcal{S}$,
+such that for any $\mu\in\mathcal{M}$ and any
+(not necessarily distinct) $x_{1},\ldots,x_{k}\in\mathbb{Z}^{2}$ and any finite $\mathcal{G}\subset\bZ^2$ containing the points,
+we have
+\begin{align*}
+\left\langle \phi\left(x_{1}\right)\cdots\phi\left(x_{k}\right)\right\rangle _{a_{-n}\mu}
+& = \lra{\mathfrak{a}_{n} \phi\left(x_{1}\right)\cdots\phi\left(x_{k}\right)}_\mu \\
+& :=\frac{1}{\sqrt{\pi}}\oint_{\left[\gamma\right]}\left\langle J\left(z\right)\phi\left(x_{1}\right)\cdots\phi\left(x_{m}\right)
+    g (\phi) \right\rangle z^{\left[n\right]} \mathrm{d}z,
+\end{align*}
+where $g$ is the Radon-Nikodym derivative of $\mu\big|_{\mathcal{G}}$ with respect
+to $\mu_{\rm{GFF}}\big|_{\mathcal{G}}$, and $\left[\gamma\right]$ is any discrete
+contour that encircles a large enough neighborhood of the origin.
+The operator $a_{-n}$ is parity reversing.
+\end{prop*}
+We then show that the operators $\left(a_{n}\right)_{n\in\mathbb{Z}}$
+satisfy the commutation relations of the Heisenberg algebra:
+\begin{thm*}[{Theorem~\ref{thm:heisenberg}}]
+\label{prop:commutation-relations}The operators $\left(a_{n}\right)_{n\in\mathbb{Z}}$
+satisfy the commutation relations
+\begin{eqnarray*}
+\left[a_{m},a_{n}\right] & = & m\delta_{n+m,0} \, \id_\mathcal{M}
+\end{eqnarray*}
+
+\end{thm*}
+Finally, we can rely on the classical Sugawara construction \cite{sugawara, sommerfield} to define
+Virasoro operators $L_{n}$. See \cite{mickelsson} for a nice textbook about the algebra of the current modes. In the following statement and in the rest of the paper, a function $f : \mathbb{R}^{\ZZ^2} \to \mathbb{C}$ is said to be a \emph{cylinder function}
+if it depends only on finitely many coordinates, called its \emph{base}.
+\begin{thm*}[Theorem~\ref{prop:sugawara-construction}]
+For each $n\in\mathbb{Z}$, in the formally infinite sum
+\[ \mathfrak{L}_{n} := \frac{1}{2}\sum_{k\geq0}\mathfrak{a}_{n-k}\mathfrak{a}_{k}
+    + \frac{1}{2} \sum_{k<0}\mathfrak{a}_{k}\mathfrak{a}_{n-k} ,\]
+only finitely many terms are non-zero when acting on an insertion of a cylinder function.
+The action of $\mathfrak{L}_{-n}$ on insertions lifts to a
+well-defined parity preserving change of measure
+operator $L_n \colon \mathcal{M} \to \mathcal{M}$.
+
+The $\left(L_{n}\right)_{n\in\mathbb{Z}}$ yield a representation of
+the Virasoro algebra with central charge $c=1$:
+\[
+\left[L_{m},L_{n}\right]=\left(m-n\right)L_{m+n}+\frac{1}{12}(m^3-m)\delta_{m+n,0} \, \id_\mathcal{M}.
+\]
+\end{thm*}
+\begin{rem}
+The above expression for Virasoro generators as a formally infinite sum of quadratic polynomials in
+the currents is standard in Sugawara constructions. In usual algebraic Sugawara constructions,
+the expression has well defined action in representations of an appropriate type, owing
+to its truncation to only finitely many terms when applied to any particular vector ---
+it is sufficient that the representation has a grading by $L_0$-eigenvalues that are bounded
+from below. Our action on insertions by
+$\mathfrak{L}_{n}$ truncates in a similar manner, now because of the finite base of the
+inserted cylinder function. We remark, however, that the action on interesting Gibbs measures
+by $L_n$ can not be recovered as a finite linear combination of quadratic expressions
+in $(a_m)_{m\in\bZ}$.
+\end{rem}
+The operators above build a discrete version of the analytic sector
+of the CFT of the free field. (One could perhaps call it
+a \emph{discrete analytic sector}.) As in the continuum case, we can also
+build the antianalytic sector in the same manner, and we thus obtain two
+commuting representations of the Virasoro algebra.
+
+\begin{prop*}[Proposition~\ref{prop:anti-analytic-sector-an}, Theorem~\ref{prop:sugawara-construction}]
+%For each $n\in\mathbb{Z}$, there
+%exists a unique operator $\bar{a}_{n}:\mathcal{M}\to\mathcal{M}$
+%such that
+%\[ \left\langle \phi\left(x_{1}\right)\cdots\phi\left(x_{m}\right) \right\rangle_{\bar{a}_{n}\mu}
+%=\overline{\left\langle \phi\left(x_{1}\right)\cdots\phi\left(x_{m}\right)\right\rangle }_{a_{n}\overline{\mu}}
+%\qquad \forall\mu\in\mathcal{M}, \, \forall x_{1},\ldots,x_{m}\in\mathbb{Z}^{2} . \]
+For $n\in\bZ$, let $\bar{a}_n \colon \mathcal{M} \rightarrow \mathcal{M}$ be the
+complex conjugate of the change of measure operator $a_n$.
+For all $n,m\in\mathbb{Z},$ we have $\left[\bar{a}_{m},a_{n}\right]=0$
+and $\left[\bar{a}_{m},\bar{a}_{n}\right]=m\delta_{m+n,0} \id_\mathcal{M}$.
+Defining $L_{n}$ as in Proposition~\ref{prop:sugawara-construction}
+and $\bar{L}_{n}$ as its complex conjugate,
+we have that $\left(L_{n}\right)_{n\in\mathbb{Z}}$ %$\left(L_{n}:\mathcal{S}\to\mathcal{S}\right)_{n\in\mathbb{Z}}$
+and $\left(\bar{L}_{n}\right)_{n\in\mathbb{Z}}$ %$\left(\bar{L}_{n}:\mathcal{S}\to\mathcal{S}\right)_{n\in\mathbb{Z}}$
+yield two commuting representations of the Virasoro algebra with central
+charge $c=1$:
+\begin{eqnarray*}
+\left[L_{n},L_{m}\right] & = & \left(n-m\right)L_{n+m}+\frac{1}{12}(m^3-m)\delta_{n+m} \, \id_\mathcal{M} \\
+\left[\bar{L}_{n},\bar{L}_{m}\right] & = & \left(n-m\right)\bar{L}_{n+m}+\frac{1}{12}(m^3-m)\delta_{n+m} \, \id_\mathcal{M} \\
+\left[L_{n},\bar{L}_{m}\right] & = & 0.
+\end{eqnarray*}
+Both representations consist of parity preserving change of measure operators.
+\end{prop*}
+
+
+
+Finally, we can use the background charge idea in the Coulomb gas construction to
+yield representations of the Virasoro algebra at arbitrary central charges.
+When $c \neq 1$, however, the operators $L_n^b, \bar{L}_n^b$ are
+not parity preserving, and thus one loses a symmetry of the original problem.
+\begin{prop*}[Proposition~\ref{prop:coulomb_gas}]
+Let $c \leq 1$ and let $b = \pm \sqrt{\frac{1-c}{12}}$.
+If we define the change
+of measure operators $L_{n}^{b},\bar{L}_{n}^{b}:\mathcal{M}\to\mathcal{M}$
+by $L_n^b:=L_n+b(n+1) a_n$, with $L_n$ and $a_n$ as above, we have that
+$\left(L_{n}^{b}\right)_{n\in\mathbb{Z}}$ and
+$\left(\bar{L}_{n}^{b}\right)_{n\in\mathbb{Z}}$ yield two commuting
+representations of the Virasoro algebra with central charge $c$.
+\end{prop*}
+\subsection{General remarks}
+%\red{{[}In CFT, the space on which one acts are insertions, not necessarily
+%probabilistic fields{]}}
+
+In conformal field theory, the basis $(L_n)_{n \in \ZZ}$ that spans the Virasoro
+algebra is given by modes of the (analytic component of the) stress-energy
+tensor $T(z)$. By comparing with the continuum GFF one might therefore attempt
+to define discrete $L_n$ modes as discrete modes of (a constant times)
+$[T(z)]=[J(z)]^2$. However, there seems to be no natural way to do this so
+that one has independence on the choice of integration contour. Instead,
+the Sugawara construction of the $L_n$ modes from the discrete current
+modes can be viewed as taking place directly in ``Fourier space'' on the
+level of operator valued Laurent modes. Our constructions give concrete
+meaning to these objects.
+
+%{[The role of complex measures in statistical mechanics -- Ising, etc...]}
+
+%\red{[}Asymptotics{]}
+
+\subsection*{Acknowledgments}
+CH is supported by the Minerva Foundation and by the National Science Foundation grant number DMS-1106588.
+FJV is supported by the Simons foundation.
+KK is supported by the Academy of Finland.
+We would like to thank St\'ephane Benoist, Dmitry Chelkak, Julien Dub\'edat,
+Krzysztof Gaw{\c e}dzki, Igor Krichever, Antti Kupiainen, Jouko Mickelsson, Andrei Okounkov,
+Eveliina Peltola, Stanislav Smirnov and Valerio Toledano Laredo for
+interesting discussions.
+
+
+\section{Discrete currents, polynomials, and contour integrals}\label{sect:monomials}
+We now describe in detail the basic building blocks in our construction.
+
+\subsection{Finite difference operators}Recall the definitions of the square grid $\ZZ^2$ with vertices $\{m+in: m,n \in \ZZ \}$, its dual $\ZZ^2_*$ with vertices $\{m+\frac{1}{2} + i(n + \frac{1}{2}): m,n \in \ZZ\}$, the diamond graph with vertices $\ZZ_{\diamond}^2 = \ZZ^2 \cup \ZZ^2_*$, and the medial graph $\ZZ^2_m$ with a vertex at the midpoint of every edge of $\ZZ^2$. We will sometimes identify an edge of a graph with its midpoint.
+
+For $f \colon \mathbb{Z}_{\diamond}^{2}\to\mathbb{C}$ (and $f \colon \mathbb{Z}_{m}^{2}\to\mathbb{C}$, respectively), we define $\left[\partial f\right] \colon \mathbb{Z}_{m}^{2} \to \mathbb{C}$
+(and $[\partial f] \colon \mathbb{Z}_{\diamond}^{2}\to\mathbb{C}$, respectively) by
+\[ [\partial f](z) = \sum_{a\in\left\{ \pm\frac{1}{2},\pm\frac{\ii}{2}\right\} }\overline{a} \, f(z+a).\]
+Similarly, we define
+$[\bar{\partial}f ]$ by
+\[ [\bar{\partial}f](z) = \sum_{a\in\left\{ \pm\frac{1}{2},\pm\frac{\ii}{2}\right\} } a \, f(z+a).\]
+
+We say that $f \colon \mathbb{Z}_{\diamond}^{2}\to\mathbb{C}$ (or $f \colon \mathbb{Z}_{m}^{2}\to\mathbb{C}$) is \emph{discrete holomorphic} at $z$ if $[\bar{\partial} f](z) = 0$.
+
+For a function $f$ defined on the square grid $\ZZ^2$ (more generally, on a shifted square grid,
+e.g., the dual $\ZZ^2_*$), the discrete Laplacian
+$[\Delta f]\colon \ZZ^2 \rightarrow \bC$ is defined by
+\[ [\Delta f](z) = \frac{1}{4} \sum_{\xi \in \{\pm 1 , \pm \ii\}} f(z+\xi) - f(z), \]
+where the latter sum is over the four nearest neighbors $w$ of $z$.
+Note that for $f$ defined on $\ZZ^2_\diamond$ (or on $\ZZ^2_m$), the composition
+$\dd \ddbar = \ddbar \dd = \Delta$ is the above Laplacian, which in particular
+splits to two blocks corresponding to $\ZZ^2$ and $\ZZ^2_*$ (on $\ZZ^2_m$ the
+two blocks correspond to midpoints of horizontal and vertical edges).
+\begin{figure}
+\begin{center}
+\begin{minipage}{14cm}
+\epsfig{file=pics-lattice_Virasoro.5, width=3.0cm} $\qquad$
+\epsfig{file=pics-lattice_Virasoro.6, width=3.0cm} $\qquad$
+\epsfig{file=pics-lattice_Virasoro.7, width=3.75cm}
+\end{minipage}
+\end{center}
+\caption{Illustrations of the weights in the finite difference operators $\partial$ and $\bar{\partial}$ and $\Delta = \partial \bar{\partial}$ on particular sublattices. The weights of other sublattices are translations of the ones shown.}
+\label{fig: discrete contours}
+\end{figure}
+
+%We also occasionally need the directional holomorphic and antiholomorphic derivatives
+%in horizontal and vertical directions,
+%\[ \dd^\mathrm{hor} = \frac{1}{2}(\dd + \ddbar) = \ddbar^\mathrm{hor} , \qquad
+%\dd^\mathrm{ver} = \frac{1}{2}(\dd - \ddbar) = - \ddbar^\mathrm{ver} . \]
+%%(and similarly for $\ddbar^\mathrm{hor}$, $\ddbar^\mathrm{ver}$).
+
+We record a property that is used in some calculations below.
+\begin{lem}\label{lem: transpose of dee}
+The transposes of the finite difference operators $\dd$
+are $- \dd$ (the operator $\bC^{\ZZ^2_m} \rightarrow \bC^{\ZZ^2_\diamond}$ has transpose
+$\bC^{\ZZ^2_\diamond} \rightarrow \bC^{\ZZ^2_m}$ and vice versa).
+In particular, if
+$f \colon \ZZ^2_m \rightarrow \bC$ and $g \colon \ZZ^2_\diamond \rightarrow \bC$
+are functions, at least one of which has finite support, then
+\[ \sum_{z \in \ZZ^2_m} f(z) \, [\dd g](z) = - \sum_{z \in \ZZ^2_\diamond} [\dd f](z) \, g(z) . \]
+Similarly, the transposes of $\ddbar$ are $-\ddbar$.
+%, the transposes of $\dd^\mathrm{hor}$ are $- \dd^\mathrm{hor}$,
+%and the transposes of $\dd^\mathrm{ver}$ are $- \dd^\mathrm{ver}$.
+\end{lem}
+%\begin{proof}
+%:D
+%\end{proof}
+
+
+\subsection{Potential kernel and discrete Cauchy kernel}
+In the full plane, the expected number of visits to a point by simple
+random walk $(X_t)_{t\in\bN}$ is infinite, and for this reason a naive definition of the (massless) discrete
+Gaussian free field will not work and one needs to consider a regularized version instead.
+
+We shall use the massive regularization based on the massive Green's function $G_\mass \colon \ZZ^2 \to \bR$, $\mass > 0$,
+%\[ G_\mass(z) = \EX \left[ \sum_{t=0}^\infty (1+\mass^2)^{-t-1} \mathbf{1}_{\{X_t=z\}} \right] ,
+%%\qquad \text{($(X_t)_{t\in\bN}$ simple random walk on $\ZZ^2$ started at origin)}
+%\]
+which is the function decaying at infinity that satisfies
+$\mass^2 G_\mass - [\Delta G_\mass] = \delta_0$.
+%It is easy to write the Fourier transform of $G_\mass$,
+%\[ G_\mass (x + \ii y) = \frac{1}{(2\pi)^2} \iint_{[-\pi,\pi]^2}
+%\frac{e^{\ii (x q + y p)}}{\mass^2 + 1 - \frac{1}{2} \cos(q) - \frac{1}{2} \cos(p)} \ud q \ud p .\]
+If we subtract a suitable diverging constant, for example the value at the origin,
+the massless limit $\mass \searrow 0$ can be taken.
+We define the  \emph{potential kernel} $\potker \colon \ZZ^2 \to \bR$ by
+\begin{align*}
+\potker(z)
+= \; & \lim_{\mass \searrow 0} \left( G_\mass(0) - G_\mass(z) \right) . %\\ = \; &
+%= \frac{1}{(2\pi)^2} \iint_{[-\pi,\pi]^2}
+%\frac{1 - e^{\ii (x q + y p)}}{1 - \frac{1}{2} \cos(q) - \frac{1}{2} \cos(p)} \ud q \ud p .
+\end{align*}
+%The potential kernel $\potker \colon \ZZ^2 \rightarrow \bR$
+It is a function satisfying $[\Delta \potker] (z) = \delta_0(z)$ and having
+logarithmic growth at infinity, and it is determined up to an additive constant by these
+conditions. In fact we have
+\[ \potker(z) = \frac{2}{\pi} \, \log |z| + \frac{2\gamma + \log 8}{\pi} +  O(|z|^{-2})\]
+as $z \rightarrow \infty$, see, e.g., \cite[Sections 4 and 6]{lawler-limic}.
+For convenience, we extend the potential kernel to the
+diamond lattice $\ZZ^2_\diamond = \ZZ^2 \cup \ZZ^2_*$ %,
+%\[ \potker \colon \ZZ^2_\diamond \to \bR ,\]
+by setting the values on $\ZZ^2_*$ to zero.
+With this extension, we can consider the function
+\[ [\dd \potker] \colon \ZZ^2_m \rightarrow \bC , \]
+which is purely real on the horizontal edges and purely imaginary on the vertical edges of $\ZZ^2$.
+
+See \cite{hongler-i, kenyon-ci} for discussion and references to the following result.
+\begin{lem}
+The function $\Cker = [\dd \potker]$ is the unique function $\Cker:\mathbb{Z}_{m}^{2}\to\mathbb{C}$
+satisfying $\left[\ddbar \Cker \right](z)=\delta_{0}(z)$
+and $\Cker\left(z\right) \to 0$ as $|z| \to \infty$. We
+call $\Cker$ the \emph{discrete Cauchy kernel} with pole at $0$.
+\end{lem}
+\begin{proof}
+Clearly $\Cker=[\dd \potker]$ satisfies $[\ddbar \Cker] = [\ddbar \dd \potker] = [\Delta \potker] = \delta_0$,
+and $\Cker$ decays at infinity.
+
+To show uniqueness, consider the difference of two functions satisfying the properties.
+The difference is a function on $\ZZ^2_\diamond = \ZZ^2 \cup \ZZ^2_*$,
+which is annihilated by $\ddbar$, and in particular its restrictions
+to $\ZZ^2$ and $\ZZ^2_*$ are harmonic %, since $\Delta = \dd \ddbar$. As harmonic function
+and decaying at infinity, thus zero. %, the difference is zero.
+\end{proof}
+
+\subsection{Discrete Laurent monomials}
+We next define discrete Laurent monomial functions on both
+$\mathbb{Z}_{\diamond}^{2}$ and $\mathbb{Z}_{m}^{2}$. The appropriate
+neighborhoods of origin are measured in the norm $\|x + \ii y\|_1 = |x|+|y|$,
+and we denote these neighborhoods on the two lattices by
+\begin{align*}
+\overline{B}_\diamed(r) = \left\{ z \in \ZZ^2_\diamed \, : \, \|z\|_1 \leq r \right\} .
+\end{align*}
+
+
+\begin{lem}\label{lem: discrete Laurent monomials}
+There exist unique functions $z\mapsto z^{\left[k\right]}$, $k\in\mathbb{Z}$,
+defined for $z \in \mathbb{Z}_{\diamond}^{2} \cup \mathbb{Z}_{m}^{2}$ such that:
+\begin{itemize}
+\setlength{\itemsep}{0.5em}
+\item The functions $z\mapsto z^{\left[k\right]}$ for $k \in \{-1,0,1\}$ are given by
+\[z^{\left[0\right]} \equiv 1 , \qquad z^{[1]}=z \]
+and
+\[ z^{[-1]} = \begin{cases} 2\pi \, \Cker(z) & \text{ for } z \in \ZZ^2_m \\
+\frac{\pi}{2} \underset{a \in \{ \pm \frac{1}{2} , \pm \frac{\ii}{2} \}}{\sum} \Cker(z-a)
+& \text{ for } z \in \ZZ^2_\diamond \end{cases} .\]
+\item For all $k\in\bZ$ we have
+\begin{align}\label{dr}
+[\dd z^{\left[k\right]} ] = k z^{\left[k-1\right]}.
+\end{align}
+\item For $k \geq 0$ the function $z \mapsto z^{[k]}$ is discrete holomorphic in the sense
+that \[ [\ddbar z^{[k]}] \equiv 0 . \]
+\item For all $k>0$ we have the vanishing at origin conditions
+\begin{align*}
+0^{[k]}=0 , \qquad
+\left( \frac{1}{2} \right)^{[k]} + \left( \frac{-1}{2} \right)^{[k]} = 0 , \qquad
+\left( \frac{\ii}{2} \right)^{[k]} + \left( \frac{-\ii}{2} \right)^{[k]} = 0 , & \\ %\qquad
+\text{ and } \; \left( \frac{1+\ii}{2} \right)^{[k]} + \left( \frac{1-\ii}{2} \right)^{[k]}
++ \left( \frac{-1+\ii}{2} \right)^{[k]} + \left( \frac{-1+\ii}{2} \right)^{[k]} = 0 . &
+\end{align*}
+%$0^{[k]}=0$, and $(\frac{1}{2})^{[k]} + (\frac{-1}{2})^{[k]} = 0$,
+%and $(\frac{\ii}{2})^{[k]} + (\frac{-\ii}{2})^{[k]} = 0$, and
+%$(\frac{1+\ii}{2})^{[k]} + (\frac{-1+\ii}{2})^{[k]} + (\frac{-1-\ii}{2})^{[k]} + (\frac{1-\ii}{2})^{[k]} = 0$.
+\end{itemize}
+The functions $z \mapsto z^{[k]}$ are called the Laurent monomials, and they have the following further properties:
+\begin{itemize}
+\item For all $k \in \ZZ$ and $z \in \ZZ^2_\diamond \cup \ZZ^2_m$
+we have $\overline{z}^{\left[k\right]} = \overline{z^{\left[k\right]}}$.
+\item For all $k \in \ZZ$ and $z \in \ZZ^2_\diamond \cup \ZZ^2_m$
+we have $(\ii z)^{\left[k\right]} = \ii^k z^{\left[k\right]}$.
+\item For $k>0$ the function $z \mapsto z^{[k]}$ vanishes for $z \in \clballdiamed{\frac{k-1}{2}}$.
+\item For $k \leq -1$ the function $z \mapsto z^{[k]}$ is
+discrete holomorphic outside a neighborhood of the origin in the sense
+that
+$ [\ddbar z^{[k]}] = 0 $ % \qquad \text{for }
+for $ z \notin \clballdiamed{\frac{|k|}{2}} $.
+%\item{For $k \ge 2$,
+% \[0^{\left[k\right]}=\left(\pm\frac{1}{2}\right)^{\left[k\right]}=\left(\pm\frac{i}{2}\right)^{\left[k\right]}=0.\]}
+\end{itemize}
+\end{lem}
+In the proof below we use discrete integrations that differ slightly from the important integrals later
+(for the attentive reader there should be no confusion, however, as later we will use
+integration contours on a different lattice, and we will integrate products of two functions).
+Below, for a function $f$ defined at the midpoints of edges of $\ZZ^2$ (i.e., on $\ZZ^2_m$),
+we define the integral along the oriented edge $\overrightarrow{zw}$ ($z,w \in \ZZ^2$, $|z-w|=1$)
+by the evident expression $(w-z) \times f(\frac{z+w}{2})$.
+%\[ \int_{\overrightarrow{zw}}^{(\ZZ^2)} f \; = \; (w-z) \times f \left( \frac{z+w}{2} \right) . \]
+The integral along an oriented path is the sum of the integrals along the oriented edges of the path.
+Note that the positively oriented integral around a plaquette surrounding $z \in \ZZ^2_*$
+of $f\colon \ZZ^2_m \rightarrow \bC$ is just $2\ii [\ddbar f](z)$.
+The set of horizontal edges $(\ZZ+\frac{1}{2}) \times \ZZ \subset \ZZ^2_m$,
+the set of vertical edges $\ZZ \times (\ZZ+\frac{1}{2}) \subset \ZZ^2_m$, and the
+dual $\ZZ^2_* = (\ZZ+\frac{1}{2})^2$ are all translates of the standard square grid $\ZZ^2$,
+and we define integrals on these with obvious modifications.
+\begin{proof}[Proof of Lemma~\ref{lem: discrete Laurent monomials}]
+The case of negative $k$ is obvious once $z^{[-1]}$ has been defined by the formula given above.
+Indeed, to have the correct derivatives of Equation \ref{dr}, we need to set \[ z^{[-1-m]} = \frac{(-1)^m}{m!} [\dd^m z^{[-1]}] . \]
+It follows from the property $[\ddbar z^{[-1]}] = 2\pi \delta_0(z) + \frac{\pi}{2} \sum_a \delta_a(z)$
+and the definition of the difference operator $\dd$, that $[\ddbar z^{[-1-m]}]$ vanishes
+outside the neighborhood $\clballdiamed{\frac{1+m}{2}}$ of the origin.
+The symmetry $(\ii z)^{[-1-m]} = \ii^{-1-m} z^{[-1-m]}$ follows
+from the symmetry $\potker(\ii z) = \potker(z)$ of the potential kernel, and the expression for $\dd$.
+The symmetry $\overline{z}^{\left[-1-m\right]} = \overline{z^{\left[-1-m\right]}}$ similarly follows
+from $\potker(\overline{z}) = \potker(z)$ and the expression for $\dd$.
+
+For positive $k$, we proceed recursively.
+We first define $z^{[0]}$ and $z^{[1]}$ by the given formulas (they obviously satisfy the stated properties).
+Then for $k \geq 2$ we define $z^{[k]}$ by integrating $k z^{[k-1]}$.
+For $z \in \ZZ^2$ the path of integration is any path from $0\in\ZZ^2$ to $z$.
+The result is independent of the choice of such path because $[\ddbar z^{[k-1]}] \equiv 0$.
+For $z$ (a midpoint of) a horizontal edge the path of integration is any path from
+$\frac{1}{2} \in (\ZZ+\frac{1}{2}) \times \ZZ$ to $z$
+(we could alternatively take the starting point $-\frac{1}{2}$ without any change, since $0^{[k-1]} = 0$),
+and for $z$ (a midpoint of) a vertical edge the path of integration is any path from
+$\frac{\ii}{2} \in \ZZ \times (\ZZ+\frac{1}{2})$ to $z$
+(we could alternatively take $-\frac{\ii}{2}$ as the starting point).
+For $z \in \ZZ^2_*$ the path of integration is any path from
+$\frac{1+\ii}{2} \in \ZZ^2_*$ to $z$, and we include an additive constant so as to
+guarantee $\sum_{a \in \{\pm\frac{1+\ii}{2},\pm\frac{1-\ii}{2}\}} a^{[k]} = 0$
+(in fact, this additive constant is zero except when $k=2$, in which case we have to set
+$(\frac{1+\ii}{2})^{[2]}=\frac{\ii}{2}$).
+
+To calculate $[\dd z^{[k]}]$, write it as
+\[ [\dd z^{[k]}] =
+\frac{1}{2} \Bigg[ \left( z+\frac{1}{2} \right)^{[k]} - \left( z-\frac{1}{2} \right)^{[k]} \Bigg]
+- \frac{\ii}{2} \Bigg[ \left( z+\frac{\ii}{2} \right)^{[k]} - \left( z-\frac{\ii}{2} \right)^{[k]} \Bigg] \]
+and note that the two terms are both equal to $\frac{1}{2} k z^{[k-1]}$ by the construction
+of $z^{[k]}$ as an integral.
+Similarly, in the calculation of $[\ddbar z^{[k]}]$ the two contributions cancel.
+We have thus constructed Laurent monomials with the desired defining properties,
+and uniqueness is clear since only constant functions are annihilated by both $\dd$ and $\ddbar$.
+
+The fact that $z^{[k]}$ is $0$ in $\clballdiamed{\frac{k-1}{2}}$ follows inductively:
+the vanishing of $z^{[k-1]}$ in a neighborhood of origin makes its integral $z^{[k]}$ constant in
+a slightly bigger neighborhood, and this constant is fixed by the vanishing at origin conditions.
+The symmetries $(\ii z)^{[k]} = \ii^k z^{[k]}$ and
+$\overline{z}^{\left[k\right]} = \overline{z^{\left[k\right]}}$ are clear by the construction.
+\end{proof}
+%\begin{rem}\label{rem:finitely-many-modes}
+%The following easily verified observation will be important in the Sugawara construction of the $L_n$ operators: for each fixed $z \in \ZZ^2_\diamond \cup \ZZ^2_m$, there exists $N=N(z) < \infty$ such that $z^{[k]} =0$ for all $k \ge N$.
+%\end{rem}
+%\begin{rem}
+%There is some freedom in how to define $z^{[-1]}$ on $\ZZ^2_\diamond$.
+%Indeed, we could just as well have defined it as a translate of the Cauchy kernel $\Cker(z)$ on $\ZZ^2_m$,
+%thereby placing the singularity at some point of $\ZZ^2_m$. We have chosen instead a symmetric version
+%by averaging translates with singularities at $\{\pm 1/2, \pm i/2 \}$.
+%\end{rem}
+%\begin{rem}
+%The vanishing at origin conditions for $k>0$ are only to fix some constants of integration.
+%Similarly, there would be some freedom in the definition of $z^{[-1]}$ for $z \in \ZZ^2_\diamond$.
+%In both cases, we have chosen to fix the constants in a simple symmetric manner.
+%For the results of the present article concerning the discrete GFF in the full plane
+%the choices are not important, and concerning the discrete GFF in the half-plane, only
+%a symmetry in the reflection $z \mapsto \overline{z}$ would be needed.
+%\end{rem}
+
+%Fact
+%that for given $z$, only a finite number of $z^{\left[k\right]}$
+%for $k>0$ are nonzero -- refer to remark to be made about positive
+%energy property{]} {[}Symmetries of $z$: $\overline{z}^{\left[k\right]}=\overline{z^{\left[k\right]}}$,
+%$\left(-z\right)^{\left[k\right]}=\left(-1\right)^{k}z^{\left[k\right]}$
+%-- hopefully correct{]}
+
+\subsection{Discrete contour integrals of products of two functions}
+We now define the important notion of discrete contour integral of a product of two functions.
+The contour of integration will be a path on the shifted half-mesh square lattice
+$(\frac{1}{2}\ZZ + \frac{1}{4})^2$. Note that any edge of this lattice is between a point of
+$\ZZ^2_m$ and a point of $\ZZ^2_\diamond$, both at distance $\frac{1}{4}$ of the edge.
+\begin{figure}
+\begin{center}
+\begin{minipage}{13cm}\epsfig{file=pics-lattice_Virasoro.2, width=13cm}
+\end{minipage}
+\end{center}
+\caption{A discrete contour is
+a closed counterclockwise oriented path on the shifted
+half-mesh square lattice $(\frac{1}{2}\ZZ^2+\frac{1}{4})^2$.}
+\label{fig: discrete contours}
+\end{figure}
+Let $f \colon \ZZ^2_m \rightarrow \bC$ and $g \colon \ZZ^2_\diamond \rightarrow \bC$ be two functions.
+We define the integral of the product of $f$ and $g$ along an oriented edge $[\overrightarrow{uv}]$
+($u,v \in (\frac{1}{2}\ZZ + \frac{1}{4})^2$, $|u-v|=\frac{1}{2}$) as
+\[ \int_{[\overrightarrow{uv}]} f(z) g(z) \ud z \; := \; (v-u) \times f(z_m) g(z_\diamond) ,\]
+where $z_m \in \ZZ^2_m$ and $z_\diamond \in \ZZ^2_\diamond$ are the points at distance $\frac{1}{4}$
+of $[\overrightarrow{uv}]$.
+The integral along an oriented path $[\gamma]$ on $(\frac{1}{2}\ZZ + \frac{1}{4})^2$
+is the sum of the integrals along the oriented edges of the path, and is denoted by
+$ \int_{[\gamma]} f(z) g(z) \ud z $
+(by convention, we write the function defined on $\ZZ^2_m$ first, and the function defined
+on $\ZZ^2_\diamond$ second).
+
+By discrete contour we mean a positively oriented
+(i.e. counterclockwise) closed simple path $[\gamma]$ on $(\frac{1}{2}\ZZ + \frac{1}{4})^2$.
+We denote by
+\[ \mathrm{int}_\diamond[\gamma] \subset \ZZ^2_\diamond \qquad (\text{respectively }
+\mathrm{int}_m[\gamma] \subset \ZZ^2_m ) \]
+the set of points of the diamond lattice (respectively the medial lattice) encircled by $[\gamma]$.
+The discrete closure
+$\overline{\mathrm{int}}_\diamond[\gamma] \subset \ZZ^2_\diamond$ (respectively
+$\overline{\mathrm{int}}_m[\gamma] \subset \ZZ^2_m$) is the
+union of $\mathrm{int}_\diamond[\gamma] \subset \ZZ^2_\diamond$ (respectively
+$\mathrm{int}_\diamond[\gamma] \subset \ZZ^2_\diamond$) and
+the set of points of $\ZZ^2_\diamond$ (respectively $\ZZ^2_m$)
+at distance $\frac{1}{4}$ from $[\gamma]$.
+The integrals over such closed discrete contours are denoted by
+\[ \oint_{[\gamma]} f(z) g(z) \ud z , \]
+and they can be evaluated with the help of the following
+combination of discrete Leibnitz rule and Stokes' formula.
+\begin{lem}\label{IBP}
+Let $f:\ZZ^2_m \to \mathbb{C} $ and $g: \ZZ^2_\diamond \to \mathbb{C}$ and
+$[\gamma]$ a discrete contour. Then we have
+\[ \oint_{[\gamma]} f(z) g(z) \ud z =
+\ii \sum_{z \in \mathrm{int}_m[\gamma]} f(z) \; [\ddbar g](z)
++ \ii \sum_{z \in \mathrm{int}_\diamond[\gamma]} [\ddbar f](z)\; g(z) . \]
+%\begin{align*}
+% \frac{1}{2i} \oint_{[\gamma]} f(z) \, g(z) dz=\sum_{z \in \cV_{\Gamma_m}} f(z) \left[\ddbar g \right](z) + \sum_{z \in \cV_{\Gamma_\diamond}} \left[\ddbar f\right](z) g(z),
+%%\left( \sum_{\vec{e} \in \partial_0 \mathcal{E}_{\Omega}} f(\mathbf{m}(\vec{e})) \, g\left(\mathbf{m}(\vec{e}) + \frac{i \vec{e}}{2}\right)\vec{e} + \sum_{\vec{e} \in  \partial_1 \mathcal{E}_{\Omega^*}} f(\mathbf{m}(\vec{e})) \, g\left(\mathbf{m}(\vec{e}) + \frac{i \vec{e}}{2}\right)\vec{e} \right),
+%\end{align*}
+%where $\left[ \gamma \right] = \left[ \dd \Gamma \right]$.
+\end{lem}
+%\begin{rem}
+%There are two points per unit area of both $\ZZ^2_m$ and $\ZZ^2_\diamond$,
+%so the right hand side is a discretization of the intergal
+%$2\ii \iint \bar{\partial} (fg)$ over the area encircled by $\gamma$.
+%\end{rem}
+\begin{proof}
+Decompose the integral to a sum of integrals around elementary plaquettes
+of the shifted half-mesh square lattice $(\frac{1}{2}\ZZ + \frac{1}{4})^2$,
+and notice that the integral around a plaquette that surrounds $z \in \ZZ^2_m$
+is $\ii f(z) \, [\ddbar g](z)$ and the integral around a plaquette that
+surrounds $z \in \ZZ^2_\diamond$ is $\ii [\ddbar f](z) \, g(z)$.
+\end{proof}
+
+
+
+\subsection{Discrete residue calculus}
+As a consequence of the above simple lemma,
+we have the following discrete analog of a standard residue calculation.
+\begin{lem}\label{key-lemma}
+Let $m,n \in \ZZ$, let $r = \max \{0, -\frac{m}{2}, -\frac{n}{2} \}$, and let $[\gamma]$ be a discrete contour that separates
+the neighborhood $\clballdiamed{r}$ of the origin from infinity.
+Then we have
+\begin{align}\label{oct31_1}
+\frac{1}{2 \pi \ii} \oint_{[\gamma]} z^{[m]} \, z^{[n]} \, \ud z = \delta_{m+n, -1} ,
+\end{align}
+where $z^{[m]}$ and $z^{[n]}$ are discrete Laurent monomial functions
+restricted to $\ZZ^2_m$ and $\ZZ^2_\diamond$, respectively.
+%where the function $z^{[m]}\Big|_{\ZZ^2_m}$
+%      \begin{align}\label{oct31_1}
+%      \frac{1}{2i} \oint_{[\gamma]} z^{[m]} \, z^{[n]} dz = \delta_{m+n+1}.
+%      \end{align}
+\end{lem}
+\begin{proof}
+By Lemma~\ref{IBP} we have
+\begin{equation}\label{feb26}
+\frac{1}{\ii} \oint_{[\gamma]} z^{[m]} \, z^{[n]} \, \ud z
+= \sum_{z \in \mathrm{int}_m[\gamma]} z^{[m]} \, [\ddbar z^{[n]} ]
++ \sum_{z \in \mathrm{int}_\diamond[\gamma]} [\ddbar z^{[m]} ] \, z^{[n]} ,
+\end{equation}
+and we note that by the assumption on $[\gamma]$, the sets $\mathrm{int}_m[\gamma]$ and
+$\mathrm{int}_\diamond[\gamma]$ contain the supports of $[\ddbar z^{[n]}]$
+and $[\ddbar z^{[m]}]$, respectively.
+Also note that if $m,n \ge 0$, then \eqref{oct31_1} follows immediately from \eqref{feb26},
+since $z^{[n]}$ and $z^{[m]}$ are discrete holomorphic.
+
+Suppose $n \geq 0, m \leq -1$. Then only the second sum on the right hand side
+of \eqref{feb26} remains.
+%Moreover, the sum has no non-vanishing terms unless
+%the radius of the neighborhood
+%where $z^{[n]}$ vanishes is smaller than the radius of the neighborhood where $[\ddbar z^{[m]}]$ is supported
+%$n < |m|+1$.
+Using $\dd^\top = -\dd$ repeatedly we get that
+\begin{align}
+\sum_{z \in \mathrm{int}_\diamond[\gamma]} [\ddbar z^{[m]}] \,  z^{[n]}
+& = \frac{(-1)^{-m-1}}{(-m-1)!} \sum_{z \in \mathrm{int}_\diamond[\gamma]} [\ddbar \dd^{-m-1} z^{[-1]}] \, z^{[n]} \\
+\nonumber
+& = \frac{1}{(-m-1)!} \sum_{z} [\ddbar z^{[-1]}] \, [\dd^{-m-1} z^{[n]}] \\
+\nonumber
+& = \frac{n!}{(-m-1)!(n+m+1)!} \sum_{z} [\ddbar z^{[-1]}] \, z^{[n+m+1]} ,
+\end{align}
+where the sums in the last two expressions are over $z \in \ZZ^2_\diamond$ or $z \in \ZZ^2_m$,
+according to whether $-m-1$ is even or odd, respectively. In the two cases, we have
+that $[\ddbar z^{[-1]}]$ is $2\pi \delta_0(z)$ or
+$\frac{\pi}{2} \sum_{a \in \{\pm\frac{1}{2}, \pm\frac{\ii}{2}\}} \delta_a(z)$, respectively,
+and in either case the result of the whole expression evaluates to $\delta_{n+m+1}$.
+The case $n \leq -1 , m \geq 0$ is similar.
+
+Finally, in the case $m,n \leq -1$ rewrite both sums on the right hand side of \eqref{feb26}
+as above. If $n$ and $m$ have the same parity, then each of the rewritten sums vanishes
+separately because the summands are odd:
+$[\ddbar \Cker](-z) \times (-z)^{[n+m+1]} = - [\ddbar \Cker](z) \times z^{[n+m+1]}$.
+If $n$ and $m$ are of different parities, then both rewritten sums are sums over the same
+sublattice --- they are otherwise identical, but they come with opposite signs and cancel
+each other.
+\end{proof}
+\begin{rem}
+Discrete holomorphic monomials and related constructions have been considered by several authors, apparently beginning with the work of Duffin \cite{duffin}. We mention also the more recent work of Mercat \cite{mercat} which was also in part motivated by applications to statistical mechanics models.
+\end{rem}
+
+
+%\red{[Connection with disintegration of measures, universal property
+%of conditional expectation? -- not mandatory to include that]}
+
+\section{Discrete current modes}\label{sect:current-modes}
+
+\subsection{The discrete Gaussian free field pinned at the origin}
+While the (massless) discrete Gaussian free field can not directly be defined in the
+full plane, the massive Green's function $G_\mass$ introduced in Section~\ref{sect:monomials}
+is the covariance of the well-defined massive discrete Gaussian free
+field $\left( \phi_\mass(z) \right)_{z \in \ZZ^2}$,
+\[ \lra{\phi_\mass(z) \, \phi_\mass(w)} = G_\mass(z-w) . \]
+In the massless limit $\mass \searrow 0$, differences of values of the field remain well-behaved.
+The pinned discrete Gaussian free field $\phi$ is the limit as $\mass \searrow 0$ of the
+field $\phi_\mass -\phi_\mass(0)$. We can write its correlation functions in terms of the
+potential kernel $\potker$ introduced in Section~\ref{sect:monomials},
+\begin{align*}
+\lra{ \phi(z) \, \phi(w) }
+= \; & \lim_{\mass \searrow 0} \lra{(\phi_\mass(z) - \phi_\mass(0)) \, (\phi_\mass(w) - \phi_\mass(0))} \\
+%= \; & \lim_{\mass \searrow 0} \Big( G_\mass(z-w) - G_\mass(z) - G_\mass(w) + G_\mass(0) \Big) \\
+= \; & \potker(z) + \potker(w) - \potker(z-w) .
+\end{align*}
+
+\subsection{The discrete current}
+Let $\phi$ be the discrete GFF on $\ZZ^2$, pinned at $0$. To define the
+\emph{current}
+\[ J(z) = [\dd \phi](z) \qquad (z \in \ZZ^2_m) , \]
+we first extend the definition of $\phi$ to $\ZZ^2_\diamond = \ZZ^2 \cup \ZZ^2_*$ by
+setting the value of $\phi$ to zero on $\ZZ^2_*$. By differentiating the two point correlation function
+\[ \lra{\phi(z) \phi(w)} = \potker(z) + \potker(w) - \potker(z-w) \]
+%(where $\potker$ is the potential kernel, extended to zero on $\ZZ^2_*$ as in Section~\ref{sect:monomials})
+we can now conveniently write the correlations of the current in terms of $\Cker = [\dd \potker]$. For example:
+%$z^{[-1]} = 2\pi \Cker(z) = 2\pi [\dd \potker](z)$ (for $z \in \ZZ^2_m$):
+\begin{align*}
+\lra{J(z) \phi(x)} = \; & \begin{cases}
+\Cker(z) - \Cker(z-x) & \text{ if } x \in \ZZ^2 , \;  z \in \ZZ^2_m; \\
+0 & \text{ if } x \in \ZZ^2_* , \;  z \in \ZZ^2_m \end{cases}; \\
+\lra{J (z)J (w) } = \; &
+%\begin{cases}
+%\frac{1}{2} \Big( \Cker(w+\frac{1}{2}-z) - \Cker(w-\frac{1}{2}-z) \Big) & \text{ if } w \in \ZZ^2_m \text{ is horizontal} \\
+%\frac{1}{2\ii} \Big( \Cker(w+\frac{\ii}{2}-z) - \Cker(w-\frac{\ii}{2}-z) \Big) & \text{ if } w \in \ZZ^2_m \text{ is vertical} \end{cases} \\
+[\dd \Cker] (w-z) .
+%= \; &
+%\begin{cases}
+%[\dd^\mathrm{hor} \Cker] (w-z) & \text{ if } w \in \ZZ^2_m \text{ is horizontal} \\
+%[\dd^\mathrm{ver} \Cker] (w-z) & \text{ if } w \in \ZZ^2_m \text{ is vertical}. \end{cases}
+\end{align*}
+
+\subsection{Wick's formula}
+Let $\phi$ be the discrete GFF on $\ZZ^2_\diamond$, pinned at $0$. We have given
+the two-point correlations for its current $J = [\dd \phi ]$ in terms of
+$[\dd \Cker]$. Wick's formula lets us compute higher order correlations of a
+Gaussian field from its two-point correlations; see \cite[Chapter 1]{janson} for a proof.
+
+\begin{lem}[Bosonic Wick's formula]
+Suppose that $(X_i)_{i \in I}$ is a finite collection of centered Gaussian random variables. Then we have
+\begin{align}\label{wick}
+\lra{\prod_{i\in I} X_i } = \sum_{P} \prod_{\{a,b\} \in P} \lra{X_{a} X _{b}},
+\end{align}
+where the sum is over all pair partitions $P$ of $I$, i.e. over
+collections $P$ of $\frac{|I|}{2}$ mutually disjoint two element subsets of $I$
+(the sum is empty if $|I|$ is odd).
+\end{lem}
+
+We will make calculations involving correlations of the discrete
+current $J(z)$ and the field $\phi(x)$. In particular, the Wick expansion of
+\[ \Biglra{ J (z) J (w) \phi(x_1) \cdots \phi(x_k)} \]
+contains terms of two types: those in which the two currents are paired together
+\begin{align}
+\label{type2}
+\biglra{J (z) J(w)} & \prod_{\{a,b\}\in P} \biglra{\phi(x_{a}) \phi(x_{b})} \\
+\nonumber
+& \text{($P$ a pair partition of $\set{1,2,\ldots,k}$)}
+\end{align}
+and those in which both are paired with something else
+\begin{align}
+\label{type1}
+\biglra{J (z) \phi(x_i)} & \biglra{J (w) \phi(x_j)} \prod_{\{a,b\}\in P'} \biglra{\phi(x_{a}) \phi(x_{b})} \\
+\nonumber
+& \text{($i \neq j$ and $P'$ a pair partition of $\set{1,2,\ldots,k}\setminus\set{i,j}$)} .
+\end{align}
+
+\subsection{Discrete current modes acting on insertions}
+%Recall that for $z,w \in \ZZ^2_m, \, x \in \ZZ^2_\diamond$ we have
+%\[ \lra{J (z) \phi(x)} =  z^{[-1]} - (z-x)^{[-1]} , \quad  \lra{J (z)J (w) }=- [\dd_w(z-w)^{[-1]}]. \]
+%\begin{defn}\label{current-mode-def}
+Suppose that $\mathcal{G} \subset \ZZ^2$ is finite.
+For any $\mu \in \mathcal{M}$ and any $n \in \mathbb{Z}$ we define discrete current
+modes $\mathfrak{a}_n$ acting by discrete contour integrals on insertions of
+functions $f: \mathbb{R}^{\mathcal{G}} \to \mathbb{C}$ in $L^p(\mu_{\rm{GFF}} \big|_{\mathcal{G}})$
+for some $p >1$:
+\begin{equation}\label{A_def}
+\lra{\mathfrak{a}_n f(\phi \big|_{\mathcal{G}}) }_\mu :=
+\frac{1}{\sqrt{\pi}} \oint_{[\gamma]} \lra{ J(z) f(\phi \big|_{\mathcal{G}})g(\phi \big|_{\mathcal{G}})}
+    z^{[n]} \, \ud z
+\end{equation}
+where $[\gamma]$ is any discrete contour separating
+$\mathcal{G} \cup \clballdiamed{\max\{0,-\frac{n}{2}\}} $
+from $\infty$, and $g=g^\mu_{\mathcal{G}}$ is the Radon-Nikodym derivative of
+$\mu \big|_{\mathcal{G}}$ with respect to $\mu_{\rm{GFF}}\big|_{\mathcal{G}}$.
+
+%\red{Sorry, I'm not yet completely sure of good normalization, probably $\alpha = \frac{1}{\sqrt{\pi}}$\ldots}
+
+More generally, we define the iterated action (or ``product'') of multiple
+discrete current modes on field insertions by contour integrals
+\begin{multline*}
+\lra{\mathfrak{a}_{n_j}\cdots\mathfrak{a}_{n_1}  f(\phi \big|_{\mathcal{G}}) }_\mu \\
+:= \frac{1}{{\pi}^{j/2}} \oint_{\left[\gamma_{j}\right]} \cdots \oint_{\left[\gamma_{1}\right]}
+    \lra{ J(w_j) \cdots J(w_1) f(\phi \big|_{\mathcal{G}})g(\phi \big|_{\mathcal{G}})}
+    w_1^{\left[n_1\right]} \cdots w_j^{\left[n_j\right]} \ud w_1 \cdots \ud w_j,
+\end{multline*}
+where the contours are radially ordered: the contour $[\gamma_1]$ of integration of $w_1$
+%(corresponding to $\mathfrak{a}_{n_1}$)
+separates
+$\mathcal{G} \cup \clballdiamed{\max\{0,-\frac{n_1}{2}\}}$ from $\infty$,
+and for $k=2,3,\ldots,j$, the contour $[\gamma_k]$ of integration of $w_k$
+%(corresponding to $\mathfrak{a}_{n_k}$)
+separates $\overline{\mathrm{int}}_m [\gamma_{k-1}] \cup
+\overline{\mathrm{int}}_\diamond [\gamma_{k-1}] \cup \clballdiamed{\max\{0,-\frac{n_k}{2}\}}$
+%(corresponding to $\mathfrak{a}_{n_{k-1}}$)
+from $\infty$.
+%\end{defn}
+
+%\begin{rem}
+%We are mostly interested in the case when $f$ is a polynomial.
+%\end{rem}
+%\begin{rem}
+%In view of the residue formula of Lemma~\ref{key-lemma} it would perhaps be more accurate to call $\mathfrak{j}_n=\frac{1}{2i}\oint J(z) z^{[n]} dz$ current mode, so that $\mathfrak{a}_n = i\mathfrak{j}_n$.
+%\end{rem}
+
+
+
+%\begin{prop}
+%\label{prop:contour-integral-current-mode}For any $x_{1},\ldots,x_{k}\in\mathbb{Z}_\diamond^{2}$
+%and any $n\in\mathbb{Z}$ the discrete contour integral \eqref{A_def}
+%is independent of the discrete integration contour $[\gamma]$ provided it separates
+%$\left\{0, x_{1},\ldots,x_{k}\right\}$ from $\infty$.
+%\end{prop}
+%\begin{proof}
+%Suppose $[\gamma']$ is a discrete contour that separates $[\gamma]$ from infinity.
+%The integration by parts formula of Lemma~\ref{IBP} shows that for any $x \in \ZZ^2_\diamond$ inside $[\gamma]$,
+%\[
+%\frac{1}{2i}\left(\oint_{\left[\gamma' \right]}  - \oint_{\left[\gamma\right]} \right)(z-x)^{[-1]} z^{\left[n\right]}\mathrm{d}z = \sum_{z \in [\Gamma' \setminus \Gamma]_m} (z-x)^{[-1]} [\ddbar_z z^{\left[n\right]}] + \sum_{z \in [\Gamma' \setminus \Gamma]_\diamond} [\ddbar_z(z-x)^{[-1]}] z^{\left[n\right]} =0
+%\]
+%by discrete holomorphicity. A Wick expansion combined with this computation completes the proof.
+%\end{proof}
+%It is no more difficult to check this directly for $L^2$ insertions, so we will do so.x
+
+It follows from H\"older's inequality that the integrals %inside the integrals
+$ \lra{\mathfrak{a}_{n} f(\phi |_{\mathcal{G}}) }_\mu $ and
+$ \lra{\mathfrak{a}_{n_j}\cdots\mathfrak{a}_{n_1} f(\phi |_{\mathcal{G}}) }_\mu $ make
+sense for any given choice of contours, but we need to verify that the definition is
+independent of the choices of contours.
+\begin{lem}\label{prop:contour-integral-current-mode}
+Suppose that $\mathcal{G} \subset \ZZ^2$ is finite and
+that $f: \mathbb{R}^{\mathcal{G}} \to \mathbb{C}$ is
+in $L^p(\mu_{\rm{GFF}} \big|_{\mathcal{G}})$ for some $p>1$. Then,
+\[ \oint_{\left[\gamma_{j}\right]} \cdots \oint_{\left[\gamma_{1}\right]}
+  \lra{ J(w_j) \cdots J(w_1) f(\phi \big|_{\mathcal{G}})}
+  w_1^{\left[n_1\right]} \cdots w_j^{\left[n_j\right]} \ud w_1 \cdots \ud w_j, \]
+is independent of the sequence of contours $[\gamma_1] , [\gamma_2], \ldots, [\gamma_j]$,
+provided the contours are radially ordered as above.
+%with $[\gamma_1]$ separating $\mathcal{G} \cup \left\{0, \pm 1/2, \pm i/2\right \}$ from $\infty$.
+%the discrete contour integral
+%\[
+%\oint_{[\gamma]}\lra{J(z) f(\phi\big|_{\mathcal{G}})} z^{[n]} dz,
+%\]
+%is independent of the choice of bounded integration contour $[\gamma]$ provided it separates
+%$\mathcal{G} \cup \left\{0, \pm 1/2, \pm i/2\right \}$ from $\infty$.
+\end{lem}
+%For any finite $\mathcal{G} \subset \ZZ^2_\diamond$, any $n\in\mathbb{Z}$, and any $f: \mathbb{R}^{\mathcal{G}} \to \mathbb{C}$ in $L^2\left(\mu_{\rm{GFF}}\big|_{\mathcal{G}}\right)$,
+
+\begin{proof}
+%Since $\mu \in \mathcal{M}$ there exists a polynomial $P$ such that
+%\[
+%\lra{J(z) F(\phi)}_\mu=\lra{J(z) F(\phi) P(\phi\big|_{\mathcal{H}})}.
+%\]
+We consider the case of one contour first, and we assume $\mathcal{G} \neq \emptyset$.
+By the domain Markov property of $\phi$ under $\mu_{\rm{GFF}}$,
+if we condition on the values of $\phi$ on $\mathcal{G}$,
+the conditional distribution of $\phi$ outside
+of $\mathcal{G}$ is that of a Gaussian free field with Dirichlet zero boundary conditions
+plus a discrete harmonic function $h \colon \ZZ^2 \setminus \mathcal{G} \to \mathbb{C}$
+with boundary values on $\dd (\ZZ^2 \setminus \mathcal{G})$ given by the values of $\phi\big|_{\mathcal{G}}$.
+Consequently, by conditioning inside the expected value, since $f(\phi\big|_{\mathcal{G}})$ is measurable
+with respect to the values of $\phi$ on $\mathcal{G}$, we have
+\begin{align}\label{mar4.1}
+\lra{J(z) f(\phi\big|_{\mathcal{G}})} = \lra{ [\dd h](z) f(\phi\big|_{\mathcal{G}})},
+\qquad z \in \ZZ^2_m .
+\end{align}
+Now suppose $[\gamma']$ is another positively oriented closed discrete contour that also separates
+$\mathcal{G} \cup \clballdiamed{\max\{0,-\frac{n}{2}\}}$ from infinity, and which we may for
+simplicity assume to encircle at least the same set as $[\gamma]$.
+%which in turn lies outside of $\mathcal{G}$.
+The identity \eqref{mar4.1} now shows that
+\begin{align*}
+\left(\oint_{\left[\gamma' \right]}  - \oint_{\left[\gamma\right]} \right)
+    \lra{J(z) f(\phi\big|_{\mathcal{G}})} z^{[n]} \ud z
+\; & = \left(\oint_{\left[\gamma' \right]}  - \oint_{\left[\gamma\right]} \right)
+    \lra{ [\dd h](z) f(\phi\big|_{\mathcal{G}})} z^{[n]} \ud z \\
+\; & = \lra{ f(\phi\big|_{\mathcal{G}}) \times \left(\oint_{\left[\gamma' \right]}  - \oint_{\left[\gamma\right]} \right)
+    [\dd h](z) z^{[n]} \ud z } % \\ \; &
+= 0 .
+\end{align*}
+Indeed, the last equality follows since $z^{[n]}$ is discrete holomorphic
+outside of $\clballdiamed{-\frac{n}{2}}$, and so for any discrete harmonic function $h$ as above, the %integration by parts
+formula of Lemma~\ref{IBP} gives
+\begin{align*}
+& \frac{1}{\ii}\left(\oint_{\left[\gamma' \right]}  - \oint_{\left[\gamma\right]} \right)[\dd h](z) z^{[n]} \ud z \\
+= \; & %\Big(
+    \sum_{z \in \mathrm{int}_m[\gamma'] \setminus \mathrm{int}_m[\gamma]}
+    %- \sum_{z \in \mathrm{int}_m[\gamma] \setminus \mathrm{int}_m[\gamma']} \Big)
+    [\dd h](z) \, \underbrace{[\ddbar z^{\left[n\right]}]}_{=0} %\\
+%& \qquad + %\Big(
+    + \sum_{z \in \mathrm{int}_\diamond[\gamma'] \setminus \mathrm{int}_\diamond[\gamma]}
+    %- \sum_{z \in \mathrm{int}_\diamond[\gamma] \setminus \mathrm{int}_\diamond[\gamma']} \Big)
+    \underbrace{[\Delta h](z)}_{=0} \, z^{\left[n\right]} .
+%+ \sum_{z \in [\Gamma' \setminus \Gamma]_\diamond} [\Delta u](z) z^{\left[n\right]} = 0.
+\end{align*}
+
+It remains to check the case with several radially ordered contours.
+By conditioning on the values of $\phi$ on $\mathcal{G}$ and on the
+contours $[\gamma_{k-1}]$ and $[\gamma_{k+1}]$ (more precisely, on the vertices of $\ZZ^2$ at
+distance $\frac{1}{4}$ from these contours), a similar argument as the one just given implies
+that we can move $[\gamma_k]$ as long as it is between $[\gamma_{k-1}]$ and $[\gamma_{k+1}]$.
+\end{proof}
+
+
+
+
+%By the domain Markov property of $\phi$ under $\mu_{\rm{GFF}}$, if we condition on the values of $\phi$ on $\mathcal{G}$ (which we can assume is simply connected and contains $\{0, \pm 1/2, \pm i/2\}$), the conditional distribution of $\phi$ outside of $\mathcal{G}$ is that of a mean zero Gaussian free field plus a discrete harmonic function $u(z): \ZZ^2_\diamond \to \mathbb{C}$ with boundary values on $\dd \ZZ^2_\diamond \setminus \mathcal{H}$ given by the values of $\phi$. Hence by conditioning inside the integral, since $F(\phi)$ and $P(\phi\big|_{\mathcal{H}})$ are measurable with respect to the values of $\phi$ on $\mathcal{H}$,
+%\begin{align}\label{mar4.1}
+%\lra{J(z) F(\phi) P(\phi\big|_{\mathcal{H}})} = \lra{ [\dd u](z) F(\phi) P(\phi\big|_{\mathcal{H}})}.
+%\end{align}
+%Now suppose $[\gamma']$ is a discrete contour that separates $[\gamma]$ from infinity which in turn is outside of $\mathcal{H}$. The identity \eqref{mar4.1} combined with the integration by parts formula of Lemma~\ref{IBP} shows that
+%\begin{align*}
+%\left(\oint_{\left[\gamma' \right]}  - \oint_{\left[\gamma\right]} \right)\lra{J(z) F(\phi)}_{\mu} z^{[n]} dz & = \left(\oint_{\left[\gamma' \right]}  - \oint_{\left[\gamma\right]} \right) \lra{ [\dd u](z) F(\phi) P(\phi\big|_{\mathcal{H}})}z^{[n]} dz \\
+%&  \lra{ \left(\oint_{\left[\gamma' \right]}  - \oint_{\left[\gamma\right]} \right)[\dd u](z) z^{[n]} dz  F(\phi) P(\phi\big|_{\mathcal{H}})}\\
+%&=0.
+%\end{align*}
+%Indeed, since $z^{[n]}$ is discrete holomorphic outside of $\mathcal{H}$, for any discrete harmonic function $u$ as above,
+%\[
+%\frac{1}{2i}\left(\oint_{\left[\gamma' \right]}  - \oint_{\left[\gamma\right]} \right)[\dd u](z) z^{[n]} dz = \sum_{z \in [\Gamma' \setminus \Gamma]_m} [\dd u](z) [\ddbar z^{\left[n\right]}] + \sum_{z \in [\Gamma' \setminus \Gamma]_\diamond} [\Delta u](z) z^{\left[n\right]}=0.
+%\]
+%This completes the proof.
+%\end{proof}
+
+
+
+\subsection{Current modes as change of measure operators}
+Each discrete current mode $\mathfrak{a}_{n}$ induces a change of measure operator acting on $\mathcal{M}$,
+denoted by $a_{-n}$.
+%Recall that we always assume the corresponding discrete contours to be radially ordered.
+%
+%Let $\mu \in \mathcal{M}$ and let $P$ and $\mathcal{H}$ be as in Definition~\ref{def:space-gibbs-measures}. Using Lemma~\ref{prop:contour-integral-current-mode} we can consider the contour integral action of the current modes on insertions of $L^2\left(\mu_{\rm{GFF}} \big|_{\mathcal{G}} \right)$ functions $F: \mathbb{R}^{\mathcal{G}} \to \mathbb{C}$ of the free field under the measure $\mu$:
+%\[
+%\frac{1}{2}\oint_{[\gamma]}\lra{J(z) F(\phi \big|_{\mathcal{G}}) }_\mu z^{[n]} dz=\frac{1}{2}\oint_{[\gamma]}\lra{J(z) F(\phi \big|_{\mathcal{G}} ) P(\phi \big|_{\mathcal{H}}) } z^{[n]} dz,
+%\]
+%where $[\gamma]$ is any discrete contour that separates $\mathcal{H}$ from $\infty$.
+
+We first state an auxiliary result on the reconstruction of the change of measure operator
+from a consistent family of operators acting on insertions. Below we denote briefly
+$L^p_\mathcal{G} = L^p(\mu_\mathrm{GFF}\big|_\mathcal{G})$. Note that a Gibbs
+measure $\mu \in \mathcal{M}$ is determined by the collection of Radon-Nikodym derivatives
+$\left( g_\mathcal{G} \right)_{\mathcal{G} \subset \ZZ^2 \text{ finite}}$,
+\[ g_\mathcal{G} = \frac{\ud \mu \big|_\mathcal{G}}{\ud \mu_\mathrm{GFF}\big|_\mathcal{G}}
+\in \bigcap_{p<\infty} L^p_\mathcal{G} , \]
+which satisfy the consistency conditions that for any $\mathcal{G} \subset \mathcal{G}'$ we have
+\[ g_\mathcal{G} (\phi|_\mathcal{G}) =
+\EX \left[ g_\mathcal{G'} (\phi|_\mathcal{G'}) \, \Big| \, \phi|_\mathcal{G} \right] ,\]
+where the right hand side is the conditional expected value over the discrete GFF $\phi$
+given its values on $\mathcal{G}$. Conversely, any collection
+$\left( g_\mathcal{G} \right)_{\mathcal{G} \subset \ZZ^2 \text{ finite}}$ of functions
+$g_\mathcal{G} \in \bigcap_{p<\infty} L^p_\mathcal{G}$ satisfying the above consistency
+condition determines a Gibbs measure $\mu \in \mathcal{M}$.
+\begin{lem}\label{lem: lifting to change of measure operators}
+Suppose that $\left( \mathfrak{A}_\mathcal{G} \right)_{\mathcal{G} \subset \ZZ^2 \text{ finite}}$
+is a family of linear functionals
+\[ \mathfrak{A}_\mathcal{G} \colon \bigcup_{p>1} L^p_\mathcal{G} \rightarrow \bC \]
+such that
+\begin{itemize}
+\item for any $p>1$, the functional $\mathfrak{A}_\mathcal{G}$
+restricted to $L^p_\mathcal{G}$ is a bounded operator
+\item for all $\mathcal{G} \subset \mathcal{G}'$ and $f \in L^p_\mathcal{G}$, the consistency
+$ \mathfrak{A}_\mathcal{G'} (f) = \mathfrak{A}_\mathcal{G} (f) $ holds.
+\end{itemize}
+Then there exists a unique change of measure operator $A \colon \mathcal{M} \rightarrow \mathcal{M}$
+such that for any $\mu \in \mathcal{M}$ and $\mathcal{G}$
+%with  $\frac{\ud \mu \big|_\mathcal{G}}{\ud \mu_\mathrm{GFF}\big|_\mathcal{G}} = g_\mathcal{G}$
+and any $f \in L^p_\mathcal{G}$, $p>1$, we have
+\[ \lra{ f }_{A\mu}
+= \mathfrak{A}_\mathcal{G} (f g_\mathcal{G}^\mu) .\]
+\end{lem}
+\begin{proof}
+Fix a Gibbs measure $\mu \in \mathcal{M}$. Uniqueness of the Gibbs measure $A\mu$ with the above
+correlation functions is clear, so it suffices to construct one and prove
+that $A\mu \in \mathcal{M}$.
+
+Fixing first also $\mathcal{G}$, we note that the map
+\[ f \mapsto \mathfrak{A}_\mathcal{G} (f g_\mathcal{G}^\mu) \]
+is a bounded linear functional on any $L^p_\mathcal{G}$, $p>1$.
+It follows from $L^p$-space duality, that there is a unique function
+$\alpha^\mu_\mathcal{G} \in \bigcap_{p<\infty} L^p_\mathcal{G}$ such that we can write
+\[ \mathfrak{A}_\mathcal{G}(f g_\mathcal{G}^\mu) = \lra{ f \alpha^\mu_\mathcal{G} } .\]
+Consistency of the operators implies that for all $f \in L^p_\mathcal{G}$
+and for any $\mathcal{G}' \supset \mathcal{G}$ we have
+\[ \lra{f \alpha^\mu_{\mathcal{G}'}} = \lra{ f \alpha^\mu_\mathcal{G} } .\]
+Thus the collection
+$\left( \alpha_\mathcal{G} \right)_{\mathcal{G} \subset \ZZ^2 \text{ finite}}$
+is consistent and can be used to define the Gibbs measure $A \mu$ such that the Radon-Nikodym
+derivative of $(A \mu)\big|_\mathcal{G}$ is $\alpha_\mathcal{G}$. By construction
+$A \mu$ has the desired correlation functions, the Radon-Nikodym derivative
+$\alpha^\mu_\mathcal{G}$ is in $L^p_\mathcal{G}$ for all $p<\infty$, and
+$(A \mu)\big|_\mathcal{G}$ is absolutely continuous with respect to $\mu\big|_\mathcal{G}$ ---
+so we have that $A \mu \in \mathcal{M}$ is a change of measure of $\mu$.
+\end{proof}
+
+
+
+\begin{prop}\label{prop:current-mode-operators}
+For each $n\in\mathbb{Z}$, there
+exists a unique operator $a_{n} \colon \mathcal{M}\to\mathcal{M}$
+such that for any $\mu\in\mathcal{M}$ and any $x_1, \ldots, x_k \in \mathbb{Z}^{2}$,
+\[ \left\langle \phi(x_1) \cdots \phi(x_k)\right\rangle _{a_{n}\mu}= \lra{\mathfrak{a}_{-n} \phi(x_1) \cdots \phi(x_k)}_{\mu}.
+%\frac{1}{2}\oint_{\left[\gamma\right]}\left\langle J\left(z\right)\phi(x_1) \cdots \phi(x_k)\right\rangle _{\mu}z^{\left[n\right]}\mathrm{d}z,
+\]
+The operator $a_n$ is parity reversing.
+% odd in the sense that $a_{n}\mathcal{S}\subset\mathcal{A}$ and $a_{n}\mathcal{A}\subset\mathcal{S}$.
+Moreover, for any $n_1,\ldots,n_j \in \ZZ$, the composition of operators
+$a_{n_1} \cdots a_{n_j} \colon \mathcal{M} \to \mathcal{M}$ is characterized by the formulas
+\[ \left\langle \phi(x_1) \cdots \phi(x_k)\right\rangle _{a_{n_1} \cdots a_{n_j}\mu}
+= \lra{\mathfrak{a}_{-n_j} \cdots \mathfrak{a}_{-n_1} \phi(x_1) \cdots \phi(x_k)}_{\mu} , \]
+for all $\mu\in\mathcal{M}$ and $x_1, \ldots, x_k \in \mathbb{Z}^{2}$, and we recall that the product of
+current modes $\mathfrak{a}_{-n_j} \cdots \mathfrak{a}_{-n_1}$ acting on insertions is taken radially ordered.
+\end{prop}
+\begin{proof}
+Since polynomials in $\left( \phi(x) \right)_{x \in\mathcal{G}}$ are dense in any $L^p_\mathcal{G}$,
+and the association $f \mapsto \lra{\mathfrak{a}_{-n} f}$ is bounded in any $L^p_\mathcal{G}$,
+the existence and uniqueness of the change of measure operator $a_n$ follows from Lemma~\ref{lem: lifting to change of measure operators}.
+The formula for the correlation functions of $a_{n_1} \cdots a_{n_j} \mu$ is obtained iteratively, and the
+uniqueness of the measure with these correlation functions is again clear.
+To show that $a_n$ takes symmetric measures to antisymmetric measures and vice versa, just note
+that the Radon-Nikodym derivatives $\alpha^\mu_\mathcal{G}$ for $a_n \mu$, as constructed in Lemma~\ref{lem: lifting to change of measure operators},
+have the opposite parity compared to the Radon-Nikodym derivatives $g^\mu_\mathcal{G}$ for $\mu$.
+%Let $\mathcal{G} \subset \ZZ^2$ be finite and $\mu \in \mathcal{M}$. Then by definition $\mu\big|_{\mathcal{G}} \ll \mu_{\rm{GFF}}\big|_{\mathcal{G}}$ and $\ud \mu\big|_{\mathcal{G}} = g \, \ud \mu_{\rm{GFF}}\big|_{\mathcal{G}}$, where $g \in L^p=L^p(\mu_{\rm{GFF}}\big|_{\mathcal{G}})$ for every $p < \infty$. Consequently, the assignment
+%\begin{equation}\label{def:assignment}
+%f \mapsto \lra{\mathfrak{a}_{-n_j} \cdots \mathfrak{a}_{-n_1}  f(\phi \big|_{\mathcal{G}}) g(\phi \big|_{\mathcal{G}}) }
+%\end{equation}
+%defines for each $q >1$ a bounded linear functional on $L^q$ and by Lemma~\ref{prop:contour-integral-current-mode} it is independent on the choices of contours, provided they are radially ordered. It follows by $L^p$-space duality that there is a unique function $g_{n_1,\ldots,n_j} \in L^p$, for every $p<\infty$, such that
+%\begin{align}\label{mar5.1}
+%\lra{\mathfrak{a}_{-n_j} \cdots \mathfrak{a}_{-n_1}  f(\phi \big|_{\mathcal{G}}) g(\phi \big|_{\mathcal{G}}) } = \lra{f(\phi \big|_{\mathcal{G}}) g_{n_1,\ldots,n_j}(\phi \big|_{\mathcal{G}}) }
+%\end{align}
+%for any $f \in L^q$ with $q > 1$.
+%%(In fact, since clearly $g=2^{-1}\mathbb{E}\left[ \oint J(z) z^{[n]}Q \mid \phi\big|_{\mathcal{G}}\right]$, we see that $g \in L^p$ for all $p < \infty$.)
+%We define a complex Borel measure $(a_{n_1} \cdots a_{n_j}\mu)\big|_{\mathcal{G}}:= g_{n_1,\ldots,n_j} \cdot \mu_{\rm{GFF}}\big|_{\mathcal{G}}$, with $g_{n_1,\ldots,n_j}$ as above.
+%Varying $\mathcal{G}$, using the independence on the choices of contours, this defines a complex Gibbs measure $(a_{n_1} \cdots a_{n_j} \mu)$: if $\mathcal{G} \subset \mathcal{G}'$ with densities $g_{n_1,\ldots,n_j}$ and $g_{n_1,\ldots,n_j}'$, then $g_{n_1,\ldots,n_j} = \int_{\phi\big|_{\mathcal{G}' \setminus \mathcal{G}} }g_{n_1,\ldots,n_j}'  \mu_{\rm{GFF}}(\ud \phi)$.
+%
+%It remains to show that  $a_n$ takes symmetric measures to antisymmetric measures, and vice versa.
+%But this follows at once since $J(z)=[\dd \phi](z)$ is a linear combination of linear terms and so
+%the density $g_n$ defining $(a_n \mu ) \big|_\mathcal{G}$ has the opposite parity compared to $g$.
+\end{proof}
+\begin{thm}\label{thm:heisenberg}
+The change of measure operators $(a_n), \, n \in \ZZ,$ form a representation of the Heisenberg algebra:
+\[ [a_m, a_n] = m \delta_{m+n,0} \, \id_\mathcal{M}. \]
+\end{thm}
+\begin{proof}
+Let $x_1, \ldots, x_k$ be points in $\ZZ^2$ and let $[\gamma_0], [\gamma_1], [\gamma_2]$ be discrete contours such that $[\gamma_0]$ encircles $\{x_1, \ldots, x_k\} \cup \clballdiamed{\max\{0,-\frac{m}{2},-\frac{n}{2}\}}$,
+and $[\gamma_1]$ encircles $[\gamma_0]$, and $[\gamma_2]$ encircles $[\gamma_1]$.
+%and such that for $j,k =0,1,2$ and $k > j$, $[\gamma_k]$ separates $[\gamma_j]$ from infinity.
+We shall start by computing
+\begin{multline}\label{diff}
+\lra{\mathfrak{a}_m \mathfrak{a}_n \phi(x_1) \cdots \phi(x_k)} - \lra{\mathfrak{a}_n \mathfrak{a}_m \phi(x_1) \cdots \phi(x_k)} \\
+= \frac{1}{\pi} \oint_{[\gamma_2]} \oint_{[\gamma_1]}\lra{ J (z) J (w) \phi(x_1) \cdots \phi(x_k)} w^{[n]} z^{[m]} \ud w \ud z  \\
+- \frac{1}{\pi} \oint_{[\gamma_1]} \oint_{[\gamma_0]}\lra{ J (w) J (z) \phi(x_1) \cdots \phi(x_k)} z^{[m]} w^{[n]} \ud z \ud w.
+\end{multline}
+A Wick expansion of the correlation function produces terms of the form \eqref{type1} that factor and thus cancel
+in \eqref{diff}, and one non-cancelling term of the form \eqref{type2}. By fixing $w \in \ZZ^2_m$
+at distance $\frac{1}{4}$ from $[\gamma_1]$ in each of the two
+integrals contributing to \eqref{diff}, and rearranging the integrations with the help of Lemma~\ref{IBP},
+we see that the contribution of the non-cancelling terms to \eqref{diff} can be written as
+\[ \lra{ \phi(x_1) \cdots \phi(x_k)} \times
+\frac{1}{\pi} \oint_{[\gamma_1]} \Big( \oint_{[\sigma_w]} \lra{ J (z) J (w)} z^{[m]} \ud z \Big) w^{[n]} \ud w , \]
+where $[\sigma_w]$ is a positively oriented discrete closed contour encircling $w$.
+For each $w$, the inner integral therefore becomes
+%, according to whether $w$ is the midpoint of a horizontal or vertical edge,
+\begin{align*}
+\oint_{[\sigma_w]} \lra{ J (z) J (w)} z^{[m]} \ud z
+%= \; & \oint_{[\sigma_w]} [\dd^{\mathrm{hor/ver}} \Cker](z-w) \, z^{[m]} \ud z \\
+= \; & \oint_{[\sigma_w]} [\dd \Cker](z-w) \, z^{[m]} \ud z \\
+%= \; & \ii \sum_{z \in \mathrm{int}_\diamond [\sigma_w]} [\ddbar \dd^{\mathrm{hor/ver}} \Cker](z-w) \, z^{[m]} \\
+= \; & \ii \sum_{z \in \mathrm{int}_\diamond [\sigma_w]} [\ddbar \dd \Cker](z-w) \, z^{[m]} \\
+%= \; & - \ii \sum_{z \in \overline{\mathrm{int}}_m [\sigma_w]} [\ddbar \Cker](z-w) \, [\dd^{\mathrm{hor/ver}} z^{[m]}] \\
+= \; & - \ii \sum_{z \in \overline{\mathrm{int}}_m [\sigma_w]} [\ddbar \Cker](z-w) \, [\dd z^{[m]}] \\
+= \; & - \ii \frac{m}{2} w^{[m-1]} ,
+\end{align*}
+where we used Lemma~\ref{IBP}, the fact that $[\ddbar z^{[m]}] = 0$ inside $[\sigma_w]$ and
+the antisymmetry of $\dd$ stated in Lemma~\ref{lem: transpose of dee}. %  = - \dd^{\mathrm{hor/ver}},
+%and the observation that
+%\[ [\dd^{\mathrm{hor/ver}} w^{[m]}] = \frac{1}{2} [\dd w^{[m]}] = \frac{m}{2} w^{[m-1]} ,\]
+%which follows since $[\ddbar w^{[m]}]$ vanishes as $w \notin \clballdiamed{-\frac{m}{2}}$.
+We then integrate around $[\gamma_1]$ and apply Lemma~\ref{key-lemma}:
+\[ \oint_{[\gamma_1]} \Big( \oint_{[\sigma_w]} \lra{ J (z) J (w)} z^{[m]} \ud z \Big) w^{[n]} \ud w
+= \frac{- \ii m}{2} \oint_{[\gamma_1]} w^{[m-1]} w^{[n]} \ud w
+= \pi m \delta_{m+n, 0} . \]
+
+Now, let $\mu \in \mathcal{M}$ and a finite $\mathcal{G} \subset \ZZ^2$ be given. The computations above describe the action of $(\mathfrak{a}_m\mathfrak{a}_n -\mathfrak{a}_n\mathfrak{a}_m)$ on insertions of polynomials $P$ in the Gaussian variables
+$\left( \phi(x) \right)_{x \in \mathcal{G}}$:
+\begin{align}\label{poly}
+\lra{(\mathfrak{a}_m\mathfrak{a}_n -\mathfrak{a}_n\mathfrak{a}_m) P(\phi\big|_{\mathcal{G}})}
+ % = \; & \pi \alpha^2 m \delta_{0,m+n}\lra{P(\phi\big|_{\mathcal{G}})} \\
+ = \; & m \delta_{0,m+n}\lra{P(\phi\big|_{\mathcal{G}})} .
+\end{align}
+%Let $g=g_\mathcal{G}^\mu$ be the Radon-Nikodym derivative of $\mu\big|_{\mathcal{G}}$ with respect to $\mu_{\rm{GFF}}\big|_{\mathcal{G}}$ and $f \in L^q=L^q\left(\mu_{\rm{GFF}}\big|_{\mathcal{G}}\right)$ for some fixed but arbitrary $q> 1$. H\"older's inequality implies that the product $f g \in L^{p}$ for any $1 \le p <q$. We have noted that polynomials are dense in $L^p(\mu_{\rm{GFF}} \big|_{\mathcal{G}})$ for every $0 \le p < \infty$. Thus whenever $p<q$ we can approximate $fg$ by polynomials in $L^{p}$, and apply H\"older's inequality and \eqref{poly} to see that
+%\[ \lra{(\mathfrak{a}_m\mathfrak{a}_n -\mathfrak{a}_n\mathfrak{a}_m) f(\phi \big|_{\mathcal{G}}) g(\phi \big|_{\mathcal{G}}) }
+%= m \delta_{0,m+n}\lra{f(\phi \big|_{\mathcal{G}}) g(\phi \big|_{\mathcal{G}})}. \]
+%Since $q>1$ and $f \in L^q$ were arbitrary,
+Since this holds for all polynomials $P$, we obtain
+\[ [a_{-n} , a_{-m}] \, \mu \; = \; m \delta_{0,m+n} \, \mu , \]
+and so the proof is complete.
+\end{proof}
+%\begin{rem}\label{rem:associativity}
+%It is not hard to see by similar arguments as those of the proof of Theorem~\ref{thm:heisenberg} that $\mathfrak{a}_k[\mathfrak{a}_m, \mathfrak{a}_n]$ lifts to the change of measure operator $a_k m \delta_{0,m+n} \rm{Id}$.
+%\end{rem}
+By analogous arguments we may construct antianalytic current modes $\bar{a}_n$
+corresponding to $\oint \bar{J}(z) \bar{z}^{[n]} d \bar{z}$, where
+$\bar{J}(z):=[\ddbar \phi](z)$, and show that these operators also yield a
+representation of the Heisenberg algebra.
+%Below we denote by $\overline{\mu}$ the
+%complex conjugate of a Gibbs measure $\mu$, i.e. the Gibbs measure defined by
+%\[ \lra{P(\phi\big|_\mathcal{G})}_{\overline{\mu}} = \overline{\lra{P(\phi\big|_\mathcal{G})}_{\mu}} \]
+%for any polynomial $P$ with real coefficients.
+\begin{prop}\label{prop:anti-analytic-sector-an}
+For each $k\in\mathbb{Z}$, there
+exists a unique operator $\bar{a}_{k}:\mathcal{M}\to\mathcal{M}$, with
+$\bar{a}_{k}\mathcal{S}\subset\mathcal{A}$ and $\bar{a}_{k}\mathcal{A}\subset\mathcal{S}$
+such that for any $\mu\in\mathcal{M}$ and any (not necessarily distinct)
+$x_{1},\ldots,x_{m}\in\mathbb{Z}^{2}_\diamond$ we have
+\[ \lra{\phi(x_1) \cdots \phi(x_m)}_{\bar{a}_k\mu} =
+    \overline{\lra{\phi(x_1) \cdots \phi(x_m)}_{{a_k} \overline{\mu}}}. \]
+Moreover, the change of measure operators $(\bar{a}_n)_{n \in \ZZ}$ form a representation of the Heisenberg algebra:
+\[ [\bar{a}_m, \bar{a}_n] = m \delta_{m+n,0} \, \id_\mathcal{M} \]
+and they commute with the discrete analytic current modes
+\[ [a_m, \bar{a}_n] = 0 . \]
+\end{prop}
+\begin{proof}
+The construction of $\bar{a}_n$ and the calculation of their commutation relations is
+identical to those of $a_n$. To see that the two representations of Heisenberg algebra
+commute, note that in a calculation like in the proof of Proposition~\ref{thm:heisenberg},
+a Wick expansion of $\lra{J(z) \bar{J}(w) \phi(x_1) \ldots \phi(x_k)}$
+yields cancelling terms plus a term containing the factor
+$\lra{J(z) \bar{J}(w)} = [\ddbar \Cker] (w-z)$. But this function
+of $z$ is identically $0$ on the contour $\sigma_w$.
+\end{proof}
+
+%\begin{rem}
+%We end the section with the observation that the $a_n$ and $\bar{a}_n$ operators commute. Indeed, a Wick expansion of $\lra{J(z) \bar{J}(w) \phi(x_1) \ldots \phi(x_k)}$ yields commuting terms plus a term containing the factor $\lra{J(z) \bar{J}(w)} = -\ddbar_w(z-w)^{[-1]}$. But this function is identically $0$ on the inner integration contour.
+%\end{rem}
+\section{Sugawara construction of Virasoro modes}\label{sugawara}
+We are now ready to construct the operators that span the commuting Virasoro algebras.
+\subsection{Virasoro modes acting on insertions}
+For any $n \in \ZZ$, the action on insertions of the formally infinite
+linear combinations
+\begin{align}
+\mathfrak{L}_n
+& := \frac{1}{2} \sum_{j \ge 0} \mathfrak{a}_{n-j}\mathfrak{a}_j
+     + \frac{1}{2}\sum_{j \le -1} \mathfrak{a}_j \mathfrak{a}_{n-j}  \label{Ln-definition} \\
+\bar{\mathfrak{L}}_n
+& := \frac{1}{2} \sum_{j \ge 0} \bar{\mathfrak{a}}_{n-j}\bar{\mathfrak{a}}_j
+     + \frac{1}{2}\sum_{j \le -1} \bar{\mathfrak{a}}_j \bar{\mathfrak{a}}_{n-j}\label{Ln-bar-definition}
+\end{align}
+of current modes are well defined, since only finitely many terms ever contribute
+when we act on insertions of cylinder functions.
+Indeed, for fixed finite subgraph $\mathcal{G} \subset \bZ^2$, denote
+\[ M_\mathcal{G} = 1 + 2 \times \max \{ \|z\|_1 \; : \; z \in \mathcal{G} \} .\]
+Then if $x_1, \ldots, x_k \in \mathcal{G}$, we have
+that $\lra{\mathfrak{a}_j \phi(x_1) \cdots \phi(x_k)}$ vanishes for all
+$j > M_\mathcal{G}$, because the integration contour
+in the definition of $\mathfrak{a}_j$ can then be taken so that in the integration the
+monomial $z^{[j]}$ only ever gets evaluated in the set
+$\clballdiamed{\frac{j-1}{2}}$, where it is zero. Thus for $f \in L^p_\mathcal{G}$
+the action of $\mathfrak{L}_n$ is actually defined as the finite sum
+\begin{align*}
+\lra{\mathfrak{L}_n f(\phi\big|_\mathcal{G})}
+= \; & \frac{1}{2} \sum_{j = 0}^{M_\mathcal{G}} \lra{\mathfrak{a}_{n-j}\mathfrak{a}_j f(\phi\big|_\mathcal{G})}
+    + \frac{1}{2} \sum_{j = n - M_\mathcal{G} }^{-1} \lra{\mathfrak{a}_j \mathfrak{a}_{n-j} f(\phi\big|_\mathcal{G})},
+\end{align*}
+and similarly for $\bar{\mathfrak{L}}_n$.
+%with a number of needed terms showing for a fixed $n \in \bZ$ and fixed subgraph $\mathcal{G}$ .
+
+%\begin{rem}
+%By Theorem~\ref{thm:heisenberg}, \eqref{Ln-definition} one could equivalently define
+%$\mathfrak{L}_n = \frac{1}{2}\mathfrak{a}_n \mathfrak{a}_0
+%+ \sum_{j\ge 1} \mathfrak{a}_{n-j}\mathfrak{a}_j$, and similarly for \eqref{Ln-bar-definition}.
+%\end{rem}
+
+
+\subsection{Virasoro modes as change of measure operators}
+Like in Section~\ref{sect:current-modes} with current modes, we can lift the action of
+$\mathfrak{L}_n$ on insertions to an action on Gibbs measures.
+\begin{prop}\label{prop:Virasoro-mode-operators}
+For each $n\in\mathbb{Z}$, there
+exists unique operators $L_{n}$ and $\bar{L}_n$ on $\mathcal{M}$
+such that for any $\mu\in\mathcal{M}$ and any $x_1, \ldots, x_k \in \mathbb{Z}^{2}$
+\begin{align*}
+\lra{\phi(x_1) \cdots \phi(x_k)}_{L_n \mu}
+= \; & \lra{ \mathfrak{L}_{-n} \phi(x_1) \cdots \phi(x_k)}_{\mu} \\
+\lra{\phi(x_1) \cdots \phi(x_k)}_{\bar{L}_n \mu}
+= \; & \lra{ \bar{\mathfrak{L}}_{-n} \phi(x_1) \cdots \phi(x_k)}_{\mu} .
+\end{align*}
+The operators $L_n, \bar{L}_n$ are parity preserving.
+%even in the sense that $L_{n}\mathcal{S}\subset\mathcal{S}$
+%and $L_{n}\mathcal{A}\subset\mathcal{A}$ and similarly for $\bar{L}_n$.
+\end{prop}
+\begin{proof}
+For any $n \in \ZZ$, the operators $\mathfrak{L}_{-n}$ and $\bar{\mathfrak{L}}_{-n}$
+form consistent families of operators that are bounded on each $L^p_\mathcal{G}$, $p>1$, as follows
+immediately from the fact that for a fixed $\mathcal{G}$ and $n\in\bZ$ they coincide
+with finite linear combinations of products of current modes.
+Thus by an earlier Lemma, they lift to change of measure operators
+$L_{n} \colon \mathcal{M} \rightarrow \mathcal{M}$ and
+$\bar{L}_{n} \colon \mathcal{M} \rightarrow \mathcal{M}$, respectively, uniquely determined by
+the above formulas on the dense subspace of polynomials.
+\end{proof}
+
+Keeping in mind that $a_n$ is the change of measure operator obtained by lifting the
+action on insertions of $\mathfrak{a}_{-n}$, and that the lift of a composition
+is a composition of lifts in the reverse order (the change of measure operator is a
+formal adjoint of the action on insertions), we have a formal expression for the $L_n$ as
+\begin{align*}
+L_n & = \frac{1}{2} \sum_{j \ge 0} a_{-j} a_{j+n}
+     + \frac{1}{2}\sum_{j \le -1} a_{j+n} a_{-j}
+   = \frac{1}{2} \sum_{j \le -1} a_{j} a_{n-j}
+     + \frac{1}{2}\sum_{j \ge 0} a_{n-j} a_{j} , % \\
+%\bar{L}_n & = \frac{1}{2} \sum_{j \ge 0} \bar{a}_{-j} \bar{a}_{j+n}
+%     + \frac{1}{2}\sum_{j \le -1} \bar{a}_{j+n} \bar{a}_{-j}
+%   = \frac{1}{2} \sum_{j \le -1} \bar{a}_{j} \bar{a}_{n-j}
+%     + \frac{1}{2}\sum_{j \ge 0} \bar{a}_{n-j} \bar{a}_{j} .
+\end{align*}
+and similarly for $\bar{L}_n$.
+However, one would have to make sense of these infinite linear
+combinations of (compositions of) change of measure operators.
+Our approach of lifting the action could be %alternatively
+thought of as considering the pointwise convergence of the above series of
+change of measure operators when the underlying space of Gibbs measures
+is equipped with an appropriate weak topology.
+%the (weak) topology induced by integrations against
+%finitely supported functions in all $L^p(\mu_{\mathrm{GFF}})$.
+
+%\begin{defn}
+%For $n\in \ZZ$, we define the change of measure operators $L_n,\bar{L}_n:\mathcal{M} \to \mathcal{M}$, as the lifts to $\mathcal{M}$ of
+%\begin{align}
+%\mathfrak{L}_n &:= \frac{1}{2} \sum_{j \ge 0} \mathfrak{a}_{n-j}\mathfrak{a}_j + \frac{1}{2}\sum_{j \le -1} \mathfrak{a}_j \mathfrak{a}_{n-j}; \label{Ln-definition} \\
+%\bar{\mathfrak{L}}_n &:= \frac{1}{2} \sum_{j \ge 0} \bar{\mathfrak{a}}_{n-j}\bar{\mathfrak{a}}_j + \frac{1}{2}\sum_{j \le -1} \bar{\mathfrak{a}}_j \bar{\mathfrak{a}}_{n-j}\label{Ln-bar-definition},
+%\end{align}
+%respectively.
+%\end{defn}
+%This is the classical Sugawara construction developed through several papers, including \cite{sugawara, kz}. When acting on insertions, such as
+%\[ \lra{\mathfrak{L}_n \phi(x_1) \cdots \phi(x_k)} \]
+%only finitely many terms in the series defining $\mathfrak{L}_n$ are non-zero, see Remark~\ref{rem:finitely-many-modes}. The number of non-zero terms depends only on the maximum modulus of $x_1,\ldots,x_k$.
+%
+%and we require that the same two nested discrete contours separating $0,z_1, \ldots, z_k$ from $\infty$ are used for all pairs $a_{n-j}a_{j}$ and $a_j a_{n-j}$ appearing in \eqref{Ln-definition}. Assuming this, it follows from Lemma~\ref{Dec11.1} that only finitely many terms are non-zero in the infinite sum of \eqref{Ln-definition}. The number of non-zero terms depends on $z_1,\ldots,z_k$ and the choice of contours.
+%Informally, we can interpret the $L_n$ as Laurent modes of the stress-energy tensor $T(z) = [J J](z)$, see, e.g., p.47 of \cite{Blumenhagen_Plauschinn}.
+
+\subsection{Virasoro commutation relations}
+To be self-contained, and to be
+explicit about the well-definedness of the needed compositions of operators,
+we include here the well-known calculation of the commutation relations of the
+operators $L_n$ obtained by a Sugawara-type construction.
+\begin{thm}\label{Ln-GFF}\label{prop:sugawara-construction}\label{thm:gff-virasoro-full-plane}
+The two families of change of measure operators $(\bar{L}_n),(L_n), \, n \in \ZZ,$
+yield commuting representations of the Virasoro algebra of central charge $c=1$:
+\begin{align*}
+[L_m, L_n] & \; =  (m-n)L_{m+n} + \frac{1}{12} (m^3-m) \delta_{m+n,0} \rm{Id} , \\
+[\bar{L}_m, \bar{L}_n] & \; = (m-n)\bar{L}_{m+n} + \frac{1}{12} (m^3-m) \delta_{m+n,0} \rm{Id} , \\
+%\text{and } \qquad
+[L_m, \bar{L}_n] & \; = 0.
+\end{align*}
+We have $[L_n,a_m] = - m a_{n+m}$, $[\bar{L}_n,\bar{a}_m] = - m \bar{a}_{n+m}$,
+and  $[L_n,\bar{a}_m] = 0 = [\bar{L}_n, a_m]$.
+\end{thm}
+%\begin{rem}
+%Notice that the theorem gives a precise meaning to the statement that the central charge of the discrete Gaussian free field equals $1$. In particular, we have identified the central charge on the discrete level.
+%\end{rem}
+\begin{proof}
+%[Proof of Theorem~\ref{Ln-GFF}]
+By the remark at the end of Section~\ref{sect:current-modes} it is clear that $[L_m, \bar{L}_n] = 0$
+for all $m,n \in \mathbb{Z}$. We will check the Virasoro relations for $(L_n)$ by first
+treating the actions $(\mathfrak{L}_n)$ on insertions;
+the argument for $(\bar{L}_n)$ is identical.
+Using the commutation relations of the $\mathfrak{a}_n$ (see the proof of
+Theorem~\ref{thm:heisenberg} and Proposition~\ref{prop:current-mode-operators}) and
+the simple commutator identity $[A, BC] = [A,B]C + B [A,C]$, we have
+\begin{align*}
+2[\mathfrak{L}_m, \mathfrak{a}_n]
+%= & \, \sum_{j \ge 0} \mathfrak{a}_{m-j}\mathfrak{a}_j \mathfrak{a}_n + \sum_{j \le -1} \mathfrak{a}_j \mathfrak{a}_{m-j} \mathfrak{a}_n - \sum_{j \ge 0} \mathfrak{a}_n \mathfrak{a}_{m-j}\mathfrak{a}_j  - \sum_{j \le -1} \mathfrak{a}_n \mathfrak{a}_j \mathfrak{a}_{m-j} \\
+= &  \, \sum_{j \ge 0} \left( [\mathfrak{a}_{m-j}, \mathfrak{a}_n] \mathfrak{a}_j  + \mathfrak{a}_{m-j} [\mathfrak{a}_j, \mathfrak{a}_n] \right) + \sum_{j \le -1} \left( [\mathfrak{a}_j, \mathfrak{a}_n] \mathfrak{a}_{m-j} + \mathfrak{a}_j [ \mathfrak{a}_{m-j} , \mathfrak{a}_n] \right) \\
+%= & \, \sum_{j \ge 0} \left( (m-j) \delta_{m-j+n,0} \mathfrak{a}_j +  j \delta_{j+n,0} \mathfrak{a}_{m-j} \right) \\
+%  & \qquad + \sum_{j \le -1} \left( j \delta_{j+n,0} \mathfrak{a}_{m-j} + (m-j) \delta_{m-j+n,0} \mathfrak{a}_j \right)\\
+= & \, -2 n \mathfrak{a}_{m+n},
+\end{align*}
+where at each step of the calculation the expression has a well-defined
+action on insertions of polynomials $P$ of $\left( \phi(x) \right)_{x \in \mathcal{G}}$
+due to a truncation to finitely many terms.
+Consequently, again by Theorem~\ref{thm:heisenberg},
+Proposition~\ref{prop:current-mode-operators}, and the same commutator identity, we have
+\begin{align*}
+2[\mathfrak{L}_m, \mathfrak{L}_n] = & \, \sum_{j \ge 0} [\mathfrak{L}_m, \mathfrak{a}_{n-j}\mathfrak{a}_j] + \sum_{j \le -1} [\mathfrak{L}_m, \mathfrak{a}_j\mathfrak{a}_{n-j}]\\
+= &  \sum_{j \ge 0}  \left(-(n-j) \mathfrak{a}_{m+n-j} \mathfrak{a}_j - j \mathfrak{a}_{n-j} \mathfrak{a}_{m+j}\right)  \\
+& \qquad + \sum_{j \le -1} \left( - (n-j) \mathfrak{a}_j \mathfrak{a}_{m+n-j}-j \mathfrak{a}_{m+j} \mathfrak{a}_{n-j}  \right) \\
+= & \sum_{j \ge 0} (m-n+j-m) \mathfrak{a}_{m+n-j} \mathfrak{a}_j  - \sum_{j\ge m} (j-m) \mathfrak{a}_{m+n-j}\mathfrak{a}_j\\
+& \qquad + \sum_{j \le -1} (m-n+j-m) \mathfrak{a}_j \mathfrak{a}_{m+n-j} - \sum_{j \le m-1} (j-m) \mathfrak{a}_j \mathfrak{a}_{m+n-j}.
+\end{align*}
+We can rewrite this last expression as
+\begin{align*}
+[\mathfrak{L}_m, \mathfrak{L}_n]& =\frac{1}{2}\sum_{j \ge 0} (m-n) \mathfrak{a}_{m+n-j} \mathfrak{a}_j + \frac{1}{2} \sum_{j \le -1} (m-n) \mathfrak{a}_j \mathfrak{a}_{m+n-j} + R_{m,n} \\
+& =  (m-n)\mathfrak{L}_{m+n} + R_{m,n},
+\end{align*}
+where
+\[ R_{m,n} := \begin{cases}
+    \frac{1}{2}\sum_{j = 0}^{m-1} (m-j)(\mathfrak{a}_j \mathfrak{a}_{m+n-j}- \mathfrak{a}_{m+n-j}\mathfrak{a}_j)
+	& \text{if } m>0 \\
+    0 & \text{if } m=0 \\
+    \frac{1}{2}\sum_{j=m}^{-1} (j-m)(\mathfrak{a}_j \mathfrak{a}_{m+n-j} -\mathfrak{a}_{m+n-j} \mathfrak{a}_j)
+	& \text{if } m<0 .
+\end{cases} \]
+%$R_{0,n} = 0$, and if $m \ge 1$,
+%\begin{align*}
+%R_{m,n} & =  \frac{1}{2}\sum_{j = 0}^{m-1} (m-j)(\mathfrak{a}_j \mathfrak{a}_{m+n-j}- \mathfrak{a}_{m+n-j}\mathfrak{a}_j) \\
+%%& = \frac{1}{2}\sum_{j = 0}^{m-1} (m-j) [\mathfrak{a}_j, \mathfrak{a}_{m+n-j}]  \\
+%& =  \frac{1}{2} \sum_{i = 0}^{m-1} (m-j) j \delta_{m+n,0} & \text{(by Proposition~\ref{prop:commutation-relations})} \\
+%& =  \frac{1}{12} ( m^3-m) \delta_{m+n,0},
+%\end{align*}
+We then show that
+$ R_{m,n}=\frac{1}{12} ( m^3-m) \delta_{m+n,0}$.
+If $m \ge 1$ this is seen by the calculation
+\begin{align*}
+R_{m,n} & =  \frac{1}{2}\sum_{j = 0}^{m-1} (m-j)(\mathfrak{a}_j \mathfrak{a}_{m+n-j}- \mathfrak{a}_{m+n-j}\mathfrak{a}_j) \\
+%& = \frac{1}{2}\sum_{j = 0}^{m-1} (m-j) [\mathfrak{a}_j, \mathfrak{a}_{m+n-j}]  \\
+& =  \frac{1}{2} \sum_{j = 0}^{m-1} (m-j) j \delta_{m+n,0} & \text{(by Proposition~\ref{prop:commutation-relations})} \\
+& =  \frac{1}{12} ( m^3-m) \delta_{m+n,0} ,
+\end{align*}
+and if $m \le -1$, the calculation is similar.
+
+As in the proof of Theorem~\ref{thm:heisenberg}, the commutation
+relations for the actions on insertions give the commutation relations for the change of
+measure operators, because $L_n a_m - a_m L_n$ is the operator obtained by lifting the action
+of $\mathfrak{a}_{-m} \mathfrak{L}_{-n} - \mathfrak{L}_{-n} \mathfrak{a}_{-m}$ in the
+sense of Lemma~\ref{lem: lifting to change of measure operators}, and
+$L_n L_m - L_m L_n$ is the operator obtained by lifting the action
+of $\mathfrak{L}_{-m} \mathfrak{L}_{-n} - \mathfrak{L}_{-n} \mathfrak{L}_{-m}$ etc.
+\end{proof}
+
+%//////////////////////////////
+
+%\section{Half plane}
+%In this section we will sketch a construction of $\tilde{L}_n$:s for the discrete GFF in the upper half-plane. Let $\tilde{\phi}
+%(z), z \in \ZZ^2_\diamond \cap \mathbb{H}$ be the discrete Gaussian free field with Dirichlet boundary condition on $\ZZ^2_\diamond \cap \mathbb{R}$. (It is convenient to set $\tilde \phi \equiv 0$ on the lower half-plane.) The two-point correlation function for $\tilde\phi$ is
+%\[
+%\lra{\tilde{\phi}(z) \tilde{\phi}(w)}_{\mathbb{H}} = \tilde{G}(z,w)\]
+%where
+%\begin{equation}\label{GH}
+%\tilde{G}(z,w) : = G(z,w) - G(z,\bar{w}), \quad z,w \in \ZZ^2_\diamond,
+%\end{equation}
+%and $G(z,w)$ is the free Green's function for the discrete Laplacian on $\ZZ^2_\diamond$. From this it follows that for $z,w \in \ZZ^2_\diamond$,
+%\begin{align}\label{GHrels}
+%\tilde{G}(z,w) & = \tilde{G}(\bar{z},\bar{w})=-\tilde{G}(\bar{z},w)  =- \tilde{G}(z,\bar{w}).
+%\end{align}
+%When $z \in \ZZ^2_m$ is in $\mathbb{H}$ we have
+%\[
+%\lra{\dd\tilde{\phi}(z) \tilde{\phi}(w)}_\HH= \dd_1 \tilde{G}(z,w), \quad \lra{\ddbar \tilde{\phi}(z) \tilde{\phi(w)}}_\HH = \ddbar_1 \tilde{G}(z,w) = - \dd_1 \tilde{G}(\bar{z},w).
+%\]
+%while if $x \in \ZZ^2_m$ is real then since $\tilde\phi$ is $0$ on the lower half-plane we can write
+%\begin{align}\label{Greal}
+%\lra{\dd \tilde{\phi}(x) \tilde{\phi}(w)}_{\HH} & = -\frac{i}{2}\tilde{G}\left(x+\frac{i}{2},w\right) \\
+%& =\frac{1}{2}\dd_1 \tilde{G}(x, w)\end{align}
+%and
+%\begin{align}\label{Greal2}
+%\lra{\ddbar \tilde{\phi}(x) \tilde{\phi}(w)}_{\HH} & = \frac{i}{2}\tilde{G}\left(x+\frac{i}{2},w\right) \\
+%& =-\frac{1}{2}\dd_1 \tilde{G}(x, w).
+%\end{align}
+
+
+
+\section{Further results}
+\subsection{Coulomb gas}\label{sect:coulomb-gas}
+By adding a multiple of the current mode to each $L_n$ one obtains representations of
+the Virasoro algebra with other central charges. For $b \in \bR $ we define change of
+measure operators
+\begin{align}\label{def:cg}
+L_n^b:=L_n+b(n+1) a_n, \qquad \bar{L}_n^b:=\bar{L}_n+b(n+1) \bar{a}_n,
+\end{align}
+which will both satisfy the Virasoro commutation relations with central charge $c=1-12b^2$.
+For $b \neq 0$, these operators are not parity preserving (nor are they parity reversing),
+as opposed to the $L_n$ corresponding to $c=1$, and they can therefore be considered less
+natural.
+%It is not clear if
+%one can construct the $L_n^b$ by considering current modes of a modified
+%discrete field.
+\begin{prop}\label{prop:coulomb_gas}
+For $c \leq 1$ and $n\in\mathbb{Z}$, if we define the change
+of measure operators $L_{n}^{b},\bar{L}_{n}^{b} \colon \mathcal{M}\to\mathcal{M}$
+by \eqref{def:cg} with $b=\pm\sqrt{\frac{1-c}{12}}$, we have
+that $\left(L_{n}^{b}\right)_{n\in\mathbb{Z}}$
+and $\left(\bar{L}_{n}^{b}\right)_{n\in\mathbb{Z}}$ yield two commuting
+representations of the Virasoro algebra with central charge $c$, that is
+$[L_n^b , \bar{L}_m^b] = 0$,
+\[ [L_m^b, L_n^b]
+    = (m-n)L^b_{m+n} + \frac{c}{12}(m^3-m) \delta_{m+n,0} \, \id_\mathcal{M}, \]
+and similarly for $(\bar{L}_n^b)$.
+\end{prop}
+\begin{proof}
+Starting from the observation  $[L_m^b, a_n] = -n a_{m+n} + b m \delta_{m+n,0} \id_\mathcal{M}$,
+the proof is a straightforward modification of that of Theorem~\ref{prop:sugawara-construction}.
+\end{proof}
+
+
+\subsection{Discrete GFF in a half plane}
+A similar construction based on current modes can be carried out for the discrete GFF
+in the upper half-plane $\bH = \bZ \times \bN$ with Dirichlet boundary
+condition on $\partial \bH = \ZZ \times \set{0}$. We sketch the construction.
+
+In the half-plane $\bH$, the Green's function $G^\bH(z,w)$ is well defined
+%as the expected number of visits to $w$ of a simple random walk from $z$ in $\bH$,
+even without an infrared regularization: for a fixed $w \in \bH$
+it is determined by $- [\Delta G^\bH](\cdot,w) = \delta_w$ and
+$G^\bH(z,w)=0$ for $z \in \partial \bH$.
+%and it is given by %$G^{\bH}(z , w) = \potker(z-\bar{w}) - \potker(z-w)$.
+%\[ G^{\bH}(x + \ii y , x' + \ii y') =
+%\frac{1}{(2\pi)^2} \iint_{[-\pi,\pi]^2}
+%    \frac{e^{\ii (x-x') q + \ii (y-y') p} - e^{\ii (x-x') q + \ii (y+y') p}}
+%        {1 - \frac{1}{2} \cos(q) - \frac{1}{2} \cos(p)} \ud q \ud p .\]
+The discrete GFF in the upper half-plane is a collection $(\phi^{\bH}(z))_{z \in \bH}$
+of centered real Gaussians with covariance given by the Green's function
+\[ \EX\left[ \phi^{\bH}(z) \phi^{\bH}(w) \right] = G^{\bH}(z , w) .\]
+
+We note that since $G^{\bH}(z , w) = \potker(z-\bar{w}) - \potker(z-w)$, the field
+$\phi^\bH$ can be constructed by a reflection: if $\phi=(\phi(z))_{z \in \bZ^2}$ is
+the pinned discrete GFF on the infinite square lattice $\bZ^2$, then the field
+\[ \phi^\bH (z) = \frac{1}{\sqrt{2}} \Big( \phi(z) - \phi(\bar{z}) \Big) \]
+is a discrete GFF in the upper half-plane. We define the current by
+\[ J^\bH (z) = [\dd \phi^{\bH}](z) \]
+with $\phi^\bH$ extended to the dual as zero. With the reflection trick, the current
+makes sense for all $z \in \bZ^2_m$, its correlation functions are recovered by Wick's
+formula from the two-point functions
+\[ \lra{J^\bH (z) \phi^\bH(x)} = \Cker(z-x) - \Cker(z-\bar{x}) \]
+for $x \in \bZ^2$ (discrete holomorphic for $z\notin\set{x,\bar{x}}$),
+and we can define the action on insertions by integration
+\[ \lra{\mathfrak{a}^\bH_n f(\phi^\bH \big|_{\mathcal{G}}) }_\mu :=
+\frac{1}{\sqrt{\pi}} \oint_{[\gamma]} \lra{ J^\bH(z) f(\phi^\bH \big|_{\mathcal{G}})g(\phi^\bH \big|_{\mathcal{G}})}
+    z^{[n]} \, \ud z \]
+where $[\gamma]$ is any sufficiently large simple closed discrete contour
+and $g=g^\mu_{\mathcal{G}}$ is a Radon-Nikodym derivative.
+If one prefers not to resort to the reflection trick, the above expression can
+be written entirely in terms of $(\phi^{\bH}(z))_{z \in \bH}$ by noting that
+the contour may be assumed to be symmetric with respect to a reflection in the real axis,
+and then in the integrand we may use
+$\bar{z}^{[n]}=\overline{z^{[n]}}$ and $ J^\bH(\bar{z}) = - \bar{J}^\bH(z)$ to rewrite
+everything in terms of only the part of the contour that is in the upper half plane.
+
+From the two-point function of the current
+\[ \lra{J^\bH (z) J^\bH (w)} = [\dd \Cker](w-z) - \delta_{z,\bar{w}} \]
+one recovers the Heisenberg commutation relations
+\[ \mathfrak{a}^\bH_m \mathfrak{a}^\bH_n - \mathfrak{a}^\bH_n \mathfrak{a}^\bH_m = m \delta_{n+m,0} \, \id \]
+as before. The construction of the change of measure operators $(a^\bH_n)_{n\in\bZ}$ and the
+Virasoro operators $(L^\bH_n)_{n\in\bZ}$ is entirely parallel to the case treated earlier, and
+one obtains the following result:
+
+\begin{thm}\label{thm:half-plane}
+Let $\mathcal{M}^\bH$ be the vector space of complex Gibbs measures that are
+changes of measure of law of the discrete GFF in $\bH$, and whose
+Radon-Nikodym derivatives with respect to it are in $L^p$ for all $p<\infty$.
+
+There exists a family of change of measure operators $(a^\bH_n)_{n\in\bZ}$
+on $\mathcal{M}^\bH$ that are parity reversing and that satisfy the Heisenberg
+algebra commutation relations %$[a^\bH_m,a^\bH_n]=m \delta_{n+m,0} \id$
+and a family of change of measure operators $(L^\bH_n)_{n\in\bZ}$ on $\mathcal{M}^\bH$
+that are parity preserving and that satisfy the Virasoro algebra
+commutation relations with central charge $c=1$ %, $[a^\bH_m,a^\bH_n]=m \delta_{n+m,0} \id$
+and such that $[L_n,a_m] = - m a_{n+m}$.
+\end{thm}
+
+
+
+%\begin{align*}
+%%\lra{\phi(x_1) \cdots \phi(x_k)}_{\mathbb{H}} \mapsto
+%\frac{1}{i}\int_{[\sigma]} \lra{ [\dd \phi ](z) \phi(x_1) \cdots \phi(x_k)}_{\mathbb{H}} z^{[n]} \, dz + \frac{1}{i}\int_{[\sigma]}\lra{[ \ddbar \phi] \phi(x_1) \cdots \phi(x_k)}_{\mathbb{H}} \bar{z}^{[n]}\, d\bar{z}.
+%\end{align*}
+%Here $[\sigma]$ is a discrete ``crosscut'' defined by the disjoint union of the edges of $\dd_0 \cE_{\Sigma}$ and $\dd_1 \cE_{\Sigma_m}$ that intersect $\HH$ for some discrete domain $\Sigma$ such that $\partial \Sigma \cap \HH$ is a crosscut of $\HH$ separating $0, x_1, \ldots x_k$ from $\infty$ in $\HH$.
+%
+%The $\tilde{\mathfrak{a}}_n$ lift to change of measure operators and yield a representation of the Heisenberg algebra: using the reflection symmetry of the correlation function of the half-plane discrete GFF one can show that the two integrals defining the $\tilde{\mathfrak{a}}_n$ combine and can be written as one standard discrete contour integral involving symmetrized versions of the whole-plane correlation kernels. The Virasoro modes can then be defined by the Sugawara construction.
+
+%\subsection{\red{Ising model}}
+
+\bibliographystyle{9}
+
+\begin{thebibliography}{References}
+
+%\bibitem[AsMc11]{assis-mccoy}M. Assis, B. M. McCoy, The energy density
+%of an Ising half-plane lattice, \emph{J. Phys. A:Math. Theor.} 44:095003,
+%2011.
+%[Bax89]
+
+\bibitem[BaBe03]{bauer-bernard-i}M.~Bauer, D.~Bernard, Conformal field theories of stochastic {L}oewner evolutions, \emph{Comm. Math. Phys.} 239: 493--521, 2003.
+
+\bibitem[BaBe04]{bauer-bernard-ii}M.~Bauer, D.~Bernard, Conformal transformations and the SLE partition function martingale, \emph{Ann. Henri Poincar\'e} 5, 289, 2004. % [arXiv:math-ph/0305061]
+
+\bibitem[Bax89]{baxter}R. Baxter, \emph{Exactly solved models in
+statistical mechanics}. Academic Press Inc. {[}Harcourt Brace Jovanovich
+Publishers{]}, London, 1989.
+
+\bibitem[BeHo13]{benoist-hongler} S. Benoist, C. Hongler, In preparation, 2013.
+
+\bibitem[BPZ84a]{belavin-polyakov-zamolodchikov-i}A. A. Belavin,
+A. M. Polyakov, A. B. Zamolodchikov. Infinite conformal symmetry in
+two-dimensional quantum field theory\emph{. Nucl. Phys. B}, 241(2):333--380,
+1984.
+
+\bibitem[BPZ84b]{belavin-polyakov-zamolodchikov-ii}A. A. Belavin,
+A. M. Polyakov, A. B. Zamolodchikov. Infinite conformal symmetry of
+critical fluctuations in two dimensions.\emph{ J. Stat. Phys.}, 34(5-6):763--774,
+1984.
+
+%\bibitem[BoDT09]{boutillier-de-tiliere-i}C. Boutillier, B. de Tili?re,
+%The critical Z-invariant Ising model via dimers: locality property.
+%\emph{Comm. Math. Phys}, to appear. arXiv:0902.1882v1, 2009.
+%
+%\bibitem[BoDT08]{boutillier-de-tiliere-ii}C. Boutillier, B. de Tili?re,
+%The critical Z-invariant Ising model via dimers: the periodic case.
+%\emph{PTRF} 147:379-413, 2010. arXiv:0812.3848v1.
+
+%\bibitem[BuGu93]{burkhard-guim}T. Burkhardt, I. Guim, \emph{Conformal
+%theory of the two-dimensional Ising model with homogeneous boundary
+%conditions and with disordered boundary fields}, Phys. Rev. B (1),
+%47:14306-14311, 1993.
+
+%\bibitem[CaNe07a]{camia-newman-i}F. Camia and C.M. Newman, Critical
+%percolation exploration path and SLE(6): a proof of convergence\emph{.
+%Probab. Th. Rel. Fields} 139:473-519, 2007.
+
+%\bibitem[CaNe07b]{camia-newman-ii}F. Camia and C. M. Newman,  Two-Dimensional
+%Critical Percolation: The Full Scaling Limit\emph{. Comm. Math. Phys.}
+%268(1):1--38, 2007.\emph{ }
+
+\bibitem[Car84]{cardy-i}J. Cardy, Conformal invariance and Surface
+Critical Behavior\emph{. Nucl. Phys. B} 240:514--532, 1984.
+
+%\bibitem[Car92]{cardy-iii}J. Cardy. Critical percolation in finite
+%geometries\emph{. J. Phys. A} 25(4):L201\textendash{}L206, 1992.
+
+%\bibitem[ChIz11]{chelkak-izyurov}D. Chelkak and K. Izyurov, Holomorphic
+%Spinor Observables in the Critical Ising Model, arXiv:1105.5709v2.
+
+\bibitem[CHI12]{chi-ising}D.~Chelkak, C.~Hongler, K. Izyurov, Conformal Invariance of Spin Correlations in the Planar Ising Model, arXiv:1202.2838, 2012.
+
+\bibitem[ChSm11]{chelkak-smirnov-i}D. Chelkak and S. Smirnov, Discrete
+complex analysis on isoradial graphs\emph{. Advances in Mathematics},
+228:1590--1630, 2011.
+
+\bibitem[ChSm09]{chelkak-smirnov-ii}D. Chelkak and S. Smirnov, Universality
+in the 2D Ising model and conformal invariance of fermionic observables\emph{.
+Inventiones} \emph{Math.}, to appear. arXiv:0910.2045.
+
+%
+%\bibitem[ChSm11]{chelkak-smirnov-iii}D. Chelkak and S. Smirnov,\emph{
+%}preprint.
+
+%\bibitem[DeMo10]{dembo-montanary}A. Dembo, A. Montanari, Ising model
+%on locally tree-like graphs, \emph{Ann. Appl. Probab.}, 20(2):565--592,
+%2010.
+
+\bibitem[DMS97]{di-francesco-mathieu-senechal}P. Di Francesco, P.
+Mathieu, D. S\'en\'echal, \emph{Conformal Field Theory}. Graduate texts
+in contemporary physics. Springer-Verlag New York, 1997.
+
+\bibitem[DRC06]{cardy-doyon-riva} B.~Doyon, V.~Riva, J.~Cardy, Identification of the stress-energy tensor through conformal restriction in {SLE} and related processes. \emph{Comm. Math. Phys.},268:687--716, 2006.
+
+\bibitem[Dub13]{dubedat-def} J. Dub\'edat, personal communication.
+
+\bibitem[Duf56]{duffin}R.~J.~Duffin, Basic properties of discrete analytic functions. \emph{Duke Math. J.}, 23: 335--363, 1956.
+
+\bibitem[FrWe03]{werner-friedrich-i}R. Friedrich, W. Werner, Conformal restriction, highest-weight representations and SLE, \emph{Comm. Math. Phys.}, 243: 105--122, 2003.
+
+\bibitem[Fun05]{funaki}T.~Funaki, Stochastic interface models, \emph{Lecture Notes in Math.}, 1869: {103--274}, 2005.
+
+%\bibitem[Dub11a]{dubedat-i}J. Dub?dat, Dimers and analytic torsion
+%I, arXiv:1110.2808v1.
+
+%\bibitem[Dub11b]{dubedat-ii}J. Dub?dat\emph{, }Exact bosonization
+%of the Ising model, arXiv:1112.4399v1.
+%
+%\bibitem[Dub12]{dubedat-iii}J. Dub?dat, in preparation.
+%
+%\bibitem[DHN11]{duminil-copin-hongler-nolin}H. Duminil-Copin, C.
+%Hongler, P. Nolin, Connection probabilities and RSW-type bounds for
+%the FK Ising model\emph{. Comm. Pure. Appl. Math. }64(9):1165--1198,
+%2011\emph{.}
+
+%\bibitem[Fis98]{fisher}M. E. Fisher, Renormalization group theory:
+%its basis and formulation in statistical mechanics. \emph{Rev. Modern
+%Phys.}, 70(2):653--681, 1998.
+
+\bibitem[Gaw99]{gawedzki}
+K. Gaw{\c e}dzki,
+Lectures on conformal field theory.
+In \emph{Quantum fields and strings: A course for
+mathematicians}, Vols. 1, 2 (Princeton, NJ, 1996/1997), pages 727--805.
+Amer. Math. Soc., Providence, RI, 1999.
+
+%\bibitem[GRS08]{garban-rohde-schramm}C. Garban, S. Rohde, O. Schramm,
+%Continuity of the SLE trace in simply connected domains. \emph{Israel
+%Journal of Math., }to appear, 2008.
+
+%\bibitem[GHS70]{griffith-hurst-sherman}R. Griffiths, C.A. Hurst,
+%S. Sherman, Concavitiy of Magnetization of an Ising Ferromagnet in
+%a Positive External Field, \emph{J. Math. Phys. }11(3):790--795, 1970.
+
+%\bibitem[Gri06]{grimmett}G. Grimmett, \emph{The Random-Cluster Model}.
+%Volume 333 of Grundlehren der Mathematischen Wissenschaften, Springer-Verlag,
+%Berlin, 2006.
+
+%\bibitem[Hec67]{hecht}R. Hecht, Correlation Functions for the Two-Dimensional
+%Ising Model, \emph{Phys. Rev.} 158:557--561, 1967.
+
+\bibitem[Hon10]{hongler-i}C. Hongler, \emph{Conformal invariance
+of Ising model correlations}. Ph.D. thesis, University of Geneva,
+http://www.math.columbia.edu/\textasciitilde{}hongler/thesis.pdf,
+2010.
+
+
+%\bibitem[HoKy13]{hongler-kytola} C. Hongler, K. Kyt\"ol\"a, In preparation, 2013.
+
+%\bibitem[HoSm10]{hongler-smirnov-ii}C. Hongler, S. Smirnov.\emph{
+%}The energy density in the critical planar Ising model. arXiv:1008.2645v3.
+%
+%\bibitem[Isi25]{ising}E. Ising, Beitrag zur Theorie des Ferromagnetismus\emph{.
+%Zeitschrift f?r Physik}, 31:253--258, 1925.
+
+\bibitem[ItTh87]{itoyama-thacker}H.~Itoyama, H.~B.~Thacker, Lattice Virasoro algebra and corner transfer matrices in the Baxter eight-vertex model. \emph{Phys. Rev. Lett.} 58: 1395--1398, 1987.
+
+\bibitem[Jan97]{janson}S.~Janson, \emph{Gaussian Hilbert spaces.} Cambridge Tracts in Mathematics 129, Cambridge University Press 1997.
+
+\bibitem[KaMa11]{kang-makarov}N.-G.~Kang, N. G.~Makarov. Gaussian free field and conformal field theory. arXiv:1101.1024, 2011.
+%
+%\bibitem[KaCe71]{kadanoff-ceva}L. Kadanoff, H. Ceva, Determination
+%of an operator algebra for the two-dimensional Ising model\emph{.
+%Phys. Rev. B} (3), 3:3918--3939, 1971.
+
+\bibitem[Ken00]{kenyon-ci}R.~Kenyon, Conformal invariance of domino tiling. \emph{Ann. Probab.} 28(2): 759--795, 2000.
+
+\bibitem[KoSa94]{koo-saleur} W.M. Koo, H. Saleur, Representations of the Virasoro algebra from lattice models, \emph{Nucl. Phys. B}, 426:459--504, 1994.
+
+\bibitem[KnZa84]{kz}V.~G.~Knizhnik, A.~B.~Zamoldchikov, Current algebra and Wess-Zumino model in two dimensions. \emph{Nucl. Phys. B} 247: 83--103, 1984.
+
+%\bibitem[KrWa41]{kramers-wannier}H. A. Kramers and G. H. Wannnier,
+%Statistics of the two-dimensional ferromagnet. I.\emph{ Phys. Rev.
+%(2)}, 60:252--262, 1941.
+
+\bibitem[Kyt07]{kytola-local_mgales_virasoro} K.~Kyt\"ol\"a, Virasoro module structure of local martingales of SLE variants, \emph{Rev. Math. Phys.}
+19, 455, 2007. % [arXiv:math-ph/0604047]
+
+%\bibitem[LaLi04]{lawler-limi}G.F. Lawler, V. Limic, The Beurling
+%Estimate for a Class of Random Walks, \emph{Elec. J. Prob. 9(27)},
+%2004.
+
+\bibitem[LaLi10]{lawler-limic}G. F.~Lawler, V.~Limic, \emph{Random walk: a modern introduction.} Cambridge.
+
+\bibitem[LSW04]{lsw-lerw}G. F.~Lawler, O.~Schramm,W.~Werner, Conformal invariance of planar loop-erased random walks and uniform spanning trees. \emph{Ann. Probab.}, 32(1b): 939--995, 2004.
+%
+%\bibitem[Len20]{lenz}W. Lenz,\emph{ }Beitrag zum Verst?ndnis der
+%magnetischen Eigenschaften in festen K?rpern. \emph{Phys. Zeitschr.},
+%21:613--615, 1920.
+
+\bibitem[JM94]{jimbo-miwa}M. Jimbo, T. Miwa, \emph{Algebraic Analysis of Solvable Lattice Models}, CBMS Regional Conferenfece Series in Mathematics, 85, 1994.
+
+\bibitem[Mer01]{mercat}C.~Mercat, Discrete Riemann surfaces and the Ising model. \emph{Comm. Math. Phys.}, 218(1):177--216, 2001.
+
+\bibitem[Mic89]{mickelsson}J. Mickelsson, \emph{Current Algebras and Groups}, Plenum Monographs in Nonlinear Physics, Springer, 1989.
+
+\bibitem[Sch00]{schramm-sle} O. Schramm, Scaling limits of loop-erased random walks and uniform spanning trees. \emph{Israel J. Math.} 118: 221--288, 2000.
+
+\bibitem[ScSh09]{schramm-sheffield-gff-i} O.~Schramm, S.~Sheffield, Contour lines of the two-dimensional discrete {G}aussian free field. \emph{Acta Math.} 202: 21--137, 2009.
+
+\bibitem[She05]{sheffield-gff-ptrf}S.~Sheffield, Gaussian free fields for mathematicians. \emph{Probab. Theory Related Fields}. 139: 521--541, 2007.
+
+\bibitem[Smi01]{smirnov-percolation}S.~Smirnov, Critical percolation in the plane: conformal invariance, Cardy's formula, scaling limits. \emph{C. R. Acad. Sci. Paris Ser. I Math.}, 333(3): 239--244, 2001.
+
+\bibitem[Smi10]{smirnov-ising}S.~Smirnov, Conformal invariance in random cluster models. I. Holomorphic fermions in the Ising model. \emph{Ann. of Math.}172(2): 1435--1467, 2010.
+\bibitem[Sug68]{sugawara}H.~Sugawara, A field theory of currents. \emph{Phys. Rev. Lett.} 170:1659, 1968.
+\bibitem[Som68]{sommerfield}C. Sommerfield, Currents as dynamical variables, \emph{Phys. Rev. Lett.} 176:2019, 1968.
+%\bibitem[McWu67]{mccoy-wu-ii}B. M. McCoy and T. T. Wu, Theory of
+%Toeplitz Determinants and the Spin Correlations of the Two-Dimensional
+%Ising Model. IV, \emph{Phys. Rev. }162(2):436--475, 1967.
+
+%\bibitem[McWu73]{mccoy-wu-i}B. M. McCoy and T. T. Wu, \emph{The two-dimensional
+%Ising model}. Harvard University Press, Cambridge, Massachusetts,
+%1973.
+
+%\bibitem[Ons44]{onsager}L. Onsager, Crystal statistics. I. A two-dimensional
+%model with an order-disorder transition\emph{. Phys. Rev. }65(2):117--149,
+%1944.
+%
+%\bibitem[Pal07]{palmer}J. Palmer, \emph{Planar Ising correlations}.
+%Birkh?user, 2007.
+%
+%\bibitem[PaTr83]{palmer-tracy}J. Palmer, C. A. Tracy,\emph{ }Two-Dimensional
+%Ising Correlations: The SMJ Analysis.\emph{ Adv. in Appl. Math. }4:46--102,
+%1983.
+%
+%\bibitem[Pin11]{pinson}H. Pinson, Rotational Invariance of the 2D
+%spin-spin correlation function.
+%
+%\bibitem[SMJ77]{sato-miwa-jimbo-i}R. Peierls, On Ising's model of
+%ferromagnetism. \emph{Proc. Camb. Philos. Soc., }32:477--481, 1936.M.
+%Sato, T. Miwa, M. Jimbo,\emph{ }Studies on holonomic quantum fields,
+%I\emph{-IV. Proc. Japan Acad. Ser. A Math. Sci., }53(1):6--10, 53(1):147-152,
+%53(1):153-158, 53(1):183-185, 1977.
+%
+%\bibitem[SMJ79a]{sato-miwa-jimbo-ii}M. Sato, T. Miwa, M. Jimbo, Holonomic
+%quantum fields III.\emph{ Publ. RIMS, Kyoto Univ. }15:577--629, 1979.
+%
+%\bibitem[SMJ79b]{sato-miwa-jimbo-iii}M. Sato, T. Miwa, M. Jimbo,
+%Holonomic quantum fields IV.\emph{ Publ. RIMS, Kyoto Univ.} 15:871--972,
+%1979.
+%
+%\bibitem[SMJ80]{sato-miwa-jimbo-iv}M. Sato, T. Miwa, M. Jimbo,\emph{
+%}Holonomic quantum fields V. \emph{Publ. RIMS, Kyoto Univ.} 16:531--584,
+%1980.
+%
+%\bibitem[Smi06]{smirnov-i}S. Smirnov,\emph{ }Towards conformal invariance
+%of 2D lattice models\emph{.} \emph{Sanz-Sol?, Marta (ed.) et al.,
+%Proceedings of the international congress of mathematicians (ICM),
+%Madrid, Spain, August 22--30, 2006. Volume II: Invited lectures, 1421-1451.
+%Z?rich: European Mathematical Society (EMS),} 2006.
+%
+%\bibitem[WMTB76]{wu-mccoy-tracy-barouch}T. T. Wu, B. M. McCoy, C.
+%A. Tracy, E. Barouch, Spin-spin correlation functions for the two-dimensional
+%Ising model: Exact theory in the scaling region.\emph{ Phys. Rev.
+%B }13:316--374, 1976.
+
+\end{thebibliography}
+
+\end{document}

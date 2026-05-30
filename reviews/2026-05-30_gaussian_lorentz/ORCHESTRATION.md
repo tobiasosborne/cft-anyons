@@ -37,7 +37,7 @@ Protocol:
 | J6 | Complete | `019e797a-f922-71e1-8e79-27a75c489125` (`Jason`) | Added sampled smooth-symbol rotation and boost-boost residual helpers. |
 | A1 | Complete | `019e7984-d92f-7940-9a7e-09ba5930619a` (`Hilbert`) | Registered Weinberg QFT Vol. I with targeted OCR anchors for stress-energy and Poincare generators. |
 | A2 | Complete | `019e7990-12ad-7151-a8e4-5604d5e29783` (`Feynman`) | Registered original Koo-Saleur arXiv source and updated KS source-boundary wording. |
-| A3 | Pending | - | Discrete Gaussian/free-field Virasoro source. |
+| A3 | Complete | `019e799c-3578-70f0-93d9-6b026a436206` (`Hegel`) | Registered discrete GFF Virasoro source with version-pinned arXiv v1 TeX anchors. |
 | A4 | Pending | - | Harmonic-chain energy-current formulas. |
 | S1 | Pending | - | Gaussian real-space density shard. |
 | S2 | Pending | - | 1+1 lattice stress-energy candidate shard. |
@@ -181,3 +181,15 @@ Protocol:
   the rigorous convergence theorem attached to the later free-fermion/OAR
   source.  `make check-report-shards`, `make report`, and `git diff --check`
   passed.
+- 2026-05-30: A2 pushed as `d7d0483`.  A3 delegated to worker
+  `019e799c-3578-70f0-93d9-6b026a436206` (`Hegel`).  Parent found legal source
+  leads for Hongler--Johansson Viklund--Kytola's discrete Gaussian free-field
+  Virasoro preprint via the University of Helsinki and EPFL Infoscience records.
+- 2026-05-30: A3 reviewed by parent and accepted.  The source registration
+  uses the EPFL open-access PDF plus arXiv `1307.4104v1` source TeX, with
+  anchors for square-grid dGFF change-of-measure operators, current modes,
+  Sugawara construction, and two commuting `c=1` Virasoro representations.
+  The report update keeps the boundary explicit: this source does not supply
+  continuum stress-energy/Poincare formulas or harmonic-chain energy-current
+  identities.  `make check-report-shards`, `make report`, and `git diff
+  --check` passed before landing.

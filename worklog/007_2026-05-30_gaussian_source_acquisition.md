@@ -1,5 +1,59 @@
 # Worklog chunk 007 — 2026-05-30
 
+## A3 discrete GFF Virasoro source registration — 2026-05-30
+
+### Context
+
+The Gaussian Lorentz plan needed a local source for the discrete
+Gaussian/free-field Virasoro side quest before later stress-energy proposal
+shards can say anything precise about lattice conformal generators.
+
+### What changed
+
+- Delegated A3 to worker `019e799c-3578-70f0-93d9-6b026a436206` (`Hegel`) and
+  reviewed the registration.
+- Added `SRC-HONGLER-JOHANSSON-KYTOLA-2013` under
+  `references/lattice-symmetry/`, including the EPFL open-access PDF, a
+  `pdftotext` extraction, the version-pinned arXiv `v1` source package, and the
+  extracted TeX anchor file.  The original source package is preserved
+  unchanged; the extracted TeX copy has trailing horizontal whitespace stripped
+  so repository whitespace gates can check it.
+- Updated `references/manifest/SOURCES.md`.
+- Updated CA-23 only at the source-boundary level: the source supports
+  square-grid dGFF change-of-measure Virasoro claims, not harmonic-chain
+  stress-energy or continuum Poincare formulas.
+
+### Why these choices
+
+- The arXiv `v1` source TeX gives stable line anchors for the original
+  "Lattice Representations of the Virasoro Algebra I" preprint.
+- The unversioned arXiv e-print currently resolves to a later expanded work, so
+  the manifest records the version pin explicitly.
+
+### Frictions / dead ends
+
+- The useful scope is narrower than the Gaussian harmonic-chain target: it is a
+  dGFF-on-square-grid, change-of-measure construction with current modes and
+  Sugawara operators.  It is evidence for lattice-level Virasoro structure, not
+  for the missing energy-current formulas.
+
+### Acceptance
+
+- Parent verified all four source hashes and inspected the key TeX anchor
+  ranges for abstract scope, change-of-measure operators, current modes,
+  Heisenberg relations, Sugawara construction, and commuting `c=1` Virasoro
+  representations.
+- `make check-report-shards` passed.
+- `make report` passed.
+- `git diff --check` passed.
+
+### Pointers
+
+- Source manifest: `references/lattice-symmetry/SOURCES.md`.
+- Source TeX anchors:
+  `references/lattice-symmetry/HonglerJohanssonKytola2013/source/vir_20130715.tex`.
+- Report: CA-23 source-boundary update.
+
 ## A2 original Koo-Saleur source registration — 2026-05-30
 
 ### Context

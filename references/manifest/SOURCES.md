@@ -13,6 +13,7 @@ New sources are filed under `references/<topic>/` with a per-topic `SOURCES.md`
 | `SRC-SCHOTTENLOHER-CFT` | [`references/cft/SOURCES.md`](../cft/SOURCES.md) — Schottenloher, *A Mathematical Introduction to CFT* (LNP 759, 2008) |
 | `SRC-WEINBERG-QFT1` | [`references/qft/SOURCES.md`](../qft/SOURCES.md) — Weinberg, *The Quantum Theory of Fields*, Vol. I (Cambridge University Press, 1995) |
 | `SRC-KOO-SALEUR-1994` | [`references/lattice-symmetry/SOURCES.md`](../lattice-symmetry/SOURCES.md) — Koo and Saleur, "Representations of the Virasoro algebra from lattice models" (arXiv:hep-th/9312156, Nucl. Phys. B426, 1994) |
+| `SRC-HONGLER-JOHANSSON-KYTOLA-2013` | [`references/lattice-symmetry/SOURCES.md`](../lattice-symmetry/SOURCES.md) — Hongler, Johansson Viklund, and Kytola, "Lattice Representations of the Virasoro Algebra I: Discrete Gaussian Free Field" (arXiv:1307.4104v1, EPFL open-access preprint) |
 
 The flat tables below are the legacy layout inherited from the prior effort.
 
