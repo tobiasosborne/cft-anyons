@@ -14,11 +14,13 @@
 invariants now implemented for the scalar Gaussian tier.  The checks are not
 continuum proofs; they are finite algebraic witnesses that the coefficient
 compiler is computing the intended symbols and residuals.  The massless doubler
-check is a coefficient-level rejection test, not a Fock-generator check.
+check is a coefficient-level rejection test, not a Fock-generator check.  The
+finite periodic checks below do not assert an exact differential
+\([X_a,P_b]=i\delta_{ab}\) commutator.
 
 Dependencies: CA-24--CA-27, INDEX.md, and CONVENTIONS.md (j).
 
-% Source: literature/md/2010.11121/2010.11121.md:274 -- lattice and dual lattice Fourier setup.
+% Source: literature/md/2010.11121/2010.11121.md:274--293 -- finite torus lattice, dual lattice, and Fourier transform normalization.
 % Source: literature/md/2010.11121/2010.11121.md:598 -- lattice scalar Hamiltonian.
 % Source: literature/md/2010.11121/2010.11121.md:623 -- lattice Klein-Gordon dispersion.
 % Source: literature/md/2010.11121/2010.11121.md:1626--1628 -- massless fields require a zero-mode policy.
@@ -58,7 +60,10 @@ one has the exact identity
 \]
 Therefore the sorted eigenvalues of the finite stiffness matrix must equal the
 sorted symbol values on the periodic Brillouin grid.  This is the finite
-Fourier invariant checked in Julia for \(d=1,2,3\).
+Fourier invariant checked in Julia for \(d=1,2,3\).  It is not a finite
+periodic first-moment or momentum-coordinate commutator test; those require a
+branch, sawtooth, Fourier-interpolation, or other coordinate convention before
+they can become numerical claims.
 
 \subsection{Implemented Example Systems}
 
@@ -116,9 +121,10 @@ The next suite should add three checks:
 \[
 \begin{array}{ll}
 1.&\text{finite Fourier eigenvectors, not only eigenvalues},\\
-2.&\text{boost and rotation residual norms on shrinking low-energy windows},\\
-3.&\text{comparison of open-boundary first moments with momentum-space tests}.
+2.&\text{sampled symbol residuals on shrinking low-energy windows},\\
+3.&\text{comparison of open-boundary first moments with periodic symbol tests}.
 \end{array}
 \]
-The third item requires a boundary convention before it can be promoted beyond
-a local experiment.
+Any finite periodic coordinate-generator version of the second or third item
+requires a branch or Fourier-interpolation convention before it can be promoted
+beyond a local experiment.

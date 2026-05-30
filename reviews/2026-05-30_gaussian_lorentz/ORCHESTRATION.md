@@ -21,7 +21,7 @@ Protocol:
 | C1 | Complete | `019e790c-6ac9-7990-9e43-9be09e34ca34` (`Confucius`) | Added convention (k) and updated CA-11, CA-24, CA-26; parent tightened inverse-flow wording before landing. |
 | C2 | Complete | `019e7914-909d-71f0-87d4-711abd3494dd` (`Boyle`) | CA-24--CA-26 now explicitly use flat local-symbol `L^2(dk)` algebra; OAR/mass-shell bridge remains an open proof obligation. |
 | C3 | Complete | `019e7919-7dba-7b21-8e02-7454d14a6858` (`Fermat`) | Recorded nonnegative mass label, positive-dispersion generator scope, and massless doubler as coefficient-level rejection only. |
-| C4 | Pending | - | Smooth low-energy patches vs finite periodic grids. |
+| C4 | Complete | `019e7921-7709-7431-a8e9-50cec9e57ed4` (`Aristotle`) | Split smooth-patch differential algebra from finite periodic symbol/eigenvalue checks. |
 | C5 | Pending | - | Numerical tolerance and validator conventions. |
 | C6 | Pending | - | Gaussian real-space density convention. |
 | R1 | Pending | - | CA-26 checked-coverage wording. |
@@ -68,3 +68,8 @@ Protocol:
   `m>0` is sufficient only for the nearest-neighbour KG positive-dispersion
   family, while arbitrary coefficient symbols still require `omega>0` on the
   chosen patch.  `make ci-before-push` passed.
+- 2026-05-30: C3 pushed as `6956597`.  C4 delegated to worker
+  `019e7921-7709-7431-a8e9-50cec9e57ed4` (`Aristotle`) with write scope
+  `CONVENTIONS.md`, CA-17, CA-23, CA-26, and CA-28.
+- 2026-05-30: C4 reviewed by parent and accepted.  `make ci-before-push` and
+  `git diff --check` passed; `report.pdf` did not change in the parent gate.

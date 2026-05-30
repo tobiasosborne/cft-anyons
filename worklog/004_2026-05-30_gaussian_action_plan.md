@@ -1,5 +1,48 @@
 # Worklog chunk 004 — 2026-05-30
 
+## Session log — 2026-05-30 — Action-plan C4 smooth patches versus finite grids
+
+### Context
+
+C4 repairs a finite-dimensional ambiguity: smooth momentum patches support the
+differential operator \(X_a=i\partial_{k_a}\), but finite periodic Brillouin
+grids cannot carry exact canonical commutators because of the trace obstruction.
+
+### What changed
+
+- Delegated C4 to worker `019e7921-7709-7431-a8e9-50cec9e57ed4`
+  (`Aristotle`).
+- Updated CONVENTIONS.md (h), (j) to state that finite Gaussian periodic grids
+  are currently symbol/eigenvalue checks only.
+- Updated CA-26 to split the smooth \(C_c^\infty(\mathcal U)\) differential
+  core from finite periodic Fourier-symbol checks.
+- Updated CA-17, CA-23, and CA-28 so periodic first-moment or coordinate
+  generator tests require a branch, sawtooth, or Fourier-interpolation
+  convention before becoming claims.
+
+### Why these choices
+
+- This preserves the useful finite periodic numerical suite without pretending
+  that a finite matrix pair satisfies \([X_a,P_b]=i\delta_{ab}\).  The finite
+  side remains an invariant check of coefficient symbols and Fourier spectra.
+
+### Frictions / dead ends
+
+- None.  This step was report/convention-only; no Julia surface changed.
+
+### Acceptance
+
+- `make ci-before-push` passed.
+- `git diff --check` passed.
+
+### Pointers
+
+- Action plan: `reviews/2026-05-30_gaussian_lorentz/ACTION_PLAN.md` (C4).
+- Orchestration ledger:
+  `reviews/2026-05-30_gaussian_lorentz/ORCHESTRATION.md`.
+- Convention: `CONVENTIONS.md` (h), (j).
+- Report shards: CA-17, CA-23, CA-26, CA-28.
+
 ## Session log — 2026-05-30 — Action-plan C3 mass and zero-mode policy
 
 ### Context

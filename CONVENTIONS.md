@@ -157,8 +157,10 @@ identified across active/passive conventions.
 **Source:** `references/cft/Schottenloher2008/Schottenloher2008.md:4040`--`:4050`
 (Stone convention), `:4113`--`:4117` (translation generators and `P_0=H`);
 CA-12 local derivation; `test/runtests.jl` lattice current coefficient check.
-**Sweep status:** CA-10--CA-17 use this convention; no periodic-boundary or
-higher-dimensional orientation convention is fixed yet.
+**Sweep status:** CA-10--CA-17 use this convention; no periodic-boundary
+first-moment or higher-dimensional orientation convention is fixed yet.  The
+finite Gaussian periodic grids in (j) are symbol/eigenvalue checks, not a
+periodic position convention.
 
 ## (i) Galilean symmetry candidates and mass density
 **Choice:** Galilean follow-up shards use Newtonian coordinates
@@ -217,14 +219,21 @@ documented Gaussian API even though current coefficient formulas only contain
 Finite periodic numerical checks use momenta
 `k_a = 2 pi n_a / (epsilon L_a)` and the real-space stiffness matrix
 `V_{xy} = sum_r V_r 1_{y=x+r mod L}`; its eigenvalue oracle is the list of
-symbol values on this Brillouin grid.  The low-energy Hessian residual is
+symbol values on this Brillouin grid.  These finite periodic checks are
+symbol/eigenvalue checks only.  They do not introduce finite matrices
+`X_a, P_b` satisfying the exact differential commutator
+`[X_a,P_b]=i delta_ab`; in finite dimension the trace of a commutator is zero,
+while the trace of `i delta_ab I` is not.  Any finite periodic first-moment,
+position-coordinate, or momentum-coordinate generator test must first name a
+branch, sawtooth, Fourier-interpolation, or other periodic coordinate
+convention.
+The low-energy Hessian residual is
 `1/2 Hessian(omega^2)(0) - c^2 I`, equivalently
 `-epsilon^2/2 sum_r r_a r_b V_r - c^2 delta_ab`.
 At the one-particle local-symbol level, CA-24--CA-26 work on the flat momentum
-space `L^2(U, dk)` on a smooth patch `U`, or on the analogous flat finite
-momentum grid for numerical symbol checks.  Thus `X_a=i partial_{k_a}` is the
-flat-measure differential operator, and the time-zero Lorentz-boost candidate is
-the flat-measure symmetric formula
+space `L^2(U, dk)` on a smooth open patch `U`.  Thus
+`X_a=i partial_{k_a}` is the flat-measure differential operator, and the
+time-zero Lorentz-boost candidate is the flat-measure symmetric formula
 `K_a = 1/2 (X_a omega + omega X_a)`.  Then
 `i[H,K_a]` has multiplication symbol `1/2 partial_a omega(k)^2`; the continuum
 Klein-Gordon condition with speed `c=1` is that this tends to `k_a`, equivalently
@@ -250,8 +259,9 @@ Poincare theorem.  The zero-mode restriction is kept explicit because the
 one-particle complex structure uses `omega^{-1}` and the OAR source names the
 massless zero mode as a separate problem.
 **Source:** `literature/md/2010.11121/2010.11121.md:51`--`:58` (harmonic lattice
-Hamiltonian and scaling-limit claims), `:598`--`:610` (lattice Hamiltonian,
-dispersion, and ground-state two-point function), `:614`--`:623`
+Hamiltonian and scaling-limit claims), `:274`--`:293` (finite torus lattice,
+dual lattice, and discrete Fourier transform), `:598`--`:610` (lattice
+Hamiltonian, dispersion, and ground-state two-point function), `:614`--`:623`
 (renormalized mass and lattice Klein-Gordon dispersion), `:648`--`:681` (OAR
 continuum one-particle scalar product, flat Fock realization, dynamics, speed 1,
 and translations), `:1037`--`:1046` (continuum free scalar time evolution and
