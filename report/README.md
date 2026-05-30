@@ -25,6 +25,7 @@ before treating report edits as complete.
 | 5 | `CA-05-SYMMETRY-DECORATED-GRAMMAR` | `report/sections/05_symmetry_decorated_grammar.tex` | Symmetry-Decorated Many-Particle Grammar |
 | 6 | `CA-06-SECTORS-PROJECTIONS-QUOTIENTS` | `report/sections/06_sectors_projections_quotients.tex` | Sectors, Projections, Subspaces, and Quotients |
 | 7 | `CA-07-EXCHANGE-STATISTICS-LAYER` | `report/sections/07_exchange_statistics_layer.tex` | Exchange Symmetry and Statistics as Sector Selection |
+| 8 | `CA-08-HILBERT-SPACE-COMPILER-SPEC` | `report/sections/08_hilbert_space_compiler_spec.tex` | Scoping the Hilbert-Space Compiler |
 
 ## Adding a shard
 

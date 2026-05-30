@@ -22,4 +22,5 @@ gotcha) goes to agent memory under
 
 | Chunk | Span | Topics |
 |---|---|---|
+| `002_2026-05-30_compiler_spec.md` | 2026-05-30 | CA-08 Hilbert-space compiler scope/spec and finite exchange-projector checks |
 | `001_2026-05-30_reboot.md` | 2026-05-30 | Reboot: archive of old project, north star, lab-book scaffold |

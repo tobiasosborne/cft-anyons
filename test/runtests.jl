@@ -33,4 +33,40 @@ end
     anti_invariant_vector = ComplexF64[1, -1]
     @test P * invariant_vector ≈ invariant_vector
     @test P * anti_invariant_vector ≈ zeros(ComplexF64, 2)
+
+    @test_throws ErrorException CftAnyons.finite_group_average_projector([])
+    @test_throws ErrorException CftAnyons.finite_group_average_projector([ComplexF64[1 1; 0 1]])
+end
+
+@testset "two-qubit exchange projectors" begin
+    I4 = Matrix{ComplexF64}(I, 4, 4)
+    swap_slots = ComplexF64[
+        1 0 0 0
+        0 0 1 0
+        0 1 0 0
+        0 0 0 1
+    ]
+
+    P_symmetric = (I4 + swap_slots) / 2
+    P_antisymmetric = (I4 - swap_slots) / 2
+
+    @test CftAnyons.is_orthogonal_projection(P_symmetric)
+    @test CftAnyons.is_orthogonal_projection(P_antisymmetric)
+    @test P_symmetric * P_antisymmetric ≈ zeros(ComplexF64, 4, 4)
+    @test tr(P_symmetric) ≈ 3
+    @test tr(P_antisymmetric) ≈ 1
+
+    e0 = ComplexF64[1, 0]
+    e1 = ComplexF64[0, 1]
+    e00 = kron(e0, e0)
+    e11 = kron(e1, e1)
+    symmetric_cross = (kron(e0, e1) + kron(e1, e0)) / sqrt(2)
+    antisymmetric_cross = (kron(e0, e1) - kron(e1, e0)) / sqrt(2)
+
+    @test P_symmetric * e00 ≈ e00
+    @test P_symmetric * symmetric_cross ≈ symmetric_cross
+    @test P_symmetric * e11 ≈ e11
+    @test P_symmetric * antisymmetric_cross ≈ zeros(ComplexF64, 4)
+    @test P_antisymmetric * antisymmetric_cross ≈ antisymmetric_cross
+    @test P_antisymmetric * e00 ≈ zeros(ComplexF64, 4)
 end

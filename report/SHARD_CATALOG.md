@@ -73,3 +73,12 @@ single ~200-line source file it points to.
 - Summary: Keeps internal symmetries separate from exchange symmetry and records how the two actions coexist on n-particle sectors.
 - Summary: Defers para-statistics and genuinely anyonic braid statistics until their source, convention, and projector data are fixed.
 - Keywords: exchange symmetry, statistics, symmetric Fock, antisymmetric Fock, permutation group, sector projector, anyonic deferral
+
+## `CA-08-HILBERT-SPACE-COMPILER-SPEC`
+
+- Source: `report/sections/08_hilbert_space_compiler_spec.tex`
+- Title: Scoping the Hilbert-Space Compiler
+- Summary: Specifies the first partial compiler from typed grammar expressions to Hilbert carriers, gradings, observable-algebra policies, symmetry data, and sector witnesses.
+- Summary: Gives deterministic constructor rules and finite-dimensional invariants that can be checked before any categorical anyon data enters.
+- Summary: Works through small examples: maybe qubits, distinguishable pairs, truncated Fock space, exchange sectors, invariant quotients, and a required compile error.
+- Keywords: Hilbert-space compiler, compiler specification, examples, dimensions, observable policy, compile error, symmetric sector, invariant quotient
