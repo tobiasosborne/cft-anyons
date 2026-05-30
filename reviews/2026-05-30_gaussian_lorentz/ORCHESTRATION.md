@@ -35,7 +35,7 @@ Protocol:
 | J4 | Complete | `019e7968-63d3-7010-8a23-e7cca580ed2d` (`Sagan`) | Added strict scalar coefficient validation and loud negative tests. |
 | J5 | Complete | `019e7970-b245-7a42-9153-e0ae276cc11c` (`Beauvoir`) | Added finite-grid minimum data, a nonnegative gate, and Hessian-insufficiency witnesses. |
 | J6 | Complete | `019e797a-f922-71e1-8e79-27a75c489125` (`Jason`) | Added sampled smooth-symbol rotation and boost-boost residual helpers. |
-| A1 | Pending | - | Continuum stress-energy / Poincare-generator source. |
+| A1 | Complete | `019e7984-d92f-7940-9a7e-09ba5930619a` (`Hilbert`) | Registered Weinberg QFT Vol. I with targeted OCR anchors for stress-energy and Poincare generators. |
 | A2 | Pending | - | Original Koo-Saleur source. |
 | A3 | Pending | - | Discrete Gaussian/free-field Virasoro source. |
 | A4 | Pending | - | Harmonic-chain energy-current formulas. |
@@ -156,3 +156,16 @@ Protocol:
   The helper surface remains smooth-symbol data only; no finite-grid coordinate
   generator or second-quantized closure claim was added.  `make ci-before-push`
   and `git diff --check` passed.
+- 2026-05-30: J6 pushed as `af3e331`.  A1 started.  Parent found a local
+  Weinberg QFT Vol. 1 DJVU in
+  `/home/tobiasosborne/Projects/Lyr.jl/docs/references/`; A1 must register only
+  legally local/source-manifested material and verify line anchors before any
+  report claim uses it.
+- 2026-05-30: A1 reviewed by parent and accepted as source registration only.
+  Weinberg QFT Vol. I is now registered under `references/qft/` with SHA256
+  `39fdcaeb42d073b60442866f793589555ad4a4c772b56a17915add9d6c5829df`.
+  Targeted OCR anchors cover Noether currents, energy-momentum tensor,
+  Belinfante tensor, rotation/boost generators, and Lorentz commutator caveats.
+  General improvement ambiguity remains unsourced; exact formula promotion
+  still requires page-image checking because OCR is noisy.  `make
+  check-report-shards` and `git diff --check` passed.

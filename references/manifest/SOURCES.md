@@ -11,6 +11,7 @@ New sources are filed under `references/<topic>/` with a per-topic `SOURCES.md`
 | Source ID | Topic manifest |
 |---|---|
 | `SRC-SCHOTTENLOHER-CFT` | [`references/cft/SOURCES.md`](../cft/SOURCES.md) — Schottenloher, *A Mathematical Introduction to CFT* (LNP 759, 2008) |
+| `SRC-WEINBERG-QFT1` | [`references/qft/SOURCES.md`](../qft/SOURCES.md) — Weinberg, *The Quantum Theory of Fields*, Vol. I (Cambridge University Press, 1995) |
 
 The flat tables below are the legacy layout inherited from the prior effort.
 
@@ -65,4 +66,3 @@ The flat tables below are the legacy layout inherited from the prior effort.
 - Deprecated extracted files under `references/text/deprecated/` are retained
   only as import provenance. New claims should cite the normalized text paths
   in `references/text/`.
-
