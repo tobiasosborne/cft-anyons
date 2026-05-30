@@ -222,6 +222,51 @@ end
     @test_throws ErrorException CftAnyons.boost_time_symbol_from_coefficients([([0], 2.0), ([1], -0.5)], [0.2])
 end
 
+@testset "Gaussian quadratic commutator sign convention" begin
+    q_energy = [1 0; 0 0]
+    p_energy = [0 0; 0 1]
+
+    # i[q^2 / 2, p^2 / 2] = -(q p + p q) / 2.
+    @test CftAnyons.quadratic_commutator_matrix(q_energy, p_energy) == [0 -1; -1 0]
+    @test CftAnyons.quadratic_commutator_matrix(p_energy, q_energy) == [0 1; 1 0]
+    @test CftAnyons.canonical_phase_space_symplectic(1) == [0 1; -1 0]
+    @test_throws ErrorException CftAnyons.quadratic_commutator_matrix(zeros(3, 3), zeros(3, 3))
+end
+
+@testset "Gaussian open-chain energy current continuity" begin
+    N = 5
+    onsite = 7.25
+    bond = -1.5
+    densities = CftAnyons.open_chain_gaussian_energy_density_matrices(N; onsite, bond)
+    hamiltonian = CftAnyons.open_chain_gaussian_hamiltonian_matrix(N; onsite, bond)
+    currents = CftAnyons.open_chain_gaussian_energy_current_matrices(densities)
+    shifted_currents = CftAnyons.open_chain_gaussian_energy_current_matrices(N; onsite = onsite + 3.0, bond)
+
+    @test length(densities) == N
+    @test length(currents) == N - 1
+    @test gaussian_symbol_isapprox(sum(densities), hamiltonian)
+    @test gaussian_symbol_isapprox(hamiltonian[1:N, 1:N], SymTridiagonal(fill(onsite, N), fill(bond, N - 1)))
+    @test gaussian_symbol_isapprox(hamiltonian[N + 1:2N, N + 1:2N], Matrix{Float64}(I, N, N))
+
+    for j in 1:(N - 1)
+        closed_form = CftAnyons.open_chain_gaussian_energy_current_closed_form_matrix(N, j; bond)
+        @test gaussian_symbol_isapprox(currents[j], closed_form)
+        @test gaussian_symbol_isapprox(currents[j], shifted_currents[j])
+        @test gaussian_symbol_isapprox(closed_form[j + 1, N + j], bond / 2)
+        @test gaussian_symbol_isapprox(closed_form[j, N + j + 1], -bond / 2)
+    end
+
+    continuity_residuals = CftAnyons.open_chain_gaussian_energy_continuity_residuals(N; onsite, bond)
+    @test all(residual -> gaussian_symbol_isapprox(residual, zeros(2N, 2N)), continuity_residuals)
+
+    lhs = [CftAnyons.quadratic_commutator_matrix(hamiltonian, densities[j]) for j in 1:N]
+    @test gaussian_symbol_isapprox(lhs[1], -currents[1])
+    for j in 2:(N - 1)
+        @test gaussian_symbol_isapprox(lhs[j], currents[j - 1] - currents[j])
+    end
+    @test gaussian_symbol_isapprox(lhs[N], currents[N - 1])
+end
+
 @testset "Gaussian boson Klein-Gordon symbols" begin
     for d in 1:3
         k = collect(0.1:0.1:(0.1d))

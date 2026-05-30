@@ -376,6 +376,14 @@ implicit.  Periodic wrap-around bonds are included in the total density split,
 but periodic first moments still require the coordinate-branch policy fixed
 separately in (j).
 
+For the finite open one-dimensional nearest-neighbour scalar chain, the local
+energy-current orientation is
+`J_{j+1/2}=i[e_j,e_{j+1}]`, with endpoint convention
+`J_{1/2}=J_{N+1/2}=0`, so the checked finite continuity identity is
+`i[H,e_j]=J_{j-1/2}-J_{j+1/2}`.  This is only a local quadratic-density current
+convention for future `T_01` candidates; it is not a continuum stress tensor or
+`T_11` claim.
+
 Vacuum-energy policy: the split above is bare.  No subtraction is implicit.
 After a state `Omega` or `omega` is named, an expectation-subtracted density may
 be written `:h_x:_omega = h_x - omega(h_x) 1`.  Such a subtraction changes the
@@ -403,7 +411,10 @@ lattice scalar Hamiltonian and dispersion), `:614`--`:623` (physical mass and
 renormalized lattice dispersion);
 `references/text/CFTFromLatticeFermions.txt:378`--`:389` (vacuum/ground-state
 subtraction as a normal-ordering requirement in the free-fermion Koo-Saleur
-setting); CA-29.
+setting); `src/GaussianBosonCurrents.jl` and `test/runtests.jl` testsets
+"Gaussian quadratic commutator sign convention" and
+"Gaussian open-chain energy current continuity" (finite open-chain local
+current derivation); CA-29.
 **Sweep status:** CA-29 defines and uses this convention.  CA-24--CA-28 use only
 the total scalar symbol and finite periodic stiffness checks; any later
 real-space first-moment or quadratic-density mode must cite this entry or

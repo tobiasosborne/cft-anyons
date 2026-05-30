@@ -164,6 +164,7 @@ end
 
 include("GalileiAlgebras.jl")
 include("GaussianBosons.jl")
+include("GaussianBosonCurrents.jl")
 include("GaussianBosonNumerics.jl")
 
 """
