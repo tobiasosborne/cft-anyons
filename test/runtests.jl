@@ -234,37 +234,55 @@ end
 end
 
 @testset "Gaussian open-chain energy current continuity" begin
-    N = 5
-    onsite = 7.25
-    bond = -1.5
-    densities = CftAnyons.open_chain_gaussian_energy_density_matrices(N; onsite, bond)
-    hamiltonian = CftAnyons.open_chain_gaussian_hamiltonian_matrix(N; onsite, bond)
-    currents = CftAnyons.open_chain_gaussian_energy_current_matrices(densities)
-    shifted_currents = CftAnyons.open_chain_gaussian_energy_current_matrices(N; onsite = onsite + 3.0, bond)
+    cases = [
+        (2, 0.75, -0.5),
+        (3, 2.0, 1.25),
+        (5, 7.25, -1.5),
+        (7, 0.1, -0.875),
+    ]
 
-    @test length(densities) == N
-    @test length(currents) == N - 1
-    @test gaussian_symbol_isapprox(sum(densities), hamiltonian)
-    @test gaussian_symbol_isapprox(hamiltonian[1:N, 1:N], SymTridiagonal(fill(onsite, N), fill(bond, N - 1)))
-    @test gaussian_symbol_isapprox(hamiltonian[N + 1:2N, N + 1:2N], Matrix{Float64}(I, N, N))
+    for (N, onsite, bond) in cases
+        densities = CftAnyons.open_chain_gaussian_energy_density_matrices(N; onsite, bond)
+        hamiltonian = CftAnyons.open_chain_gaussian_hamiltonian_matrix(N; onsite, bond)
+        currents = CftAnyons.open_chain_gaussian_energy_current_matrices(densities)
+        shifted_currents = CftAnyons.open_chain_gaussian_energy_current_matrices(N;
+            onsite = onsite + 3.0, bond)
 
-    for j in 1:(N - 1)
-        closed_form = CftAnyons.open_chain_gaussian_energy_current_closed_form_matrix(N, j; bond)
-        @test gaussian_symbol_isapprox(currents[j], closed_form)
-        @test gaussian_symbol_isapprox(currents[j], shifted_currents[j])
-        @test gaussian_symbol_isapprox(closed_form[j + 1, N + j], bond / 2)
-        @test gaussian_symbol_isapprox(closed_form[j, N + j + 1], -bond / 2)
+        @test length(densities) == N
+        @test length(currents) == N - 1
+        @test gaussian_symbol_isapprox(sum(densities), hamiltonian)
+        @test gaussian_symbol_isapprox(hamiltonian[1:N, 1:N],
+            SymTridiagonal(fill(onsite, N), fill(bond, N - 1)))
+        @test gaussian_symbol_isapprox(hamiltonian[N + 1:2N, N + 1:2N],
+            Matrix{Float64}(I, N, N))
+
+        for j in 1:(N - 1)
+            closed_form = CftAnyons.open_chain_gaussian_energy_current_closed_form_matrix(N, j;
+                bond)
+            @test gaussian_symbol_isapprox(currents[j], closed_form)
+            @test gaussian_symbol_isapprox(currents[j], shifted_currents[j])
+            @test gaussian_symbol_isapprox(closed_form[j + 1, N + j], bond / 2)
+            @test gaussian_symbol_isapprox(closed_form[j, N + j + 1], -bond / 2)
+        end
+
+        continuity_residuals = CftAnyons.open_chain_gaussian_energy_continuity_residuals(N;
+            onsite, bond)
+        @test length(continuity_residuals) == N
+        @test all(residual -> gaussian_symbol_isapprox(residual, zeros(2N, 2N)),
+            continuity_residuals)
+
+        lhs = [CftAnyons.quadratic_commutator_matrix(hamiltonian, densities[j]) for j in 1:N]
+        @test gaussian_symbol_isapprox(lhs[1], -currents[1])
+        for j in 2:(N - 1)
+            @test gaussian_symbol_isapprox(lhs[j], currents[j - 1] - currents[j])
+        end
+        @test gaussian_symbol_isapprox(lhs[N], currents[N - 1])
     end
 
-    continuity_residuals = CftAnyons.open_chain_gaussian_energy_continuity_residuals(N; onsite, bond)
-    @test all(residual -> gaussian_symbol_isapprox(residual, zeros(2N, 2N)), continuity_residuals)
-
-    lhs = [CftAnyons.quadratic_commutator_matrix(hamiltonian, densities[j]) for j in 1:N]
-    @test gaussian_symbol_isapprox(lhs[1], -currents[1])
-    for j in 2:(N - 1)
-        @test gaussian_symbol_isapprox(lhs[j], currents[j - 1] - currents[j])
-    end
-    @test gaussian_symbol_isapprox(lhs[N], currents[N - 1])
+    @test_throws ErrorException CftAnyons.open_chain_gaussian_energy_current_matrices(1;
+        onsite = 1, bond = -1)
+    @test_throws ErrorException CftAnyons.open_chain_gaussian_energy_current_closed_form_matrix(3, 3;
+        bond = -1)
 end
 
 @testset "Gaussian boson Klein-Gordon symbols" begin
@@ -340,6 +358,42 @@ end
         bond = -1, spacing = 1)
     @test_throws ErrorException CftAnyons.nearest_neighbor_integrated_energy_current_symbol([0.1];
         bond = -1, spacing = 0)
+end
+
+@testset "Gaussian stress-energy current slope witnesses" begin
+    for (spacing, speed) in ((1.0, 1.0), (0.5, 1.25), (0.125, 0.75))
+        kg_bond = -speed^2 / spacing^2
+        @test gaussian_symbol_isapprox(
+            CftAnyons.nearest_neighbor_current_symbol_speed_residual(; bond = kg_bond,
+                spacing, speed),
+            0)
+        unit_speed_residual = CftAnyons.nearest_neighbor_current_symbol_speed_residual(;
+            bond = -1 / spacing^2, spacing, speed)
+        @test gaussian_symbol_isapprox(unit_speed_residual, 1 - speed^2)
+        speed == 1.0 || @test abs(unit_speed_residual) > 0.1
+        @test CftAnyons.nearest_neighbor_current_symbol_speed_residual(;
+            bond = abs(kg_bond), spacing, speed) < -speed^2
+    end
+
+    spacing = 0.2
+    speed = 1.3
+    wrong_magnitude = CftAnyons.nearest_neighbor_current_symbol_speed_residual(;
+        bond = -0.5 * speed^2 / spacing^2, spacing, speed)
+    wrong_sign = CftAnyons.nearest_neighbor_current_symbol_speed_residual(;
+        bond = speed^2 / spacing^2, spacing, speed)
+
+    @test gaussian_symbol_isapprox(wrong_magnitude, -0.5 * speed^2)
+    @test gaussian_symbol_isapprox(wrong_sign, -2 * speed^2)
+    @test_throws ErrorException CftAnyons.nearest_neighbor_current_symbol_speed_residual(;
+        bond = -1, spacing = 0, speed = 1)
+    @test_throws ErrorException CftAnyons.nearest_neighbor_current_symbol_speed_residual(;
+        bond = -1, spacing = 1, speed = 0)
+    @test_throws ErrorException CftAnyons.nearest_neighbor_current_symbol_speed_residual(;
+        bond = -1, spacing = 1 + im, speed = 1)
+    @test_throws ErrorException CftAnyons.nearest_neighbor_current_symbol_speed_residual(;
+        bond = -1, spacing = 1, speed = 1 + im)
+    @test_throws ErrorException CftAnyons.nearest_neighbor_current_symbol_speed_residual(;
+        bond = 1 + im, spacing = 1, speed = 1)
 end
 
 @testset "Gaussian boson finite-difference boost-time oracle" begin

@@ -50,6 +50,7 @@ before treating report edits as complete.
 | 30 | `CA-30-GAUSSIAN-BOSON-1D-STRESS-CANDIDATES` | `report/sections/30_gaussian_boson_1d_stress_candidates.tex` | One-Dimensional Gaussian Boson Stress-Energy Candidates |
 | 31 | `CA-31-GAUSSIAN-CURRENT-SYMBOL-EQUIVALENCE` | `report/sections/31_gaussian_current_symbol_equivalence.tex` | Gaussian Current-Symbol Equivalence in One Dimension |
 | 32 | `CA-32-GAUSSIAN-HIGHER-DIMENSIONAL-CELL-CURRENTS` | `report/sections/32_gaussian_higher_dimensional_cell_currents.tex` | Higher-Dimensional Gaussian Cell-Current Proposal |
+| 33 | `CA-33-GAUSSIAN-STRESS-NUMERICAL-SUITE` | `report/sections/33_gaussian_stress_numerical_suite.tex` | First Gaussian Stress-Energy Numerical Suite |
 
 ## Adding a shard
 

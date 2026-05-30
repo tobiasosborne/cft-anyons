@@ -297,3 +297,12 @@ single ~200-line source file it points to.
 - Summary: Separates energy flux, momentum density, and stress witnesses instead of inferring T_a0 from T_0a or assuming symmetric stress.
 - Summary: Records rotation, trace, improvement, and open-versus-periodic boundary diagnostics as future numerical targets, not convergence claims.
 - Keywords: Gaussian boson, higher dimensions, cell current, stress tensor, rotation, boundary terms, compiler input
+
+## `CA-33-GAUSSIAN-STRESS-NUMERICAL-SUITE`
+
+- Source: `report/sections/33_gaussian_stress_numerical_suite.tex`
+- Title: First Gaussian Stress-Energy Numerical Suite
+- Summary: Extends the checked Gaussian current layer with finite open-chain T_01 continuity tests across several chains and endpoint signs.
+- Summary: Adds a one-dimensional nearest-neighbour current-symbol slope residual that detects wrong speed, bond magnitude, and orientation.
+- Summary: Keeps periodic first moments, finite-chain dGamma(k), higher-dimensional current densities, and T_11 witnesses as open obligations.
+- Keywords: Gaussian boson, stress-energy numerical suite, open chain, energy current, slope residual, failure witness

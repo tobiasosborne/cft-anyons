@@ -1,0 +1,160 @@
+% SHARD-ID: CA-33-GAUSSIAN-STRESS-NUMERICAL-SUITE
+% SHARD-TITLE: First Gaussian Stress-Energy Numerical Suite
+% SHARD-SUMMARY: Extends the checked Gaussian current layer with finite open-chain T_01 continuity tests across several chains and endpoint signs.
+% SHARD-SUMMARY: Adds a one-dimensional nearest-neighbour current-symbol slope residual that detects wrong speed, bond magnitude, and orientation.
+% SHARD-SUMMARY: Keeps periodic first moments, finite-chain dGamma(k), higher-dimensional current densities, and T_11 witnesses as open obligations.
+% SHARD-KEYWORDS: Gaussian boson, stress-energy numerical suite, open chain, energy current, slope residual, failure witness
+
+\section{First Gaussian Stress-Energy Numerical Suite}
+\label{sec:gaussian-stress-numerical-suite}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: checked local-current numerical suite.}  This shard records the
+first stress-energy-specific numerical tests.  The checked surface is narrow:
+finite open-chain \(T_{01}\) continuity for the CA-29/CA-30 density-current
+choice, and a one-dimensional nearest-neighbour current-symbol slope residual.
+It is not a finite boost construction, not a \(\mathrm d\Gamma(k)\) theorem, not
+a periodic first-moment test, and not a continuum stress-tensor claim.
+
+Dependencies: CA-29--CA-32 and CONVENTIONS.md (j), (k), (l).
+
+% Convention: CONVENTIONS.md:196--239 -- finite periodic Gaussian checks do not
+%   define periodic first moments or finite coordinate generators.
+% Convention: CONVENTIONS.md:260--269 -- boost-time symbol
+%   (1/2) partial_a omega(k)^2 and its sign convention.
+% Convention: CONVENTIONS.md:312--347 -- Poincare vector fields translated to
+%   self-adjoint commutator signs.
+% Convention: CONVENTIONS.md:349--421 -- Gaussian density split, finite open
+%   current orientation, endpoint convention, subtraction, and improvement
+%   policies.
+% Source: report/sections/29_gaussian_boson_real_space_density.tex:74--105 --
+%   equal-endpoint split and finite open-boundary policy.
+% Source: report/sections/30_gaussian_boson_1d_stress_candidates.tex:83--146 --
+%   T_00, T_01, T_10, and T_11 roles and endpoint signs.
+% Source: report/sections/31_gaussian_current_symbol_equivalence.tex:55--98 --
+%   one-dimensional nearest-neighbour current-symbol equality.
+% Source: report/sections/32_gaussian_higher_dimensional_cell_currents.tex:70--132 --
+%   higher-dimensional cell-current equations remain proposal-level inputs.
+% Checked: src/GaussianBosonCurrents.jl:126--235 -- open-chain currents,
+%   closed forms, current-symbol helper, slope residual, and continuity
+%   residuals.
+% Checked: test/runtests.jl:236--286 -- strengthened open-chain
+%   "Gaussian open-chain energy current continuity" tests.
+% Checked: test/runtests.jl:324--397 -- current-symbol equality and
+%   "Gaussian stress-energy current slope witnesses" tests.
+
+\subsection{Finite Open-Chain Continuity}
+
+The first suite strengthens the A4 local-current witness instead of replacing
+it.  For each tested open chain, the Julia layer constructs the CA-29
+equal-endpoint site energies \(e_j\), the total Hamiltonian
+\[
+  H=\sum_{j=1}^N e_j,
+\]
+and the edge currents
+\[
+  J_{j+1/2}=i[e_j,e_{j+1}],
+  \qquad 1\le j<N .
+\]
+The residual helper checks
+\[
+  i[H,e_j]-(J_{j-1/2}-J_{j+1/2})=0
+\]
+with endpoint currents \(J_{1/2}=J_{N+1/2}=0\).
+
+The test cases now cover several chain sizes and onsite/bond choices:
+\[
+  (N,a,b)\in
+  \{(2,0.75,-0.5),(3,2.0,1.25),(5,7.25,-1.5),(7,0.1,-0.875)\}.
+\]
+For each case the suite asserts:
+\[
+\begin{array}{ll}
+1.&\sum_j e_j=H,\\
+2.&H_{qq}\text{ is the expected tridiagonal matrix with diagonal }a
+    \text{ and bond }b,\\
+3.&H_{pp}=I,\\
+4.&J_{j+1/2}\text{ equals the closed form }
+    \frac b2(q_{j+1}p_j-q_jp_{j+1}),\\
+5.&J_{j+1/2}\text{ is independent of the onsite coefficient},\\
+6.&\text{all continuity residual matrices vanish},\\
+7.&i[H,e_1]=-J_{3/2},\quad
+   i[H,e_j]=J_{j-1/2}-J_{j+1/2},\quad
+   i[H,e_N]=J_{N-1/2}.
+\end{array}
+\]
+The explicit endpoint tests are the important stress-energy addition: boundary
+signs are part of the local \(T_{01}\) claim, not discarded finite-size errors.
+The suite also checks that a one-site chain cannot produce a bond current and
+that an out-of-range open bond index raises an error.
+
+\subsection{Current-Symbol Slope Residual}
+
+The second suite is the smallest symbol-level current-density failure witness
+currently justified by CA-31.  For the one-dimensional nearest-neighbour symbol
+\[
+  \mathcal J_\epsilon(k)=-\epsilon b\sin(\epsilon k),
+\]
+the small-\(k\) slope is
+\[
+  \mathcal J_\epsilon'(0)=-\epsilon^2 b.
+\]
+The new helper returns the speed residual
+\[
+  \rho_J(b,\epsilon,c)=-\epsilon^2 b-c^2 .
+\]
+It validates positive spacing, positive target speed, and real bond data before
+returning a number.
+
+For the speed-\(c\) nearest-neighbour Klein-Gordon bond
+\[
+  b=-c^2\epsilon^{-2},
+\]
+the residual is zero.  The tests assert this for several spacings and speeds.
+They also assert failure witnesses:
+\[
+  b=-\epsilon^{-2}\quad\text{fails when }c\ne1,
+\]
+wrong bond magnitude gives the expected nonzero residual, and reversing the
+bond sign gives
+\[
+  \rho_J(c^2\epsilon^{-2},\epsilon,c)=-2c^2 .
+\]
+These are current-density symbol failures for the CA-31 orientation.  They are
+not Hessian-only failures and they do not use a periodic coordinate branch.
+
+\subsection{What This Falsifies}
+
+The suite falsifies three classes of local-current mistakes:
+\[
+\begin{array}{ll}
+1.&\text{incorrect open-boundary signs in }
+   i[H,e_j]=J_{j-1/2}-J_{j+1/2},\\
+2.&\text{wrong orientation in }
+   J_{j+1/2}=i[e_j,e_{j+1}],\\
+3.&\text{nearest-neighbour current symbols whose low-energy slope does not
+   match the selected }c^2.
+\end{array}
+\]
+The onsite-independence checks also catch an accidental insertion of the mass or
+onsite term into the nearest-neighbour current.
+
+\subsection{Open Obligations}
+
+The suite deliberately leaves the following undone:
+\[
+\begin{array}{ll}
+1.&\text{finite open-chain wave packets and comparison with }
+   \mathrm d\Gamma(k),\\
+2.&\text{periodic first moments or periodic coordinate generators},\\
+3.&\text{higher-dimensional current-density formulas and incidence-sign tests},\\
+4.&\text{next-nearest-neighbour or doubler current-density witnesses},\\
+5.&\text{momentum-density }T_{10}\text{ and stress-current }T_{11}\text{
+   continuity tests},\\
+6.&\text{scaling maps, state choices, domains, and continuum convergence.}
+\end{array}
+\]
+The doubler evidence remains the CA-28 coefficient/minimum-data rejection.  It
+should not be described as a current-density failure until a current formula for
+that non-nearest-neighbour symbol is derived and tested.

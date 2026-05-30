@@ -1,5 +1,58 @@
 # Worklog chunk 008 — 2026-05-30
 
+## S5 stress-energy numerical suite — 2026-05-30
+
+### Context
+
+S5 asked for the first stress-energy-specific numerical suite after the
+real-space density/current choices were fixed.  The safe checked surface was
+finite open-chain \(T_{01}\) continuity and the one-dimensional
+nearest-neighbour current-symbol slope, not finite boosts, periodic first
+moments, higher-dimensional currents, or \(T_{11}\).
+
+### What changed
+
+- Delegated S5 to worker `019e79cd-65ee-7d23-9373-aa00a48822a9` (`Godel`) and
+  reviewed the patch.
+- Added
+  `nearest_neighbor_current_symbol_speed_residual` to
+  `src/GaussianBosonCurrents.jl`.
+- Strengthened `test/runtests.jl` open-chain current tests across several
+  chain sizes, onsite values, and bond values, including endpoint signs.
+- Added current-symbol slope failure witnesses for wrong speed, wrong bond
+  magnitude, and reversed orientation.
+- Added CA-33,
+  `report/sections/33_gaussian_stress_numerical_suite.tex`, and updated report
+  maps, source anchors, `INDEX.md`, and `report.pdf`.
+
+### Why these choices
+
+- The suite keeps the local conservation claim algebraic: the tested identity
+  is \(i[H,e_j]=J_{j-1/2}-J_{j+1/2}\) with explicit open endpoints.
+- The slope residual \(-\epsilon^2 b-c^2\) is the smallest current-density
+  failure witness justified by the CA-31 nearest-neighbour symbol bridge.
+
+### Frictions / dead ends
+
+- Parent tightened the worker patch so the new public helper validates real
+  spacing, speed, and bond data with explicit `ErrorException`s.
+- Higher-dimensional current-density formulas, next-nearest/doubler current
+  witnesses, finite-chain \(\mathrm d\Gamma(k)\), and \(T_{11}\) remain open.
+
+### Acceptance
+
+- `julia --project=. -e 'using Pkg; Pkg.test()'` passed.
+- `make check-report-shards` passed.
+- `make report` passed.
+- `git diff --check` passed.
+
+### Pointers
+
+- Report shard: CA-33.
+- Code: `src/GaussianBosonCurrents.jl`.
+- Tests: `test/runtests.jl` testsets "Gaussian open-chain energy current
+  continuity" and "Gaussian stress-energy current slope witnesses".
+
 ## S4 higher-dimensional cell-current proposal — 2026-05-30
 
 ### Context

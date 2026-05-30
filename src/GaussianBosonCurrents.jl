@@ -192,6 +192,25 @@ function kg_nearest_neighbor_integrated_energy_current_symbol(k; spacing = 1)
 end
 
 """
+    nearest_neighbor_current_symbol_speed_residual(; bond, spacing = 1, speed = 1)
+
+Return the low-energy slope residual for the 1D nearest-neighbour integrated
+current symbol ``J(k)=-spacing*bond*sin(spacing*k)``:
+``J'(0)-speed^2 = -spacing^2*bond - speed^2``.
+
+This is a symbol-level witness only.  It does not define a finite periodic
+coordinate, an open-chain momentum operator, or a continuum stress tensor.
+"""
+function nearest_neighbor_current_symbol_speed_residual(; bond, spacing = 1, speed = 1)
+    spacing_coeff = _check_real_parameter("spacing", spacing)
+    speed_coeff = _check_real_parameter("speed", speed)
+    spacing_coeff > 0 || error("spacing must be positive, got $spacing")
+    speed_coeff > 0 || error("speed must be positive, got $speed")
+    bond_coeff = _check_real_parameter("bond", bond)
+    return -spacing_coeff^2 * bond_coeff - speed_coeff^2
+end
+
+"""
     open_chain_gaussian_energy_continuity_residuals(num_sites; onsite, bond)
 
 Return matrices for

@@ -43,7 +43,7 @@ Protocol:
 | S2 | Complete | `019e79b7-67f8-75f3-bab1-61384f352692` (`Planck`) | Added CA-30 1+1 lattice stress-energy candidate shard with checked `T_01` seed and proposal-level `T_10/T_11`. |
 | S3 | Complete | `019e79be-23a4-7641-8544-9e982559ba02` (`Faraday`) | Added CA-31 and tests for the 1D nearest-neighbour integrated-current symbol matching the KG boost-time symbol. |
 | S4 | Complete | `019e79c6-cc6d-7d70-b7ff-5d1e1deaf713` (`Wegener`) | Added CA-32 higher-dimensional cell-current proposal shard with oriented support data as compiler input. |
-| S5 | Pending | - | Stress-energy numerical suite. |
+| S5 | Complete | `019e79cd-65ee-7d23-9373-aa00a48822a9` (`Godel`) | Added CA-33 and tests for finite open-chain `T_01` continuity plus a 1D nearest-neighbour current-symbol slope failure witness. |
 
 ## Running Notes
 
@@ -254,3 +254,17 @@ Protocol:
   not edit CONVENTIONS.md, claim convergence, infer `T_a0` from `T_0a`, or
   assume symmetric stress.  `make check-report-shards`, `make report`, and
   `git diff --check` passed.
+- 2026-05-30: S5 delegated to worker
+  `019e79cd-65ee-7d23-9373-aa00a48822a9` (`Godel`).  Target is the first
+  stress-energy numerical suite: strengthened finite-open-chain local
+  continuity checks plus a narrow nearest-neighbour current-symbol slope
+  witness, with periodic first moments, higher-dimensional current conventions,
+  and `T_11` left unclaimed unless actually derived.
+- 2026-05-30: S5 reviewed by parent and accepted after tightening the new
+  slope-residual helper to validate real spacing, speed, and bond data with
+  loud project errors, and after replacing a weak wrong-speed test with an
+  exact residual check.  CA-33 records only finite open-chain `T_01` continuity
+  and a 1D nearest-neighbour current-symbol slope witness; periodic first
+  moments, finite-chain `dGamma(k)`, higher-dimensional current densities,
+  doubler current witnesses, and `T_11` remain open.  `Pkg.test()`, `make
+  check-report-shards`, `make report`, and `git diff --check` passed.
