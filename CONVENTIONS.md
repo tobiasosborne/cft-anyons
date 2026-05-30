@@ -215,12 +215,14 @@ Lorentz-boost candidate
 `i[H,K_a]` has multiplication symbol `1/2 partial_a omega(k)^2`; the continuum
 Klein-Gordon condition with speed `c=1` is that this tends to `k_a`, equivalently
 `omega(k)^2 = m^2 + |k|^2 + higher irrelevant lattice corrections` near
-`k=0`.  The speed-`c` variant replaces this by `c^2 k_a`.
+`k=0`.  The speed-`c` variant replaces this by `c^2 k_a`.  These commutator
+signs use the vector-field-to-Stone-generator map in (k).
 **Reasoning:** The source base already proves/records free scalar lattice fields,
 their dispersion, and the Klein-Gordon/free-field scaling limit for the standard
 nearest-neighbour model.  The one-particle boost-symbol calculation is a local
-derivation that turns the Lorentz algebra into explicit differential conditions
-on `omega^2`, hence on the Hamiltonian coefficients.
+derivation that turns the Lorentz algebra, with the sign map in (k), into
+explicit differential conditions on `omega^2`, hence on the Hamiltonian
+coefficients.
 **Source:** `literature/md/2010.11121/2010.11121.md:51`--`:58` (harmonic lattice
 Hamiltonian and scaling-limit claims), `:598`--`:610` (lattice Hamiltonian,
 dispersion, and ground-state two-point function), `:614`--`:623`
@@ -233,3 +235,40 @@ free scalar time evolution and theorem), `references/cft/Schottenloher2008/Schot
 and "Gaussian boson finite periodic examples"; CA-23--CA-28.
 **Sweep status:** CA-23--CA-28 use this convention; the full bosonic BdG/pairing
 convention is not yet fixed.
+
+## (k) Poincare vector fields to self-adjoint commutators
+**Choice:** CA-11 uses active coordinate vector fields
+`P_mu = partial_mu` and `M_mu_nu = x_mu partial_nu - x_nu partial_mu`.
+When those brackets are translated to self-adjoint quantum-generator notation,
+use Stone one-parameter groups `U_X(t)=exp(-it A_X)` and implement the active
+spacetime flow passively, by pullback along the inverse flow.  Equivalently, the
+skew-adjoint infinitesimal operator is the negative of the CA-11 vector field;
+on a common invariant core this gives
+`i[A_X,A_Y] = A_{[X,Y]}`.  Keep Schottenloher's translation names
+`P_0=H` and spatial `P_a`, and set
+`H=A_{P_0}`, `P_a=A_{P_a}`, `K_a=A_{M_{0a}}`, while the self-adjoint spatial
+rotation used in the Gaussian shards is `J_ab=-A_{M_{ab}}`
+(`1 <= a < b <= d`, extended by `J_ba=-J_ab`).
+
+With this convention the target self-adjoint commutator table is
+`i[H,P_a]=0`, `i[P_a,P_b]=0`,
+`i[H,K_a]=P_a`,
+`i[P_b,K_a]=delta_ab H`,
+`i[H,J_ab]=0`,
+`i[P_c,J_ab]=delta_ac P_b - delta_bc P_a`,
+`i[K_c,J_ab]=delta_ac K_b - delta_bc K_a`,
+`i[K_a,K_b]=J_ab`, and
+`i[J_ab,J_cd]=delta_bc J_ad - delta_ac J_bd + delta_ad J_bc - delta_bd J_ac`.
+**Reasoning:** Schottenloher supplies the Stone sign `U(t)=exp(-itA)` and names
+the self-adjoint translation generators with `P_0=H`; CA-11 supplies the checked
+active vector-field brackets.  The passive/pullback choice fixes the remaining
+active/passive ambiguity.  The minus sign in `J_ab=-A_{M_ab}` compensates the
+lowered spatial-index convention in CA-11 and is the sign for the Gaussian
+orbital operator `J_ab=X_aP_b-X_bP_a`.
+**Source:** `references/cft/Schottenloher2008/Schottenloher2008.md:4040`--`:4050`
+(Stone convention), `:4113`--`:4117` (translation generators and `P_0=H`);
+CA-11 local vector-field derivation; `test/runtests.jl` testset "Poincare
+vector-field brackets".
+**Sweep status:** CA-11 states the vector-field table; CA-24--CA-26 use this
+entry for the self-adjoint `i[.,.]` Poincare target signs.  CA-12--CA-17 still
+keep finite-lattice sign choices explicit under (h).

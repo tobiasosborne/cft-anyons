@@ -18,7 +18,7 @@ Protocol:
 
 | Step | Status | Subagent | Result / notes |
 | --- | --- | --- | --- |
-| C1 | Pending | - | Next step: vector-field to self-adjoint-generator sign map. |
+| C1 | Complete | `019e790c-6ac9-7990-9e43-9be09e34ca34` (`Confucius`) | Added convention (k) and updated CA-11, CA-24, CA-26; parent tightened inverse-flow wording before landing. |
 | C2 | Pending | - | Gaussian one-particle measure and boost formula status. |
 | C3 | Pending | - | Mass, positivity, and zero-mode policy. |
 | C4 | Pending | - | Smooth low-energy patches vs finite periodic grids. |
@@ -49,3 +49,10 @@ Protocol:
 
 - 2026-05-30: Orchestration started.  `make ci-before-push` was green at
   commit `e38a5b9`; working tree clean before beginning C1.
+- 2026-05-30: C1 delegated to worker
+  `019e790c-6ac9-7990-9e43-9be09e34ca34` (`Confucius`) with write scope
+  `CONVENTIONS.md`, CA-11, CA-24, and CA-26.
+- 2026-05-30: C1 reviewed by parent.  The worker patch was accepted after
+  replacing an ambiguous "anti-homomorphism at the unitary level" phrase with
+  the explicit inverse-flow/Stone-generator convention.  Landing checks passed:
+  `make check-report-shards`, `make report`, and `git diff --check`.
