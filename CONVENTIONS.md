@@ -227,6 +227,23 @@ while the trace of `i delta_ab I` is not.  Any finite periodic first-moment,
 position-coordinate, or momentum-coordinate generator test must first name a
 branch, sawtooth, Fourier-interpolation, or other periodic coordinate
 convention.
+Gaussian numerical helpers use explicit named tolerances rather than default
+`isapprox`.  The nearly-real symbol validators use
+`GAUSSIAN_SYMBOL_IMAG_ATOL = 1e-10` and
+`GAUSSIAN_SYMBOL_IMAG_RTOL = 1e-10`, applied as a scale-aware comparison of the
+complex symbol with its real part after the dimension and spacing preconditions
+have been checked.  Exact symbol/Hessian value checks use
+`GAUSSIAN_SYMBOL_VALUE_ATOL = 1e-10` and
+`GAUSSIAN_SYMBOL_VALUE_RTOL = 1e-10`.  Finite periodic eigenvalue comparisons
+use `GAUSSIAN_EIGENVALUE_ATOL = 1e-10` and
+`GAUSSIAN_EIGENVALUE_RTOL = 1e-10`.  Periodic minima counts use
+`GAUSSIAN_MINIMUM_COUNT_ATOL = 1e-10` and
+`GAUSSIAN_MINIMUM_COUNT_RTOL = 1e-10`, so a near-degenerate minimum is counted
+only if it is numerically equal to the minimum under that scale-aware policy.
+The small-spacing sample residual uses
+`GAUSSIAN_SMALL_SPACING_RESIDUAL_ATOL = 5e-4` and
+`GAUSSIAN_SMALL_SPACING_RESIDUAL_RTOL = 1e-10`; this is a named finite-sample
+test tolerance, not a continuum error bound.
 The low-energy Hessian residual is
 `1/2 Hessian(omega^2)(0) - c^2 I`, equivalently
 `-epsilon^2/2 sum_r r_a r_b V_r - c^2 delta_ab`.
@@ -269,10 +286,14 @@ theorem), `:1626`--`:1628` (massless zero-mode warning),
 `references/cft/Schottenloher2008/Schottenloher2008.md:4186`--`:4244`
 (free bosonic QFT/Klein-Gordon/Poincare-covariant construction, including the
 natural Poincare action);
+`src/GaussianBosons.jl:9`--`:25` (Gaussian tolerance constants and real-symbol
+validator), `src/GaussianBosonNumerics.jl:137`--`:149` (minima-count
+validator),
 `test/runtests.jl` testsets "Gaussian boson Klein-Gordon symbols" and
 "Gaussian boson boost-time symbols", "Gaussian boson Lorentz Hessian examples",
-and "Gaussian boson finite periodic massive coefficient spectra" plus "Gaussian
-boson massless doubler coefficient rejection"; CA-23--CA-28.
+and "Gaussian boson finite periodic massive coefficient spectra" plus
+"Gaussian boson numerical tolerance policy" and "Gaussian boson massless doubler
+coefficient rejection"; CA-23--CA-28.
 **Sweep status:** CA-23--CA-28 use this convention; the full bosonic BdG/pairing
 convention is not yet fixed.
 

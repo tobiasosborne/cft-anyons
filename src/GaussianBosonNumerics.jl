@@ -135,13 +135,16 @@ function periodic_stiffness_matrix(coefficients, sizes)
 end
 
 """
-    count_periodic_symbol_minima(coefficients, sizes; spacing = 1, atol = 1e-10)
+    count_periodic_symbol_minima(coefficients, sizes; spacing = 1,
+        atol = GAUSSIAN_MINIMUM_COUNT_ATOL,
+        rtol = GAUSSIAN_MINIMUM_COUNT_RTOL)
 
-Count periodic-grid momenta whose symbol value is within ``atol`` of the
-minimum.
+Count periodic-grid momenta whose symbol value is numerically equal to the
+minimum under the Gaussian minima-count tolerance convention.
 """
-function count_periodic_symbol_minima(coefficients, sizes; spacing = 1, atol = 1e-10)
+function count_periodic_symbol_minima(coefficients, sizes; spacing = 1,
+        atol = GAUSSIAN_MINIMUM_COUNT_ATOL, rtol = GAUSSIAN_MINIMUM_COUNT_RTOL)
     values = periodic_symbol_values(coefficients, sizes; spacing)
     minimum_value = minimum(values)
-    return count(value -> abs(value - minimum_value) <= atol, values)
+    return count(value -> isapprox(value, minimum_value; atol, rtol), values)
 end

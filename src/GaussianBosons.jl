@@ -6,6 +6,24 @@ function _check_k_vector(k)
     length(k) in 1:3 || error("momentum vector dimension must be 1, 2, or 3, got $(length(k))")
 end
 
+const GAUSSIAN_SYMBOL_IMAG_ATOL = 1e-10
+const GAUSSIAN_SYMBOL_IMAG_RTOL = 1e-10
+const GAUSSIAN_SYMBOL_VALUE_ATOL = 1e-10
+const GAUSSIAN_SYMBOL_VALUE_RTOL = 1e-10
+const GAUSSIAN_EIGENVALUE_ATOL = 1e-10
+const GAUSSIAN_EIGENVALUE_RTOL = 1e-10
+const GAUSSIAN_MINIMUM_COUNT_ATOL = 1e-10
+const GAUSSIAN_MINIMUM_COUNT_RTOL = 1e-10
+const GAUSSIAN_SMALL_SPACING_RESIDUAL_ATOL = 5e-4
+const GAUSSIAN_SMALL_SPACING_RESIDUAL_RTOL = 1e-10
+
+function _real_symbol_value(total, label; atol = GAUSSIAN_SYMBOL_IMAG_ATOL, rtol = GAUSSIAN_SYMBOL_IMAG_RTOL)
+    real_total = real(total)
+    isapprox(total, complex(real_total, zero(real_total)); atol, rtol) ||
+        error("$label has non-negligible imaginary part $(imag(total))")
+    return real_total
+end
+
 """
     kg_lattice_omega_squared(k; mass, spacing = 1)
 
@@ -76,12 +94,15 @@ function kg_nearest_neighbor_coefficients(spatial_dim::Integer; mass, spacing = 
 end
 
 """
-    scalar_quadratic_symbol(coefficients, k; spacing = 1)
+    scalar_quadratic_symbol(coefficients, k; spacing = 1,
+        imag_atol = GAUSSIAN_SYMBOL_IMAG_ATOL,
+        imag_rtol = GAUSSIAN_SYMBOL_IMAG_RTOL)
 
 Evaluate ``sum_r V_r exp(i ε k⋅r)`` for real-space scalar quadratic
 coefficients.
 """
-function scalar_quadratic_symbol(coefficients, k; spacing = 1)
+function scalar_quadratic_symbol(coefficients, k; spacing = 1,
+        imag_atol = GAUSSIAN_SYMBOL_IMAG_ATOL, imag_rtol = GAUSSIAN_SYMBOL_IMAG_RTOL)
     _check_k_vector(k)
     spacing > 0 || error("spacing must be positive, got $spacing")
     total = 0.0 + 0.0im
@@ -89,17 +110,19 @@ function scalar_quadratic_symbol(coefficients, k; spacing = 1)
         length(offset) == length(k) || error("offset $offset has dimension $(length(offset)); expected $(length(k))")
         total += coeff * cis(spacing * sum(offset[a] * k[a] for a in eachindex(k)))
     end
-    abs(imag(total)) < 1e-10 || error("quadratic symbol has non-negligible imaginary part $(imag(total))")
-    return real(total)
+    return _real_symbol_value(total, "quadratic symbol"; atol = imag_atol, rtol = imag_rtol)
 end
 
 """
-    boost_time_symbol_from_coefficients(coefficients, k; spacing = 1)
+    boost_time_symbol_from_coefficients(coefficients, k; spacing = 1,
+        imag_atol = GAUSSIAN_SYMBOL_IMAG_ATOL,
+        imag_rtol = GAUSSIAN_SYMBOL_IMAG_RTOL)
 
 Evaluate the vector ``1/2 ∇_k omega(k)^2`` from real-space scalar quadratic
 coefficients.
 """
-function boost_time_symbol_from_coefficients(coefficients, k; spacing = 1)
+function boost_time_symbol_from_coefficients(coefficients, k; spacing = 1,
+        imag_atol = GAUSSIAN_SYMBOL_IMAG_ATOL, imag_rtol = GAUSSIAN_SYMBOL_IMAG_RTOL)
     _check_k_vector(k)
     spacing > 0 || error("spacing must be positive, got $spacing")
     out = zeros(Float64, length(k))
@@ -110,8 +133,7 @@ function boost_time_symbol_from_coefficients(coefficients, k; spacing = 1)
             phase = spacing * sum(offset[a] * k[a] for a in eachindex(k))
             total += 0.5im * spacing * offset[axis] * coeff * cis(phase)
         end
-        abs(imag(total)) < 1e-10 || error("boost-time symbol has non-negligible imaginary part $(imag(total))")
-        out[axis] = real(total)
+        out[axis] = _real_symbol_value(total, "boost-time symbol"; atol = imag_atol, rtol = imag_rtol)
     end
     return out
 end

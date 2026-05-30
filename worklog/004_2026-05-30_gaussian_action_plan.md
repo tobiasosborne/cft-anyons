@@ -1,5 +1,50 @@
 # Worklog chunk 004 — 2026-05-30
 
+## Session log — 2026-05-30 — Action-plan C5 numerical tolerances
+
+### Context
+
+C5 records numerical tolerance policy before Gaussian helpers become compiler
+gates.  The existing code mixed default `isapprox`, hard-coded `1e-10`, and one
+hard-coded small-spacing tolerance.
+
+### What changed
+
+- Delegated C5 to worker `019e7927-20a8-7bb0-bff1-fe2539a686c3`
+  (`Epicurus`).
+- Added named Gaussian tolerance constants for imaginary-part validation,
+  symbol/Hessian values, finite eigenvalues, minima counts, and the
+  small-spacing residual sample.
+- Replaced scattered Gaussian test tolerances with helper comparisons using the
+  named constants.
+- Updated the minima counter to use named absolute and relative tolerances.
+- Updated CONVENTIONS.md (j) and CA-28 with the tolerance policy.
+
+### Why these choices
+
+- Named tolerances make later compiler gates auditable.  The symbol-imaginary
+  check is now scale-aware after dimension and spacing preconditions, while the
+  small-spacing threshold remains explicitly a finite-sample tolerance rather
+  than a continuum estimate.
+
+### Frictions / dead ends
+
+- The patch intentionally did not implement structural coefficient validation;
+  that remains J4.
+
+### Acceptance
+
+- `make ci-before-push` passed.
+- `git diff --check` passed.
+
+### Pointers
+
+- Action plan: `reviews/2026-05-30_gaussian_lorentz/ACTION_PLAN.md` (C5).
+- Orchestration ledger:
+  `reviews/2026-05-30_gaussian_lorentz/ORCHESTRATION.md`.
+- Files: `src/GaussianBosons.jl`, `src/GaussianBosonNumerics.jl`,
+  `test/runtests.jl`, CA-28, CONVENTIONS.md (j).
+
 ## Session log — 2026-05-30 — Action-plan C4 smooth patches versus finite grids
 
 ### Context

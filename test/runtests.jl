@@ -148,6 +148,25 @@ end
     @test_throws ErrorException CftAnyons.first_moment_continuity_current_coefficients([0])
 end
 
+gaussian_symbol_isapprox(actual, expected) = isapprox(actual, expected; atol = CftAnyons.GAUSSIAN_SYMBOL_VALUE_ATOL, rtol = CftAnyons.GAUSSIAN_SYMBOL_VALUE_RTOL)
+gaussian_eigenvalue_isapprox(actual, expected) = isapprox(actual, expected; atol = CftAnyons.GAUSSIAN_EIGENVALUE_ATOL, rtol = CftAnyons.GAUSSIAN_EIGENVALUE_RTOL)
+gaussian_small_spacing_isapprox(actual, expected) = isapprox(actual, expected; atol = CftAnyons.GAUSSIAN_SMALL_SPACING_RESIDUAL_ATOL, rtol = CftAnyons.GAUSSIAN_SMALL_SPACING_RESIDUAL_RTOL)
+
+@testset "Gaussian boson numerical tolerance policy" begin
+    @test CftAnyons.GAUSSIAN_SYMBOL_IMAG_ATOL == 1e-10
+    @test CftAnyons.GAUSSIAN_SYMBOL_IMAG_RTOL == 1e-10
+    @test CftAnyons.GAUSSIAN_EIGENVALUE_ATOL == 1e-10
+    @test CftAnyons.GAUSSIAN_EIGENVALUE_RTOL == 1e-10
+    @test CftAnyons.GAUSSIAN_MINIMUM_COUNT_ATOL == 1e-10
+    @test CftAnyons.GAUSSIAN_MINIMUM_COUNT_RTOL == 1e-10
+    @test CftAnyons.GAUSSIAN_SMALL_SPACING_RESIDUAL_ATOL == 5e-4
+    @test CftAnyons.GAUSSIAN_SMALL_SPACING_RESIDUAL_RTOL == 1e-10
+
+    near_flat = [([0], 1.0), ([1], -2e-11), ([-1], -2e-11)]
+    @test CftAnyons.count_periodic_symbol_minima(near_flat, [2]; spacing = 1) == 2
+    @test CftAnyons.count_periodic_symbol_minima(near_flat, [2]; spacing = 1, atol = 1e-13, rtol = 0.0) == 1
+end
+
 @testset "Gaussian boson Klein-Gordon symbols" begin
     for d in 1:3
         k = collect(0.1:0.1:(0.1d))
@@ -156,9 +175,9 @@ end
         coeffs = CftAnyons.kg_nearest_neighbor_coefficients(d; mass, spacing)
 
         @test length(coeffs) == 1 + 2d
-        @test CftAnyons.scalar_quadratic_symbol(coeffs, k; spacing) ≈
-              CftAnyons.kg_lattice_omega_squared(k; mass, spacing)
-        @test CftAnyons.continuum_kg_omega_squared(k; mass) ≈ mass^2 + sum(abs2, k)
+        @test gaussian_symbol_isapprox(CftAnyons.scalar_quadratic_symbol(coeffs, k; spacing),
+            CftAnyons.kg_lattice_omega_squared(k; mass, spacing))
+        @test gaussian_symbol_isapprox(CftAnyons.continuum_kg_omega_squared(k; mass), mass^2 + sum(abs2, k))
     end
 
     @test_throws ErrorException CftAnyons.kg_lattice_omega_squared([0.0, 0.1, 0.2, 0.3]; mass = 1)
@@ -172,15 +191,15 @@ end
         spacing = 0.2
         coeffs = CftAnyons.kg_nearest_neighbor_coefficients(d; mass, spacing)
 
-        @test CftAnyons.boost_time_symbol_from_coefficients(coeffs, k; spacing) ≈
-              CftAnyons.kg_lattice_boost_time_symbol(k; spacing)
-        @test CftAnyons.continuum_kg_boost_time_symbol(k) ≈ k
+        @test gaussian_symbol_isapprox(CftAnyons.boost_time_symbol_from_coefficients(coeffs, k; spacing),
+            CftAnyons.kg_lattice_boost_time_symbol(k; spacing))
+        @test gaussian_symbol_isapprox(CftAnyons.continuum_kg_boost_time_symbol(k), k)
     end
 
     k = [0.3, -0.2, 0.1]
     ε = 0.05
     lattice_symbol = CftAnyons.kg_lattice_boost_time_symbol(k; spacing = ε)
-    @test norm(lattice_symbol - k) < 5e-4
+    @test gaussian_small_spacing_isapprox(lattice_symbol, k)
     @test_throws ErrorException CftAnyons.kg_lattice_boost_time_symbol([0.0]; spacing = 0)
 end
 
@@ -191,8 +210,8 @@ end
         hessian = CftAnyons.low_energy_hessian_from_coefficients(coeffs, d; spacing)
         residual = CftAnyons.lorentz_hessian_residual(coeffs, d; spacing)
 
-        @test hessian ≈ 2 * Matrix{Float64}(I, d, d)
-        @test residual ≈ zeros(d, d)
+        @test gaussian_symbol_isapprox(hessian, 2 * Matrix{Float64}(I, d, d))
+        @test gaussian_symbol_isapprox(residual, zeros(d, d))
     end
 
     speeds = [1.0, 1.5, 0.5]
@@ -200,7 +219,7 @@ end
     hessian = CftAnyons.low_energy_hessian_from_coefficients(anisotropic, 3; spacing = 0.25)
     residual = CftAnyons.lorentz_hessian_residual(anisotropic, 3; spacing = 0.25)
 
-    @test diag(hessian) ≈ 2 .* speeds .^ 2
+    @test gaussian_symbol_isapprox(diag(hessian), 2 .* speeds .^ 2)
     @test norm(residual) > 1
 end
 
@@ -213,8 +232,8 @@ end
         spectrum = sort(eigvals(Symmetric(stiffness)))
         symbols = sort(CftAnyons.periodic_symbol_values(coeffs, sizes; spacing))
 
-        @test stiffness ≈ stiffness'
-        @test spectrum ≈ symbols
+        @test gaussian_eigenvalue_isapprox(stiffness, stiffness')
+        @test gaussian_eigenvalue_isapprox(spectrum, symbols)
     end
 end
 
@@ -222,7 +241,7 @@ end
     # This is a coefficient-level zero-mode witness, not positive-dispersion
     # Fock-generator evidence; see CONVENTIONS.md (j).
     doubler = CftAnyons.doubler_quadratic_coefficients(2; mass = 0, spacing = 1)
-    @test CftAnyons.scalar_quadratic_symbol(doubler, [0.0, 0.0]; spacing = 1) ≈ 0
+    @test gaussian_symbol_isapprox(CftAnyons.scalar_quadratic_symbol(doubler, [0.0, 0.0]; spacing = 1), 0)
     @test CftAnyons.count_periodic_symbol_minima(doubler, [4, 4]; spacing = 1) == 4
     @test_throws ErrorException CftAnyons.periodic_stiffness_matrix([([0, 0], 1.0)], [3])
 end
