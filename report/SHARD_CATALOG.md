@@ -242,7 +242,7 @@ single ~200-line source file it points to.
 - Title: One-Particle Generator Algebra for Gaussian Bosons
 - Summary: Defines the one-particle H, P, J, and K candidates on a smooth momentum-space core.
 - Summary: Derives the commutators that are exact for any scalar dispersion and isolates the residuals that depend on omega.
-- Summary: Explains how second quantization transports the algebraic checks to the many-body Gaussian Fock space.
+- Summary: Records only formal dGamma bookkeeping on an algebraic finite-particle core, leaving many-body representation theorems open.
 - Keywords: Gaussian boson, Poincare generators, boost, rotation, commutator, second quantization
 
 ## `CA-27-GAUSSIAN-BOSON-RESIDUAL-CONDITIONS`

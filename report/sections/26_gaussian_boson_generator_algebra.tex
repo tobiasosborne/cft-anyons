@@ -2,7 +2,7 @@
 % SHARD-TITLE: One-Particle Generator Algebra for Gaussian Bosons
 % SHARD-SUMMARY: Defines the one-particle H, P, J, and K candidates on a smooth momentum-space core.
 % SHARD-SUMMARY: Derives the commutators that are exact for any scalar dispersion and isolates the residuals that depend on omega.
-% SHARD-SUMMARY: Explains how second quantization transports the algebraic checks to the many-body Gaussian Fock space.
+% SHARD-SUMMARY: Records only formal dGamma bookkeeping on an algebraic finite-particle core, leaving many-body representation theorems open.
 % SHARD-KEYWORDS: Gaussian boson, Poincare generators, boost, rotation, commutator, second quantization
 
 \section{One-Particle Generator Algebra for Gaussian Bosons}
@@ -10,11 +10,16 @@
 
 \subsection{Status, Sources, and Dependencies}
 
-\textbf{Status: checked flat local derivation on a common core.}  The Poincare
+\textbf{Status: flat local derivation with limited Julia checks.}  The Poincare
 target, Stone convention, and free-boson Fock realization are sourced.  The
 commutator identities in this shard are local differential-operator derivations
-on a flat \(L^2(dk)\) smooth momentum-space core, not yet a sourced OAR or
-mass-shell Poincare representation theorem.
+on a flat \(L^2(dk)\) smooth momentum-space core.  The Julia suite currently
+checks coefficient/symbol consequences: Klein-Gordon symbols, boost-time
+symbols, low-energy Hessian examples, finite periodic massive spectra, the
+massless doubler coefficient-rejection witness, and the Gaussian tolerance
+policy.  It does not check the full generator bracket table or any
+second-quantized identity.  The smooth-core derivation is not yet a sourced OAR
+or mass-shell Poincare representation theorem.
 
 Dependencies: CA-11, CA-24--CA-25, and CONVENTIONS.md (h), (j), (k).
 
@@ -27,7 +32,11 @@ Dependencies: CA-11, CA-24--CA-25, and CONVENTIONS.md (h), (j), (k).
 % Source: literature/md/2010.11121/2010.11121.md:648--681 -- OAR scalar product, flat Fock realization, and implemented Klein-Gordon dynamics.
 % Convention: CONVENTIONS.md (j) -- flat L^2(dk) status of the CA-24--CA-26 local symbol algebra.
 % Convention: CONVENTIONS.md (k) -- vector-field to self-adjoint-generator sign map.
-% Checked: test/runtests.jl, "Gaussian boson boost-time symbols".
+% Checked: test/runtests.jl, "Gaussian boson numerical tolerance policy",
+%   "Gaussian boson Klein-Gordon symbols", "Gaussian boson boost-time symbols",
+%   "Gaussian boson Lorentz Hessian examples",
+%   "Gaussian boson finite periodic massive coefficient spectra", and
+%   "Gaussian boson massless doubler coefficient rejection".
 
 \subsection{Momentum Core}
 
@@ -134,7 +143,8 @@ The continuum target with speed \(c=1\) wants \(P_a=k_a\).  The residual is
   \frac{1}{2}\partial_a\omega(k)^2-k_a.
 \]
 For speed \(c\), replace \(k_a\) by \(c^2k_a\).  This is the first algebraic
-filter on Hamiltonian coefficients.
+filter on Hamiltonian coefficients, and it is the only generator-algebra
+residual currently checked at coefficient-symbol level in Julia.
 
 \subsection{Rotation-Hamiltonian Residual}
 
@@ -177,17 +187,22 @@ Here the possible divergence term vanishes because \(R\) is a gradient
 residual:
 \(\partial_aR_b=\partial_bR_a\).  Thus the boost-boost bracket closes to the
 rotation bracket whenever the boost-time residual \(R_a\) vanishes on the patch.
-The remaining caveat is analytic, not algebraic: all of these are unbounded
-operators and still require a common self-adjointness/core theorem before this
-becomes a continuum representation statement.
+This boost-boost statement is a smooth-core algebraic derivation only; no Julia
+test currently checks the boost-boost operator bracket.  The remaining caveat is
+analytic, not algebraic: all of these are unbounded operators and still require a
+common self-adjointness/core theorem before this becomes a continuum
+representation statement.
 
 \subsection{Second Quantization}
 
-On the finite-particle core of
+Let
 \[
-  \mathcal F_+(\mathfrak h_\epsilon),
+  \mathcal F_{\mathrm{alg}}(\mathcal D_0)
+  :=
+  \bigoplus_{n=0}^{\mathrm{fin}}\mathcal D_0^{\otimes_s n}
+  \subset \mathcal F_+\bigl(L^2(\mathcal U,dk)\bigr)
 \]
-the many-body candidates are
+be the algebraic finite-particle core.  The formal many-body candidates are
 \[
   H=d\Gamma(h),\quad
   P_a=d\Gamma(p_a),\quad
@@ -195,8 +210,15 @@ the many-body candidates are
   K_a=d\Gamma(K_a^{(1)}),
 \]
 with a separate vacuum-energy convention if absolute Hamiltonian values are
-used.  Commutators of second quantizations reproduce second quantizations of
-the one-particle commutators on the finite-particle core of this flat symbol
-Fock model.  Thus the compiler can perform the first Lorentz tests at
-one-particle level here, while the OAR/mass-shell Poincare bridge remains an
-open proof obligation.
+used.  The formal core identity is
+\[
+  [d\Gamma(A),d\Gamma(B)]\psi=d\Gamma([A,B])\psi,
+  \qquad \psi\in\mathcal F_{\mathrm{alg}}(\mathcal D_0),
+\]
+whenever the one-particle commutator identity is already established on
+\(\mathcal D_0\) and the displayed products preserve that algebraic domain.
+This is a local \(d\Gamma\) bookkeeping statement on the algebraic
+finite-particle core, not a Julia-checked invariant and not a self-adjoint
+many-body representation theorem.  The current tests do not lift residuals to
+Gaussian Fock space; domain/self-adjointness for the unbounded \(d\Gamma\)
+generators and the sourced OAR/mass-shell bridge remain open proof obligations.

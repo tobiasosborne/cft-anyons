@@ -24,7 +24,7 @@ Protocol:
 | C4 | Complete | `019e7921-7709-7431-a8e9-50cec9e57ed4` (`Aristotle`) | Split smooth-patch differential algebra from finite periodic symbol/eigenvalue checks. |
 | C5 | Complete | `019e7927-20a8-7bb0-bff1-fe2539a686c3` (`Epicurus`) | Added named Gaussian numerical tolerances and threaded them through symbol, eigenvalue, minima, and small-spacing checks. |
 | C6 | Complete | `019e7931-4366-7781-90aa-0666928bff72` (`Harvey`) | Added convention (l) and CA-29 for Gaussian real-space energy-density split; no stress-tensor claim. |
-| R1 | Pending | - | CA-26 checked-coverage wording. |
+| R1 | Complete | `019e7939-5cff-74c1-85be-419101a1a77a` (`Aquinas`) | Demoted CA-26 checked coverage and formalized dGamma language; parent synchronized shard/catalog summary. |
 | R2 | Pending | - | CA-23 roadmap drift. |
 | R3 | Pending | - | Source-anchor ranges in lattice-symmetry shards. |
 | R4 | Pending | - | Stress-energy and angular-momentum density intuition in CA-13. |
@@ -85,3 +85,7 @@ Protocol:
 - 2026-05-30: C6 reviewed by parent and accepted.  `make ci-before-push` passed;
   parent then forced `latexmk -pdf -g report.tex` so `report.pdf` includes the
   new CA-29 shard.
+- 2026-05-30: C6 pushed as `3acf9a1`.  R1 delegated to worker
+  `019e7939-5cff-74c1-85be-419101a1a77a` (`Aquinas`) with write scope CA-26.
+- 2026-05-30: R1 reviewed by parent and accepted after synchronizing the CA-26
+  shard summary with `report/SHARD_CATALOG.md`.  `make ci-before-push` passed.
