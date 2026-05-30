@@ -1,5 +1,40 @@
 # Worklog chunk 003 — 2026-05-30
 
+## Session log — 2026-05-30 — Gaussian Lorentz orchestration ledger
+
+### Context
+
+Tobias asked to execute the Gaussian Lorentz action plan serially, delegating
+each step to a subagent, while making sure the orchestration survives context
+compaction.
+
+### What changed
+
+- Added `reviews/2026-05-30_gaussian_lorentz/ORCHESTRATION.md`.
+- Updated the review bundle README to list the orchestration ledger.
+
+### Why these choices
+
+- The ledger is the durable recovery point for this multi-step run: it records
+  action-plan step status, subagent ownership, checks, and running notes outside
+  conversation memory.
+
+### Frictions / dead ends
+
+- None.  The first content step remains C1: vector-field to self-adjoint
+  generator sign conventions.
+
+### Acceptance
+
+- The ledger exists and is indexed in the review bundle.
+
+### Pointers
+
+- Action plan:
+  `reviews/2026-05-30_gaussian_lorentz/ACTION_PLAN.md`.
+- Orchestration ledger:
+  `reviews/2026-05-30_gaussian_lorentz/ORCHESTRATION.md`.
+
 ## Session log — 2026-05-30 — Gaussian Lorentz action plan
 
 ### Context

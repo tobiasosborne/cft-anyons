@@ -12,6 +12,7 @@ for a lattice realization of stress-energy tensor density, separating the clear
 Expected files:
 
 - `ACTION_PLAN.md`
+- `ORCHESTRATION.md`
 - `SYNTHESIS.md`
 - `reviewer_01_source_conventions.md`
 - `reviewer_02_algebra_domains.md`
