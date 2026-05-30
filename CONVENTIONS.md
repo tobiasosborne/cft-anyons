@@ -333,3 +333,66 @@ vector-field brackets".
 **Sweep status:** CA-11 states the vector-field table; CA-24--CA-26 use this
 entry for the self-adjoint `i[.,.]` Poincare target signs.  CA-12--CA-17 still
 keep finite-lattice sign choices explicit under (h).
+
+## (l) Gaussian real-space energy-density split
+**Choice:** In the scalar Gaussian block, `h_x` denotes a physical real-space
+energy density attached to the cell at site `x`, not an already integrated
+cell-energy term.  For lattice spacing `epsilon` in spatial dimension `d`, the
+cell volume is `epsilon^d` and
+`H_epsilon = epsilon^d sum_x h_x`.  When interfacing with the generic
+first-moment notation of (h), use the site energy
+`e_x = epsilon^d h_x`, so that `H_epsilon = sum_x e_x`.
+
+For a real symmetric translation-invariant scalar kernel `V_r = V_-r`, write
+the total Hamiltonian as
+`H_epsilon = epsilon^d (1/2 sum_x Pi_x^2
+  + 1/2 sum_{x,r} Phi_x V_r Phi_{x+r})`.
+The default local split is the equal-endpoint bond split
+`h_x = 1/2 Pi_x^2 + 1/2 V_0 Phi_x^2
+  + 1/4 sum_{r != 0} V_r
+    (Phi_x Phi_{x+r} + Phi_{x-r} Phi_x)`.
+Thus every nonzero displacement bond is shared equally between its two endpoint
+cells.  In the cell-normalized `q,p` notation of CA-24--CA-28, the same formula
+defines `e_x` and the physical density is `h_x = e_x / epsilon^d`.
+
+Boundary policy: the default exact identities are for infinite lattices with
+summable tails or for finite periodic lattices as total-energy expressions.
+For finite open restrictions, include only bonds present in the named finite
+Hamiltonian and share each included bond equally between its included endpoints;
+no ghost sites, half-bonds outside the region, or boundary counterterms are
+implicit.  Periodic wrap-around bonds are included in the total density split,
+but periodic first moments still require the coordinate-branch policy fixed
+separately in (j).
+
+Vacuum-energy policy: the split above is bare.  No subtraction is implicit.
+After a state `Omega` or `omega` is named, an expectation-subtracted density may
+be written `:h_x:_omega = h_x - omega(h_x) 1`.  Such a subtraction changes the
+Hamiltonian by a scalar and is invisible to commutators, but it is part of any
+claim about absolute energies, expectation values, or Fourier modes of
+quadratic densities.  The local source for vacuum/ground-state subtraction is a
+free-fermion Koo-Saleur precedent, not a Gaussian-scalar theorem.
+
+Improvement policy: the default density has no divergence improvement.  In
+symbols, the default is `b=0` in any rewrite
+`h'_x = h_x + (nabla_epsilon . b)_x`.  A later improved density must separately
+name the discrete divergence, the edge field `b`, and the boundary convention.
+Even when the total energy is unchanged on a periodic lattice or under decaying
+boundary conditions, first moments of the density change by a discrete
+summation-by-parts term, so improvements are not interchangeable for
+position-weighted generators.
+**Reasoning:** The OAR scalar-field source writes the lattice Hamiltonian with
+an explicit cell-volume factor and a nearest-neighbour quadratic potential, but
+it does not choose a unique local site density for arbitrary later first
+moments.  The equal-endpoint split is a convention that preserves the sourced
+total Hamiltonian and makes the bond assignment deterministic before any
+position-weighted generator uses it.
+**Source:** `literature/md/2010.11121/2010.11121.md:598`--`:603` (sourced
+lattice scalar Hamiltonian and dispersion), `:614`--`:623` (physical mass and
+renormalized lattice dispersion);
+`references/text/CFTFromLatticeFermions.txt:378`--`:389` (vacuum/ground-state
+subtraction as a normal-ordering requirement in the free-fermion Koo-Saleur
+setting); CA-29.
+**Sweep status:** CA-29 defines and uses this convention.  CA-24--CA-28 use only
+the total scalar symbol and finite periodic stiffness checks; any later
+real-space first-moment or quadratic-density mode must cite this entry or
+replace it with an explicitly recorded convention sweep.

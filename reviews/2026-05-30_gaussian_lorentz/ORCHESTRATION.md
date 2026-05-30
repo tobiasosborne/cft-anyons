@@ -23,7 +23,7 @@ Protocol:
 | C3 | Complete | `019e7919-7dba-7b21-8e02-7454d14a6858` (`Fermat`) | Recorded nonnegative mass label, positive-dispersion generator scope, and massless doubler as coefficient-level rejection only. |
 | C4 | Complete | `019e7921-7709-7431-a8e9-50cec9e57ed4` (`Aristotle`) | Split smooth-patch differential algebra from finite periodic symbol/eigenvalue checks. |
 | C5 | Complete | `019e7927-20a8-7bb0-bff1-fe2539a686c3` (`Epicurus`) | Added named Gaussian numerical tolerances and threaded them through symbol, eigenvalue, minima, and small-spacing checks. |
-| C6 | Pending | - | Gaussian real-space density convention. |
+| C6 | Complete | `019e7931-4366-7781-90aa-0666928bff72` (`Harvey`) | Added convention (l) and CA-29 for Gaussian real-space energy-density split; no stress-tensor claim. |
 | R1 | Pending | - | CA-26 checked-coverage wording. |
 | R2 | Pending | - | CA-23 roadmap drift. |
 | R3 | Pending | - | Source-anchor ranges in lattice-symmetry shards. |
@@ -79,3 +79,9 @@ Protocol:
 - 2026-05-30: C5 reviewed by parent and accepted.  `make ci-before-push` and
   `git diff --check` passed; structural coefficient validation remains deferred
   to J4.
+- 2026-05-30: C5 pushed as `241bdd1`.  C6 delegated to worker
+  `019e7931-4366-7781-90aa-0666928bff72` (`Harvey`) with write scope
+  `CONVENTIONS.md`, new CA-29 density shard, and report shard maps.
+- 2026-05-30: C6 reviewed by parent and accepted.  `make ci-before-push` passed;
+  parent then forced `latexmk -pdf -g report.tex` so `report.pdf` includes the
+  new CA-29 shard.

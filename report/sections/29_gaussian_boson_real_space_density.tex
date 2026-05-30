@@ -1,0 +1,164 @@
+% SHARD-ID: CA-29-GAUSSIAN-BOSON-REAL-SPACE-DENSITY
+% SHARD-TITLE: Gaussian Boson Real-Space Energy Density
+% SHARD-SUMMARY: Fixes the scalar Gaussian real-space energy-density convention as a local split of the sourced lattice Hamiltonian.
+% SHARD-SUMMARY: Records cell-volume, equal bond-sharing, boundary, vacuum-subtraction, and improvement policies before position-weighted use.
+% SHARD-KEYWORDS: Gaussian boson, real-space density, Hamiltonian density, cell volume, bond sharing, normal ordering, improvement
+
+\section{Gaussian Boson Real-Space Energy Density}
+\label{sec:gaussian-boson-real-space-density}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: convention, not a theorem.}  This shard fixes how the scalar
+Gaussian Hamiltonian is split into site-attached real-space energy densities.
+It preserves the total Hamiltonian used in the sourced nearest-neighbour
+scalar model and in CA-24--CA-28, but it does not claim a continuum tensor
+object, a conservation law, or covariance.
+
+Dependencies: CA-23--CA-28 and CONVENTIONS.md (j), (l).
+
+% Source: literature/md/2010.11121/2010.11121.md:598--603 -- sourced lattice scalar Hamiltonian with cell-volume factor and dispersion.
+% Source: literature/md/2010.11121/2010.11121.md:614--623 -- physical mass convention and renormalized lattice Klein-Gordon dispersion.
+% Source: references/text/CFTFromLatticeFermions.txt:378--389 -- vacuum/ground-state subtraction corresponds to normal ordering in the free-fermion Koo-Saleur setting.
+% Convention: CONVENTIONS.md (j) -- scalar Gaussian coefficient tier and finite periodic symbol/eigenvalue scope.
+% Convention: CONVENTIONS.md (l) -- real-space energy-density split fixed here.
+
+\subsection{Cell Volume and Notation}
+
+Let the hypercubic lattice spacing be \(\epsilon\), so one spatial cell has
+volume \(\epsilon^d\).  In this shard \(h_x\) is the physical energy density
+attached to the cell at \(x\):
+\[
+  H_\epsilon=\epsilon^d\sum_x h_x.
+\]
+The integrated site energy is
+\[
+  e_x:=\epsilon^d h_x,
+  \qquad
+  H_\epsilon=\sum_x e_x .
+\]
+This distinction matters because the generic first-moment notation of
+CONVENTIONS.md (h) writes \(H=\sum_x h_x\); for the Gaussian block, the object
+to insert there is \(e_x\), not the density \(h_x\).
+
+For fields \(\Phi_x,\Pi_x\) and a real symmetric translation-invariant kernel
+\(V_r=V_{-r}\), use
+\[
+  H_\epsilon
+  =
+  \epsilon^d
+  \left(
+    \frac12\sum_x\Pi_x^2
+    +
+    \frac12\sum_{x,r}\Phi_xV_r\Phi_{x+r}
+  \right).
+\]
+For the nearest-neighbour Klein-Gordon source, the renormalized coefficients are
+\[
+  V_0=m^2+\frac{2d}{\epsilon^2},
+  \qquad
+  V_{\pm e_a}=-\frac{1}{\epsilon^2},
+\]
+which give the dispersion recorded in CA-24.
+
+\subsection{Equal-Endpoint Bond Split}
+
+The chosen local density is
+\[
+  h_x
+  =
+  \frac12\Pi_x^2
+  +
+  \frac12 V_0\Phi_x^2
+  +
+  \frac14\sum_{r\ne0}V_r
+  \bigl(\Phi_x\Phi_{x+r}+\Phi_{x-r}\Phi_x\bigr).
+\]
+Each nonzero displacement bond is assigned half to each endpoint cell.  Summing
+over \(x\) gives
+\[
+  \sum_x h_x
+  =
+  \frac12\sum_x\Pi_x^2
+  +
+  \frac12\sum_{x,r}\Phi_xV_r\Phi_{x+r},
+\]
+so this convention reproduces the total scalar Hamiltonian above after the
+cell-volume factor is restored.
+
+The \(q,p\) notation in CA-24--CA-28 absorbs the cell volume into the coefficient
+bookkeeping.  In that notation the same displayed formula defines \(e_x\), and
+the physical density is \(h_x=e_x/\epsilon^d\).
+
+\subsection{Boundary Policy}
+
+The default exact identities are infinite-lattice identities with summable
+tails, or finite periodic total-energy identities.  On a finite open region,
+the density is obtained from the finite Hamiltonian actually named: include
+only bonds present in that Hamiltonian, and share each included bond equally
+between its included endpoints.  No exterior ghost sites, omitted half-bonds,
+or boundary counterterms are implicit.
+
+For periodic finite lattices, wrap-around bonds are included in the total
+energy split.  This does not create a periodic position convention.  Any
+periodic first moment still needs the branch, sawtooth, or interpolation policy
+required by CONVENTIONS.md (j).
+
+\subsection{Vacuum-Energy Policy}
+
+The density above is bare.  No normal-ordering or vacuum subtraction is
+implicit.  Once a state \(\omega\) is named, the expectation-subtracted version
+may be recorded as
+\[
+  {:}h_x{:}_\omega:=h_x-\omega(h_x)\mathbf 1 .
+\]
+This changes \(H_\epsilon\) by a scalar and therefore drops out of commutators,
+but it matters for absolute energies, expectation values, and Fourier modes of
+quadratic densities.  The local subtraction source is the free-fermion
+Koo-Saleur setting, where the scaling-limit representation relies on subtracting
+vacuum or ground-state expectation values; this shard only records the analogous
+policy needed before such quantities are used in the scalar Gaussian block.
+
+\subsection{Improvement Policy}
+
+The default convention has no divergence improvement:
+\[
+  h'_x=h_x
+\]
+unless a later shard explicitly names an edge field \(b\), a discrete divergence
+\((\nabla_\epsilon\cdot b)_x\), and a boundary convention.  Such a rewrite
+\[
+  h'_x=h_x+(\nabla_\epsilon\cdot b)_x
+\]
+may leave the total energy unchanged on a periodic lattice or for decaying
+fields, but it is not harmless for position-weighted generators.  A discrete
+summation-by-parts calculation shifts first moments by an edge-field term plus
+boundary contributions.  For example, in one dimension with
+\[
+  (\nabla_\epsilon b)_n
+  =
+  \frac{b_{n+1/2}-b_{n-1/2}}{\epsilon},
+  \qquad x_n=\epsilon n,
+\]
+one has
+\[
+  \epsilon\sum_n x_n(\nabla_\epsilon b)_n
+  =
+  -\epsilon\sum_n b_{n+1/2}
+  +\text{boundary terms}.
+\]
+Therefore improvements are separate data, not gauge choices to be silently
+modded out.
+
+\subsection{Compiler Consequence}
+
+A scalar Gaussian real-space generator proposal must now carry the tuple
+\[
+\bigl(\epsilon^d,\; h_x,\; e_x=\epsilon^dh_x,\;
+  \text{boundary policy},\; \text{subtraction policy},\;
+  \text{improvement policy}\bigr).
+\]
+The total symbol \(\omega(k)^2\) remains sufficient for CA-24--CA-28, but it is
+not sufficient once a construction uses position weights or local quadratic
+modes.  Those later constructions must cite this density convention or perform
+an explicit convention sweep.

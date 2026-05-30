@@ -1,5 +1,44 @@
 # Worklog chunk 004 — 2026-05-30
 
+## Session log — 2026-05-30 — Action-plan C6 Gaussian density convention
+
+### Context
+
+C6 fixes a real-space scalar Gaussian energy-density split before any later
+stress-energy or position-weighted generator proposal can use local densities.
+
+### What changed
+
+- Delegated C6 to worker `019e7931-4366-7781-90aa-0666928bff72` (`Harvey`).
+- Added CONVENTIONS.md (l): cell volume, site energy \(e_x=\epsilon^d h_x\),
+  equal-endpoint bond sharing, boundary policy, subtraction policy, and
+  divergence-improvement policy.
+- Added CA-29 and wired it through `report.tex`, `report/README.md`, and
+  `report/SHARD_CATALOG.md`.
+
+### Why these choices
+
+- The source fixes the total scalar lattice Hamiltonian, but not a unique local
+  split for later first moments.  The equal-endpoint convention is deterministic
+  and is explicitly only an energy-density convention, not a stress-tensor
+  theorem.
+
+### Frictions / dead ends
+
+- The worker restored `report.pdf` after building; the parent forced a rebuild
+  before commit so the distributable includes CA-29.
+
+### Acceptance
+
+- `make ci-before-push` passed.
+- Forced `latexmk -pdf -g report.tex` produced a 75-page `report.pdf`.
+
+### Pointers
+
+- Action plan: `reviews/2026-05-30_gaussian_lorentz/ACTION_PLAN.md` (C6).
+- Shard: CA-29, `report/sections/29_gaussian_boson_real_space_density.tex`.
+- Convention: CONVENTIONS.md (l).
+
 ## Session log — 2026-05-30 — Action-plan C5 numerical tolerances
 
 ### Context

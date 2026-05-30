@@ -46,6 +46,7 @@ before treating report edits as complete.
 | 26 | `CA-26-GAUSSIAN-BOSON-GENERATOR-ALGEBRA` | `report/sections/26_gaussian_boson_generator_algebra.tex` | One-Particle Generator Algebra for Gaussian Bosons |
 | 27 | `CA-27-GAUSSIAN-BOSON-RESIDUAL-CONDITIONS` | `report/sections/27_gaussian_boson_residual_conditions.tex` | Lorentz Residual Conditions on Gaussian Coefficients |
 | 28 | `CA-28-GAUSSIAN-BOSON-NUMERICAL-SUITE` | `report/sections/28_gaussian_boson_numerical_suite.tex` | Numerical Verification Suite for Gaussian Boson Examples |
+| 29 | `CA-29-GAUSSIAN-BOSON-REAL-SPACE-DENSITY` | `report/sections/29_gaussian_boson_real_space_density.tex` | Gaussian Boson Real-Space Energy Density |
 
 ## Adding a shard
 

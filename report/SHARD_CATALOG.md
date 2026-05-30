@@ -262,3 +262,11 @@ single ~200-line source file it points to.
 - Summary: Checks finite periodic stiffness matrices against Brillouin-zone symbol values instead of relying on visual spectra.
 - Summary: Records the current example systems: Klein-Gordon, anisotropic cones, and doubler symbols.
 - Keywords: Gaussian boson, Julia, numerical verification, finite periodic lattice, stiffness matrix, examples
+
+## `CA-29-GAUSSIAN-BOSON-REAL-SPACE-DENSITY`
+
+- Source: `report/sections/29_gaussian_boson_real_space_density.tex`
+- Title: Gaussian Boson Real-Space Energy Density
+- Summary: Fixes the scalar Gaussian real-space energy-density convention as a local split of the sourced lattice Hamiltonian.
+- Summary: Records cell-volume, equal bond-sharing, boundary, vacuum-subtraction, and improvement policies before position-weighted use.
+- Keywords: Gaussian boson, real-space density, Hamiltonian density, cell volume, bond sharing, normal ordering, improvement
