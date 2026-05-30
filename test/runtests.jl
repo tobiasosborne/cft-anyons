@@ -223,6 +223,21 @@ end
     @test norm(residual) > 1
 end
 
+@testset "Gaussian boson centered periodic momentum labels" begin
+    even_grid = CftAnyons.centered_periodic_momentum_grid([4]; spacing = 1)
+    @test [entry.label[1] for entry in even_grid] == [0, 1, -2, -1]
+    @test gaussian_symbol_isapprox([entry.momentum[1] for entry in even_grid], [0, pi / 2, -pi, -pi / 2])
+    @test gaussian_symbol_isapprox(CftAnyons.periodic_momentum_grid([4]; spacing = 1)[4], [3pi / 2])
+    @test even_grid[4].label == [-1]
+    @test gaussian_symbol_isapprox(even_grid[4].momentum, [-pi / 2])
+
+    odd_grid = CftAnyons.centered_periodic_momentum_grid([5]; spacing = 2)
+    @test [entry.label[1] for entry in odd_grid] == [0, 1, 2, -2, -1]
+    @test gaussian_symbol_isapprox([entry.momentum[1] for entry in odd_grid],
+        [0, pi / 5, 2pi / 5, -2pi / 5, -pi / 5])
+    @test_throws ErrorException CftAnyons.centered_periodic_momentum_grid([4]; spacing = 0)
+end
+
 @testset "Gaussian boson finite periodic massive coefficient spectra" begin
     for sizes in ([5], [4, 3], [3, 2, 2])
         d = length(sizes)

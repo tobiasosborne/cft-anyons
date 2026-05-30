@@ -29,7 +29,7 @@ Protocol:
 | R3 | Complete | `019e7942-eb85-7bc0-b26d-bf536840f3f6` (`Popper`) | Expanded KS and OAR source-anchor ranges in CA-14--CA-17 and CA-23 without new claims. |
 | R4 | Complete | `019e7947-8ec3-77b1-88fc-7c98019df9be` (`Volta`) | Qualified CA-13 angular-momentum density as continuum mnemonic and deferred lattice rotation formula until current conventions exist. |
 | R5 | Complete | `019e794b-6426-7381-973c-b2852c96284f` (`Nietzsche`) | Narrowed CA-28 finite-periodic coverage to symbols, stiffness spectra, minima counts, and implemented coefficient residuals/Hessians. |
-| J1 | Pending | - | Centered periodic momentum labels. |
+| J1 | Complete | `019e794e-7fb9-70c0-a1f7-1a71d4926fbf` (`Kuhn`) | Added centered periodic momentum labels for branch-aware low-energy windows, with even/odd tests and convention note. |
 | J2 | Pending | - | Fourier eigenvector tests. |
 | J3 | Pending | - | Independent finite-difference derivative oracle. |
 | J4 | Pending | - | Structural coefficient validation. |
@@ -107,3 +107,9 @@ Protocol:
   `019e794b-6426-7381-973c-b2852c96284f` (`Nietzsche`) with write scope CA-28.
 - 2026-05-30: R5 reviewed by parent and accepted.  `make ci-before-push` and
   `git diff --check` passed; `report.pdf` did not change in the parent gate.
+- 2026-05-30: R5 pushed as `803fde0`.  J1 delegated to worker
+  `019e794e-7fb9-70c0-a1f7-1a71d4926fbf` (`Kuhn`) with write scope
+  `src/GaussianBosonNumerics.jl`, tests, CA-28, and `INDEX.md`.
+- 2026-05-30: J1 reviewed by parent and accepted after adding the centered
+  momentum-label branch to CONVENTIONS.md (j).  `make ci-before-push` and
+  `git diff --check` passed.

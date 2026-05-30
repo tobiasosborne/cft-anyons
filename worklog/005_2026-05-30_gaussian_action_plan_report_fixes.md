@@ -1,5 +1,48 @@
 # Worklog chunk 005 — 2026-05-30
 
+## Session log — 2026-05-30 — Action-plan J1 centered momentum labels
+
+### Context
+
+J1 starts the Julia/test-hardening block by adding branch-aware finite momentum
+labels for low-energy windows.  The existing periodic grid is uncentered and is
+still useful for branch-insensitive spectra, but it represents the last grid
+point of \(L=4\) as \(3\pi/2\) rather than the small negative representative.
+
+### What changed
+
+- Delegated J1 to worker `019e794e-7fb9-70c0-a1f7-1a71d4926fbf` (`Kuhn`).
+- Added `centered_periodic_momentum_grid(sizes; spacing=1)` in
+  `src/GaussianBosonNumerics.jl`.
+- Added even and odd tests, including \(L=4\) where the uncentered \(3\pi/2\)
+  point is represented as label \(-1\), momentum \(-\pi/2\).
+- Updated CA-28 and `INDEX.md`.
+- Parent added the centered branch convention to CONVENTIONS.md (j).
+
+### Why these choices
+
+- This gives future low-energy window and residual tests a branch-aware
+  momentum label while preserving the old uncentered grid for
+  branch-insensitive symbol spectra.
+- The centered helper is explicitly not a periodic position-coordinate or
+  finite generator construction.
+
+### Frictions / dead ends
+
+- The worker intentionally did not touch CONVENTIONS.md; the parent added the
+  convention note to satisfy the convention-before-use rule.
+
+### Acceptance
+
+- `make ci-before-push` passed.
+- `git diff --check` passed.
+
+### Pointers
+
+- Action plan: `reviews/2026-05-30_gaussian_lorentz/ACTION_PLAN.md` (J1).
+- Files: `src/GaussianBosonNumerics.jl`, `test/runtests.jl`, CA-28,
+  CONVENTIONS.md (j), `INDEX.md`.
+
 ## Session log — 2026-05-30 — Action-plan R5 finite-periodic numerical boundary
 
 ### Context

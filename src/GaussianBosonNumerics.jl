@@ -99,6 +99,37 @@ function periodic_momentum_grid(sizes; spacing = 1)
             for site in vec(collect(CartesianIndices(dims)))]
 end
 
+function _centered_periodic_dual_label(label::Integer, size::Integer)
+    return mod(label + size ÷ 2, size) - size ÷ 2
+end
+
+"""
+    centered_periodic_momentum_grid(sizes; spacing = 1)
+
+Return branch-aware periodic momenta in the same Cartesian order as
+`periodic_momentum_grid`.  Each entry is a named tuple `(label, momentum)`,
+where `label[a]` is the centered integer dual representative modulo `sizes[a]`
+and `momentum[a] = 2 pi label[a] / (spacing * sizes[a])`.
+
+For each size `L`, the branch is `-floor(L / 2), ..., ceil(L / 2) - 1`;
+for even `L = 2r`, this is `-r, ..., 0, ..., r - 1`.
+"""
+function centered_periodic_momentum_grid(sizes; spacing = 1)
+    _check_periodic_sizes(sizes)
+    spacing > 0 || error("spacing must be positive, got $spacing")
+    dims = Tuple(Int.(sizes))
+
+    # Source: literature/md/2010.11121/2010.11121.md:274--293 uses the
+    # centered dual-lattice labels {-r, ..., 0, ..., r-1} for side length 2r.
+    return map(vec(collect(CartesianIndices(dims)))) do site
+        site_tuple = Tuple(site)
+        label = [_centered_periodic_dual_label(site_tuple[axis] - 1, dims[axis])
+                 for axis in eachindex(dims)]
+        momentum = [2 * pi * label[axis] / (spacing * dims[axis]) for axis in eachindex(dims)]
+        return (label = label, momentum = momentum)
+    end
+end
+
 """
     periodic_symbol_values(coefficients, sizes; spacing = 1)
 

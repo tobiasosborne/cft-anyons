@@ -227,6 +227,12 @@ while the trace of `i delta_ab I` is not.  Any finite periodic first-moment,
 position-coordinate, or momentum-coordinate generator test must first name a
 branch, sawtooth, Fourier-interpolation, or other periodic coordinate
 convention.
+For low-energy window selection only, the helper
+`centered_periodic_momentum_grid` uses centered integer dual representatives
+`n_a in {-floor(L_a/2), ..., ceil(L_a/2)-1}` and physical representatives
+`k_a = 2 pi n_a / (epsilon L_a)`.  This is a momentum-label branch for finite
+symbol sampling; it is not a periodic position-coordinate convention and does
+not by itself define finite boost or rotation generators.
 Gaussian numerical helpers use explicit named tolerances rather than default
 `isapprox`.  The nearly-real symbol validators use
 `GAUSSIAN_SYMBOL_IMAG_ATOL = 1e-10` and
@@ -277,7 +283,7 @@ one-particle complex structure uses `omega^{-1}` and the OAR source names the
 massless zero mode as a separate problem.
 **Source:** `literature/md/2010.11121/2010.11121.md:51`--`:58` (harmonic lattice
 Hamiltonian and scaling-limit claims), `:274`--`:293` (finite torus lattice,
-dual lattice, and discrete Fourier transform), `:598`--`:610` (lattice
+centered dual lattice, and discrete Fourier transform), `:598`--`:610` (lattice
 Hamiltonian, dispersion, and ground-state two-point function), `:614`--`:623`
 (renormalized mass and lattice Klein-Gordon dispersion), `:648`--`:681` (OAR
 continuum one-particle scalar product, flat Fock realization, dynamics, speed 1,
@@ -285,9 +291,10 @@ and translations), `:1037`--`:1046` (continuum free scalar time evolution and
 theorem), `:1626`--`:1628` (massless zero-mode warning),
 `references/cft/Schottenloher2008/Schottenloher2008.md:4186`--`:4244`
 (free bosonic QFT/Klein-Gordon/Poincare-covariant construction, including the
-natural Poincare action);
+natural Poincare action); `src/GaussianBosonNumerics.jl:102`--`:130`
+(`centered_periodic_momentum_grid`);
 `src/GaussianBosons.jl:9`--`:25` (Gaussian tolerance constants and real-symbol
-validator), `src/GaussianBosonNumerics.jl:137`--`:149` (minima-count
+validator), `src/GaussianBosonNumerics.jl:168`--`:180` (minima-count
 validator),
 `test/runtests.jl` testsets "Gaussian boson Klein-Gordon symbols" and
 "Gaussian boson boost-time symbols", "Gaussian boson Lorentz Hessian examples",
