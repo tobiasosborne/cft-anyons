@@ -3,6 +3,17 @@
 All external facts used in formalisation must refer to a local file in this
 manifest, with a string locator in the extracted text or markdown.
 
+## Topic-grouped sources (current convention)
+
+New sources are filed under `references/<topic>/` with a per-topic `SOURCES.md`
+(AGENTS.md "Sources"). This central manifest remains the discoverable index.
+
+| Source ID | Topic manifest |
+|---|---|
+| `SRC-SCHOTTENLOHER-CFT` | [`references/cft/SOURCES.md`](../cft/SOURCES.md) — Schottenloher, *A Mathematical Introduction to CFT* (LNP 759, 2008) |
+
+The flat tables below are the legacy layout inherited from the prior effort.
+
 ## Primary Local Sources
 
 | Source ID | Local file | Extracted text | SHA256 |
