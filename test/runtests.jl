@@ -147,3 +147,39 @@ end
     @test CftAnyons.first_moment_continuity_current_coefficients([-1, 0, 2, 5]) == [1, 2, 3]
     @test_throws ErrorException CftAnyons.first_moment_continuity_current_coefficients([0])
 end
+
+@testset "Gaussian boson Klein-Gordon symbols" begin
+    for d in 1:3
+        k = collect(0.1:0.1:(0.1d))
+        mass = 0.7
+        spacing = 0.25
+        coeffs = CftAnyons.kg_nearest_neighbor_coefficients(d; mass, spacing)
+
+        @test length(coeffs) == 1 + 2d
+        @test CftAnyons.scalar_quadratic_symbol(coeffs, k; spacing) ≈
+              CftAnyons.kg_lattice_omega_squared(k; mass, spacing)
+        @test CftAnyons.continuum_kg_omega_squared(k; mass) ≈ mass^2 + sum(abs2, k)
+    end
+
+    @test_throws ErrorException CftAnyons.kg_lattice_omega_squared([0.0, 0.1, 0.2, 0.3]; mass = 1)
+    @test_throws ErrorException CftAnyons.kg_nearest_neighbor_coefficients(4; mass = 1)
+end
+
+@testset "Gaussian boson boost-time symbols" begin
+    for d in 1:3
+        k = [0.1 * (-1)^a * a for a in 1:d]
+        mass = 0.4
+        spacing = 0.2
+        coeffs = CftAnyons.kg_nearest_neighbor_coefficients(d; mass, spacing)
+
+        @test CftAnyons.boost_time_symbol_from_coefficients(coeffs, k; spacing) ≈
+              CftAnyons.kg_lattice_boost_time_symbol(k; spacing)
+        @test CftAnyons.continuum_kg_boost_time_symbol(k) ≈ k
+    end
+
+    k = [0.3, -0.2, 0.1]
+    ε = 0.05
+    lattice_symbol = CftAnyons.kg_lattice_boost_time_symbol(k; spacing = ε)
+    @test norm(lattice_symbol - k) < 5e-4
+    @test_throws ErrorException CftAnyons.kg_lattice_boost_time_symbol([0.0]; spacing = 0)
+end

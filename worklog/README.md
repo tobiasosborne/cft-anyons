@@ -22,5 +22,6 @@ gotcha) goes to agent memory under
 
 | Chunk | Span | Topics |
 |---|---|---|
+| `003_2026-05-30_gaussian_boson_lorentz.md` | 2026-05-30 | CA-23--CA-24 Gaussian boson Lorentz roadmap and symbol calculus |
 | `002_2026-05-30_compiler_spec.md` | 2026-05-30 | CA-08 compiler spec; Fock/sector correction; CA-09 Fibonacci kinematic sector; CA-10--CA-17 lattice bulk-symmetry candidates |
 | `001_2026-05-30_reboot.md` | 2026-05-30 | Reboot: archive of old project, north star, lab-book scaffold |

@@ -163,6 +163,7 @@ function poincare_vector_field_bracket(a::PoincareBasisKey, b::PoincareBasisKey,
 end
 
 include("GalileiAlgebras.jl")
+include("GaussianBosons.jl")
 
 """
     nearest_neighbor_boost_current_coefficients(positions) -> Vector

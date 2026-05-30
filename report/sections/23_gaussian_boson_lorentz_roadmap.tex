@@ -1,0 +1,151 @@
+% SHARD-ID: CA-23-GAUSSIAN-BOSON-LORENTZ-ROADMAP
+% SHARD-TITLE: Gaussian Boson Lorentz Generator Roadmap
+% SHARD-SUMMARY: Opens the Gaussian-boson Lorentz block for spatial dimensions d=1,2,3 and fixes the first solvable target class.
+% SHARD-SUMMARY: Decomposes the multi-shard quest into symbol calculus, diagonalisation, generator algebra, Lorentz conditions, numerical checks, and continuum proof obligations.
+% SHARD-SUMMARY: States the end goal: identify when translation-invariant Gaussian lattice coefficients scale to the Klein-Gordon/free scalar Poincare representation.
+% SHARD-KEYWORDS: Gaussian boson, Lorentz symmetry, Klein-Gordon, lattice generators, roadmap, quadratic Hamiltonian
+
+\section{Gaussian Boson Lorentz Generator Roadmap}
+\label{sec:gaussian-boson-lorentz-roadmap}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: roadmap shard with checked seed.}  This shard scopes a
+multi-shard programme.  CA-24 supplies the first checked symbol calculation.
+The stronger continuum conclusion is not yet proved for a general coefficient
+class.
+
+Dependencies: CA-10--CA-17 for lattice Lorentz motivation and acceptance tests,
+and CONVENTIONS.md (j).  This shard starts the Gaussian-boson block.
+
+% Source: literature/md/2010.11121/2010.11121.md:13 -- scaling limit of free lattice ground states extends to the massive continuum free field with spacetime translations.
+% Source: literature/md/2010.11121/2010.11121.md:51 -- harmonic free lattice fields on the torus.
+% Source: literature/md/2010.11121/2010.11121.md:57 -- renormalization condition yields continuum free field of mass m.
+% Source: literature/md/2010.11121/2010.11121.md:61 -- construction gives local net of continuum free field in arbitrary dimensions.
+% Source: literature/md/2010.11121/2010.11121.md:164 -- free scalar field can be treated with full control.
+% Source: references/cft/Schottenloher2008/Schottenloher2008.md:4186 -- free bosonic QFT via Klein-Gordon operator, arbitrary D>=2.
+% Source: references/cft/Schottenloher2008/Schottenloher2008.md:4244 -- Poincare representation for the free boson.
+
+\subsection{Problem Statement}
+
+We now restrict the lattice-symmetry problem to a solvable class:
+translation-invariant Gaussian bosonic lattice systems in spatial dimensions
+\[
+  d=1,2,3,
+  \qquad D=d+1.
+\]
+The physical target is Lorentz/Poincare covariance in the scaling limit.  The
+expected endpoint is the scalar free field:
+\[
+  \omega(k)^2=m^2+|k|^2
+\]
+after the correct normalization of lattice spacing, velocity, field strength,
+and mass.
+
+The inputs are not merely a matrix Hamiltonian.  The compiler receives:
+\[
+\begin{array}{ll}
+\Lambda_{\epsilon,L} & \text{periodic hypercubic lattice or infinite lattice},\\
+q_x,p_x & \text{canonical bosonic field variables},\\
+V_r & \text{translation-invariant quasi-local quadratic coefficients},\\
+\epsilon & \text{lattice spacing},\\
+S_\epsilon & \text{state/scaling-map data, when a continuum claim is requested}.
+\end{array}
+\]
+The first coefficient tier is the scalar canonical Hamiltonian
+\[
+  H=\frac{1}{2}\sum_xp_x^2+\frac{1}{2}\sum_{x,r}q_xV_rq_{x+r}.
+\]
+Full bosonic BdG/pairing systems are a later tier, not silently included in the
+first convention.
+
+\subsection{North Star}
+
+For each admissible coefficient family \(V^{(\epsilon)}_r\), compute the
+candidate generators as functions of the coefficients:
+\[
+  H,\quad P_a,\quad J_{ab},\quad K_a,
+\]
+then compute the residuals in the Poincare algebra.  The residuals become
+conditions on the symbol
+\[
+  \omega_\epsilon(k)^2=\sum_rV^{(\epsilon)}_r e^{i\epsilon k\cdot r}.
+\]
+The end goal is a theorem-shaped statement:
+
+\[
+\begin{gathered}
+\text{Gaussian lattice coefficients satisfying locality, positivity,}\\
+\text{single low-energy minimum, and isotropic Klein-Gordon Taylor data}
+\\
+\Longrightarrow
+\text{ scaling limit is the free scalar/Klein-Gordon Poincare system.}
+\end{gathered}
+\]
+
+\subsection{Shard Roadmap}
+
+The intended block is:
+\[
+\begin{array}{ll}
+\text{CA-24} & \text{symbol calculus and the seed boost-time check},\\
+\text{CA-25} & \text{canonical and BdG diagonalisation conventions},\\
+\text{CA-26} & \text{one-particle generator algebra }H,P,J,K,\\
+\text{CA-27} & \text{real-space densities and coefficient formulas},\\
+\text{CA-28} & \text{Lorentz residuals as conditions on }\omega^2,\\
+\text{CA-29} & \text{nearest-neighbour Klein-Gordon in }d=1,2,3,\\
+\text{CA-30} & \text{anisotropic and multi-minimum counterexamples},\\
+\text{CA-31} & \text{finite periodic numerical verification suite},\\
+\text{CA-32} & \text{OAR/wavelet scaling integration and proof obligations},\\
+\text{CA-33} & \text{source acquisitions: Weinberg and discrete Gaussian/Virasoro}.
+\end{array}
+\]
+These are labels for the queue, not claims that the theorems are complete.
+
+\subsection{Side Quests}
+
+\textbf{Source acquisition.}  The registered local OAR sources cover the free
+scalar lattice scaling limit and spacetime translations.  They explicitly warn
+that Lorentz/conformal convergence requires further work.  We need a registered
+source for the exact continuum stress-energy/Poincare-generator formulas, and a
+registered copy of the discrete Gaussian free-field Virasoro source currently
+present only as bibliography metadata.
+
+\textbf{Generator ambiguity.}  A local Hamiltonian density is not unique:
+\[
+  h_x\mapsto h_x+\nabla\cdot b_x
+\]
+changes first moments by boundary or current terms.  The Gaussian block must
+track which density convention produced \(K_a=\sum_xx_ah_x\).
+
+\textbf{Periodic positions.}  Numerical tests use periodic lattices.  First
+moments need a branch or sawtooth convention, so early finite tests should use
+momentum-space generators or open-chain checks unless the branch is explicitly
+fixed.
+
+\textbf{BdG pairing.}  A general quasi-local Hamiltonian in creation and
+annihilation operators may include pairing terms.  The scalar \(q,p\) tier
+captures Klein-Gordon directly; BdG requires symplectic positivity and a stable
+bosonic Bogoliubov convention before generator formulas are promoted.
+
+\subsection{Numerical Verification Plan}
+
+The Julia layer should stay at the invariant level:
+\[
+\begin{array}{ll}
+1.&\text{symbol from coefficients equals the analytic dispersion},\\
+2.&\frac12\nabla\omega_\epsilon(k)^2\text{ equals the boost-time residual},\\
+3.&\frac{\sin(\epsilon k_a)}{\epsilon}\to k_a\text{ for the KG lattice},\\
+4.&\text{anisotropic Hessians fail the Lorentz residual checks},\\
+5.&\text{finite Fourier matrices diagonalize periodic stiffness matrices}.
+\end{array}
+\]
+The first three checks are implemented with CA-24.
+
+\subsection{Acceptance Boundary}
+
+Passing the symbol tests is not a proof of Lorentz invariance.  A continuum
+claim still needs the CA-15 payload: scaling maps, state sequence, topology,
+operator domains, local observable covariance, and boundary/renormalization
+policy.  The value of the Gaussian block is that the algebraic residuals can be
+made explicit before attempting that proof.

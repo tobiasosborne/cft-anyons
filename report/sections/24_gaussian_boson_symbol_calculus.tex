@@ -1,0 +1,165 @@
+% SHARD-ID: CA-24-GAUSSIAN-BOSON-SYMBOL-CALCULUS
+% SHARD-TITLE: Gaussian Boson Symbol Calculus and the Boost-Time Residual
+% SHARD-SUMMARY: Defines the first scalar Gaussian-boson coefficient tier and its Fourier dispersion symbol in d=1,2,3.
+% SHARD-SUMMARY: Derives the one-particle boost-time commutator symbol as one half of the gradient of omega squared.
+% SHARD-SUMMARY: Checks the nearest-neighbour lattice Klein-Gordon example and its small-momentum Lorentz limit in Julia.
+% SHARD-KEYWORDS: Gaussian boson, Fourier symbol, dispersion, boost, Klein-Gordon, Julia check
+
+\section{Gaussian Boson Symbol Calculus and the Boost-Time Residual}
+\label{sec:gaussian-boson-symbol-calculus}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: sourced model class plus checked local derivation.}  The
+standard lattice scalar-field Hamiltonian and dispersion are sourced.  The
+boost-time residual calculation is a local one-particle derivation checked by
+Julia.
+
+Dependencies: CA-11, CA-12, CA-23, and CONVENTIONS.md (h), (j).
+
+% Source: literature/md/2010.11121/2010.11121.md:598 -- free lattice Hamiltonian for scalar fields.
+% Source: literature/md/2010.11121/2010.11121.md:603 -- lattice dispersion gamma_mu_N.
+% Source: literature/md/2010.11121/2010.11121.md:614 -- physical mass convention mu_N^2 = epsilon_N^2 m^2 + 2d.
+% Source: literature/md/2010.11121/2010.11121.md:623 -- lattice Klein-Gordon dispersion gamma_m^(N)(k)^2.
+% Source: literature/md/2010.11121/2010.11121.md:676 -- continuum dynamics satisfies the Klein-Gordon equation.
+% Source: literature/md/2010.11121/2010.11121.md:681 -- Klein-Gordon propagation speed 1 and spatial translations.
+% Checked: test/runtests.jl, "Gaussian boson Klein-Gordon symbols" and "Gaussian boson boost-time symbols".
+
+\subsection{Coefficient Tier}
+
+Fix \(d\in\{1,2,3\}\).  On a periodic hypercubic lattice with spacing
+\(\epsilon\), use canonical fields
+\[
+  [q_x,q_y]=0,\qquad [p_x,p_y]=0,\qquad [q_x,p_y]=i\delta_{xy}.
+\]
+The first scalar Gaussian tier is
+\[
+  H=\frac{1}{2}\sum_x p_x^2
+    +\frac{1}{2}\sum_{x,r}q_xV_rq_{x+r},
+  \qquad V_r=V_{-r}\in\mathbb R.
+\]
+Quasi-locality means that \(V_r\) has enough decay, or finite range in the first
+examples, so that the Fourier symbol and its derivatives used below exist.
+
+Define
+\[
+  \omega_\epsilon(k)^2
+  :=
+  \sum_r V_r e^{i\epsilon k\cdot r}.
+\]
+For a stable scalar model, this symbol is non-negative, with the zero-mode
+policy stated separately in the massless case.
+
+\subsection{Nearest-Neighbour Klein-Gordon Example}
+
+The sourced lattice scalar-field example has, in the notation of this shard,
+\[
+  V_0=m^2+\frac{2d}{\epsilon^2},
+  \qquad
+  V_{\pm e_a}=-\frac{1}{\epsilon^2}.
+\]
+Therefore
+\[
+\begin{aligned}
+  \omega_{\epsilon,m}(k)^2
+  &=
+    m^2+\frac{2d}{\epsilon^2}
+    -\frac{1}{\epsilon^2}\sum_{a=1}^d
+      (e^{i\epsilon k_a}+e^{-i\epsilon k_a})\\
+  &=
+    m^2+\frac{2}{\epsilon^2}\sum_{a=1}^d(1-\cos(\epsilon k_a)).
+\end{aligned}
+\]
+For fixed physical \(k\) and \(\epsilon\to0\),
+\[
+  \omega_{\epsilon,m}(k)^2
+  =
+  m^2+|k|^2+O(\epsilon^2|k|^4).
+\]
+
+\subsection{Momentum-Space Position}
+
+After diagonalization, the one-particle Hamiltonian is multiplication by
+\(\omega(k)\).  Let
+\[
+  X_a=i\partial_{k_a}
+\]
+on a common smooth core in momentum space.  The time-zero boost candidate
+corresponding to the energy first moment is the symmetrized operator
+\[
+  K_a=\frac{1}{2}(X_a\omega+\omega X_a).
+\]
+The symmetrization is the one-particle version of taking a self-adjoint first
+moment of the energy density.
+
+\subsection{Boost-Time Residual}
+
+For a test wavefunction \(\psi\),
+\[
+\begin{aligned}
+  [K_a,\omega]\psi
+  &=
+  \frac{1}{2}(X_a\omega^2-\omega X_a\omega)\psi\\
+  &=
+  i\,\omega\,(\partial_a\omega)\psi.
+\end{aligned}
+\]
+Thus
+\[
+  i[\omega,K_a]
+  =
+  \omega\,\partial_a\omega
+  =
+  \frac{1}{2}\partial_a\omega(k)^2.
+\]
+This is the algebraic output of the boost-time commutator.  To match the
+continuum Poincare relation \(i[H,K_a]=P_a\) with \(P_a=k_a\), one needs
+\[
+  \frac{1}{2}\partial_a\omega(k)^2=k_a.
+\]
+Integrating over \(k\) gives
+\[
+  \omega(k)^2=m^2+|k|^2
+\]
+on the connected low-energy patch.  With speed \(c\), the right side is
+\(c^2k_a\), giving \(\omega(k)^2=m^2+c^2|k|^2\).
+
+\subsection{Lattice Residual}
+
+For the nearest-neighbour lattice Klein-Gordon symbol,
+\[
+  \frac{1}{2}\partial_a\omega_{\epsilon,m}(k)^2
+  =
+  \frac{\sin(\epsilon k_a)}{\epsilon}.
+\]
+Therefore the boost-time commutator has the correct continuum limit:
+\[
+  \frac{\sin(\epsilon k_a)}{\epsilon}=k_a+O(\epsilon^2k_a^3).
+\]
+The Julia tests check this in \(d=1,2,3\), both from the closed formula and by
+evaluating the coefficient symbol
+\(\sum_rV_re^{i\epsilon k\cdot r}\).
+
+\subsection{Rotation Residual}
+
+For the one-particle rotation candidate
+\[
+  J_{ab}=X_aP_b-X_bP_a,\qquad P_a=k_a,
+\]
+one obtains
+\[
+  i[\omega,J_{ab}]
+  =
+  k_b\partial_a\omega-k_a\partial_b\omega.
+\]
+Thus rotations commute with the Hamiltonian exactly when the dispersion is
+radial on the momentum region under consideration.  For a hypercubic lattice
+this is not exact over the full Brillouin zone, but the Klein-Gordon expansion
+is isotropic to quadratic order at \(k=0\).
+
+\subsection{Boundary}
+
+This shard is a one-particle symbol calculation.  The many-body generators are
+second quantizations plus vacuum-energy and domain policies.  Real-space
+locality of \(K_a=\sum_xx_ah_x\), boundary terms, and convergence of the
+second-quantized operators are deferred to later shards.

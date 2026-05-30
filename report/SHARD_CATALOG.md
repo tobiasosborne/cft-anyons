@@ -208,3 +208,21 @@ single ~200-line source file it points to.
 - Summary: Gives small successful and failed examples showing why a Hamiltonian density alone cannot compile Galilean boosts.
 - Summary: Records the next source and proof obligations before Galilean lattice candidates can be promoted to continuum symmetry claims.
 - Keywords: Galilean compiler, mass density, current witness, central extension, examples, compile error
+
+## `CA-23-GAUSSIAN-BOSON-LORENTZ-ROADMAP`
+
+- Source: `report/sections/23_gaussian_boson_lorentz_roadmap.tex`
+- Title: Gaussian Boson Lorentz Generator Roadmap
+- Summary: Opens the Gaussian-boson Lorentz block for spatial dimensions d=1,2,3 and fixes the first solvable target class.
+- Summary: Decomposes the multi-shard quest into symbol calculus, diagonalisation, generator algebra, Lorentz conditions, numerical checks, and continuum proof obligations.
+- Summary: States the end goal: identify when translation-invariant Gaussian lattice coefficients scale to the Klein-Gordon/free scalar Poincare representation.
+- Keywords: Gaussian boson, Lorentz symmetry, Klein-Gordon, lattice generators, roadmap, quadratic Hamiltonian
+
+## `CA-24-GAUSSIAN-BOSON-SYMBOL-CALCULUS`
+
+- Source: `report/sections/24_gaussian_boson_symbol_calculus.tex`
+- Title: Gaussian Boson Symbol Calculus and the Boost-Time Residual
+- Summary: Defines the first scalar Gaussian-boson coefficient tier and its Fourier dispersion symbol in d=1,2,3.
+- Summary: Derives the one-particle boost-time commutator symbol as one half of the gradient of omega squared.
+- Summary: Checks the nearest-neighbour lattice Klein-Gordon example and its small-momentum Lorentz limit in Julia.
+- Keywords: Gaussian boson, Fourier symbol, dispersion, boost, Klein-Gordon, Julia check

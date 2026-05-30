@@ -190,3 +190,39 @@ mass extension of the Galilei group.
 `test/runtests.jl` testsets "Galilei vector-field brackets" and "Galilei mass
 central coefficient"; CA-18--CA-22.
 **Sweep status:** CA-18--CA-22 use this convention.
+
+## (j) Translation-invariant Gaussian boson symbols
+**Choice:** The Gaussian-boson Lorentz block uses spatial dimensions
+`d in {1,2,3}` and continuum target dimension `D=d+1`.  The default finite
+numerical model is a periodic hypercubic lattice; the default algebraic model is
+the corresponding translation-invariant infinite-lattice or Brillouin-zone
+symbol.  The first tier is a scalar real canonical boson with fields `q_x,p_x`
+obeying `[q_x,p_y]=i delta_xy` and Hamiltonian
+`H = 1/2 sum_x p_x^2 + 1/2 sum_{x,r} q_x V_r q_{x+r}`, with real symmetric
+quasi-local coefficients `V_r=V_{-r}`.  Its Fourier symbol is
+`omega(k)^2 = sum_r V_r exp(i epsilon k.r)`.  The nearest-neighbour lattice
+Klein-Gordon example has
+`omega_{epsilon,m}(k)^2 = m^2 + 2 epsilon^{-2} sum_a (1-cos(epsilon k_a))`.
+At the one-particle symbol level, use `X_a=i partial_{k_a}` and the time-zero
+Lorentz-boost candidate
+`K_a = 1/2 (X_a omega + omega X_a)`.  Then
+`i[H,K_a]` has multiplication symbol `1/2 partial_a omega(k)^2`; the continuum
+Klein-Gordon condition with speed `c=1` is that this tends to `k_a`, equivalently
+`omega(k)^2 = m^2 + |k|^2 + higher irrelevant lattice corrections` near
+`k=0`.  The speed-`c` variant replaces this by `c^2 k_a`.
+**Reasoning:** The source base already proves/records free scalar lattice fields,
+their dispersion, and the Klein-Gordon/free-field scaling limit for the standard
+nearest-neighbour model.  The one-particle boost-symbol calculation is a local
+derivation that turns the Lorentz algebra into explicit differential conditions
+on `omega^2`, hence on the Hamiltonian coefficients.
+**Source:** `literature/md/2010.11121/2010.11121.md:51`--`:58` (harmonic lattice
+Hamiltonian and scaling-limit claims), `:598`--`:610` (lattice Hamiltonian,
+dispersion, and ground-state two-point function), `:614`--`:623`
+(renormalized mass and lattice Klein-Gordon dispersion), `:676`--`:681`
+(Klein-Gordon dynamics, speed 1, translations), `:1037`--`:1046` (continuum
+free scalar time evolution and theorem), `references/cft/Schottenloher2008/Schottenloher2008.md:4186`--`:4244`
+(free bosonic QFT/Klein-Gordon/Poincare-covariant construction);
+`test/runtests.jl` testsets "Gaussian boson Klein-Gordon symbols" and
+"Gaussian boson boost-time symbols"; CA-23--CA-24.
+**Sweep status:** CA-23--CA-24 use this convention; the full bosonic BdG/pairing
+convention is not yet fixed.

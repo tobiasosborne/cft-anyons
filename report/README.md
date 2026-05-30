@@ -40,6 +40,8 @@ before treating report edits as complete.
 | 20 | `CA-20-GALILEAN-PROJECTIVE-MASS` | `report/sections/20_galilean_projective_mass.tex` | Projective Galilean Symmetry and the Mass Central Term |
 | 21 | `CA-21-LATTICE-GALILEAN-BOOSTS` | `report/sections/21_lattice_galilean_boosts.tex` | Lattice Galilean Boosts from Mass-Density First Moments |
 | 22 | `CA-22-GALILEAN-COMPILER-INTERFACE` | `report/sections/22_galilean_compiler_interface.tex` | Compiler Rules and Examples for Galilean Targets |
+| 23 | `CA-23-GAUSSIAN-BOSON-LORENTZ-ROADMAP` | `report/sections/23_gaussian_boson_lorentz_roadmap.tex` | Gaussian Boson Lorentz Generator Roadmap |
+| 24 | `CA-24-GAUSSIAN-BOSON-SYMBOL-CALCULUS` | `report/sections/24_gaussian_boson_symbol_calculus.tex` | Gaussian Boson Symbol Calculus and the Boost-Time Residual |
 
 ## Adding a shard
 
