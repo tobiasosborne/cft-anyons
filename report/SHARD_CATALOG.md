@@ -270,3 +270,12 @@ single ~200-line source file it points to.
 - Summary: Fixes the scalar Gaussian real-space energy-density convention as a local split of the sourced lattice Hamiltonian.
 - Summary: Records cell-volume, equal bond-sharing, boundary, vacuum-subtraction, and improvement policies before position-weighted use.
 - Keywords: Gaussian boson, real-space density, Hamiltonian density, cell volume, bond sharing, normal ordering, improvement
+
+## `CA-30-GAUSSIAN-BOSON-1D-STRESS-CANDIDATES`
+
+- Source: `report/sections/30_gaussian_boson_1d_stress_candidates.tex`
+- Title: One-Dimensional Gaussian Boson Stress-Energy Candidates
+- Summary: Proposes a 1+1-dimensional lattice stress-energy dictionary for the scalar Gaussian chain using the CA-29 density split.
+- Summary: Promotes only the finite open-chain energy-current component T_01 to a checked seed via the A4 continuity witness.
+- Summary: Keeps T_10 and T_11 as future momentum-density and momentum-current targets, not as consequences of symmetry or tracelessness.
+- Keywords: Gaussian boson, stress-energy candidate, energy current, momentum density, open chain, continuity equation

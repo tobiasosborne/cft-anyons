@@ -40,7 +40,7 @@ Protocol:
 | A3 | Complete | `019e799c-3578-70f0-93d9-6b026a436206` (`Hegel`) | Registered discrete GFF Virasoro source with version-pinned arXiv v1 TeX anchors. |
 | A4 | Complete | `019e79aa-6791-78b0-8cbc-5d97538e9936` (`Hypatia`) | Added finite open-chain Gaussian energy-current helpers/tests for the local `T_01` candidate; `T_11` remains pending. |
 | S1 | Complete | `019e79b4-eb8c-7193-a6a0-3aaf60ed8178` (`Kierkegaard`) | Audited CA-29 against S1 and found the density shard already satisfies the step; no report edits needed. |
-| S2 | Pending | - | 1+1 lattice stress-energy candidate shard. |
+| S2 | Complete | `019e79b7-67f8-75f3-bab1-61384f352692` (`Planck`) | Added CA-30 1+1 lattice stress-energy candidate shard with checked `T_01` seed and proposal-level `T_10/T_11`. |
 | S3 | Pending | - | Current-vs-symbol equivalence checks. |
 | S4 | Pending | - | Higher-dimensional cell-current proposal shard. |
 | S5 | Pending | - | Stress-energy numerical suite. |
@@ -216,3 +216,14 @@ Protocol:
   vacuum-subtraction deferral, and explicit non-stress-tensor status; shard
   maps already include CA-29.  Worker changed no files and ran
   `make check-report-shards` plus `git diff --check`.
+- 2026-05-30: S1 audit recorded and pushed as `d24da2c`.  S2 delegated to
+  worker `019e79b7-67f8-75f3-bab1-61384f352692` (`Planck`).  Target is a new
+  CA-30 report shard for 1+1 lattice stress-energy candidates: checked
+  finite-open-chain `T_01` seed, `T_10` as a pending current-vs-symbol
+  comparison target, and `T_11` only as a future momentum-current witness.
+- 2026-05-30: S2 reviewed by parent and accepted after adding a small CA-23
+  roadmap synchronization.  CA-30 defines \(T_{00}\) from CA-29, records the
+  checked finite-open-chain \(T_{01}\) continuity seed from A4, keeps \(T_{10}\)
+  as the pending S3 current-vs-symbol comparison target, and defines \(T_{11}\)
+  only operationally as a future momentum-current witness.  `make
+  check-report-shards`, `make report`, and `git diff --check` passed.

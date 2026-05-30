@@ -1,0 +1,193 @@
+% SHARD-ID: CA-30-GAUSSIAN-BOSON-1D-STRESS-CANDIDATES
+% SHARD-TITLE: One-Dimensional Gaussian Boson Stress-Energy Candidates
+% SHARD-SUMMARY: Proposes a 1+1-dimensional lattice stress-energy dictionary for the scalar Gaussian chain using the CA-29 density split.
+% SHARD-SUMMARY: Promotes only the finite open-chain energy-current component T_01 to a checked seed via the A4 continuity witness.
+% SHARD-SUMMARY: Keeps T_10 and T_11 as future momentum-density and momentum-current targets, not as consequences of symmetry or tracelessness.
+% SHARD-KEYWORDS: Gaussian boson, stress-energy candidate, energy current, momentum density, open chain, continuity equation
+
+\section{One-Dimensional Gaussian Boson Stress-Energy Candidates}
+\label{sec:gaussian-boson-1d-stress-candidates}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: proposal with checked \(T_{01}\) seed.}  This shard fixes a
+candidate dictionary for the finite open one-dimensional scalar Gaussian chain.
+Only the energy-current entry has a checked local witness.  No convergence
+theorem, no continuum stress tensor, and no Virasoro representation is claimed.
+
+Dependencies: CA-12, CA-23--CA-29, CONVENTIONS.md (j), (k), (l), and the A4
+finite open-chain current tests.
+
+% Source: references/qft/SOURCES.md:59--90 -- registered Weinberg A1 anchor ranges and improvement-status boundary.
+% Source: references/qft/SOURCES.md:94--97 -- targeted OCR is an anchor convenience; exact signs/indices need page-image checks.
+% Source: references/qft/Weinberg1995/Weinberg1995_QFT1_A1_ocr.txt:260--280 -- translations give conserved currents grouped as the energy-momentum tensor and integrated translation generators.
+% Source: references/qft/Weinberg1995/Weinberg1995_QFT1_A1_ocr.txt:357--361 -- canonical raised tensor need not be symmetric.
+% Source: references/qft/Weinberg1995/Weinberg1995_QFT1_A1_ocr.txt:572--589 -- Belinfante tensor is conserved, has the same integrated translations, and is symmetric.
+% Source: references/qft/Weinberg1995/Weinberg1995_QFT1_A1_ocr.txt:619--633 -- boost generator and displayed commutators with H and P.
+% Source: references/qft/Weinberg1995/Weinberg1995_QFT1_A1_ocr.txt:675--684 -- Lorentz commutator proof caveat for boost generators with auxiliary fields.
+% Source: references/cft/Schottenloher2008/Schottenloher2008.md:5046--5052 -- Axiom 5: 1+1 CFT energy-momentum tensor fields, symmetry, and conservation.
+% Source: references/cft/Schottenloher2008/Schottenloher2008.md:5054--5063 -- Luescher-Mack consequence: tracelessness and Virasoro modes under Axioms 1--5.
+% Convention: CONVENTIONS.md:219--239 -- finite periodic checks do not define first moments or coordinate generators without a branch policy.
+% Convention: CONVENTIONS.md:312--347 -- Poincare vector-field brackets translated to self-adjoint commutator signs.
+% Convention: CONVENTIONS.md:349--421 -- Gaussian density split, open-chain current orientation, endpoint convention, subtraction, and improvement policies.
+% Source: report/sections/12_lattice_boost_current_1d.tex:24--89 -- first energy moment yields nearest-neighbour current candidate with periodic position warning.
+% Source: report/sections/29_gaussian_boson_real_space_density.tex:26--42 -- physical density h_x versus integrated site energy e_x.
+% Source: report/sections/29_gaussian_boson_real_space_density.tex:93--105 -- open-boundary and periodic first-moment policies.
+% Source: report/sections/29_gaussian_boson_real_space_density.tex:107--151 -- subtraction and improvement policies.
+% Source: src/GaussianBosonCurrents.jl:127--183 -- finite open-chain energy-current and continuity-residual helpers.
+% Checked: test/runtests.jl:236--267 -- "Gaussian open-chain energy current continuity".
+
+\subsection{Continuum Motivation and Boundary}
+
+The continuum notation \(T_{\mu\nu}\) is used here as a target shape, not as an
+imported lattice theorem.  Weinberg supplies the QFT motivation that spacetime
+translations lead to conserved currents grouped as an energy-momentum tensor and
+that translation generators are spatial integrals of time components.  The same
+registered OCR also records two caveats that matter for the lattice dictionary:
+the canonical raised tensor need not be symmetric, while the Belinfante tensor is
+a modified conserved tensor with the same integrated translation generators and
+symmetry.  The OCR around formulas is noisy, so this shard uses those anchors
+only for motivation and caveats, not for exact component signs.
+The self-adjoint commutator signs for any later Poincare comparison are the
+project convention in CONVENTIONS.md (k), not raw OCR import.
+
+Schottenloher's Axiom 5 is narrower but sharper for the CFT endpoint: in a
+two-dimensional conformal field theory there are four fields \(T_{\mu\nu}\),
+\(\mu,\nu\in\{0,1\}\), with symmetry and conservation.  The later
+Luescher--Mack theorem gives tracelessness and two Virasoro mode families under
+the full Axioms 1--5.  We do not use those CFT conclusions to define the lattice
+\(T_{10}\) or \(T_{11}\).  They are acceptance targets for a future continuum
+proof.
+
+\subsection{Finite Open Chain Setup}
+
+Work first with a finite open chain of \(N\) cells and spacing \(\epsilon\).  The
+CA-29 density convention distinguishes the physical density \(h_j\) from the
+integrated cell energy
+\[
+  e_j=\epsilon h_j,
+  \qquad
+  H_\epsilon=\sum_{j=1}^N e_j .
+\]
+Finite commutators use \(e_j\).  This avoids inserting an accidental factor of
+\(\epsilon\) into a discrete continuity identity.
+
+For the nearest-neighbour scalar Gaussian chain, the A4 helper implements the
+CA-29 equal-endpoint split of the finite Hamiltonian: kinetic and onsite terms
+belong to the site, and each present bond \(q_j q_{j+1}\) is split equally
+between its two endpoints.  Open-chain means no exterior ghost cells, no missing
+half-bonds, and no boundary counterterms are implicit.
+
+\subsection{Candidate Dictionary}
+
+\paragraph{\(T_{00}^{\mathrm{lat}}\).}
+The lattice energy-density entry is the CA-29 density:
+\[
+  T_{00}^{\mathrm{lat}}(j):=h_j .
+\]
+For exact finite open-chain algebra, the cell-integrated version is
+\[
+  E_j:=e_j=\epsilon h_j .
+\]
+Thus \(T_{00}^{\mathrm{lat}}\) is the physical density label, while \(E_j\) is
+the object that appears in the tested quadratic commutators.
+
+\paragraph{\(T_{01}^{\mathrm{lat}}\).}
+The energy-current or energy-flux seed lives on open-chain edges:
+\[
+  J_{j+1/2}:=i[e_j,e_{j+1}],
+  \qquad 1\le j<N .
+\]
+Set endpoint currents to zero,
+\[
+  J_{1/2}=J_{N+1/2}=0 .
+\]
+The checked finite continuity identity is
+\[
+  i[H_\epsilon,e_j]
+  =
+  J_{j-1/2}-J_{j+1/2},
+  \qquad 1\le j\le N .
+\]
+This is the only stress-energy component in this shard with a Julia witness.
+It is the lattice candidate corresponding to \(T_{01}\) in the cell-integrated
+continuity law
+\[
+  \frac{d}{dt}\int_{\text{cell }j}T_{00}\,dx
+  =
+  T_{01}(x_{j-1/2})-T_{01}(x_{j+1/2}) .
+\]
+No continuum normalization or convergence of \(J_{j+1/2}\) is claimed.
+
+\paragraph{\(T_{10}^{\mathrm{lat}}\).}
+Do not identify \(T_{10}^{\mathrm{lat}}\) with \(T_{01}^{\mathrm{lat}}\) at this
+stage.  Define it instead as the future integrated momentum-density comparison
+target:
+\[
+  M_j \quad\text{with}\quad P^{\mathrm{lat}}=\sum_j M_j .
+\]
+The required next witness is that the chosen \(M_j\), or at least its total
+\(P^{\mathrm{lat}}\), matches the Gaussian one-particle flat-symbol momentum
+target after the appropriate \(\mathrm{d}\Gamma(k)\) comparison is made.  That is
+the S3 task, not an assumption in this shard.
+
+\paragraph{\(T_{11}^{\mathrm{lat}}\).}
+Define \(T_{11}^{\mathrm{lat}}\) operationally as the future current of the
+chosen momentum density.  Once \(M_j\) is fixed, the candidate stress component
+must come with edge terms \(S_{j+1/2}\) and a checked equation
+\[
+  i[H_\epsilon,M_j]
+  =
+  S_{j-1/2}-S_{j+1/2}
+\]
+with an explicit boundary convention.  Until that witness exists, there is no
+lattice \(T_{11}\) formula.  In particular, \(T_{11}^{\mathrm{lat}}\) is not
+defined as \(-T_{00}^{\mathrm{lat}}\), not derived from tracelessness, and not
+inferred from CFT holomorphic factorization.
+
+\subsection{Boundary, Subtraction, and Improvement}
+
+This candidate dictionary is open-boundary first.  Endpoint currents are part of
+the statement, not small errors:
+\[
+  i[H_\epsilon,e_1]=-J_{3/2},
+  \qquad
+  i[H_\epsilon,e_N]=J_{N-1/2}.
+\]
+Periodic total-energy density splits are allowed by CA-29, but periodic first
+moments and periodic coordinate-dependent generator tests remain blocked until
+CONVENTIONS.md (j) fixes a coordinate branch, sawtooth, Fourier interpolation,
+or equivalent policy.
+
+The default density is bare.  A state-dependent subtraction
+\({:}h_j{:}_\omega=h_j-\omega(h_j)\mathbf 1\) may later be named; it changes the
+Hamiltonian by a scalar and does not change commutators, but it is part of any
+claim about absolute energy or density modes.  The default improvement is
+zero.  Any later replacement \(h'_j=h_j+(\nabla_\epsilon b)_j\) must name the
+edge field, discrete divergence, and boundary convention before first moments or
+currents are recomputed.
+
+\subsection{Compiler Payload and Acceptance}
+
+A compiler output that cites this shard must carry:
+\[
+\begin{array}{ll}
+\text{density convention} & h_j,\ e_j=\epsilon h_j,\ \text{CA-29 split},\\
+\text{boundary policy} & \text{finite open chain, }J_{1/2}=J_{N+1/2}=0,\\
+\text{subtraction policy} & \text{bare unless a state }\omega\text{ is named},\\
+\text{improvement policy} & b=0\text{ unless a discrete divergence is named},\\
+\text{checked }T_{01}\text{ witness} &
+  i[H_\epsilon,e_j]=J_{j-1/2}-J_{j+1/2}.
+\end{array}
+\]
+
+The acceptance boundary is equally explicit.  The checked witness is the finite
+open-chain continuity residual in \texttt{src/GaussianBosonCurrents.jl} and
+\texttt{test/runtests.jl}.  Still pending are the S3 equivalence witness
+comparing \(T_{01}\) current or first-moment data with the flat
+\(\mathrm{d}\Gamma(k)\) momentum target; the \(T_{11}\) witness consisting of a
+chosen momentum density \(M_j\) and checked current \(S_{j+1/2}\); and the
+continuum witness: scaling maps, domains, state sequence, and covariance
+convergence.
+Without those witnesses, the dictionary remains a proposal with one checked
+component, not a stress-tensor theorem.
