@@ -1,67 +1,53 @@
-# cft-anyons
+# cft-anyons — ARCHIVED
 
-Canonical consolidated repo for the mathematics, formalisation,
-computational backend, and literature for indefinite-particle Hilbert
-spaces of mobile anyons in unitary fusion categories, with refinement
-maps to OAR continuum limits.
+**This repository has been wound down.** As of **2026-05-30**, the previous
+"consolidation" effort (a sharded LaTeX statement, a Lean 4 formalisation, a
+Julia computational backend, and a large process/provenance scaffold) was judged
+to have **marginal-to-nonexistent value** and was archived wholesale.
 
-## **Read [PRD.md](PRD.md) first.**
+## The only thing here worth keeping: the papers
 
-Everything else reads outward from there. PRD names the canonical
-artifacts, the read order, the scope, and the validation methodology.
+The literature round — finding, fetching, and extracting the relevant sources —
+is real, reusable value. It is **kept and live**:
 
-## Directory map
+- **`references/`** — curated, hand-named anyon/CFT source PDFs with text
+  extractions and a provenance manifest (`references/manifest/`).
+- **`literature/`** — the bibliography work: `references.bib`, the markdown
+  extractions under `literature/md/` (~330 papers), the `papers.sqlite` seed +
+  schema under `literature/db/`, and `SURVEY.md` / `SYNTHESIS.md`.
 
-```
-PRD.md                       entry point — read this first
-GLOSSARY.md                  canonical definitions (definitional bedrock)
-CONVENTIONS.md               notational / gauge / indexing choices
-CLAUDE.md, AGENTS.md         methodology + rules for agents (identical pair)
+> A larger raw-PDF backup of the literature (from sibling source projects) is
+> kept **locally only** under `literature/_imported/` and is git-ignored — it is
+> reacquirable from arXiv and is not pushed.
 
-summary.tex                  guiding conceptual mathematical statement
-ERRATA.md                    append-only log of corrections to summary.tex
+## Everything else is dead
 
-RESEARCH_NOTES.md            open questions, acquisition queue
-PROVENANCE.md                imported-file audit trail (hashes)
-CITATION_INDEX.md            summary.tex citation → discharge status
-MIGRATION_LOG.md             per-step commit log of the consolidation
+All former math/code/process content lives under
+**`archive/legacy-consolidation/`** (plus the older `archive/` snapshots). It is
+retained for history only. See `archive/legacy-consolidation/ARCHIVED.md`.
+**Do not extend it, cite it as canonical, or treat it as a foundation.**
 
-Formalisation/               Lean 4 proofs (lake build; zero sorry/axiom)
-src/MobileAnyons/            Julia computational backend
-tests/                       Julia tests
-scripts/julia/               Julia triple-check scripts
-scripts/wolfram/             Wolfram triple-check scripts
-scripts/lit/                 literature CLI (lit.py — SQLite-backed bibliography)
-results/CHECKS.md            triple-check command log
+## If you (a human or agent) want to start real work here
 
-references/                  local PDFs + SHA256 manifest
-literature/                  bibliography DB (630 papers, SQLite)
-reviews/                     hostile audits of canonical content
+Start from zero. Do **not** resurrect the abandoned process. The lesson learned,
+distilled from the sibling project `arithmetic-quantum-mechanics` (which is
+pleasant to work in), is a light, fast, accretive workflow:
 
-stocktake/                   provenance of the consolidation:
-  README.md                    synthesis from inheritance of 3 prior projects
-  MIGRATION_PLAN.md            the phased plan
-  reports/                     per-slice exploration reports + hostile reviews
+1. **Work in small shards.** One self-contained ~200-line unit per idea, with a
+   short header (id, title, 1–2 line summary, keywords) so it is findable.
+2. **Cite local ground truth inline.** Every nontrivial claim points to a local
+   file + line range (the papers above are exactly this ground truth). If a
+   source isn't local, fetch it into `references/` first or mark the gap.
+3. **Prefer a mechanical check + a red-green invariant test** over human/LLM
+   review ceremony. A deterministic script and a build are the gate.
+4. **No heavy apparatus.** No reviewer-gating tiers, no five-gate (M/D/C/R/I)
+   ceremony, no GLOSSARY hard-gate, no beads, no migration log, no remote CI.
+   Keep the governing docs short.
 
-archive/                     deep storage — do not read unless asked:
-  chats/                       chat1-4.md (superseded source transcripts)
-  cad-meta-snapshot/           CAD heavy meta docs (post-Phase 7)
-  mma-archive-v0-snapshot/     MMA v0 with known indexing bugs (post-Phase 10)
-
-af/                          adversarial-proof workspace (optional, post-Phase 7)
-docs/                        long-form docs (af quickref, etc.)
-```
-
-## Status
-
-**v1, Phase 1 (definitional bedrock) complete; Phase 2 (provenance
-infrastructure / validator imports) in progress.** See
-[`MIGRATION_LOG.md`](MIGRATION_LOG.md) for the per-step log,
-[`PRD.md`](PRD.md) for the version/phase line, and
-[`stocktake/README.md`](stocktake/README.md) for the inheritance
-picture from the three source projects.
+See `AGENTS.md` for the agent-facing version of this stance.
 
 ## License
 
-GNU Affero General Public License v3.0 (AGPLv3). See
-[`LICENSE`](LICENSE) for the full text.
+Original text/code under AGPL-3.0 (`LICENSE`). Third-party papers under
+`references/` and `literature/` retain their original licenses; provenance is
+recorded in the manifests.
