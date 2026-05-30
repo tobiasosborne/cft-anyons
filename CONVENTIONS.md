@@ -41,11 +41,22 @@ detail and is useful as *reference prior art* (dead, not canonical — re-derive
 and re-cite).
 
 ## (a) Vacuum / unit-object index
-**Choice:** NOT YET FIXED.
-**Reasoning:** 0-indexed vs 1-indexed enumerations of `Irr(C)` were a recurring
-bug in prior work; fix once and cite.
-**Source:** —
-**Sweep status:** —
+**Choice (object level — FIXED, CA-02):** The **vacuum is the complex line `ℂ`**,
+i.e. the monoidal unit of the tensor product `⊗` and the degree-0 (zero-particle)
+sector. It is a one-dimensional space carrying the unit vacuum vector `Ω`. It is
+**distinct from the zero space `{0}`**, which is the unit of the direct sum `⊕`
+(empty `⊗` = `ℂ`; empty `⊕` = `{0}`).
+**Choice (index level — NOT YET FIXED):** the 0- vs 1-indexed enumeration of
+`Irr(C)` (a recurring bug in prior work) is a separate question, deferred until a
+specific category's simple objects are enumerated.
+**Reasoning:** the object-level vacuum is forced by the AND/OR/vacuum grammar
+(CA-02): "vacuum = ℂ" is the ⊗-unit, not the ⊕-unit. The index-level convention is
+orthogonal and not yet needed.
+**Source:** `report/sections/02_and_or_vacuum_grammar.tex` (CA-02, "Two Monoidal
+Structures and Their Units"); `references/cft/Schottenloher2008/Schottenloher2008.md:4218`
+("H_0 = ℂ with the vacuum Ω := 1 ∈ H_0").
+**Sweep status:** CA-02, CA-03 use vacuum `= ℂ` (`\one`) and zero space `= {0}`
+(`\zero`) per this convention.
 
 ## (b) F-symbol / R-symbol gauge
 **Choice:** NOT YET FIXED.

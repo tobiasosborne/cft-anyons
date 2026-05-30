@@ -1,0 +1,189 @@
+% SHARD-ID: CA-02-AND-OR-VACUUM-GRAMMAR
+% SHARD-TITLE: Many-Particle Hilbert Spaces: the AND/OR/Vacuum Grammar
+% SHARD-SUMMARY: Builds many-particle Hilbert spaces from three primitives: OR = direct sum, AND = tensor product, vacuum = the complex line.
+% SHARD-SUMMARY: Fixes the two monoidal units (zero space for OR, the vacuum C for AND) and the distributivity linking them, with a carrier functor and particle-number grading.
+% SHARD-SUMMARY: Separates indefinite particle number from exchange symmetry and defers statistics to a later quotient; the finite grammar here is completed to indefinite particle number in CA-03.
+% SHARD-KEYWORDS: many-particle Hilbert space, direct sum, tensor product, vacuum, rig category, particle number, distinguishable Fock
+
+\section{Many-Particle Hilbert Spaces: the AND/OR/Vacuum Grammar}
+\label{sec:and-or-vacuum-grammar}
+
+\subsection{Sources and Dependencies}
+
+This is a pre-topic foundation for the programme (see CA-01, the programme map):
+how to build the Hilbert space of an indefinite number of particles of arbitrary
+types. The guiding
+idea is that two logical connectives map cleanly onto two Hilbert-space
+constructions, and the no-particle system is the complex line.
+
+% Source: literature/md/1910.10619/1910.10619.md:39
+%   "The construction of Fock space is often presented in a confusing way which
+%    intermixes the roles of exchange symmetry and indefinite particle number."
+% Source: literature/md/1910.10619/1910.10619.md:41
+%   "the arguably conceptually simpler construction of distinguishable Fock space
+%    ... Subsequently, one can obtain Bose-/Fermi-Fock space by imposing an
+%    equivalence relation under particle exchange. This approach emphasizes the
+%    separation of concerns".
+
+This shard treats the \emph{finite} grammar and its semantics; the rigorous
+\emph{indefinite}-particle (Hilbert-completed) case is CA-03. It harmonises with,
+and re-proves nothing from, the finite ``AND/OR many-particle grammar'' developed
+by the author in the sibling project (notation $\mathcal V$, $\mathcal V_n$,
+$\mathrm{AND}=\otimes$, $\mathrm{OR}=\oplus$, $\one=\mathbb C$); see that project's
+shard \texttt{AQM-70}. Statistics (Bose / Fermi / para) are deferred throughout.
+
+\subsection{The Three Primitives}
+
+Let particle \emph{types} be (separable, complex) Hilbert spaces; a type's space is
+the state space of one particle of that type. Three primitives generate composite
+systems:
+\begin{itemize}
+  \item \textbf{OR $=$ direct sum $\oplus$.} ``Either a particle of type $1$ or of
+  type $2$'' is $\mathcal H_1 \oplus \mathcal H_2$.
+  \item \textbf{AND $=$ tensor product $\otimes$.} ``A particle of type $1$
+  \emph{and} a particle of type $2$'' is $\mathcal H_1 \otimes \mathcal H_2$.
+  \item \textbf{vacuum $=\mathbb C$.} The no-particle system is the complex line.
+\end{itemize}
+Crucially, this grammar fixes \emph{indefinite particle number}; exchange symmetry
+(statistics) is a \emph{separate, later} step, realised as a quotient or subspace
+(CA-03, \S``Symmetries come later''). Keeping the two apart is the whole point.
+
+\subsection{Two Monoidal Structures and Their Units}
+
+On the category $\Hilb$ of complex Hilbert spaces (with the obvious unitary
+coherence isomorphisms) there are two symmetric monoidal structures:
+\[
+  (\Hilb,\ \oplus,\ \zero)
+  \qquad\text{and}\qquad
+  (\Hilb,\ \otimes,\ \mathbb C),
+\]
+with the two units \emph{distinct}:
+\[
+  A \oplus \zero \;\cong\; A
+  \qquad(\text{$\oplus$-unit is the \emph{zero space} }\zero),
+  \qquad\qquad
+  A \otimes \mathbb C \;\cong\; A
+  \qquad(\text{$\otimes$-unit is the \emph{vacuum} }\mathbb C).
+\]
+The two are linked by a \emph{distributivity} natural isomorphism, which on
+Hilbert spaces is \emph{unitary}:
+\[
+  \delta:\; A \otimes (B \oplus C)
+  \;\xrightarrow{\ \cong\ }\;
+  (A \otimes B) \oplus (A \otimes C),
+  \qquad
+  A \otimes \zero \;\cong\; \zero .
+\]
+Together $(\Hilb,\oplus,\zero,\otimes,\mathbb C)$ is a symmetric \emph{rig}
+(bimonoidal) category. Its coherence --- that all diagrams built from associators,
+unitors, symmetries, and $\delta$ commute --- is standard (Laplaza; Kelly) and is
+\emph{not} re-proved here; downstream we use only the elementary, manifestly
+unitary associativity/unitor isomorphisms and the degree-$0$ identification
+$\mathbb C \otimes A \cong A$.
+
+\paragraph{Vacuum $=\mathbb C$, not $\zero$.}
+The vacuum is the $\otimes$-unit $\mathbb C$ (the empty tensor product, one
+particle's worth of ``nothing''), a \emph{one-dimensional} space carrying the unit
+vector $\vac$. It is \emph{not} the $\oplus$-unit $\zero$ (the empty direct sum,
+the impossible system). Empty $\otimes$ is $\mathbb C$; empty $\oplus$ is $\zero$.
+Conflating them is the first pitfall this grammar guards against (cf.\
+CONVENTIONS.md (a), which fixes the vacuum \emph{object} as $\mathbb C$).
+
+\subsection{The Grammar and its Carrier}
+
+Fix a set $\{K_x\}_{x\in X}$ of single-particle type spaces (the \emph{atoms}).
+Grammar expressions are
+\[
+  E ::= 0 \;\mid\; \one \;\mid\; K \;\mid\;
+        \mathrm{AND}(E,F) \;\mid\; \mathrm{OR}(E,F),
+\]
+where $0$ is the zero atom, $\one$ is the vacuum atom ($\one=\mathbb C$), and $K$
+ranges over the atoms. The \emph{carrier} $\mathcal V(E)$ is defined recursively:
+\[
+\begin{aligned}
+  \mathcal V(0) &= \zero, &
+  \mathcal V(\one) &= \mathbb C, &
+  \mathcal V(K) &= K, \\
+  \mathcal V(\mathrm{AND}(E,F)) &= \mathcal V(E)\otimes \mathcal V(F), &
+  \mathcal V(\mathrm{OR}(E,F)) &= \mathcal V(E)\oplus \mathcal V(F). &&
+\end{aligned}
+\]
+Thus $\mathrm{AND}$ is independent coexistence and $\mathrm{OR}$ is alternatives.
+Parenthesisation and order are part of the written expression; the rig coherence
+above guarantees that re-bracketing or re-ordering a \emph{fixed} expression
+changes $\mathcal V(E)$ only by a canonical unitary isomorphism, so $\mathcal V$ is
+well defined up to canonical unitary isomorphism. (Morally $\mathcal V$ is the
+evaluation of the free symmetric rig category on $\{K_x\}$ into $\Hilb$; we use
+this only as motivation, not as a load-bearing theorem.)
+
+\subsection{Particle-Number Grading}
+
+Declare each atom $K$ to be \emph{one} particle and $\one$ to be \emph{zero}
+particles. The carrier then carries a particle-number grading $\mathcal V_n$:
+\[
+  \mathcal V_0(\one)=\mathbb C,\quad
+  \mathcal V_n(\one)=\zero\ (n\neq 0),\qquad
+  \mathcal V_1(K)=K,\quad
+  \mathcal V_n(K)=\zero\ (n\neq 1),\quad
+  \mathcal V_n(0)=\zero,
+\]
+\[
+  \mathcal V_n(\mathrm{OR}(E,F)) = \mathcal V_n(E)\oplus \mathcal V_n(F),
+  \qquad
+  \mathcal V_n(\mathrm{AND}(E,F)) = \bigoplus_{i+j=n}\mathcal V_i(E)\otimes \mathcal V_j(F).
+\]
+For a \emph{finite} expression the parse tree is finite, so only finitely many
+sectors are nonzero and $\mathcal V(E)=\bigoplus_{n\ge 0}\mathcal V_n(E)$ is a
+\emph{finite} direct sum. The integer $n$ is a grammar count of one-particle atoms;
+it is not a dynamics, a statistics rule, or (yet) an indefinite-particle space.
+
+\paragraph{Worked atoms.}
+A one-particle ``menu'' over a finite type set $X$ is $P=\mathrm{OR}_{x\in X}K_x$,
+with $\mathcal V(P)=\bigoplus_{x\in X}K_x$ (the infinite, $\ell^2$-completed menu is
+CA-03). The expression $\one\,\mathrm{OR}\,K$ has
+carrier $\mathbb C\oplus K$ --- a ``maybe'' particle (either zero or one particle
+of type $K$), as in the sibling shard's $\mathbb C\oplus\mathbb C^d$.
+% Source: literature/md/1910.10619/1910.10619.md:65
+%   "We could call this the Hilbert space of a ``maybe'' quantum spin."
+Tensoring $N$ ``maybe'' atoms, $\mathrm{AND}_{j=1}^{N}(\one\,\mathrm{OR}\,K)$, has
+carrier $(\mathbb C\oplus K)^{\otimes N}$, whose grade-$n$ sector (by
+distributivity) is $\bigoplus_{|S|=n}\bigotimes_{x\in S}K$ over $n$-subsets of the
+$N$ slots --- the finite ``occupation'' picture.
+
+\subsection{Lamport Dependency Skeleton}
+
+\[\small\setlength{\arraycolsep}{2pt}
+\begin{array}{rcl}
+D1 &:& \text{atoms } \{K_x\}_{x\in X}\ \text{(single-particle Hilbert spaces);}\
+       \one=\mathbb C\ \text{(vacuum)},\ 0=\zero.\\
+D2 &:& E ::= 0 \mid \one \mid K \mid \mathrm{AND}(E,F)\mid \mathrm{OR}(E,F).\\
+D3 &:& \mathcal V:\ \mathcal V(0)=\zero,\ \mathcal V(\one)=\mathbb C,\
+       \mathcal V(\mathrm{AND})=\otimes,\ \mathcal V(\mathrm{OR})=\oplus.\\
+D4 &:& \mathcal V_0(\one)=\mathbb C,\ \mathcal V_1(K)=K;\
+       \mathcal V_n(\mathrm{OR})=\oplus,\ \mathcal V_n(\mathrm{AND})=\textstyle\bigoplus_{i+j=n}\mathcal V_i\otimes\mathcal V_j.\\
+D5 &:& (\Hilb,\oplus,\zero,\otimes,\mathbb C)\ \text{a symmetric rig category, with}\\
+   & & \delta:A\otimes(B\oplus C)\xrightarrow{\ \cong\ }(A\otimes B)\oplus(A\otimes C)\ \text{unitary and natural.}\\
+T1 &:& \text{(D5) coherence (Laplaza; Kelly)}\Rightarrow \mathcal V\ \text{well defined up to canonical unitary iso.}\\
+T2 &:& \text{(D4) finite }E:\ \mathcal V(E)=\bigoplus_{n\ge0}\mathcal V_n(E)\ \text{a finite sum (finite particle number).}\\
+\end{array}
+\]
+
+\subsection{Scope and Deferral}
+
+Two extensions are deliberately out of this shard:
+\begin{itemize}
+  \item \textbf{Indefinite particle number.} A genuine superposition over
+  \emph{unboundedly} many particle numbers has infinite support and does not live
+  in the finite direct sum above; it requires the Hilbert ($\ell^2$) completion.
+  That is the content of CA-03, and is the new rigorous part of this pre-topic.
+  \item \textbf{Statistics.} $\mathrm{AND}$ and $\mathrm{OR}$ choose no exchange
+  symmetry. Bosonic / fermionic / para sectors arise later, by acting with the
+  permutation group on tensor slots and passing to an invariant subspace or
+  quotient (CA-03). This grammar only sets up the carrier those symmetries act on.
+\end{itemize}
+
+\paragraph{Pitfalls.}
+(i) The $\oplus$-unit is $\zero$; the $\otimes$-unit (the vacuum) is $\mathbb C$ ---
+distinct objects. (ii) Distributivity is an \emph{isomorphism}, not an equality;
+all sector identities below hold up to canonical unitary iso. (iii) Everything here
+is \emph{finite}; do not silently read the grading as an indefinite-particle space.

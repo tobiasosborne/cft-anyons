@@ -1,0 +1,186 @@
+% SHARD-ID: CA-03-INDEFINITE-PARTICLE-FOCK
+% SHARD-TITLE: Indefinite Particle Number: the Full Fock Completion
+% SHARD-SUMMARY: Makes the indefinite-particle Hilbert space rigorous as the l2 (Hilbert) direct sum of completed tensor powers, with the vacuum at degree zero.
+% SHARD-SUMMARY: Distinguishes the algebraic direct sum (finite particle number, dense) from its Hilbert completion (indefinite particle number) and shows the Fock space is a Hilbert space with mutually orthogonal sectors.
+% SHARD-SUMMARY: Identifies this as the full / distinguishable Fock space and locates Bose/Fermi statistics as the deferred per-sector permutation quotient.
+% SHARD-KEYWORDS: Fock space, indefinite particle number, Hilbert direct sum, completed tensor product, vacuum, distinguishable Fock, second quantization
+
+\section{Indefinite Particle Number: the Full Fock Completion}
+\label{sec:indefinite-particle-fock}
+
+\subsection{Sources and Dependencies}
+
+This shard completes CA-02's finite AND/OR/vacuum grammar to a genuine
+\emph{indefinite}-particle Hilbert space. It depends on CA-02 (the two monoidal
+structures, the units $\zero$ and $\mathbb C$, the carrier $\mathcal V$ and grading
+$\mathcal V_n$). The named Fock construction is anchored locally:
+
+% Source: references/cft/Schottenloher2008/Schottenloher2008.md:4216
+%   "D:=\bigoplus_{N=0}^{\infty} H_N"
+% Source: references/cft/Schottenloher2008/Schottenloher2008.md:4218
+%   "(H_0 = C with the vacuum Omega := 1 in H_0)"
+% Source: references/cft/Schottenloher2008/Schottenloher2008.md:4222
+%   "The completion of D with respect to this inner product is the Fock space H."
+% Source: literature/md/1910.10619/1910.10619.md:57
+%   "F(C^d) = \bigoplus_{N=0}^{\infty} H_N = \bigoplus_{N=0}^{\infty}(C^d \otimes ... \otimes C^d)  (N factors)"
+% Source: literature/md/1910.10619/1910.10619.md:59
+%   "the *vacuum*, is assigned the Hilbert space (C^d)^{\otimes 0} = C."
+% Source: literature/md/2010.11121/2010.11121.md:258
+%   "bosonic Fock space over h: F_+(h) = C\Omega \oplus \bigoplus_n h^{\otimes_s n}".
+
+The sibling project's finite grammar (\texttt{AQM-70}) is recovered as the
+finite-truncation of the object built here.
+
+\subsection{Two Direct Sums --- the Load-Bearing Distinction}
+
+Let $\{W_n\}_{n\ge 0}$ be a countable family of Hilbert spaces.
+\begin{itemize}
+  \item The \textbf{algebraic direct sum} $\bigoplus^{\mathrm{alg}}_{n}W_n$ consists
+  of finite-support sequences $(w_n)$ ($w_n\in W_n$, $w_n=0$ for all but finitely
+  many $n$). It is a pre-Hilbert space, generally \emph{incomplete}.
+  \item The \textbf{Hilbert ($\ell^2$) direct sum} $\hoplus_{n}W_n$ consists of
+  sequences with $\sum_n\|w_n\|_{W_n}^2<\infty$, with inner product
+  $\langle (w_n),(v_n)\rangle=\sum_n\langle w_n,v_n\rangle_{W_n}$ (absolutely
+  convergent by Cauchy--Schwarz). It is \emph{complete}, hence a Hilbert space.
+\end{itemize}
+$\bigoplus^{\mathrm{alg}}_{n}W_n$ is a \emph{dense} subspace of $\hoplus_{n}W_n$,
+and the latter is its completion (standard functional analysis).
+
+\paragraph{Why indefinite particle number forces $\hoplus$.}
+A state with nonzero amplitude in \emph{unboundedly} many particle-number sectors
+(a genuine superposition over indefinitely many particles) has infinite support: it
+lies in $\hoplus$ but not in $\bigoplus^{\mathrm{alg}}$. ``Indefinite particle
+number'' $\Leftrightarrow$ ``not confined to finitely many sectors''
+$\Rightarrow$ the $\ell^2$ completion is \emph{required}. This is exactly what
+CA-02's finite grammar lacks.
+
+\subsection{Completed Tensor Powers}
+
+For Hilbert spaces $H,K$, the \emph{completed} (Hilbert) tensor product
+$H\hotimes K$ is the completion of the algebraic tensor product under the inner
+product determined by $\langle a\otimes b,\,c\otimes d\rangle
+=\langle a,c\rangle_H\langle b,d\rangle_K$ (well defined and positive definite).
+For finite-dimensional factors $\hotimes=\otimes$; the completion bites only for
+infinite-dimensional one-particle spaces. Define the \emph{completed tensor powers}
+\[
+  H^{\hotimes 0} := \mathbb C\ \ (\text{the vacuum sector}),
+  \qquad
+  H^{\hotimes n} := \underbrace{H\hotimes\cdots\hotimes H}_{n},
+\]
+the bracketing immaterial up to the canonical unitary associativity isomorphism.
+
+\subsection{The Full Fock Space}
+
+\paragraph{Definition.}
+For a one-particle Hilbert space $H$, the \emph{full Fock space} is
+\[
+  \boxed{\ \Fock(H)\;:=\;\hoplus_{n\ge 0} H^{\hotimes n}\ },
+  \qquad H^{\hotimes 0}=\mathbb C,
+\]
+i.e.\ $\psi=(\psi_n)_{n\ge0}$ with $\psi_n\in H^{\hotimes n}$ and
+$\|\psi\|^2=\sum_n\|\psi_n\|^2<\infty$. The unit vector $\vac=(1,0,0,\dots)$ in the
+degree-$0$ sector $\mathbb C$ is the \emph{vacuum}. This is the
+\emph{distinguishable} Fock space (the author's term in the local source
+\texttt{1910.10619}); in operator algebra it is also called the \emph{free} or
+\emph{Boltzmann} Fock space (standard terminology, not anchored in a local
+source), namely the Hilbert completion of the tensor algebra
+$T(H)=\bigoplus_n H^{\otimes n}$. It is \emph{not} the symmetric (bosonic)
+or antisymmetric (fermionic) Fock space; see ``Symmetries come later'' below.
+
+\paragraph{Theorem (Fock is a Hilbert space).}
+$\Fock(H)$ is a Hilbert space; (i) the algebraic direct sum
+$\bigoplus^{\mathrm{alg}}_n H^{\hotimes n}$ (the finite-particle vectors) is
+\emph{dense}; (ii) distinct-$n$ sectors are \emph{mutually orthogonal},
+$\langle\psi,\varphi\rangle=\sum_n\langle\psi_n,\varphi_n\rangle$, so
+$H^{\hotimes m}\perp H^{\hotimes n}$ for $m\neq n$; (iii) on the degree-$0$ sector
+the inner product is the standard one on $\mathbb C$ and $\vac$ is a unit vector.
+\emph{Proof.} An instance of the $\ell^2$-direct-sum facts above with
+$W_n=H^{\hotimes n}$: completeness, density of the algebraic sum, and summand
+orthogonality are exactly those statements. $\square$
+
+\paragraph{The $1/N!$ caveat (a convention trap).}
+Schottenloher's inner product on $D=\bigoplus_N H_N$ weights sector $N$ by $1/N!$;
+that factor is a \emph{symmetric}-Fock normalisation correcting the $N!$
+overcounting of symmetric tensors. The full Fock space above uses the \emph{plain}
+$\ell^2$ sum with \emph{no} combinatorial weight. Do not copy the $1/N!$ into the
+distinguishable case.
+% Source: references/cft/Schottenloher2008/Schottenloher2008.md:4220
+%   inner product "f_0 g_0 + sum_{N>=1} (1/N!) <f_N,g_N>" -- symmetric-Fock weight.
+
+\subsection{The Grammar Generates the Indefinite-Particle Space}
+
+Let the one-particle menu over a countable type set $X$ be
+$P=\mathrm{OR}_{x\in X}K_x$, with carrier $\mathcal V(P)=\hoplus_{x\in X}K_x$ (the
+$\ell^2$ direct sum; an ordinary finite direct sum when $X$ is finite). The
+indefinite-particle space over this menu is $\Fock(\mathcal V(P))$. Expanding each completed tensor power by distributivity
+(CA-02's $\delta$, extended unitarily to the completions) gives the
+$(n,\text{type-word})$-graded decomposition
+\[
+  \mathcal V(P)^{\hotimes n}\ \cong\ \hoplus_{w\in X^n} K_w,
+  \quad K_w:=K_{x_1}\hotimes\cdots\hotimes K_{x_n},
+  \qquad\Longrightarrow\qquad
+  \Fock(\mathcal V(P))\ \cong\ \hoplus_{n\ge 0}\ \hoplus_{w\in X^n} K_w .
+\]
+Each of the $n$ tensor slots independently chooses a type $x_i\in X$ (two slots may
+choose the same type; nothing is symmetrised). The grading is $\mathcal V_n=\hoplus_{w\in X^n}K_w$ ($n$ = particle number, $w\in X^n$ = ordered type-word) ---
+the $\ell^2$-completed, all-$n$ analogue of CA-02's finite grade-$n$ sector. The
+sibling project's finite expressions ($P_X^{\,\mathrm{AND}\,m}$, the truncation
+$T_{\le M}$) are precisely the finite-support / finite-$M$ restrictions of this
+object; that is the exact harmonisation: \texttt{AQM-70} is the
+$\bigoplus^{\mathrm{alg}}$/finite-$M$ truncation of $\Fock$.
+
+\subsection{Symmetries Come Later (the Deferred Quotient)}
+
+The full Fock space is the carrier on which exchange symmetry acts; it is not
+itself a (anti)symmetric space. For each $n$ the permutation group $S_n$ acts
+unitarily on $H^{\hotimes n}$ by permuting tensor slots. Bosonic and fermionic Fock
+spaces are then the images of the per-sector orthogonal projectors
+\[
+  \Gamma_{\mathrm s}(H)=P_{\mathrm{sym}}\,\Fock(H)
+  \quad(\text{symmetric / Bose}),
+  \qquad
+  \Gamma_{\mathrm a}(H)=P_{\mathrm{anti}}\,\Fock(H)
+  \quad(\text{antisymmetric / Fermi}),
+\]
+with para-statistics the other Young-symmetry isotypic components. This is the
+``impose an equivalence relation under particle exchange'' step.
+% Source: literature/md/1910.10619/1910.10619.md:41
+%   "one can obtain Bose-/Fermi-Fock space by imposing an equivalence relation
+%    under particle exchange."
+We define no projector and prove nothing here: the construction of these symmetry
+quotients/subspaces, and the genuinely anyonic case (where standard Fock space is
+not the right object), are deferred to later shards.
+
+\subsection{Lamport Dependency Skeleton}
+
+\[\small\setlength{\arraycolsep}{2pt}
+\begin{array}{rcl}
+D6 &:& \bigoplus^{\mathrm{alg}}\!(\text{finite support})\ \subset\
+       \hoplus\,(\ell^2):\ \langle(w_n),(v_n)\rangle=\textstyle\sum_n\langle w_n,v_n\rangle.\\
+D7 &:& \text{completed tensor power } H^{\hotimes n},\ H^{\hotimes 0}=\mathbb C\ (\text{vacuum}).\\
+D8 &:& \Fock(H):=\hoplus_{n\ge0}H^{\hotimes n}\ \text{(full / distinguishable Fock);}\ \vac=(1,0,\dots).\\
+D9 &:& P=\mathrm{OR}_{x\in X}K_x;\quad \Fock(\mathcal V(P))=\hoplus_{n\ge0}\mathcal V(P)^{\hotimes n}.\\
+T3 &:& \text{(D6,D7) } \Fock(H)\ \text{Hilbert; } \bigoplus^{\mathrm{alg}}\ \text{dense; }
+       H^{\hotimes m}\perp H^{\hotimes n}\ (m\neq n).\\
+T4 &:& \text{indefinite particle no.} \Leftrightarrow \text{infinite support} \Rightarrow \hoplus\ \text{(not } \bigoplus^{\mathrm{alg}}).\\
+T5 &:& \text{(D8,}\delta\text{) } \Fock(\mathcal V(P))\cong\hoplus_{n\ge0}\hoplus_{w\in X^n}K_w\ ((n,\text{type-word})\text{ grading}).\\
+T6 &:& \Gamma_{\mathrm s}=P_{\mathrm{sym}}\Fock,\ \Gamma_{\mathrm a}=P_{\mathrm{anti}}\Fock\ \text{deferred (statistics later)}.\\
+\end{array}
+\]
+
+\subsection{Scope and Pitfalls}
+
+\textbf{In scope:} the indefinite-particle direction, i.e.\ countable
+$\mathrm{OR}$ (the Fock completion). \textbf{Out of scope:} countable
+$\mathrm{AND}$ (an \emph{infinite tensor product}), which is analytically a
+different object (von Neumann's infinite tensor product, needing a stabilising
+reference sequence) --- not developed here.
+
+Pitfalls: (i) \emph{algebraic} $\bigoplus^{\mathrm{alg}}$ (finite particle number,
+dense, incomplete) vs.\ \emph{completed} $\hoplus$ (indefinite, complete) --- the
+distinction this shard exists to make. (ii) For infinite-dimensional one-particle
+$H$, the $\mathrm{AND}$ of CA-02 must mean the \emph{completed} $\hotimes$, not the
+algebraic $\otimes$. (iii) The $1/N!$ symmetric-Fock weight must not be imported
+into the distinguishable case. (iv) All sector identities hold on dense subspaces
+and extend by continuity; states are $\ell^2$-summable and cross-sector inner
+products vanish.

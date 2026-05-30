@@ -19,6 +19,8 @@ before treating report edits as complete.
 |---:|---|---|---|
 | 0 | `CA-00-FRONTMATTER` | `report/sections/00_frontmatter.tex` | Frontmatter, North Star, and Claim Status |
 | 1 | `CA-01-PROGRAMME-MAP` | `report/sections/01_programme_map.tex` | Programme Map |
+| 2 | `CA-02-AND-OR-VACUUM-GRAMMAR` | `report/sections/02_and_or_vacuum_grammar.tex` | Many-Particle Hilbert Spaces: the AND/OR/Vacuum Grammar |
+| 3 | `CA-03-INDEFINITE-PARTICLE-FOCK` | `report/sections/03_indefinite_particle_fock.tex` | Indefinite Particle Number: the Full Fock Completion |
 
 ## Adding a shard
 
