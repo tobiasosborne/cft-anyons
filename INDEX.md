@@ -10,8 +10,8 @@ lab book points here, to the script and run artifact that back it.
 |---|---|
 | `scripts/check_report_shards.sh` | Deterministic structural guard for the sharded lab book. |
 | `scripts/ci_before_push.sh` | Local pre-push gate (shard guard + report build + Julia tests). |
-| `src/CftAnyons.jl` | Seed Julia backend: golden-ratio invariant helper, finite-group averaging projector helper, and Fibonacci fusion-path count helper. |
-| `test/runtests.jl` | Julia invariant checks (`make test` / `Pkg.test()`), including the `C2` swap averaging projector sector check used by CA-06, the two-qubit exchange projector check used by CA-08, and the Fibonacci path-count check used by CA-09. |
+| `src/CftAnyons.jl` | Seed Julia backend: golden-ratio invariant helper, finite-group averaging projector helper, Fibonacci fusion-path count helper, Poincare vector-field bracket helper, and nearest-neighbour boost-current coefficient helper. |
+| `test/runtests.jl` | Julia invariant checks (`make test` / `Pkg.test()`), including the `C2` swap averaging projector sector check used by CA-06, the two-qubit exchange projector check used by CA-08, the Fibonacci path-count check used by CA-09, and the lattice-symmetry algebra/coefficient checks used by CA-11--CA-12. |
 
 ## Runs
 

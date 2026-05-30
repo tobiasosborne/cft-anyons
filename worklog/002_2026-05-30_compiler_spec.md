@@ -1,5 +1,62 @@
 # Worklog chunk 002 — 2026-05-30
 
+## Session log — 2026-05-30 — CA-10--CA-17 lattice bulk-symmetry candidates
+
+### Context
+
+Tobias pivoted from Hilbert-space compiler grammar to lattice versions of bulk
+symmetry operations.  The requested motivation was: bare QM gives time
+translation from \(H\), while a lattice Hamiltonian density \(H=\sum_j h_j\)
+plus geometry should let us guess boosts, translations, and rotations.  He also
+asked for multiple shards, high provenance, clear separation of intuition from
+derivation, and subagent source scouting.
+
+### What changed
+
+- Added an eight-shard lattice-symmetry block:
+  - **CA-10** motivates the problem and records the source gap for Weinberg and
+    the Koo--Saleur original.
+  - **CA-11** fixes the continuum Poincare/Euclidean target and derives the
+    vector-field bracket table locally.
+  - **CA-12** derives \(i[H,\sum_j x_jh_j]\) as a nearest-neighbour current sum,
+    giving \(i[h_j,h_{j+1}]\) as the first bulk momentum candidate.
+  - **CA-13** generalises scalar ramps and position-dependent translations to
+    higher-dimensional candidate boosts/rotations.
+  - **CA-14** records Koo--Saleur as the sourced prototype: Hamiltonian-density
+    Fourier modes plus commutator corrections approximate Virasoro generators in
+    the cited free-fermion/OAR setting.
+  - **CA-15** states acceptance tests for promoting candidates to continuum
+    symmetry claims.
+  - **CA-16** specifies the lattice-symmetry compiler interface.
+  - **CA-17** gives small examples and the research/source-acquisition queue.
+- Added CONVENTIONS.md (h): lattice candidate generators are self-adjoint,
+  infinitesimal observable action is \(i[A,B]\), and open-chain first-moment
+  signs are explicit.
+- Added Julia helpers/checks for the Poincare vector-field bracket signs and
+  nearest-neighbour boost-current coefficients.
+
+### Why these choices
+
+- Subagents found no registered Weinberg OCR and no canonical local source for
+  the exact general \(K\sim\sum_j jh_j\) or energy-current theorem.  Therefore
+  the boost/current formula is written as a checked local derivation, not a
+  literature claim.
+- The first lattice layer should output candidates plus proof obligations.  OAR
+  sources show translation recovery in scaling limits, but also warn that
+  Lorentz/conformal convergence is additional work.
+
+### Acceptance
+
+- `make ci-before-push`: PASS after CA-10--CA-17 (shard guard + report build +
+  Julia tests, 39 tests total).
+
+### Pointers
+
+- Shards: CA-10--CA-17.
+- Sources: Schottenloher for Stone/Wigner/Poincare/Euclidean anchors;
+  `CFTFromLatticeFermions.txt` for Koo--Saleur-style density modes; OAR sources
+  for scaling-limit translations and covariance caveats.
+
 ## Session log — 2026-05-30 — CA-09 Fibonacci kinematics as a fusion-rule sector
 
 ### Context

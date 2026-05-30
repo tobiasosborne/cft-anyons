@@ -1,0 +1,98 @@
+% SHARD-ID: CA-16-LATTICE-SYMMETRY-COMPILER-INTERFACE
+% SHARD-TITLE: A Compiler Interface for Lattice Symmetry Candidates
+% SHARD-SUMMARY: Extends the Hilbert-space compiler contract with lattice geometry, Hamiltonian densities, candidate generators, and symmetry evidence.
+% SHARD-SUMMARY: Specifies successful and failed outputs for boosts, translations, rotations, and Koo-Saleur-style modes.
+% SHARD-SUMMARY: Keeps candidate generation separate from proof of continuum covariance.
+% SHARD-KEYWORDS: lattice compiler, symmetry compiler, Hamiltonian density, generator candidates, evidence payload, compile error
+
+\section{A Compiler Interface for Lattice Symmetry Candidates}
+\label{sec:lattice-symmetry-compiler-interface}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: compiler specification shard.}  This shard extends CA-08 at the
+level of output slots.  It is not yet an implementation.
+
+Dependencies: CA-08 and CA-10--CA-15.
+
+% Source: references/text/CFTFromLatticeFermions.txt:95 -- local terms plus observable algebra are needed for scaling-limit meaning.
+% Source: references/text/CFTFromLatticeFermions.txt:2182 -- lattice Hamiltonian-density Fourier modes.
+% Source: references/text/CFTFromLatticeFermions.txt:2197 -- KS approximants from density modes and commutators.
+% Source: references/text/OARWavelets.txt:395 -- discrete translations extend to arbitrary translations in the continuum limit.
+% Source: references/text/OARWavelets.txt:405 -- Lorentz/conformal convergence remains further work.
+
+\subsection{Input Contract}
+
+The lattice symmetry compiler receives a compiled Hilbert/QM system plus:
+\[
+\begin{array}{ll}
+\Lambda_N &: \text{finite lattice, graph, or cell complex},\\
+x &: \Lambda_N\to\mathbb R^d\text{ position map},\\
+\mathcal A_N &: \text{observable algebra with locality map},\\
+H_N=\sum_r h_r &: \text{self-adjoint local Hamiltonian density},\\
+T &: \text{target symmetry algebra or group},\\
+S_N &: \text{state/sector sequence and scaling maps, if known}.
+\end{array}
+\]
+If the Hamiltonian is supplied only as a black-box matrix, the compiler must
+fail for boost/rotation generation: the density decomposition is part of the
+mathematical data.
+
+\subsection{Candidate Generation}
+
+For one-dimensional open chains, the first candidate layer is deterministic:
+\[
+  K_x=\sum_j x_jh_j,\qquad
+  P_x=i[H,K_x].
+\]
+For uniform nearest-neighbour density this reduces to the CA-12 current sum.
+
+For higher-dimensional lattices, scalar ramps \(f_a(r)=r^a\) generate candidate
+momentum components
+\[
+  P_a^{\mathrm{lat}}:=i[H,K_{f_a}].
+\]
+Rotation candidates are then built from the momentum-density layer:
+\[
+  J_{ab}^{\mathrm{lat}}
+  \approx
+  \sum_r(r_a p_b^{\mathrm{lat}}(r)-r_b p_a^{\mathrm{lat}}(r)).
+\]
+Koo--Saleur-style modes use Fourier weights instead of polynomial weights and
+include the commutator corrections specified by the cited Definition 4.1.
+
+\subsection{Output Contract}
+
+The compiler output for each candidate generator must include:
+\[
+\begin{array}{ll}
+\text{name} &: \text{for example }P_a,K_a,J_{ab},L_k,\bar L_k,\\
+\text{formula} &: \text{finite expression in }h_r\text{ and commutators},\\
+\text{domain policy} &: \text{finite matrix, core, or unbounded deferral},\\
+\text{locality support} &: \text{site/bond/cell support accounting},\\
+\text{status} &: \text{Proposal, Source-local, or Checked},\\
+\text{evidence} &: \text{source lines, derivation, test, or run artifact},\\
+\text{continuum target} &: \text{target generator and expected bracket}.
+\end{array}
+\]
+
+\subsection{Failure Modes}
+
+The compiler must fail loudly when:
+\[
+\begin{array}{ll}
+1.&H\text{ has no density decomposition},\\
+2.&\Lambda_N\text{ has no position map but a boost/rotation is requested},\\
+3.&\text{periodic boundary positions are requested without a branch convention},\\
+4.&\text{the target algebra requires a source/convention not yet fixed},\\
+5.&\text{a convergence claim is requested without scaling maps or states}.
+\end{array}
+\]
+
+\subsection{Compiler Principle}
+
+The finite expression and the continuum theorem are different compilation
+products.  The first can often be generated algebraically from
+\((\Lambda_N,x,\{h_r\})\).  The second is a proof obligation involving scaling
+maps, states, and operator topology.  The compiler should output both slots, but
+it must never fill the proof slot with intuition.

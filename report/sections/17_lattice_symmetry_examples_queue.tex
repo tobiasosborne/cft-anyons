@@ -1,0 +1,113 @@
+% SHARD-ID: CA-17-LATTICE-SYMMETRY-EXAMPLES-QUEUE
+% SHARD-TITLE: Small Examples and the Lattice-Symmetry Research Queue
+% SHARD-SUMMARY: Works through a sequence of small examples showing what the lattice-symmetry compiler can and cannot infer.
+% SHARD-SUMMARY: Records boundary cases: black-box Hamiltonians, open chains, nonuniform spacing, periodic chains, square lattices, and Koo-Saleur modes.
+% SHARD-SUMMARY: Lists the next source acquisitions and derivations needed before promoting the programme beyond proposal status.
+% SHARD-KEYWORDS: examples, research queue, open chain, periodic chain, square lattice, Koo-Saleur, Weinberg, source acquisition
+
+\section{Small Examples and the Lattice-Symmetry Research Queue}
+\label{sec:lattice-symmetry-examples-queue}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: worked examples and queue.}  The examples are deliberately
+small.  They illustrate compiler behaviour, not new convergence theorems.
+
+Dependencies: CA-10--CA-16.
+
+% Source: references/cft/Schottenloher2008/Schottenloher2008.md:4046 -- time evolution from a one-parameter unitary group.
+% Source: references/cft/Schottenloher2008/Schottenloher2008.md:4117 -- P_0=H and P_j are momenta.
+% Source: references/text/CFTFromLatticeFermions.txt:2182 -- lattice Fourier modes of Hamiltonian density.
+% Source: references/text/CFTFromLatticeFermions.txt:2233 -- smeared KS approximants converge in the cited setting.
+% Checked: test/runtests.jl, "Poincare vector-field brackets" and "nearest-neighbour boost current coefficients".
+
+\subsection{Example 1: Black-Box Quantum System}
+
+Input: a Hilbert space and a self-adjoint Hamiltonian \(H\).
+
+Output: time translation \(U(t)=e^{-itH}\).
+
+Failed request: infer boosts, rotations, or spatial translations.  There is no
+lattice geometry, no position map, and no Hamiltonian density.  The compiler
+must stop.
+
+\subsection{Example 2: Open Uniform Chain}
+
+Input:
+\[
+  H=\sum_{j=1}^N h_j,\qquad x_j=j,\qquad [h_j,h_k]=0\text{ for }|j-k|>1.
+\]
+Candidate boost:
+\[
+  K=\sum_j jh_j.
+\]
+Candidate momentum:
+\[
+  P=i[H,K]=\sum_{j=1}^{N-1}i[h_j,h_{j+1}].
+\]
+Status: checked finite derivation; no continuum convergence yet.
+
+\subsection{Example 3: Nonuniform Chain}
+
+Input: positions \(x_1<\cdots<x_N\).  The same derivation gives
+\[
+  P_x=i[H,K_x]
+  =
+  \sum_{j=1}^{N-1}(x_{j+1}-x_j)i[h_j,h_{j+1}].
+\]
+The coefficients are discrete spacings.  The Julia test pins this invariant for
+uniform and nonuniform examples.
+
+\subsection{Example 4: Periodic Chain}
+
+Input: a circle with periodic density terms.
+
+Problem: \(x_j=j\) is not a single-valued function on the circle.  A periodic
+boost-like first moment requires a branch cut, a sawtooth, Fourier modes, or a
+different construction.  Koo--Saleur Fourier modes are the better sourced
+periodic prototype.
+
+\subsection{Example 5: Square Lattice}
+
+Input: positions \(r=(m,n)\).  Scalar ramps \(f_x(r)=m\), \(f_y(r)=n\) give two
+candidate momentum components via
+\[
+  P_a^{\mathrm{lat}}=i[H,\sum_r r^a h_r].
+\]
+Rotation about the origin should then be built as a position-dependent
+translation from the two momentum-density components.  Status: proposal until an
+orientation and density-localisation convention is fixed.
+
+\subsection{Example 6: Koo--Saleur Modes}
+
+Input: periodic one-dimensional critical Hamiltonian density.  Fourier modes of
+the density and commutator corrections give candidates for \(L_k,\bar L_k\).
+In the cited free-fermion/OAR setting, smeared approximants converge to smeared
+Virasoro generators.  Status outside that setting: source-local precedent, not a
+general theorem.
+
+\subsection{Research Queue}
+
+\[
+\begin{array}{ll}
+1.&\text{Register Weinberg Vol. 1 or an equivalent QFT source with OCR anchors.}\\
+2.&\text{Promote/register the original Koo--Saleur source before citing it.}\\
+3.&\text{Source or derive a general local energy-current theorem.}\\
+4.&\text{Fix periodic-boundary first-moment conventions.}\\
+5.&\text{Define higher-dimensional oriented density supports.}\\
+6.&\text{Add numerical examples checking commutator closure in small chains.}\\
+7.&\text{Connect anyon-chain Hamiltonian densities to the same candidate layer.}
+\end{array}
+\]
+
+\subsection{Landing Point}
+
+The next compiler upgrade is therefore not only a Hilbert-space compiler and not
+yet only a tensor-category compiler.  It is a lattice-QM compiler layer:
+\[
+  (\text{carrier},\mathcal A_N,\Lambda_N,\{h_r\},x,S_N)
+  \longmapsto
+  (\text{candidate bulk symmetries},\text{evidence obligations}).
+\]
+Only after those obligations are discharged can the continuum symmetry
+representation be claimed.

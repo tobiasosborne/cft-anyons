@@ -138,3 +138,24 @@ direct sums give projections), `:235` (orthogonal projections and splittings);
 CA-06 local derivation and `test/runtests.jl` finite-group invariant check;
 CA-07--CA-08 for one-dimensional exchange-character sectors.
 **Sweep status:** CA-04--CA-08 and `src/CftAnyons.jl` finite projector helpers.
+
+## (h) Lattice bulk-symmetry candidate generators
+**Choice:** Lattice-symmetry motivation shards use finite open chains unless a
+periodic boundary is explicitly named. A local Hamiltonian is written
+`H = sum_j h_j` with self-adjoint finite-range density terms. Candidate
+generators are self-adjoint operators; their infinitesimal action on observables
+is `delta_A(B) = i[A,B]`. For a one-dimensional boost ansatz, site positions
+are real numbers `x_j` and `K_x = sum_j x_j h_j`. If non-neighbouring density
+terms commute, the candidate bulk momentum density produced by `i[H,K_x]` has
+nearest-neighbour coefficients `x_{j+1} - x_j`; for unit spacing this is
+`sum_j i[h_j,h_{j+1}]`, up to endpoint and sign conventions.
+**Reasoning:** Schottenloher fixes Stone's theorem with `U(t)=exp(-itA)`, while
+the Wightman/Poincare discussion uses translation generators with its own sign
+choice. For the lattice pre-work, the robust object is the self-adjoint
+commutator expression `i[H,K]`; global signs are kept explicit and not silently
+identified across active/passive conventions.
+**Source:** `references/cft/Schottenloher2008/Schottenloher2008.md:4040`--`:4050`
+(Stone convention), `:4113`--`:4117` (translation generators and `P_0=H`);
+CA-12 local derivation; `test/runtests.jl` lattice current coefficient check.
+**Sweep status:** CA-10--CA-17 use this convention; no periodic-boundary or
+higher-dimensional orientation convention is fixed yet.

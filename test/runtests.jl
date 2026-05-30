@@ -92,3 +92,24 @@ end
     @test tau_counts[3:end] == tau_counts[2:end-1] .+ tau_counts[1:end-2]
     @test_throws ErrorException CftAnyons.fibonacci_fusion_path_counts(-1)
 end
+
+@testset "Poincare vector-field brackets" begin
+    P(μ) = (:P, μ, 0)
+    M(μ, ν) = μ < ν ? (:M, μ, ν) : (:M, ν, μ)
+    bracket(a, b) = CftAnyons.poincare_vector_field_bracket(a, b, 3)
+
+    @test bracket(P(0), P(1)) == Dict{Tuple{Symbol, Int, Int}, Int}()
+    @test bracket(M(0, 1), P(0)) == Dict(P(1) => -1)
+    @test bracket(M(0, 1), P(1)) == Dict(P(0) => -1)
+    @test bracket(M(1, 2), P(1)) == Dict(P(2) => 1)
+    @test bracket(M(1, 2), M(2, 3)) == Dict(M(1, 3) => -1)
+    @test bracket(M(0, 1), M(0, 2)) == Dict(M(1, 2) => -1)
+    @test_throws ErrorException CftAnyons.poincare_vector_field_bracket(P(4), P(0), 3)
+    @test_throws ErrorException CftAnyons.poincare_vector_field_bracket((:M, 2, 1), P(0), 3)
+end
+
+@testset "nearest-neighbour boost current coefficients" begin
+    @test CftAnyons.nearest_neighbor_boost_current_coefficients(0:5) == ones(Int, 5)
+    @test CftAnyons.nearest_neighbor_boost_current_coefficients([0, 1, 3, 6]) == [1, 2, 3]
+    @test_throws ErrorException CftAnyons.nearest_neighbor_boost_current_coefficients([0])
+end

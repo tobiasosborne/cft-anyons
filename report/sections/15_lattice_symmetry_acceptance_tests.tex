@@ -1,0 +1,104 @@
+% SHARD-ID: CA-15-LATTICE-SYMMETRY-ACCEPTANCE-TESTS
+% SHARD-TITLE: Acceptance Tests for Lattice Symmetry Candidates
+% SHARD-SUMMARY: Turns lattice symmetry guesses into proof obligations: locality, self-adjointness, commutator closure, scaling convergence, and observable covariance.
+% SHARD-SUMMARY: Uses OAR and continuum-limit sources to stress that translations can be recovered while Lorentz/conformal covariance is extra work.
+% SHARD-SUMMARY: Defines the evidence payload a compiler must carry before calling a lattice candidate a continuum symmetry.
+% SHARD-KEYWORDS: acceptance tests, scaling limit, Lieb-Robinson, covariance, Poincare, Lorentz, compiler evidence
+
+\section{Acceptance Tests for Lattice Symmetry Candidates}
+\label{sec:lattice-symmetry-acceptance-tests}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: specification shard.}  This shard does not prove convergence for
+new models.  It states the checks required before a candidate generator is
+promoted from proposal to checked continuum symmetry data.
+
+Dependencies: CA-10--CA-14.
+
+% Source: references/text/OARWavelets.txt:10 -- rigorous OAR scheme constructs free field with continuous translations.
+% Source: references/text/OARWavelets.txt:13 -- causality follows from Lieb-Robinson bounds.
+% Source: references/text/OARWavelets.txt:389 -- translations/dynamics/locality/Lieb-Robinson section.
+% Source: references/text/OARWavelets.txt:393 -- continuous extension of spatial translations from dyadic translations.
+% Source: references/text/OARWavelets.txt:398 -- translation generators are usual momentum operators.
+% Source: references/text/OARWavelets.txt:405 -- Lorentz/conformal convergence requires further work.
+% Source: references/text/OsborneContinuumLimitsQuantumLatticeSystems.txt:328 -- Poincare invariance is not automatic.
+% Source: literature/md/2010.11121/2010.11121.md:241 -- time-zero net axioms.
+% Source: literature/md/2010.11121/2010.11121.md:243 -- Poincare covariance is an additional requirement.
+
+\subsection{Local Finite-Scale Checks}
+
+At fixed lattice size \(N\), a candidate generator \(G_N\) must first pass
+finite operator checks:
+\[
+  G_N=G_N^*,\qquad
+  G_N\text{ is built from named local density terms},\qquad
+  \mathrm{supp}(G_N)\text{ policy is explicit}.
+\]
+For unbounded thermodynamic-limit candidates, the finite check is only the
+first layer; domains must later be named.
+
+\subsection{Algebraic Checks}
+
+Given a target Lie algebra with generators \(X_a\), the lattice candidates
+\(G_a^{(N)}\) should satisfy commutator closure in a controlled sense:
+\[
+  i[G_a^{(N)},G_b^{(N)}]
+  \approx
+  f_{ab}^{\ \ c}G_c^{(N)}+\text{central or boundary terms}.
+\]
+The approximation relation must be specified: exact finite-size equality,
+matrix-element convergence, strong resolvent convergence, strong operator
+convergence on a core, or convergence after compression to a low-energy sector.
+
+\subsection{Scaling Checks}
+
+The OAR source shows that continuous spatial translations can be reconstructed
+from discrete dyadic translations in a suitable scaling limit, with the usual
+momentum operators as generators.  It also states that analogous convergence
+for Lorentz or conformal transformations requires further work.  This is the
+main warning for this programme:
+\[
+  \text{translation recovery}\not\Rightarrow
+  \text{Poincare recovery}.
+\]
+
+Therefore every candidate boost or rotation needs its own scaling statement.
+For a sequence \(G_N\), the report must say:
+\[
+  G_N \xrightarrow{\ ?\ } G
+\]
+and name the topology, state sequence, renormalisation maps, and dense domain or
+core on which the statement is intended.
+
+\subsection{Observable Covariance Checks}
+
+The target is not only an operator on states.  It is a symmetry action on the
+observable system.  The evidence payload should include
+\[
+  \alpha_N^G(A)=e^{itG_N}Ae^{-itG_N}
+\]
+or the infinitesimal commutator \(i[G_N,A]\), together with the expected
+transformation of local algebras.  For translations this means moving supports.
+For rotations it means rotating supports.  For boosts it means mixing time and
+space in the continuum representation.
+
+\subsection{Acceptance Payload}
+
+A lattice generator candidate is accepted into the compiler only with:
+\[
+\begin{array}{ll}
+1.&\text{density provenance: the exact }h_j\text{ and supports},\\
+2.&\text{finite algebra checks: self-adjointness and commutators},\\
+3.&\text{renormalisation maps and state sequence},\\
+4.&\text{operator topology or matrix-element convergence target},\\
+5.&\text{observable covariance statement},\\
+6.&\text{boundary/central/vacuum-subtraction policy}.
+\end{array}
+\]
+
+\subsection{Boundary}
+
+Time-zero net axioms and Lieb-Robinson bounds give important locality control,
+but local causality is not the same as full Poincare covariance.  The compiler
+must keep these evidence levels separate.

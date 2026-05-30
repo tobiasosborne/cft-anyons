@@ -82,4 +82,95 @@ function fibonacci_fusion_path_counts(max_n::Integer)
     return counts
 end
 
+const PoincareBasisKey = Tuple{Symbol, Int, Int}
+
+_p_key(mu::Integer)::PoincareBasisKey = (:P, Int(mu), 0)
+
+function _m_key(mu::Integer, nu::Integer)
+    mu == nu && return nothing, 0
+    if mu < nu
+        return (:M, Int(mu), Int(nu)), 1
+    else
+        return (:M, Int(nu), Int(mu)), -1
+    end
+end
+
+function _metric_entry(mu::Integer, nu::Integer)
+    mu == nu || return 0
+    return mu == 0 ? 1 : -1
+end
+
+function _add_coeff!(out, key, coeff)
+    (key === nothing || coeff == 0) && return out
+    out[key] = get(out, key, 0) + coeff
+    out[key] == 0 && delete!(out, key)
+    return out
+end
+
+"""
+    poincare_vector_field_bracket(a, b, spatial_dim) -> Dict
+
+Return the Poincare vector-field Lie bracket in ``d + 1`` dimensions.
+
+Basis keys are ``(:P, μ, 0)`` for translations and ``(:M, μ, ν)`` for
+Lorentz generators, with zero-based spacetime indices and ``μ < ν`` for
+canonical ``M`` keys. The convention is
+``M_{μν} = x_μ ∂_ν - x_ν ∂_μ`` for metric ``diag(1,-1,...,-1)``.
+"""
+function poincare_vector_field_bracket(a::PoincareBasisKey, b::PoincareBasisKey, spatial_dim::Integer)
+    spatial_dim < 1 && error("spatial_dim must be positive, got $spatial_dim")
+    max_index = spatial_dim
+    for key in (a, b)
+        if key[1] == :M
+            key[2] < key[3] || error("Lorentz basis key must have μ < ν, got $key")
+        elseif key[1] != :P
+            error("unknown Poincare basis kind $(key[1])")
+        end
+        for idx in key[2:3]
+            key[1] == :P && idx == 0 && continue
+            0 <= idx <= max_index || error("index $idx outside 0:$max_index")
+        end
+    end
+
+    kind_a, mu, nu = a
+    kind_b, rho, sigma = b
+    out = Dict{PoincareBasisKey, Int}()
+
+    if kind_a == :P && kind_b == :P
+        return out
+    elseif kind_a == :M && kind_b == :P
+        _add_coeff!(out, _p_key(mu), _metric_entry(nu, rho))
+        _add_coeff!(out, _p_key(nu), -_metric_entry(mu, rho))
+    elseif kind_a == :P && kind_b == :M
+        neg = poincare_vector_field_bracket(b, a, spatial_dim)
+        for (key, coeff) in neg
+            _add_coeff!(out, key, -coeff)
+        end
+    elseif kind_a == :M && kind_b == :M
+        key, sign = _m_key(mu, sigma)
+        _add_coeff!(out, key, _metric_entry(nu, rho) * sign)
+        key, sign = _m_key(nu, sigma)
+        _add_coeff!(out, key, -_metric_entry(mu, rho) * sign)
+        key, sign = _m_key(nu, rho)
+        _add_coeff!(out, key, _metric_entry(mu, sigma) * sign)
+        key, sign = _m_key(mu, rho)
+        _add_coeff!(out, key, -_metric_entry(nu, sigma) * sign)
+    else
+        error("unknown Poincare basis kinds $(kind_a), $(kind_b)")
+    end
+
+    return out
+end
+
+"""
+    nearest_neighbor_boost_current_coefficients(positions) -> Vector
+
+Return coefficients multiplying ``i[h_j,h_{j+1}]`` in the local derivation of
+``i[sum_j h_j, sum_j x_j h_j]`` for nearest-neighbour commuting densities.
+"""
+function nearest_neighbor_boost_current_coefficients(positions)
+    length(positions) >= 2 || error("need at least two lattice positions")
+    return [positions[j + 1] - positions[j] for j in 1:(length(positions) - 1)]
+end
+
 end # module CftAnyons

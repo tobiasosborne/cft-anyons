@@ -91,3 +91,75 @@ single ~200-line source file it points to.
 - Summary: Derives the Fibonacci dimension recurrence from the left-associated path-basis sector and checks the path-count invariant in Julia.
 - Summary: Records why full Fibonacci anyons require a tensor-category compiler with F/R-symbol coherence, not only a Hilbert-space compiler.
 - Keywords: Fibonacci, fusion path, sector projector, tau atom, admissibility, tensor category compiler, F-move, coherence
+
+## `CA-10-LATTICE-SYMMETRY-MOTIVATION`
+
+- Source: `report/sections/10_lattice_symmetry_motivation.tex`
+- Title: Why Lattice Symmetry Generators Are a Problem
+- Summary: Opens the lattice-symmetry programme: an abstract QM system supplies time evolution, while a lattice also supplies geometry.
+- Summary: Separates sourced continuum symmetry targets from intuition-driven lattice generator guesses built from local Hamiltonian densities.
+- Summary: Records the source gap for Weinberg and Koo-Saleur originals before using Schottenloher, OAR, and lattice-fermion sources.
+- Keywords: lattice symmetry, time translation, Hamiltonian density, Poincare, Lorentz, boost, source gap
+
+## `CA-11-CONTINUUM-BULK-SYMMETRY-TARGET`
+
+- Source: `report/sections/11_continuum_bulk_symmetry_target.tex`
+- Title: The Continuum Bulk Symmetry Target
+- Summary: Fixes the continuum symmetry target as Poincare or Euclidean motion symmetry with projective-unitary implementation.
+- Summary: Derives the Poincare vector-field brackets from the metric-preserving vector fields rather than importing an unsourced table.
+- Summary: Pins the boost-time-translation-to-momentum relation up to the sign convention used by the lattice candidate layer.
+- Keywords: Poincare algebra, Lorentz algebra, Euclidean group, boost, momentum, vector fields, Lie bracket
+
+## `CA-12-LATTICE-BOOST-CURRENT-1D`
+
+- Source: `report/sections/12_lattice_boost_current_1d.tex`
+- Title: A One-Dimensional Boost Produces a Momentum Current
+- Summary: Derives the nearest-neighbour identity that the first energy moment K=sum_j x_j h_j gives i[H,K] as a weighted sum of i[h_j,h_{j+1}].
+- Summary: Interprets the uniform-spacing expression as the first lattice candidate for bulk momentum.
+- Summary: Marks the derivation as local and conditional on the Hamiltonian-density decomposition and commutation range.
+- Keywords: lattice boost, momentum current, Hamiltonian density, commutator, nearest neighbour, energy moment
+
+## `CA-13-POSITION-DEPENDENT-BULK-GENERATORS`
+
+- Source: `report/sections/13_position_dependent_bulk_generators.tex`
+- Title: Position-Dependent Bulk Generators
+- Summary: Generalizes the one-dimensional first-moment idea to scalar ramps, vector fields, translations, rotations, and boosts on lattices with positions.
+- Summary: Distinguishes sourced continuum geometry from proposal-level lattice formulas for higher-dimensional bulk generators.
+- Summary: Explains why rotations need momentum-density candidates, while boosts can start directly from the energy density.
+- Keywords: position-dependent translation, lattice rotation, lattice boost, vector field, momentum density, higher dimensions
+
+## `CA-14-KOO-SALEUR-PROTOTYPE`
+
+- Source: `report/sections/14_koo_saleur_prototype.tex`
+- Title: Koo-Saleur as the Prototype
+- Summary: Uses the local lattice-fermion source to show a rigorous precedent for constructing continuum symmetry generators from lattice Hamiltonian-density modes.
+- Summary: Records the Koo-Saleur pattern: Fourier modes of h_j plus commutator corrections approximate Virasoro generators.
+- Summary: Keeps the original Koo-Saleur paper as an acquisition target rather than an uncited authority.
+- Keywords: Koo-Saleur, Virasoro, Hamiltonian density, Fourier modes, commutator correction, OAR
+
+## `CA-15-LATTICE-SYMMETRY-ACCEPTANCE-TESTS`
+
+- Source: `report/sections/15_lattice_symmetry_acceptance_tests.tex`
+- Title: Acceptance Tests for Lattice Symmetry Candidates
+- Summary: Turns lattice symmetry guesses into proof obligations: locality, self-adjointness, commutator closure, scaling convergence, and observable covariance.
+- Summary: Uses OAR and continuum-limit sources to stress that translations can be recovered while Lorentz/conformal covariance is extra work.
+- Summary: Defines the evidence payload a compiler must carry before calling a lattice candidate a continuum symmetry.
+- Keywords: acceptance tests, scaling limit, Lieb-Robinson, covariance, Poincare, Lorentz, compiler evidence
+
+## `CA-16-LATTICE-SYMMETRY-COMPILER-INTERFACE`
+
+- Source: `report/sections/16_lattice_symmetry_compiler_interface.tex`
+- Title: A Compiler Interface for Lattice Symmetry Candidates
+- Summary: Extends the Hilbert-space compiler contract with lattice geometry, Hamiltonian densities, candidate generators, and symmetry evidence.
+- Summary: Specifies successful and failed outputs for boosts, translations, rotations, and Koo-Saleur-style modes.
+- Summary: Keeps candidate generation separate from proof of continuum covariance.
+- Keywords: lattice compiler, symmetry compiler, Hamiltonian density, generator candidates, evidence payload, compile error
+
+## `CA-17-LATTICE-SYMMETRY-EXAMPLES-QUEUE`
+
+- Source: `report/sections/17_lattice_symmetry_examples_queue.tex`
+- Title: Small Examples and the Lattice-Symmetry Research Queue
+- Summary: Works through a sequence of small examples showing what the lattice-symmetry compiler can and cannot infer.
+- Summary: Records boundary cases: black-box Hamiltonians, open chains, nonuniform spacing, periodic chains, square lattices, and Koo-Saleur modes.
+- Summary: Lists the next source acquisitions and derivations needed before promoting the programme beyond proposal status.
+- Keywords: examples, research queue, open chain, periodic chain, square lattice, Koo-Saleur, Weinberg, source acquisition

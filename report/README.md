@@ -27,6 +27,14 @@ before treating report edits as complete.
 | 7 | `CA-07-EXCHANGE-STATISTICS-LAYER` | `report/sections/07_exchange_statistics_layer.tex` | Exchange Symmetry and Statistics as Sector Selection |
 | 8 | `CA-08-HILBERT-SPACE-COMPILER-SPEC` | `report/sections/08_hilbert_space_compiler_spec.tex` | Scoping the Hilbert-Space Compiler |
 | 9 | `CA-09-FIBONACCI-KINEMATIC-SECTOR` | `report/sections/09_fibonacci_kinematic_sector.tex` | Fibonacci Kinematics as a Fusion-Rule Sector |
+| 10 | `CA-10-LATTICE-SYMMETRY-MOTIVATION` | `report/sections/10_lattice_symmetry_motivation.tex` | Why Lattice Symmetry Generators Are a Problem |
+| 11 | `CA-11-CONTINUUM-BULK-SYMMETRY-TARGET` | `report/sections/11_continuum_bulk_symmetry_target.tex` | The Continuum Bulk Symmetry Target |
+| 12 | `CA-12-LATTICE-BOOST-CURRENT-1D` | `report/sections/12_lattice_boost_current_1d.tex` | A One-Dimensional Boost Produces a Momentum Current |
+| 13 | `CA-13-POSITION-DEPENDENT-BULK-GENERATORS` | `report/sections/13_position_dependent_bulk_generators.tex` | Position-Dependent Bulk Generators |
+| 14 | `CA-14-KOO-SALEUR-PROTOTYPE` | `report/sections/14_koo_saleur_prototype.tex` | Koo-Saleur as the Prototype |
+| 15 | `CA-15-LATTICE-SYMMETRY-ACCEPTANCE-TESTS` | `report/sections/15_lattice_symmetry_acceptance_tests.tex` | Acceptance Tests for Lattice Symmetry Candidates |
+| 16 | `CA-16-LATTICE-SYMMETRY-COMPILER-INTERFACE` | `report/sections/16_lattice_symmetry_compiler_interface.tex` | A Compiler Interface for Lattice Symmetry Candidates |
+| 17 | `CA-17-LATTICE-SYMMETRY-EXAMPLES-QUEUE` | `report/sections/17_lattice_symmetry_examples_queue.tex` | Small Examples and the Lattice-Symmetry Research Queue |
 
 ## Adding a shard
 
