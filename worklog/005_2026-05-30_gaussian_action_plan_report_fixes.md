@@ -1,5 +1,45 @@
 # Worklog chunk 005 — 2026-05-30
 
+## Session log — 2026-05-30 — Action-plan R2 CA-23 roadmap repair
+
+### Context
+
+R2 repairs CA-23 after the original roadmap drifted away from the shards that
+actually landed: CA-27 is residuals/counterexamples, CA-28 is the numerical
+suite, and CA-29 is now the real-space density convention.
+
+### What changed
+
+- Delegated R2 to worker `019e793e-01a5-7280-b32d-57a00392a479` (`Galileo`).
+- Moved the CA-15 proof-obligation warning next to the theorem-shaped goal.
+- Replaced the stale roadmap table with actual CA-24--CA-29 roles.
+- Added queued, explicitly proposal-scoped follow-ups for stress candidates,
+  current-vs-symbol checks, higher-dimensional cells, stress-energy numerics,
+  and source acquisition.
+
+### Why these choices
+
+- The roadmap should be a navigation aid, not a false history.  Keeping the
+  CA-15 proof boundary adjacent to the desired theorem prevents finite symbol
+  checks from reading as continuum Lorentz invariance.
+
+### Frictions / dead ends
+
+- None.  No report catalog change was needed because CA-23 metadata did not
+  change.
+
+### Acceptance
+
+- `make ci-before-push` passed.
+- `git diff --check` passed.
+
+### Pointers
+
+- Action plan: `reviews/2026-05-30_gaussian_lorentz/ACTION_PLAN.md` (R2).
+- Shard: CA-23.
+- Orchestration ledger:
+  `reviews/2026-05-30_gaussian_lorentz/ORCHESTRATION.md`.
+
 ## Session log — 2026-05-30 — Action-plan R1 CA-26 coverage demotion
 
 ### Context

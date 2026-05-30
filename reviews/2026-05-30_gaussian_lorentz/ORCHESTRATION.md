@@ -25,7 +25,7 @@ Protocol:
 | C5 | Complete | `019e7927-20a8-7bb0-bff1-fe2539a686c3` (`Epicurus`) | Added named Gaussian numerical tolerances and threaded them through symbol, eigenvalue, minima, and small-spacing checks. |
 | C6 | Complete | `019e7931-4366-7781-90aa-0666928bff72` (`Harvey`) | Added convention (l) and CA-29 for Gaussian real-space energy-density split; no stress-tensor claim. |
 | R1 | Complete | `019e7939-5cff-74c1-85be-419101a1a77a` (`Aquinas`) | Demoted CA-26 checked coverage and formalized dGamma language; parent synchronized shard/catalog summary. |
-| R2 | Pending | - | CA-23 roadmap drift. |
+| R2 | Complete | `019e793e-01a5-7280-b32d-57a00392a479` (`Galileo`) | Replaced stale CA-23 roadmap with actual CA-24--CA-29 roles and queued proposal follow-ups. |
 | R3 | Pending | - | Source-anchor ranges in lattice-symmetry shards. |
 | R4 | Pending | - | Stress-energy and angular-momentum density intuition in CA-13. |
 | R5 | Pending | - | Finite-periodic numerical claims in CA-28. |
@@ -89,3 +89,7 @@ Protocol:
   `019e7939-5cff-74c1-85be-419101a1a77a` (`Aquinas`) with write scope CA-26.
 - 2026-05-30: R1 reviewed by parent and accepted after synchronizing the CA-26
   shard summary with `report/SHARD_CATALOG.md`.  `make ci-before-push` passed.
+- 2026-05-30: R1 pushed as `9db065d`.  R2 delegated to worker
+  `019e793e-01a5-7280-b32d-57a00392a479` (`Galileo`) with write scope CA-23.
+- 2026-05-30: R2 reviewed by parent and accepted.  `make ci-before-push` and
+  `git diff --check` passed; `report.pdf` did not change in the parent gate.
