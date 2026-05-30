@@ -1,8 +1,8 @@
 % SHARD-ID: CA-14-KOO-SALEUR-PROTOTYPE
 % SHARD-TITLE: Koo-Saleur as the Prototype
-% SHARD-SUMMARY: Uses the local lattice-fermion source to show a rigorous precedent for constructing continuum symmetry generators from lattice Hamiltonian-density modes.
+% SHARD-SUMMARY: Uses the original Koo-Saleur source to record the lattice Virasoro prototype from Hamiltonian-density modes.
 % SHARD-SUMMARY: Records the Koo-Saleur pattern: Fourier modes of h_j plus commutator corrections approximate Virasoro generators.
-% SHARD-SUMMARY: Keeps the original Koo-Saleur paper as an acquisition target rather than an uncited authority.
+% SHARD-SUMMARY: Separates the original conjectural/numerical support from the later rigorous free-fermion/OAR convergence theorem.
 % SHARD-KEYWORDS: Koo-Saleur, Virasoro, Hamiltonian density, Fourier modes, commutator correction, OAR
 
 \section{Koo--Saleur as the Prototype}
@@ -10,13 +10,25 @@
 
 \subsection{Status, Sources, and Dependencies}
 
-\textbf{Status: sourced precedent shard.}  The original Koo--Saleur paper is not
-yet registered as a canonical source here.  This shard cites the local
-lattice-fermion/OAR treatment, which states and proves a free-fermion
+\textbf{Status: source-local prototype plus later rigorous precedent.}  The
+original Koo--Saleur paper is registered here and supports the lattice Virasoro
+prototype as a conjectural construction with numerical and analytic checks for
+XXZ/RSOS/Temperley--Lieb settings.  This shard keeps that separate from the
+local lattice-fermion/OAR treatment, which states and proves a free-fermion
 Koo--Saleur convergence result.
 
 Dependencies: CA-10--CA-13.
 
+% Source: references/lattice-symmetry/KooSaleur1993/source/9312156.tex:36--45 -- original scope: XXZ/RSOS scaling limits, conjectural stress tensor, mostly numerical checks.
+% Source: references/lattice-symmetry/KooSaleur1993/source/9312156.tex:606--648 -- Hamiltonian-limit density and ground-state subtraction e_infty.
+% Source: references/lattice-symmetry/KooSaleur1993/source/9312156.tex:704--712 -- T_xy component involves nearest-neighbour commutators.
+% Source: references/lattice-symmetry/KooSaleur1993/source/9312156.tex:877--925 -- weighted Hamiltonians, Fourier expansion, vacuum subtraction, and normal ordering.
+% Source: references/lattice-symmetry/KooSaleur1993/source/9312156.tex:949--976 -- single Fourier components map to L_n +/- \bar L_{-n} in the double scaling limit.
+% Source: references/lattice-symmetry/KooSaleur1993/source/9312156.tex:1030--1062 -- commutator calculation, central term, and finite-L non-closure.
+% Source: references/lattice-symmetry/KooSaleur1993/source/9312156.tex:1068--1108 -- double-limit process and commutator/scaling-limit caveat.
+% Source: references/lattice-symmetry/KooSaleur1993/source/9312156.tex:1623--1673 -- vertex-model lattice Virasoro generators l_n and \bar l_{-n}.
+% Source: references/lattice-symmetry/KooSaleur1993/source/9312156.tex:2219--2266 -- RSOS conjecture with the same lattice quantities.
+% Source: references/lattice-symmetry/KooSaleur1993/source/9312156.tex:2380--2396 -- conclusion: numerical evidence, exact Bethe-ansatz work still needed, conjectured homomorphism.
 % Source: references/text/CFTFromLatticeFermions.txt:385--388 -- KS convergence relies on correct scaling representation and vacuum subtraction.
 % Source: references/text/CFTFromLatticeFermions.txt:395--404 -- transverse-field Ising even subalgebra, KS convergence, and extra odd/full-covariance work.
 % Source: references/text/CFTFromLatticeFermions.txt:2128--2133 -- continuum H is integral of Hamiltonian density.
@@ -49,9 +61,19 @@ Hamiltonian density.  From a lattice density
 \[
   h^{(N)}:\Lambda_N\to \mathcal A_N
 \]
-one forms Fourier modes \(H_k^{(N)}\).  The cited Definition 4.1 then combines
-these modes with commutators against the lattice Hamiltonian mode \(H_0^{(N)}\)
-to produce lattice analogues of \(L_k\) and \(\bar L_k\).
+one forms Fourier modes \(H_k^{(N)}\).  In the original Temperley--Lieb
+presentation, the Hamiltonian-limit density is represented by
+ground-state-subtracted \(e_j-e_\infty\) terms, while the second stress-tensor
+component is represented by nearest-neighbour commutators
+\([e_j,e_{j+1}]\).  The lattice Virasoro candidates \(l_n,\bar l_{-n}\) are
+therefore Fourier sums of
+\[
+  (e_j-e_\infty)\ \pm\ \text{constant}\cdot [e_j,e_{j+1}],
+\]
+with the \(c/24\) zero-mode shift.  The later free-fermion/OAR Definition 4.1
+uses the same structural pattern: density modes plus commutator corrections
+against the lattice Hamiltonian mode \(H_0^{(N)}\) produce lattice analogues of
+\(L_k\) and \(\bar L_k\).
 
 The important structural point for our programme is:
 \[
@@ -66,10 +88,14 @@ target rather than a first moment and a Poincare translation target.
 
 \subsection{Scaling Representation Matters}
 
-The source explicitly warns that convergence of these approximants depends on
-the correct scaling-limit representation and on subtracting ground-state
-expectation values, corresponding to normal ordering.  Therefore the compiler
-must not output only formal sums.  It must also output:
+The original source already builds in ground-state subtraction, normal ordering,
+and a double-limit process; it also warns that finite-\(L\) lattice quantities
+do not close as the Virasoro algebra and that a scaling limit of a commutator is
+not generally the commutator of scaling limits.  The later rigorous
+free-fermion/OAR source similarly makes convergence depend on the correct
+scaling-limit representation and on subtracting ground-state expectation values,
+corresponding to normal ordering.  Therefore the compiler must not output only
+formal sums.  It must also output:
 \[
 \begin{array}{ll}
   &\text{state sequence},\\
@@ -93,7 +119,9 @@ requires a scaling theorem.
 
 \subsection{Boundary}
 
-This shard does not import the original 1994 paper as authority.  It records it
-as a future acquisition target.  It also does not assert that arbitrary anyon
-chains satisfy the same convergence theorem; the cited source treats
-free-fermion systems and related examples.
+The original Koo--Saleur source supports the prototype as a conjectural and
+numerically checked construction for XXZ/RSOS/Temperley--Lieb lattice models; it
+does not prove a general rigorous convergence theorem for arbitrary microscopic
+models.  The convergence theorem cited here is still the later
+free-fermion/OAR result, and arbitrary anyon chains remain outside both sourced
+claims.

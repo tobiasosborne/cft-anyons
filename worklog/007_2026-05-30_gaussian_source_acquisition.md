@@ -1,5 +1,56 @@
 # Worklog chunk 007 — 2026-05-30
 
+## A2 original Koo-Saleur source registration — 2026-05-30
+
+### Context
+
+CA-14 had used a later lattice-fermion/OAR treatment as the rigorous
+Koo--Saleur precedent while keeping the original Koo--Saleur paper as an
+acquisition target.  A2 was the source-acquisition step for the original paper.
+
+### What changed
+
+- Delegated A2 to worker `019e7990-12ad-7151-a8e4-5604d5e29783` (`Feynman`) and
+  reviewed the registration.
+- Added `SRC-KOO-SALEUR-1994` under `references/lattice-symmetry/`, including
+  the arXiv source package, arXiv PDF, extracted TeX anchor file, and PDF text
+  extraction.
+- Updated `references/manifest/SOURCES.md`.
+- Updated CA-14, CA-10, CA-17, and `report/SHARD_CATALOG.md` to remove the
+  stale acquisition-target wording while keeping the claim boundary explicit.
+
+### Why these choices
+
+- The arXiv source TeX gives stable line anchors for formulas, so it is the
+  preferred citation target over PDF OCR.
+- The original source supports the lattice Virasoro prototype and its
+  conjectural/numerical checks; the later rigorous free-fermion/OAR convergence
+  theorem remains a separate sourced claim.
+
+### Frictions / dead ends
+
+- The original source itself warns that finite-\(L\) lattice quantities do not
+  close as the Virasoro algebra and that scaling limits of commutators need not
+  be commutators of scaling limits.  Those caveats are now part of the report
+  boundary, not hidden in the source manifest.
+
+### Acceptance
+
+- Parent verified the source TeX hash and inspected the key anchor ranges:
+  abstract scope, Hamiltonian-density subtraction, commutator stress component,
+  Fourier modes, Virasoro-mode mapping, finite-\(L\) non-closure, scaling-limit
+  caveat, vertex/RSOS formulas, fixed-boundary formula, and conclusion limits.
+- `make check-report-shards` passed.
+- `make report` passed.
+- `git diff --check` passed.
+
+### Pointers
+
+- Source manifest: `references/lattice-symmetry/SOURCES.md`.
+- Source TeX anchors:
+  `references/lattice-symmetry/KooSaleur1993/source/9312156.tex`.
+- Report: CA-14, with source-boundary updates in CA-10 and CA-17.
+
 ## A1 continuum stress-energy source registration — 2026-05-30
 
 ### Context

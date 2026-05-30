@@ -36,7 +36,7 @@ Protocol:
 | J5 | Complete | `019e7970-b245-7a42-9153-e0ae276cc11c` (`Beauvoir`) | Added finite-grid minimum data, a nonnegative gate, and Hessian-insufficiency witnesses. |
 | J6 | Complete | `019e797a-f922-71e1-8e79-27a75c489125` (`Jason`) | Added sampled smooth-symbol rotation and boost-boost residual helpers. |
 | A1 | Complete | `019e7984-d92f-7940-9a7e-09ba5930619a` (`Hilbert`) | Registered Weinberg QFT Vol. I with targeted OCR anchors for stress-energy and Poincare generators. |
-| A2 | Pending | - | Original Koo-Saleur source. |
+| A2 | Complete | `019e7990-12ad-7151-a8e4-5604d5e29783` (`Feynman`) | Registered original Koo-Saleur arXiv source and updated KS source-boundary wording. |
 | A3 | Pending | - | Discrete Gaussian/free-field Virasoro source. |
 | A4 | Pending | - | Harmonic-chain energy-current formulas. |
 | S1 | Pending | - | Gaussian real-space density shard. |
@@ -169,3 +169,15 @@ Protocol:
   General improvement ambiguity remains unsourced; exact formula promotion
   still requires page-image checking because OCR is noisy.  `make
   check-report-shards` and `git diff --check` passed.
+- 2026-05-30: A1 pushed as `d234015`.  A2 delegated to worker
+  `019e7990-12ad-7151-a8e4-5604d5e29783` (`Feynman`).  Target is legal
+  registration of the original Koo--Saleur source `hep-th/9312156` and only
+  report updates supported by verified local anchors.
+- 2026-05-30: A2 reviewed by parent and accepted.  The original Koo--Saleur
+  arXiv source is registered under `references/lattice-symmetry/`, with source
+  TeX anchors for Hamiltonian-density Fourier modes, commutator corrections,
+  vacuum subtraction, finite-\(L\) non-closure, and scaling-limit caveats.
+  CA-14 now treats the original paper as source-local prototype while keeping
+  the rigorous convergence theorem attached to the later free-fermion/OAR
+  source.  `make check-report-shards`, `make report`, and `git diff --check`
+  passed.

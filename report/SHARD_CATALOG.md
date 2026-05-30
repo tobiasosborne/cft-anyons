@@ -98,7 +98,7 @@ single ~200-line source file it points to.
 - Title: Why Lattice Symmetry Generators Are a Problem
 - Summary: Opens the lattice-symmetry programme: an abstract QM system supplies time evolution, while a lattice also supplies geometry.
 - Summary: Separates sourced continuum symmetry targets from intuition-driven lattice generator guesses built from local Hamiltonian densities.
-- Summary: Records the source gap for Weinberg and Koo-Saleur originals before using Schottenloher, OAR, and lattice-fermion sources.
+- Summary: Records the source boundary after registering Weinberg and Koo-Saleur alongside Schottenloher, OAR, and lattice-fermion sources.
 - Keywords: lattice symmetry, time translation, Hamiltonian density, Poincare, Lorentz, boost, source gap
 
 ## `CA-11-CONTINUUM-BULK-SYMMETRY-TARGET`
@@ -132,9 +132,9 @@ single ~200-line source file it points to.
 
 - Source: `report/sections/14_koo_saleur_prototype.tex`
 - Title: Koo-Saleur as the Prototype
-- Summary: Uses the local lattice-fermion source to show a rigorous precedent for constructing continuum symmetry generators from lattice Hamiltonian-density modes.
+- Summary: Uses the original Koo-Saleur source to record the lattice Virasoro prototype from Hamiltonian-density modes.
 - Summary: Records the Koo-Saleur pattern: Fourier modes of h_j plus commutator corrections approximate Virasoro generators.
-- Summary: Keeps the original Koo-Saleur paper as an acquisition target rather than an uncited authority.
+- Summary: Separates the original conjectural/numerical support from the later rigorous free-fermion/OAR convergence theorem.
 - Keywords: Koo-Saleur, Virasoro, Hamiltonian density, Fourier modes, commutator correction, OAR
 
 ## `CA-15-LATTICE-SYMMETRY-ACCEPTANCE-TESTS`
