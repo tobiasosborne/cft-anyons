@@ -203,6 +203,17 @@ quasi-local coefficients `V_r=V_{-r}`.  Its Fourier symbol is
 `omega(k)^2 = sum_r V_r exp(i epsilon k.r)`.  The nearest-neighbour lattice
 Klein-Gordon example has
 `omega_{epsilon,m}(k)^2 = m^2 + 2 epsilon^{-2} sum_a (1-cos(epsilon k_a))`.
+The Gaussian helper keyword `mass` is a nonnegative physical mass label
+`m >= 0`; there is no signed-mass convention.  Positive-dispersion generator
+statements, including the oscillator complex structure, Fock bookkeeping, and
+flat boost formula below, are used only on patches where `omega(k)>0`.  The
+sourced free-boson Wightman example assumes `m>0`, and the OAR lattice source
+flags the massless zero mode because `gamma_m(k)^{-1}` is then undefined at
+`k=0`.  Thus `mass=0` examples are coefficient-level symbol/residual tests
+until a zero-mode policy is fixed; they are not evidence for the current
+positive-dispersion generator theorem.  Negative numeric masses are outside the
+documented Gaussian API even though current coefficient formulas only contain
+`mass^2`; validation is deferred to the planned coefficient-validator step.
 Finite periodic numerical checks use momenta
 `k_a = 2 pi n_a / (epsilon L_a)` and the real-space stiffness matrix
 `V_{xy} = sum_r V_r 1_{y=x+r mod L}`; its eigenvalue oracle is the list of
@@ -235,19 +246,23 @@ derivation that turns the Lorentz algebra, with the sign map in (k), into
 explicit differential conditions on `omega^2`, hence on the Hamiltonian
 coefficients.  The boost formula is measure-sensitive, so the current safe
 status is a flat local symbol algebra rather than the sourced OAR or mass-shell
-Poincare theorem.
+Poincare theorem.  The zero-mode restriction is kept explicit because the
+one-particle complex structure uses `omega^{-1}` and the OAR source names the
+massless zero mode as a separate problem.
 **Source:** `literature/md/2010.11121/2010.11121.md:51`--`:58` (harmonic lattice
 Hamiltonian and scaling-limit claims), `:598`--`:610` (lattice Hamiltonian,
 dispersion, and ground-state two-point function), `:614`--`:623`
 (renormalized mass and lattice Klein-Gordon dispersion), `:648`--`:681` (OAR
 continuum one-particle scalar product, flat Fock realization, dynamics, speed 1,
 and translations), `:1037`--`:1046` (continuum free scalar time evolution and
-theorem), `references/cft/Schottenloher2008/Schottenloher2008.md:4186`--`:4244`
+theorem), `:1626`--`:1628` (massless zero-mode warning),
+`references/cft/Schottenloher2008/Schottenloher2008.md:4186`--`:4244`
 (free bosonic QFT/Klein-Gordon/Poincare-covariant construction, including the
 natural Poincare action);
 `test/runtests.jl` testsets "Gaussian boson Klein-Gordon symbols" and
 "Gaussian boson boost-time symbols", "Gaussian boson Lorentz Hessian examples",
-and "Gaussian boson finite periodic examples"; CA-23--CA-28.
+and "Gaussian boson finite periodic massive coefficient spectra" plus "Gaussian
+boson massless doubler coefficient rejection"; CA-23--CA-28.
 **Sweep status:** CA-23--CA-28 use this convention; the full bosonic BdG/pairing
 convention is not yet fixed.
 

@@ -13,13 +13,15 @@
 \textbf{Status: checked Julia shard.}  This shard records the numerical
 invariants now implemented for the scalar Gaussian tier.  The checks are not
 continuum proofs; they are finite algebraic witnesses that the coefficient
-compiler is computing the intended symbols and residuals.
+compiler is computing the intended symbols and residuals.  The massless doubler
+check is a coefficient-level rejection test, not a Fock-generator check.
 
 Dependencies: CA-24--CA-27, INDEX.md, and CONVENTIONS.md (j).
 
 % Source: literature/md/2010.11121/2010.11121.md:274 -- lattice and dual lattice Fourier setup.
 % Source: literature/md/2010.11121/2010.11121.md:598 -- lattice scalar Hamiltonian.
 % Source: literature/md/2010.11121/2010.11121.md:623 -- lattice Klein-Gordon dispersion.
+% Source: literature/md/2010.11121/2010.11121.md:1626--1628 -- massless fields require a zero-mode policy.
 % Checked: src/GaussianBosons.jl, src/GaussianBosonNumerics.jl, and test/runtests.jl.
 
 \subsection{Why These Tests}
@@ -81,9 +83,10 @@ and that the Lorentz residual is nonzero when the target speed is \(1\).
   =
   m^2+\epsilon^{-2}\sum_a\sin^2(\epsilon k_a)
 \]
-and count multiple minima on an even periodic grid.  This catches the case
+with \(m=0\) and count multiple minima on an even periodic grid.  This catches the case
 where the Hessian at one minimum is correct but the compiler would need a
-multi-species or sector-selection output.
+multi-species, sector-selection, or zero-mode policy output.  It is deliberately
+outside the positive-dispersion generator statements.
 
 \subsection{Current Julia Surface}
 

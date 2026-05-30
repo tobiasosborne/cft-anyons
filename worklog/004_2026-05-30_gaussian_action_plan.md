@@ -1,5 +1,54 @@
 # Worklog chunk 004 — 2026-05-30
 
+## Session log — 2026-05-30 — Action-plan C3 mass and zero-mode policy
+
+### Context
+
+C3 separates massive positive-dispersion generator statements from massless
+coefficient-level examples.  The local sources assume \(m>0\) for the free
+bosonic Wightman example and explicitly flag the massless zero mode as requiring
+a policy before using \(\gamma_m^{-1}\).
+
+### What changed
+
+- Delegated C3 to worker `019e7919-7dba-7b21-8e02-7454d14a6858` (`Fermat`).
+- Updated CONVENTIONS.md (j) to record `mass` as a nonnegative physical label
+  and to mark negative numeric masses as outside the documented API.
+- Updated CA-24, CA-25, CA-27, and CA-28 to restrict current Fock/generator
+  statements to positive-dispersion patches.
+- Split the Julia testset so the massless doubler is explicitly a
+  coefficient-level rejection witness, not Fock-generator evidence.
+
+### Why these choices
+
+- The coefficient formulas only see \(m^2\), but the Hilbert-space and
+  generator layer needs \(\omega>0\) or a zero-mode convention.  Keeping the
+  massless doubler as a rejection witness preserves the useful counterexample
+  without upgrading it to an unsupported theorem.
+- The parent tightened CA-25 so \(m>0\) is identified as sufficient only for the
+  nearest-neighbour Klein-Gordon family; arbitrary coefficient symbols still
+  require an explicit positive patch condition.
+
+### Frictions / dead ends
+
+- Source-level validation for negative `mass` is deferred to the planned
+  coefficient-validator step because C3 did not own `src/`.
+
+### Acceptance
+
+- `make ci-before-push` passed, including shard guard, report rebuild, and
+  Julia tests.
+
+### Pointers
+
+- Action plan: `reviews/2026-05-30_gaussian_lorentz/ACTION_PLAN.md` (C3).
+- Orchestration ledger:
+  `reviews/2026-05-30_gaussian_lorentz/ORCHESTRATION.md`.
+- Convention: `CONVENTIONS.md` (j).
+- Report shards: CA-24, CA-25, CA-27, CA-28.
+- Testsets: `Gaussian boson finite periodic massive coefficient spectra` and
+  `Gaussian boson massless doubler coefficient rejection`.
+
 ## Session log — 2026-05-30 — Action-plan C2 one-particle measure status
 
 ### Context

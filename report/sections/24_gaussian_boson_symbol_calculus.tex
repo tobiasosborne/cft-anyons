@@ -13,8 +13,9 @@
 \textbf{Status: sourced model class plus checked flat local derivation.}  The
 standard lattice scalar-field Hamiltonian and dispersion are sourced.  The
 boost-time residual calculation is a local one-particle derivation on flat
-\(L^2(dk)\), checked by Julia.  It is not yet a sourced OAR or mass-shell
-Poincare representation theorem.
+\(L^2(dk)\), checked by Julia on positive-dispersion patches.  It is not yet a
+sourced OAR or mass-shell Poincare representation theorem, and massless
+zero-mode examples are coefficient-level tests only.
 
 Dependencies: CA-11, CA-12, CA-23, and CONVENTIONS.md (h), (j), (k).
 
@@ -25,6 +26,8 @@ Dependencies: CA-11, CA-12, CA-23, and CONVENTIONS.md (h), (j), (k).
 % Source: literature/md/2010.11121/2010.11121.md:648--681 -- sourced OAR one-particle scalar product, flat Fock realization, dynamics, speed 1, and translations.
 % Source: literature/md/2010.11121/2010.11121.md:676 -- continuum dynamics satisfies the Klein-Gordon equation.
 % Source: literature/md/2010.11121/2010.11121.md:681 -- Klein-Gordon propagation speed 1 and spatial translations.
+% Source: literature/md/2010.11121/2010.11121.md:1626--1628 -- massless fields require a zero-mode policy.
+% Source: references/cft/Schottenloher2008/Schottenloher2008.md:4186 -- free bosonic QFT example assumes m > 0.
 % Source: references/cft/Schottenloher2008/Schottenloher2008.md:4244 -- sourced free-boson construction has a natural Poincare action on Fock space.
 % Convention: CONVENTIONS.md (j) -- CA-24--CA-26 use flat L^2(dk) local symbol algebra, not yet the sourced OAR/mass-shell theorem.
 % Convention: CONVENTIONS.md (k) -- self-adjoint Poincare commutator signs.
@@ -53,7 +56,9 @@ Define
   \sum_r V_r e^{i\epsilon k\cdot r}.
 \]
 For a stable scalar model, this symbol is non-negative, with the zero-mode
-policy stated separately in the massless case.
+policy stated separately in the massless case.  The helper parameter \(m\) is a
+nonnegative mass label; the generator statements below use only the stricter
+case \(\omega_\epsilon(k)>0\) on the chosen patch.
 
 \subsection{Nearest-Neighbour Klein-Gordon Example}
 
@@ -86,7 +91,7 @@ For fixed physical \(k\) and \(\epsilon\to0\),
 
 After diagonalization, this shard uses the flat local momentum space
 \(L^2(\mathcal U,dk)\).  The one-particle Hamiltonian is multiplication by
-\(\omega(k)\), and
+\(\omega(k)\), with \(\omega(k)>0\) on \(\mathcal U\), and
 \[
   X_a=i\partial_{k_a}
 \]

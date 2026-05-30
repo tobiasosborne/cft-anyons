@@ -27,6 +27,8 @@ Dependencies: CA-23--CA-24 and CONVENTIONS.md (a), (f), (j).
 % Source: literature/md/2010.11121/2010.11121.md:670 -- continuum Fock/Weyl representation by creation and annihilation operators.
 % Source: literature/md/2010.11121/2010.11121.md:1037 -- continuum Hamiltonian as second quantization of the one-particle generator.
 % Source: literature/md/2010.11121/2010.11121.md:1540 -- one-particle Hamiltonians as multiplication by dispersion in a cutoff diagonalization.
+% Source: literature/md/2010.11121/2010.11121.md:1626--1628 -- massless fields require a zero-mode policy.
+% Source: references/cft/Schottenloher2008/Schottenloher2008.md:4186 -- free bosonic QFT example assumes m > 0.
 
 \subsection{Scalar Coefficient Tier}
 
@@ -57,9 +59,12 @@ The stability condition for this tier is
 \[
   \omega_\epsilon(k)^2\ge 0
 \]
-on the Brillouin zone, with a separate zero-mode policy in the massless case.
-For the massive shards below we assume \(\omega_\epsilon(k)>0\) on the patch in
-which the one-particle formulas are used.
+on the Brillouin zone.  The \texttt{mass} parameter is a nonnegative label; in
+the nearest-neighbour Klein-Gordon family, \(m>0\) gives the positive-dispersion
+case used by the current generator statements.  For a general coefficient
+symbol the required condition remains \(\omega_\epsilon(k)>0\) on the chosen
+patch.  When \(m=0\), zero modes are coefficient data only until a zero-mode
+convention excludes or otherwise controls them.
 
 \subsection{Mode Decoupling}
 
@@ -85,7 +90,7 @@ to multiplication by a dispersion symbol.
 
 \subsection{Complex Structure and Fock Space}
 
-For \(\omega>0\), the oscillator complex structure is
+For \(\omega>0\) on the chosen momentum patch, the oscillator complex structure is
 \[
   (q,p)\longmapsto (-\omega p,\omega^{-1}q).
 \]
@@ -99,7 +104,7 @@ the representation on a mass-independent flat \(L^2\) Fock space.  This shard
 uses only the resulting flat symbol bookkeeping and does not prove that the
 boost formula of CA-24/CA-26 intertwines the OAR or mass-shell representation.
 
-The compiler-level output for the scalar tier is therefore:
+The compiler-level output for the positive-dispersion scalar tier is therefore:
 \[
 \begin{array}{ll}
 \mathfrak h_\epsilon
@@ -138,8 +143,9 @@ written.
 
 \subsection{Compiler Consequence}
 
-For the scalar Gaussian block, all later candidate generators can be constructed
-first on the one-particle smooth momentum core and then second-quantized.  The
+For the positive-dispersion scalar Gaussian block, later candidate generators can
+be constructed first on the one-particle smooth momentum core and then
+second-quantized.  The
 coefficient data enter only through \(\omega_\epsilon(k)^2\) and its
 derivatives, while the continuum proof still requires the CA-15 payload:
 scaling maps, state convergence, domains, and observable covariance.

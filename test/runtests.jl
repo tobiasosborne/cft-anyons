@@ -204,7 +204,7 @@ end
     @test norm(residual) > 1
 end
 
-@testset "Gaussian boson finite periodic examples" begin
+@testset "Gaussian boson finite periodic massive coefficient spectra" begin
     for sizes in ([5], [4, 3], [3, 2, 2])
         d = length(sizes)
         spacing = 0.4
@@ -216,8 +216,13 @@ end
         @test stiffness ≈ stiffness'
         @test spectrum ≈ symbols
     end
+end
 
+@testset "Gaussian boson massless doubler coefficient rejection" begin
+    # This is a coefficient-level zero-mode witness, not positive-dispersion
+    # Fock-generator evidence; see CONVENTIONS.md (j).
     doubler = CftAnyons.doubler_quadratic_coefficients(2; mass = 0, spacing = 1)
+    @test CftAnyons.scalar_quadratic_symbol(doubler, [0.0, 0.0]; spacing = 1) ≈ 0
     @test CftAnyons.count_periodic_symbol_minima(doubler, [4, 4]; spacing = 1) == 4
     @test_throws ErrorException CftAnyons.periodic_stiffness_matrix([([0, 0], 1.0)], [3])
 end

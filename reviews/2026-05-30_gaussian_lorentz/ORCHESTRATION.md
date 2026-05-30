@@ -20,7 +20,7 @@ Protocol:
 | --- | --- | --- | --- |
 | C1 | Complete | `019e790c-6ac9-7990-9e43-9be09e34ca34` (`Confucius`) | Added convention (k) and updated CA-11, CA-24, CA-26; parent tightened inverse-flow wording before landing. |
 | C2 | Complete | `019e7914-909d-71f0-87d4-711abd3494dd` (`Boyle`) | CA-24--CA-26 now explicitly use flat local-symbol `L^2(dk)` algebra; OAR/mass-shell bridge remains an open proof obligation. |
-| C3 | Pending | - | Mass, positivity, and zero-mode policy. |
+| C3 | Complete | `019e7919-7dba-7b21-8e02-7454d14a6858` (`Fermat`) | Recorded nonnegative mass label, positive-dispersion generator scope, and massless doubler as coefficient-level rejection only. |
 | C4 | Pending | - | Smooth low-energy patches vs finite periodic grids. |
 | C5 | Pending | - | Numerical tolerance and validator conventions. |
 | C6 | Pending | - | Gaussian real-space density convention. |
@@ -61,3 +61,10 @@ Protocol:
   `CONVENTIONS.md`, CA-24, CA-25, and CA-26.
 - 2026-05-30: C2 reviewed by parent and accepted.  Landing checks passed:
   `make check-report-shards`, `make report`, and `git diff --check`.
+- 2026-05-30: C2 pushed as `a2fd2b0`.  C3 delegated to worker
+  `019e7919-7dba-7b21-8e02-7454d14a6858` (`Fermat`) with write scope
+  `CONVENTIONS.md`, CA-24, CA-25, CA-27, CA-28, and `test/runtests.jl`.
+- 2026-05-30: C3 reviewed by parent and accepted after tightening CA-25 so
+  `m>0` is sufficient only for the nearest-neighbour KG positive-dispersion
+  family, while arbitrary coefficient symbols still require `omega>0` on the
+  chosen patch.  `make ci-before-push` passed.
