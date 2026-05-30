@@ -1,5 +1,54 @@
 # Worklog chunk 007 — 2026-05-30
 
+## A4 open-chain Gaussian energy-current derivation — 2026-05-30
+
+### Context
+
+A4 asked for either a source or a checked local derivation of the harmonic-chain
+energy-current formulas needed before the future Gaussian `T_01` stress-energy
+proposal.  CA-29 had already fixed the real-space energy-density split.
+
+### What changed
+
+- Delegated A4 to worker `019e79aa-6791-78b0-8cbc-5d97538e9936` (`Hypatia`) and
+  reviewed the pushed commit `f3f1705`.
+- Added `src/GaussianBosonCurrents.jl`, included from `src/CftAnyons.jl`.
+- Added phase-space quadratic commutator helpers for
+  \(i[Q(A),Q(B)]\), finite open nearest-neighbour Gaussian density matrices,
+  bond currents \(J_{j+1/2}=i[e_j,e_{j+1}]\), closed-form current matrices, and
+  continuity residuals.
+- Updated CONVENTIONS.md (l), `INDEX.md`, and `test/runtests.jl`.
+
+### Why these choices
+
+- A local derivation is enough for the first `T_01` layer and avoids importing a
+  broader harmonic-chain stress-tensor source before the finite density
+  convention is tested.
+- The quadratic-form representation checks the actual canonical commutator
+  algebra rather than restating the first-moment identity.
+
+### Frictions / dead ends
+
+- This does not solve the momentum-current / `T_11` problem.  It only proves the
+  finite open-chain energy-continuity identity for the chosen CA-29 density
+  split and orientation.
+
+### Acceptance
+
+- Parent reviewed the sign pin
+  \(i[q^2/2,p^2/2]=-(qp+pq)/2\), the closed-form bond-current test, and the
+  endpoint/interior continuity tests.
+- `julia --project=. -e 'using Pkg; Pkg.test()'` passed.
+- `make check-report-shards` passed.
+- `git diff --check` passed.
+
+### Pointers
+
+- Code: `src/GaussianBosonCurrents.jl`.
+- Tests: `test/runtests.jl` testsets "Gaussian quadratic commutator sign
+  convention" and "Gaussian open-chain energy current continuity".
+- Convention: CONVENTIONS.md (l).
+
 ## A3 discrete GFF Virasoro source registration — 2026-05-30
 
 ### Context

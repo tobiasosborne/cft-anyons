@@ -38,7 +38,7 @@ Protocol:
 | A1 | Complete | `019e7984-d92f-7940-9a7e-09ba5930619a` (`Hilbert`) | Registered Weinberg QFT Vol. I with targeted OCR anchors for stress-energy and Poincare generators. |
 | A2 | Complete | `019e7990-12ad-7151-a8e4-5604d5e29783` (`Feynman`) | Registered original Koo-Saleur arXiv source and updated KS source-boundary wording. |
 | A3 | Complete | `019e799c-3578-70f0-93d9-6b026a436206` (`Hegel`) | Registered discrete GFF Virasoro source with version-pinned arXiv v1 TeX anchors. |
-| A4 | Pending | - | Harmonic-chain energy-current formulas. |
+| A4 | Complete | `019e79aa-6791-78b0-8cbc-5d97538e9936` (`Hypatia`) | Added finite open-chain Gaussian energy-current helpers/tests for the local `T_01` candidate; `T_11` remains pending. |
 | S1 | Pending | - | Gaussian real-space density shard. |
 | S2 | Pending | - | 1+1 lattice stress-energy candidate shard. |
 | S3 | Pending | - | Current-vs-symbol equivalence checks. |
@@ -193,3 +193,16 @@ Protocol:
   continuum stress-energy/Poincare formulas or harmonic-chain energy-current
   identities.  `make check-report-shards`, `make report`, and `git diff
   --check` passed before landing.
+- 2026-05-30: A3 pushed as `056c959`.  A4 delegated to worker
+  `019e79aa-6791-78b0-8cbc-5d97538e9936` (`Hypatia`).  Target is a checked
+  local derivation for the finite open 1D nearest-neighbour scalar Gaussian
+  energy-current orientation under CA-29/CONVENTIONS.md (l), explicitly only
+  backing the future `T_01` candidate and not solving `T_11`.
+- 2026-05-30: A4 reviewed by parent and accepted after worker push `f3f1705`.
+  The patch adds phase-space quadratic commutator matrices, CA-29 open-chain
+  Gaussian density matrices, bond currents `J_{j+1/2}=i[e_j,e_{j+1}]`, a
+  closed-form current matrix independent of the onsite coefficient, and finite
+  endpoint/interior continuity tests.  Parent reran `Pkg.test()`,
+  `make check-report-shards`, and `git diff --check`; all passed.  Scope is
+  explicitly local finite-open-chain `T_01` evidence only; no continuum
+  stress-tensor or `T_11` claim landed.
