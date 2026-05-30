@@ -151,6 +151,24 @@ end
 gaussian_symbol_isapprox(actual, expected) = isapprox(actual, expected; atol = CftAnyons.GAUSSIAN_SYMBOL_VALUE_ATOL, rtol = CftAnyons.GAUSSIAN_SYMBOL_VALUE_RTOL)
 gaussian_eigenvalue_isapprox(actual, expected) = isapprox(actual, expected; atol = CftAnyons.GAUSSIAN_EIGENVALUE_ATOL, rtol = CftAnyons.GAUSSIAN_EIGENVALUE_RTOL)
 gaussian_small_spacing_isapprox(actual, expected) = isapprox(actual, expected; atol = CftAnyons.GAUSSIAN_SMALL_SPACING_RESIDUAL_ATOL, rtol = CftAnyons.GAUSSIAN_SMALL_SPACING_RESIDUAL_RTOL)
+const GAUSSIAN_FINITE_DIFFERENCE_ATOL = 2e-8
+const GAUSSIAN_FINITE_DIFFERENCE_RTOL = 2e-8
+gaussian_finite_difference_isapprox(actual, expected) =
+    isapprox(actual, expected; atol = GAUSSIAN_FINITE_DIFFERENCE_ATOL, rtol = GAUSSIAN_FINITE_DIFFERENCE_RTOL)
+
+function central_difference_half_gradient(coefficients, k; spacing = 1, step = 1e-5)
+    out = zeros(Float64, length(k))
+    for axis in eachindex(k)
+        plus = copy(k)
+        minus = copy(k)
+        plus[axis] += step
+        minus[axis] -= step
+        forward = CftAnyons.scalar_quadratic_symbol(coefficients, plus; spacing)
+        backward = CftAnyons.scalar_quadratic_symbol(coefficients, minus; spacing)
+        out[axis] = (forward - backward) / (4 * step)
+    end
+    return out
+end
 
 periodic_label_momentum(label, sizes; spacing = 1) =
     [2 * pi * label[axis] / (spacing * sizes[axis]) for axis in eachindex(sizes)]
@@ -222,6 +240,47 @@ end
     lattice_symbol = CftAnyons.kg_lattice_boost_time_symbol(k; spacing = ε)
     @test gaussian_small_spacing_isapprox(lattice_symbol, k)
     @test_throws ErrorException CftAnyons.kg_lattice_boost_time_symbol([0.0]; spacing = 0)
+end
+
+@testset "Gaussian boson finite-difference boost-time oracle" begin
+    cases = [
+        (
+            [([0], 2.1), ([1], -0.37), ([-1], -0.37), ([2], 0.08), ([-2], 0.08)],
+            [0.37],
+            0.7,
+        ),
+        (
+            [
+                ([0, 0], 2.6),
+                ([1, 0], -0.22), ([-1, 0], -0.22),
+                ([0, 1], -0.31), ([0, -1], -0.31),
+                ([1, 1], 0.13), ([-1, -1], 0.13),
+                ([2, -1], -0.04), ([-2, 1], -0.04),
+            ],
+            [0.31, -0.24],
+            0.8,
+        ),
+        (
+            [
+                ([0, 0, 0], 3.4),
+                ([1, 0, 0], -0.18), ([-1, 0, 0], -0.18),
+                ([0, 1, 0], -0.21), ([0, -1, 0], -0.21),
+                ([0, 0, 1], -0.16), ([0, 0, -1], -0.16),
+                ([1, 1, 0], 0.09), ([-1, -1, 0], 0.09),
+                ([1, -2, 1], -0.035), ([-1, 2, -1], -0.035),
+            ],
+            [0.17, -0.29, 0.23],
+            0.6,
+        ),
+    ]
+
+    for (coefficients, k, spacing) in cases
+        closed_form = CftAnyons.boost_time_symbol_from_coefficients(coefficients, k; spacing)
+        finite_difference = central_difference_half_gradient(coefficients, k; spacing)
+
+        @test norm(finite_difference) > 0.01
+        @test gaussian_finite_difference_isapprox(closed_form, finite_difference)
+    end
 end
 
 @testset "Gaussian boson Lorentz Hessian examples" begin

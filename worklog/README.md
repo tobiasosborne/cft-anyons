@@ -22,6 +22,7 @@ gotcha) goes to agent memory under
 
 | Chunk | Span | Topics |
 |---|---|---|
+| `006_2026-05-30_gaussian_action_plan_julia_hardening.md` | 2026-05-30 | Julia/test hardening for the Gaussian Lorentz action plan |
 | `005_2026-05-30_gaussian_action_plan_report_fixes.md` | 2026-05-30 | Report-only containment fixes for the Gaussian Lorentz action plan |
 | `004_2026-05-30_gaussian_action_plan.md` | 2026-05-30 | Serial execution of the Gaussian Lorentz action plan |
 | `003_2026-05-30_gaussian_boson_lorentz.md` | 2026-05-30 | CA-23--CA-24 Gaussian boson Lorentz roadmap and symbol calculus |

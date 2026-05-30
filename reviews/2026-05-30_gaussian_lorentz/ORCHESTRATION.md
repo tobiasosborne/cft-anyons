@@ -31,7 +31,7 @@ Protocol:
 | R5 | Complete | `019e794b-6426-7381-973c-b2852c96284f` (`Nietzsche`) | Narrowed CA-28 finite-periodic coverage to symbols, stiffness spectra, minima counts, and implemented coefficient residuals/Hessians. |
 | J1 | Complete | `019e794e-7fb9-70c0-a1f7-1a71d4926fbf` (`Kuhn`) | Added centered periodic momentum labels for branch-aware low-energy windows, with even/odd tests and convention note. |
 | J2 | Complete | `019e7956-628b-7152-aba9-e962d2f24b2a` (`Raman`) | Added finite Fourier vector helper and assigned-eigenvalue tests, including direction sentinel. |
-| J3 | Pending | - | Independent finite-difference derivative oracle. |
+| J3 | Complete | `019e795f-7356-7501-b435-a8fc6711feec` (`Schrodinger`) | Added a test-local central finite-difference oracle for the boost-time coefficient helper in d=1,2,3. |
 | J4 | Pending | - | Structural coefficient validation. |
 | J5 | Pending | - | Positivity and patch/minimum witnesses. |
 | J6 | Pending | - | Rotation and boost-boost residual helpers. |
@@ -120,3 +120,13 @@ Protocol:
   phase convention to CONVENTIONS.md (j).  Worker mutation check flipped `x+r`
   to `x-r` and the new direction sentinel failed as intended.  `make
   ci-before-push` and `git diff --check` passed.
+- 2026-05-30: J2 pushed as `987c04c`.  Worklog chunk 006 started.  J3 delegated
+  to worker `019e795f-7356-7501-b435-a8fc6711feec` (`Schrodinger`) with write
+  scope tests, optional Gaussian numerics helper, and optional CA-28.
+- 2026-05-30: J3 reviewed by parent and accepted.  The worker patch compares
+  `boost_time_symbol_from_coefficients` against a test-local central difference
+  of the separate scalar-symbol evaluator, including the `1/2` factor.  Worker
+  mutation probes for a sign flip and missing `1/2` failed as intended.  `make
+  ci-before-push` passed.
+- 2026-05-30: J3 landed in the finite-difference oracle slice.  Next step is
+  J4 structural coefficient validation.
