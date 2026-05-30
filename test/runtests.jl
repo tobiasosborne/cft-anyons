@@ -379,11 +379,44 @@ end
     @test_throws ErrorException CftAnyons.periodic_fourier_vector([3], [0.5])
 end
 
+@testset "Gaussian boson finite-grid minimum data" begin
+    unstable = [([0], 0.0), ([1], 1.0), ([-1], 1.0), ([2], -0.5), ([-2], -0.5)]
+    residual = CftAnyons.lorentz_hessian_residual(unstable, 1; spacing = 1, speed = 1)
+    data = CftAnyons.symbol_minimum_data(unstable, [4]; spacing = 1)
+
+    @test gaussian_symbol_isapprox(residual, zeros(1, 1))
+    @test gaussian_symbol_isapprox(data.minimum_value, -3)
+    @test data.minimum_count == 1
+    @test data.minima[1].value == data.minimum_value
+    @test data.minima[1].location == [3]
+    @test data.minima[1].label == [2]
+    @test gaussian_symbol_isapprox(data.minima[1].momentum, [pi])
+    @test data.minima[1].centered_label == [-2]
+    @test gaussian_symbol_isapprox(data.minima[1].centered_momentum, [-pi])
+    @test_throws ErrorException CftAnyons.symbol_minimum_data(unstable, [4]; spacing = 1, require_nonnegative = true)
+end
+
 @testset "Gaussian boson massless doubler coefficient rejection" begin
     # This is a coefficient-level zero-mode witness, not positive-dispersion
     # Fock-generator evidence; see CONVENTIONS.md (j).
-    doubler = CftAnyons.doubler_quadratic_coefficients(2; mass = 0, spacing = 1)
-    @test gaussian_symbol_isapprox(CftAnyons.scalar_quadratic_symbol(doubler, [0.0, 0.0]; spacing = 1), 0)
-    @test CftAnyons.count_periodic_symbol_minima(doubler, [4, 4]; spacing = 1) == 4
+    for d in 1:3
+        sizes = fill(4, d)
+        doubler = CftAnyons.doubler_quadratic_coefficients(d; mass = 0, spacing = 1)
+        residual = CftAnyons.lorentz_hessian_residual(doubler, d; spacing = 1, speed = 1)
+        data = CftAnyons.symbol_minimum_data(doubler, sizes; spacing = 1, require_nonnegative = true)
+        expected_labels = Set(Tuple(label) for label in Iterators.product(ntuple(_ -> (0, 2), d)...))
+        expected_centered_labels = Set(Tuple(label) for label in Iterators.product(ntuple(_ -> (0, -2), d)...))
+        expected_locations = Set(Tuple(label) for label in Iterators.product(ntuple(_ -> (1, 3), d)...))
+
+        @test gaussian_symbol_isapprox(CftAnyons.scalar_quadratic_symbol(doubler, zeros(d); spacing = 1), 0)
+        @test gaussian_symbol_isapprox(residual, zeros(d, d))
+        @test gaussian_symbol_isapprox(data.minimum_value, 0)
+        @test data.minimum_count == 2^d
+        @test CftAnyons.count_periodic_symbol_minima(doubler, sizes; spacing = 1) == 2^d
+        @test Set(Tuple(minimum.label) for minimum in data.minima) == expected_labels
+        @test Set(Tuple(minimum.centered_label) for minimum in data.minima) == expected_centered_labels
+        @test Set(Tuple(minimum.location) for minimum in data.minima) == expected_locations
+        @test all(minimum -> gaussian_symbol_isapprox(minimum.value, 0), data.minima)
+    end
     @test_throws ErrorException CftAnyons.periodic_stiffness_matrix([([0, 0], 1.0)], [3])
 end

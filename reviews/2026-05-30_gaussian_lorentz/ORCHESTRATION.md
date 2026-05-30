@@ -33,7 +33,7 @@ Protocol:
 | J2 | Complete | `019e7956-628b-7152-aba9-e962d2f24b2a` (`Raman`) | Added finite Fourier vector helper and assigned-eigenvalue tests, including direction sentinel. |
 | J3 | Complete | `019e795f-7356-7501-b435-a8fc6711feec` (`Schrodinger`) | Added a test-local central finite-difference oracle for the boost-time coefficient helper in d=1,2,3. |
 | J4 | Complete | `019e7968-63d3-7010-8a23-e7cca580ed2d` (`Sagan`) | Added strict scalar coefficient validation and loud negative tests. |
-| J5 | Pending | - | Positivity and patch/minimum witnesses. |
+| J5 | Complete | `019e7970-b245-7a42-9153-e0ae276cc11c` (`Beauvoir`) | Added finite-grid minimum data, a nonnegative gate, and Hessian-insufficiency witnesses. |
 | J6 | Pending | - | Rotation and boost-boost residual helpers. |
 | A1 | Pending | - | Continuum stress-energy / Poincare-generator source. |
 | A2 | Pending | - | Original Koo-Saleur source. |
@@ -138,3 +138,12 @@ Protocol:
   rejection tests for `scalar_quadratic_symbol` and
   `boost_time_symbol_from_coefficients`.  `make ci-before-push` and
   `git diff --check` passed.
+- 2026-05-30: J4 pushed as `e636d34`.  J5 delegated to worker
+  `019e7970-b245-7a42-9153-e0ae276cc11c` (`Beauvoir`).  Target is finite-grid
+  minimum data, positivity witnesses, and explicit examples showing Hessian
+  success is not enough.
+- 2026-05-30: J5 reviewed by parent and accepted.  The new helper reports
+  finite-grid minimum value/count/location, the unstable \(V_0=0,V_{\pm1}=1,
+  V_{\pm2}=-1/2\) witness passes the Hessian residual but fails finite-grid
+  nonnegativity, and the doubler minima are recorded in d=1,2,3.  `make
+  ci-before-push` and `git diff --check` passed.

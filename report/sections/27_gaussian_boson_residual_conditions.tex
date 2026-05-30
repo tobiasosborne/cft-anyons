@@ -24,7 +24,9 @@ Dependencies: CA-24--CA-26 and CONVENTIONS.md (j).
 % Source: literature/md/2010.11121/2010.11121.md:676 -- continuum Klein-Gordon dynamics.
 % Source: literature/md/2010.11121/2010.11121.md:1626--1628 -- massless fields require a zero-mode policy.
 % Source: references/cft/Schottenloher2008/Schottenloher2008.md:4186 -- Klein-Gordon operator in the free bosonic QFT example.
-% Checked: test/runtests.jl, "Gaussian boson Lorentz Hessian examples" and "Gaussian boson massless doubler coefficient rejection".
+% Checked: test/runtests.jl, "Gaussian boson Lorentz Hessian examples",
+% "Gaussian boson finite-grid minimum data", and
+% "Gaussian boson massless doubler coefficient rejection".
 
 \subsection{Gradient Residual}
 
@@ -76,6 +78,10 @@ This is the first finite-dimensional coefficient test.  In compiler form:
 It must vanish at the chosen low-energy point before the model can be routed to
 a Klein-Gordon continuum target.
 
+It is not a positivity or patch certificate.  The Hessian only sees the Taylor
+coefficient at the chosen point; a finite-grid symbol can still be negative
+elsewhere or have additional low-energy minima.
+
 \subsection{Nearest-Neighbour Klein-Gordon}
 
 For
@@ -116,6 +122,33 @@ Unless all \(c_a\) agree with the target speed, the boost-time residual cannot
 match a single Lorentz cone.  The Julia test suite checks this as a deliberate
 failure case, not as an approximate success.
 
+\subsection{Hessian-Passing Instability Witness}
+
+In \(d=1\), at \(\epsilon=1\), consider the scalar coefficients
+\[
+  V_0=0,\qquad V_{\pm 1}=1,\qquad V_{\pm 2}=-\frac12 .
+\]
+The symbol is
+\[
+  \omega(k)^2=2\cos k-\cos(2k).
+\]
+Its low-energy Hessian data pass the speed-one condition:
+\[
+  -\frac12\sum_r r^2V_r=1.
+\]
+However, the \(L=4\) periodic sample has values
+\[
+  \omega(0)^2=1,\quad
+  \omega(\pi/2)^2=1,\quad
+  \omega(\pi)^2=-3,\quad
+  \omega(3\pi/2)^2=1.
+\]
+The checked minimum-data helper records the negative minimum \(-3\), with
+uncentered label \(2\) and momentum \(\pi\), plus centered label \(-2\) and
+momentum \(-\pi\).  Enabling its nonnegative finite-grid gate makes the helper
+raise an error.  Thus the Hessian residual can vanish while the finite periodic
+symbol is unstable.
+
 \subsection{Doubler Counterexample}
 
 The Hessian condition is necessary but not sufficient.  The symbol
@@ -132,6 +165,12 @@ Brillouin-zone points with \(\sin(\epsilon k_a)=0\).  Therefore the compiler als
 needs a \emph{single-patch} or \emph{sector-selection} condition before a
 continuum relativistic scalar target is attached.
 
+The current tests record this in \(d=1,2,3\) on the \(L_a=4\) periodic grids:
+the Hessian residual still vanishes at speed \(1\), while
+\(\texttt{symbol\_minimum\_data}\) finds \(2^d\) zero minima with each centered
+label coordinate in \(\{0,-2\}\).  This is a finite-grid witness of extra
+patches, not a continuum species-count theorem.
+
 \subsection{Compiler Rule}
 
 For the scalar Gaussian tier, a Lorentz-target compile attempt must emit at
@@ -145,7 +184,8 @@ least:
 \text{rotation residual} &
   k_b\partial_a\omega^2-k_a\partial_b\omega^2,\\
 \text{boost-boost residual} & R_bX_a-R_aX_b,\\
-\text{patch data} & \text{chosen minimum and exclusion of unwanted minima}.
+\text{patch data} &
+  \text{finite-grid minimum value, labels, momenta, and count}.
 \end{array}
 \]
 Only the mass and speed entries are finite Taylor data.  The residual and patch

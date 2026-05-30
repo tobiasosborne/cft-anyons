@@ -148,6 +148,65 @@ function periodic_symbol_values(coefficients, sizes; spacing = 1, validate_coeff
 end
 
 """
+    symbol_minimum_data(coefficients, sizes; spacing = 1,
+        atol = GAUSSIAN_MINIMUM_COUNT_ATOL,
+        rtol = GAUSSIAN_MINIMUM_COUNT_RTOL,
+        require_nonnegative = false,
+        validate_coefficients = true)
+
+Return finite-periodic minimum data for a scalar quadratic symbol.  The result
+records the minimum value, the number of grid points tied for the minimum under
+the Gaussian minima tolerance, and per-minimum location data in the uncentered
+and centered periodic momentum conventions.
+
+If `require_nonnegative` is true, a negative minimum outside the same tolerance
+raises an error with the first offending label and momentum.
+"""
+function symbol_minimum_data(coefficients, sizes; spacing = 1,
+        atol = GAUSSIAN_MINIMUM_COUNT_ATOL, rtol = GAUSSIAN_MINIMUM_COUNT_RTOL,
+        require_nonnegative = false, validate_coefficients = true)
+    _check_periodic_sizes(sizes)
+    dims = Tuple(Int.(sizes))
+    values = periodic_symbol_values(coefficients, dims; spacing, validate_coefficients)
+    uncentered_grid = periodic_momentum_grid(dims; spacing)
+    centered_grid = centered_periodic_momentum_grid(dims; spacing)
+    sites = vec(collect(CartesianIndices(dims)))
+    minimum_value = minimum(values)
+
+    minima = [
+        (
+            linear_index = index,
+            cartesian_index = sites[index],
+            location = collect(Tuple(sites[index])),
+            label = [Tuple(sites[index])[axis] - 1 for axis in eachindex(dims)],
+            momentum = uncentered_grid[index],
+            centered_label = centered_grid[index].label,
+            centered_momentum = centered_grid[index].momentum,
+            value = values[index],
+        )
+        for index in eachindex(values)
+        if isapprox(values[index], minimum_value; atol, rtol)
+    ]
+
+    if require_nonnegative && minimum_value < 0 && !isapprox(minimum_value, 0; atol, rtol)
+        first_minimum = first(minima)
+        error("periodic symbol has negative finite-grid minimum $(minimum_value) " *
+              "at label $(first_minimum.label), centered label $(first_minimum.centered_label), " *
+              "momentum $(first_minimum.momentum)")
+    end
+
+    return (
+        minimum_value = minimum_value,
+        minimum_count = length(minima),
+        minima = minima,
+        sizes = collect(dims),
+        spacing = float(spacing),
+        atol = atol,
+        rtol = rtol,
+    )
+end
+
+"""
     periodic_fourier_vector(sizes, label)
 
 Return the normalized finite periodic Fourier vector with integer dual label
@@ -208,7 +267,6 @@ minimum under the Gaussian minima-count tolerance convention.
 function count_periodic_symbol_minima(coefficients, sizes; spacing = 1,
         atol = GAUSSIAN_MINIMUM_COUNT_ATOL, rtol = GAUSSIAN_MINIMUM_COUNT_RTOL,
         validate_coefficients = true)
-    values = periodic_symbol_values(coefficients, sizes; spacing, validate_coefficients)
-    minimum_value = minimum(values)
-    return count(value -> isapprox(value, minimum_value; atol, rtol), values)
+    return symbol_minimum_data(coefficients, sizes; spacing = spacing, atol = atol,
+        rtol = rtol, validate_coefficients = validate_coefficients).minimum_count
 end

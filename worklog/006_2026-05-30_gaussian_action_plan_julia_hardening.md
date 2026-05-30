@@ -1,5 +1,57 @@
 # Worklog chunk 006 — 2026-05-30
 
+## J5 finite-grid minimum and positivity witnesses — 2026-05-30
+
+### Context
+
+J4 made scalar coefficient structure explicit, but the Lorentz Hessian residual
+was still only local Taylor data.  The action plan required finite-grid
+positivity and patch/minimum witnesses before these residuals can become
+compiler gates.
+
+### What changed
+
+- Delegated J5 to worker `019e7970-b245-7a42-9153-e0ae276cc11c`
+  (`Beauvoir`) and reviewed the patch.
+- Added `symbol_minimum_data`, returning finite-grid minimum value, count,
+  one-based locations, uncentered labels/momenta, centered labels/momenta, and
+  tolerance metadata.
+- Added a `require_nonnegative=true` finite-grid gate that raises on negative
+  minima outside the named minima tolerance.
+- Added the unstable one-dimensional witness
+  \(V_0=0,V_{\pm1}=1,V_{\pm2}=-1/2\): its speed-one Hessian residual vanishes,
+  but the \(L=4\) symbol has minimum \(-3\) at the Brillouin edge.
+- Strengthened doubler checks in \(d=1,2,3\), recording \(2^d\) zero minima
+  with centered labels in \(\{0,-2\}^d\).
+- Updated CA-27, CA-28, and INDEX.md to describe finite-grid witnesses rather
+  than continuum species or positivity theorems.
+
+### Why these choices
+
+- Hessian data alone can certify only one Taylor coefficient at a chosen patch;
+  it cannot prove stability or single-species behavior.
+- Returning both centered and uncentered labels keeps the helper compatible with
+  the finite spectrum convention and the branch-aware low-energy convention.
+
+### Frictions / dead ends
+
+- The nonnegative gate is deliberately finite-grid only.  It is useful as a
+  compiler witness, but it is not a continuum positivity proof.
+
+### Acceptance
+
+- `make ci-before-push` passed after parent review, including
+  `make check-report-shards`, `make report`, and `Pkg.test()`.
+- `git diff --check` passed.
+
+### Pointers
+
+- Helper: `src/GaussianBosonNumerics.jl`.
+- Tests: `test/runtests.jl`, testsets
+  "Gaussian boson finite-grid minimum data" and
+  "Gaussian boson massless doubler coefficient rejection".
+- Report: CA-27 and CA-28.
+
 ## J4 structural coefficient validation — 2026-05-30
 
 ### Context

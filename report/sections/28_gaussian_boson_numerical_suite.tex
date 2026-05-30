@@ -20,9 +20,10 @@ finite periodic checks below do not assert an exact differential
 
 The current numerical surface is deliberately narrow: it checks scalar
 coefficient structure, finite-periodic symbol values, finite stiffness spectra,
-assigned Fourier eigenvectors, periodic minima counts, and the implemented
+assigned Fourier eigenvectors, periodic minimum data, and the implemented
 coefficient residuals/Hessians.  It also checks centered periodic momentum
-labels for branch-aware low-energy windows and test-local central
+labels for branch-aware low-energy windows, a loud finite-grid nonnegativity
+gate when requested, and test-local central
 finite-difference boost-time derivative oracles.  It does not test finite boost
 generators, finite rotation generators, coordinate-generator commutators, or
 full generator closure.
@@ -33,8 +34,8 @@ Dependencies: CA-24--CA-27, INDEX.md, and CONVENTIONS.md (j).
 % Source: literature/md/2010.11121/2010.11121.md:598 -- lattice scalar Hamiltonian.
 % Source: literature/md/2010.11121/2010.11121.md:623 -- lattice Klein-Gordon dispersion.
 % Source: literature/md/2010.11121/2010.11121.md:1626--1628 -- massless fields require a zero-mode policy.
-% Checked: src/GaussianBosons.jl:9--68 and :146--195; src/GaussianBosonNumerics.jl:51--214.
-% Checked: test/runtests.jl:151--220 and :223--387.
+% Checked: src/GaussianBosons.jl:9--68 and :146--195; src/GaussianBosonNumerics.jl:51--272.
+% Checked: test/runtests.jl:151--220 and :223--422.
 
 \subsection{Why These Tests}
 
@@ -151,35 +152,49 @@ finite-difference oracle above.
 \]
 and that the Lorentz residual is nonzero when the target speed is \(1\).
 
+\textbf{Hessian-passing unstable scalar.}  The tests build the one-dimensional
+coefficient witness
+\[
+  V_0=0,\qquad V_{\pm1}=1,\qquad V_{\pm2}=-\frac12.
+\]
+Its speed-one Hessian residual vanishes, but finite periodic sampling at
+\(L=4\) has minimum \(-3\).  The minimum-data helper records one minimum at
+location \(3\), uncentered label \(2\), centered label \(-2\), uncentered
+momentum \(\pi\), and centered momentum \(-\pi\).  Requesting a nonnegative
+finite-grid symbol raises an error, so this example cannot pass as a stable
+scalar symbol.
+
 \textbf{Doubler symbol.}  The tests build
 \[
   \omega_\epsilon(k)^2
   =
   m^2+\epsilon^{-2}\sum_a\sin^2(\epsilon k_a)
 \]
-with \(m=0\) and count multiple minima on an even periodic grid.  This catches the case
-where the Hessian at one minimum is correct but the compiler would need a
-multi-species, sector-selection, or zero-mode policy output.  It is deliberately
-outside the positive-dispersion generator statements.
+with \(m=0\).  In \(d=1,2,3\), the speed-one Hessian residual vanishes on the
+chosen patch, but the \(L_a=4\) periodic grid has \(2^d\) zero minima with
+centered label coordinates in \(\{0,-2\}\).  This catches the case where the
+Hessian at one minimum is correct but the compiler would need a multi-species,
+sector-selection, or zero-mode policy output.  It is deliberately outside the
+positive-dispersion generator statements.
 
 \subsection{Current Julia Surface}
 
 The checked helper layer is:
 \[
 \begin{array}{ll}
-\texttt{kg\_nearest\_neighbor\_coefficients}
+\begin{gathered}\texttt{kg\_nearest\_neighbor}\\\texttt{\_coefficients}\end{gathered}
   & \text{standard scalar KG coefficients},\\
-\texttt{anisotropic\_kg\_nearest\_neighbor\_coefficients}
+\begin{gathered}\texttt{anisotropic\_kg}\\\texttt{\_nearest\_neighbor}\\\texttt{\_coefficients}\end{gathered}
   & \text{anisotropic coefficient witness},\\
-\texttt{doubler\_quadratic\_coefficients}
+\begin{gathered}\texttt{doubler\_quadratic}\\\texttt{\_coefficients}\end{gathered}
   & \text{coefficient-level doubler witness},\\
-\texttt{validate\_scalar\_coefficients}
+\begin{gathered}\texttt{validate\_scalar}\\\texttt{\_coefficients}\end{gathered}
   & \text{structural scalar-coefficient validator},\\
 \texttt{scalar\_quadratic\_symbol}
   & \sum_rV_re^{i\epsilon k\cdot r},\\
-\texttt{boost\_time\_symbol\_from\_coefficients}
+\begin{gathered}\texttt{boost\_time\_symbol}\\\texttt{\_from\_coefficients}\end{gathered}
   & \frac12\nabla\omega^2,\\
-\texttt{low\_energy\_hessian\_from\_coefficients}
+\begin{gathered}\texttt{low\_energy\_hessian}\\\texttt{\_from\_coefficients}\end{gathered}
   & \partial_a\partial_b\omega^2(0),\\
 \texttt{lorentz\_hessian\_residual}
   & \frac12{\rm Hess}(\omega^2)(0)-c^2I,\\
@@ -193,7 +208,9 @@ The checked helper layer is:
   & \text{Fourier vector for a dual label},\\
 \texttt{periodic\_symbol\_values}
   & \text{finite Brillouin-grid eigenvalue oracle},\\
-\texttt{count\_periodic\_symbol\_minima}
+\begin{gathered}\texttt{symbol}\\\texttt{\_minimum\_data}\end{gathered}
+  & \text{finite-grid minimum value, labels, momenta, and count},\\
+\begin{gathered}\texttt{count\_periodic}\\\texttt{\_symbol\_minima}\end{gathered}
   & \text{finite-grid minima counter}.
 \end{array}
 \]
@@ -208,7 +225,7 @@ Proposed next suite additions, none claimed as achieved here, are:
 \begin{array}{ll}
 1.&\text{sampled symbol residuals on shrinking low-energy windows},\\
 2.&\text{comparison of open-boundary first moments with periodic symbol tests},\\
-3.&\text{positivity witnesses and patch/minimum certificates}.
+3.&\text{rotation and boost-boost residual helpers}.
 \end{array}
 \]
 Any finite periodic coordinate-generator version of the first-moment comparison
