@@ -1,5 +1,40 @@
 # Worklog chunk 005 — 2026-05-30
 
+## Session log — 2026-05-30 — Action-plan R4 angular-momentum mnemonic
+
+### Context
+
+R4 qualifies CA-13's angular-momentum-density formula so it cannot be read as a
+sourced lattice stress-energy dictionary.
+
+### What changed
+
+- Delegated R4 to worker `019e7947-8ec3-77b1-88fc-7c98019df9be` (`Volta`).
+- Updated CA-13 to state that \(J_{ab}=\int(x_ap_b-x_bp_a)\,dx\) is a
+  continuum mnemonic only.
+- Updated CA-16 to mark lattice rotation output as deferred until a
+  momentum-density/current convention has its own evidence.
+
+### Why these choices
+
+- Schottenloher currently sources geometric vector fields and rotations, not a
+  lattice momentum density or stress-energy tensor.  A1 remains the source gate
+  before promoting any stress-energy formula.
+
+### Frictions / dead ends
+
+- None.  This was a small report containment fix.
+
+### Acceptance
+
+- `make ci-before-push` passed.
+- `git diff --check` passed.
+
+### Pointers
+
+- Action plan: `reviews/2026-05-30_gaussian_lorentz/ACTION_PLAN.md` (R4).
+- Shards: CA-13 and CA-16.
+
 ## Session log — 2026-05-30 — Action-plan R3 source-anchor ranges
 
 ### Context
