@@ -21,6 +21,10 @@ before treating report edits as complete.
 | 1 | `CA-01-PROGRAMME-MAP` | `report/sections/01_programme_map.tex` | Programme Map |
 | 2 | `CA-02-AND-OR-VACUUM-GRAMMAR` | `report/sections/02_and_or_vacuum_grammar.tex` | Many-Particle Hilbert Spaces: the AND/OR/Vacuum Grammar |
 | 3 | `CA-03-INDEFINITE-PARTICLE-FOCK` | `report/sections/03_indefinite_particle_fock.tex` | Indefinite Particle Number: the Full Fock Completion |
+| 4 | `CA-04-HILBERT-SPACE-COMPILER-CONTRACT` | `report/sections/04_hilbert_space_compiler_contract.tex` | A Hilbert-Space Compiler Contract |
+| 5 | `CA-05-SYMMETRY-DECORATED-GRAMMAR` | `report/sections/05_symmetry_decorated_grammar.tex` | Symmetry-Decorated Many-Particle Grammar |
+| 6 | `CA-06-SECTORS-PROJECTIONS-QUOTIENTS` | `report/sections/06_sectors_projections_quotients.tex` | Sectors, Projections, Subspaces, and Quotients |
+| 7 | `CA-07-EXCHANGE-STATISTICS-LAYER` | `report/sections/07_exchange_statistics_layer.tex` | Exchange Symmetry and Statistics as Sector Selection |
 
 ## Adding a shard
 

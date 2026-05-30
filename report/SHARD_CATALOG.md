@@ -37,3 +37,39 @@ single ~200-line source file it points to.
 - Summary: Distinguishes the algebraic direct sum (finite particle number, dense) from its Hilbert completion (indefinite particle number) and shows the Fock space is a Hilbert space with mutually orthogonal sectors.
 - Summary: Identifies this as the full / distinguishable Fock space and locates Bose/Fermi statistics as the deferred per-sector permutation quotient.
 - Keywords: Fock space, indefinite particle number, Hilbert direct sum, completed tensor product, vacuum, distinguishable Fock, second quantization
+
+## `CA-04-HILBERT-SPACE-COMPILER-CONTRACT`
+
+- Source: `report/sections/04_hilbert_space_compiler_contract.tex`
+- Title: A Hilbert-Space Compiler Contract
+- Summary: States the mini north star for the pre-work sequence: expressions in the many-particle grammar should compile to Hilbert carriers, observable-algebra policies, symmetries, and evidence metadata.
+- Summary: Separates syntax from semantics and records the typed output slots needed before the grammar can support sectors, quotients, and later category-valued data.
+- Summary: Treats the regular-expression analogy as a proposal while keeping every constructor responsible for explicit Hilbert-space and observable-algebra data.
+- Keywords: Hilbert-space compiler, grammar, observable algebra, regular expressions, syntax, semantics, evidence metadata
+
+## `CA-05-SYMMETRY-DECORATED-GRAMMAR`
+
+- Source: `report/sections/05_symmetry_decorated_grammar.tex`
+- Title: Symmetry-Decorated Many-Particle Grammar
+- Summary: Adds ordinary and projective-unitary symmetry data to atoms and propagates it through OR, AND, and full Fock constructions.
+- Summary: Uses central extensions as the pre-work representation of projective symmetries, avoiding unsourced cocycle arithmetic in the grammar.
+- Summary: Records the compatibility requirements needed before multiple atomic Hilbert spaces can share a single compiled symmetry action.
+- Keywords: symmetry, unitary representation, projective representation, central extension, tensor product, direct sum, Fock
+
+## `CA-06-SECTORS-PROJECTIONS-QUOTIENTS`
+
+- Source: `report/sections/06_sectors_projections_quotients.tex`
+- Title: Sectors, Projections, Subspaces, and Quotients
+- Summary: Makes precise the slogan that symmetry sectors can be represented by orthogonal projections, closed subspaces, or suitable Hilbert quotients.
+- Summary: Proves the finite-group averaging projection for invariant sectors and records the checked C2 swap example in the Julia test suite.
+- Summary: Separates invariant vectors, invariant observable algebras, and compressed sector observable algebras so the compiler cannot conflate them.
+- Keywords: sector, projection, quotient, invariant subspace, averaging projector, observable algebra, compression
+
+## `CA-07-EXCHANGE-STATISTICS-LAYER`
+
+- Source: `report/sections/07_exchange_statistics_layer.tex`
+- Title: Exchange Symmetry and Statistics as Sector Selection
+- Summary: Applies the sector machinery to the permutation action on tensor slots, recovering symmetric and antisymmetric Fock sectors from the full distinguishable carrier.
+- Summary: Keeps internal symmetries separate from exchange symmetry and records how the two actions coexist on n-particle sectors.
+- Summary: Defers para-statistics and genuinely anyonic braid statistics until their source, convention, and projector data are fixed.
+- Keywords: exchange symmetry, statistics, symmetric Fock, antisymmetric Fock, permutation group, sector projector, anyonic deferral

@@ -10,7 +10,8 @@ lab book points here, to the script and run artifact that back it.
 |---|---|
 | `scripts/check_report_shards.sh` | Deterministic structural guard for the sharded lab book. |
 | `scripts/ci_before_push.sh` | Local pre-push gate (shard guard + report build + Julia tests). |
-| `test/runtests.jl` | Julia invariant checks (`make test` / `Pkg.test()`). |
+| `src/CftAnyons.jl` | Seed Julia backend: golden-ratio invariant helper and finite-group averaging projector helper. |
+| `test/runtests.jl` | Julia invariant checks (`make test` / `Pkg.test()`), including the `C2` swap averaging projector sector check used by CA-06. |
 
 ## Runs
 

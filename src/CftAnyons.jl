@@ -1,5 +1,7 @@
 module CftAnyons
 
+using LinearAlgebra
+
 # Seed module for the cft-anyons computational backend. Per AGENTS.md Rule 7,
 # the accompanying tests assert real mathematical invariants, not "it loaded".
 # This file is intentionally tiny; extend it as the pipeline (CA-01) grows.
@@ -16,5 +18,42 @@ checks exactly this invariant, establishing the project's "tests assert a known
 value / identity" convention.
 """
 golden_ratio() = (1 + sqrt(5)) / 2
+
+"""
+    finite_group_average_projector(unitaries) -> Matrix
+
+Average a finite list of same-size unitary matrices.
+
+For a finite unitary representation ``U : G -> U(H)``, the average
+``|G|^-1 * sum_g U(g)`` is the orthogonal projection onto the invariant sector.
+The function checks only the finite matrix preconditions; the caller supplies
+the group law evidence by passing a representation image.
+"""
+function finite_group_average_projector(unitaries)
+    isempty(unitaries) && error("cannot average an empty finite group representation")
+
+    first_size = size(first(unitaries))
+    length(first_size) == 2 || error("expected matrices, got first object with size $first_size")
+    first_size[1] == first_size[2] || error("expected square matrices, got first size $first_size")
+
+    T = promote_type(map(eltype, unitaries)...)
+    P = zeros(T, first_size)
+    for (idx, U) in pairs(unitaries)
+        size(U) == first_size || error("matrix $idx has size $(size(U)); expected $first_size")
+        U' * U ≈ I || error("matrix $idx is not unitary within default isapprox tolerance")
+        P .+= U
+    end
+    return P / length(unitaries)
+end
+
+"""
+    is_orthogonal_projection(P; atol = 1e-12) -> Bool
+
+Return whether ``P`` is self-adjoint and idempotent to numerical tolerance.
+"""
+function is_orthogonal_projection(P; atol = 1e-12)
+    size(P, 1) == size(P, 2) || return false
+    return isapprox(P, P'; atol) && isapprox(P * P, P; atol)
+end
 
 end # module CftAnyons

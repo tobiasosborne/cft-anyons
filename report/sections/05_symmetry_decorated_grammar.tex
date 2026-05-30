@@ -1,0 +1,122 @@
+% SHARD-ID: CA-05-SYMMETRY-DECORATED-GRAMMAR
+% SHARD-TITLE: Symmetry-Decorated Many-Particle Grammar
+% SHARD-SUMMARY: Adds ordinary and projective-unitary symmetry data to atoms and propagates it through OR, AND, and full Fock constructions.
+% SHARD-SUMMARY: Uses central extensions as the pre-work representation of projective symmetries, avoiding unsourced cocycle arithmetic in the grammar.
+% SHARD-SUMMARY: Records the compatibility requirements needed before multiple atomic Hilbert spaces can share a single compiled symmetry action.
+% SHARD-KEYWORDS: symmetry, unitary representation, projective representation, central extension, tensor product, direct sum, Fock
+
+\section{Symmetry-Decorated Many-Particle Grammar}
+\label{sec:symmetry-decorated-grammar}
+
+\subsection{Sources and Dependencies}
+
+This shard extends CA-02 and CA-03 by decorating atoms with symmetry data.  It
+uses CONVENTIONS.md (f).
+
+% Source: references/cft/Schottenloher2008/Schottenloher2008.md:1524
+%   unitary representation = continuous homomorphism G -> U(H).
+% Source: references/cft/Schottenloher2008/Schottenloher2008.md:1528
+%   projective representation = continuous homomorphism G -> U(P).
+% Source: references/cft/Schottenloher2008/Schottenloher2008.md:1570
+%   a projective representation determines a central extension E of G and a lift.
+% Source: references/cft/Schottenloher2008/Schottenloher2008.md:1618
+%   in the topological setting, the lift is a continuous unitary representation.
+% Source: references/text/PenneysUnitaryFusionCategories.md:323
+%   Rep^\dagger(G) has Hilbert spaces with unitary G-actions and equivariant maps.
+
+\subsection{Decorated Atoms}
+
+Fix a topological group \(G\).  A symmetry-decorated atom is a pair
+\[
+  (K_x,U_x),\qquad U_x:G\to U(K_x),
+\]
+where \(K_x\) is the atomic Hilbert space and \(U_x\) is a unitary
+representation.  If the intended symmetry is projective, the pre-work convention
+is to choose a central extension
+\[
+  1\to U(1)\to E\to G\to 1
+\]
+and use an honest unitary representation \(U_x:E\to U(K_x)\).  The expression is
+then compiled over \(E\), with a note that the induced physical symmetry is
+projective over \(G\).
+
+The vacuum atom is \((\mathbb C,\mathbf 1)\), where \(\mathbf 1(g)z=z\).  The
+zero atom carries the unique representation on \(\zero\).
+
+\subsection{Propagation Through OR and AND}
+
+If \(E,F\) have compiled carriers and representations \((H_E,U_E)\) and
+\((H_F,U_F)\) for the same group or chosen central extension, define
+\[
+  H_{\operatorname{OR}(E,F)}=H_E\oplus H_F,\qquad
+  U_{\operatorname{OR}(E,F)}(g)=U_E(g)\oplus U_F(g),
+\]
+and
+\[
+  H_{\operatorname{AND}(E,F)}=H_E\hotimes H_F,\qquad
+  U_{\operatorname{AND}(E,F)}(g)=U_E(g)\hotimes U_F(g).
+\]
+For finite-dimensional factors, \(\hotimes=\otimes\).  In infinite-dimensional
+Hilbert spaces, the completed tensor product is the one already required by
+CA-03.
+
+These formulas are the Hilbert-space version of the monoidal structure on
+\(\Rep^\dagger(G)\): direct sums are block actions and tensor products are
+diagonal actions.  If two atoms use different groups, different central
+extensions, or incompatible projective multipliers, the compiler must stop and
+ask for a common symmetry object before forming a single \(U_E\).
+
+\subsection{Propagation Through Full Fock}
+
+For an ordinary unitary representation \(U:G\to U(H)\), define the full-Fock
+action
+\[
+  \Fock(U)(g)
+  =
+  \bigoplus_{n\ge0} U(g)^{\hotimes n}
+  \quad\text{on}\quad
+  \Fock(H)=\hoplus_{n\ge0}H^{\hotimes n},
+\]
+with \(U(g)^{\hotimes0}=\operatorname{id}_{\mathbb C}\).  This preserves the
+particle-number grading.  In this pre-work shard, no Shale--Stinespring-type
+implementability theorem is claimed for general canonical field algebras; the
+formula is only the sectorwise tensor-power representation on the full Fock
+carrier.  Implementing a one-particle unitary on a chosen CAR/CCR observable
+algebra is a separate field-algebra question.
+
+\subsection{Intertwiners and Symmetry-Preserving Compilation}
+
+A morphism between decorated atoms or compiled expressions is symmetry-preserving
+only when it is an intertwiner:
+\[
+  T U_E(g)=U_F(g)T\quad\text{for all }g.
+\]
+This matters for compiler optimisations.  Rebracketing and distributivity
+isomorphisms used by CA-02 are acceptable in the decorated grammar only when they
+also intertwine the propagated actions.  The standard Hilbert-space associators,
+unitors, symmetries, and distributivity maps do so for diagonal direct-sum and
+tensor-product actions.
+
+\subsection{Lamport Dependency Skeleton}
+
+{\small
+\[
+\setlength{\arraycolsep}{2pt}
+\begin{array}{rcl}
+D13 &:& \text{decorated atom }(K_x,U_x),\ U_x:G\to U(K_x).\\
+D14 &:& \text{projective symmetry over }G\text{ is compiled via }U_x:E\to U(K_x)
+        \text{ for a named central extension }E.\\
+D15 &:& U_{E\operatorname{OR}F}=U_E\oplus U_F,\quad
+        U_{E\operatorname{AND}F}=U_E\hotimes U_F.\\
+D16 &:& \Fock(U)=\hoplus_{n\ge0}U^{\hotimes n},\quad U^{\hotimes0}=1_{\mathbb C}.\\
+T9 &:& \text{The propagated symmetry preserves the CA-02/CA-03 particle grading.}\\
+T10 &:& \text{A single compiled }U_E\text{ requires a common group or central extension.}
+\end{array}
+\]
+}
+
+\subsection{Boundary}
+
+This shard does not yet impose invariance, select charge sectors, form quotient
+spaces, or define symmetry-invariant observable algebras.  Those are sector
+operations, not mere symmetry propagation, and are treated in CA-06.

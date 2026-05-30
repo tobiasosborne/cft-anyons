@@ -85,3 +85,40 @@ normalization, chiral vs full — record before use.
 naming.
 **Source:** —
 **Sweep status:** —
+
+## (f) Symmetry data in the Hilbert-space grammar
+**Choice:** A symmetry on a Hilbert carrier is recorded as a strongly continuous
+unitary representation `U : G -> U(H)`. A projective symmetry is handled, in this
+pre-work grammar, by replacing it with an honest unitary representation of a
+specified central extension `E -> G`; no cocycle-level calculus is used until a
+later convention fixes multipliers. The vacuum sector `C` carries the trivial
+action, and the zero space carries the unique action. Grammar propagation uses
+direct sums for OR, tensor products for AND, and sectorwise tensor powers for
+Fock.
+**Reasoning:** this keeps the syntax inside ordinary Hilbert-space
+representation theory while still supporting the project's projective-unitary
+north star. It also avoids silently tensoring projective multipliers with
+incompatible cocycles.
+**Source:** `references/cft/Schottenloher2008/Schottenloher2008.md:1524`
+(unitary representation), `:1528` (projective representation), `:1570` and
+`:1618` (central-extension lift); `references/text/PenneysUnitaryFusionCategories.md:323`
+(`Rep^\dagger(G)`); CA-05.
+**Sweep status:** CA-04--CA-07 use this convention.
+
+## (g) Sector, projection, and quotient semantics
+**Choice:** A sector of a compiled Hilbert carrier is represented first by an
+orthogonal projection `P = P^* = P`; its Hilbert space is `Ran(P)` with the
+inherited inner product. A quotient presentation is admitted only when the
+closed relation subspace is named. For a finite group action, the invariant
+quotient is `H / span{U(g)v - v}` and is identified with `Ran(P_G)` through the
+averaging projection `P_G = |G|^{-1} sum_g U(g)`. Observable algebras must be
+named explicitly: full `B(H)`, block-preserving, tensor-local, invariant, or
+compressed `P A P` on `Ran(P)`.
+**Reasoning:** "symmetry = quotient" is too imprecise: the Hilbert quotient is
+controlled by a closed relation subspace, and the computationally stable object
+is the projection. Explicit observable policies prevent confusing
+`B(H \oplus K)` with `B(H) \oplus B(K)` or a tensor-local subalgebra.
+**Source:** `references/text/PenneysUnitaryFusionCategories.md:219` (orthogonal
+direct sums give projections), `:235` (orthogonal projections and splittings);
+CA-06 local derivation and `test/runtests.jl` finite-group invariant check.
+**Sweep status:** CA-04--CA-07 and `src/CftAnyons.jl` finite projector helpers.

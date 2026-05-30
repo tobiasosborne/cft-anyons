@@ -1,0 +1,146 @@
+% SHARD-ID: CA-06-SECTORS-PROJECTIONS-QUOTIENTS
+% SHARD-TITLE: Sectors, Projections, Subspaces, and Quotients
+% SHARD-SUMMARY: Makes precise the slogan that symmetry sectors can be represented by orthogonal projections, closed subspaces, or suitable Hilbert quotients.
+% SHARD-SUMMARY: Proves the finite-group averaging projection for invariant sectors and records the checked C2 swap example in the Julia test suite.
+% SHARD-SUMMARY: Separates invariant vectors, invariant observable algebras, and compressed sector observable algebras so the compiler cannot conflate them.
+% SHARD-KEYWORDS: sector, projection, quotient, invariant subspace, averaging projector, observable algebra, compression
+
+\section{Sectors, Projections, Subspaces, and Quotients}
+\label{sec:sectors-projections-quotients}
+
+\subsection{Sources and Dependencies}
+
+This shard depends on CA-04 and CA-05 and fixes the first sector semantics for
+the Hilbert-space compiler.  It uses CONVENTIONS.md (g).
+
+% Source: references/text/PenneysUnitaryFusionCategories.md:219
+%   orthogonal direct sums give isometries and mutually orthogonal projections.
+% Source: references/text/PenneysUnitaryFusionCategories.md:235
+%   an orthogonal projection satisfies p^2 = p = p^\dagger and splits by an isometry.
+% Checked: test/runtests.jl, "finite symmetry sector projectors".
+
+\subsection{The Triangle}
+
+Let \(H\) be a Hilbert space.  The compiler treats a sector first as an
+orthogonal projection
+\[
+  P=P^*=P^2\in\BH(H).
+\]
+It may then expose either of the equivalent Hilbert-space presentations
+\[
+  H_P:=\Ran(P)\subset H,\qquad
+  H/\ker(P)=H/\Ran(1-P).
+\]
+The map
+\[
+  [v]\in H/\ker(P)\longmapsto Pv\in \Ran(P)
+\]
+is a well-defined unitary isomorphism when the quotient has the Hilbert quotient
+norm.  Thus the safe slogan is not ``symmetry equals quotient'' but:
+\[
+  \text{projection}\quad\Longleftrightarrow\quad
+  \text{closed subspace}\quad\Longleftrightarrow\quad
+  \text{quotient by the named orthogonal complement}.
+\]
+
+\subsection{Finite-Group Invariants}
+
+Let \(G\) be finite and \(U:G\to U(H)\) a unitary representation.  Define
+\[
+  P_G=\frac1{|G|}\sum_{g\in G}U(g).
+\]
+Then \(P_G\) is the orthogonal projection onto the invariant subspace
+\[
+  H^G=\{v\in H:U(g)v=v\ \forall g\in G\}.
+\]
+
+\emph{Proof.}  Idempotence follows by reindexing:
+\[
+  P_G^2=\frac1{|G|^2}\sum_{g,h}U(gh)
+       =\frac1{|G|}\sum_k U(k)=P_G.
+\]
+Self-adjointness follows from unitarity and \(g\mapsto g^{-1}\):
+\[
+  P_G^*=\frac1{|G|}\sum_g U(g)^*
+       =\frac1{|G|}\sum_g U(g^{-1})=P_G.
+\]
+For every \(k\), \(U(k)P_G=P_G\), so \(\Ran(P_G)\subset H^G\).  If \(v\in H^G\),
+then \(P_Gv=v\), so \(H^G\subset\Ran(P_G)\). \(\square\)
+
+\subsection{Coinvariant Quotient}
+
+For the same finite action, let
+\[
+  R_G=\Span\{U(g)v-v:g\in G,\ v\in H\}.
+\]
+Then \(R_G\subseteq\ker(P_G)\) because \(P_GU(g)=P_G\).  Conversely, if
+\(w\in\ker(P_G)\), then
+\[
+  w
+  =
+  \frac1{|G|}\sum_{g\in G}\bigl(w-U(g)w\bigr)\in R_G.
+\]
+Therefore \(R_G=\ker(P_G)=(H^G)^\perp\), and the coinvariant quotient
+\[
+  H_G:=H/R_G
+\]
+is canonically unitarily isomorphic to the invariant subspace \(H^G\).  For
+compact non-finite groups the analogous statement requires a Haar-integral and
+analytic hypotheses; this shard records only the finite checked case.
+
+\subsection{Observable-Algebra Distinctions}
+
+There are three different symmetry-related algebras that the compiler must not
+identify silently:
+\[
+  \BH(H),\qquad
+  \BH(H)^G:=\{A:U(g)AU(g)^*=A\ \forall g\},\qquad
+  P_G\BH(H)P_G\cong \BH(H^G).
+\]
+The first is the full algebra before imposing symmetry.  The second is the
+algebra of invariant observables on the original carrier.  The third is the
+compressed algebra acting on the invariant sector.  A model may choose one of
+these, but the choice is an observable policy in the sense of CA-04, not a
+consequence of the word ``symmetry'' alone.
+
+\subsection{Checked Example}
+
+The current Julia check uses \(G=C_2\) acting on \(\mathbb C^2\) by the swap
+matrix \(S\).  The averaging projection is
+\[
+  P=\frac12(I+S)
+   =
+  \begin{pmatrix}
+    1/2 & 1/2\\
+    1/2 & 1/2
+  \end{pmatrix}.
+\]
+The test checks \(P^*=P=P^2\), checks \(I-P\) is the complementary orthogonal
+projection, verifies \(P(I-P)=0\), and verifies that \((1,1)\) is fixed while
+\((1,-1)\) is killed.  This is the first executable invariant for the sector
+compiler.
+
+\subsection{Lamport Dependency Skeleton}
+
+{\small
+\[
+\setlength{\arraycolsep}{2pt}
+\begin{array}{rcl}
+D17 &:& \text{sector projection }P=P^*=P^2;\quad H_P=\Ran(P).\\
+D18 &:& H/\ker(P)\xrightarrow{\ [v]\mapsto Pv\ }\Ran(P).\\
+D19 &:& P_G=|G|^{-1}\sum_g U(g)\quad (G\text{ finite}).\\
+D20 &:& R_G=\Span\{U(g)v-v\}.\\
+L1 &:& P_G=P_G^*=P_G^2,\quad \Ran(P_G)=H^G.\\
+L2 &:& R_G=\ker(P_G)=(H^G)^\perp,\quad H/R_G\cong H^G.\\
+T11 &:& \text{Projection, subspace, and quotient are equivalent only after the relation subspace is named.}\\
+T12 &:& \BH(H)^G\text{ and }P_G\BH(H)P_G\text{ are different observable policies.}
+\end{array}
+\]
+}
+
+\subsection{Boundary}
+
+The finite averaging theorem is not a statement about spontaneous symmetry
+breaking, gauge constraints, BRST cohomology, braid statistics, or superselection
+sectors in a continuum CFT.  It is the first Hilbert-space sector rule needed by
+the compiler.

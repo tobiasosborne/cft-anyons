@@ -1,0 +1,142 @@
+% SHARD-ID: CA-04-HILBERT-SPACE-COMPILER-CONTRACT
+% SHARD-TITLE: A Hilbert-Space Compiler Contract
+% SHARD-SUMMARY: States the mini north star for the pre-work sequence: expressions in the many-particle grammar should compile to Hilbert carriers, observable-algebra policies, symmetries, and evidence metadata.
+% SHARD-SUMMARY: Separates syntax from semantics and records the typed output slots needed before the grammar can support sectors, quotients, and later category-valued data.
+% SHARD-SUMMARY: Treats the regular-expression analogy as a proposal while keeping every constructor responsible for explicit Hilbert-space and observable-algebra data.
+% SHARD-KEYWORDS: Hilbert-space compiler, grammar, observable algebra, regular expressions, syntax, semantics, evidence metadata
+
+\section{A Hilbert-Space Compiler Contract}
+\label{sec:hilbert-space-compiler-contract}
+
+\subsection{Status and Local Anchors}
+
+\textbf{Status: Proposal / contract shard.}  This shard introduces no new
+mathematical classification theorem.  It records a design target for the
+pre-work sequence around CA-02 and CA-03: a typed grammar of many-particle
+expressions should be compilable to Hilbert-space data and observable-algebra
+data with explicit evidence status.
+
+Local anchors are CA-02 for the finite AND/OR/vacuum grammar, CA-03 for the
+Hilbert direct-sum Fock completion, and \texttt{CONVENTIONS.md} entries (f) and
+(g) for symmetry and sector semantics.  The first executable check for this
+sequence is the finite averaging projector in \texttt{test/runtests.jl}, backed
+by \texttt{src/CftAnyons.jl}.
+
+\subsection{Mini North Star}
+
+Proposal: build a \emph{Hilbert-space compiler}.  The user supplies an expression
+in a typed grammar, together with the atom table and required policies; the
+compiler returns the Hilbert carrier, its observable algebra policy, its symmetry
+representation data, and any sector projection or quotient presentation that was
+requested.
+
+The motivating analogy is ``regular expressions for quantum mechanics'': a small
+syntax has compositional semantics.  The analogy is only a prompt.  Here the
+syntax is typed and semantics-bearing; every constructor must say what it does to
+Hilbert carriers, particle gradings, observable algebras, symmetries, and
+evidence metadata.
+
+\subsection{Input Record}
+
+A compiled expression is not just a string.  It has an input record:
+\[
+  \mathsf{Input}
+  =
+  (\mathsf{Atoms},\ E,\ \mathsf{Completion},\ \mathsf{ObsPolicy},\
+   \mathsf{Symmetry},\ \mathsf{SectorPolicy}).
+\]
+
+\begin{description}
+\item[\(\mathsf{Atoms}\).]
+A table of atoms.  At minimum, each atom names a Hilbert space \(K_x\).  Later
+entries may include a group representation, a particle degree, a source locator,
+or category data.
+\item[\(E\).]
+A grammar expression built from \(0,\one,K_x,\operatorname{AND},\operatorname{OR}\),
+Fock, and later sector constructors.
+\item[\(\mathsf{Completion}\).]
+Whether \(\oplus,\otimes\) are finite Hilbert operations, Hilbert completions
+\(\hoplus,\hotimes\), or a finite cutoff.  CA-03 fixes the first infinite Fock
+completion used here.
+\item[\(\mathsf{ObsPolicy}\).]
+The observable-algebra choice.  There is no silent default: full
+\(\BH(H)\), block-preserving, tensor-local, symmetry-invariant, and compressed
+sector algebras are different outputs.
+\item[\(\mathsf{Symmetry}\).]
+Optional unitary or projective-unitary representation data, handled according to
+CONVENTIONS.md (f).
+\item[\(\mathsf{SectorPolicy}\).]
+Optional projection, subspace, or quotient data; see CONVENTIONS.md (g).
+\end{description}
+
+\subsection{Output Record}
+
+The intended output is a typed record, not only a Hilbert-space dimension:
+\[
+  \mathsf{Compile}(E)
+  =
+  (H_E,\ \{H_{E,n}\}_{n\ge0},\ \Alg_E,\ U_E,\ P_E,\ Q_E,\ \mathsf{Evidence}_E).
+\]
+
+\begin{description}
+\item[\(H_E\).]
+The Hilbert carrier.  CA-02 and CA-03 define the first carrier semantics.
+\item[\(\{H_{E,n}\}\).]
+The particle-number grading when the atom table declares particle degrees.
+\item[\(\Alg_E\).]
+The selected observable algebra.  This slot is mandatory once any observable
+claim is made.
+\item[\(U_E\).]
+The propagated symmetry representation, if symmetry data were supplied.
+\item[\(P_E\).]
+The selected sector projection, if a sector constructor was used.
+\item[\(Q_E\).]
+The quotient presentation, if one was requested and its closed relation subspace
+was named.
+\item[\(\mathsf{Evidence}_E\).]
+Source-local, checked, proposal, question, or rejected evidence tags for the
+pieces above.
+\end{description}
+
+\subsection{Observable-Algebra Policies}
+
+The carrier alone does not determine the observable algebra relevant to a model.
+For example, \(H\oplus K\) supports at least:
+\[
+  \BH(H\oplus K),\qquad
+  \BH(H)\oplus \BH(K),\qquad
+  \text{off-diagonal creation/annihilation blocks between }H\text{ and }K.
+\]
+All three are legitimate in different contexts; none is forced by the word
+``OR'' alone.  Similarly, \(H\otimes K\) supports the full algebra
+\(\BH(H\otimes K)\) and the tensor-local subalgebra generated by
+\(\BH(H)\otimes I\) and \(I\otimes\BH(K)\).
+
+Compiler rule: no report statement may infer an observable algebra merely from a
+carrier constructor.  The statement must name the observable policy, or remain a
+carrier-only statement.
+
+\subsection{Lamport Dependency Skeleton}
+
+{\small
+\[
+\setlength{\arraycolsep}{2pt}
+\begin{array}{rcl}
+D10 &:& \mathsf{Input}=(\mathsf{Atoms},E,\mathsf{Completion},\mathsf{ObsPolicy},
+        \mathsf{Symmetry},\mathsf{SectorPolicy}).\\
+D11 &:& \mathsf{Compile}(E)=(H_E,\{H_{E,n}\},\Alg_E,U_E,P_E,Q_E,
+        \mathsf{Evidence}_E).\\
+D12 &:& \mathsf{ObsPolicy}\in\{\text{carrier-only},\BH(H),\text{block},
+        \text{tensor-local},\text{invariant},\text{compressed}\}.\\
+T7 &:& \text{A carrier claim needs }H_E;\ \text{an observable claim also needs }\Alg_E.\\
+T8 &:& \text{The compiler analogy is a proposal, not a theorem of canonical quantization.}
+\end{array}
+\]
+}
+
+\subsection{Boundary}
+
+This contract does not yet compile fusion-category labels, anyonic braid
+statistics, Hamiltonians, continuum limits, or CFT data.  It only fixes the
+pre-work target: future shards should be able to say exactly which input record
+they compile and which output slots they have actually justified.
