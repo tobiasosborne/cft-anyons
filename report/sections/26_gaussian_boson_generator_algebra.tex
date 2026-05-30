@@ -15,11 +15,12 @@ target, Stone convention, and free-boson Fock realization are sourced.  The
 commutator identities in this shard are local differential-operator derivations
 on a flat \(L^2(dk)\) smooth momentum-space core.  The Julia suite currently
 checks coefficient/symbol consequences: Klein-Gordon symbols, boost-time
-symbols, low-energy Hessian examples, finite periodic massive spectra, the
-massless doubler coefficient-rejection witness, and the Gaussian tolerance
-policy.  It does not check the full generator bracket table or any
-second-quantized identity.  The smooth-core derivation is not yet a sourced OAR
-or mass-shell Poincare representation theorem.
+symbols, sampled rotation-Hamiltonian residuals, sampled boost-boost residual
+coefficient data, low-energy Hessian examples, finite periodic massive spectra,
+the massless doubler coefficient-rejection witness, and the Gaussian tolerance
+policy.  It does not check the full generator bracket table, finite coordinate
+commutators, or any second-quantized identity.  The smooth-core derivation is
+not yet a sourced OAR or mass-shell Poincare representation theorem.
 
 Dependencies: CA-11, CA-24--CA-25, and CONVENTIONS.md (h), (j), (k).
 
@@ -34,6 +35,7 @@ Dependencies: CA-11, CA-24--CA-25, and CONVENTIONS.md (h), (j), (k).
 % Convention: CONVENTIONS.md (k) -- vector-field to self-adjoint-generator sign map.
 % Checked: test/runtests.jl, "Gaussian boson numerical tolerance policy",
 %   "Gaussian boson Klein-Gordon symbols", "Gaussian boson boost-time symbols",
+%   "Gaussian boson rotation and boost-boost symbol residuals",
 %   "Gaussian boson Lorentz Hessian examples",
 %   "Gaussian boson finite periodic massive coefficient spectra", and
 %   "Gaussian boson massless doubler coefficient rejection".
@@ -143,8 +145,9 @@ The continuum target with speed \(c=1\) wants \(P_a=k_a\).  The residual is
   \frac{1}{2}\partial_a\omega(k)^2-k_a.
 \]
 For speed \(c\), replace \(k_a\) by \(c^2k_a\).  This is the first algebraic
-filter on Hamiltonian coefficients, and it is the only generator-algebra
-residual currently checked at coefficient-symbol level in Julia.
+filter on Hamiltonian coefficients.  Julia now exposes it both as the
+boost-time symbol \(B_a=\frac12\partial_a\omega^2\) and as the residual vector
+\(R_a=B_a-c^2k_a\), still only at coefficient-symbol level.
 
 \subsection{Rotation-Hamiltonian Residual}
 
@@ -161,6 +164,13 @@ Equivalently,
 \]
 where \(\omega>0\).  Hypercubic lattice symbols usually fail this globally on
 the Brillouin zone but may satisfy it to leading order at a low-energy minimum.
+The Julia helper records the sampled antisymmetric matrix
+\[
+  2(k_bB_a-k_aB_b),
+  \qquad B_a=\frac12\partial_a\omega^2,
+\]
+so the factor of two follows the boost-time convention instead of being
+re-derived independently.
 
 \subsection{Boost-Boost Residual}
 
@@ -187,11 +197,13 @@ Here the possible divergence term vanishes because \(R\) is a gradient
 residual:
 \(\partial_aR_b=\partial_bR_a\).  Thus the boost-boost bracket closes to the
 rotation bracket whenever the boost-time residual \(R_a\) vanishes on the patch.
-This boost-boost statement is a smooth-core algebraic derivation only; no Julia
-test currently checks the boost-boost operator bracket.  The remaining caveat is
-analytic, not algebraic: all of these are unbounded operators and still require a
-common self-adjointness/core theorem before this becomes a continuum
-representation statement.
+The Julia helper records only the sampled coefficient tensor for the
+first-order residual \(R_bX_a-R_aX_b\): its \((a,b,c)\) entry is the coefficient
+of \(X_c\) for the ordered boost pair \((a,b)\).  It is not a finite-grid
+coordinate commutator and does not check the boost-boost operator bracket.  The
+remaining caveat is analytic, not algebraic: all of these are unbounded
+operators and still require a common self-adjointness/core theorem before this
+becomes a continuum representation statement.
 
 \subsection{Second Quantization}
 

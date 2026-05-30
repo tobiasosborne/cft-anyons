@@ -299,6 +299,43 @@ end
     end
 end
 
+@testset "Gaussian boson rotation and boost-boost symbol residuals" begin
+    for d in 1:3
+        k = [0.13 * (-1)^axis * axis for axis in 1:d]
+        spacing = 0.03
+        coeffs = CftAnyons.kg_nearest_neighbor_coefficients(d; mass = 0.5, spacing)
+        rotation = CftAnyons.rotation_hamiltonian_residual_from_coefficients(coeffs, k; spacing)
+        boost_boost = CftAnyons.boost_boost_residual_coefficients_from_coefficients(coeffs, k; spacing)
+
+        @test gaussian_small_spacing_isapprox(rotation, zeros(d, d))
+        @test gaussian_small_spacing_isapprox(boost_boost, zeros(d, d, d))
+    end
+
+    speeds = [1.0, 1.4, 0.7]
+    anisotropic = CftAnyons.anisotropic_kg_nearest_neighbor_coefficients(speeds; mass = 0.4, spacing = 0.05)
+    anisotropic_k = [0.4, -0.3, 0.2]
+    anisotropic_rotation = CftAnyons.rotation_hamiltonian_residual_from_coefficients(anisotropic, anisotropic_k; spacing = 0.05)
+    anisotropic_boost_boost = CftAnyons.boost_boost_residual_coefficients_from_coefficients(anisotropic, anisotropic_k; spacing = 0.05)
+    anisotropic_boost_time = CftAnyons.boost_time_residual_from_coefficients(anisotropic, anisotropic_k; spacing = 0.05)
+
+    @test abs(anisotropic_rotation[1, 2]) > 0.15
+    @test gaussian_symbol_isapprox(anisotropic_rotation + anisotropic_rotation', zeros(3, 3))
+    @test norm(anisotropic_boost_boost) > 0.25
+    @test gaussian_symbol_isapprox(anisotropic_boost_boost + permutedims(anisotropic_boost_boost, (2, 1, 3)), zeros(3, 3, 3))
+    @test gaussian_symbol_isapprox(anisotropic_boost_boost[1, 2, 1], anisotropic_boost_time[2])
+    @test gaussian_symbol_isapprox(anisotropic_boost_boost[1, 2, 2], -anisotropic_boost_time[1])
+
+    doubler = CftAnyons.doubler_quadratic_coefficients(2; mass = 0, spacing = 1)
+    doubler_rotation = CftAnyons.rotation_hamiltonian_residual_from_coefficients(doubler, [pi / 2, pi / 4]; spacing = 1)
+    doubler_boost_boost = CftAnyons.boost_boost_residual_coefficients_from_coefficients(doubler, [pi, 0.0]; spacing = 1)
+
+    @test abs(doubler_rotation[1, 2]) > 1
+    @test gaussian_symbol_isapprox(CftAnyons.scalar_quadratic_symbol(doubler, [pi, 0.0]; spacing = 1), 0)
+    @test abs(doubler_boost_boost[1, 2, 2]) > 3
+    @test_throws ErrorException CftAnyons.rotation_hamiltonian_residual_from_coefficients([([0], 2.0), ([1], -0.5)], [0.2])
+    @test_throws ErrorException CftAnyons.boost_boost_residual_coefficients_from_coefficients(doubler, [0.1, 0.2]; speed = 0)
+end
+
 @testset "Gaussian boson Lorentz Hessian examples" begin
     for d in 1:3
         spacing = 0.35

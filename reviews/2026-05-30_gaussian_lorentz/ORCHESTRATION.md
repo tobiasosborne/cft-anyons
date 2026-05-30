@@ -34,7 +34,7 @@ Protocol:
 | J3 | Complete | `019e795f-7356-7501-b435-a8fc6711feec` (`Schrodinger`) | Added a test-local central finite-difference oracle for the boost-time coefficient helper in d=1,2,3. |
 | J4 | Complete | `019e7968-63d3-7010-8a23-e7cca580ed2d` (`Sagan`) | Added strict scalar coefficient validation and loud negative tests. |
 | J5 | Complete | `019e7970-b245-7a42-9153-e0ae276cc11c` (`Beauvoir`) | Added finite-grid minimum data, a nonnegative gate, and Hessian-insufficiency witnesses. |
-| J6 | Pending | - | Rotation and boost-boost residual helpers. |
+| J6 | Complete | `019e797a-f922-71e1-8e79-27a75c489125` (`Jason`) | Added sampled smooth-symbol rotation and boost-boost residual helpers. |
 | A1 | Pending | - | Continuum stress-energy / Poincare-generator source. |
 | A2 | Pending | - | Original Koo-Saleur source. |
 | A3 | Pending | - | Discrete Gaussian/free-field Virasoro source. |
@@ -147,3 +147,12 @@ Protocol:
   V_{\pm2}=-1/2\) witness passes the Hessian residual but fails finite-grid
   nonnegativity, and the doubler minima are recorded in d=1,2,3.  `make
   ci-before-push` and `git diff --check` passed.
+- 2026-05-30: J5 pushed as `db297a8`.  J6 delegated to worker
+  `019e797a-f922-71e1-8e79-27a75c489125` (`Jason`).  Target is symbolic
+  rotation and boost-boost residual helpers without asserting finite-grid
+  coordinate commutators.
+- 2026-05-30: J6 reviewed by parent and accepted after adding antisymmetry
+  checks for the sampled rotation matrix and boost-boost coefficient tensor.
+  The helper surface remains smooth-symbol data only; no finite-grid coordinate
+  generator or second-quantized closure claim was added.  `make ci-before-push`
+  and `git diff --check` passed.

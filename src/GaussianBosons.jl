@@ -193,3 +193,71 @@ function boost_time_symbol_from_coefficients(coefficients, k; spacing = 1,
     end
     return out
 end
+
+"""
+    boost_time_residual_from_coefficients(coefficients, k; spacing = 1,
+        speed = 1, validate_coefficients = true)
+
+Evaluate the smooth-symbol residual ``R_a(k) = 1/2 ∂_a omega(k)^2 - c^2 k_a``.
+This is coefficient-level data only; it does not construct finite coordinate
+or boost operators.
+"""
+function boost_time_residual_from_coefficients(coefficients, k; spacing = 1, speed = 1,
+        imag_atol = GAUSSIAN_SYMBOL_IMAG_ATOL, imag_rtol = GAUSSIAN_SYMBOL_IMAG_RTOL,
+        validate_coefficients = true)
+    _check_k_vector(k)
+    speed > 0 || error("speed must be positive, got $speed")
+    boost_time = boost_time_symbol_from_coefficients(coefficients, k; spacing = spacing,
+        imag_atol = imag_atol, imag_rtol = imag_rtol,
+        validate_coefficients = validate_coefficients)
+    return [boost_time[axis] - float(speed)^2 * float(k[axis]) for axis in eachindex(k)]
+end
+
+"""
+    rotation_hamiltonian_residual_from_coefficients(coefficients, k; spacing = 1,
+        validate_coefficients = true)
+
+Return the antisymmetric smooth-symbol residual matrix
+``k_b ∂_a omega(k)^2 - k_a ∂_b omega(k)^2``.  Since
+`boost_time_symbol_from_coefficients` is ``1/2 ∇ omega^2``, this helper computes
+``2(k_b B_a - k_a B_b)`` from the shared boost-time symbol convention.
+"""
+function rotation_hamiltonian_residual_from_coefficients(coefficients, k; spacing = 1,
+        imag_atol = GAUSSIAN_SYMBOL_IMAG_ATOL, imag_rtol = GAUSSIAN_SYMBOL_IMAG_RTOL,
+        validate_coefficients = true)
+    _check_k_vector(k)
+    boost_time = boost_time_symbol_from_coefficients(coefficients, k; spacing = spacing,
+        imag_atol = imag_atol, imag_rtol = imag_rtol,
+        validate_coefficients = validate_coefficients)
+    spatial_dim = length(k)
+    residual = zeros(Float64, spatial_dim, spatial_dim)
+    for a in 1:spatial_dim, b in 1:spatial_dim
+        residual[a, b] = 2 * (float(k[b]) * boost_time[a] - float(k[a]) * boost_time[b])
+    end
+    return residual
+end
+
+"""
+    boost_boost_residual_coefficients_from_coefficients(coefficients, k; spacing = 1,
+        speed = 1, validate_coefficients = true)
+
+Return sampled smooth-symbol coefficient data for the first-order operator
+residual ``R_b X_a - R_a X_b`` in CA-26, where
+``R_a = 1/2 ∂_a omega(k)^2 - c^2 k_a``.  The returned tensor has entries
+`data[a,b,c]`, the coefficient of ``X_c`` in the residual for the ordered
+boost pair ``(a,b)``.  This does not assert an exact finite-grid CCR.
+"""
+function boost_boost_residual_coefficients_from_coefficients(coefficients, k; spacing = 1,
+        speed = 1, imag_atol = GAUSSIAN_SYMBOL_IMAG_ATOL,
+        imag_rtol = GAUSSIAN_SYMBOL_IMAG_RTOL, validate_coefficients = true)
+    residual_vector = boost_time_residual_from_coefficients(coefficients, k; spacing = spacing,
+        speed = speed, imag_atol = imag_atol, imag_rtol = imag_rtol,
+        validate_coefficients = validate_coefficients)
+    spatial_dim = length(k)
+    residual = zeros(Float64, spatial_dim, spatial_dim, spatial_dim)
+    for a in 1:spatial_dim, b in 1:spatial_dim
+        residual[a, b, a] += residual_vector[b]
+        residual[a, b, b] -= residual_vector[a]
+    end
+    return residual
+end

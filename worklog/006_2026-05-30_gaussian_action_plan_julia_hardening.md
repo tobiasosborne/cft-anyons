@@ -1,5 +1,52 @@
 # Worklog chunk 006 — 2026-05-30
 
+## J6 sampled rotation and boost-boost residuals — 2026-05-30
+
+### Context
+
+After J5, the remaining Julia-hardening item was to cover the non-boost-time
+symbol residuals described in CA-26 without pretending to have finite-grid
+coordinate generators or full operator closure.
+
+### What changed
+
+- Delegated J6 to worker `019e797a-f922-71e1-8e79-27a75c489125` (`Jason`) and
+  reviewed the patch.
+- Added `boost_time_residual_from_coefficients`,
+  `rotation_hamiltonian_residual_from_coefficients`, and
+  `boost_boost_residual_coefficients_from_coefficients`.
+- Tested nearest-neighbour Klein-Gordon small-spacing behavior, anisotropic
+  failures, doubler failures, strict validation on residual helpers, and parent
+  antisymmetry checks for the sampled rotation matrix and boost-boost tensor.
+- Updated CA-26--CA-28 and INDEX.md so the checked surface is named as sampled
+  smooth-symbol residual data.
+
+### Why these choices
+
+- CA-26 supports coefficient/symbol residuals on the smooth momentum core; it
+  does not yet support finite periodic coordinate commutators or unbounded
+  self-adjoint generator closure.
+- The boost-boost helper therefore returns coefficients of \(R_bX_a-R_aX_b\),
+  not a finite matrix commutator.
+
+### Frictions / dead ends
+
+- CA-28 had an older phrase conflating the boost-time symbol with the residual;
+  parent review split those statements into \(B_a\) and \(R_a=B_a-c^2k_a\).
+
+### Acceptance
+
+- `make ci-before-push` passed after parent review, including
+  `make check-report-shards`, `make report`, and `Pkg.test()`.
+- `git diff --check` passed.
+
+### Pointers
+
+- Helpers: `src/GaussianBosons.jl`.
+- Tests: `test/runtests.jl`, testset
+  "Gaussian boson rotation and boost-boost symbol residuals".
+- Report: CA-26, CA-27, and CA-28.
+
 ## J5 finite-grid minimum and positivity witnesses — 2026-05-30
 
 ### Context
