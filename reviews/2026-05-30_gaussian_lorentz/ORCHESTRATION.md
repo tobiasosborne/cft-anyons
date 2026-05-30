@@ -32,7 +32,7 @@ Protocol:
 | J1 | Complete | `019e794e-7fb9-70c0-a1f7-1a71d4926fbf` (`Kuhn`) | Added centered periodic momentum labels for branch-aware low-energy windows, with even/odd tests and convention note. |
 | J2 | Complete | `019e7956-628b-7152-aba9-e962d2f24b2a` (`Raman`) | Added finite Fourier vector helper and assigned-eigenvalue tests, including direction sentinel. |
 | J3 | Complete | `019e795f-7356-7501-b435-a8fc6711feec` (`Schrodinger`) | Added a test-local central finite-difference oracle for the boost-time coefficient helper in d=1,2,3. |
-| J4 | Pending | - | Structural coefficient validation. |
+| J4 | Complete | `019e7968-63d3-7010-8a23-e7cca580ed2d` (`Sagan`) | Added strict scalar coefficient validation and loud negative tests. |
 | J5 | Pending | - | Positivity and patch/minimum witnesses. |
 | J6 | Pending | - | Rotation and boost-boost residual helpers. |
 | A1 | Pending | - | Continuum stress-energy / Poincare-generator source. |
@@ -130,3 +130,11 @@ Protocol:
   ci-before-push` passed.
 - 2026-05-30: J3 landed in the finite-difference oracle slice.  Next step is
   J4 structural coefficient validation.
+- 2026-05-30: J4 delegated to worker
+  `019e7968-63d3-7010-8a23-e7cca580ed2d` (`Sagan`).  Target is a strict
+  scalar-coefficient validator for common dimension, integer offsets, real
+  coefficients, and paired \(V_r=V_{-r}\) data, with loud failure tests.
+- 2026-05-30: J4 reviewed by parent and accepted after adding default-wiring
+  rejection tests for `scalar_quadratic_symbol` and
+  `boost_time_symbol_from_coefficients`.  `make ci-before-push` and
+  `git diff --check` passed.

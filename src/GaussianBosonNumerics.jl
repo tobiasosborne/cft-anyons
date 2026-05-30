@@ -49,14 +49,17 @@ function doubler_quadratic_coefficients(spatial_dim::Integer; mass, spacing = 1)
 end
 
 """
-    low_energy_hessian_from_coefficients(coefficients, spatial_dim; spacing = 1)
+    low_energy_hessian_from_coefficients(coefficients, spatial_dim; spacing = 1,
+        validate_coefficients = true)
 
 Return the Hessian of ``omega(k)^2`` at ``k=0`` for real-space scalar
 coefficients.
 """
-function low_energy_hessian_from_coefficients(coefficients, spatial_dim::Integer; spacing = 1)
+function low_energy_hessian_from_coefficients(coefficients, spatial_dim::Integer; spacing = 1,
+        validate_coefficients = true)
     _check_spatial_dimension(spatial_dim)
     spacing > 0 || error("spacing must be positive, got $spacing")
+    validate_coefficients && validate_scalar_coefficients(coefficients; spatial_dim)
     hessian = zeros(Float64, spatial_dim, spatial_dim)
     for (offset, coeff) in coefficients
         length(offset) == spatial_dim || error("offset $offset has dimension $(length(offset)); expected $spatial_dim")
@@ -69,14 +72,16 @@ function low_energy_hessian_from_coefficients(coefficients, spatial_dim::Integer
 end
 
 """
-    lorentz_hessian_residual(coefficients, spatial_dim; spacing = 1, speed = 1)
+    lorentz_hessian_residual(coefficients, spatial_dim; spacing = 1, speed = 1,
+        validate_coefficients = true)
 
 Return ``1/2 Hessian(omega^2)(0) - c^2 I``.  Vanishing is the quadratic
 low-energy Lorentz-speed condition for the scalar tier.
 """
-function lorentz_hessian_residual(coefficients, spatial_dim::Integer; spacing = 1, speed = 1)
+function lorentz_hessian_residual(coefficients, spatial_dim::Integer; spacing = 1, speed = 1,
+        validate_coefficients = true)
     speed > 0 || error("speed must be positive, got $speed")
-    hessian = low_energy_hessian_from_coefficients(coefficients, spatial_dim; spacing)
+    hessian = low_energy_hessian_from_coefficients(coefficients, spatial_dim; spacing, validate_coefficients)
     return 0.5 * hessian - float(speed)^2 * Matrix{Float64}(I, spatial_dim, spatial_dim)
 end
 
@@ -131,12 +136,15 @@ function centered_periodic_momentum_grid(sizes; spacing = 1)
 end
 
 """
-    periodic_symbol_values(coefficients, sizes; spacing = 1)
+    periodic_symbol_values(coefficients, sizes; spacing = 1, validate_coefficients = true)
 
 Evaluate the scalar quadratic symbol on the finite periodic momentum grid.
 """
-function periodic_symbol_values(coefficients, sizes; spacing = 1)
-    return [scalar_quadratic_symbol(coefficients, k; spacing) for k in periodic_momentum_grid(sizes; spacing)]
+function periodic_symbol_values(coefficients, sizes; spacing = 1, validate_coefficients = true)
+    _check_periodic_sizes(sizes)
+    validate_coefficients && validate_scalar_coefficients(coefficients; spatial_dim = length(sizes))
+    return [scalar_quadratic_symbol(coefficients, k; spacing, validate_coefficients = false)
+            for k in periodic_momentum_grid(sizes; spacing)]
 end
 
 """
@@ -162,15 +170,16 @@ function periodic_fourier_vector(sizes, label)
 end
 
 """
-    periodic_stiffness_matrix(coefficients, sizes)
+    periodic_stiffness_matrix(coefficients, sizes; validate_coefficients = true)
 
 Build the finite periodic stiffness matrix whose Fourier eigenvalues are the
 periodic symbol values.
 """
-function periodic_stiffness_matrix(coefficients, sizes)
+function periodic_stiffness_matrix(coefficients, sizes; validate_coefficients = true)
     _check_periodic_sizes(sizes)
     dims = Tuple(Int.(sizes))
     spatial_dim = length(dims)
+    validate_coefficients && validate_scalar_coefficients(coefficients; spatial_dim)
     sites = CartesianIndices(dims)
     linear = LinearIndices(dims)
     stiffness = zeros(Float64, length(sites), length(sites))
@@ -190,14 +199,16 @@ end
 """
     count_periodic_symbol_minima(coefficients, sizes; spacing = 1,
         atol = GAUSSIAN_MINIMUM_COUNT_ATOL,
-        rtol = GAUSSIAN_MINIMUM_COUNT_RTOL)
+        rtol = GAUSSIAN_MINIMUM_COUNT_RTOL,
+        validate_coefficients = true)
 
 Count periodic-grid momenta whose symbol value is numerically equal to the
 minimum under the Gaussian minima-count tolerance convention.
 """
 function count_periodic_symbol_minima(coefficients, sizes; spacing = 1,
-        atol = GAUSSIAN_MINIMUM_COUNT_ATOL, rtol = GAUSSIAN_MINIMUM_COUNT_RTOL)
-    values = periodic_symbol_values(coefficients, sizes; spacing)
+        atol = GAUSSIAN_MINIMUM_COUNT_ATOL, rtol = GAUSSIAN_MINIMUM_COUNT_RTOL,
+        validate_coefficients = true)
+    values = periodic_symbol_values(coefficients, sizes; spacing, validate_coefficients)
     minimum_value = minimum(values)
     return count(value -> isapprox(value, minimum_value; atol, rtol), values)
 end

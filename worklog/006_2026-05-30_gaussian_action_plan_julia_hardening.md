@@ -1,5 +1,57 @@
 # Worklog chunk 006 — 2026-05-30
 
+## J4 structural coefficient validation — 2026-05-30
+
+### Context
+
+After J3, the Gaussian numerical helpers still trusted coefficient lists more
+than CONVENTIONS.md (j) allows.  The action plan required a strict scalar
+coefficient validator before positivity and patch/minimum gates.
+
+### What changed
+
+- Delegated J4 to worker `019e7968-63d3-7010-8a23-e7cca580ed2d` (`Sagan`) and
+  reviewed the patch.
+- Added `validate_scalar_coefficients`, checking nonempty data, integer
+  offsets, common dimension \(d\in\{1,2,3\}\), real coefficients, and aggregate
+  paired equality \(V_r=V_{-r}\).
+- Wired strict validation by default into scalar symbol, boost-time symbol,
+  Hessian/residual, periodic symbol, minima, and stiffness helpers.
+- Preserved the one-sided Fourier direction sentinel only through an explicit
+  `validate_coefficients=false` path, after asserting strict rejection.
+- Updated CA-28 and INDEX.md to include the validator in the checked numerical
+  surface.
+
+### Why these choices
+
+- The compiler-facing path should fail closed on non-scalar-Gaussian data rather
+  than silently using a convenience kernel.
+- Aggregate pairing permits repeated offsets while still checking the actual
+  structural condition \(V_r=V_{-r}\).
+
+### Frictions / dead ends
+
+- The existing one-sided sentinel is intentionally nonphysical.  Keeping it
+  required an explicit opt-out keyword and a report note so it cannot be
+  mistaken for scalar Gaussian evidence.
+
+### Acceptance
+
+- Parent added wiring tests proving the default scalar and boost-time helpers
+  reject an unpaired coefficient list.
+- `make ci-before-push` passed after parent review, including
+  `make check-report-shards`, `make report`, and `Pkg.test()`.
+- `git diff --check` passed.
+
+### Pointers
+
+- Validator: `src/GaussianBosons.jl`.
+- Strict numerical paths: `src/GaussianBosonNumerics.jl`.
+- Tests: `test/runtests.jl`, testset
+  "Gaussian boson scalar coefficient validation".
+- Report: CA-28
+  `report/sections/28_gaussian_boson_numerical_suite.tex`.
+
 ## J3 finite-difference boost-time oracle — 2026-05-30
 
 ### Context
@@ -70,8 +122,7 @@ continue here.
 
 ### Acceptance
 
-- Pending first content entry in this chunk: J3 finite-difference derivative
-  oracle.
+- First content entry recorded above: J3 finite-difference derivative oracle.
 
 ### Pointers
 

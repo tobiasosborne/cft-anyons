@@ -206,6 +206,22 @@ raw_periodic_symbol(coefficients, label, sizes) =
     @test CftAnyons.count_periodic_symbol_minima(near_flat, [2]; spacing = 1, atol = 1e-13, rtol = 0.0) == 1
 end
 
+@testset "Gaussian boson scalar coefficient validation" begin
+    valid = [([0], 2.0), ([1], -0.5), ([-1], -0.5)]
+    duplicated = [([0], 2.0), ([1], -0.2), ([1], -0.3), ([-1], -0.5)]
+
+    @test CftAnyons.validate_scalar_coefficients(valid) == 1
+    @test CftAnyons.validate_scalar_coefficients(duplicated; spatial_dim = 1) == 1
+
+    @test_throws ErrorException CftAnyons.validate_scalar_coefficients([([0], 2.0), ([1], -0.5)])
+    @test_throws ErrorException CftAnyons.validate_scalar_coefficients([([0], 2.0), ([1], -0.5), ([-1], -0.4)])
+    @test_throws ErrorException CftAnyons.validate_scalar_coefficients([([0], 1.0 + 0.1im)])
+    @test_throws ErrorException CftAnyons.validate_scalar_coefficients([([0, 0], 1.0), ([1], -0.5), ([-1], -0.5)])
+    @test_throws ErrorException CftAnyons.validate_scalar_coefficients([([0.5], 1.0)])
+    @test_throws ErrorException CftAnyons.scalar_quadratic_symbol([([0], 2.0), ([1], -0.5)], [0.2])
+    @test_throws ErrorException CftAnyons.boost_time_symbol_from_coefficients([([0], 2.0), ([1], -0.5)], [0.2])
+end
+
 @testset "Gaussian boson Klein-Gordon symbols" begin
     for d in 1:3
         k = collect(0.1:0.1:(0.1d))
@@ -355,7 +371,8 @@ end
     label = [1]
     shift_vector = CftAnyons.periodic_fourier_vector([5], label)
     shift_symbol = raw_periodic_symbol(one_sided, label, [5])
-    shift_matrix = CftAnyons.periodic_stiffness_matrix(one_sided, [5])
+    @test_throws ErrorException CftAnyons.periodic_stiffness_matrix(one_sided, [5])
+    shift_matrix = CftAnyons.periodic_stiffness_matrix(one_sided, [5]; validate_coefficients = false)
     @test gaussian_eigenvalue_isapprox(shift_matrix * shift_vector, shift_symbol * shift_vector)
     @test !gaussian_eigenvalue_isapprox(shift_matrix * shift_vector, conj(shift_symbol) * shift_vector)
     @test_throws ErrorException CftAnyons.periodic_fourier_vector([3], [0, 1])

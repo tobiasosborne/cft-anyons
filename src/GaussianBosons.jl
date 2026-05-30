@@ -17,6 +17,56 @@ const GAUSSIAN_MINIMUM_COUNT_RTOL = 1e-10
 const GAUSSIAN_SMALL_SPACING_RESIDUAL_ATOL = 5e-4
 const GAUSSIAN_SMALL_SPACING_RESIDUAL_RTOL = 1e-10
 
+"""
+    validate_scalar_coefficients(coefficients; spatial_dim = nothing) -> Int
+
+Validate scalar Gaussian coefficient data against CONVENTIONS.md (j).
+
+The checked structure is finite-entry data with integer offsets, a common
+spatial dimension ``d in {1,2,3}``, real coefficients, and aggregate paired
+equality ``V_r = V_-r`` after repeated offsets are summed.
+"""
+function validate_scalar_coefficients(coefficients; spatial_dim = nothing)
+    expected_dim = nothing
+    if spatial_dim !== nothing
+        spatial_dim isa Integer || error("spatial_dim must be an integer, got $spatial_dim")
+        _check_spatial_dimension(spatial_dim)
+        expected_dim = Int(spatial_dim)
+    end
+
+    saw_entry = false
+    aggregates = Dict{Tuple{Vararg{Int}}, Any}()
+    for (entry_index, entry) in pairs(coefficients)
+        saw_entry = true
+        length(entry) == 2 || error("coefficient entry $entry_index must be an (offset, coefficient) pair, got $entry")
+        offset, coeff = entry
+        offset_dim = length(offset)
+        offset_dim in 1:3 || error("offset $offset has dimension $offset_dim; expected dimension 1, 2, or 3")
+        if expected_dim === nothing
+            expected_dim = offset_dim
+        else
+            offset_dim == expected_dim || error("offset $offset has dimension $offset_dim; expected $expected_dim")
+        end
+        all(component -> component isa Integer, offset) ||
+            error("offset $offset has non-integer entries; scalar Gaussian offsets must be integer lattice displacements")
+        coeff isa Real || error("coefficient for offset $offset must be real, got $coeff")
+
+        key = ntuple(axis -> Int(offset[axis]), offset_dim)
+        aggregates[key] = get(aggregates, key, zero(coeff)) + coeff
+    end
+
+    saw_entry || error("scalar Gaussian coefficient data must be nonempty")
+    for (offset, coeff) in aggregates
+        partner = ntuple(axis -> -offset[axis], length(offset))
+        haskey(aggregates, partner) ||
+            error("offset $(collect(offset)) is missing paired offset $(collect(partner))")
+        partner_coeff = aggregates[partner]
+        coeff == partner_coeff ||
+            error("paired aggregate coefficients disagree: V_$(collect(offset)) = $coeff, V_$(collect(partner)) = $partner_coeff")
+    end
+    return expected_dim
+end
+
 function _real_symbol_value(total, label; atol = GAUSSIAN_SYMBOL_IMAG_ATOL, rtol = GAUSSIAN_SYMBOL_IMAG_RTOL)
     real_total = real(total)
     isapprox(total, complex(real_total, zero(real_total)); atol, rtol) ||
@@ -96,15 +146,18 @@ end
 """
     scalar_quadratic_symbol(coefficients, k; spacing = 1,
         imag_atol = GAUSSIAN_SYMBOL_IMAG_ATOL,
-        imag_rtol = GAUSSIAN_SYMBOL_IMAG_RTOL)
+        imag_rtol = GAUSSIAN_SYMBOL_IMAG_RTOL,
+        validate_coefficients = true)
 
 Evaluate ``sum_r V_r exp(i ε k⋅r)`` for real-space scalar quadratic
 coefficients.
 """
 function scalar_quadratic_symbol(coefficients, k; spacing = 1,
-        imag_atol = GAUSSIAN_SYMBOL_IMAG_ATOL, imag_rtol = GAUSSIAN_SYMBOL_IMAG_RTOL)
+        imag_atol = GAUSSIAN_SYMBOL_IMAG_ATOL, imag_rtol = GAUSSIAN_SYMBOL_IMAG_RTOL,
+        validate_coefficients = true)
     _check_k_vector(k)
     spacing > 0 || error("spacing must be positive, got $spacing")
+    validate_coefficients && validate_scalar_coefficients(coefficients; spatial_dim = length(k))
     total = 0.0 + 0.0im
     for (offset, coeff) in coefficients
         length(offset) == length(k) || error("offset $offset has dimension $(length(offset)); expected $(length(k))")
@@ -116,15 +169,18 @@ end
 """
     boost_time_symbol_from_coefficients(coefficients, k; spacing = 1,
         imag_atol = GAUSSIAN_SYMBOL_IMAG_ATOL,
-        imag_rtol = GAUSSIAN_SYMBOL_IMAG_RTOL)
+        imag_rtol = GAUSSIAN_SYMBOL_IMAG_RTOL,
+        validate_coefficients = true)
 
 Evaluate the vector ``1/2 ∇_k omega(k)^2`` from real-space scalar quadratic
 coefficients.
 """
 function boost_time_symbol_from_coefficients(coefficients, k; spacing = 1,
-        imag_atol = GAUSSIAN_SYMBOL_IMAG_ATOL, imag_rtol = GAUSSIAN_SYMBOL_IMAG_RTOL)
+        imag_atol = GAUSSIAN_SYMBOL_IMAG_ATOL, imag_rtol = GAUSSIAN_SYMBOL_IMAG_RTOL,
+        validate_coefficients = true)
     _check_k_vector(k)
     spacing > 0 || error("spacing must be positive, got $spacing")
+    validate_coefficients && validate_scalar_coefficients(coefficients; spatial_dim = length(k))
     out = zeros(Float64, length(k))
     for axis in eachindex(k)
         total = 0.0 + 0.0im
