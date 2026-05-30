@@ -39,7 +39,7 @@ Protocol:
 | A2 | Complete | `019e7990-12ad-7151-a8e4-5604d5e29783` (`Feynman`) | Registered original Koo-Saleur arXiv source and updated KS source-boundary wording. |
 | A3 | Complete | `019e799c-3578-70f0-93d9-6b026a436206` (`Hegel`) | Registered discrete GFF Virasoro source with version-pinned arXiv v1 TeX anchors. |
 | A4 | Complete | `019e79aa-6791-78b0-8cbc-5d97538e9936` (`Hypatia`) | Added finite open-chain Gaussian energy-current helpers/tests for the local `T_01` candidate; `T_11` remains pending. |
-| S1 | Pending | - | Gaussian real-space density shard. |
+| S1 | Complete | `019e79b4-eb8c-7193-a6a0-3aaf60ed8178` (`Kierkegaard`) | Audited CA-29 against S1 and found the density shard already satisfies the step; no report edits needed. |
 | S2 | Pending | - | 1+1 lattice stress-energy candidate shard. |
 | S3 | Pending | - | Current-vs-symbol equivalence checks. |
 | S4 | Pending | - | Higher-dimensional cell-current proposal shard. |
@@ -206,3 +206,13 @@ Protocol:
   `make check-report-shards`, and `git diff --check`; all passed.  Scope is
   explicitly local finite-open-chain `T_01` evidence only; no continuum
   stress-tensor or `T_11` claim landed.
+- 2026-05-30: A4 completion recorded and pushed as `04100e7`.  S1 delegated to
+  worker `019e79b4-eb8c-7193-a6a0-3aaf60ed8178` (`Kierkegaard`) as a
+  reconciliation step, because C6 already created CA-29 and convention (l).
+  Worker should patch only if CA-29 misses an S1 acceptance item.
+- 2026-05-30: S1 reviewed by parent and accepted as already complete.  Worker
+  found CA-29 has the required source/dependency block, cell-volume and
+  density split, equal-endpoint support accounting, boundary policy,
+  vacuum-subtraction deferral, and explicit non-stress-tensor status; shard
+  maps already include CA-29.  Worker changed no files and ran
+  `make check-report-shards` plus `git diff --check`.

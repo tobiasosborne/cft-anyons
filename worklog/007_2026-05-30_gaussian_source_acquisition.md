@@ -1,5 +1,47 @@
 # Worklog chunk 007 — 2026-05-30
 
+## S1 Gaussian real-space density audit — 2026-05-30
+
+### Context
+
+S1 in the Gaussian Lorentz action plan asked for the missing real-space density
+shard.  C6 had already created CA-29, so this step needed a deliberate audit
+rather than duplicate content.
+
+### What changed
+
+- Delegated S1 to worker `019e79b4-eb8c-7193-a6a0-3aaf60ed8178`
+  (`Kierkegaard`) as a reconcile-only task.
+- No report or code files changed.
+- Updated the orchestration ledger after parent review.
+
+### Why these choices
+
+- CA-29 already contains the source/dependency block, density split,
+  cell-volume accounting, equal-endpoint support policy, boundary policy,
+  vacuum-subtraction deferral, and explicit non-stress-tensor status required
+  by S1.
+- Duplicating the shard would add process noise without improving provenance.
+
+### Frictions / dead ends
+
+- The useful caveat is unchanged: CA-29 fixes the density convention only.  It
+  does not define the 1+1 stress-tensor candidates, prove convergence, or solve
+  `T_11`.
+
+### Acceptance
+
+- Worker verified CA-29 against the S1 checklist and changed no files.
+- `make check-report-shards` passed.
+- `git diff --check` passed.
+
+### Pointers
+
+- Density shard: CA-29,
+  `report/sections/29_gaussian_boson_real_space_density.tex`.
+- Orchestration ledger:
+  `reviews/2026-05-30_gaussian_lorentz/ORCHESTRATION.md`.
+
 ## A4 open-chain Gaussian energy-current derivation — 2026-05-30
 
 ### Context
