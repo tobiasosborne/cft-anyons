@@ -1,5 +1,62 @@
 # Worklog chunk 003 — 2026-05-30
 
+## Session log — 2026-05-30 — Independent Gaussian Lorentz reviews
+
+### Context
+
+Tobias asked for multiple independent subagents to review the previous lattice
+and Gaussian Lorentz shards.  The review goals were: rigorous criticism of gaps,
+counterexamples, and problems; and a secondary collection of material for a
+future lattice stress-energy tensor density proposal, especially the 1+1 versus
+higher-dimensional distinction.
+
+### What changed
+
+- Created `reviews/2026-05-30_gaussian_lorentz/` as the central review
+  location.
+- Spawned four reviewers with disjoint write targets:
+  - source/provenance/conventions;
+  - algebra/signs/domains;
+  - numerics/examples;
+  - stress-energy proposal map.
+- Added `SYNTHESIS.md` summarizing the shared highest-severity findings and the
+  recommended next shards.
+- Indexed the review artifact in `INDEX.md`.
+
+### Why these choices
+
+- The reviews are kept outside the report because they are critical handoff
+  artifacts, not polished lab-book claims.
+- Separate files preserve independence and make disagreement visible.
+- The synthesis records the cross-review consensus without overwriting the
+  reviewers' detailed findings.
+
+### Frictions / dead ends
+
+- The thread limit blocked the fourth reviewer initially; older completed
+  subagents were closed and the fourth reviewer was then spawned.
+- The algebra review is intentionally long because it records detailed sign and
+  domain checks; it is not a report shard and is not subject to the report shard
+  line cap.
+
+### Acceptance
+
+- Four independent review files exist in
+  `reviews/2026-05-30_gaussian_lorentz/`.
+- `SYNTHESIS.md` captures the actionable queue: sign convention, finite-periodic
+  branch limits, one-particle measure, real-space density convention,
+  zero-mode/tolerance policies, validators, and stress-energy source
+  acquisition.
+
+### Pointers
+
+- Review synthesis: `reviews/2026-05-30_gaussian_lorentz/SYNTHESIS.md`.
+- Independent reviews:
+  `reviewer_01_source_conventions.md`,
+  `reviewer_02_algebra_domains.md`,
+  `reviewer_03_numerics_examples.md`,
+  `reviewer_04_stress_tensor_proposal.md`.
+
 ## Session log — 2026-05-30 — CA-25--CA-28 Gaussian boson algebra and examples
 
 ### Context

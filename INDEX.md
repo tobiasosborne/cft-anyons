@@ -22,6 +22,12 @@ _None yet._ When a script produces data, create
 `runs/<YYYY-MM-DD>-<slug>/{data,figures}/` with a `README.md` (command line +
 headline finding) and add a row here.
 
+## Reviews
+
+| Artifact | Purpose |
+|---|---|
+| `reviews/2026-05-30_gaussian_lorentz/` | Independent rigorous reviews of CA-10--CA-17 and CA-23--CA-28, plus synthesis for stress-energy-density follow-up shards. |
+
 ## Report shards
 
 See `report/SHARD_CATALOG.md` for the searchable shard catalogue.
