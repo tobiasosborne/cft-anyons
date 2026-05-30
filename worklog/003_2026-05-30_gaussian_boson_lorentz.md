@@ -1,5 +1,83 @@
 # Worklog chunk 003 — 2026-05-30
 
+## Session log — 2026-05-30 — CA-25--CA-28 Gaussian boson algebra and examples
+
+### Context
+
+Tobias asked to continue orchestrating the multi-mega-shard Gaussian-boson
+Lorentz quest with side quests from the shard roadmap, including Julia
+verification and examples, while maintaining the provenance/reproducibility
+standard of the AQM lab book.
+
+### What changed
+
+- Added **CA-25**, diagonalizing the scalar translation-invariant Gaussian tier
+  to oscillator modes and the one-particle multiplication symbol.
+- Added **CA-26**, the one-particle \(H,P,J,K\) generator algebra on a smooth
+  momentum core, including exact boost-momentum closure and boost-time /
+  boost-boost residuals.
+- Added **CA-27**, coefficient-level Lorentz residual conditions:
+  gradient residual, low-energy Hessian condition, anisotropic failure, and the
+  doubler counterexample.
+- Added **CA-28**, the numerical verification suite specification for the
+  scalar Gaussian examples.
+- Added `src/GaussianBosonNumerics.jl` with checked helpers for anisotropic and
+  doubler coefficient systems, low-energy Hessians, Lorentz Hessian residuals,
+  periodic stiffness matrices, Brillouin-grid symbol values, and minimum
+  counting.
+- Extended `test/runtests.jl` with invariant tests for:
+  - KG Hessian residuals in \(d=1,2,3\);
+  - anisotropic cone rejection;
+  - periodic stiffness spectra versus symbol values in \(d=1,2,3\);
+  - doubler multi-minimum detection.
+
+### Why these choices
+
+- The source scout found strong local anchors for free scalar lattice
+  Hamiltonians, dispersions, Fock representation, and second-quantized
+  continuum Hamiltonians.  It also confirmed gaps for Weinberg, general
+  stress-energy generator formulae, and bosonic Gaussian Virasoro/Koo-Saleur
+  convergence.  The new shards therefore prove algebraic residual identities
+  locally and mark continuum generator convergence as open.
+- The numerical suite compares independently constructed real-space stiffness
+  data and momentum-space symbol values.  This keeps the tests invariant-level,
+  not visual or smoke-test based.
+- BdG/pairing systems remain explicitly deferred because their symplectic
+  positivity and Bogoliubov implementability conventions are not fixed.
+
+### Frictions / dead ends
+
+- The first periodic-grid helper returned an array shaped like the lattice,
+  which made sorted spectrum comparison ill-typed; it was flattened so the
+  spectrum oracle is a list of symbol values.
+- The algebra side quest supplied a useful boost-boost residual formula; this
+  was folded into CA-26 after checking that the gradient nature of \(R_a\) kills
+  the extra divergence term.
+- The current finite periodic momentum grid is adequate for symmetric scalar
+  symbols.  Later non-even or BdG symbols will need a stricter branch/sign
+  convention before DFT eigenvector tests are promoted.
+
+### Acceptance
+
+- `make check-report-shards`: PASS with 29 shards.
+- `make report`: PASS, rebuilt `report.pdf`.
+- `julia --project=. -e 'using Pkg; Pkg.test()'`: PASS, including the new
+  Gaussian-boson residual and finite-periodic example checks.
+
+### Pointers
+
+- Shards: CA-25--CA-28.
+- Code/tests: `src/GaussianBosonNumerics.jl`, `src/GaussianBosons.jl`,
+  `test/runtests.jl`.
+- Sources: `literature/md/2010.11121/2010.11121.md:251`--`:301`,
+  `:598`--`:623`, `:648`--`:716`, `:1037`--`:1046`, `:1540`--`:1556`;
+  `references/cft/Schottenloher2008/Schottenloher2008.md:4092`--`:4117`,
+  `:4186`--`:4244`; OAR wavelet boundary at
+  `references/text/OARWavelets.txt:390`--`:406`.
+- Open source/proof gaps: Weinberg QFT Vol. 1 registration, general
+  stress-energy generator formulae, bosonic Gaussian Virasoro/Koo-Saleur
+  convergence, massless zero-mode policy, and BdG/pairing convention.
+
 ## Session log — 2026-05-30 — CA-23--CA-24 Gaussian boson Lorentz roadmap
 
 ### Context

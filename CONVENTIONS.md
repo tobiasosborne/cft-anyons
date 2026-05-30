@@ -203,6 +203,12 @@ quasi-local coefficients `V_r=V_{-r}`.  Its Fourier symbol is
 `omega(k)^2 = sum_r V_r exp(i epsilon k.r)`.  The nearest-neighbour lattice
 Klein-Gordon example has
 `omega_{epsilon,m}(k)^2 = m^2 + 2 epsilon^{-2} sum_a (1-cos(epsilon k_a))`.
+Finite periodic numerical checks use momenta
+`k_a = 2 pi n_a / (epsilon L_a)` and the real-space stiffness matrix
+`V_{xy} = sum_r V_r 1_{y=x+r mod L}`; its eigenvalue oracle is the list of
+symbol values on this Brillouin grid.  The low-energy Hessian residual is
+`1/2 Hessian(omega^2)(0) - c^2 I`, equivalently
+`-epsilon^2/2 sum_r r_a r_b V_r - c^2 delta_ab`.
 At the one-particle symbol level, use `X_a=i partial_{k_a}` and the time-zero
 Lorentz-boost candidate
 `K_a = 1/2 (X_a omega + omega X_a)`.  Then
@@ -223,6 +229,7 @@ dispersion, and ground-state two-point function), `:614`--`:623`
 free scalar time evolution and theorem), `references/cft/Schottenloher2008/Schottenloher2008.md:4186`--`:4244`
 (free bosonic QFT/Klein-Gordon/Poincare-covariant construction);
 `test/runtests.jl` testsets "Gaussian boson Klein-Gordon symbols" and
-"Gaussian boson boost-time symbols"; CA-23--CA-24.
-**Sweep status:** CA-23--CA-24 use this convention; the full bosonic BdG/pairing
+"Gaussian boson boost-time symbols", "Gaussian boson Lorentz Hessian examples",
+and "Gaussian boson finite periodic examples"; CA-23--CA-28.
+**Sweep status:** CA-23--CA-28 use this convention; the full bosonic BdG/pairing
 convention is not yet fixed.

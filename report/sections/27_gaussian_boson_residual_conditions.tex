@@ -1,0 +1,151 @@
+% SHARD-ID: CA-27-GAUSSIAN-BOSON-RESIDUAL-CONDITIONS
+% SHARD-TITLE: Lorentz Residual Conditions on Gaussian Coefficients
+% SHARD-SUMMARY: Converts the boost-time and rotation residuals into explicit Taylor conditions on the scalar coefficient symbol.
+% SHARD-SUMMARY: Shows why isotropic Klein-Gordon quadratic data are necessary but not sufficient for a one-particle relativistic scaling limit.
+% SHARD-SUMMARY: Adds checked anisotropic and doubler counterexamples as compiler rejection witnesses.
+% SHARD-KEYWORDS: Gaussian boson, Lorentz residual, Hessian, anisotropy, doubler, coefficient conditions
+
+\section{Lorentz Residual Conditions on Gaussian Coefficients}
+\label{sec:gaussian-boson-residual-conditions}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: checked local coefficient calculus.}  The sourced free scalar
+model supplies the target dispersion.  The general coefficient residuals are
+local Taylor calculations from
+\(\omega_\epsilon(k)^2=\sum_rV_re^{i\epsilon k\cdot r}\).  The examples in
+this shard are checked in Julia.
+
+Dependencies: CA-24--CA-26 and CONVENTIONS.md (j).
+
+% Source: literature/md/2010.11121/2010.11121.md:614 -- physical mass convention for the lattice scalar.
+% Source: literature/md/2010.11121/2010.11121.md:623 -- nearest-neighbour lattice Klein-Gordon dispersion.
+% Source: literature/md/2010.11121/2010.11121.md:676 -- continuum Klein-Gordon dynamics.
+% Source: references/cft/Schottenloher2008/Schottenloher2008.md:4186 -- Klein-Gordon operator in the free bosonic QFT example.
+% Checked: test/runtests.jl, "Gaussian boson Lorentz Hessian examples".
+
+\subsection{Gradient Residual}
+
+For a scalar coefficient family,
+\[
+  \omega_\epsilon(k)^2=\sum_rV_re^{i\epsilon k\cdot r}.
+\]
+The boost-time residual from CA-26 is
+\[
+  R_a(k)
+  =
+  \frac{1}{2}\partial_a\omega_\epsilon(k)^2-c^2k_a.
+\]
+Explicitly,
+\[
+  \frac{1}{2}\partial_a\omega_\epsilon(k)^2
+  =
+  \frac{i\epsilon}{2}\sum_r r_aV_re^{i\epsilon k\cdot r}.
+\]
+When \(V_r=V_{-r}\), this is real and can be written as a sine sum:
+\[
+  \frac{1}{2}\partial_a\omega_\epsilon(k)^2
+  =
+  -\epsilon\sum_{r>0} r_aV_r\sin(\epsilon k\cdot r),
+\]
+where \(r>0\) denotes any fixed choice of one representative from each
+\(\{r,-r\}\) pair.
+
+\subsection{Low-Energy Hessian Condition}
+
+At a symmetric minimum \(k=0\), the first derivative vanishes.  The Hessian is
+\[
+  \partial_a\partial_b\omega_\epsilon(0)^2
+  =
+  -\epsilon^2\sum_r r_ar_bV_r.
+\]
+Therefore the quadratic Lorentz-speed condition is
+\[
+  -\frac{\epsilon^2}{2}\sum_r r_ar_bV_r
+  =
+  c^2\delta_{ab}.
+\]
+This is the first finite-dimensional coefficient test.  In compiler form:
+\[
+  \mathsf{HessResidual}_{ab}
+  :=
+  -\frac{\epsilon^2}{2}\sum_r r_ar_bV_r-c^2\delta_{ab}.
+\]
+It must vanish at the chosen low-energy point before the model can be routed to
+a Klein-Gordon continuum target.
+
+\subsection{Nearest-Neighbour Klein-Gordon}
+
+For
+\[
+  V_0=m^2+\frac{2d}{\epsilon^2},
+  \qquad
+  V_{\pm e_a}=-\frac{1}{\epsilon^2},
+\]
+one obtains
+\[
+  -\frac{\epsilon^2}{2}
+  \sum_r r_ar_bV_r
+  =
+  \delta_{ab}.
+\]
+The gradient residual is the stronger finite-\(\epsilon\) expression
+\[
+  R_a(k)=\frac{\sin(\epsilon k_a)}{\epsilon}-k_a,
+\]
+which vanishes as \(O(\epsilon^2k_a^3)\) for fixed physical momentum.
+
+\subsection{Anisotropic Counterexample}
+
+Let the nearest-neighbour coefficients carry different speeds \(c_a\):
+\[
+  \omega_\epsilon(k)^2
+  =
+  m^2+\frac{2}{\epsilon^2}
+  \sum_a c_a^2(1-\cos(\epsilon k_a)).
+\]
+Then
+\[
+  -\frac{\epsilon^2}{2}\sum_r r_ar_bV_r
+  =
+  c_a^2\delta_{ab}.
+\]
+Unless all \(c_a\) agree with the target speed, the boost-time residual cannot
+match a single Lorentz cone.  The Julia test suite checks this as a deliberate
+failure case, not as an approximate success.
+
+\subsection{Doubler Counterexample}
+
+The Hessian condition is necessary but not sufficient.  The symbol
+\[
+  \omega_\epsilon(k)^2
+  =
+  m^2+\frac{1}{\epsilon^2}\sum_a\sin^2(\epsilon k_a)
+\]
+has the correct quadratic Hessian at \(k=0\) when \(c=1\), but it has additional
+low-energy minima at Brillouin-zone points with \(\sin(\epsilon k_a)=0\).
+On even periodic grids this produces multiple minima.  Therefore the compiler
+also needs a \emph{single-patch} or \emph{sector-selection} condition: a
+continuum relativistic scalar target is attached only after choosing one
+low-energy patch and proving the other minima decouple or are intentionally
+retained as extra species.
+
+\subsection{Compiler Rule}
+
+For the scalar Gaussian tier, a Lorentz-target compile attempt must emit at
+least:
+\[
+\begin{array}{ll}
+\text{mass term} & \omega(0)^2,\\
+\text{speed matrix} &
+  -\frac{\epsilon^2}{2}\sum_r r_ar_bV_r,\\
+\text{boost residual} & R_a(k),\\
+\text{rotation residual} &
+  k_b\partial_a\omega^2-k_a\partial_b\omega^2,\\
+\text{boost-boost residual} & R_bX_a-R_aX_b,\\
+\text{patch data} & \text{chosen minimum and exclusion of unwanted minima}.
+\end{array}
+\]
+Only the mass and speed entries are finite Taylor data.  The residual and patch
+entries are what prevent an anisotropic or doubler model from being mislabeled
+as a single Klein-Gordon field.

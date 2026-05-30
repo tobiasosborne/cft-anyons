@@ -164,6 +164,7 @@ end
 
 include("GalileiAlgebras.jl")
 include("GaussianBosons.jl")
+include("GaussianBosonNumerics.jl")
 
 """
     nearest_neighbor_boost_current_coefficients(positions) -> Vector

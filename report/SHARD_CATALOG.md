@@ -226,3 +226,39 @@ single ~200-line source file it points to.
 - Summary: Derives the one-particle boost-time commutator symbol as one half of the gradient of omega squared.
 - Summary: Checks the nearest-neighbour lattice Klein-Gordon example and its small-momentum Lorentz limit in Julia.
 - Keywords: Gaussian boson, Fourier symbol, dispersion, boost, Klein-Gordon, Julia check
+
+## `CA-25-GAUSSIAN-BOSON-DIAGONALIZATION`
+
+- Source: `report/sections/25_gaussian_boson_diagonalization.tex`
+- Title: Gaussian Boson Diagonalization and the One-Particle Symbol
+- Summary: Diagonalizes the scalar translation-invariant Gaussian boson tier into oscillator modes in spatial dimensions d=1,2,3.
+- Summary: Separates the sourced free-scalar Fock construction from the local coefficient-symbol derivation used by the compiler.
+- Summary: Records the exact boundary where general bosonic BdG and pairing systems remain deferred.
+- Keywords: Gaussian boson, diagonalization, one-particle Hilbert space, Fock, dispersion, BdG deferral
+
+## `CA-26-GAUSSIAN-BOSON-GENERATOR-ALGEBRA`
+
+- Source: `report/sections/26_gaussian_boson_generator_algebra.tex`
+- Title: One-Particle Generator Algebra for Gaussian Bosons
+- Summary: Defines the one-particle H, P, J, and K candidates on a smooth momentum-space core.
+- Summary: Derives the commutators that are exact for any scalar dispersion and isolates the residuals that depend on omega.
+- Summary: Explains how second quantization transports the algebraic checks to the many-body Gaussian Fock space.
+- Keywords: Gaussian boson, Poincare generators, boost, rotation, commutator, second quantization
+
+## `CA-27-GAUSSIAN-BOSON-RESIDUAL-CONDITIONS`
+
+- Source: `report/sections/27_gaussian_boson_residual_conditions.tex`
+- Title: Lorentz Residual Conditions on Gaussian Coefficients
+- Summary: Converts the boost-time and rotation residuals into explicit Taylor conditions on the scalar coefficient symbol.
+- Summary: Shows why isotropic Klein-Gordon quadratic data are necessary but not sufficient for a one-particle relativistic scaling limit.
+- Summary: Adds checked anisotropic and doubler counterexamples as compiler rejection witnesses.
+- Keywords: Gaussian boson, Lorentz residual, Hessian, anisotropy, doubler, coefficient conditions
+
+## `CA-28-GAUSSIAN-BOSON-NUMERICAL-SUITE`
+
+- Source: `report/sections/28_gaussian_boson_numerical_suite.tex`
+- Title: Numerical Verification Suite for Gaussian Boson Examples
+- Summary: Specifies the Julia invariant suite for scalar Gaussian boson symbols in dimensions d=1,2,3.
+- Summary: Checks finite periodic stiffness matrices against Brillouin-zone symbol values instead of relying on visual spectra.
+- Summary: Records the current example systems: Klein-Gordon, anisotropic cones, and doubler symbols.
+- Keywords: Gaussian boson, Julia, numerical verification, finite periodic lattice, stiffness matrix, examples

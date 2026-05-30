@@ -1,0 +1,121 @@
+% SHARD-ID: CA-28-GAUSSIAN-BOSON-NUMERICAL-SUITE
+% SHARD-TITLE: Numerical Verification Suite for Gaussian Boson Examples
+% SHARD-SUMMARY: Specifies the Julia invariant suite for scalar Gaussian boson symbols in dimensions d=1,2,3.
+% SHARD-SUMMARY: Checks finite periodic stiffness matrices against Brillouin-zone symbol values instead of relying on visual spectra.
+% SHARD-SUMMARY: Records the current example systems: Klein-Gordon, anisotropic cones, and doubler symbols.
+% SHARD-KEYWORDS: Gaussian boson, Julia, numerical verification, finite periodic lattice, stiffness matrix, examples
+
+\section{Numerical Verification Suite for Gaussian Boson Examples}
+\label{sec:gaussian-boson-numerical-suite}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: checked Julia shard.}  This shard records the numerical
+invariants now implemented for the scalar Gaussian tier.  The checks are not
+continuum proofs; they are finite algebraic witnesses that the coefficient
+compiler is computing the intended symbols and residuals.
+
+Dependencies: CA-24--CA-27, INDEX.md, and CONVENTIONS.md (j).
+
+% Source: literature/md/2010.11121/2010.11121.md:274 -- lattice and dual lattice Fourier setup.
+% Source: literature/md/2010.11121/2010.11121.md:598 -- lattice scalar Hamiltonian.
+% Source: literature/md/2010.11121/2010.11121.md:623 -- lattice Klein-Gordon dispersion.
+% Checked: src/GaussianBosons.jl, src/GaussianBosonNumerics.jl, and test/runtests.jl.
+
+\subsection{Why These Tests}
+
+The numerical layer is not allowed to assert that a plot ``looks relativistic''.
+Each check must compare two independently constructed objects:
+\[
+  \text{real-space coefficient data}
+  \quad\longleftrightarrow\quad
+  \text{momentum-space symbol data}.
+\]
+For Gaussian systems this is unusually powerful because the finite periodic
+stiffness matrix is exactly diagonalized by Fourier modes.
+
+\subsection{Periodic Stiffness Matrix}
+
+For finite periodic sizes \(L_1,\ldots,L_d\), define the stiffness matrix
+\[
+  V_{xy}
+  =
+  \sum_r V_r\,\mathbf 1_{y=x+r\;{\rm mod}\;L}.
+\]
+For the Fourier vector
+\[
+  \varphi_k(x)=|\Lambda|^{-1/2}e^{i\epsilon k\cdot x},
+\]
+one has the exact identity
+\[
+  (V\varphi_k)(x)
+  =
+  \left(\sum_rV_re^{i\epsilon k\cdot r}\right)\varphi_k(x)
+  =
+  \omega_\epsilon(k)^2\varphi_k(x).
+\]
+Therefore the sorted eigenvalues of the finite stiffness matrix must equal the
+sorted symbol values on the periodic Brillouin grid.  This is the finite
+Fourier invariant checked in Julia for \(d=1,2,3\).
+
+\subsection{Implemented Example Systems}
+
+\textbf{Nearest-neighbour Klein-Gordon.}  The tests check the coefficient
+symbol against
+\[
+  m^2+\frac{2}{\epsilon^2}\sum_a(1-\cos(\epsilon k_a)),
+\]
+the boost-time residual against \(\sin(\epsilon k_a)/\epsilon\), and the
+low-energy Hessian residual against zero.
+
+\textbf{Anisotropic cones.}  The tests build coefficients with speeds
+\((c_1,c_2,c_3)\).  They verify that the Hessian is
+\[
+  2\,{\rm diag}(c_1^2,c_2^2,c_3^2)
+\]
+and that the Lorentz residual is nonzero when the target speed is \(1\).
+
+\textbf{Doubler symbol.}  The tests build
+\[
+  \omega_\epsilon(k)^2
+  =
+  m^2+\epsilon^{-2}\sum_a\sin^2(\epsilon k_a)
+\]
+and count multiple minima on an even periodic grid.  This catches the case
+where the Hessian at one minimum is correct but the compiler would need a
+multi-species or sector-selection output.
+
+\subsection{Current Julia Surface}
+
+The checked helper layer is:
+\[
+\begin{array}{ll}
+\texttt{kg\_nearest\_neighbor\_coefficients}
+  & \text{standard scalar KG coefficients},\\
+\texttt{scalar\_quadratic\_symbol}
+  & \sum_rV_re^{i\epsilon k\cdot r},\\
+\texttt{boost\_time\_symbol\_from\_coefficients}
+  & \frac12\nabla\omega^2,\\
+\texttt{low\_energy\_hessian\_from\_coefficients}
+  & \partial_a\partial_b\omega^2(0),\\
+\texttt{lorentz\_hessian\_residual}
+  & \frac12{\rm Hess}(\omega^2)(0)-c^2I,\\
+\texttt{periodic\_stiffness\_matrix}
+  & \text{finite periodic real-space matrix},\\
+\texttt{periodic\_symbol\_values}
+  & \text{finite Brillouin-grid eigenvalue oracle}.
+\end{array}
+\]
+
+\subsection{Next Numerical Milestones}
+
+The next suite should add three checks:
+\[
+\begin{array}{ll}
+1.&\text{finite Fourier eigenvectors, not only eigenvalues},\\
+2.&\text{boost and rotation residual norms on shrinking low-energy windows},\\
+3.&\text{comparison of open-boundary first moments with momentum-space tests}.
+\end{array}
+\]
+The third item requires a boundary convention before it can be promoted beyond
+a local experiment.

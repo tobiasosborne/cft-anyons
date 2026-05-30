@@ -42,6 +42,10 @@ before treating report edits as complete.
 | 22 | `CA-22-GALILEAN-COMPILER-INTERFACE` | `report/sections/22_galilean_compiler_interface.tex` | Compiler Rules and Examples for Galilean Targets |
 | 23 | `CA-23-GAUSSIAN-BOSON-LORENTZ-ROADMAP` | `report/sections/23_gaussian_boson_lorentz_roadmap.tex` | Gaussian Boson Lorentz Generator Roadmap |
 | 24 | `CA-24-GAUSSIAN-BOSON-SYMBOL-CALCULUS` | `report/sections/24_gaussian_boson_symbol_calculus.tex` | Gaussian Boson Symbol Calculus and the Boost-Time Residual |
+| 25 | `CA-25-GAUSSIAN-BOSON-DIAGONALIZATION` | `report/sections/25_gaussian_boson_diagonalization.tex` | Gaussian Boson Diagonalization and the One-Particle Symbol |
+| 26 | `CA-26-GAUSSIAN-BOSON-GENERATOR-ALGEBRA` | `report/sections/26_gaussian_boson_generator_algebra.tex` | One-Particle Generator Algebra for Gaussian Bosons |
+| 27 | `CA-27-GAUSSIAN-BOSON-RESIDUAL-CONDITIONS` | `report/sections/27_gaussian_boson_residual_conditions.tex` | Lorentz Residual Conditions on Gaussian Coefficients |
+| 28 | `CA-28-GAUSSIAN-BOSON-NUMERICAL-SUITE` | `report/sections/28_gaussian_boson_numerical_suite.tex` | Numerical Verification Suite for Gaussian Boson Examples |
 
 ## Adding a shard
 

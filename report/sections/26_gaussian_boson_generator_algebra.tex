@@ -1,0 +1,171 @@
+% SHARD-ID: CA-26-GAUSSIAN-BOSON-GENERATOR-ALGEBRA
+% SHARD-TITLE: One-Particle Generator Algebra for Gaussian Bosons
+% SHARD-SUMMARY: Defines the one-particle H, P, J, and K candidates on a smooth momentum-space core.
+% SHARD-SUMMARY: Derives the commutators that are exact for any scalar dispersion and isolates the residuals that depend on omega.
+% SHARD-SUMMARY: Explains how second quantization transports the algebraic checks to the many-body Gaussian Fock space.
+% SHARD-KEYWORDS: Gaussian boson, Poincare generators, boost, rotation, commutator, second quantization
+
+\section{One-Particle Generator Algebra for Gaussian Bosons}
+\label{sec:gaussian-boson-generator-algebra}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: checked local derivation on a common core.}  The Poincare
+target, Stone convention, and free-boson Fock realization are sourced.  The
+commutator identities in this shard are local differential-operator derivations
+on a smooth momentum-space core.
+
+Dependencies: CA-11, CA-24--CA-25, and CONVENTIONS.md (h), (j).
+
+% Source: references/cft/Schottenloher2008/Schottenloher2008.md:4040 -- Stone convention for one-parameter unitary groups.
+% Source: references/cft/Schottenloher2008/Schottenloher2008.md:4092 -- Poincare group and relativistic invariance.
+% Source: references/cft/Schottenloher2008/Schottenloher2008.md:4106 -- unitary Poincare representation.
+% Source: references/cft/Schottenloher2008/Schottenloher2008.md:4113 -- translation generators P_mu and P_0=H.
+% Source: references/cft/Schottenloher2008/Schottenloher2008.md:4244 -- free bosonic QFT carries a natural Poincare action on Fock space.
+% Checked: test/runtests.jl, "Gaussian boson boost-time symbols".
+
+\subsection{Momentum Core}
+
+Work on a connected smooth momentum patch \(\mathcal U\) where
+\(\omega(k)>0\).  Let
+\[
+  \mathcal D_0=C_c^\infty(\mathcal U)
+\]
+or the corresponding trigonometric-polynomial core on a finite periodic
+Brillouin grid.  Define
+\[
+  X_a=i\partial_{k_a},
+  \qquad
+  h=\omega(k),
+  \qquad
+  p_a=k_a .
+\]
+The one-particle Hamiltonian and momenta are multiplication operators:
+\[
+  H^{(1)}=h,\qquad P_a^{(1)}=p_a.
+\]
+The rotation and time-zero boost candidates are
+\[
+  J_{ab}^{(1)}=X_aP_b-X_bP_a,
+  \qquad
+  K_a^{(1)}=\frac{1}{2}(X_ah+hX_a).
+\]
+All commutators below are identities on \(\mathcal D_0\); promoting them to
+self-adjoint generator statements is a separate domain theorem.
+
+\subsection{Exact Translation and Rotation Brackets}
+
+Because \(h\) and \(p_a\) are multiplication operators,
+\[
+  i[h,p_a]=0.
+\]
+The canonical differential identity is
+\[
+  [X_a,p_b]=i\delta_{ab}.
+\]
+Therefore
+\[
+  i[P_c,J_{ab}]
+  =
+  \delta_{ac}P_b-\delta_{bc}P_a.
+\]
+This is independent of the dispersion.  It is kinematical: it comes from the
+chosen momentum coordinate and the differential representation of rotations.
+
+\subsection{Boost-Momentum Bracket}
+
+For the boost candidate,
+\[
+\begin{aligned}
+  [P_b,K_a]
+  &=
+  \frac{1}{2}\bigl([P_b,X_a]h+h[P_b,X_a]\bigr)\\
+  &=
+  -i\delta_{ab}h.
+\end{aligned}
+\]
+Hence
+\[
+  i[P_b,K_a]=\delta_{ab}H .
+\]
+This part of the Poincare algebra is exact for every positive scalar
+dispersion because it only uses \(K_a\) as the symmetrized first moment of
+energy.
+
+\subsection{Boost-Time Residual}
+
+CA-24 derived
+\[
+  i[H,K_a]
+  =
+  \frac{1}{2}\partial_a\omega(k)^2.
+\]
+The continuum target with speed \(c=1\) wants \(P_a=k_a\).  The residual is
+\[
+  R_a(k)
+  :=
+  \frac{1}{2}\partial_a\omega(k)^2-k_a.
+\]
+For speed \(c\), replace \(k_a\) by \(c^2k_a\).  This is the first algebraic
+filter on Hamiltonian coefficients.
+
+\subsection{Rotation-Hamiltonian Residual}
+
+The Hamiltonian commutes with rotations iff the dispersion is radial on the
+patch:
+\[
+  i[h,J_{ab}]
+  =
+  k_b\partial_a\omega-k_a\partial_b\omega.
+\]
+Equivalently,
+\[
+  k_b\partial_a\omega^2-k_a\partial_b\omega^2=0
+\]
+where \(\omega>0\).  Hypercubic lattice symbols usually fail this globally on
+the Brillouin zone but may satisfy it to leading order at a low-energy minimum.
+
+\subsection{Boost-Boost Residual}
+
+Write
+\[
+  B_a(k):=\frac{1}{2}\partial_a\omega(k)^2,
+  \qquad
+  R_a(k):=B_a(k)-k_a.
+\]
+Equivalently \(B_a=h\partial_a h\).  Since
+\[
+  K_a=i\left(h\partial_a+\frac{1}{2}\partial_ah\right),
+\]
+the commutator of the first-order differential parts gives
+\[
+  i[K_a,K_b]
+  =
+  J_{ab}+R_bX_a-R_aX_b.
+\]
+Here the possible divergence term vanishes because \(R\) is a gradient
+residual:
+\(\partial_aR_b=\partial_bR_a\).  Thus the boost-boost bracket closes to the
+rotation bracket whenever the boost-time residual \(R_a\) vanishes on the patch.
+The remaining caveat is analytic, not algebraic: all of these are unbounded
+operators and still require a common self-adjointness/core theorem before this
+becomes a continuum representation statement.
+
+\subsection{Second Quantization}
+
+On the finite-particle core of
+\[
+  \mathcal F_+(\mathfrak h_\epsilon),
+\]
+the many-body candidates are
+\[
+  H=d\Gamma(h),\quad
+  P_a=d\Gamma(p_a),\quad
+  J_{ab}=d\Gamma(J_{ab}^{(1)}),\quad
+  K_a=d\Gamma(K_a^{(1)}),
+\]
+with a separate vacuum-energy convention if absolute Hamiltonian values are
+used.  Commutators of second quantizations reproduce second quantizations of
+the one-particle commutators on the finite-particle core.  Thus the compiler can
+perform the first Lorentz tests at one-particle level and then lift the checked
+residuals to the Gaussian Fock space.

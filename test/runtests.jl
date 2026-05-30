@@ -183,3 +183,41 @@ end
     @test norm(lattice_symbol - k) < 5e-4
     @test_throws ErrorException CftAnyons.kg_lattice_boost_time_symbol([0.0]; spacing = 0)
 end
+
+@testset "Gaussian boson Lorentz Hessian examples" begin
+    for d in 1:3
+        spacing = 0.35
+        coeffs = CftAnyons.kg_nearest_neighbor_coefficients(d; mass = 0.6, spacing)
+        hessian = CftAnyons.low_energy_hessian_from_coefficients(coeffs, d; spacing)
+        residual = CftAnyons.lorentz_hessian_residual(coeffs, d; spacing)
+
+        @test hessian ≈ 2 * Matrix{Float64}(I, d, d)
+        @test residual ≈ zeros(d, d)
+    end
+
+    speeds = [1.0, 1.5, 0.5]
+    anisotropic = CftAnyons.anisotropic_kg_nearest_neighbor_coefficients(speeds; mass = 0.4, spacing = 0.25)
+    hessian = CftAnyons.low_energy_hessian_from_coefficients(anisotropic, 3; spacing = 0.25)
+    residual = CftAnyons.lorentz_hessian_residual(anisotropic, 3; spacing = 0.25)
+
+    @test diag(hessian) ≈ 2 .* speeds .^ 2
+    @test norm(residual) > 1
+end
+
+@testset "Gaussian boson finite periodic examples" begin
+    for sizes in ([5], [4, 3], [3, 2, 2])
+        d = length(sizes)
+        spacing = 0.4
+        coeffs = CftAnyons.kg_nearest_neighbor_coefficients(d; mass = 0.8, spacing)
+        stiffness = CftAnyons.periodic_stiffness_matrix(coeffs, sizes)
+        spectrum = sort(eigvals(Symmetric(stiffness)))
+        symbols = sort(CftAnyons.periodic_symbol_values(coeffs, sizes; spacing))
+
+        @test stiffness ≈ stiffness'
+        @test spectrum ≈ symbols
+    end
+
+    doubler = CftAnyons.doubler_quadratic_coefficients(2; mass = 0, spacing = 1)
+    @test CftAnyons.count_periodic_symbol_minima(doubler, [4, 4]; spacing = 1) == 4
+    @test_throws ErrorException CftAnyons.periodic_stiffness_matrix([([0, 0], 1.0)], [3])
+end
