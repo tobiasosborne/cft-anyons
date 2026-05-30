@@ -1,5 +1,41 @@
 # Worklog chunk 005 — 2026-05-30
 
+## Session log — 2026-05-30 — Action-plan R5 finite-periodic numerical boundary
+
+### Context
+
+R5 narrows CA-28 so the finite-periodic numerical suite cannot be read as a
+test of finite boosts, rotations, branch choices, coordinate-generator
+commutators, or full generator closure.
+
+### What changed
+
+- Delegated R5 to worker `019e794b-6426-7381-973c-b2852c96284f` (`Nietzsche`).
+- Updated CA-28 status/current-surface prose to state the checked coverage
+  exactly: symbol values, stiffness spectra, minima counts, and implemented
+  coefficient residuals/Hessians.
+- Marked next numerical milestones as proposed additions, not achieved
+  coverage.
+
+### Why these choices
+
+- The finite periodic suite is valuable but narrow.  It checks coefficient and
+  Fourier invariants, not finite coordinate-generator algebra.
+
+### Frictions / dead ends
+
+- None.  This completes the report-only containment block R1--R5.
+
+### Acceptance
+
+- `make ci-before-push` passed.
+- `git diff --check` passed.
+
+### Pointers
+
+- Action plan: `reviews/2026-05-30_gaussian_lorentz/ACTION_PLAN.md` (R5).
+- Shard: CA-28.
+
 ## Session log — 2026-05-30 — Action-plan R4 angular-momentum mnemonic
 
 ### Context

@@ -18,6 +18,12 @@ check is a coefficient-level rejection test, not a Fock-generator check.  The
 finite periodic checks below do not assert an exact differential
 \([X_a,P_b]=i\delta_{ab}\) commutator.
 
+The current finite-periodic numerical surface is deliberately narrow: it checks
+symbol values, finite stiffness spectra, periodic minima counts, and the
+implemented coefficient residuals/Hessians.  It does not test finite boost
+generators, finite rotation generators, periodic branch choices,
+coordinate-generator commutators, or full generator closure.
+
 Dependencies: CA-24--CA-27, INDEX.md, and CONVENTIONS.md (j).
 
 % Source: literature/md/2010.11121/2010.11121.md:274--293 -- finite torus lattice, dual lattice, and Fourier transform normalization.
@@ -119,6 +125,10 @@ The checked helper layer is:
 \begin{array}{ll}
 \texttt{kg\_nearest\_neighbor\_coefficients}
   & \text{standard scalar KG coefficients},\\
+\texttt{anisotropic\_kg\_nearest\_neighbor\_coefficients}
+  & \text{anisotropic coefficient witness},\\
+\texttt{doubler\_quadratic\_coefficients}
+  & \text{coefficient-level doubler witness},\\
 \texttt{scalar\_quadratic\_symbol}
   & \sum_rV_re^{i\epsilon k\cdot r},\\
 \texttt{boost\_time\_symbol\_from\_coefficients}
@@ -130,13 +140,18 @@ The checked helper layer is:
 \texttt{periodic\_stiffness\_matrix}
   & \text{finite periodic real-space matrix},\\
 \texttt{periodic\_symbol\_values}
-  & \text{finite Brillouin-grid eigenvalue oracle}.
+  & \text{finite Brillouin-grid eigenvalue oracle},\\
+\texttt{count\_periodic\_symbol\_minima}
+  & \text{finite-grid minima counter}.
 \end{array}
 \]
+This list is a coverage boundary, not a generator-algebra interface: no helper
+currently constructs a finite coordinate generator, a finite boost, a finite
+rotation, or their commutator table.
 
 \subsection{Next Numerical Milestones}
 
-The next suite should add three checks:
+Proposed next suite additions, none claimed as achieved here, are:
 \[
 \begin{array}{ll}
 1.&\text{finite Fourier eigenvectors, not only eigenvalues},\\
