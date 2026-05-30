@@ -1,5 +1,42 @@
 # Worklog chunk 005 — 2026-05-30
 
+## Session log — 2026-05-30 — Action-plan R3 source-anchor ranges
+
+### Context
+
+R3 fixes source comments whose anchors only pointed to the first line of
+multi-line claims, especially the Koo-Saleur convergence statements and the OAR
+warning that Lorentz/conformal convergence remains further work.
+
+### What changed
+
+- Delegated R3 to worker `019e7942-eb85-7bc0-b26d-bf536840f3f6` (`Popper`).
+- Expanded KS source ranges in CA-14, CA-16, and CA-17.
+- Expanded OAR translation and Lorentz/conformal warning ranges in CA-15,
+  CA-16, and CA-23.
+
+### Why these choices
+
+- No mathematical claims changed.  The evidence chain is now less brittle
+  because each source comment covers the sentence or claim it is meant to
+  support.
+
+### Frictions / dead ends
+
+- None.  This was deliberately anchor-only.
+
+### Acceptance
+
+- `make ci-before-push` passed.
+- `git diff --check` passed.
+
+### Pointers
+
+- Action plan: `reviews/2026-05-30_gaussian_lorentz/ACTION_PLAN.md` (R3).
+- Shards: CA-14, CA-15, CA-16, CA-17, CA-23.
+- Sources: `references/text/CFTFromLatticeFermions.txt:2233--2235`,
+  `:2256--2257`, and `references/text/OARWavelets.txt:405--406`.
+
 ## Session log — 2026-05-30 — Action-plan R2 CA-23 roadmap repair
 
 ### Context

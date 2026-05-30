@@ -26,7 +26,7 @@ Protocol:
 | C6 | Complete | `019e7931-4366-7781-90aa-0666928bff72` (`Harvey`) | Added convention (l) and CA-29 for Gaussian real-space energy-density split; no stress-tensor claim. |
 | R1 | Complete | `019e7939-5cff-74c1-85be-419101a1a77a` (`Aquinas`) | Demoted CA-26 checked coverage and formalized dGamma language; parent synchronized shard/catalog summary. |
 | R2 | Complete | `019e793e-01a5-7280-b32d-57a00392a479` (`Galileo`) | Replaced stale CA-23 roadmap with actual CA-24--CA-29 roles and queued proposal follow-ups. |
-| R3 | Pending | - | Source-anchor ranges in lattice-symmetry shards. |
+| R3 | Complete | `019e7942-eb85-7bc0-b26d-bf536840f3f6` (`Popper`) | Expanded KS and OAR source-anchor ranges in CA-14--CA-17 and CA-23 without new claims. |
 | R4 | Pending | - | Stress-energy and angular-momentum density intuition in CA-13. |
 | R5 | Pending | - | Finite-periodic numerical claims in CA-28. |
 | J1 | Pending | - | Centered periodic momentum labels. |
@@ -92,4 +92,9 @@ Protocol:
 - 2026-05-30: R1 pushed as `9db065d`.  R2 delegated to worker
   `019e793e-01a5-7280-b32d-57a00392a479` (`Galileo`) with write scope CA-23.
 - 2026-05-30: R2 reviewed by parent and accepted.  `make ci-before-push` and
+  `git diff --check` passed; `report.pdf` did not change in the parent gate.
+- 2026-05-30: R2 pushed as `c7fe6cd`.  R3 delegated to worker
+  `019e7942-eb85-7bc0-b26d-bf536840f3f6` (`Popper`) with write scope CA-14,
+  CA-15, CA-16, CA-17, and CA-23.
+- 2026-05-30: R3 reviewed by parent and accepted.  `make ci-before-push` and
   `git diff --check` passed; `report.pdf` did not change in the parent gate.
