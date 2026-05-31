@@ -10,20 +10,25 @@ lab book points here, to the script and run artifact that back it.
 |---|---|
 | `scripts/check_report_shards.sh` | Deterministic structural guard for the sharded lab book. |
 | `scripts/ci_before_push.sh` | Local pre-push gate (shard guard + report build + Julia tests). |
-| `src/CftAnyons.jl` | Seed Julia backend: golden-ratio invariant helper, finite-group averaging projector helper, Fibonacci fusion-path count helper, Poincare vector-field bracket helper, nearest-neighbour boost-current coefficient helper, and includes for the Galilei, Gaussian-boson, and qubit Pauli helper files. |
+| `src/CftAnyons.jl` | Seed Julia backend: golden-ratio invariant helper, finite-group averaging projector helper, Fibonacci fusion-path count helper, Poincare vector-field bracket helper, nearest-neighbour boost-current coefficient helper, and includes for the Galilei, Gaussian-boson, qubit Pauli, and qubit SDP helper files. |
 | `src/GalileiAlgebras.jl` | Checked Galilei vector-field bracket helper, mass-central coefficient helper, and first-moment continuity-current coefficient helper used by CA-19--CA-21. |
 | `src/GaussianBosons.jl` | Checked Gaussian-boson symbol helpers: nearest-neighbour Klein-Gordon dispersion, scalar coefficient validation, coefficient-symbol evaluation, boost-time residuals, rotation-Hamiltonian residuals, and boost-boost residual coefficient data used by CA-24, CA-26, and CA-28. |
 | `src/GaussianBosonCurrents.jl` | Checked Gaussian current helpers: phase-space quadratic commutators, CA-29 equal-endpoint nearest-neighbour density matrices, local bond currents `J_{j+1/2}=i[e_j,e_{j+1}]`, closed-form current matrices, continuity residuals for the T_01 candidate, the 1D translation-invariant integrated-current symbol used by CA-31, and the nearest-neighbour current-symbol speed residual used by CA-33. |
 | `src/GaussianBosonNumerics.jl` | Checked Gaussian-boson numerical/example helpers: Lorentz Hessian residuals, anisotropic and doubler coefficient examples, uncentered and centered finite periodic momentum grids, finite periodic Fourier vectors, finite periodic stiffness matrices, Brillouin-grid symbol spectra, and finite-grid minimum-data certificates used by CA-27--CA-28. |
 | `src/QubitPauliLattice.jl` | Checked qubit Pauli helpers: one-, two-, three-, and n-site Pauli operator reconstruction, symmetric on-site bond split, adjacent-density current `i[h_12,h_23]`, direct Pauli-coefficient current tensor, conservation residuals, raw five-site overlap sentinels, and first-moment boost density helpers used by CA-34--CA-40. |
 | `src/QubitPauliResiduals.jl` | Checked one-dimensional qubit residual helpers: Pauli-coefficient coboundary tensors `D u = u_j-u_{j+1}` and the four-site boost-relation local density `B_j=i[p_j,h_{j+1}]+2i[p_j,h_{j+2}]` used by CA-38--CA-40. |
-| `test/runtests.jl` | Julia invariant checks (`make test` / `Pkg.test()`), including the `C2` swap averaging projector sector check used by CA-06, the two-qubit exchange projector check used by CA-08, the Fibonacci path-count check used by CA-09, the lattice-symmetry algebra/coefficient checks used by CA-11--CA-12, the qubit Pauli adjacent-current/coboundary/residual obstruction checks used by CA-34--CA-40, the Galilean algebra/mass/current checks used by CA-19--CA-21, the Gaussian-boson symbol checks used by CA-24, the strengthened Gaussian open-chain T_01 current continuity checks used by A4 and CA-33, the current-symbol equivalence checks used by CA-31, the current-symbol slope witnesses used by CA-33, and the Gaussian-boson residual/numerical/scalar-coefficient-validation/centered-momentum/Fourier-eigenvector/minimum-data/rotation/boost-boost checks used by CA-26--CA-28. |
+| `src/QubitPauliWords.jl` | Exact positioned Pauli-word algebra for the SDP hierarchy: sparse word representation, product phases, translation-canonical moment representatives, finite window enumeration, and coefficient-to-term conversion used by CA-47--CA-50. |
+| `src/QubitPoincareWitnesses.jl` | Linear least-squares witness solvers for fixed-`h` conservation and boost coboundary equations before SDP construction, used by CA-49--CA-51. |
+| `src/QubitMomentSDP.jl` | JuMP/MathOptInterface/MosekTools implementation of the fixed-residual qubit moment SDP: level specification, affine expectation forms, realified PSD cone, residual relation constraints, and solver verdict mapping used by CA-46--CA-50. |
+| `src/QubitHamiltonianScreening.jl` | Deterministic sentinel Hamiltonian matrices and current-collapse gate helper used by CA-51--CA-52. |
+| `scripts/julia/qubit_sdp_smoke.jl` | Reproducible Mosek smoke run for the qubit SDP layer; writes `runs/2026-05-31-qubit-sdp-smoke/results.toml`. |
+| `test/runtests.jl` | Julia invariant checks (`make test` / `Pkg.test()`), including the `C2` swap averaging projector sector check used by CA-06, the two-qubit exchange projector check used by CA-08, the Fibonacci path-count check used by CA-09, the lattice-symmetry algebra/coefficient checks used by CA-11--CA-12, the qubit Pauli adjacent-current/coboundary/residual obstruction checks used by CA-34--CA-40, the qubit Pauli-word moment-SDP checks used by CA-46--CA-52, the Galilean algebra/mass/current checks used by CA-19--CA-21, the Gaussian-boson symbol checks used by CA-24, the strengthened Gaussian open-chain T_01 current continuity checks used by A4 and CA-33, the current-symbol equivalence checks used by CA-31, the current-symbol slope witnesses used by CA-33, and the Gaussian-boson residual/numerical/scalar-coefficient-validation/centered-momentum/Fourier-eigenvector/minimum-data/rotation/boost-boost checks used by CA-26--CA-28. |
 
 ## Runs
 
-_None yet._ When a script produces data, create
-`runs/<YYYY-MM-DD>-<slug>/{data,figures}/` with a `README.md` (command line +
-headline finding) and add a row here.
+| Run bundle | Producer | Headline |
+|---|---|---|
+| `runs/2026-05-31-qubit-sdp-smoke/` | `scripts/julia/qubit_sdp_smoke.jl` | Mosek returns `:not_excluded_at_level` for the zero-residual moment problem and `:excluded` for the artificial identity and forced-`ZZ` contradiction instances. |
 
 ## Reviews
 
@@ -32,6 +37,7 @@ headline finding) and add a row here.
 | `reviews/2026-05-30_gaussian_lorentz/` | Independent rigorous reviews of CA-10--CA-17 and CA-23--CA-28, plus synthesis for stress-energy-density follow-up shards. |
 | `reviews/2026-05-31_qubit_nn_symmetry/` | Orchestration record for the qubit nearest-neighbour symmetry diagnostic subagents feeding CA-34--CA-37. |
 | `reviews/2026-05-31_qubit_nn_sdp_hierarchy/` | Orchestration record for the expanded qubit necessary-equation and SDP-hierarchy subagents feeding CA-38--CA-45. |
+| `reviews/2026-05-31_qubit_sdp_implementation/` | Orchestration record for the Julia qubit moment-SDP implementation subagents feeding CA-46--CA-52. |
 
 ## Report shards
 

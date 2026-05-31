@@ -1,0 +1,57 @@
+% SHARD-ID: CA-47-QUBIT-PAULI-WORD-MOMENT-BASIS
+% SHARD-TITLE: Pauli Word Moment Basis for Infinite Qubit Chains
+% SHARD-SUMMARY: Implements finite positioned Pauli words and translation-canonical moment variables.
+% SHARD-SUMMARY: Exact Pauli multiplication gives the phases used in moment matrices and residual constraints.
+% SHARD-SUMMARY: Rows and columns are actual local words; only the moment variables are quotiented by translation.
+% SHARD-KEYWORDS: Pauli words, moment basis, translation invariance, qubit chain, exact algebra
+
+\section{Pauli Word Moment Basis for Infinite Qubit Chains}
+\label{sec:qubit-pauli-word-moment-basis}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: checked.}  The word algebra is implemented without dense
+matrices and checked against exact Pauli identities.
+
+Dependencies: CA-38, CA-43, CA-46.
+
+% Source: references/text/CFTFromLatticeFermions.txt:80--100 -- local finite
+%   support Hamiltonian terms and observable algebra.
+% Source: references/text/CFTFromLatticeFermions.txt:1033--1038 -- Pauli
+%   matrices in the qubit setting.
+% Checked: src/QubitPauliWords.jl; test/runtests.jl testset
+%   "qubit Pauli moment SDP hierarchy".
+
+\subsection{Positioned Words}
+
+A word is stored as sorted non-identity labels on integer sites.  Identities
+are not stored, but gaps are preserved:
+\[
+  X_0Z_2\quad\leftrightarrow\quad
+  \texttt{sites=(0,2), labels=(1,3)}.
+\]
+The empty word is the identity.  Multiplication is sitewise with
+\[
+  XY=iZ,\quad YZ=iX,\quad ZX=iY,
+\]
+and the reversed products carrying \(-i\).  The implementation returns
+\[
+  P_uP_v=\phi(u,v)P_{u\cdot v},
+  \qquad \phi(u,v)\in\{1,-1,i,-i\}.
+\]
+The tests assert \(XY=iZ\), \(YX=-iZ\), \(X^2=I\), and commutation of disjoint
+words.
+
+\subsection{Translation Quotient}
+
+The SDP row/column words are not quotiented by translation.  They are actual
+local probes in a finite window.  Translation invariance enters only when a
+moment variable is named:
+\[
+  y_s=\omega(P_s)=\omega(P_{\tau^n s}).
+\]
+The canonical representative shifts the first non-identity site to \(0\).
+Thus \(X_{-3}Z_{-1}\) and \(X_0Z_2\) share the same moment variable.
+
+Because each phase-free Pauli word is self-adjoint, each canonical moment
+variable is real.  Complex numbers enter only as multiplication phases.

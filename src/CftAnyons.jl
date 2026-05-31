@@ -168,6 +168,10 @@ include("GaussianBosonCurrents.jl")
 include("GaussianBosonNumerics.jl")
 include("QubitPauliLattice.jl")
 include("QubitPauliResiduals.jl")
+include("QubitPoincareWitnesses.jl")
+include("QubitPauliWords.jl")
+include("QubitMomentSDP.jl")
+include("QubitHamiltonianScreening.jl")
 
 """
     nearest_neighbor_boost_current_coefficients(positions) -> Vector

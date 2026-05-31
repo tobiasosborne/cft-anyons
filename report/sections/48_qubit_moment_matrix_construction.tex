@@ -1,0 +1,56 @@
+% SHARD-ID: CA-48-QUBIT-MOMENT-MATRIX-CONSTRUCTION
+% SHARD-TITLE: Moment Matrices and Positivity Constraints
+% SHARD-SUMMARY: Builds the finite moment matrix M_{u,v}=omega(P_u^*P_v) from exact Pauli products.
+% SHARD-SUMMARY: Uses the realification [A -B; B A] to impose complex Hermitian positivity in JuMP.
+% SHARD-SUMMARY: Checks feasible and infeasible tiny Mosek instances as smoke tests.
+% SHARD-KEYWORDS: moment matrix, positivity, realification, JuMP, Mosek, qubit SDP
+
+\section{Moment Matrices and Positivity Constraints}
+\label{sec:qubit-moment-matrix-construction}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: checked.}  Moment matrices are constructed by
+\texttt{build\_qubit\_sdp\_model}.
+
+Dependencies: CA-43--CA-47.
+
+% Source: literature/md/2010.11121/2010.11121.md:178--184 -- projectively
+%   consistent states and GNS compatibility.
+% Checked: src/QubitMomentSDP.jl; test/runtests.jl testset
+%   "qubit Pauli moment SDP hierarchy".
+
+\subsection{Affine Moment Matrix}
+
+For a finite actual probe set \(\mathcal W\), define
+\[
+  M_{u,v}
+  =
+  \omega(P_u^*P_v)
+  =
+  \phi(u,v)y_{\operatorname{can}(u\cdot v)}.
+\]
+The identity moment is the constant \(1\).  All other canonical words appearing
+in products or relation constraints receive real JuMP variables.
+
+Write \(M=A+iB\), with \(A,B\) real affine matrices.  Positivity of the complex
+Hermitian moment matrix is imposed by the real symmetric cone
+\[
+  \begin{pmatrix}
+  A&-B\\
+  B&A
+  \end{pmatrix}\succeq0.
+  \tag{48.1}
+\]
+For the one-site probe set \(\{I,X,Y,Z\}\), the implementation creates three
+real moment variables and an \(8\times8\) realified PSD block.  This exact
+dimension is checked in the Julia suite.
+
+\subsection{Tiny Feasibility Tests}
+
+The zero-residual one-site moment problem solves with Mosek as
+\[
+  \texttt{:not\_excluded\_at\_level}.
+\]
+The artificial relation \(\omega(I)=0\) solves as \(\texttt{:excluded}\).
+These are smoke tests for the solver path, not physical Hamiltonian claims.

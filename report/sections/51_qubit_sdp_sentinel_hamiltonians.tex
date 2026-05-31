@@ -1,0 +1,55 @@
+% SHARD-ID: CA-51-QUBIT-SDP-SENTINEL-HAMILTONIANS
+% SHARD-TITLE: Sentinel Hamiltonians for the SDP Hierarchy
+% SHARD-SUMMARY: Records deterministic qubit coefficient matrices used to test current collapse, conservation witnesses, boost witnesses, and SDP contradictions.
+% SHARD-SUMMARY: Fully onsite and ZZ densities fail by current collapse; fake and generic densities fail conservation; the transverse-Ising-style density reaches the boost gate.
+% SHARD-SUMMARY: These are implementation sentinels, not claims of criticality or continuum symmetry.
+% SHARD-KEYWORDS: sentinel Hamiltonians, qubit, current collapse, transverse Ising, ZZ, screening
+
+\section{Sentinel Hamiltonians for the SDP Hierarchy}
+\label{sec:qubit-sdp-sentinel-hamiltonians}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: checked sentinels.}  These examples test the implementation and
+do not assert physical criticality.
+
+Dependencies: CA-35, CA-39--CA-50.
+
+% Checked: src/QubitHamiltonianScreening.jl; test/runtests.jl testset
+%   "qubit Pauli moment SDP hierarchy".
+
+\subsection{Matrices}
+
+The package records five \(4\times4\) Pauli coefficient matrices:
+
+\begin{itemize}
+\item a symmetric fully onsite split of \(0.25I+0.7X-0.3Y+0.5Z\);
+\item a commuting classical \(ZZ\) density;
+\item a transverse-Ising-style density \(-ZZ-0.35(XI+IX)\);
+\item a generic currentful density;
+\item the fake asymmetric onsite split \(XI+IZ\).
+\end{itemize}
+
+The deterministic current filter gives
+\[
+  \text{onsite},ZZ:\texttt{:current\_collapsed},
+\]
+and
+\[
+  \text{transverse-Ising},\text{generic},\text{fake}:
+  \texttt{:currentful}.
+\]
+
+\subsection{Gate Outcomes}
+
+The onsite and \(ZZ\) examples are excluded before SDP for the nontrivial
+first-moment route because \(p=0\).  Their boost-witness solve has only the
+trivial \(\lambda=0\) branch.
+
+The generic and fake examples have nonzero current but fail \(A=Du\).  This is
+the second algebraic gate catching more than current collapse.
+
+The transverse-Ising-style example has nonzero current and passes \(A=Du\), but
+the implemented linear boost witness does not solve (49.1) with the tested
+data.  It is therefore a useful near-candidate sentinel: it reaches a deeper
+gate before failing.

@@ -1,0 +1,60 @@
+% SHARD-ID: CA-49-QUBIT-RESIDUAL-RELATION-COMPILER
+% SHARD-TITLE: Compiling Poincare Residuals into Moment Equations
+% SHARD-SUMMARY: Implements the fixed-h residual terms A-Du and B-u-lambda h+mu I-Dw used by the SDP hierarchy.
+% SHARD-SUMMARY: Adds linear witness solvers for the conservation and boost coboundary equations before SDP construction.
+% SHARD-SUMMARY: Relation constraints are compiled as real and imaginary affine equations omega(X^* R Y)=0.
+% SHARD-KEYWORDS: Poincare residual, coboundary witness, moment constraints, qubit SDP, fixed h
+
+\section{Compiling Poincare Residuals into Moment Equations}
+\label{sec:qubit-residual-relation-compiler}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: checked local implementation.}  Dense matrix residual oracles
+from CA-40 are converted into coefficient terms and then into moment equations.
+
+Dependencies: CA-39--CA-40, CA-43--CA-48, CONVENTIONS.md (n).
+
+% Source: references/cft/Schottenloher2008/Schottenloher2008.md:4040--4050
+%   and :4113--4117 -- Stone convention and P_0=H.
+% Checked: src/QubitPauliResiduals.jl, src/QubitPoincareWitnesses.jl,
+%   src/QubitMomentSDP.jl, and test/runtests.jl.
+
+\subsection{Algebraic Witnesses}
+
+For fixed \(h\), the first algebraic gate solves
+\[
+  A(h)=Du
+\]
+as a real least-squares linear system after fixing the scalar gauge
+\(u_{00}=0\).  Passing this gate supplies a concrete \(u\).
+
+The next gate solves the linearized boost equation
+\[
+  B(h)-u-\lambda h+\mu I=Dw,
+  \tag{49.1}
+\]
+again with the scalar gauge \(w_{000}=0\).  Here \(\lambda=v^2\) and
+\(\mu=v^2e\).  A positive \(\lambda\) is the nontrivial-speed branch; a solution
+with \(\lambda=0\) is only the trivial current-collapsed branch.
+
+\subsection{Moment Relations}
+
+Once residual terms \(R=\sum_rc_rP_r\) are fixed, each pair of probe words gives
+\[
+  \omega(X^*RY)
+  =
+  \sum_r c_r\,\phi(X,r,Y)\,
+  y_{\operatorname{can}(XrY)}
+  =
+  0.
+  \tag{49.2}
+\]
+The implementation splits (49.2) into real and imaginary affine constraints.
+This is the finite SDP condition promised by CA-43.
+
+\subsection{Important Boundary}
+
+Witness solving is an algebraic necessary filter.  The SDP layer does not
+optimize over \(h\), \(u\), \(w\), or \(\lambda\).  It checks whether a fixed
+residual system is compatible with a finite positive moment restriction.

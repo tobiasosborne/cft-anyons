@@ -1,6 +1,7 @@
 using Test
 using CftAnyons
 using LinearAlgebra
+using JuMP
 
 @testset "CftAnyons seed invariants" begin
     φ = CftAnyons.golden_ratio()
@@ -207,6 +208,98 @@ end
     @test_throws ErrorException CftAnyons.pauli_n_site_operator(zeros(4, 3))
     @test_throws ErrorException CftAnyons.local_operator_embedding(zeros(3, 3), 1, 3)
     @test_throws ErrorException CftAnyons.one_dimensional_coboundary_coefficients(zeros(4, 3))
+end
+
+@testset "qubit Pauli moment SDP hierarchy" begin
+    identity_word = CftAnyons.PauliWord()
+    x0 = CftAnyons.pauli_word([1])
+    y0 = CftAnyons.pauli_word([2])
+    z0 = CftAnyons.pauli_word([3])
+    x2 = CftAnyons.pauli_word([1]; start = 2)
+    z4 = CftAnyons.pauli_word([3]; start = 4)
+
+    phase, word = CftAnyons.multiply_pauli_words(x0, y0)
+    @test phase == 1.0im
+    @test word == z0
+
+    phase, word = CftAnyons.multiply_pauli_words(y0, x0)
+    @test phase == -1.0im
+    @test word == z0
+
+    phase, word = CftAnyons.multiply_pauli_words(x0, x0)
+    @test phase == 1.0 + 0.0im
+    @test word == identity_word
+
+    phase, word = CftAnyons.multiply_pauli_words(x2, z4)
+    @test phase == 1.0 + 0.0im
+    @test word == CftAnyons.PauliWord((2, 4), (1, 3))
+    @test CftAnyons.canonical_moment_word(word) == CftAnyons.PauliWord((0, 2), (1, 3))
+    @test CftAnyons.canonical_moment_word(CftAnyons.PauliWord((-3, -1), (1, 3))) ==
+          CftAnyons.PauliWord((0, 2), (1, 3))
+
+    one_site_spec = CftAnyons.QubitSDPSpec(psd_window_length = 1)
+    one_site_data = CftAnyons.build_qubit_sdp_model(one_site_spec)
+    @test one_site_data.psd_dimension == 8
+    @test length(one_site_data.moment_variables) == 3
+    @test JuMP.num_variables(one_site_data.model) == 3
+    @test one_site_data.relation_constraint_count == 0
+
+    zero_relation_spec = CftAnyons.QubitSDPSpec(
+        psd_window_length = 1,
+        relation_window_length = 1,
+        residuals = [CftAnyons.PauliTerm[]],
+    )
+    zero_relation_data = CftAnyons.build_qubit_sdp_model(zero_relation_spec)
+    @test zero_relation_data.relation_constraint_count == 0
+
+    identity_relation_spec = CftAnyons.QubitSDPSpec(
+        psd_window_length = 1,
+        relation_window_length = 0,
+        residuals = [CftAnyons.identity_residual_terms()],
+    )
+    identity_relation_data = CftAnyons.build_qubit_sdp_model(identity_relation_spec)
+    @test identity_relation_data.relation_constraint_count == 1
+    @test CftAnyons.solve_qubit_sdp(one_site_spec).status == :not_excluded_at_level
+    @test CftAnyons.solve_qubit_sdp(identity_relation_spec).status == :excluded
+
+    zz = zeros(4, 4)
+    zz[4, 4] = 1.0
+    zz_relation_spec = CftAnyons.QubitSDPSpec(
+        psd_window_length = 2,
+        relation_window_length = 2,
+        residuals = [CftAnyons.coefficient_residual_terms(zz)],
+    )
+    @test CftAnyons.solve_qubit_sdp(zz_relation_spec).status == :excluded
+
+    transverse_ising = zeros(4, 4)
+    transverse_ising[4, 4] = -1.0
+    transverse_ising[2, 1] = -0.35
+    transverse_ising[1, 2] = -0.35
+    @test !isempty(CftAnyons.conservation_residual_terms(transverse_ising))
+    @test !isempty(CftAnyons.boost_residual_terms(transverse_ising; speed2 = 1.0))
+
+    sentinels = CftAnyons.qubit_sentinel_hamiltonians()
+    @test CftAnyons.qubit_current_filter_status(sentinels[:onsite]) == :current_collapsed
+    @test CftAnyons.qubit_current_filter_status(sentinels[:zz]) == :current_collapsed
+    @test CftAnyons.qubit_current_filter_status(sentinels[:transverse_ising]) == :currentful
+    @test CftAnyons.qubit_current_filter_status(sentinels[:generic_currentful]) == :currentful
+    @test CftAnyons.qubit_current_filter_status(sentinels[:fake_split]) == :currentful
+
+    onsite_conservation_witness = CftAnyons.solve_conservation_witness(sentinels[:onsite])
+    onsite_boost_witness =
+        CftAnyons.solve_boost_witness(sentinels[:onsite], onsite_conservation_witness.u)
+    @test onsite_conservation_witness.feasible
+    @test onsite_boost_witness.feasible
+    @test !onsite_boost_witness.nontrivial_speed
+
+    ti_conservation_witness = CftAnyons.solve_conservation_witness(sentinels[:transverse_ising])
+    ti_boost_witness =
+        CftAnyons.solve_boost_witness(sentinels[:transverse_ising], ti_conservation_witness.u)
+    @test ti_conservation_witness.feasible
+    @test !ti_boost_witness.feasible
+
+    @test !CftAnyons.solve_conservation_witness(sentinels[:generic_currentful]).feasible
+    @test !CftAnyons.solve_conservation_witness(sentinels[:fake_split]).feasible
 end
 
 @testset "Galilei vector-field brackets" begin

@@ -1,5 +1,85 @@
 # Worklog chunk 009 — 2026-05-31
 
+## Qubit moment-SDP implementation — 2026-05-31
+
+### Context
+
+Tobias asked to turn the qubit vacuum-state hierarchy into a functional Julia
+implementation backed by Mosek: finite Pauli moments, residual relation
+constraints, solver verdicts, sentinels, and enough shards to keep the
+derivations and future candidate-search path coherent after compaction.
+
+### What changed
+
+- Spawned four implementation subagents for Pauli-word moment algebra,
+  JuMP/Mosek API strategy, shard planning, and sentinel Hamiltonians.  Their
+  durable record is
+  `reviews/2026-05-31_qubit_sdp_implementation/ORCHESTRATION.md`, now marked
+  completed and closed.
+- Added `JuMP`, `MathOptInterface`, and `MosekTools` to the Julia project.
+- Added `src/QubitPauliWords.jl`, `src/QubitPoincareWitnesses.jl`,
+  `src/QubitMomentSDP.jl`, and `src/QubitHamiltonianScreening.jl`.
+- Extended the Julia tests with a "qubit Pauli moment SDP hierarchy" testset:
+  exact Pauli multiplication, translation-canonical moment keys, PSD model
+  dimensions, artificial infeasibility witnesses, conservation/boost witness
+  gates, and sentinel Hamiltonian statuses.
+- Added `scripts/julia/qubit_sdp_smoke.jl` and run bundle
+  `runs/2026-05-31-qubit-sdp-smoke/`, whose `results.toml` records the
+  zero-residual feasible case and the artificial identity/ZZ contradiction
+  exclusions.
+- Added CONVENTIONS.md (p), shards CA-46--CA-52, and the corresponding
+  `report.tex`, `report/README.md`, `report/SHARD_CATALOG.md`, and `INDEX.md`
+  entries.
+
+### Why these choices
+
+- The first implementation is fixed-\(h\).  Residual coefficients are fixed
+  before the SDP is built; joint optimization over \(h,u,w,\lambda,\mu\) would
+  be a polynomial/lifted hierarchy, not the plain SDP Tobias asked to land
+  first.
+- Actual positioned Pauli words are kept as moment-matrix rows and columns.
+  Translation invariance is imposed only by canonicalizing moment variables,
+  which preserves the finite GNS probe-space interpretation.
+- Feasibility is deliberately named `:not_excluded_at_level`, not evidence for
+  symmetry.  Only finite-level infeasibility is an exclusion certificate for
+  the named first-moment/residual route.
+
+### Frictions / dead ends
+
+- The transverse-Ising-style sentinel is currentful and passes conservation but
+  currently fails the least-squares boost witness.  It is useful as a gate
+  sentinel, not yet a sourced physical candidate claim.
+- The smoke SDP exclusions use artificial residuals (`I=0` and forced
+  `ZZ=0`) because they are clean solver invariants.  Real Hamiltonian
+  exclusions should be recorded in future run bundles after candidate inputs
+  and witness choices are fixed.
+- Solver tests currently assume the local Mosek installation works.  That is
+  true on this machine; future portability may need an opt-in solver gate while
+  keeping model-construction tests unconditional.
+
+### Acceptance
+
+- `make check-report-shards` passed with 53 included shards.
+- `make report` rebuilt `report.pdf` successfully at 125 pages.
+- `julia --project=. -e 'using Pkg; Pkg.test()'` passed; the new qubit moment
+  SDP testset reported 33 passes.
+- `julia --project=. scripts/julia/qubit_sdp_smoke.jl` reported
+  `forced_zz_zero_relation => excluded`,
+  `identity_zero_relation => excluded`, and
+  `zero_residual => not_excluded_at_level`.
+- `make ci-before-push` passed after the worklog and manifest updates.
+
+### Pointers
+
+- Shards: CA-46, CA-47, CA-48, CA-49, CA-50, CA-51, CA-52.
+- Convention: CONVENTIONS.md (p).
+- Code/tests: `src/QubitPauliWords.jl`, `src/QubitPoincareWitnesses.jl`,
+  `src/QubitMomentSDP.jl`, `src/QubitHamiltonianScreening.jl`,
+  `test/runtests.jl` testset "qubit Pauli moment SDP hierarchy".
+- Run bundle: `runs/2026-05-31-qubit-sdp-smoke/`.
+- Review orchestration:
+  `reviews/2026-05-31_qubit_sdp_implementation/ORCHESTRATION.md`.
+
 ## Qubit necessary equations and SDP hierarchy — 2026-05-31
 
 ### Context

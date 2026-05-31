@@ -1,0 +1,64 @@
+% SHARD-ID: CA-50-QUBIT-SDP-LEVELS-AND-MOSEK-BACKEND
+% SHARD-TITLE: SDP Levels and the Mosek Backend
+% SHARD-SUMMARY: Defines the implemented level data: PSD probe words, relation probe words, residuals, and moment variables.
+% SHARD-SUMMARY: Documents the JuMP/Mosek status map used for finite-level exclusion.
+% SHARD-SUMMARY: Records the smoke run bundle that checks feasible and infeasible tiny instances.
+% SHARD-KEYWORDS: SDP levels, Mosek, JuMP, solver status, run bundle, exclusion
+
+\section{SDP Levels and the Mosek Backend}
+\label{sec:qubit-sdp-levels-and-mosek-backend}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: checked implementation.}  The solver path is exercised by
+tests and by a recorded smoke run.
+
+Dependencies: CA-44--CA-49.
+
+% Checked: Project.toml dependencies JuMP, MathOptInterface, MosekTools;
+%   scripts/julia/qubit_sdp_smoke.jl;
+%   runs/2026-05-31-qubit-sdp-smoke/results.toml.
+
+\subsection{Level Data}
+
+An implemented level consists of:
+\[
+  \mathcal W_{\mathrm{psd}},\qquad
+  \mathcal W_{\mathrm{rel}},\qquad
+  \mathcal R.
+\]
+The first set is the row/column basis for the PSD moment matrix.  The second
+set supplies \(X,Y\) in \(\omega(X^*RY)=0\).  The third is a list of fixed
+residual coefficient terms.
+
+The convenience constructor uses full Pauli-word windows:
+\[
+  \mathcal W=\{P_s:\operatorname{supp}s\subseteq
+  [a,a+L-1]\}.
+\]
+Optional weight truncation is an implementation diagnostic, not the canonical
+hierarchy.
+
+\subsection{Solver Status}
+
+The feasibility problem has no objective.  The status map is:
+\[
+\begin{array}{c|c}
+\text{MOI termination status}&\text{hierarchy verdict}\\ \hline
+\texttt{OPTIMAL}&\texttt{:not\_excluded\_at\_level}\\
+\texttt{INFEASIBLE},\texttt{INFEASIBLE\_OR\_UNBOUNDED}&\texttt{:excluded}\\
+\text{anything else}&\texttt{:solver\_unknown}.
+\end{array}
+\]
+This map is intentionally conservative.
+
+\subsection{Smoke Run}
+
+The run bundle
+\[
+  \texttt{runs/2026-05-31-qubit-sdp-smoke/}
+\]
+records three tiny Mosek solves: zero residual, identity-zero relation, and a
+forced \(ZZ=0\) relation.  The first is not excluded at the level; the latter
+two are excluded.  The \(ZZ\) case is artificial: it forces
+\(\omega(ZZ\cdot ZZ)=\omega(I)=0\).

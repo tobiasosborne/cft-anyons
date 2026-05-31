@@ -1,0 +1,46 @@
+% SHARD-ID: CA-52-QUBIT-CANDIDATE-SELECTION-ROADMAP
+% SHARD-TITLE: Candidate Hamiltonian Selection Roadmap
+% SHARD-SUMMARY: Explains how algebraic gates and SDP levels prioritize real qubit Hamiltonian candidates for later scaling-limit work.
+% SHARD-SUMMARY: Feasibility is treated as survival of a finite exclusion test, never as evidence of symmetry.
+% SHARD-SUMMARY: Lists the next implementation steps: witness scans, run-bundle format, and physical source registration for named model families.
+% SHARD-KEYWORDS: candidate selection, qubit Hamiltonian, screening, SDP hierarchy, Poincare, Virasoro
+
+\section{Candidate Hamiltonian Selection Roadmap}
+\label{sec:qubit-candidate-selection-roadmap}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: roadmap.}  This shard connects the implementation to the north
+star: identifying Hamiltonians worth expensive continuum analysis.
+
+Dependencies: CA-15, CA-42--CA-51.
+
+% Source: references/lattice-symmetry/KooSaleur1993/source/9312156.tex:1030--1108
+%   -- finite lattice Virasoro non-closure warning.
+% Source: references/text/CFTFromLatticeFermions.txt:376--388 -- vacuum /
+%   ground-state subtraction in Koo-Saleur scaling.
+
+\subsection{Screening Order}
+
+For a fixed nearest-neighbour qubit density \(h_{\alpha\beta}\), use:
+
+\begin{enumerate}
+\item current collapse \(p=0\);
+\item conservation witness \(A=Du\);
+\item boost witness \(B-u-\lambda h+\mu I=Dw\) with \(\lambda>0\);
+\item finite moment SDP feasibility for the chosen residuals;
+\item only then, low-energy/scaling and Koo-Saleur/Virasoro tests.
+\end{enumerate}
+
+The point is to reject impossible candidates cheaply.  A Hamiltonian surviving
+all finite checks is not accepted as symmetric; it is merely promoted to the
+next, more expensive analysis.
+
+\subsection{Next Implementation Steps}
+
+The immediate next step is a run format for candidate scans: input
+\(h_{\alpha\beta}\), current status, witness data, level data, solver status,
+and a headline verdict.  Continuous families require external parameter scans
+or a later polynomial hierarchy.  Named physical model families need registered
+sources before the report can claim criticality, universality class, or
+continuum CFT content.

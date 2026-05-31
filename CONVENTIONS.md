@@ -534,3 +534,32 @@ schema.  No Julia checker for the two-dimensional edge residuals exists yet.
 **Sweep status:** CA-41 uses this proposal-level convention only.  Later
 two-dimensional implementation must either keep this convention or record a
 sweep before using different edge/cell data.
+
+## (p) Qubit SDP implementation levels
+**Choice:** The implemented qubit SDP hierarchy uses actual positioned Pauli
+words as moment-matrix rows and columns.  Translation invariance is imposed only
+on moment variables by replacing every product word with the canonical
+representative whose first non-identity site is 0.  Since each phase-free Pauli
+word is self-adjoint, canonical moment variables are real.  Complex phases from
+Pauli products are represented by realifying a Hermitian moment matrix
+`M=A+iB` as `[A -B; B A] >= 0`.
+
+The first implemented solver tier is fixed-`h`: residual coefficient terms are
+fixed before model construction.  Algebraic witness solvers may first solve
+`A=Du` and `B-u-lambda*h+mu*I=Dw`, but the JuMP SDP does not optimize over
+`h`, `u`, `w`, `lambda`, or `mu`.  The Mosek-backed status map is
+`OPTIMAL -> :not_excluded_at_level`,
+`INFEASIBLE` or `INFEASIBLE_OR_UNBOUNDED -> :excluded`, and any other status
+`-> :solver_unknown`.
+**Reasoning:** Actual row/column words preserve the finite local GNS probe
+space, while quotienting only moment variables encodes translation invariance.
+The realification keeps the problem in a standard real semidefinite cone.  The
+fixed-`h` boundary is what keeps the first hierarchy a genuine SDP rather than
+a polynomial moment relaxation.
+**Source:** CA-46--CA-52 local derivations and implementation documentation;
+`src/QubitPauliWords.jl`, `src/QubitPoincareWitnesses.jl`,
+`src/QubitMomentSDP.jl`, `src/QubitHamiltonianScreening.jl`;
+`runs/2026-05-31-qubit-sdp-smoke/results.toml`.
+**Sweep status:** CA-46--CA-52 and the qubit SDP Julia tests use this
+convention.  Future variable-`h` scans must record a new polynomial-relaxation
+convention before using solver statuses as exclusion evidence.

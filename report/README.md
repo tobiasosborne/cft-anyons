@@ -63,6 +63,13 @@ before treating report edits as complete.
 | 43 | `CA-43-QUBIT-VACUUM-MOMENT-CONSTRAINTS` | `report/sections/43_qubit_vacuum_moment_constraints.tex` | Vacuum Moment Constraints for Qubit Residuals |
 | 44 | `CA-44-QUBIT-SDP-EXCLUSION-HIERARCHY` | `report/sections/44_qubit_sdp_exclusion_hierarchy.tex` | SDP Exclusion Hierarchy for Qubit Hamiltonians |
 | 45 | `CA-45-QUBIT-SYMMETRY-EXCLUSION-ROADMAP` | `report/sections/45_qubit_symmetry_exclusion_roadmap.tex` | Roadmap for Qubit Symmetry Exclusion |
+| 46 | `CA-46-QUBIT-SDP-IMPLEMENTATION-CONTRACT` | `report/sections/46_qubit_sdp_implementation_contract.tex` | Qubit SDP Implementation Contract |
+| 47 | `CA-47-QUBIT-PAULI-WORD-MOMENT-BASIS` | `report/sections/47_qubit_pauli_word_moment_basis.tex` | Pauli Word Moment Basis for Infinite Qubit Chains |
+| 48 | `CA-48-QUBIT-MOMENT-MATRIX-CONSTRUCTION` | `report/sections/48_qubit_moment_matrix_construction.tex` | Moment Matrices and Positivity Constraints |
+| 49 | `CA-49-QUBIT-RESIDUAL-RELATION-COMPILER` | `report/sections/49_qubit_residual_relation_compiler.tex` | Compiling Poincare Residuals into Moment Equations |
+| 50 | `CA-50-QUBIT-SDP-LEVELS-AND-MOSEK-BACKEND` | `report/sections/50_qubit_sdp_levels_and_mosek_backend.tex` | SDP Levels and the Mosek Backend |
+| 51 | `CA-51-QUBIT-SDP-SENTINEL-HAMILTONIANS` | `report/sections/51_qubit_sdp_sentinel_hamiltonians.tex` | Sentinel Hamiltonians for the SDP Hierarchy |
+| 52 | `CA-52-QUBIT-CANDIDATE-SELECTION-ROADMAP` | `report/sections/52_qubit_candidate_selection_roadmap.tex` | Candidate Hamiltonian Selection Roadmap |
 
 ## Adding a shard
 

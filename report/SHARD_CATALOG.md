@@ -414,3 +414,66 @@ single ~200-line source file it points to.
 - Summary: Records the delegated subagent work, the checked Julia surface, and the open convention gaps.
 - Summary: Gives acceptance tests for future runs before any Hamiltonian is claimed excluded.
 - Keywords: roadmap, qubit exclusion, SDP, Poincare, Virasoro, orchestration
+
+## `CA-46-QUBIT-SDP-IMPLEMENTATION-CONTRACT`
+
+- Source: `report/sections/46_qubit_sdp_implementation_contract.tex`
+- Title: Qubit SDP Implementation Contract
+- Summary: Fixes the Julia API and solver boundary for the fixed-h qubit moment hierarchy.
+- Summary: Separates exact Pauli algebra, algebraic Poincare witnesses, JuMP model construction, and Mosek solves.
+- Summary: States what an exclusion verdict means and what evidence must accompany it.
+- Keywords: qubit, SDP, implementation, JuMP, Mosek, fixed Hamiltonian, exclusion
+
+## `CA-47-QUBIT-PAULI-WORD-MOMENT-BASIS`
+
+- Source: `report/sections/47_qubit_pauli_word_moment_basis.tex`
+- Title: Pauli Word Moment Basis for Infinite Qubit Chains
+- Summary: Implements finite positioned Pauli words and translation-canonical moment variables.
+- Summary: Exact Pauli multiplication gives the phases used in moment matrices and residual constraints.
+- Summary: Rows and columns are actual local words; only the moment variables are quotiented by translation.
+- Keywords: Pauli words, moment basis, translation invariance, qubit chain, exact algebra
+
+## `CA-48-QUBIT-MOMENT-MATRIX-CONSTRUCTION`
+
+- Source: `report/sections/48_qubit_moment_matrix_construction.tex`
+- Title: Moment Matrices and Positivity Constraints
+- Summary: Builds the finite moment matrix M_{u,v}=omega(P_u^*P_v) from exact Pauli products.
+- Summary: Uses the realification [A -B; B A] to impose complex Hermitian positivity in JuMP.
+- Summary: Checks feasible and infeasible tiny Mosek instances as smoke tests.
+- Keywords: moment matrix, positivity, realification, JuMP, Mosek, qubit SDP
+
+## `CA-49-QUBIT-RESIDUAL-RELATION-COMPILER`
+
+- Source: `report/sections/49_qubit_residual_relation_compiler.tex`
+- Title: Compiling Poincare Residuals into Moment Equations
+- Summary: Implements the fixed-h residual terms A-Du and B-u-lambda h+mu I-Dw used by the SDP hierarchy.
+- Summary: Adds linear witness solvers for the conservation and boost coboundary equations before SDP construction.
+- Summary: Relation constraints are compiled as real and imaginary affine equations omega(X^* R Y)=0.
+- Keywords: Poincare residual, coboundary witness, moment constraints, qubit SDP, fixed h
+
+## `CA-50-QUBIT-SDP-LEVELS-AND-MOSEK-BACKEND`
+
+- Source: `report/sections/50_qubit_sdp_levels_and_mosek_backend.tex`
+- Title: SDP Levels and the Mosek Backend
+- Summary: Defines the implemented level data: PSD probe words, relation probe words, residuals, and moment variables.
+- Summary: Documents the JuMP/Mosek status map used for finite-level exclusion.
+- Summary: Records the smoke run bundle that checks feasible and infeasible tiny instances.
+- Keywords: SDP levels, Mosek, JuMP, solver status, run bundle, exclusion
+
+## `CA-51-QUBIT-SDP-SENTINEL-HAMILTONIANS`
+
+- Source: `report/sections/51_qubit_sdp_sentinel_hamiltonians.tex`
+- Title: Sentinel Hamiltonians for the SDP Hierarchy
+- Summary: Records deterministic qubit coefficient matrices used to test current collapse, conservation witnesses, boost witnesses, and SDP contradictions.
+- Summary: Fully onsite and ZZ densities fail by current collapse; fake and generic densities fail conservation; the transverse-Ising-style density reaches the boost gate.
+- Summary: These are implementation sentinels, not claims of criticality or continuum symmetry.
+- Keywords: sentinel Hamiltonians, qubit, current collapse, transverse Ising, ZZ, screening
+
+## `CA-52-QUBIT-CANDIDATE-SELECTION-ROADMAP`
+
+- Source: `report/sections/52_qubit_candidate_selection_roadmap.tex`
+- Title: Candidate Hamiltonian Selection Roadmap
+- Summary: Explains how algebraic gates and SDP levels prioritize real qubit Hamiltonian candidates for later scaling-limit work.
+- Summary: Feasibility is treated as survival of a finite exclusion test, never as evidence of symmetry.
+- Summary: Lists the next implementation steps: witness scans, run-bundle format, and physical source registration for named model families.
+- Keywords: candidate selection, qubit Hamiltonian, screening, SDP hierarchy, Poincare, Virasoro

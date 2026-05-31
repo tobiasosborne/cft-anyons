@@ -1,0 +1,61 @@
+% SHARD-ID: CA-46-QUBIT-SDP-IMPLEMENTATION-CONTRACT
+% SHARD-TITLE: Qubit SDP Implementation Contract
+% SHARD-SUMMARY: Fixes the Julia API and solver boundary for the fixed-h qubit moment hierarchy.
+% SHARD-SUMMARY: Separates exact Pauli algebra, algebraic Poincare witnesses, JuMP model construction, and Mosek solves.
+% SHARD-SUMMARY: States what an exclusion verdict means and what evidence must accompany it.
+% SHARD-KEYWORDS: qubit, SDP, implementation, JuMP, Mosek, fixed Hamiltonian, exclusion
+
+\section{Qubit SDP Implementation Contract}
+\label{sec:qubit-sdp-implementation-contract}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: checked implementation contract.}  This shard records the
+Julia layer that implements the fixed-\(h\) hierarchy of CA-43--CA-45.
+
+Dependencies: CA-38--CA-45, CONVENTIONS.md (n).
+
+% Source: literature/md/2010.11121/2010.11121.md:126--180 -- states,
+%   projective limits, and GNS vector state.
+% Source: literature/md/2010.11121/2010.11121.md:204--243 -- local algebras,
+%   vacuum invariance, and Poincare-covariance warning.
+% Checked: Project.toml declares JuMP, MathOptInterface, and MosekTools;
+%   test/runtests.jl testset "qubit Pauli moment SDP hierarchy".
+
+\subsection{Package Split}
+
+The implementation is deliberately layered.
+
+\begin{itemize}
+\item \texttt{QubitPauliWords.jl}: exact positioned Pauli words, exact
+  multiplication phases, translation canonicalisation, and coefficient-term
+  extraction.
+\item \texttt{QubitPoincareWitnesses.jl}: linear algebraic witnesses for
+  \(A=Du\) and \(B-u-\lambda h+\mu I=Dw\), used before invoking an SDP.
+\item \texttt{QubitMomentSDP.jl}: finite moment bases, moment matrices,
+  relation constraints \(\omega(X^*RY)=0\), JuMP model construction, and
+  Mosek-backed solve helpers.
+\item \texttt{QubitHamiltonianScreening.jl}: deterministic sentinel
+  Hamiltonians and current-collapse filters.
+\end{itemize}
+
+The fixed-\(h\) boundary from CA-44 is enforced in the API: an SDP instance
+takes residual terms as fixed coefficients.  If \(h\), \(u\), \(w\), and
+\(\lambda\) are all variables, the problem is no longer this SDP; it becomes a
+separate polynomial/lifted hierarchy.
+
+\subsection{Verdicts}
+
+The solver helper returns one of three finite-level statuses:
+\[
+  \texttt{:excluded},\qquad
+  \texttt{:not\_excluded\_at\_level},\qquad
+  \texttt{:solver\_unknown}.
+\]
+Only the first is a mathematical rejection, and only for the named level and
+named residual constraints.  The second is not evidence for symmetry; it means
+that this finite relaxation did not find a contradiction.
+
+An exclusion claim must cite the coefficient matrix \(h_{\alpha\beta}\), the
+residuals, the moment/probe word sets, the solver status, and a run bundle or
+test that reproduces the result.
