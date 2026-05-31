@@ -21,14 +21,18 @@ lab book points here, to the script and run artifact that back it.
 | `src/QubitPoincareWitnesses.jl` | Linear least-squares witness solvers for fixed-`h` conservation and boost coboundary equations before SDP construction, used by CA-49--CA-51. |
 | `src/QubitMomentSDP.jl` | JuMP/MathOptInterface/MosekTools implementation of the fixed-residual qubit moment SDP: level specification, affine expectation forms, realified PSD cone, residual relation constraints, and solver verdict mapping used by CA-46--CA-50. |
 | `src/QubitHamiltonianScreening.jl` | Deterministic sentinel Hamiltonian matrices and current-collapse gate helper used by CA-51--CA-52. |
+| `src/QubitHamiltonianFamilies.jl` | Named two-qubit Pauli coefficient constructors for sourced TFIM/XY/XXZ/Heisenberg families and synthetic XYZ/DM/compass/generic scan inputs used by CA-54--CA-56. |
+| `src/QubitCandidateScan.jl` | Fixed first-moment-route candidate scan API: evaluates current collapse, conservation witness, boost witness, optional SDP status, scoped verdicts, and TOML-friendly result rows used by CA-53--CA-61. |
 | `scripts/julia/qubit_sdp_smoke.jl` | Reproducible Mosek smoke run for the qubit SDP layer; writes `runs/2026-05-31-qubit-sdp-smoke/results.toml`. |
-| `test/runtests.jl` | Julia invariant checks (`make test` / `Pkg.test()`), including the `C2` swap averaging projector sector check used by CA-06, the two-qubit exchange projector check used by CA-08, the Fibonacci path-count check used by CA-09, the lattice-symmetry algebra/coefficient checks used by CA-11--CA-12, the qubit Pauli adjacent-current/coboundary/residual obstruction checks used by CA-34--CA-40, the qubit Pauli-word moment-SDP checks used by CA-46--CA-52, the Galilean algebra/mass/current checks used by CA-19--CA-21, the Gaussian-boson symbol checks used by CA-24, the strengthened Gaussian open-chain T_01 current continuity checks used by A4 and CA-33, the current-symbol equivalence checks used by CA-31, the current-symbol slope witnesses used by CA-33, and the Gaussian-boson residual/numerical/scalar-coefficient-validation/centered-momentum/Fourier-eigenvector/minimum-data/rotation/boost-boost checks used by CA-26--CA-28. |
+| `scripts/julia/qubit_candidate_scan.jl` | Reproducible broad candidate scan for sourced and synthetic nearest-neighbour qubit Hamiltonian samples; writes `runs/2026-05-31-qubit-candidate-scan/{inputs,summary,results}.toml`. |
+| `test/runtests.jl` | Julia invariant checks (`make test` / `Pkg.test()`), including the `C2` swap averaging projector sector check used by CA-06, the two-qubit exchange projector check used by CA-08, the Fibonacci path-count check used by CA-09, the lattice-symmetry algebra/coefficient checks used by CA-11--CA-12, the qubit Pauli adjacent-current/coboundary/residual obstruction checks used by CA-34--CA-40, the qubit Pauli-word moment-SDP checks used by CA-46--CA-52, the qubit Hamiltonian candidate-scan checks used by CA-53--CA-61, the Galilean algebra/mass/current checks used by CA-19--CA-21, the Gaussian-boson symbol checks used by CA-24, the strengthened Gaussian open-chain T_01 current continuity checks used by A4 and CA-33, the current-symbol equivalence checks used by CA-31, the current-symbol slope witnesses used by CA-33, and the Gaussian-boson residual/numerical/scalar-coefficient-validation/centered-momentum/Fourier-eigenvector/minimum-data/rotation/boost-boost checks used by CA-26--CA-28. |
 
 ## Runs
 
 | Run bundle | Producer | Headline |
 |---|---|---|
 | `runs/2026-05-31-qubit-sdp-smoke/` | `scripts/julia/qubit_sdp_smoke.jl` | Mosek returns `:not_excluded_at_level` for the zero-residual moment problem and `:excluded` for the artificial identity and forced-`ZZ` contradiction instances. |
+| `runs/2026-05-31-qubit-candidate-scan/` | `scripts/julia/qubit_candidate_scan.jl` | The fixed first-moment-route scan checks 99 qubit Hamiltonian samples: 9 current-collapsed, 27 conservation-witness failures, and 63 exact boost-witness failures; self-dual TFIM reaches and fails the boost gate. |
 
 ## Reviews
 
@@ -38,6 +42,7 @@ lab book points here, to the script and run artifact that back it.
 | `reviews/2026-05-31_qubit_nn_symmetry/` | Orchestration record for the qubit nearest-neighbour symmetry diagnostic subagents feeding CA-34--CA-37. |
 | `reviews/2026-05-31_qubit_nn_sdp_hierarchy/` | Orchestration record for the expanded qubit necessary-equation and SDP-hierarchy subagents feeding CA-38--CA-45. |
 | `reviews/2026-05-31_qubit_sdp_implementation/` | Orchestration record for the Julia qubit moment-SDP implementation subagents feeding CA-46--CA-52. |
+| `reviews/2026-05-31_qubit_candidate_scan/` | Orchestration record for the sourced/synthetic candidate scan subagents feeding CA-53--CA-61. |
 
 ## Report shards
 

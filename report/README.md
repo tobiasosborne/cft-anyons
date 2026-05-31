@@ -70,6 +70,15 @@ before treating report edits as complete.
 | 50 | `CA-50-QUBIT-SDP-LEVELS-AND-MOSEK-BACKEND` | `report/sections/50_qubit_sdp_levels_and_mosek_backend.tex` | SDP Levels and the Mosek Backend |
 | 51 | `CA-51-QUBIT-SDP-SENTINEL-HAMILTONIANS` | `report/sections/51_qubit_sdp_sentinel_hamiltonians.tex` | Sentinel Hamiltonians for the SDP Hierarchy |
 | 52 | `CA-52-QUBIT-CANDIDATE-SELECTION-ROADMAP` | `report/sections/52_qubit_candidate_selection_roadmap.tex` | Candidate Hamiltonian Selection Roadmap |
+| 53 | `CA-53-QUBIT-CANDIDATE-SCAN-CONTRACT` | `report/sections/53_qubit_candidate_scan_contract.tex` | Qubit Candidate Scan Contract |
+| 54 | `CA-54-QUBIT-HAMILTONIAN-FAMILY-CONVENTIONS` | `report/sections/54_qubit_hamiltonian_family_conventions.tex` | Pauli Coefficients for Scan Families |
+| 55 | `CA-55-QUBIT-SOURCED-SPIN-CHAIN-FAMILIES` | `report/sections/55_qubit_sourced_spin_chain_families.tex` | Locally Sourced Spin-Chain Inputs |
+| 56 | `CA-56-QUBIT-SYNTHETIC-GRID-FAMILIES` | `report/sections/56_qubit_synthetic_grid_families.tex` | Synthetic and Stress-Test Hamiltonian Grids |
+| 57 | `CA-57-QUBIT-ALGEBRAIC-SCAN-GATES` | `report/sections/57_qubit_algebraic_scan_gates.tex` | Current, Conservation, and Boost Witness Gates |
+| 58 | `CA-58-QUBIT-SDP-SCAN-LEVELS` | `report/sections/58_qubit_sdp_scan_levels.tex` | Optional SDP Levels for Scan Survivors |
+| 59 | `CA-59-QUBIT-CANDIDATE-SCAN-RUN-BUNDLE` | `report/sections/59_qubit_candidate_scan_run_bundle.tex` | Reproducible Scan Bundle Format |
+| 60 | `CA-60-QUBIT-CANDIDATE-SCAN-RESULTS` | `report/sections/60_qubit_candidate_scan_results.tex` | First Candidate Scan Results |
+| 61 | `CA-61-QUBIT-SCAN-TO-SCALING-QUEUE` | `report/sections/61_qubit_scan_to_scaling_queue.tex` | From Scan Failures to Scaling Work |
 
 ## Adding a shard
 

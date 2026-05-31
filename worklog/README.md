@@ -22,6 +22,7 @@ gotcha) goes to agent memory under
 
 | Chunk | Span | Topics |
 |---|---|---|
+| `010_2026-05-31_qubit_candidate_scan.md` | 2026-05-31 | Qubit candidate Hamiltonian families, algebraic scan, and fixed-SDP scan contract |
 | `009_2026-05-31_qubit_nn_symmetry.md` | 2026-05-31 | Qubit nearest-neighbour lattice-symmetry diagnostics and Pauli current obstruction |
 | `008_2026-05-30_gaussian_stress_energy_candidates.md` | 2026-05-30 | Gaussian stress-energy candidate shards and follow-up checks |
 | `007_2026-05-30_gaussian_source_acquisition.md` | 2026-05-30 | Source acquisition and A4 current derivation for Gaussian Lorentz stress-energy follow-ups |

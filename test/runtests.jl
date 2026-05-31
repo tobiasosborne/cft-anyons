@@ -302,6 +302,52 @@ end
     @test !CftAnyons.solve_conservation_witness(sentinels[:fake_split]).feasible
 end
 
+@testset "qubit Hamiltonian candidate scan" begin
+    onsite = CftAnyons.qubit_onsite_field_density(; hx = 0.7, hy = -0.3, hz = 0.5, scalar = 0.25)
+    @test onsite ≈ CftAnyons.pauli_two_site_coefficients(
+        CftAnyons.symmetric_onsite_bond_density([0.25, 0.7, -0.3, 0.5]))
+
+    tfim = CftAnyons.qubit_tfim_density(; coupling = 1.0, field = 1.0)
+    @test tfim[4, 4] == -1.0
+    @test tfim[2, 1] == -0.5
+    @test tfim[1, 2] == -0.5
+    @test CftAnyons.pauli_two_site_coefficients(CftAnyons.pauli_two_site_operator(tfim)) ≈ tfim
+
+    identity_shift = copy(tfim)
+    identity_shift[1, 1] += 7.0
+    tfim_result = CftAnyons.scan_qubit_candidate(
+        CftAnyons.QubitHamiltonianSample("tfim_self_dual", :tfim, Dict(:field => 1.0), tfim))
+    shifted_result = CftAnyons.scan_qubit_candidate(
+        CftAnyons.QubitHamiltonianSample("tfim_shifted", :tfim, Dict(:field => 1.0), identity_shift))
+    @test tfim_result.verdict == :excluded_no_boost_witness
+    @test tfim_result.conservation_feasible
+    @test !tfim_result.boost_feasible
+    @test shifted_result.verdict == tfim_result.verdict
+    @test shifted_result.current_norm ≈ tfim_result.current_norm
+
+    xxz = CftAnyons.qubit_xxz_density(; exchange = 1.0, delta = 1.0)
+    heisenberg = CftAnyons.qubit_heisenberg_density(; exchange = 1.0)
+    @test xxz ≈ heisenberg
+
+    samples = CftAnyons.qubit_candidate_scan_samples()
+    results = CftAnyons.scan_qubit_candidates(samples)
+    summary = CftAnyons.qubit_scan_summary_table(results)
+    @test length(samples) == 99
+    @test summary["total"] == 99
+    @test summary["by_verdict"]["excluded_current_collapsed"] == 9
+    @test summary["by_verdict"]["excluded_no_conservation_witness"] == 27
+    @test summary["by_verdict"]["excluded_no_boost_witness"] == 63
+    @test only(r for r in results if r.sample.name == "tfim_self_dual").verdict ==
+          :excluded_no_boost_witness
+    @test all(r -> r.verdict != :not_excluded_algebraic, results)
+
+    row = CftAnyons.qubit_scan_result_row(tfim_result)
+    @test row["scope"] == "fixed_first_moment_route"
+    @test row["terminal_gate"] == "boost"
+    @test row["source_kind"] == "locally_sourced_family"
+    @test row["coefficients"][4][4] == -1.0
+end
+
 @testset "Galilei vector-field brackets" begin
     H = (:H, 0, 0)
     P(a) = (:P, a, 0)

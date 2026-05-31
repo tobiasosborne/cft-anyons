@@ -1,0 +1,47 @@
+% SHARD-ID: CA-54-QUBIT-HAMILTONIAN-FAMILY-CONVENTIONS
+% SHARD-TITLE: Pauli Coefficients for Scan Families
+% SHARD-SUMMARY: Fixes signs and coefficient maps for TFIM, XY, XXZ, Heisenberg, and synthetic grids.
+% SHARD-SUMMARY: Distinguishes locally sourced physical labels from synthetic stress-test labels.
+% SHARD-SUMMARY: Records the symmetric field split used by every candidate matrix.
+% SHARD-KEYWORDS: qubit, Pauli coefficients, TFIM, XY, XXZ, synthetic grid, convention
+
+\section{Pauli Coefficients for Scan Families}
+\label{sec:qubit-hamiltonian-family-conventions}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: checked implementation convention.}  The family constructors
+are implemented in the Julia backend.
+
+Dependencies: CA-34--CA-53, CONVENTIONS.md (m), (q).
+
+% Source: references/text/GaugingDefectsQuantumSpinSystems.txt:1487--1496.
+% Source: references/text/CFTFromLatticeFermions.txt:1351--1403.
+% Source: literature/md/2302.14081/2302.14081.md:56--64.
+% Checked: test/runtests.jl, testset "qubit Hamiltonian candidate scan".
+
+\subsection{Implemented Maps}
+
+The scan uses \((I,X,Y,Z)\) row/column order.  A one-site field
+\(f_a\sigma^a_j\) is represented on bonds by
+\[
+  h_{a0}=h_{0a}=f_a/2.
+\]
+Thus the self-dual transverse-Ising sample is
+\[
+  h=-ZZ-\frac12(XI+IX),
+\]
+which is the bond-density version of the sourced transverse-Ising form.
+
+The XXZ constructor uses
+\[
+  h=J(XX+YY+\Delta ZZ),
+\]
+and Heisenberg is the \(\Delta=1\) specialization.  The transverse-XY
+constructor uses \(J_xXX+J_yYY+h_zZ\) with the same symmetric field split.
+
+\subsection{Synthetic Families}
+
+XYZ, compass, DM-style, field-deformed Heisenberg, and deterministic dense
+generic matrices are stress tests.  They exercise the gates but carry no
+criticality or universality-class claim in this lab book.

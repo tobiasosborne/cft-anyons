@@ -1,0 +1,35 @@
+% SHARD-ID: CA-59-QUBIT-CANDIDATE-SCAN-RUN-BUNDLE
+% SHARD-TITLE: Reproducible Scan Bundle Format
+% SHARD-SUMMARY: Defines the files written by the first qubit candidate scan.
+% SHARD-SUMMARY: The bundle stores inputs, summary counts, notable points, and one result row per Hamiltonian.
+% SHARD-SUMMARY: INDEX.md and the worklog point to the producer script and run directory.
+% SHARD-KEYWORDS: run bundle, TOML, candidate scan, reproducibility, INDEX
+
+\section{Reproducible Scan Bundle Format}
+\label{sec:qubit-candidate-scan-run-bundle}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: checked run bundle.}  The bundle is
+\[
+  \texttt{runs/2026-05-31-qubit-candidate-scan/}.
+\]
+
+Dependencies: CA-53--CA-58 and AGENTS.md Law 3.
+
+% Producer: scripts/julia/qubit_candidate_scan.jl.
+% Outputs: inputs.toml, summary.toml, results.toml.
+
+\subsection{Files}
+
+\texttt{inputs.toml} records the Pauli basis, indexing rule, family inventory,
+source-kind inventory, and sample count.  \texttt{summary.toml} records verdict
+counts and notable sourced points.  \texttt{results.toml} records one row per
+sample, including coefficients, parameters, terminal gate, residual norms, and
+scope.
+
+\subsection{Acceptance}
+
+The run command prints the same headline counts that the TOML stores:
+99 samples, 9 current-collapsed, 27 conservation failures, and 63 exact
+boost-witness failures.

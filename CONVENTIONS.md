@@ -563,3 +563,46 @@ a polynomial moment relaxation.
 **Sweep status:** CA-46--CA-52 and the qubit SDP Julia tests use this
 convention.  Future variable-`h` scans must record a new polynomial-relaxation
 convention before using solver statuses as exclusion evidence.
+
+## (q) Qubit candidate-scan families and verdicts
+**Choice:** Candidate scans use the same two-site Pauli coefficient convention
+as (m): row/column order `(I,X,Y,Z)` and symmetric one-site fields, so a field
+`f_a sigma^a_j` is encoded in a bond density by
+`h[a+1,1]=h[1,a+1]=f_a/2`.  The implemented named constructors are:
+`qubit_tfim_density(coupling=J, field=g)` giving `-J ZZ - g X` after the
+symmetric field split; `qubit_xy_density(jx,jy,field_z)`;
+`qubit_xxz_density(exchange,delta)` giving `J(XX+YY+delta ZZ)`;
+`qubit_heisenberg_density(exchange)` as the `delta=1` XXZ specialization; and
+synthetic `XYZ`, compass, Dzyaloshinskii--Moriya-style, field, and deterministic
+generic grids.
+
+Only `TFIM`, transverse `XY`, and `XXZ`/Heisenberg labels are treated as
+locally sourced physical families in the scan.  `XYZ`, `DM`, compass, and
+generic labels are synthetic stress tests unless a later source manifest
+registers physical claims for them.  The scan verdicts are scoped to the
+fixed first-moment route:
+`excluded_current_collapsed`, `excluded_no_conservation_witness`,
+`excluded_no_boost_witness`, `excluded_zero_speed`, `excluded_by_sdp`,
+`not_excluded_algebraic`, `not_excluded_at_level`, and `solver_unknown`.
+The word "excluded" here always means excluded for that named route and gate,
+not excluded from all possible CFT or scaling-limit constructions.
+**Reasoning:** The scan must compare real candidate families and broad
+stress-test grids without silently importing physics folklore.  In particular,
+the locally sourced self-dual transverse-Ising point is a known critical model,
+but it fails the exact local boost-witness gate implemented here; that failure
+is evidence that this exact first-moment route is too strict for that model,
+not evidence against the Ising scaling limit.
+**Source:** `references/text/GaugingDefectsQuantumSpinSystems.txt:1487`--`:1496`
+and `:1513`--`:1515` (transverse-Ising Hamiltonian and critical-theory claim);
+`literature/md/1112.5950/1112.5950.md:55`--`:57` (critical TFIM / Ising CFT);
+`references/text/CFTFromLatticeFermions.txt:396`--`:402` and
+`:1351`--`:1403` (TFIM/XY scaling and Jordan--Wigner XY form);
+`literature/md/2302.14081/2302.14081.md:56`--`:64`, `:928`--`:952`, and
+`:1057`--`:1059` (XXZ Hamiltonian and continuum/gapless anchors);
+`src/QubitHamiltonianFamilies.jl`, `src/QubitCandidateScan.jl`,
+`scripts/julia/qubit_candidate_scan.jl`, and
+`runs/2026-05-31-qubit-candidate-scan/summary.toml`.
+**Sweep status:** CA-53--CA-61 and the Julia testset
+"qubit Hamiltonian candidate scan" use this convention.  Future scans over
+longer-range, three-site, qutrit, anyonic, or variable-`h` families need a new
+convention entry before their verdicts are compared with this qubit scan.

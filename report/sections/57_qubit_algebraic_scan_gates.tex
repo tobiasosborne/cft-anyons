@@ -1,0 +1,37 @@
+% SHARD-ID: CA-57-QUBIT-ALGEBRAIC-SCAN-GATES
+% SHARD-TITLE: Current, Conservation, and Boost Witness Gates
+% SHARD-SUMMARY: Documents the three algebraic gates used before any SDP solve.
+% SHARD-SUMMARY: The scan records residual norms and terminal gates for every point.
+% SHARD-SUMMARY: The self-dual TFIM result exposes the strictness of the exact boost-witness route.
+% SHARD-KEYWORDS: current gate, conservation witness, boost witness, TFIM, algebraic scan
+
+\section{Current, Conservation, and Boost Witness Gates}
+\label{sec:qubit-algebraic-scan-gates}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: checked scan gates.}  The implementation calls the CA-40 and
+CA-49 helpers pointwise.
+
+Dependencies: CA-39--CA-40, CA-49, CA-53--CA-56.
+
+% Checked: src/QubitHamiltonianScreening.jl, src/QubitPoincareWitnesses.jl,
+%   src/QubitCandidateScan.jl, and test/runtests.jl.
+
+\subsection{Gates}
+
+The current gate checks whether \(p=i[h_j,h_{j+1}]\) collapses.  The
+conservation gate solves \(A=Du\).  The boost gate solves
+\[
+  B-u-\lambda h+\mu I=Dw
+\]
+with \(w_{000}=0\) and requires nonzero positive speed for the nontrivial
+operator route.
+
+\subsection{Interpretation}
+
+The first full scan has no survivor of the exact boost gate.  The self-dual
+TFIM point, which is locally sourced as critical, passes current and
+conservation but fails the exact boost witness.  Therefore this gate is best
+read as a test for an exact UV first-moment construction, not as a general
+criterion for CFT emergence.

@@ -1,0 +1,42 @@
+% SHARD-ID: CA-53-QUBIT-CANDIDATE-SCAN-CONTRACT
+% SHARD-TITLE: Qubit Candidate Scan Contract
+% SHARD-SUMMARY: Fixes the candidate-scan API, result schema, and scoped verdict vocabulary.
+% SHARD-SUMMARY: Separates exact algebraic gates, optional SDP levels, and physical interpretation.
+% SHARD-SUMMARY: Survival is not symmetry evidence, and exclusion is always route-scoped.
+% SHARD-KEYWORDS: qubit, candidate scan, result schema, fixed first-moment route, exclusion
+
+\section{Qubit Candidate Scan Contract}
+\label{sec:qubit-candidate-scan-contract}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: checked implementation.}  The scan layer packages the CA-46--CA-52
+fixed-\(h\) gates into reproducible candidate runs.
+
+Dependencies: CA-39, CA-46--CA-52, CONVENTIONS.md (m)--(q).
+
+% Checked: src/QubitCandidateScan.jl, scripts/julia/qubit_candidate_scan.jl,
+%   runs/2026-05-31-qubit-candidate-scan/summary.toml, and test/runtests.jl.
+
+\subsection{Contract}
+
+Each scan point is a real \(4\times4\) Pauli coefficient matrix
+\(h_{\alpha\beta}\).  The gate order is:
+\[
+  p=i[h_j,h_{j+1}],\qquad A=Du,\qquad
+  B-u-\lambda h+\mu I=Dw,
+\]
+followed, only when requested, by finite moment-SDP checks.
+
+The serialized row records the family, parameters, coefficient matrix, current
+norm, witness residual norms, speed data, terminal gate, and scoped verdict.
+The scope field records the fixed first-moment route.
+
+\subsection{Verdict Boundary}
+
+\texttt{excluded\_current\_collapsed} and
+\texttt{excluded\_no\_conservation\_witness} are early algebraic failures for
+the fixed current route.  \texttt{excluded\_no\_boost\_witness} means the exact
+local boost-witness equation failed; it does not reject other lattice
+stress-tensor constructions such as Koo--Saleur/free-fermion routes.  This
+distinction is essential for sourced critical transverse Ising.

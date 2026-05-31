@@ -1,0 +1,36 @@
+% SHARD-ID: CA-58-QUBIT-SDP-SCAN-LEVELS
+% SHARD-TITLE: Optional SDP Levels for Scan Survivors
+% SHARD-SUMMARY: Specifies when a candidate scan invokes the fixed-residual Mosek SDP layer.
+% SHARD-SUMMARY: Solver statuses inherit the CA-50 finite-level semantics.
+% SHARD-SUMMARY: The first broad scan stops before SDP because no point survives the exact boost gate.
+% SHARD-KEYWORDS: SDP scan, Mosek, fixed residual, survivor, finite level
+
+\section{Optional SDP Levels for Scan Survivors}
+\label{sec:qubit-sdp-scan-levels}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: implemented option, unused by the first broad run.}  The scan
+API can call \texttt{solve\_qubit\_sdp} after a nontrivial boost witness.
+
+Dependencies: CA-44, CA-50, CA-53--CA-57.
+
+% Checked: src/QubitMomentSDP.jl and src/QubitCandidateScan.jl.
+% Prior run: runs/2026-05-31-qubit-sdp-smoke/.
+
+\subsection{Level Data}
+
+An SDP row must record the PSD window, relation window, moment count, relation
+constraint count, optimizer, and solver status.  The status vocabulary remains
+\[
+  \texttt{:excluded},\quad
+  \texttt{:not\_excluded\_at\_level},\quad
+  \texttt{:solver\_unknown}.
+\]
+
+\subsection{First-Run Boundary}
+
+The 99-point run has no nontrivial exact boost witness, so it does not invoke
+Mosek per point.  This keeps the run honest: adding SDP rows before fixing a
+residual witness would mix the fixed-\(h\) SDP with a polynomial
+variable-witness problem.

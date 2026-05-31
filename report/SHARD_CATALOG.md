@@ -477,3 +477,84 @@ single ~200-line source file it points to.
 - Summary: Feasibility is treated as survival of a finite exclusion test, never as evidence of symmetry.
 - Summary: Lists the next implementation steps: witness scans, run-bundle format, and physical source registration for named model families.
 - Keywords: candidate selection, qubit Hamiltonian, screening, SDP hierarchy, Poincare, Virasoro
+
+## `CA-53-QUBIT-CANDIDATE-SCAN-CONTRACT`
+
+- Source: `report/sections/53_qubit_candidate_scan_contract.tex`
+- Title: Qubit Candidate Scan Contract
+- Summary: Fixes the candidate-scan API, result schema, and scoped verdict vocabulary.
+- Summary: Separates exact algebraic gates, optional SDP levels, and physical interpretation.
+- Summary: Survival is not symmetry evidence, and exclusion is always route-scoped.
+- Keywords: qubit, candidate scan, result schema, fixed first-moment route, exclusion
+
+## `CA-54-QUBIT-HAMILTONIAN-FAMILY-CONVENTIONS`
+
+- Source: `report/sections/54_qubit_hamiltonian_family_conventions.tex`
+- Title: Pauli Coefficients for Scan Families
+- Summary: Fixes signs and coefficient maps for TFIM, XY, XXZ, Heisenberg, and synthetic grids.
+- Summary: Distinguishes locally sourced physical labels from synthetic stress-test labels.
+- Summary: Records the symmetric field split used by every candidate matrix.
+- Keywords: qubit, Pauli coefficients, TFIM, XY, XXZ, synthetic grid, convention
+
+## `CA-55-QUBIT-SOURCED-SPIN-CHAIN-FAMILIES`
+
+- Source: `report/sections/55_qubit_sourced_spin_chain_families.tex`
+- Title: Locally Sourced Spin-Chain Inputs
+- Summary: Records the physical qubit families that have local source anchors.
+- Summary: TFIM, transverse XY, and XXZ/Heisenberg are sourced; XYZ, DM, compass, clock, and Potts are not plain sourced qubit NN inputs here.
+- Summary: Criticality claims are separated from scan verdicts.
+- Keywords: TFIM, XY, XXZ, Heisenberg, source anchors, qubit scan
+
+## `CA-56-QUBIT-SYNTHETIC-GRID-FAMILIES`
+
+- Source: `report/sections/56_qubit_synthetic_grid_families.tex`
+- Title: Synthetic and Stress-Test Hamiltonian Grids
+- Summary: Defines the unsourced grids used to stress the algebraic gates.
+- Summary: Synthetic names are implementation inputs, not physical criticality claims.
+- Summary: Deterministic generic samples make the run reproducible without random state.
+- Keywords: synthetic grid, XYZ, DM, compass, generic bilinear, stress test
+
+## `CA-57-QUBIT-ALGEBRAIC-SCAN-GATES`
+
+- Source: `report/sections/57_qubit_algebraic_scan_gates.tex`
+- Title: Current, Conservation, and Boost Witness Gates
+- Summary: Documents the three algebraic gates used before any SDP solve.
+- Summary: The scan records residual norms and terminal gates for every point.
+- Summary: The self-dual TFIM result exposes the strictness of the exact boost-witness route.
+- Keywords: current gate, conservation witness, boost witness, TFIM, algebraic scan
+
+## `CA-58-QUBIT-SDP-SCAN-LEVELS`
+
+- Source: `report/sections/58_qubit_sdp_scan_levels.tex`
+- Title: Optional SDP Levels for Scan Survivors
+- Summary: Specifies when a candidate scan invokes the fixed-residual Mosek SDP layer.
+- Summary: Solver statuses inherit the CA-50 finite-level semantics.
+- Summary: The first broad scan stops before SDP because no point survives the exact boost gate.
+- Keywords: SDP scan, Mosek, fixed residual, survivor, finite level
+
+## `CA-59-QUBIT-CANDIDATE-SCAN-RUN-BUNDLE`
+
+- Source: `report/sections/59_qubit_candidate_scan_run_bundle.tex`
+- Title: Reproducible Scan Bundle Format
+- Summary: Defines the files written by the first qubit candidate scan.
+- Summary: The bundle stores inputs, summary counts, notable points, and one result row per Hamiltonian.
+- Summary: INDEX.md and the worklog point to the producer script and run directory.
+- Keywords: run bundle, TOML, candidate scan, reproducibility, INDEX
+
+## `CA-60-QUBIT-CANDIDATE-SCAN-RESULTS`
+
+- Source: `report/sections/60_qubit_candidate_scan_results.tex`
+- Title: First Candidate Scan Results
+- Summary: Reports the checked 99-point qubit Hamiltonian scan.
+- Summary: All points fail before a nontrivial exact boost witness; TFIM and XXZ fail at that boost gate.
+- Summary: The result rejects the exact first-moment route, not the sourced CFT status of known critical models.
+- Keywords: scan results, TFIM, XXZ, Heisenberg, boost witness, route failure
+
+## `CA-61-QUBIT-SCAN-TO-SCALING-QUEUE`
+
+- Source: `report/sections/61_qubit_scan_to_scaling_queue.tex`
+- Title: From Scan Failures to Scaling Work
+- Summary: Converts the first scan into next proof obligations rather than a dead end.
+- Summary: Known critical TFIM and gapless XXZ should move to Koo-Saleur/OAR-style diagnostics.
+- Summary: Future SDP work must relax or quotient the boost relation instead of requiring an exact local witness.
+- Keywords: scaling queue, TFIM, XXZ, Koo-Saleur, OAR, future SDP

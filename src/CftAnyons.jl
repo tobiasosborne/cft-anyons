@@ -172,6 +172,8 @@ include("QubitPoincareWitnesses.jl")
 include("QubitPauliWords.jl")
 include("QubitMomentSDP.jl")
 include("QubitHamiltonianScreening.jl")
+include("QubitHamiltonianFamilies.jl")
+include("QubitCandidateScan.jl")
 
 """
     nearest_neighbor_boost_current_coefficients(positions) -> Vector
