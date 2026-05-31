@@ -1,0 +1,151 @@
+% SHARD-ID: CA-39-QUBIT-1D-POINCARE-NECESSARY-EQUATIONS
+% SHARD-TITLE: One-Dimensional Qubit Poincare Necessary Equations
+% SHARD-SUMMARY: Writes the full first-moment-route Poincare obstruction equations for a nearest-neighbour qubit density in Pauli coefficients.
+% SHARD-SUMMARY: The equations are the current definition, translation conservation modulo a coboundary, and the boost-translation relation modulo a coboundary.
+% SHARD-SUMMARY: Fully on-site and commuting densities fail because their generated momentum current collapses.
+% SHARD-KEYWORDS: qubit chain, Poincare, necessary equations, Pauli coefficients, boost, coboundary
+
+\section{One-Dimensional Qubit Poincare Necessary Equations}
+\label{sec:qubit-1d-poincare-necessary-equations}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: local derivation, partly checked.}  The current, coboundary,
+and residual tensors are implemented in Julia.  The equations are necessary for
+the fixed CA-12 first-moment route, not sufficient for continuum Poincare
+symmetry.
+
+Dependencies: CA-11, CA-12, CA-35, CA-38, CONVENTIONS.md (k), (m), (n).
+
+% Source: references/cft/Schottenloher2008/Schottenloher2008.md:4040--4050
+%   and :4113--4117 -- Stone convention and P_0=H.
+% Checked: src/QubitPauliLattice.jl, src/QubitPauliResiduals.jl, and
+%   test/runtests.jl, testset "qubit Pauli nearest-neighbour current
+%   obstructions".
+
+\subsection{Input and Current}
+
+Let
+\[
+  h_j=\sum_{\alpha,\beta=0}^3
+  h_{\alpha\beta}\sigma_j^\alpha\sigma_{j+1}^\beta,
+  \qquad h_{\alpha\beta}\in\mathbb R .
+\]
+The first-moment route fixes
+\[
+  H=\sum_j h_j,\qquad K=\sum_j jh_j,\qquad
+  P=i[H,K]=\sum_jp_j,
+  \qquad p_j=i[h_j,h_{j+1}].
+\]
+The current coefficients are
+\[
+  p_{aed}
+  =
+  -2\sum_{b,c=1}^3h_{ab}h_{cd}\epsilon_{bce},
+  \qquad e\in\{1,2,3\},
+  \tag{39.1}
+\]
+with \(p_{a0d}=0\).  Equivalently the right-leg vector
+\((h_{a1},h_{a2},h_{a3})\) must cross the left-leg vector
+\((h_{1d},h_{2d},h_{3d})\).  If
+\[
+  p_{aed}=0\quad\text{for all }a,e,d,
+  \tag{39.2}
+\]
+then the candidate bulk momentum is \(P=0\).  For a nontrivial speed
+\(v^2\neq0\), the later equation \(i[P,K]=v^2H\) can then hold only if the
+Hamiltonian density is scalar-trivial in the coboundary quotient.  The
+symmetric fully on-site split in CONVENTIONS.md (m) is checked to have
+\(p=0\); hence fully local non-scalar Hamiltonians are ruled out for this
+route.
+
+\subsection{Translation Conservation}
+
+Let
+\[
+  A_j=i[h_j+h_{j+1},p_j].
+\]
+The outer-overlap terms in \(i[H,P]\) cancel in the formal sum by the Jacobi
+identity, so translation conservation is
+\[
+  A=D u
+  \tag{39.3}
+\]
+for some two-site tensor \(u_{rs}\).  In Pauli coefficients,
+\[
+\begin{aligned}
+  A_{rst}
+  &=
+  i\sum_{\alpha,\beta,a,b}
+  h_{\alpha\beta}p_{abt}
+  \left(M_{\alpha a}^{r}M_{\beta b}^{s}
+       -M_{a\alpha}^{r}M_{b\beta}^{s}\right)\\
+  &\quad+
+  i\sum_{\alpha,\beta,b,c}
+  h_{\alpha\beta}p_{rbc}
+  \left(M_{\alpha b}^{s}M_{\beta c}^{t}
+       -M_{b\alpha}^{s}M_{c\beta}^{t}\right).
+\end{aligned}
+\]
+Thus the explicit degree-three equations are
+\[
+  A_{rst}-u_{rs}\delta_{t0}+\delta_{r0}u_{st}=0
+  \qquad(r,s,t=0,\ldots,3).
+  \tag{39.4}
+\]
+
+\subsection{Boost-Translation Relation}
+
+Assume (39.3) has been witnessed by a chosen \(u\).  The remaining bulk
+representative of \(i[P,K]\) is
+\[
+  B_j-u_j,\qquad
+  B_j=i[p_j,h_{j+1}]+2i[p_j,h_{j+2}].
+\]
+The four-site coefficients of \(B\) are
+\[
+\begin{aligned}
+  B_{rstu}
+  &=
+  i\delta_{u0}\sum_{b,c,\alpha,\beta}
+  p_{rbc}h_{\alpha\beta}
+  \left(M_{b\alpha}^{s}M_{c\beta}^{t}
+       -M_{\alpha b}^{s}M_{\beta c}^{t}\right)\\
+  &\quad+
+  2i\sum_{c,\alpha}
+  p_{rsc}h_{\alpha u}
+  \left(M_{c\alpha}^{t}-M_{\alpha c}^{t}\right).
+\end{aligned}
+\]
+Allow an explicit scalar energy-origin subtraction
+\[
+  \bar h_{rs}=h_{rs}-e\,\delta_{r0}\delta_{s0}.
+\]
+The necessary speed-\(v\) boost equation \(i[P,K]=v^2H\) is that there exists a
+three-site tensor \(w\) such that
+\[
+\begin{aligned}
+  0
+  &=
+  B_{rstu}
+  -u_{rs}\delta_{t0}\delta_{u0}
+  -v^2\bar h_{rs}\delta_{t0}\delta_{u0}\\
+  &\quad
+  -w_{rst}\delta_{u0}
+  +\delta_{r0}w_{stu}
+  \qquad(r,s,t,u=0,\ldots,3).
+\end{aligned}
+  \tag{39.5}
+\]
+Equations (39.1), (39.4), and (39.5), together with real variables
+\(u,w,e,v^2\), are the advertised explicit finite polynomial conditions on
+\(h_{\alpha\beta}\) for the one-dimensional first-moment Poincare route.
+
+\subsection{Boundary}
+
+The scalar \(h_{00}\) cannot be detected by commutators; it must be handled by
+the explicit \(e\) variable or by a state-dependent normal ordering.  The
+coboundary witnesses are also not unique.  These are convention choices, not
+loopholes: changing the density by a divergence changes \(K=\sum_j jh_j\), so
+it changes the equations.
+

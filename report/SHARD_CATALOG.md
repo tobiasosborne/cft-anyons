@@ -342,3 +342,75 @@ single ~200-line source file it points to.
 - Summary: Identifies current-zero and chiral-rank collapse as simple failure witnesses before any continuum convergence theorem.
 - Summary: Separates central-term extraction, finite-size non-closure, and low-energy compression from raw full-Hilbert-space commutators.
 - Keywords: qubit chain, Pauli basis, Koo-Saleur, Witt, Virasoro, current mode, failure witness
+
+## `CA-38-QUBIT-LOCAL-ALGEBRA-EQUATION-FRAMEWORK`
+
+- Source: `report/sections/38_qubit_local_algebra_equation_framework.tex`
+- Title: Qubit Local-Algebra Equation Framework
+- Summary: Fixes the finite Pauli-word calculus used to turn qubit lattice symmetry residuals into explicit coefficient equations.
+- Summary: Defines the coboundary quotient for infinite-chain bulk densities, so residuals may vanish modulo telescoping boundary terms.
+- Summary: Separates checked finite algebra from continuum Poincare or Virasoro claims.
+- Keywords: qubit, Pauli words, local algebra, coboundary, coefficient equations, infinite chain
+
+## `CA-39-QUBIT-1D-POINCARE-NECESSARY-EQUATIONS`
+
+- Source: `report/sections/39_qubit_1d_poincare_necessary_equations.tex`
+- Title: One-Dimensional Qubit Poincare Necessary Equations
+- Summary: Writes the full first-moment-route Poincare obstruction equations for a nearest-neighbour qubit density in Pauli coefficients.
+- Summary: The equations are the current definition, translation conservation modulo a coboundary, and the boost-translation relation modulo a coboundary.
+- Summary: Fully on-site and commuting densities fail because their generated momentum current collapses.
+- Keywords: qubit chain, Poincare, necessary equations, Pauli coefficients, boost, coboundary
+
+## `CA-40-QUBIT-1D-RESIDUAL-COMPUTER-ALGEBRA`
+
+- Source: `report/sections/40_qubit_1d_residual_computer_algebra.tex`
+- Title: Computer Algebra for One-Dimensional Qubit Residuals
+- Summary: Records the Julia helpers that reconstruct Pauli operators, currents, coboundaries, and boost residual densities.
+- Summary: The tests check nontrivial invariants: current collapse for symmetric onsite terms, nonzero interacting currents, and coboundary operator reconstruction.
+- Summary: The code is a finite residual engine, not yet an SDP solver.
+- Keywords: Julia, Pauli coefficients, residuals, coboundary, tests, qubit chain
+
+## `CA-41-QUBIT-2D-POINCARE-EQUATION-SCHEMA`
+
+- Source: `report/sections/41_qubit_2d_poincare_equation_schema.tex`
+- Title: Two-Dimensional Qubit Poincare Equation Schema
+- Summary: Gives a proposal-level square-lattice edge-density schema for ramp momenta, conservation, commuting momenta, boosts, and rotations.
+- Summary: Every residual is a finite Pauli coefficient equation modulo a named two-dimensional lattice divergence.
+- Summary: The shard records the orientation and midpoint choices needed before a two-dimensional checker can be built.
+- Keywords: qubit, square lattice, 2+1 dimensions, Poincare, edge density, divergence
+
+## `CA-42-QUBIT-WITT-VIRASORO-NECESSARY-EQUATIONS`
+
+- Source: `report/sections/42_qubit_witt_virasoro_necessary_equations.tex`
+- Title: Qubit Witt/Virasoro Necessary Equations
+- Summary: Derives exact finite Fourier-mode commutators from the qubit nearest-neighbour density and current.
+- Summary: States the chiral residual equations that any Koo-Saleur-style Virasoro ansatz must satisfy before low-energy scaling is considered.
+- Summary: Keeps central charge and finite-size closure caveated by the Koo-Saleur and OAR source boundaries.
+- Keywords: qubit, Witt, Virasoro, Koo-Saleur, Fourier modes, current algebra
+
+## `CA-43-QUBIT-VACUUM-MOMENT-CONSTRAINTS`
+
+- Source: `report/sections/43_qubit_vacuum_moment_constraints.tex`
+- Title: Vacuum Moment Constraints for Qubit Residuals
+- Summary: Defines finite restrictions of a translation-invariant global state by Pauli-word moments and positive moment matrices.
+- Summary: Converts local Poincare and Virasoro residuals into linear moment equations of the form omega(X^* R Y)=0.
+- Summary: Records the zero-expectation and normal-ordering data needed before an SDP can exclude Hamiltonians.
+- Keywords: vacuum state, moments, GNS, Pauli words, SDP constraints, qubit chain
+
+## `CA-44-QUBIT-SDP-EXCLUSION-HIERARCHY`
+
+- Source: `report/sections/44_qubit_sdp_exclusion_hierarchy.tex`
+- Title: SDP Exclusion Hierarchy for Qubit Hamiltonians
+- Summary: Packages finite Pauli moments, positivity, translation invariance, stationarity, and residual relations into a monotone SDP hierarchy.
+- Summary: Infeasibility at any level excludes a fixed Hamiltonian density for the named generator route; feasibility proves nothing.
+- Summary: Identifies which parameters must be fixed or scanned so the problem remains an SDP.
+- Keywords: SDP hierarchy, exclusion, qubit Hamiltonian, moments, Poincare residuals, Virasoro residuals
+
+## `CA-45-QUBIT-SYMMETRY-EXCLUSION-ROADMAP`
+
+- Source: `report/sections/45_qubit_symmetry_exclusion_roadmap.tex`
+- Title: Roadmap for Qubit Symmetry Exclusion
+- Summary: Summarizes the necessary-equation block and turns it into an implementation plan for algebraic filters and SDP exclusions.
+- Summary: Records the delegated subagent work, the checked Julia surface, and the open convention gaps.
+- Summary: Gives acceptance tests for future runs before any Hamiltonian is claimed excluded.
+- Keywords: roadmap, qubit exclusion, SDP, Poincare, Virasoro, orchestration

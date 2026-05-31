@@ -469,3 +469,68 @@ nearest-neighbour current obstructions".
 proposal-level two-dimensional extension only after naming the missing
 orientation and bulk-projection data.  No existing Gaussian or category shard
 uses this convention.
+
+## (n) Qubit infinite-chain residual quotient and vacuum moments
+**Choice:** The qubit exclusion block works first with the fixed
+one-dimensional first-moment route
+`H=sum_j h_j`, `K=sum_j j h_j`,
+`P=sum_j p_j`, `p_j=i[h_j,h_{j+1}]`, using the Pauli density convention (m).
+Formal equality of translation-invariant local sums is tested modulo the
+one-dimensional coboundary
+`D u = u_j-u_{j+1}`.  In Pauli coefficients, if `u` has support length `n`,
+then
+`(D u)_{a_0...a_n}
+ = u_{a_0...a_{n-1}} delta_{a_n,0}
+ - delta_{a_0,0} u_{a_1...a_n}`.
+The scalar components of coboundary witnesses are gauge variables and are set
+only by an explicit gauge choice.
+
+The named necessary \(1+1\)-dimensional coefficient equations are:
+the current definition \(p=i[h_j,h_{j+1}]\), translation conservation
+`A_j=i[h_j+h_{j+1},p_j]=D u`, and the boost-translation relation
+`B_j-u_j-v^2 \bar h_j = D w`, where
+`B_j=i[p_j,h_{j+1}]+2i[p_j,h_{j+2}]` and
+`\bar h=h-e I` allows an explicit scalar energy-origin subtraction.  Raw
+coefficientwise zero residuals are stronger optional filters, not the default.
+
+For a candidate vacuum layer, use finite Pauli-word moments
+`y_s=omega(P_s)`, normalized by `y_emptyset=1`, constrained by positivity of
+the finite moment matrix `omega(P_u^* P_v)`, translation invariance, and linear
+moment annihilation of the chosen residual relations.  Infeasibility of such a
+finite SDP excludes the fixed generator route for the fixed Hamiltonian
+coefficients; feasibility proves no continuum symmetry.
+**Reasoning:** Infinite formal sums identify densities that differ by a
+telescoping boundary term, and commutators cannot detect the scalar
+Hamiltonian-origin shift.  The moment layer is only the finite restriction of
+the state/GNS data; it is an outer hierarchy, not a proof of a vacuum.
+**Source:** `references/text/CFTFromLatticeFermions.txt:80`--`:100` (local
+finite-support Hamiltonian terms and observable algebra);
+`literature/md/2010.11121/2010.11121.md:126`--`:180` (inductive/projective
+limit states and GNS), `:204`--`:243` (local algebras, vacuum invariance, and
+Poincare-covariance warning); CA-38--CA-44 local derivations;
+`src/QubitPauliLattice.jl`, `src/QubitPauliResiduals.jl`, and `test/runtests.jl`
+testset "qubit Pauli nearest-neighbour current obstructions".
+**Sweep status:** CA-38--CA-40, CA-43--CA-45 use this convention.  CA-35 is
+kept as the adjacent-current obstruction and now points to this entry for the
+full residual quotient.
+
+## (o) Proposal-level square-lattice qubit edge residuals
+**Choice:** The two-dimensional qubit diagnostic shard uses a proposal-level
+square-lattice edge tier on \(\mathbb Z^2\): horizontal and vertical densities
+`h^x_r` and `h^y_r` live on positively oriented edges
+`(r,r+\hat x)` and `(r,r+\hat y)`.  Around a vertex the incident edges are
+ordered `W,S,E,N` with midpoint offsets
+`(-1/2,0)`, `(0,-1/2)`, `(1/2,0)`, `(0,1/2)`.  Ramp-generated momentum
+densities are formed from pairwise incident-edge commutators weighted by
+midpoint-coordinate differences.  Residual equalities are tested modulo a
+finite-support square-lattice divergence
+`R=(1-tau_{-\hat x})U_x+(1-tau_{-\hat y})U_y`.
+**Reasoning:** The midpoint/edge-orientation data are needed before the
+first-moment boost ansatz becomes an explicit finite coefficient system in
+\(2+1\) dimensions.  This is not yet a canonical cell stress tensor, rotation
+density, or continuum Poincare theorem.
+**Source:** CA-13 and CA-36 for the proposal boundary; CA-41 local coefficient
+schema.  No Julia checker for the two-dimensional edge residuals exists yet.
+**Sweep status:** CA-41 uses this proposal-level convention only.  Later
+two-dimensional implementation must either keep this convention or record a
+sweep before using different edge/cell data.

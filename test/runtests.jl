@@ -119,14 +119,21 @@ end
     onsite_density = CftAnyons.symmetric_onsite_bond_density(onsite_coefficients)
     onsite_current = CftAnyons.adjacent_bond_boost_current(onsite_density)
     onsite_conservation = CftAnyons.adjacent_bond_conservation_residual(onsite_density)
+    onsite_full_conservation = CftAnyons.infinite_chain_conservation_density(onsite_density)
+    onsite_boost_density = CftAnyons.first_moment_boost_density(onsite_density)
 
     @test onsite_density ≈ onsite_density'
     @test isapprox(onsite_current, zeros(ComplexF64, 8, 8);
         atol = CftAnyons.PAULI_COEFFICIENT_ATOL, rtol = CftAnyons.PAULI_COEFFICIENT_RTOL)
     @test isapprox(onsite_conservation, zeros(ComplexF64, 8, 8);
         atol = CftAnyons.PAULI_COEFFICIENT_ATOL, rtol = CftAnyons.PAULI_COEFFICIENT_RTOL)
+    @test isapprox(onsite_full_conservation, zeros(ComplexF64, 32, 32);
+        atol = CftAnyons.PAULI_COEFFICIENT_ATOL, rtol = CftAnyons.PAULI_COEFFICIENT_RTOL)
+    @test isapprox(onsite_boost_density, zeros(ComplexF64, 32, 32);
+        atol = CftAnyons.PAULI_COEFFICIENT_ATOL, rtol = CftAnyons.PAULI_COEFFICIENT_RTOL)
     @test isapprox(CftAnyons.adjacent_bond_current_norm(onsite_density), 0;
         atol = CftAnyons.PAULI_COEFFICIENT_ATOL, rtol = CftAnyons.PAULI_COEFFICIENT_RTOL)
+    @test norm(CftAnyons.local_operator_embedding(onsite_density, 1, 5)) > 0.1
 
     onsite_roundtrip = CftAnyons.pauli_two_site_coefficients(onsite_density)
     expected_left = onsite_coefficients / 2
@@ -150,6 +157,9 @@ end
     interacting_current = CftAnyons.adjacent_bond_boost_current(interacting_density)
     interacting_current_coefficients =
         CftAnyons.adjacent_bond_current_pauli_coefficients(transverse_ising)
+    interacting_conservation = CftAnyons.infinite_chain_conservation_density(interacting_density)
+    interacting_boost_density = CftAnyons.first_moment_boost_density(interacting_density)
+    interacting_boost_relation_density = CftAnyons.boost_relation_local_density(interacting_density)
 
     @test interacting_current ≈ interacting_current'
     @test CftAnyons.adjacent_bond_current_norm(interacting_density) > 0.1
@@ -158,18 +168,45 @@ end
           interacting_current
     @test interacting_current_coefficients[4, 3, 1] ≈ -0.7
     @test interacting_current_coefficients[1, 3, 4] ≈ 0.7
+    @test CftAnyons.pauli_n_site_operator(
+        CftAnyons.pauli_n_site_coefficients(interacting_conservation, 5)) ≈
+          interacting_conservation
+    @test interacting_boost_density ≈ interacting_boost_density'
+    @test norm(interacting_boost_density) > 0.1
+    @test interacting_boost_relation_density ≈ interacting_boost_relation_density'
+    @test norm(interacting_boost_relation_density) > 0.1
+    @test CftAnyons.pauli_n_site_operator(
+        CftAnyons.pauli_n_site_coefficients(interacting_boost_relation_density, 4)) ≈
+          interacting_boost_relation_density
+
+    coboundary_witness = zeros(4, 4)
+    coboundary_witness[2, 4] = 0.25
+    coboundary_witness[1, 1] = 7.0
+    coboundary = CftAnyons.one_dimensional_coboundary_coefficients(coboundary_witness)
+    witness_operator = CftAnyons.pauli_two_site_operator(coboundary_witness)
+    @test coboundary[2, 4, 1] ≈ 0.25
+    @test coboundary[1, 2, 4] ≈ -0.25
+    @test coboundary[1, 1, 1] ≈ 0.0
+    @test CftAnyons.pauli_n_site_operator(coboundary) ≈
+          CftAnyons.local_operator_embedding(witness_operator, 1, 3) -
+          CftAnyons.local_operator_embedding(witness_operator, 2, 3)
 
     asymmetric_fake = kron(CftAnyons.PAULI_BASIS[2], CftAnyons.PAULI_BASIS[1]) +
                       kron(CftAnyons.PAULI_BASIS[1], CftAnyons.PAULI_BASIS[4])
     fake_current = CftAnyons.adjacent_bond_boost_current(asymmetric_fake)
     fake_conservation = CftAnyons.adjacent_bond_conservation_residual(asymmetric_fake)
+    fake_full_conservation = CftAnyons.infinite_chain_conservation_density(asymmetric_fake)
     @test CftAnyons.adjacent_bond_current_norm(asymmetric_fake) > 1
     @test norm(fake_conservation) > norm(fake_current)
+    @test norm(fake_full_conservation) > norm(fake_current)
 
     @test_throws ErrorException CftAnyons.pauli_two_site_operator(zeros(3, 3))
     @test_throws ErrorException CftAnyons.pauli_site_operator([1.0, 0.0, 0.0])
     @test_throws ErrorException CftAnyons.adjacent_bond_boost_current(zeros(3, 3))
     @test_throws ErrorException CftAnyons.adjacent_bond_current_pauli_coefficients(zeros(3, 3))
+    @test_throws ErrorException CftAnyons.pauli_n_site_operator(zeros(4, 3))
+    @test_throws ErrorException CftAnyons.local_operator_embedding(zeros(3, 3), 1, 3)
+    @test_throws ErrorException CftAnyons.one_dimensional_coboundary_coefficients(zeros(4, 3))
 end
 
 @testset "Galilei vector-field brackets" begin

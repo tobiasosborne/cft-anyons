@@ -1,0 +1,112 @@
+% SHARD-ID: CA-38-QUBIT-LOCAL-ALGEBRA-EQUATION-FRAMEWORK
+% SHARD-TITLE: Qubit Local-Algebra Equation Framework
+% SHARD-SUMMARY: Fixes the finite Pauli-word calculus used to turn qubit lattice symmetry residuals into explicit coefficient equations.
+% SHARD-SUMMARY: Defines the coboundary quotient for infinite-chain bulk densities, so residuals may vanish modulo telescoping boundary terms.
+% SHARD-SUMMARY: Separates checked finite algebra from continuum Poincare or Virasoro claims.
+% SHARD-KEYWORDS: qubit, Pauli words, local algebra, coboundary, coefficient equations, infinite chain
+
+\section{Qubit Local-Algebra Equation Framework}
+\label{sec:qubit-local-algebra-equation-framework}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: checked local framework.}  This shard supplies the algebraic
+language used by CA-39--CA-44.  It does not assert that a solution has
+continuum Poincare or Virasoro symmetry.
+
+Dependencies: CA-11, CA-12, CA-15, CA-34--CA-35, CONVENTIONS.md (m), (n).
+
+% Source: references/text/CFTFromLatticeFermions.txt:80--100 -- local finite
+%   support Hamiltonian terms and observable algebra.
+% Source: references/text/CFTFromLatticeFermions.txt:1033--1038 -- Pauli
+%   matrices in the qubit setting.
+% Source: literature/md/2010.11121/2010.11121.md:204--222 -- local algebras
+%   and quasi-local algebra.
+% Checked: src/QubitPauliLattice.jl, src/QubitPauliResiduals.jl, and
+%   test/runtests.jl, testset "qubit Pauli nearest-neighbour current
+%   obstructions".
+
+\subsection{Pauli Word Algebra}
+
+Use zero-based Pauli labels \(a\in\{0,1,2,3\}\), with
+\(\sigma^0=I\).  For a finite interval, a Pauli word is
+\[
+  P_{\alpha_0\ldots\alpha_{\ell-1}}
+  =
+  \sigma^{\alpha_0}\otimes\cdots\otimes\sigma^{\alpha_{\ell-1}}.
+\]
+The local product is encoded by constants \(M_{ab}^{c}\):
+\[
+  \sigma^a\sigma^b=\sum_{c=0}^3 M_{ab}^{c}\sigma^c,
+\]
+where
+\[
+  M_{0b}^{c}=\delta_{bc},\qquad
+  M_{a0}^{c}=\delta_{ac},
+\]
+and, for \(a,b\geq1\),
+\[
+  M_{ab}^{0}=\delta_{ab},\qquad
+  M_{ab}^{c}=i\epsilon_{abc}\quad(c\geq1).
+\]
+Thus for two \(\ell\)-site coefficient tensors \(A,B\),
+\[
+  (AB)_\gamma
+  =
+  \sum_{\alpha,\beta}
+  A_\alpha B_\beta
+  \prod_{r=0}^{\ell-1}M_{\alpha_r\beta_r}^{\gamma_r}.
+\]
+The commutator coefficient is therefore the finite expression
+\[
+  (i[A,B])_\gamma
+  =
+  i\sum_{\alpha,\beta}A_\alpha B_\beta
+  \left(
+  \prod_rM_{\alpha_r\beta_r}^{\gamma_r}
+  -
+  \prod_rM_{\beta_r\alpha_r}^{\gamma_r}
+  \right).
+\]
+When two local densities have different supports, first embed both tensors into
+their common finite window by padding with Pauli label \(0\), then apply this
+formula.
+
+\subsection{Bulk Equality Modulo Divergence}
+
+Let \(\tau\) be the unit shift of the infinite chain.  A finite density \(R\)
+represents a zero bulk formal sum if it is a coboundary:
+\[
+  R=u-\tau(u).
+\]
+If \(u\) has \(n\) Pauli indices, the coefficient form fixed in CONVENTIONS.md
+(n) is
+\[
+  (D u)_{a_0\ldots a_n}
+  =
+  u_{a_0\ldots a_{n-1}}\delta_{a_n0}
+  -
+  \delta_{a_00}u_{a_1\ldots a_n}.
+  \tag{38.1}
+\]
+Consequently a local residual \(R(h)\) passes the bulk equation precisely when
+there exists a finite tensor \(u\) such that
+\[
+  R_{a_0\ldots a_n}(h)-(D u)_{a_0\ldots a_n}=0
+  \qquad
+  \text{for every Pauli word }a_0\ldots a_n .
+  \tag{38.2}
+\]
+The scalar coefficient of \(u\) lies in the kernel of \(D\), so it is a gauge
+variable.  A coefficientwise condition \(R(h)=0\) is allowed as a stronger
+filter, but it is not the default infinite-chain equation.
+
+\subsection{What ``Necessary'' Means Here}
+
+Every equation in the next shards is necessary only for the named generator
+route: the fixed Pauli density, the fixed first-moment boost ansatz, and the
+fixed coboundary quotient.  Solving these equations is not sufficient for
+continuum symmetry.  Failing one of them is still useful: it excludes the
+Hamiltonian from this route before any low-energy sector, scaling map, or
+state-space analysis is attempted.
+

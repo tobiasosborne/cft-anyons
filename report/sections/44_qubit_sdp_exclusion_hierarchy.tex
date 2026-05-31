@@ -1,0 +1,102 @@
+% SHARD-ID: CA-44-QUBIT-SDP-EXCLUSION-HIERARCHY
+% SHARD-TITLE: SDP Exclusion Hierarchy for Qubit Hamiltonians
+% SHARD-SUMMARY: Packages finite Pauli moments, positivity, translation invariance, stationarity, and residual relations into a monotone SDP hierarchy.
+% SHARD-SUMMARY: Infeasibility at any level excludes a fixed Hamiltonian density for the named generator route; feasibility proves nothing.
+% SHARD-SUMMARY: Identifies which parameters must be fixed or scanned so the problem remains an SDP.
+% SHARD-KEYWORDS: SDP hierarchy, exclusion, qubit Hamiltonian, moments, Poincare residuals, Virasoro residuals
+
+\section{SDP Exclusion Hierarchy for Qubit Hamiltonians}
+\label{sec:qubit-sdp-exclusion-hierarchy}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: rigorous proposal.}  The hierarchy is a finite-state
+consequence of the sourced state/GNS framework and the local residual
+derivations.  No solver is implemented yet.
+
+Dependencies: CA-38--CA-43, CONVENTIONS.md (n).
+
+% Source: literature/md/2010.11121/2010.11121.md:178--184 -- projectively
+%   consistent states and their projective limit.
+% Source: literature/md/2010.11121/2010.11121.md:226--243 -- vacuum invariance
+%   and warning that Poincare covariance is additional.
+
+\subsection{Level Data}
+
+Fix a Hamiltonian coefficient matrix \(h_{\alpha\beta}\).  Also fix, or scan
+externally, the scalar subtraction \(e\), speed \(v^2\), and any coboundary
+witnesses \(u,w\) used in CA-39.  This is important: if those witnesses are
+unknown variables multiplied by unknown moments, the problem is no longer an
+SDP without an additional lifting relaxation.
+
+At level \(N\), choose finite sets
+\[
+  \mathcal W_N=\{\text{Pauli words supported in }[-N,N]\},
+\]
+\[
+  \mathcal A_N=\{\text{probe words whose residual products fit the window}\},
+\]
+and residual densities
+\[
+  \mathcal R_N(h)=
+  \{A-Du,\ B-u-v^2\bar h-Dw\}
+\]
+plus any selected finite Witt/Virasoro residuals from CA-42.
+
+\subsection{SDP Constraints}
+
+The variables are finitely many moments \(y_s\).  The constraints are
+\[
+  y_{\emptyset}=1,\qquad y_{\tau s}=y_s,
+  \tag{44.1}
+\]
+\[
+  M_{\mathcal W_N}(y)\succeq0,
+  \tag{44.2}
+\]
+and optional stationarity constraints for local probes:
+\[
+  \omega(\delta_H(X))=0,\qquad
+  \omega(\delta_P(X))=0,
+  \qquad X\in\mathcal A_N.
+  \tag{44.3}
+\]
+The generator-relation constraints are
+\[
+  \omega(X^*RY)=0,
+  \qquad
+  R\in\mathcal R_N(h),\quad X,Y\in\mathcal W_N,
+  \tag{44.4}
+\]
+whenever the Pauli product \(X^*RY\) fits inside the moment support.  Each
+entry in (44.1)--(44.4) is affine in \(y\) for fixed residual coefficients, so
+this is a semidefinite feasibility problem.
+
+\subsection{Exclusion Statement}
+
+If a translation-invariant global state \(\omega\) exists whose GNS
+representation carries the chosen local residual relations, then every finite
+restriction of \(\omega\) satisfies every level \(N\).  Therefore:
+\[
+  \text{SDP level }N\text{ infeasible}
+  \quad\Longrightarrow\quad
+  h_{\alpha\beta}\text{ is excluded for this generator route.}
+  \tag{44.5}
+\]
+The hierarchy is monotone: increasing \(N\) adds moment variables and relation
+tests, and cannot turn a previously infeasible level into evidence of symmetry.
+
+\subsection{Non-Implications}
+
+Feasibility at all checked levels does not prove that a global state exists,
+does not prove uniqueness or clustering, does not prove positive energy, and
+does not prove a continuum Poincare or Virasoro representation.  It only means
+that the tested finite restrictions have not yet found a contradiction.
+
+When \(h_{\alpha\beta}\) is also a variable, the residual coefficients are
+polynomial in \(h\).  Then the feasibility problem becomes a polynomial moment
+problem over both Hamiltonian and state variables.  That is a separate
+relaxation; the first implementation should instead take \(h\) as input and
+return either an SDP infeasibility certificate or ``not excluded at this
+level''.
+

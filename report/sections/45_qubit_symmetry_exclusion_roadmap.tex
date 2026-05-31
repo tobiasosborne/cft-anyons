@@ -1,0 +1,87 @@
+% SHARD-ID: CA-45-QUBIT-SYMMETRY-EXCLUSION-ROADMAP
+% SHARD-TITLE: Roadmap for Qubit Symmetry Exclusion
+% SHARD-SUMMARY: Summarizes the necessary-equation block and turns it into an implementation plan for algebraic filters and SDP exclusions.
+% SHARD-SUMMARY: Records the delegated subagent work, the checked Julia surface, and the open convention gaps.
+% SHARD-SUMMARY: Gives acceptance tests for future runs before any Hamiltonian is claimed excluded.
+% SHARD-KEYWORDS: roadmap, qubit exclusion, SDP, Poincare, Virasoro, orchestration
+
+\section{Roadmap for Qubit Symmetry Exclusion}
+\label{sec:qubit-symmetry-exclusion-roadmap}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: implementation plan.}  This closes the current qubit
+necessary-equation expansion and names the next build steps.
+
+Dependencies: CA-34--CA-44, CONVENTIONS.md (m)--(o).
+
+% Review orchestration: reviews/2026-05-31_qubit_nn_sdp_hierarchy/ORCHESTRATION.md.
+
+\subsection{What We Have Now}
+
+The one-dimensional first-moment route now has explicit necessary equations on
+the Pauli coefficient matrix \(h_{\alpha\beta}\):
+\[
+  p_{aed}
+  =
+  -2\sum_{b,c=1}^3h_{ab}h_{cd}\epsilon_{bce},
+\]
+\[
+  A(h)=D u,
+  \qquad
+  B(h)-u-v^2(h-eI)=D w.
+\]
+These equations already rule out fully local symmetric on-site Hamiltonians and
+commuting classical densities for any nontrivial Poincare route of this form,
+because their generated momentum current is zero.
+
+The two-dimensional shard gives a square-lattice edge schema, not yet code.
+The Witt/Virasoro shard gives exact finite mode commutators and residuals, but
+keeps Koo-Saleur's finite-nonclosure warning active.  The vacuum/SDP shards turn
+``there exists a global state \(\omega\)'' into finite positive moment data and
+linear relation constraints.
+
+\subsection{Implementation Steps}
+
+\begin{enumerate}
+\item Add symbolic coefficient builders for \(A(h)\), \(B(h)\), and
+  coboundary equations, returning sparse polynomial tensors rather than dense
+  matrices.
+\item Add a solver-facing algebraic filter: for a fixed \(h\), check current
+  collapse; optionally solve the linear coboundary witnesses \(u,w\) after
+  \(p,A,B\) are computed.
+\item Build a Pauli-word moment enumerator for intervals \([-N,N]\), including
+  product constants, translation-invariance canonicalisation, and Hermitian
+  realification.
+\item Export the fixed-\(h\) feasibility problem (44.1)--(44.4) through a local
+  SDP interface.  Record every run under \texttt{runs/} with the command line,
+  \(h\), level \(N\), parameters \(e,v^2,u,w\), and solver status.
+\item Add mutation tests: perturb a known zero-current density to make the
+  current nonzero; perturb the coboundary sign to make the coboundary
+  reconstruction test fail; perturb a residual coefficient and require a small
+  SDP level to change.
+\end{enumerate}
+
+\subsection{Acceptance for an Exclusion Claim}
+
+A future statement ``\(h\) is excluded at level \(N\)'' must point to:
+
+\begin{itemize}
+\item the exact Pauli coefficient matrix \(h_{\alpha\beta}\) and density
+  convention;
+\item the algebraic residual tensors and any witnesses \(e,v^2,u,w\);
+\item the finite word sets \(\mathcal W_N,\mathcal A_N\);
+\item the SDP solver transcript or certificate in a run bundle;
+\item a worklog entry explaining why the infeasible constraints are necessary
+  for the named route.
+\end{itemize}
+
+\subsection{Open Gaps}
+
+The central charge convention remains unfixed.  The two-dimensional edge schema
+has no implementation.  The SDP hierarchy is fixed-\(h\); scanning continuous
+families of \(h_{\alpha\beta}\) requires a separate polynomial relaxation.
+None of the filters replaces CA-15's scaling-limit obligations.  They are
+designed to cheaply reject impossible candidates before the expensive continuum
+work begins.
+

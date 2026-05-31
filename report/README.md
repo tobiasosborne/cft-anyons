@@ -55,6 +55,14 @@ before treating report edits as complete.
 | 35 | `CA-35-QUBIT-1D-BOOST-CURRENT-OBSTRUCTIONS` | `report/sections/35_qubit_1d_boost_current_obstructions.tex` | One-Dimensional Qubit Boost-Current Obstructions |
 | 36 | `CA-36-QUBIT-2D-PLAQUETTE-SYMMETRY-DIAGNOSTICS` | `report/sections/36_qubit_2d_plaquette_symmetry_diagnostics.tex` | Two-Dimensional Qubit Plaquette Symmetry Diagnostics |
 | 37 | `CA-37-QUBIT-WITT-VIRASORO-DIAGNOSTICS` | `report/sections/37_qubit_witt_virasoro_diagnostics.tex` | Qubit Nearest-Neighbour Witt/Virasoro Diagnostics |
+| 38 | `CA-38-QUBIT-LOCAL-ALGEBRA-EQUATION-FRAMEWORK` | `report/sections/38_qubit_local_algebra_equation_framework.tex` | Qubit Local-Algebra Equation Framework |
+| 39 | `CA-39-QUBIT-1D-POINCARE-NECESSARY-EQUATIONS` | `report/sections/39_qubit_1d_poincare_necessary_equations.tex` | One-Dimensional Qubit Poincare Necessary Equations |
+| 40 | `CA-40-QUBIT-1D-RESIDUAL-COMPUTER-ALGEBRA` | `report/sections/40_qubit_1d_residual_computer_algebra.tex` | Computer Algebra for One-Dimensional Qubit Residuals |
+| 41 | `CA-41-QUBIT-2D-POINCARE-EQUATION-SCHEMA` | `report/sections/41_qubit_2d_poincare_equation_schema.tex` | Two-Dimensional Qubit Poincare Equation Schema |
+| 42 | `CA-42-QUBIT-WITT-VIRASORO-NECESSARY-EQUATIONS` | `report/sections/42_qubit_witt_virasoro_necessary_equations.tex` | Qubit Witt/Virasoro Necessary Equations |
+| 43 | `CA-43-QUBIT-VACUUM-MOMENT-CONSTRAINTS` | `report/sections/43_qubit_vacuum_moment_constraints.tex` | Vacuum Moment Constraints for Qubit Residuals |
+| 44 | `CA-44-QUBIT-SDP-EXCLUSION-HIERARCHY` | `report/sections/44_qubit_sdp_exclusion_hierarchy.tex` | SDP Exclusion Hierarchy for Qubit Hamiltonians |
+| 45 | `CA-45-QUBIT-SYMMETRY-EXCLUSION-ROADMAP` | `report/sections/45_qubit_symmetry_exclusion_roadmap.tex` | Roadmap for Qubit Symmetry Exclusion |
 
 ## Adding a shard
 

@@ -1,0 +1,115 @@
+% SHARD-ID: CA-43-QUBIT-VACUUM-MOMENT-CONSTRAINTS
+% SHARD-TITLE: Vacuum Moment Constraints for Qubit Residuals
+% SHARD-SUMMARY: Defines finite restrictions of a translation-invariant global state by Pauli-word moments and positive moment matrices.
+% SHARD-SUMMARY: Converts local Poincare and Virasoro residuals into linear moment equations of the form omega(X^* R Y)=0.
+% SHARD-SUMMARY: Records the zero-expectation and normal-ordering data needed before an SDP can exclude Hamiltonians.
+% SHARD-KEYWORDS: vacuum state, moments, GNS, Pauli words, SDP constraints, qubit chain
+
+\section{Vacuum Moment Constraints for Qubit Residuals}
+\label{sec:qubit-vacuum-moment-constraints}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: proposal-level SDP interface backed by sourced state/GNS
+architecture.}  The moment equations are finite algebra.  The existence of a
+continuum vacuum or positive-energy representation is not claimed.
+
+Dependencies: CA-15, CA-38--CA-42, CONVENTIONS.md (n).
+
+% Source: literature/md/2010.11121/2010.11121.md:126--180 -- inductive-limit
+%   algebra, projective-limit states, and GNS vector state.
+% Source: literature/md/2010.11121/2010.11121.md:226--243 -- time-zero net,
+%   vacuum invariance, positive energy, and Poincare-covariance warning.
+% Source: references/text/CFTFromLatticeFermions.txt:376--388 -- vacuum /
+%   ground-state subtraction in Koo-Saleur scaling.
+
+\subsection{Finite Moment Data}
+
+Let \(P_s\) be a finite Pauli word on \(\mathbb Z\), padded by identities
+outside its support.  A candidate translation-invariant global state \(\omega\)
+has moments
+\[
+  y_s=\omega(P_s),
+  \qquad y_{\emptyset}=1,
+  \qquad y_{\tau^n s}=y_s.
+  \tag{43.1}
+\]
+For a finite word set \(\mathcal W\), positivity is the moment-matrix
+constraint
+\[
+  M_{\mathcal W}(y)_{u,v}
+  =
+  \omega(P_u^*P_v)
+  =
+  \sum_s \mu_{u,v}^{s}y_s
+  \succeq0,
+  \tag{43.2}
+\]
+where the constants \(\mu_{u,v}^{s}\) are computed from the Pauli product
+table of CA-38.  Hermiticity gives
+\[
+  M_{\mathcal W}(y)_{v,u}
+  =
+  \overline{M_{\mathcal W}(y)_{u,v}}.
+\]
+The SDP may be represented over real variables by splitting real and imaginary
+parts.
+
+\subsection{Zero Expectations}
+
+The infinite sums \(H,P,K\) are not finite observables.  The finite data are
+their local densities and residuals.  After choosing the scalar subtraction
+\(\bar h=h-eI\), a vacuum-normalized test may impose
+\[
+  \omega(\bar h_j)=0,\qquad
+  \omega(p_j)=0,
+  \tag{43.3}
+\]
+and, for the residuals of CA-39,
+\[
+  \omega(A_j-Du_j)=0,\qquad
+  \omega(B_j-u_j-v^2\bar h_j-Dw_j)=0.
+  \tag{43.4}
+\]
+These are only the level-zero moment consequences.  They are usually too weak
+to exclude much.
+
+\subsection{GNS Relation Constraints}
+
+The stronger finite restriction says that a residual vanishes on the vacuum
+sector as a relation in the GNS representation.  For each chosen residual
+density \(R(h)\) and probe words \(X,Y\),
+\[
+  \omega(X^*R(h)Y)=0.
+  \tag{43.5}
+\]
+For fixed \(h\), fixed \(v^2,e,u,w\), and fixed residual coefficients, (43.5)
+is linear in the moments \(y_s\).  The same rule applies to the finite
+Witt/Virasoro residual densities \(r^{++}_{mn},r^{--}_{mn},r^{+-}_{mn}\) from
+CA-42:
+\[
+  \omega(X^*r^{\pm\pm}_{mn}(h)Y)=0,
+  \qquad
+  \omega(X^*r^{+-}_{mn}(h)Y)=0.
+  \tag{43.6}
+\]
+These equations are the promised finite data extracted from the demand that a
+global state \(\omega\) make the generators and relations vanish in expectation
+on a finite probe space.
+
+\subsection{Highest-Weight Caveat}
+
+If a chiral vacuum sector is named, one may also impose finite analogues of
+\[
+  \ell_n\Omega=0,\quad \bar\ell_n\Omega=0\qquad(n>0),
+\]
+for example
+\[
+  \omega(\ell_{-n}\ell_n)=0.
+  \tag{43.7}
+\]
+But central charge, normal ordering, and finite-volume mode normalisation are
+still convention-sensitive.  Until CONVENTIONS.md (d) is fixed for this block,
+such constraints are optional diagnostics rather than canonical Virasoro
+vacuum equations.
+

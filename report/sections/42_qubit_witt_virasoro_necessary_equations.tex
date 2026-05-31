@@ -1,0 +1,130 @@
+% SHARD-ID: CA-42-QUBIT-WITT-VIRASORO-NECESSARY-EQUATIONS
+% SHARD-TITLE: Qubit Witt/Virasoro Necessary Equations
+% SHARD-SUMMARY: Derives exact finite Fourier-mode commutators from the qubit nearest-neighbour density and current.
+% SHARD-SUMMARY: States the chiral residual equations that any Koo-Saleur-style Virasoro ansatz must satisfy before low-energy scaling is considered.
+% SHARD-SUMMARY: Keeps central charge and finite-size closure caveated by the Koo-Saleur and OAR source boundaries.
+% SHARD-KEYWORDS: qubit, Witt, Virasoro, Koo-Saleur, Fourier modes, current algebra
+
+\section{Qubit Witt/Virasoro Necessary Equations}
+\label{sec:qubit-witt-virasoro-necessary-equations}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: exact finite algebra plus proposal residuals.}  The mode
+identities are finite local algebra.  Their use as Virasoro diagnostics is a
+necessary filter only.
+
+Dependencies: CA-14, CA-35, CA-37--CA-39, CONVENTIONS.md (d), (m), (n).
+
+% Source: references/lattice-symmetry/KooSaleur1993/source/9312156.tex:1030--1108
+%   -- finite lattice quantities do not close before the scaling limit.
+% Source: references/lattice-symmetry/KooSaleur1993/source/9312156.tex:1129--1150
+%   -- H(f), P(f), and their commutator.
+% Source: references/lattice-symmetry/KooSaleur1993/source/9312156.tex:1628--1673
+%   -- lattice Virasoro proposal and low-energy restriction.
+% Source: references/cft/Schottenloher2008/Schottenloher2008.md:2438--2485
+%   -- Witt brackets and two copies.
+% Source: references/cft/Schottenloher2008/Schottenloher2008.md:2636--2644
+%   -- Virasoro central extension.
+% Source: references/cft/Schottenloher2008/Schottenloher2008.md:5059--5065
+%   -- two commuting Virasoro algebras from stress tensor modes.
+
+\subsection{Exact Density-Mode Algebra}
+
+On a periodic chain of length \(N\), set \(z_n=\exp(2\pi in/N)\) and
+\[
+  H_n=\sum_jz_n^jh_j,\qquad
+  C_j=i[h_j,h_{j+1}],\qquad
+  J_n=\sum_jz_n^jC_j .
+\]
+Then \(H_n^*=H_{-n}\), \(J_n^*=J_{-n}\), and the nearest-neighbour identity is
+\[
+  [H_m,H_n]=-i(z_n-z_m)J_{m+n}.
+  \tag{42.1}
+\]
+This is the exact lattice antecedent of the Koo-Saleur \(H(f),P(f)\)
+commutator.  In Pauli coefficients \(C_j\) is the tensor \(p\) from (39.1).
+
+Define higher-current densities
+\[
+  D_{r,j}=i[h_{j+r},C_j]\quad(r=0,1,2),
+  \qquad
+  F^{(r)}_j=i[C_j,C_{j+r}]\quad(r=1,2).
+\]
+Using the Jacobi cancellation of the \(r=-1\) term,
+\[
+  i[H_m,J_n]
+  =
+  \sum_jz_{m+n}^j
+  \left(D_{0,j}+z_mD_{1,j}+(z_m^2-z_n)D_{2,j}\right),
+  \tag{42.2}
+\]
+and
+\[
+  i[J_m,J_n]
+  =
+  \sum_jz_{m+n}^j
+  \left((z_n-z_m)F^{(1)}_j
+       +(z_n^2-z_m^2)F^{(2)}_j\right).
+  \tag{42.3}
+\]
+The \(D\)-coefficients are degree three polynomials in \(h_{\alpha\beta}\);
+the \(F\)-coefficients are degree four.
+
+\subsection{Chiral Residuals}
+
+A Koo-Saleur-style chiral ansatz has the form
+\[
+  \ell_n=A_n{:}H_n{:}_\omega+B_n{:}J_n{:}_\omega+\mu\delta_{n0}I,
+\]
+\[
+  \bar\ell_n=A_n{:}H_n{:}_\omega-B_n{:}J_n{:}_\omega+\mu\delta_{n0}I,
+\]
+with \(A_{-n}=\overline{A_n}\) and \(B_{-n}=\overline{B_n}\).  The necessary
+Virasoro residuals for a chosen finite mode set are
+\[
+  R^{++}_{mn}=
+  [\ell_m,\ell_n]-(m-n)\ell_{m+n}
+  -\frac{c}{12}m(m^2-1)\delta_{m+n,0}I,
+  \tag{42.4}
+\]
+\[
+  R^{--}_{mn}=
+  [\bar\ell_m,\bar\ell_n]-(m-n)\bar\ell_{m+n}
+  -\frac{c}{12}m(m^2-1)\delta_{m+n,0}I,
+  \tag{42.5}
+\]
+and
+\[
+  R^{+-}_{mn}=[\ell_m,\bar\ell_n].
+  \tag{42.6}
+\]
+For example,
+\[
+\begin{aligned}
+  [\ell_m,\ell_n]
+  &=
+  -iA_mA_n(z_n-z_m)J_{m+n}
+  -iA_mB_n\mathcal D_{mn}\\
+  &\quad
+  +iB_mA_n\mathcal D_{nm}
+  -iB_mB_n\mathcal F_{mn},
+\end{aligned}
+\]
+where \(\mathcal D_{mn}=i[H_m,J_n]\) and
+\(\mathcal F_{mn}=i[J_m,J_n]\) are given by (42.2)--(42.3).
+
+\subsection{Necessary Filter}
+
+At finite size, the Koo-Saleur source explicitly warns that the lattice
+quantities need not close.  Therefore the safe condition is not ``finite
+Virasoro symmetry''.  The safe condition is:
+for the chosen ansatz and mode set, every Pauli coefficient of
+\(R^{++},R^{--},R^{+-}\) outside the named span
+\[
+  \operatorname{span}\{I,H_{m+n},J_{m+n}\}
+\]
+must either vanish, be a registered finite-size correction, or be annihilated in
+the chosen low-energy/state restriction.  CA-43--CA-44 turn the last option into
+moment constraints.
+

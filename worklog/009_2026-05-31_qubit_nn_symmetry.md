@@ -1,5 +1,80 @@
 # Worklog chunk 009 — 2026-05-31
 
+## Qubit necessary equations and SDP hierarchy — 2026-05-31
+
+### Context
+
+Tobias asked for the qubit nearest-neighbour quest to go beyond first
+diagnostics: write the full necessary equations that a Pauli-basis
+Hamiltonian density \(h_{\alpha\beta}\) must satisfy for the fixed
+first-moment Poincare/Witt/Virasoro route, and then build the outer
+vacuum-state SDP hierarchy that can exclude Hamiltonians from finite
+restrictions of a candidate global state \(\omega\).
+
+### What changed
+
+- Spawned five read-only subagents for \(1+1\) coefficient equations, \(2+1\)
+  square-lattice edge equations, vacuum/SDP hierarchy, Witt/Virasoro mode
+  equations, and provenance audit.  The durable orchestration record is
+  `reviews/2026-05-31_qubit_nn_sdp_hierarchy/ORCHESTRATION.md`.
+- Added CONVENTIONS.md (n)--(o): the one-dimensional coboundary quotient
+  \(D u=u_j-u_{j+1}\), the first-moment residual normal form
+  \(A=Du\), \(B-u-v^2\bar h=Dw\), the finite moment/SDP semantics, and the
+  proposal-level square-lattice edge orientation/divergence policy.
+- Added `src/QubitPauliResiduals.jl` and extended `src/QubitPauliLattice.jl`
+  with n-site Pauli roundtrips, local embeddings, raw five-site sentinels,
+  coboundary coefficients, and the four-site boost-relation density
+  \(B_j=i[p_j,h_{j+1}]+2i[p_j,h_{j+2}]\).
+- Strengthened the qubit Julia tests to check the coboundary operator identity,
+  boost-relation density roundtrips, and the fully-on-site/current-collapse
+  obstruction.
+- Added shards CA-38--CA-45:
+  local Pauli equation framework, explicit 1D Poincare necessary equations,
+  checked residual computer algebra, 2D edge equation schema, Witt/Virasoro
+  necessary equations, vacuum moment constraints, SDP exclusion hierarchy, and
+  implementation roadmap.
+- Updated CA-35 so its conservation residual points to the full coboundary
+  quotient and CA-39 boost equation.
+
+### Why these choices
+
+- The equations are scoped to the fixed generator route, which keeps
+  "necessary" mathematically honest.  They can exclude a Hamiltonian for this
+  route, not for every possible continuum construction.
+- The divergence quotient is essential: raw coefficientwise zero is too strong
+  for infinite bulk sums because \(u_j-u_{j+1}\) telescopes.
+- The SDP hierarchy is fixed-\(h\).  If \(h\), \(u\), \(w\), or \(v^2\) are
+  simultaneously variables with the moments, the problem becomes polynomial
+  rather than a plain SDP; CA-44 records that boundary explicitly.
+
+### Frictions / dead ends
+
+- An earlier five-site conservation density is only a raw overlap sentinel.
+  Hubble's derivation showed that the exact formal conservation density after
+  Jacobi cancellation is the three-site \(A_j=i[h_j+h_{j+1},p_j]\) modulo
+  \(D u\).  The code comments and CA-35 were adjusted accordingly.
+- The \(2+1\) equations depend on an edge/cell split and rotation density, so
+  CA-41 remains proposal-level until a checker enumerates the finite patch.
+- Virasoro central data remain convention-sensitive; CA-42 gives finite
+  residuals and moment constraints but not a central-charge extraction theorem.
+
+### Acceptance
+
+- `julia --project=. -e 'using Pkg; Pkg.test()'` passed after adding the new
+  residual helpers.
+- `make check-report-shards` passed with 46 included shards.
+- `make report` rebuilt `report.pdf` successfully.
+
+### Pointers
+
+- Shards: CA-38, CA-39, CA-40, CA-41, CA-42, CA-43, CA-44, CA-45.
+- Conventions: CONVENTIONS.md (n), (o).
+- Code/tests: `src/QubitPauliLattice.jl`, `src/QubitPauliResiduals.jl`,
+  `test/runtests.jl` testset "qubit Pauli nearest-neighbour current
+  obstructions".
+- Review orchestration:
+  `reviews/2026-05-31_qubit_nn_sdp_hierarchy/ORCHESTRATION.md`.
+
 ## Qubit nearest-neighbour symmetry diagnostics — 2026-05-31
 
 ### Context
@@ -70,4 +145,3 @@ single-site Hamiltonians as the expected first casualty.
   "qubit Pauli nearest-neighbour current obstructions".
 - Review orchestration:
   `reviews/2026-05-31_qubit_nn_symmetry/ORCHESTRATION.md`.
-

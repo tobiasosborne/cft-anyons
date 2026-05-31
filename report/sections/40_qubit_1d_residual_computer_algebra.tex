@@ -1,0 +1,94 @@
+% SHARD-ID: CA-40-QUBIT-1D-RESIDUAL-COMPUTER-ALGEBRA
+% SHARD-TITLE: Computer Algebra for One-Dimensional Qubit Residuals
+% SHARD-SUMMARY: Records the Julia helpers that reconstruct Pauli operators, currents, coboundaries, and boost residual densities.
+% SHARD-SUMMARY: The tests check nontrivial invariants: current collapse for symmetric onsite terms, nonzero interacting currents, and coboundary operator reconstruction.
+% SHARD-SUMMARY: The code is a finite residual engine, not yet an SDP solver.
+% SHARD-KEYWORDS: Julia, Pauli coefficients, residuals, coboundary, tests, qubit chain
+
+\section{Computer Algebra for One-Dimensional Qubit Residuals}
+\label{sec:qubit-1d-residual-computer-algebra}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: checked.}  This shard documents the finite algebra engine
+behind CA-35 and CA-39.
+
+Dependencies: CA-35, CA-38, CA-39, CONVENTIONS.md (m), (n).
+
+% Checked: src/QubitPauliLattice.jl, src/QubitPauliResiduals.jl, and
+%   test/runtests.jl, testset "qubit Pauli nearest-neighbour current
+%   obstructions".
+
+\subsection{Operator and Coefficient Roundtrip}
+
+The file \texttt{src/QubitPauliLattice.jl} implements
+\[
+  \sum_{\alpha_0,\ldots,\alpha_{n-1}=0}^3
+  c_{\alpha_0\ldots\alpha_{n-1}}
+  \sigma^{\alpha_0}\otimes\cdots\otimes\sigma^{\alpha_{n-1}}
+\]
+for \(n=1,2,3\) and for general \(n\).  The inverse map uses
+\[
+  c_\alpha=2^{-n}\Tr(P_\alpha A).
+\]
+The tests assert coefficient roundtrips for two-site densities and for the
+five-site residual representatives.  The code rejects arrays whose axes are
+not all length \(4\), and rejects non-self-adjoint matrix inputs.
+
+\subsection{Checked Residual Helpers}
+
+The current helper returns
+\[
+  p=i[h_{12},h_{23}]
+\]
+and the direct coefficient helper returns exactly (39.1).  The conservation
+helper
+\[
+  A=i[h_{12}+h_{23},p]
+\]
+is the minimal three-site density for \(i[H,P]\) after the Jacobi cancellation
+of outer-overlap terms.
+
+The file \texttt{src/QubitPauliResiduals.jl} adds
+\[
+  (D u)_{a_0\ldots a_n}
+  =
+  u_{a_0\ldots a_{n-1}}\delta_{a_n0}
+  -
+  \delta_{a_00}u_{a_1\ldots a_n}
+\]
+and
+\[
+  B=i[p_{123},h_{23}]+2i[p_{123},h_{34}].
+\]
+The test suite checks that the coboundary coefficients reconstruct the operator
+identity
+\[
+  D u = u_{12}-u_{23}
+\]
+on a three-site window, including the fact that the scalar \(u_{00}I\) is in
+the kernel.
+
+\subsection{Sentinels}
+
+The checked examples are deliberately small:
+
+\begin{itemize}
+\item A generic real one-site density embedded by the symmetric split has
+  \(p=0\), \(A=0\), and \(B=0\), while the embedded Hamiltonian density itself
+  is nonzero.  This is the concrete fully-local exclusion witness for CA-39.
+\item A pure classical \(ZZ\) density also has \(p=0\).
+\item A transverse-Ising-style density has nonzero \(p\) and nonzero boost
+  residual density \(B\).  This only means it survives the first obstruction.
+\item An asymmetric fake on-site split creates a nonzero current, but the
+  conservation sentinel is larger than the current and catches the density-split
+  artifact.
+\end{itemize}
+
+\subsection{Current Gap}
+
+The code does not yet solve the polynomial system (39.1), (39.4), (39.5), and
+does not build moment matrices.  Its role is narrower: it makes every displayed
+coefficient tensor executable and gives mutation-friendly invariants before an
+SDP exporter is added.
+
