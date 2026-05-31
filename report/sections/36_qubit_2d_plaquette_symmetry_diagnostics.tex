@@ -1,0 +1,133 @@
+% SHARD-ID: CA-36-QUBIT-2D-PLAQUETTE-SYMMETRY-DIAGNOSTICS
+% SHARD-TITLE: Two-Dimensional Qubit Plaquette Symmetry Diagnostics
+% SHARD-SUMMARY: Proposes finite-patch algebraic diagnostics for 2+1D qubit nearest-neighbour edge densities.
+% SHARD-SUMMARY: Uses ramp currents, translation residuals, isotropy, and rotation closure as rejection filters, not continuum claims.
+% SHARD-SUMMARY: Identifies fully on-site, commuting, decoupled-stack, and anisotropic edge data as early rule-out classes.
+% SHARD-KEYWORDS: qubit lattice, 2+1 dimensions, plaquette, Poincare, ramp current, isotropy, rotation diagnostic
+
+\section{Two-Dimensional Qubit Plaquette Symmetry Diagnostics}
+\label{sec:qubit-2d-plaquette-symmetry-diagnostics}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: proposal diagnostics.}  This shard gives a finite algebraic
+test plan for \(2+1\)-dimensional qubit lattices.  No two-dimensional current
+or rotation convention is fixed yet, so every condition below is a proposed
+compiler filter.
+
+Dependencies: CA-13, CA-15, CA-16, CA-32, CONVENTIONS.md (h), (k), (m).
+
+% Source: report/sections/13_position_dependent_bulk_generators.tex:45--72 --
+%   scalar ramp candidates and higher-dimensional boost proposal.
+% Source: report/sections/13_position_dependent_bulk_generators.tex:75--92 --
+%   rotations require a momentum-density convention.
+% Source: report/sections/15_lattice_symmetry_acceptance_tests.tex:41--51 --
+%   finite algebraic closure as an acceptance layer.
+% Source: report/sections/32_gaussian_higher_dimensional_cell_currents.tex:70--132 --
+%   higher-dimensional current-density data are still proposal-level inputs.
+
+\subsection{Edge-Density Input}
+
+On an open square patch, use oriented horizontal and vertical edges:
+\[
+  h^a_{r,r+\hat a}
+  =
+  \sum_{\alpha,\beta=0}^3
+  c^a_{\alpha\beta}\,
+  \sigma_r^\alpha\sigma_{r+\hat a}^\beta,
+  \qquad a\in\{x,y\}.
+\]
+Let \(m_e\) be the midpoint of edge \(e\), and write
+\[
+  H=\sum_e h_e,\qquad
+  K_a=\sum_e m_e^a h_e.
+\]
+The ramp-current candidate is
+\[
+  P_a:=i[H,K_a]
+  =
+  \sum_{\{e,f\}}
+  (m_f^a-m_e^a)i[h_e,h_f],
+\]
+where only overlapping edge pairs contribute.  This is the direct
+higher-dimensional analogue of CA-13's scalar-ramp formula.
+
+\subsection{Patch Diagnostics}
+
+The smallest useful checks are local:
+\[
+\begin{array}{ll}
+1.&\text{three-site lines for straight }x\text{ and }y\text{ currents},\\
+2.&2\times2\text{ plaquettes for corner commutators and }C_4\text{ covariance},\\
+3.&3\times3\text{ open patches for }P_x,P_y\text{ and }i[H,P_a],\\
+4.&4\times4\text{ or larger patches for bulk-projected }i[P_x,P_y].
+\end{array}
+\]
+Boundary-supported residuals should be projected away or recorded separately.
+The diagnostic object is the interior Pauli-string residual, not raw equality
+on the whole open patch.
+
+\subsection{Proposed Rejection Filters}
+
+\begin{description}
+\item[Current nontriviality.]
+Both \(P_x\) and \(P_y\) should be nonzero in the bulk for a nontrivial
+\(2+1\)-dimensional Poincare candidate.
+
+\item[Translation conservation.]
+The bulk residual \(i[H,P_a]\) should vanish or be controlled in the intended
+finite algebra.  A nonzero interior Pauli-string residual is an early rejection
+witness for exact finite bulk closure.
+
+\item[Translation commutativity.]
+The bulk part of \(i[P_x,P_y]\) should vanish or be a named boundary/irrelevant
+term before the model is promoted.
+
+\item[Boost-translation bracket.]
+After normalisation, the residual
+\[
+  i[P_b,K_a]-\delta_{ab}H
+\]
+is the direct \(2+1\)-dimensional Poincare diagnostic.  This is strong and must
+be treated as a finite filter, not a theorem.
+
+\item[Isotropy.]
+For scalar qubits with no internal spatial action, a microscopic \(90^\circ\)
+rotation should relate horizontal and vertical edge data after endpoint
+reversal.  Obvious decoupled stacks, such as \(c^y=0\), fail this filter.
+\end{description}
+
+\subsection{Rotation Is Not Free}
+
+A rotation candidate needs a local momentum-density split
+\[
+  P_a=\sum_v p_a(v)
+\]
+before one can write
+\[
+  J_{xy}=\sum_v(x_vp_y(v)-y_vp_x(v)).
+\]
+CA-13 already marks this as extra data.  A plausible first convention is to
+assign each edge-pair current to the shared vertex, but that convention must be
+written and tested before rotation closure is claimed.  Only then should one
+check
+\[
+  i[H,J_{xy}],\qquad
+  i[P_x,J_{xy}]-P_y,\qquad
+  i[P_y,J_{xy}]+P_x.
+\]
+
+\subsection{Rule-Out Classes}
+
+The proposal immediately targets four classes:
+\[
+\begin{array}{ll}
+1.&\text{fully on-site Hamiltonians: }P_x=P_y=0,\\
+2.&\text{commuting classical edge densities: all ramp currents vanish,}\\
+3.&\text{decoupled stacks: one momentum component vanishes,}\\
+4.&\text{anisotropic edge data: fail the scalar-qubit }C_4\text{ filter.}
+\end{array}
+\]
+None of these rejections is a continuum theorem.  They are finite algebraic
+filters for the specific candidate-generator route.
+

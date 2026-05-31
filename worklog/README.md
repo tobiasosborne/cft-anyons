@@ -22,6 +22,7 @@ gotcha) goes to agent memory under
 
 | Chunk | Span | Topics |
 |---|---|---|
+| `009_2026-05-31_qubit_nn_symmetry.md` | 2026-05-31 | Qubit nearest-neighbour lattice-symmetry diagnostics and Pauli current obstruction |
 | `008_2026-05-30_gaussian_stress_energy_candidates.md` | 2026-05-30 | Gaussian stress-energy candidate shards and follow-up checks |
 | `007_2026-05-30_gaussian_source_acquisition.md` | 2026-05-30 | Source acquisition and A4 current derivation for Gaussian Lorentz stress-energy follow-ups |
 | `006_2026-05-30_gaussian_action_plan_julia_hardening.md` | 2026-05-30 | Julia/test hardening for the Gaussian Lorentz action plan |

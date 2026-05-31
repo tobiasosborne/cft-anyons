@@ -1,0 +1,117 @@
+% SHARD-ID: CA-34-QUBIT-NEAREST-NEIGHBOUR-SYMMETRY-QUEST
+% SHARD-TITLE: Qubit Nearest-Neighbour Symmetry Quest
+% SHARD-SUMMARY: Opens the qubit nearest-neighbour lattice-symmetry investigation in Pauli-basis coefficients.
+% SHARD-SUMMARY: Separates checked finite algebraic obstruction tests from proposal-level Poincare, Witt, and Virasoro diagnostics.
+% SHARD-SUMMARY: Records the concrete investigation plan for 1+1 and 2+1 dimensions.
+% SHARD-KEYWORDS: qubit, Pauli basis, nearest neighbour, Poincare, Witt, Virasoro, algebraic diagnostic
+
+\section{Qubit Nearest-Neighbour Symmetry Quest}
+\label{sec:qubit-nearest-neighbour-symmetry-quest}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: programme shard with checked seed.}  This shard scopes the next
+lattice-symmetry quest for qubit systems.  CA-35 supplies the first checked
+finite algebraic obstruction.  CA-36 and CA-37 state proposal-level diagnostics
+for \(2+1\)-dimensional Poincare tests and \(1+1\)-dimensional
+Witt/Virasoro tests.
+
+Dependencies: CA-10--CA-17, CONVENTIONS.md (h), (k), (m), and the review
+orchestration in \texttt{reviews/2026-05-31\_qubit\_nn\_symmetry/}.
+
+% Source: references/text/CFTFromLatticeFermions.txt:80--100 -- finite lattice,
+%   site Hilbert spaces, finite-support Hamiltonian terms, observable algebra.
+% Source: references/text/CFTFromLatticeFermions.txt:1033--1038 -- Pauli matrices
+%   in the qubit setting.
+% Source: references/text/CFTFromLatticeFermions.txt:1355--1357 -- Pauli
+%   algebra/qubit mapping.
+% Source: references/text/GaugingDefectsQuantumSpinSystems.txt:674--684 --
+%   pairwise neighbouring Hamiltonian terms and summed local Hamiltonian.
+% Source: report/sections/12_lattice_boost_current_1d.tex:24--104 -- CA-12
+%   nearest-neighbour first-moment identity.
+% Checked: src/QubitPauliLattice.jl and test/runtests.jl, testset
+%   "qubit Pauli nearest-neighbour current obstructions".
+
+\subsection{Input Tier}
+
+The first input class is a translation-invariant qubit nearest-neighbour
+density.  In the convention of CONVENTIONS.md (m),
+\[
+  h=\sum_{\alpha,\beta=0}^3
+    h_{\alpha\beta}\,\sigma^\alpha\otimes\sigma^\beta,
+  \qquad h_{\alpha\beta}\in\mathbb R,
+\]
+with \(\sigma^0=I\) and \(\sigma^1,\sigma^2,\sigma^3=X,Y,Z\).  On a
+one-dimensional open chain the density \(h_j\) acts on sites \((j,j+1)\), so
+\[
+  H=\sum_j h_j.
+\]
+In two spatial dimensions the same coefficient format may be used separately
+on horizontal and vertical edges, but the edge orientation, midpoint, boundary,
+and bulk-projection conventions are not fixed by this shard.
+
+\subsection{Question}
+
+The question is not whether a finite qubit lattice has exact Poincare or
+Virasoro symmetry.  CA-15 already forbids that shortcut.  The question is
+whether the finite algebra forced by the candidate generator ansatz gives
+cheap rejection tests:
+\[
+  \begin{array}{c}
+  \text{Pauli coefficient data}
+  \longrightarrow
+  \text{finite commutator residuals}\\
+  \longrightarrow
+  \text{rule out impossible symmetry candidates early}.
+  \end{array}
+\]
+The first such test is the adjacent-density current
+\[
+  J(h):=i[h_{12},h_{23}],
+\]
+because CA-12 shows that the first energy moment
+\[
+  K=\sum_j x_j h_j
+\]
+obeys \(i[H,K]\) equal to the sum of adjacent commutators in the
+translation-invariant bulk.  If this current vanishes, the first-moment boost
+ansatz produces zero spatial momentum.
+
+\subsection{Investigation Plan}
+
+\begin{description}
+\item[One-dimensional Poincare filters.]
+Compute \(J(h)\) directly from \(h_{\alpha\beta}\).  Reject the density as a
+nontrivial Poincare candidate for the CA-12 first-moment route if the bulk
+current vanishes while the energy density is non-scalar.  Then test stronger
+finite residuals such as \(i[P,K]-H\), but only after boundary, scaling, and
+normalization policies are named.
+
+\item[Two-dimensional Poincare filters.]
+Use horizontal and vertical edge densities \(h^x,h^y\).  Define ramp moments
+from edge midpoints and compute \(P_x=i[H,K_x]\), \(P_y=i[H,K_y]\) on open
+patches.  Proposed finite residuals include current nontriviality,
+\(i[H,P_a]\), \(i[P_x,P_y]\), isotropy under \(x\leftrightarrow y\), and later
+rotation closure after a local momentum-density split is fixed.
+
+\item[Witt/Virasoro filters.]
+On a periodic one-dimensional chain, form Fourier modes of the density and of
+the adjacent current.  Koo--Saleur supplies the sourced pattern:
+Hamiltonian-density modes plus commutator corrections.  The first rejection
+test is again current collapse; central terms and finite-size non-closure are
+not early failure tests.
+\end{description}
+
+\subsection{Immediate Rule-Outs}
+
+The first checked obstruction is deliberately modest.  Under the symmetric
+nearest-neighbour split of a genuine on-site qubit Hamiltonian, \(J(h)=0\).
+Thus a fully local single-site Hamiltonian cannot provide nonzero bulk momentum
+through the CA-12 first-moment boost ansatz.  The same obstruction also catches
+commuting classical nearest-neighbour densities, such as pure diagonal \(ZZ\)
+terms without noncommuting fields.
+
+Nonzero \(J(h)\) is not sufficient.  It is only the first algebraic gate.  A
+density that passes still needs the CA-15 evidence payload: local support
+policy, state sequence, renormalisation maps, convergence topology, low-energy
+sector or core, and observable covariance.

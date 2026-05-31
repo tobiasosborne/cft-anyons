@@ -1,0 +1,158 @@
+% SHARD-ID: CA-35-QUBIT-1D-BOOST-CURRENT-OBSTRUCTIONS
+% SHARD-TITLE: One-Dimensional Qubit Boost-Current Obstructions
+% SHARD-SUMMARY: Derives the adjacent-current polynomial for a qubit two-site Pauli density.
+% SHARD-SUMMARY: Checks that symmetric fully on-site Hamiltonians and commuting classical densities have zero CA-12 bulk momentum candidate.
+% SHARD-SUMMARY: Records why this rules out only the first-moment route to nontrivial Poincare symmetry, not every possible construction.
+% SHARD-KEYWORDS: qubit chain, Pauli basis, boost current, adjacent commutator, onsite obstruction, Poincare diagnostic
+
+\section{One-Dimensional Qubit Boost-Current Obstructions}
+\label{sec:qubit-1d-boost-current-obstructions}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: checked local derivation.}  This shard turns the CA-12
+nearest-neighbour identity into explicit polynomial conditions on the
+two-qubit Pauli coefficient matrix.  The obstruction is checked in Julia.
+
+Dependencies: CA-12, CA-34, CONVENTIONS.md (h), (k), (m).
+
+% Source: report/sections/12_lattice_boost_current_1d.tex:24--104 -- local
+%   derivation of i[H,K] as the adjacent-density current sum.
+% Convention: CONVENTIONS.md (m) -- qubit Pauli coefficient normalization and
+%   symmetric on-site split.
+% Checked: src/QubitPauliLattice.jl and test/runtests.jl, testset
+%   "qubit Pauli nearest-neighbour current obstructions".
+
+\subsection{Adjacent Current in Pauli Coefficients}
+
+Let
+\[
+  h_j=\sum_{\alpha,\beta=0}^3
+    h_{\alpha\beta}\,\sigma_j^\alpha\sigma_{j+1}^\beta.
+\]
+The only noncommuting overlap between \(h_j\) and \(h_{j+1}\) is at site
+\(j+1\).  With
+\[
+  [\sigma^b,\sigma^c]=2i\sum_{e=1}^3\epsilon_{bce}\sigma^e
+  \qquad (b,c\in\{1,2,3\}),
+\]
+one obtains
+\[
+\begin{aligned}
+  i[h_j,h_{j+1}]
+  &=
+  -2\sum_{\alpha,\delta=0}^3\sum_{e=1}^3
+    \left(\sum_{b,c=1}^3
+      h_{\alpha b}h_{c\delta}\epsilon_{bce}
+    \right)
+    \sigma_j^\alpha\sigma_{j+1}^e\sigma_{j+2}^\delta .
+\end{aligned}
+\]
+Equivalently, define right-leg and left-leg vectors
+\[
+  R_\alpha=(h_{\alpha1},h_{\alpha2},h_{\alpha3}),\qquad
+  L_\delta=(h_{1\delta},h_{2\delta},h_{3\delta}).
+\]
+Then the current coefficients are the cross products
+\[
+  i[h_j,h_{j+1}]
+  =
+  -2\sum_{\alpha,\delta=0}^3
+  \sum_{e=1}^3 (R_\alpha\times L_\delta)_e
+  \sigma_j^\alpha\sigma_{j+1}^e\sigma_{j+2}^\delta .
+\]
+Thus the simple current-collapse condition is
+\[
+  R_\alpha\times L_\delta=0
+  \qquad\text{for every }\alpha,\delta.
+\]
+When this holds, every adjacent-current contribution to the CA-12 bulk momentum
+candidate vanishes.
+
+\subsection{Fully On-Site Terms}
+
+For a genuine translation-invariant on-site density
+\[
+  A=\sum_{\alpha=0}^3 a_\alpha\sigma^\alpha,
+\]
+CONVENTIONS.md (m) embeds it into the two-site bond tier by the symmetric split
+\[
+  h_{\mathrm{onsite}}
+  =
+  \frac12(A\otimes I+I\otimes A).
+\]
+Then the right-leg and left-leg vectors are all parallel in the only places
+where they overlap, so
+\[
+  i[(h_{\mathrm{onsite}})_{12},(h_{\mathrm{onsite}})_{23}]=0.
+\]
+The Julia test checks this directly for a generic real linear combination of
+\(I,X,Y,Z\).
+
+Consequently the first-moment boost ansatz gives
+\[
+  i[H,K]=0
+\]
+in the translation-invariant bulk.  If the target is a nontrivial Poincare
+representation with \(i[H,K]=P\) and \(i[P,K]=H\), this first-moment route
+cannot realise it unless the energy itself is trivial after the relevant
+compression or subtraction.
+
+\subsection{Other Immediate Rejections}
+
+The same current-collapse test catches commuting nearest-neighbour density
+families.  A pure diagonal classical interaction such as \(ZZ\) has
+\[
+  [h_j,h_{j+1}]=0
+\]
+because the overlapping Pauli factor is the same diagonal matrix.  Such a model
+may still be a well-defined lattice Hamiltonian, but it fails the first
+nontrivial bulk-symmetry diagnostic: the boost-current candidate supplies no
+spatial momentum.
+
+By contrast, the tested transverse-Ising-style density with a \(ZZ\) bond and a
+symmetric \(X\)-field split has nonzero adjacent current.  This does not prove
+Poincare invariance; it only passes the first obstruction.
+
+\subsection{The Next Residual}
+
+The next necessary Poincare relation is translation conservation:
+\[
+  i[H,P]=0.
+\]
+For the local candidate \(P=\sum_j C_j\), \(C_j=i[h_j,h_{j+1}]\), the first
+bulk density to inspect is
+\[
+  A_j=i[h_j+h_{j+1},C_j].
+\]
+If \(A_j\) contains interior Pauli strings that are not a named discrete
+divergence or boundary term, the model fails the next finite algebraic filter.
+
+This residual is useful for detecting density-split artifacts.  An asymmetric
+encoding of an on-site Hamiltonian,
+\[
+  h=U\otimes I+I\otimes V,
+\]
+can create the fake current
+\[
+  i[h_{12},h_{23}]=I\otimes i[V,U]\otimes I.
+\]
+But the checked sentinel with \(U=X\), \(V=Z\) has nonzero
+\[
+  i[h_{12}+h_{23},i[h_{12},h_{23}]],
+\]
+so it fails translation conservation even though the adjacent current is
+nonzero.  A future residual suite should add the next boost relation
+\(i[P,K]=\lambda H\) after fixing the allowed density-divergence and boundary
+terms.
+
+\subsection{Boundary}
+
+The obstruction is conditional on the density convention.  An asymmetric
+encoding of an on-site Hamiltonian as \(A\otimes I+I\otimes B\) can create
+spurious adjacent commutators when \(A\) and \(B\) fail to commute.  Such
+currents are density-split artifacts unless a separate convention justifies the
+split, and the conservation residual above is the first backstop against them.
+Passing the obstruction is also far weaker than CA-15 acceptance: boundary
+residuals, scaling maps, low-energy sectors, and observable covariance remain
+unproved.

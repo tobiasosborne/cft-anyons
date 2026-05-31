@@ -306,3 +306,39 @@ single ~200-line source file it points to.
 - Summary: Adds a one-dimensional nearest-neighbour current-symbol slope residual that detects wrong speed, bond magnitude, and orientation.
 - Summary: Keeps periodic first moments, finite-chain dGamma(k), higher-dimensional current densities, and T_11 witnesses as open obligations.
 - Keywords: Gaussian boson, stress-energy numerical suite, open chain, energy current, slope residual, failure witness
+
+## `CA-34-QUBIT-NEAREST-NEIGHBOUR-SYMMETRY-QUEST`
+
+- Source: `report/sections/34_qubit_nearest_neighbour_symmetry_quest.tex`
+- Title: Qubit Nearest-Neighbour Symmetry Quest
+- Summary: Opens the qubit nearest-neighbour lattice-symmetry investigation in Pauli-basis coefficients.
+- Summary: Separates checked finite algebraic obstruction tests from proposal-level Poincare, Witt, and Virasoro diagnostics.
+- Summary: Records the concrete investigation plan for 1+1 and 2+1 dimensions.
+- Keywords: qubit, Pauli basis, nearest neighbour, Poincare, Witt, Virasoro, algebraic diagnostic
+
+## `CA-35-QUBIT-1D-BOOST-CURRENT-OBSTRUCTIONS`
+
+- Source: `report/sections/35_qubit_1d_boost_current_obstructions.tex`
+- Title: One-Dimensional Qubit Boost-Current Obstructions
+- Summary: Derives the adjacent-current polynomial for a qubit two-site Pauli density.
+- Summary: Checks that symmetric fully on-site Hamiltonians and commuting classical densities have zero CA-12 bulk momentum candidate.
+- Summary: Records why this rules out only the first-moment route to nontrivial Poincare symmetry, not every possible construction.
+- Keywords: qubit chain, Pauli basis, boost current, adjacent commutator, onsite obstruction, Poincare diagnostic
+
+## `CA-36-QUBIT-2D-PLAQUETTE-SYMMETRY-DIAGNOSTICS`
+
+- Source: `report/sections/36_qubit_2d_plaquette_symmetry_diagnostics.tex`
+- Title: Two-Dimensional Qubit Plaquette Symmetry Diagnostics
+- Summary: Proposes finite-patch algebraic diagnostics for 2+1D qubit nearest-neighbour edge densities.
+- Summary: Uses ramp currents, translation residuals, isotropy, and rotation closure as rejection filters, not continuum claims.
+- Summary: Identifies fully on-site, commuting, decoupled-stack, and anisotropic edge data as early rule-out classes.
+- Keywords: qubit lattice, 2+1 dimensions, plaquette, Poincare, ramp current, isotropy, rotation diagnostic
+
+## `CA-37-QUBIT-WITT-VIRASORO-DIAGNOSTICS`
+
+- Source: `report/sections/37_qubit_witt_virasoro_diagnostics.tex`
+- Title: Qubit Nearest-Neighbour Witt/Virasoro Diagnostics
+- Summary: Proposes finite algebraic rejection tests for 1+1D qubit nearest-neighbour Pauli densities using Fourier density modes and adjacent-current corrections.
+- Summary: Identifies current-zero and chiral-rank collapse as simple failure witnesses before any continuum convergence theorem.
+- Summary: Separates central-term extraction, finite-size non-closure, and low-energy compression from raw full-Hilbert-space commutators.
+- Keywords: qubit chain, Pauli basis, Koo-Saleur, Witt, Virasoro, current mode, failure witness

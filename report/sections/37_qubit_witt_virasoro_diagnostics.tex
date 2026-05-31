@@ -1,0 +1,112 @@
+% SHARD-ID: CA-37-QUBIT-WITT-VIRASORO-DIAGNOSTICS
+% SHARD-TITLE: Qubit Nearest-Neighbour Witt/Virasoro Diagnostics
+% SHARD-SUMMARY: Proposes finite algebraic rejection tests for 1+1D qubit nearest-neighbour Pauli densities using Fourier density modes and adjacent-current corrections.
+% SHARD-SUMMARY: Identifies current-zero and chiral-rank collapse as simple failure witnesses before any continuum convergence theorem.
+% SHARD-SUMMARY: Separates central-term extraction, finite-size non-closure, and low-energy compression from raw full-Hilbert-space commutators.
+% SHARD-KEYWORDS: qubit chain, Pauli basis, Koo-Saleur, Witt, Virasoro, current mode, failure witness
+
+\section{Qubit Nearest-Neighbour Witt/Virasoro Diagnostics}
+\label{sec:qubit-witt-virasoro-diagnostics}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: proposal with local derivation targets.}  This shard is a
+finite-scale diagnostic proposal, not a continuum Virasoro claim.
+
+Dependencies: CA-12, CA-14--CA-16, CA-34--CA-35, CONVENTIONS.md (m).  CFT
+normalisations in CONVENTIONS.md (d) remain unfixed, so no central-charge
+extraction convention is available here.
+
+% Source: references/cft/Schottenloher2008/Schottenloher2008.md:1110--1114 --
+%   Witt bracket.
+% Source: references/cft/Schottenloher2008/Schottenloher2008.md:1211--1215 --
+%   Virasoro as central extension.
+% Source: references/cft/Schottenloher2008/Schottenloher2008.md:5059--5074 --
+%   two commuting Virasoro algebras from stress-tensor modes.
+% Source: references/lattice-symmetry/KooSaleur1993/source/9312156.tex:1030--1108 --
+%   finite-L non-closure and scaling-limit commutator caveat.
+% Source: references/lattice-symmetry/KooSaleur1993/source/9312156.tex:1129--1150 --
+%   lattice H(f), P(f), and leading commutator relation.
+% Source: references/lattice-symmetry/KooSaleur1993/source/9312156.tex:1623--1673 --
+%   lattice Virasoro generator formulas and conjecture.
+% Source: references/text/CFTFromLatticeFermions.txt:2163--2217 -- Fourier
+%   density modes and Koo-Saleur approximants.
+
+\subsection{Fourier Density and Current Modes}
+
+Let a periodic qubit chain of length \(N\) have
+\[
+  H=\sum_j h_j,\qquad
+  h_j=\sum_{\alpha,\beta=0}^3
+  h_{\alpha\beta}\sigma_j^\alpha\sigma_{j+1}^\beta.
+\]
+For \(q_n=2\pi n/N\), define
+\[
+  H_n=\sum_j e^{iq_nj}h_j,\qquad
+  J_n=\sum_j e^{iq_nj}j_j,\qquad
+  j_j=i[h_j,h_{j+1}].
+\]
+The nearest-neighbour commutator identity is
+\[
+  i[H_m,H_n]
+  =
+  (e^{iq_n}-e^{iq_m})J_{m+n}.
+\]
+This is the finite Pauli-chain analogue of the Koo--Saleur pattern in which
+Hamiltonian-density modes and commutator corrections approximate chiral
+stress-tensor modes.
+
+\subsection{First Failure Witness}
+
+CA-35 gives the coefficient condition
+\[
+  R_\alpha\times L_\delta=0
+  \qquad\text{for all }\alpha,\delta,
+\]
+which implies \(j_j=0\) and hence \(J_n=0\) for every Fourier mode.  In that
+case the density modes cannot acquire the Koo--Saleur commutator correction
+needed to split left-moving and right-moving candidates.  Fully on-site
+Hamiltonians under the symmetric split fail here, as do commuting classical
+densities.
+
+\subsection{Chiral-Rank Diagnostic}
+
+A later finite diagnostic may define tentative chiral candidates of the form
+\[
+  \ell_n=a_N{:}H_n{:}+\lambda_nJ_n+\mu_N\delta_{n0}I,\qquad
+  \bar\ell_{-n}=a_N{:}H_n{:}-\lambda_nJ_n+\mu_N\delta_{n0}I.
+\]
+Before testing brackets, one should check that \(H_n\) and \(J_n\) are
+linearly independent on the chosen low-energy sector \(P_N\).  A rank-collapse
+test such as
+\[
+  \det \operatorname{Gram}_{P_N}(H_n,J_n)\ne0
+\]
+is an early finite witness that the two proposed chiral directions have not
+collapsed to one.
+
+\subsection{Compressed Witt Residuals}
+
+The raw full Hilbert-space commutator is the wrong first test.  Koo--Saleur
+already warns that finite-size quantities do not close as Virasoro generators
+and that commutators interact subtly with the scaling limit.  The diagnostic
+should therefore choose a low-energy projection \(P_N\), an intermediate
+projection \(Q_N\), and test residuals such as
+\[
+  P_N\bigl(\ell_mQ_N\ell_n-\ell_nQ_N\ell_m
+  -(m-n)\ell_{m+n}\bigr)P_N
+\]
+for \(m+n\ne0\), together with the barred and cross-chiral versions.
+
+The \(m+n=0\) brackets should not be the first rejection test: central terms
+require a Virasoro normalization, vacuum or ground-state subtraction, and a
+scaling state sequence.  These are not fixed for arbitrary qubit chains.
+
+\subsection{Boundary}
+
+This shard gives finite algebraic diagnostics only.  Passing them does not
+produce a Virasoro representation.  A continuum claim still needs the full
+CA-15 payload plus Koo--Saleur-style scaling representation data: state
+sequence, subtraction policy, mode normalization, low-energy sector, operator
+topology, and convergence theorem.
+

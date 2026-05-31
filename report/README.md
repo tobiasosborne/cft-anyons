@@ -51,6 +51,10 @@ before treating report edits as complete.
 | 31 | `CA-31-GAUSSIAN-CURRENT-SYMBOL-EQUIVALENCE` | `report/sections/31_gaussian_current_symbol_equivalence.tex` | Gaussian Current-Symbol Equivalence in One Dimension |
 | 32 | `CA-32-GAUSSIAN-HIGHER-DIMENSIONAL-CELL-CURRENTS` | `report/sections/32_gaussian_higher_dimensional_cell_currents.tex` | Higher-Dimensional Gaussian Cell-Current Proposal |
 | 33 | `CA-33-GAUSSIAN-STRESS-NUMERICAL-SUITE` | `report/sections/33_gaussian_stress_numerical_suite.tex` | First Gaussian Stress-Energy Numerical Suite |
+| 34 | `CA-34-QUBIT-NEAREST-NEIGHBOUR-SYMMETRY-QUEST` | `report/sections/34_qubit_nearest_neighbour_symmetry_quest.tex` | Qubit Nearest-Neighbour Symmetry Quest |
+| 35 | `CA-35-QUBIT-1D-BOOST-CURRENT-OBSTRUCTIONS` | `report/sections/35_qubit_1d_boost_current_obstructions.tex` | One-Dimensional Qubit Boost-Current Obstructions |
+| 36 | `CA-36-QUBIT-2D-PLAQUETTE-SYMMETRY-DIAGNOSTICS` | `report/sections/36_qubit_2d_plaquette_symmetry_diagnostics.tex` | Two-Dimensional Qubit Plaquette Symmetry Diagnostics |
+| 37 | `CA-37-QUBIT-WITT-VIRASORO-DIAGNOSTICS` | `report/sections/37_qubit_witt_virasoro_diagnostics.tex` | Qubit Nearest-Neighbour Witt/Virasoro Diagnostics |
 
 ## Adding a shard
 

@@ -419,3 +419,53 @@ current derivation); CA-29.
 the total scalar symbol and finite periodic stiffness checks; any later
 real-space first-moment or quadratic-density mode must cite this entry or
 replace it with an explicitly recorded convention sweep.
+
+## (m) Qubit nearest-neighbour Pauli densities
+**Choice:** A qubit nearest-neighbour two-site density is represented by a real
+coefficient matrix `h_{alpha beta}` in the Pauli basis
+`sigma_0=I`, `sigma_1=X`, `sigma_2=Y`, `sigma_3=Z`, with
+`h = sum_{alpha,beta=0}^3 h_{alpha beta}
+sigma_alpha otimes sigma_beta`.  The coefficient normalization is
+`h_{alpha beta} = Tr((sigma_alpha otimes sigma_beta) h) / 4`, using
+`Tr(sigma_alpha sigma_beta)=2 delta_{alpha beta}`.  Real coefficients are the
+default self-adjoint density tier.
+
+For a one-dimensional translation-invariant open chain, the default bond
+density is placed on the oriented bond `(j,j+1)` as the same two-site operator
+on neighbouring tensor factors.  The CA-12 adjacent-density current is
+`J(h)=i[h_{12},h_{23}]`.  In Pauli coefficients its three-site coefficients
+are
+`J_{a e d}(h) = -2 sum_{b,c=1}^3 h_{a b} h_{c d} epsilon_{b c e}`,
+where the displayed indices are zero-based Pauli labels and `epsilon` is the
+usual three-dimensional Levi-Civita symbol on `1,2,3`.
+
+A translation-invariant one-site Hamiltonian density
+`A=sum_alpha a_alpha sigma_alpha` is embedded into this two-site bond tier by
+the symmetric split
+`h_onsite = (A otimes I + I otimes A) / 2`.  With this split
+`i[(h_onsite)_{12},(h_onsite)_{23}]=0`, so the CA-12 first-moment boost ansatz
+produces zero bulk momentum.  This is the checked local meaning of the
+"fully local Hamiltonians are ruled out" diagnostic; asymmetric encodings of
+the same on-site total Hamiltonian are density-split artifacts until a separate
+convention justifies them.
+
+For two spatial dimensions, no final edge/cell density convention is fixed yet.
+The proposal-level diagnostic tier uses separate horizontal and vertical
+two-site Pauli matrices only after an edge orientation, edge midpoint, boundary
+policy, and bulk-projection rule are named.
+**Reasoning:** The Pauli coefficient tier makes the user's proposed input
+explicit and turns the CA-12 adjacent-current obstruction into polynomial
+conditions on the coefficient matrix.  The symmetric on-site split prevents a
+pure density-gauge choice from manufacturing spurious adjacent currents for a
+single-site Hamiltonian.
+**Source:** `references/text/CFTFromLatticeFermions.txt:80`--`:100` (finite
+lattice Hilbert spaces, local finite-support Hamiltonian terms), `:1033`--`:1038`
+(Pauli matrices in the qubit setting), `:1355`--`:1357` (Pauli algebra/qubit
+mapping); `references/text/GaugingDefectsQuantumSpinSystems.txt:674`--`:684`
+(pairwise neighbouring Hamiltonian terms); CA-12 local derivation;
+`src/QubitPauliLattice.jl` and `test/runtests.jl` testset "qubit Pauli
+nearest-neighbour current obstructions".
+**Sweep status:** CA-34--CA-35 use this convention.  CA-36 may use the
+proposal-level two-dimensional extension only after naming the missing
+orientation and bulk-projection data.  No existing Gaussian or category shard
+uses this convention.

@@ -114,6 +114,64 @@ end
     @test_throws ErrorException CftAnyons.nearest_neighbor_boost_current_coefficients([0])
 end
 
+@testset "qubit Pauli nearest-neighbour current obstructions" begin
+    onsite_coefficients = [0.25, 0.7, -0.3, 0.5]
+    onsite_density = CftAnyons.symmetric_onsite_bond_density(onsite_coefficients)
+    onsite_current = CftAnyons.adjacent_bond_boost_current(onsite_density)
+    onsite_conservation = CftAnyons.adjacent_bond_conservation_residual(onsite_density)
+
+    @test onsite_density ≈ onsite_density'
+    @test isapprox(onsite_current, zeros(ComplexF64, 8, 8);
+        atol = CftAnyons.PAULI_COEFFICIENT_ATOL, rtol = CftAnyons.PAULI_COEFFICIENT_RTOL)
+    @test isapprox(onsite_conservation, zeros(ComplexF64, 8, 8);
+        atol = CftAnyons.PAULI_COEFFICIENT_ATOL, rtol = CftAnyons.PAULI_COEFFICIENT_RTOL)
+    @test isapprox(CftAnyons.adjacent_bond_current_norm(onsite_density), 0;
+        atol = CftAnyons.PAULI_COEFFICIENT_ATOL, rtol = CftAnyons.PAULI_COEFFICIENT_RTOL)
+
+    onsite_roundtrip = CftAnyons.pauli_two_site_coefficients(onsite_density)
+    expected_left = onsite_coefficients / 2
+    expected_right = onsite_coefficients / 2
+    expected_left[1] = onsite_coefficients[1]
+    expected_right[1] = onsite_coefficients[1]
+    @test onsite_roundtrip[:, 1] ≈ expected_left
+    @test onsite_roundtrip[1, :] ≈ expected_right
+    @test onsite_roundtrip[2:4, 2:4] ≈ zeros(3, 3)
+
+    classical_zz = zeros(4, 4)
+    classical_zz[4, 4] = 1.25
+    @test CftAnyons.adjacent_bond_current_norm(
+        CftAnyons.pauli_two_site_operator(classical_zz)) ≈ 0
+
+    transverse_ising = zeros(4, 4)
+    transverse_ising[4, 4] = -1.0
+    transverse_ising[2, 1] = -0.35
+    transverse_ising[1, 2] = -0.35
+    interacting_density = CftAnyons.pauli_two_site_operator(transverse_ising)
+    interacting_current = CftAnyons.adjacent_bond_boost_current(interacting_density)
+    interacting_current_coefficients =
+        CftAnyons.adjacent_bond_current_pauli_coefficients(transverse_ising)
+
+    @test interacting_current ≈ interacting_current'
+    @test CftAnyons.adjacent_bond_current_norm(interacting_density) > 0.1
+    @test CftAnyons.pauli_two_site_coefficients(interacting_density) ≈ transverse_ising
+    @test CftAnyons.pauli_three_site_operator(interacting_current_coefficients) ≈
+          interacting_current
+    @test interacting_current_coefficients[4, 3, 1] ≈ -0.7
+    @test interacting_current_coefficients[1, 3, 4] ≈ 0.7
+
+    asymmetric_fake = kron(CftAnyons.PAULI_BASIS[2], CftAnyons.PAULI_BASIS[1]) +
+                      kron(CftAnyons.PAULI_BASIS[1], CftAnyons.PAULI_BASIS[4])
+    fake_current = CftAnyons.adjacent_bond_boost_current(asymmetric_fake)
+    fake_conservation = CftAnyons.adjacent_bond_conservation_residual(asymmetric_fake)
+    @test CftAnyons.adjacent_bond_current_norm(asymmetric_fake) > 1
+    @test norm(fake_conservation) > norm(fake_current)
+
+    @test_throws ErrorException CftAnyons.pauli_two_site_operator(zeros(3, 3))
+    @test_throws ErrorException CftAnyons.pauli_site_operator([1.0, 0.0, 0.0])
+    @test_throws ErrorException CftAnyons.adjacent_bond_boost_current(zeros(3, 3))
+    @test_throws ErrorException CftAnyons.adjacent_bond_current_pauli_coefficients(zeros(3, 3))
+end
+
 @testset "Galilei vector-field brackets" begin
     H = (:H, 0, 0)
     P(a) = (:P, a, 0)

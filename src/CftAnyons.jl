@@ -166,6 +166,7 @@ include("GalileiAlgebras.jl")
 include("GaussianBosons.jl")
 include("GaussianBosonCurrents.jl")
 include("GaussianBosonNumerics.jl")
+include("QubitPauliLattice.jl")
 
 """
     nearest_neighbor_boost_current_coefficients(positions) -> Vector
