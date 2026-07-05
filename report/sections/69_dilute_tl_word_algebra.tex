@@ -1,0 +1,151 @@
+% SHARD-ID: CA-69-DILUTE-TL-WORD-ALGEBRA
+% SHARD-TITLE: The Dilute Temperley-Lieb Algebra and the Anyonic Word Algebra
+% SHARD-SUMMARY: Registers the dilute Temperley-Lieb algebra dTL_n(beta) with its Motzkin dimension, generators, parity ideals, and dense corners.
+% SHARD-SUMMARY: Defines the diagram evaluation map into the maybe-object word algebra and proves it cannot be surjective for Fibonacci.
+% SHARD-SUMMARY: Identifies the parity-even subalgebra as the conjectured image, with exact dimension matches at L=2,3 and an open Jones-Wenzl kernel question at L>=4.
+% SHARD-KEYWORDS: dilute Temperley-Lieb, Motzkin, word algebra, parity, evaluation map, Fibonacci, Jones-Wenzl
+
+\section{The Dilute Temperley--Lieb Algebra and the Anyonic Word Algebra}
+\label{sec:dilute-tl-word-algebra}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: source-local registration plus derived finite arithmetic.}
+The algebra data are registered from the local sources; the evaluation map is
+a proposal; the non-surjectivity obstruction and the small-\(L\) dimension
+matches are checked local arithmetic.
+
+Dependencies: CA-65, CA-66, CA-68; CONVENTIONS.md (b), (r).
+
+% Source: references/lattice-symmetry/DiluteTL2014/source/Dtl_pgl_ell.06.tex:208--213 --
+%   dilute n-diagrams: vacancies, nonintersecting strings, concatenation
+%   product, factor beta per closed loop, zero for unclosed floating strings.
+% Source: references/lattice-symmetry/DiluteTL2014/source/Dtl_pgl_ell.06.tex:636--640 --
+%   the algebra dTL_n(beta); generating set a_i, a_i^t, b_i, b_i^t, e_j, x_j.
+% Source: references/lattice-symmetry/DiluteTL2014/source/Dtl_pgl_ell.06.tex:773--776 --
+%   e_i + x_i = id; u_i = b_i^t b_i recovers the dense TL generator; vacancy
+%   numbers on the two sides share parity; even/odd two-sided ideals.
+% Source: references/lattice-symmetry/DiluteTL2014/source/Dtl_pgl_ell.06.tex:891--895 --
+%   symmetric-vacancy subalgebra; pi_A dTL_n pi_A isomorphic to TL_{|A|}.
+% Source: references/lattice-symmetry/DiluteTL2014/source/Dtl_pgl_ell.06.tex:1020--1033 --
+%   dim dTL_n = sum_k C(2n,2k) dim TL_k = Motzkin number M_{2n}.
+% Source: references/lattice-symmetry/DiluteTL2014/source/Dtl_pgl_ell.06.tex:2339 --
+%   dTL_n semisimple for q not a root of unity; standard modules irreducible.
+% Source: references/lattice-symmetry/DiluteTLFusion2015/source/Full.01.tex:491--495 --
+%   ascending families dTL_n into dTL_{n+1} and TL_n into TL_{n+1}.
+% Source: references/text/PenneysUnitaryFusionCategories.md:610--625 --
+%   Fibonacci raw cup v with v^dagger v = phi id_1 (evaluation-map data).
+
+\subsection{The Dilute Algebra}
+
+The dilute Temperley--Lieb algebra \(\mathrm{dTL}_n(\beta)\) is spanned by
+dilute \(n\)-diagrams: \(n\) points on each vertical side, an even number of
+which may be \emph{vacancies}, all remaining points joined pairwise by
+non-intersecting strings.  The product is concatenation, with a factor
+\(\beta\) per closed loop and zero whenever a floating string fails to close.
+A generating set is
+\(\{a_i,a_i^t,b_i,b_i^t,e_j,x_j\}\), with \(e_i+x_i=\mathrm{id}\) and the
+dense Temperley--Lieb generator recovered as \(u_i=b_i^tb_i\).  Two facts are
+load-bearing for this block:
+
+\emph{Parity.}  The vacancy numbers on the two sides of a diagram always share
+parity, and the even/odd spans are two-sided ideals:
+\(\mathrm{dTL}_n=\mathrm{edTL}_n\oplus\mathrm{odTL}_n\).  Equivalently, a
+dilute diagram never changes the occupied-site number \(N\) by an odd amount:
+strings pair endpoints, so occupied counts on the two sides are congruent
+mod 2.
+
+\emph{Dense corners.}  For any subset \(A\) of positions, the idempotent
+\(\pi_A=\prod_{i\in A,\,j\notin A}x_je_i\) satisfies
+\(\pi_A\,\mathrm{dTL}_n\,\pi_A\cong\mathrm{TL}_{|A|}\): the fully occupied
+corner is the ordinary dense algebra.
+
+The dimension is a Motzkin number:
+\[
+  \dim\mathrm{dTL}_n=\sum_{k=0}^n\binom{2n}{2k}\dim\mathrm{TL}_k=M_{2n},
+\]
+so \(\dim\mathrm{dTL}_n=1,2,9,51,323\) for \(n=0,\dots,4\).  For \(q\) not a
+root of unity (\(\beta=q+q^{-1}\)) the algebra is semisimple.
+
+\subsection{The Evaluation Map}
+
+\textbf{Proposal.}  Let \(\Cc\) be a unitary fusion category with self-dual
+simple \(X\) of quantum dimension \(d\), and \(O=\one\oplus X\) the CA-65 site
+object.  Define
+\[
+  \rho_L:\mathrm{dTL}_L(d)\longrightarrow
+  \operatorname{End}_{\Cc}(O^{\otimes L})
+\]
+by reading a vacancy as the \(\one\)-summand, an occupied point as the
+\(X\)-summand, a through-string as the identity on \(X\) transported between
+its endpoint sites, and cups/caps as the raw coevaluation/evaluation of
+CONVENTIONS.md (r) (Fibonacci: \(v^\dagger v=\varphi\,\mathrm{id}_{\one}\), so
+closed loops evaluate to \(d=\varphi\), matching the diagrammatic \(\beta\)).
+The Frobenius--Schur flag of (r) is a recorded obligation before \(\rho_L\) is
+promoted beyond proposal status for general self-dual \(X\).
+
+\subsection{The Obstruction: No Surjection for Fibonacci}
+
+\textbf{Checked arithmetic.}  For Fibonacci, CA-66 gives
+\(\dim\operatorname{End}(O^{\otimes L})=F_{4L-1}\) (checked in the Julia
+testset ``fibonacci anyonic word algebra and vacuum insertion''), while
+\(\dim\mathrm{dTL}_L=M_{2L}\):
+\[
+\begin{array}{c|cccc}
+L & 1 & 2 & 3 & 4\\\hline
+\dim\mathrm{dTL}_L=M_{2L} & 2 & 9 & 51 & 323\\
+\dim\operatorname{End}(O^{\otimes L})=F_{4L-1} & 2 & 13 & 89 & 610
+\end{array}
+\]
+Since \(M_{2L}<F_{4L-1}\) for \(L\ge2\), no map from \(\mathrm{dTL}_L\) can be
+surjective, and passing to any quotient (e.g.\ by a Jones--Wenzl-type ideal)
+only shrinks the image.  The dense intuition
+\(\mathrm{TL}_L(\varphi)\twoheadrightarrow\operatorname{End}(\tau^{\otimes L})\)
+does \emph{not} extend to the dilute pair.
+
+\textbf{Derived mechanism.}  The failure is exactly the parity ideal
+structure: dilute diagrams preserve occupied-number parity, while Fibonacci
+has \(N_{\tau\tau}^{\tau}=1\), so the word algebra contains fusion morphisms
+changing \(N\) by one (the trivalent vertex \(\tau\to\tau\otimes\tau\)).  At
+\(L=2\) the missing \(13-9=4\) dimensions are precisely the matrix units
+linking the \(N=1\) and \(N=2\) states of the charge-\(\tau\) block.
+
+\textbf{Derived dimension coincidence.}  Splitting each CA-66 charge block by
+occupied-number parity, the parity-preserving subalgebra of
+\(\operatorname{End}(O^{\otimes L})\) has dimension
+\[
+  L=2:\ (2^2)+(2^2+1^2)=9,
+  \qquad
+  L=3:\ (4^2+1^2)+(5^2+3^2)=51,
+\]
+matching \(M_{2L}\) exactly in both cases.  \textbf{Conjecture (checked at
+the dimension level for \(L\le3\); open beyond):} for Fibonacci,
+\(\rho_L\) is an isomorphism onto the parity-even--preserving subalgebra of
+\(\operatorname{End}(O^{\otimes L})\) for small \(L\), with a nontrivial
+kernel expected only once dense corners reach the first negligible
+Jones--Wenzl projector (\(\mathrm{TL}_4\) at \(\beta=\varphi\)), i.e.\ from
+\(L=4\).  At \(L=4\) the counts \(323\) versus the parity-preserving dimension
+must be computed, not assumed; this is a CA-71-tier numerical obligation.
+
+\subsection{Consequences for the Programme}
+
+Two tiers separate cleanly.  \emph{Tier 1 (dilute TL proper):} Hamiltonians
+built from the dTL generators --- occupancy projectors, dense exchange
+\(u_i\), hopping \(a_i+a_i^t\), pair creation/annihilation \(b_i+b_i^t\) ---
+act on the word algebra through \(\rho_L\) and conserve \(N\)-parity.  The
+sourced anyonic t-J models are of this shape, and the dilute Koo--Saleur
+programme (CA-70) lives here.  \emph{Tier 2 (beyond dTL):} the full word
+algebra needs the fusion vertex; densities using \(N\)-parity-violating terms
+leave the dilute algebra and require category-specific data.  This is the
+precise algebraic sense in which the variable-\(N\) word algebra is strictly
+richer than the dilute diagram algebra.
+
+\subsection{Boundary}
+
+No Hamiltonian, criticality, or Virasoro statement is made here.  The
+evaluation map is a proposal pending the Frobenius--Schur convention; its
+injectivity on \(\mathrm{dTL}_L(\varphi)\) for \(L\le3\) is a dimension-level
+argument only and must be confirmed by an explicit rank computation (CA-71).
+The affine/periodic dilute algebra needed by a periodic Koo--Saleur setup is
+not defined in the registered sources and remains an acquisition/derivation
+target.

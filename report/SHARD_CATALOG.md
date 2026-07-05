@@ -621,3 +621,21 @@ single ~200-line source file it points to.
 - Summary: Separates the nonunital corner algebra map from strict OAR unital scaling maps, and proposes dressed refinements for Virasoro compatibility.
 - Summary: Records the Fibonacci H_2 to H_4 test target and the archived-project deficit/pair-creation precedent as re-derivation targets.
 - Keywords: refinement maps, variable-N anyons, vacuum insertion, OAR, Koo-Saleur, Virasoro, Fibonacci, dilute Temperley-Lieb
+
+## `CA-69-DILUTE-TL-WORD-ALGEBRA`
+
+- Source: `report/sections/69_dilute_tl_word_algebra.tex`
+- Title: The Dilute Temperley-Lieb Algebra and the Anyonic Word Algebra
+- Summary: Registers the dilute Temperley-Lieb algebra dTL_n(beta) with its Motzkin dimension, generators, parity ideals, and dense corners.
+- Summary: Defines the diagram evaluation map into the maybe-object word algebra and proves it cannot be surjective for Fibonacci.
+- Summary: Identifies the parity-even subalgebra as the conjectured image, with exact dimension matches at L=2,3 and an open Jones-Wenzl kernel question at L>=4.
+- Keywords: dilute Temperley-Lieb, Motzkin, word algebra, parity, evaluation map, Fibonacci, Jones-Wenzl
+
+## `CA-70-DILUTE-KOO-SALEUR-ANSATZ`
+
+- Source: `report/sections/70_dilute_koo_saleur_ansatz.tex`
+- Title: The Dilute Koo-Saleur Ansatz
+- Summary: Adapts the sourced dense-TL Koo-Saleur generator recipe to Hamiltonian densities built from dilute Temperley-Lieb generators.
+- Summary: Registers the two sourced critical anchors: the dilute O(n)/Izergin-Korepin chains with exact branch central charges, and the local anyonic t-J models.
+- Summary: States the proof obligations, including the central-term/limit gap inherited from the dense case and the periodic dilute algebra setting.
+- Keywords: Koo-Saleur, dilute Temperley-Lieb, Izergin-Korepin, dilute O(n), anyonic t-J, lattice Virasoro, periodic dilute algebra

@@ -86,6 +86,8 @@ before treating report edits as complete.
 | 66 | `CA-66-ANYONIC-STATES-VARIABLE-N-FOCK` | `report/sections/66_anyonic_states_variable_n_fock.tex` | Anyonic States and Variable-N Fock Space |
 | 67 | `CA-67-REFINEMENT-REQUIREMENTS-OBSTRUCTIONS` | `report/sections/67_refinement_requirements_obstructions.tex` | Refinement-Map Requirements and Obstructions |
 | 68 | `CA-68-VARIABLE-N-REFINEMENT-MAPS` | `report/sections/68_variable_n_refinement_maps.tex` | Refinement Maps for the Variable-N Anyonic Word Algebra |
+| 69 | `CA-69-DILUTE-TL-WORD-ALGEBRA` | `report/sections/69_dilute_tl_word_algebra.tex` | The Dilute Temperley-Lieb Algebra and the Anyonic Word Algebra |
+| 70 | `CA-70-DILUTE-KOO-SALEUR-ANSATZ` | `report/sections/70_dilute_koo_saleur_ansatz.tex` | The Dilute Koo-Saleur Ansatz |
 
 ## Adding a shard
 

@@ -1,0 +1,161 @@
+% SHARD-ID: CA-70-DILUTE-KOO-SALEUR-ANSATZ
+% SHARD-TITLE: The Dilute Koo-Saleur Ansatz
+% SHARD-SUMMARY: Adapts the sourced dense-TL Koo-Saleur generator recipe to Hamiltonian densities built from dilute Temperley-Lieb generators.
+% SHARD-SUMMARY: Registers the two sourced critical anchors: the dilute O(n)/Izergin-Korepin chains with exact branch central charges, and the local anyonic t-J models.
+% SHARD-SUMMARY: States the proof obligations, including the central-term/limit gap inherited from the dense case and the periodic dilute algebra setting.
+% SHARD-KEYWORDS: Koo-Saleur, dilute Temperley-Lieb, Izergin-Korepin, dilute O(n), anyonic t-J, lattice Virasoro, periodic dilute algebra
+
+\section{The Dilute Koo--Saleur Ansatz}
+\label{sec:dilute-koo-saleur-ansatz}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: proposal.}  To our knowledge (2026-07-05 survey, recorded in
+the review bundle) no Koo--Saleur construction exists for any dilute loop
+model or the dilute Temperley--Lieb algebra; this shard fixes the candidate
+generators and their proof obligations.  Nothing here is a convergence claim.
+
+Dependencies: CA-14, CA-42, CA-64, CA-69; CONVENTIONS.md (r).
+
+% Source: references/lattice-symmetry/GransSamuelssonEtAl2020/source/Linnea11.5.tex:587--602 --
+%   dense template: H_N = -(gamma/pi sin gamma) sum_j (e_j - e_infty), prefactor
+%   fixes the sound velocity; e_infty = sin(gamma) I_0 as an explicit integral.
+% Source: references/lattice-symmetry/GransSamuelssonEtAl2020/source/Linnea11.5.tex:791--820 --
+%   dense template: momentum density from i[h_j, h_{j-1}]; the Koo-Saleur
+%   generators as Fourier modes of (e_j - e_infty) plus current correction,
+%   with the c/24 zero-mode shift.
+% Source: references/lattice-symmetry/GransSamuelssonEtAl2020/source/Linnea11.5.tex:2528 --
+%   scaling-weak convergence: "a closer look at limits and commutators".
+% Source: references/lattice-symmetry/GransSamuelssonEtAl2020/source/Linnea11.5.tex:3198 --
+%   commutator of limits agrees with limit of commutators only up to a
+%   modified central term ("parasitic couplings"); conjectural even for dense TL.
+% Source: references/lattice-symmetry/KooSaleur1993/source/9312156.tex:1068--1108 --
+%   the original double-limit caveat: a scaling limit of commutators is not
+%   generally the commutator of scaling limits.
+% Source: references/lattice-symmetry/DiluteTL2014/source/Dtl_pgl_ell.06.tex:636--640 --
+%   dTL generators a_i, a_i^t, b_i, b_i^t, e_j, x_j.
+% Source: references/lattice-symmetry/ZhouBatchelor1997/source/9611156.tex:388--399 --
+%   exact central charges of the dilute O(n) branches:
+%   c = 1 - 3 phi^2/(pi(pi - 2 lambda)) (branches 1,2) and
+%   c = 3/2 - 3 phi^2/(2 pi lambda) (branches 3,4).
+% Source: references/lattice-symmetry/MorinDuchesnePearce2019/source/DiluteA22Final.tex:615 --
+%   the periodic dilute Temperley-Lieb algebra and its standard modules.
+% Source: references/lattice-symmetry/DiluteA22Torus2025/source/partition.functions.arxiv.tex:602 --
+%   dilute loop transfer matrices live in the enlarged periodic dilute TL algebra.
+% Source: references/lattice-symmetry/DiluteA22Torus2025/source/partition.functions.arxiv.tex:684 --
+%   dilute standard modules carry defect numbers of both parities.
+% Source: references/text/PoilblancOneDimensionalItinerantInteractingAnyons.txt:27--39 --
+%   anyonic t-J models; central charges c=1/2 (Ising), c=7/10 or 4/5
+%   (Fibonacci); combined entanglement central charge 1+c.
+% Source: references/text/PoilblancOneDimensionalItinerantInteractingAnyons.txt:296--328 --
+%   the anyonic t-J Hamiltonian: anyon hopping plus -J projector exchange.
+% GAP: needs local source (Warnaar-Batchelor-Nienhuis, J. Phys. A 25 (1992)
+%   3077: the explicit dilute O(n)/Izergin-Korepin quantum chains; no arXiv
+%   e-print exists -- journal/TIB acquisition flagged for Tobias).
+
+\subsection{What the Dense Template Requires}
+
+The sourced dense-TL recipe takes: (i) a critical Hamiltonian
+\(H_N=\sum_j h_j\) with density built from algebra generators, normalized so
+the sound velocity is one; (ii) the ground-state energy density \(e_\infty\)
+subtracted termwise; (iii) a momentum density from the nearest-neighbour
+commutator of Hamiltonian densities; (iv) periodic boundary conditions; and
+(v) the \(c/24\) zero-mode shift.  The generators are Fourier modes of the
+subtracted density plus the current correction.  The known frontier is
+recorded in the same source: even in the dense case, the limit of commutators
+agrees with the commutator of limits only up to a modified central term, and
+parts of that statement remain conjectural.
+
+\subsection{The Dilute Ansatz}
+
+\textbf{Proposal.}  Let \(h_j\) be a self-adjoint, translation-invariant
+two-site density in the dilute algebra: a real linear combination of
+occupancy projectors, the dense exchange \(u_j=b_j^tb_j\), hopping
+\(a_j+a_j^t\), and pair creation/annihilation \(b_j+b_j^t\) (all dilute
+diagrams, hence occupied-parity-preserving by CA-69).  On the periodic
+chain --- the algebraic setting being the registered periodic dilute
+Temperley--Lieb algebra --- define
+\[
+  E_n^{(N)}=\frac{N}{2\pi v}\sum_{j=1}^{N}e^{inj2\pi/N}\,(h_j-e_\infty),
+  \qquad
+  p_j=i[h_j,h_{j+1}],
+\]
+\[
+  P_n^{(N)}=\frac{N}{2\pi}\sum_{j=1}^{N}e^{in(j+\frac12)2\pi/N}\,p_j,
+\]
+\[
+  L_n^{(N)}=\tfrac12\bigl(E_n^{(N)}+\tfrac1v P_n^{(N)}\bigr)
+  +\tfrac{c}{24}\,\delta_{n,0},
+  \qquad
+  \bar L_{-n}^{(N)}=\tfrac12\bigl(E_n^{(N)}-\tfrac1v P_n^{(N)}\bigr)
+  +\tfrac{c}{24}\,\delta_{n,0},
+\]
+where \(v\) and \(e_\infty\) are the model's sound velocity and ground-state
+energy density, and \(c\) its central charge.  This is the direct dilute
+transcription of the sourced dense formula; every ingredient except the
+algebra membership of \(h_j\) is inherited.  The candidate modes live in the
+even (parity-preserving) dilute ideal, consistently with CA-69.
+
+\subsection{Two Sourced Critical Anchors}
+
+\emph{Integrable anchor (dilute O(n)/Izergin--Korepin).}  The registered
+sources give exact branch central charges,
+\(c=1-\frac{3\phi^2}{\pi(\pi-2\lambda)}\) (branches 1, 2) and
+\(c=\frac32-\frac{3\phi^2}{2\pi\lambda}\) (branches 3, 4), and the periodic
+dilute algebra carries the loop transfer matrices.  The explicit quantum-chain
+Hamiltonians (the Hamiltonian limits of these transfer matrices, with their
+\(v\) and \(e_\infty\)) are in a journal-only source flagged above; until it
+is registered, the integrable anchor supports regime selection but not a
+shard-ready density.  A recorded warning: at least one regime of the
+\(A_2^{(2)}\) model has a \emph{non-compact} continuum limit (registered
+source VernierJacobsenSaleur2014), so regime selection is part of the input
+data, not a detail.
+
+\emph{Anyonic anchor (itinerant t-J).}  The locally sourced anyonic t-J
+models are dilute in exactly the CA-69 sense: anyon hopping plus a dense
+projector exchange term, with hard-core occupancy --- an \(h_j\) in the image
+of the dilute generators under the CA-69 evaluation map, acting on the CA-66
+Fibonacci sectors.  Their central charges are numerically identified
+(\(c=7/10\) or \(4/5\) for Fibonacci, \(1/2\) for Ising; entanglement gives
+\(1+c\) with the charge sector).  This anchor is shard-ready on the input
+side but its criticality is numerical, not Bethe-exact.
+
+\subsection{Proof Obligations}
+
+\[
+\begin{array}{ll}
+1.&e_\infty,\ v,\ c\ \text{must be sourced (integrable anchor) or estimated}\\
+  &\text{with recorded finite-size protocols (anyonic anchor);}\\
+2.&\text{the central-term/limit gap is inherited from the dense case and}\\
+  &\text{remains conjectural there; no dilute claim may be stronger;}\\
+3.&\text{periodic dilute algebra: the CA-69 evaluation map must be extended}\\
+  &\text{to the periodic setting before } L_n^{(N)}\text{ acts on word sectors;}\\
+4.&\text{gaplessness alone is insufficient: a dilute-looking density can be}\\
+  &\text{gapless with dynamical exponent } z\neq1\text{ (no local source yet;}\\
+  &\text{registered as an external caution for CA-71 acceptance tests);}\\
+5.&\text{diagnostics run through CA-64: normalized GNS residuals } \nu_N\\
+  &\text{of the dilute Witt relations on long-wavelength windows.}
+\end{array}
+\]
+
+\subsection{Validation Plan (CA-71 Tier)}
+
+Exact diagonalization in the Fibonacci \(O=\one\oplus\tau\) charge sectors
+(bases already implemented and tested for CA-65--CA-68): build the dense
+projector from the sourced unitary \(F\)-matrix, hopping across vacancies,
+and raw-cup birth/death; estimate \(e_\infty\), \(v\), and \(c\) from
+finite-size spectra; construct \(L_n^{(N)}\) and test low-energy commutator
+closure and the CA-64 residuals.  Acceptance: dilute relations hold exactly;
+sourced or estimated \((e_\infty,v,c)\) reproduce the anchor values; current
+modes do not collapse; residuals decrease on the named window.  Failure
+witnesses: current collapse, wrong central charge, residuals bounded away
+from zero, or non-conformal (\(z\neq1\)) finite-size scaling.
+
+\subsection{Boundary}
+
+No convergence theorem, no continuum Virasoro representation, and no claim
+that the ansatz closes even at the level of the dense case's conjectures.
+The integrable anchor's Hamiltonian is a registered acquisition gap.  The
+anyonic anchor's criticality is numerical input, not a theorem.  The
+extension of the CA-69 evaluation map to the periodic dilute algebra is
+future work.

@@ -1,5 +1,64 @@
 # Worklog chunk 011 - 2026-07-05
 
+## Dilute-TL Koo-Saleur block (CA-69, CA-70) - 2026-07-05
+
+### Context
+
+Tobias commissioned the chase of the dilute Temperley-Lieb Koo-Saleur target:
+the 2026-07-05 survey found no lattice-Virasoro construction for any dilute
+loop model, and the dilute algebra is the natural diagram home of the CA-65
+variable-N word algebra.
+
+### What changed
+
+- Shards CA-69 (dilute TL and the word algebra) and CA-70 (dilute KS ansatz);
+  report now 71 shards, 160 pp.
+- Sources: 8 more registered (GSJS 2010.12819 dense-KS template with verified
+  generator/e_infty/central-term anchors; GRS 1207.6334 with an ID correction
+  from my wrong 1212.1378 guess; Zhou-Batchelor cond-mat/9611156 branch
+  central charges; VJS 1404.4497 non-compact regime III warning; MDP19
+  1905.07973 with the periodic dilute TL definition at DiluteA22Final.tex:615;
+  Boileau-Morin-Duchesne-Saint-Aubin 2211.09017 strip; MDKP25 2501.19288
+  torus; ZPG hep-th/9506108 fusion).
+
+### Why these choices / findings
+
+- KEY CHECKED FINDING (two independent derivations, orchestrator + GPT-5.5):
+  dTL_L(phi) CANNOT surject onto End_Fib((1+tau)^L): dim M_{2L} = 2,9,51,323
+  vs F_{4L-1} = 2,13,89,610.  Mechanism (source-anchored at Dtl:773-776):
+  dilute diagrams preserve occupied-number parity; Fibonacci's tau tau -> tau
+  vertex violates it.  The parity-even subalgebra dimensions match M_{2L}
+  EXACTLY at L=2 (9) and L=3 (51): conjecture, rho_L is an isomorphism onto
+  the parity-preserving subalgebra at small L, with a Jones-Wenzl kernel
+  expected from L=4.  Dense-case intuition does not port.
+- Two sourced critical anchors for the ansatz: integrable dilute O(n)/IK
+  chains (exact branch central charges registered; explicit Hamiltonians are
+  in journal-only 1992 papers - TIB acquisition flagged for Tobias) and the
+  LOCAL anyonic t-J models (hopping + projector = dilute generators; c=7/10,
+  4/5 Fibonacci) acting on the already-tested CA-66 sectors.
+
+### Frictions / dead ends
+
+- 2211.09017 turned out to be the STRIP (OBC) paper by different authors than
+  guessed; the periodic algebra lives in MDP19.  The 2025 torus paper defines
+  a pdTL macro it never uses.
+- Regime selection is load-bearing: A2(2) regime III flows to a NON-COMPACT
+  CFT (VJS) - a rational-CFT target must pick its regime.
+- Motzkin/Fredkin chains: gapless dilute-flavoured chains with z != 1 - the
+  cautionary failure witness (no local source yet; external caution recorded
+  in CA-70).
+
+### Acceptance
+
+- make check-report-shards: 71 shards; make report: 160 pp, no errors;
+  suite unchanged (818 green; no new Julia this block).
+
+### Pointers
+
+- Shards CA-69, CA-70; runs: none yet (CA-71 numerics queued: ED of the
+  anyonic t-J in Fibonacci sectors, dilute KS modes, CA-64 residual
+  diagnostics, and the L=4 kernel/rank computation for the CA-69 conjecture).
+
 ## Categorical Borchers-Uhlmann pipeline block (CA-62--CA-68) - 2026-07-05
 
 ### Context

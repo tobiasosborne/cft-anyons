@@ -50,7 +50,7 @@ lab book points here, to the script and run artifact that back it.
 | `reviews/2026-05-31_qubit_nn_sdp_hierarchy/` | Orchestration record for the expanded qubit necessary-equation and SDP-hierarchy subagents feeding CA-38--CA-45. |
 | `reviews/2026-05-31_qubit_sdp_implementation/` | Orchestration record for the Julia qubit moment-SDP implementation subagents feeding CA-46--CA-52. |
 | `reviews/2026-05-31_qubit_candidate_scan/` | Orchestration record for the sourced/synthetic candidate scan subagents feeding CA-53--CA-61. |
-| `reviews/2026-07-05_bu_pipeline/` | Orchestration record for the categorical Borchers-Uhlmann pipeline block (CA-62--CA-68): two-model design competition, state-existence audit, relaxed-gate design, refinement-map investigation, and source acquisitions. |
+| `reviews/2026-07-05_bu_pipeline/` | Orchestration record for the categorical Borchers-Uhlmann pipeline block (CA-62--CA-70): two-model design competition, state-existence audit, relaxed-gate design, refinement-map investigation, dilute-TL Koo-Saleur chase, and source acquisitions. |
 
 ## Report shards
 

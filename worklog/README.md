@@ -22,7 +22,7 @@ gotcha) goes to agent memory under
 
 | Chunk | Span | Topics |
 |---|---|---|
-| `011_2026-07-05_qubit_relaxed_gates.md` | 2026-07-05 | Categorical Borchers-Uhlmann pipeline block CA-62--CA-68: vision, state-existence theorem, relaxed gates + re-scan, anyonic word algebra, refinement maps |
+| `011_2026-07-05_qubit_relaxed_gates.md` | 2026-07-05 | Categorical Borchers-Uhlmann pipeline block CA-62--CA-70: vision, state-existence theorem, relaxed gates + re-scan, anyonic word algebra, refinement maps, dilute-TL Koo-Saleur |
 | `010_2026-05-31_qubit_candidate_scan.md` | 2026-05-31 | Qubit candidate Hamiltonian families, algebraic scan, and fixed-SDP scan contract |
 | `009_2026-05-31_qubit_nn_symmetry.md` | 2026-05-31 | Qubit nearest-neighbour lattice-symmetry diagnostics and Pauli current obstruction |
 | `008_2026-05-30_gaussian_stress_energy_candidates.md` | 2026-05-30 | Gaussian stress-energy candidate shards and follow-up checks |

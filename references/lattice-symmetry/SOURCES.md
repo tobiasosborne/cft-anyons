@@ -962,3 +962,703 @@ extraction or source file.
   Pearce"; the true authors, confirmed from the arXiv abstract page and the
   paper itself, are Uwe Grimm and Paul P. Martin. See the metadata-correction
   note in the `SRC-GRIMM-MARTIN-2003` entry above.
+
+### SRC-GRANS-SAMUELSSON-ETAL-2020 -- Grans-Samuelsson, Jacobsen, and Saleur, Virasoro action in quantum spin chains I
+
+- **Authors:** Linnea Grans-Samuelsson, Jesper Lykke Jacobsen, Hubert Saleur
+- **Title:** The action of the Virasoro algebra in quantum spin chains. I. The
+  non-rational case
+- **Journal:** J. High Energy Phys. **02** (2021) 130
+- **arXiv:** `2010.12819` (`v1` submitted 2020-10-24; `v2` last revised
+  2021-02-22; hep-th / cond-mat.stat-mech / math-ph)
+- **DOI:** `10.1007/JHEP02(2021)130`
+- **Local arXiv source package:**
+  `references/lattice-symmetry/GransSamuelssonEtAl2020/GransSamuelssonEtAl2020_arxiv_eprint.tar.gz`
+- **Source-package SHA256:**
+  `46b49c2d488bb0f487eda5fff9d20dc09d652d6d40acf61914a1bd72374fa45e`
+- **Local arXiv PDF:**
+  `references/lattice-symmetry/GransSamuelssonEtAl2020/GransSamuelssonEtAl2020_arxiv.pdf`
+  (61 PDF pages; 2066383 bytes)
+- **PDF SHA256:**
+  `ddc0493d60d48e7715c32d73c23542052966a2f5f3b4fc07094845ecb059fe63`
+- **Extracted source TeX:**
+  `references/lattice-symmetry/GransSamuelssonEtAl2020/source/Linnea11.5.tex`
+  (5624 lines; SHA256
+  `64efb94033d283801c10b2d952e640571a563215f43055140f96944221513ac3`).
+  Note: the e-print also contains a `BOONDOX-cal.sty` style file and ~30 PNG
+  figure files; only the main `.tex` was copied into `source/` since the
+  figures are not needed for line anchors.
+- **PDF text extraction:**
+  `references/lattice-symmetry/GransSamuelssonEtAl2020/GransSamuelssonEtAl2020_pdftotext.txt`
+  (4110 lines; SHA256
+  `77e2b21122c27fbf97f5edf1f3381a2882a3bf985a5cbc4b84699ef5a2f03914`)
+- **Retrieval:** fetched from arXiv on 2026-07-05 (unversioned e-print/PDF
+  endpoints resolve to the latest posted version, `v2`). Legal source URLs:
+  `https://arxiv.org/abs/2010.12819`,
+  `https://arxiv.org/e-print/2010.12819`, and
+  `https://arxiv.org/pdf/2010.12819`.
+- **Extraction command:**
+  ```bash
+  mkdir -p references/lattice-symmetry/GransSamuelssonEtAl2020/source
+  curl -L https://arxiv.org/e-print/2010.12819 \
+    -o references/lattice-symmetry/GransSamuelssonEtAl2020/GransSamuelssonEtAl2020_arxiv_eprint.tar.gz
+  curl -L https://arxiv.org/pdf/2010.12819 \
+    -o references/lattice-symmetry/GransSamuelssonEtAl2020/GransSamuelssonEtAl2020_arxiv.pdf
+  tar -xzf references/lattice-symmetry/GransSamuelssonEtAl2020/GransSamuelssonEtAl2020_arxiv_eprint.tar.gz \
+    -C references/lattice-symmetry/GransSamuelssonEtAl2020/source Linnea11.5.tex
+  pdftotext -layout -enc UTF-8 \
+    references/lattice-symmetry/GransSamuelssonEtAl2020/GransSamuelssonEtAl2020_arxiv.pdf \
+    references/lattice-symmetry/GransSamuelssonEtAl2020/GransSamuelssonEtAl2020_pdftotext.txt
+  ```
+- **Verified anchor ranges:**
+  - `source/Linnea11.5.tex:791`--`:820` (subsection "Discrete Virasoro
+    algebra", `\label{Discrete_Vir_Section}`) -- **the Koo-Saleur generator
+    definition used in this paper**: Hamiltonian density
+    ${\mathcal h}_j=-\frac{\gamma}{\pi\sin\gamma}e_j$ (line 791) and lattice
+    momentum density ${\mathcal p}_j = i[{\mathcal h}_j,\mathcal h_{j-1}] =
+    -i(\gamma/\pi\sin\gamma)^2[e_{j-1},e_j]$ (line 792-793, momentum operator
+    $\mathcal P_N$ at eq. `P_phi`, line 794-796), combined into
+    ${\mathcal T}_j=\frac12(\mathcal h_j+\mathcal p_j)$,
+    $\bar{\mathcal T}_j=\frac12(\mathcal h_j-\mathcal p_j)$ (lines 799-806),
+    Fourier-transformed into (eq. `generators`, lines 811-820):
+    $\KSgen_n[N] = \frac{N}{4\pi}\big[-\frac{\gamma}{\pi\sin\gamma}
+    \sum_{j=1}^N e^{inj2\pi/N}\big(e_j-e_\infty+\frac{i\gamma}{\pi\sin\gamma}
+    [e_j,e_{j+1}]\big)\big] + \frac{c}{24}\delta_{n,0}$ (line 815) and the
+    barred generator $\bar{\KSgen}_n[N]$ (line 817), "first derived by other
+    means in [KooSaleur]" (line 822); central charge $c=1-6/(x(x+1))$ at eq.
+    `c_value` (line 826). A second, alternative discretization built from the
+    "ordinary XXZ" density $f_j$ (dropping the Temperley-Lieb telescoping
+    terms) is given later at `source/Linnea11.5.tex:4964`--`:4972` (eq.
+    `generators_hi`), and a symmetrized/shifted-phase variant at
+    `source/Linnea11.5.tex:3206`--`:3208`.
+  - `source/Linnea11.5.tex:2216` -- explicit statement of **the
+    commutator-of-limits vs. limit-of-commutators gap**: "the issue of limits
+    and commutators was raised already in [KooSaleur], where it was shown
+    that the limit of commutators must sometimes differ from the commutators
+    of limits," pointing forward to `\S\ref{Anomalies}`.
+  - `source/Linnea11.5.tex:2487`--`:2528` -- start of
+    `\section{Anomalies, and the convergence of the Koo-Saleur generators}`
+    (line 2487) and its subsection "A closer look at limits and commutators"
+    (`\label{limits_section}`, line 2528), defining scaling-weak convergence
+    (lines 2509-2519) as the precise sense in which
+    $\KSgen_n[N]\mapsto L_n$.
+  - `source/Linnea11.5.tex:3198` -- **the central-term conclusion**: "We
+    conclude that the limit of commutators is the same as the commutator of
+    limits up to a modification of the central term," qualified as holding
+    for the commutator $[\mathcal L_2,\mathcal L_{-2}]$ itself, not the bare
+    product $\mathcal L_2\mathcal L_{-2}$.
+  - `source/Linnea11.5.tex:3258` -- conclusion-section restatement: the exact
+    nature of the limit/commutator exchange is open in general; conjectured
+    that the limit of Koo-Saleur commutators is correct "only up to the
+    anomalous central charge term," evidenced but not proved, encompassed in
+    conjectures `ndiff0_conj`, `cstar_conjecture`, `chiral-antichiral_conj`
+    and result `separate_conj`.
+  - `source/Linnea11.5.tex:587`--`:602` (subsection "Physical systems and the
+    Temperley-Lieb Hamiltonian") -- **sound-velocity and ground-state
+    energy-density inputs**: the Hamiltonian
+    $\mathcal H_N=-\frac{\gamma}{\pi\sin\gamma}\sum_{j=1}^N(e_j-e_\infty)$
+    (eq. `H_phi`, line 590) whose overall prefactor "is chosen to ensure
+    relativistic invariance at low energy," i.e. to fix the sound velocity
+    to 1 (line 593, forward reference to the bosonization section); the
+    ground-state energy density $e_\infty=\sin\gamma\, I_0$ (eq. `e_inf`,
+    lines 596-598) with
+    $I_0=\int_{-\infty}^{\infty}\frac{\sinh(\pi-\gamma)t}{\sinh(\pi t)
+    \cosh(\gamma t)}\,\mathrm dt$ (eq. `I0-def`, lines 599-602). Line 672
+    additionally notes that the XXZ and loop representations "have the same
+    ground-state energy and the same `velocity of sound' determining the
+    correct multiplicative normalization of the Hamiltonian."
+- **Why acquired:** the direct dense-Temperley-Lieb Koo-Saleur technical
+  template (form-factor numerics for the Koo-Saleur generators, and the
+  first systematic treatment of the commutator-of-limits vs.
+  limit-of-commutators / central-term gap) to be adapted to the dilute TL
+  algebra for the CA-69+ block.
+
+### SRC-GAINUTDINOV-READ-SALEUR-2013 -- Gainutdinov, Read, and Saleur, associative algebraic approach to bulk LCFT
+
+- **Authors:** A. M. Gainutdinov, N. Read, H. Saleur
+- **Title:** Associative algebraic approach to logarithmic CFT in the bulk:
+  the continuum limit of the $gl(1|1)$ periodic spin chain, Howe duality and
+  the interchiral algebra
+- **Journal:** Commun. Math. Phys. **341** (2016) 35--103
+- **arXiv:** `1207.6334` (`v1` submitted 2012-07-26; `v2` last revised
+  2014-09-30; hep-th / cond-mat.stat-mech / math-ph / math.QA)
+- **DOI:** `10.1007/s00220-015-2483-9`
+- **Local arXiv source package:**
+  `references/lattice-symmetry/GainutdinovReadSaleur2013/GainutdinovReadSaleur2013_arxiv_eprint.tar.gz`
+- **Source-package SHA256:**
+  `5de76951bc2d8d3ea3bc61d219f611cf5c8d51eeb1035f7248120870d8c0eda1`
+- **Local arXiv PDF:**
+  `references/lattice-symmetry/GainutdinovReadSaleur2013/GainutdinovReadSaleur2013_arxiv.pdf`
+  (69 PDF pages; 1126768 bytes)
+- **PDF SHA256:**
+  `4dc6e53d14e15143911dde3a7776aa50936121773f0aa18933d70f983ee1bc1a`
+- **Extracted source TeX:**
+  `references/lattice-symmetry/GainutdinovReadSaleur2013/source/gl11-interchalg-v5-rev3.tex`
+  (4198 lines; SHA256
+  `590bfd7707679c7595a04967148f7c9f1c79aad2e452bd8c0e699105a1174b6f`).
+  Note: the e-print also contains ~9 `.eps`/`.eps_tex` figure files; only the
+  main `.tex` was copied into `source/` since the figures are not needed for
+  line anchors.
+- **PDF text extraction:**
+  `references/lattice-symmetry/GainutdinovReadSaleur2013/GainutdinovReadSaleur2013_pdftotext.txt`
+  (3895 lines; SHA256
+  `7487277244aaabdf21ed72ade75629727ef96cab41559e6f8ddad7d03a9f8b6f`)
+- **Retrieval:** fetched from arXiv on 2026-07-05 (unversioned e-print/PDF
+  endpoints resolve to the latest posted version, `v2`). Legal source URLs:
+  `https://arxiv.org/abs/1207.6334`,
+  `https://arxiv.org/e-print/1207.6334`, and
+  `https://arxiv.org/pdf/1207.6334`.
+- **Extraction command:**
+  ```bash
+  mkdir -p references/lattice-symmetry/GainutdinovReadSaleur2013/source
+  curl -L https://arxiv.org/e-print/1207.6334 \
+    -o references/lattice-symmetry/GainutdinovReadSaleur2013/GainutdinovReadSaleur2013_arxiv_eprint.tar.gz
+  curl -L https://arxiv.org/pdf/1207.6334 \
+    -o references/lattice-symmetry/GainutdinovReadSaleur2013/GainutdinovReadSaleur2013_arxiv.pdf
+  tar -xzf references/lattice-symmetry/GainutdinovReadSaleur2013/GainutdinovReadSaleur2013_arxiv_eprint.tar.gz \
+    -C references/lattice-symmetry/GainutdinovReadSaleur2013/source gl11-interchalg-v5-rev3.tex
+  pdftotext -layout -enc UTF-8 \
+    references/lattice-symmetry/GainutdinovReadSaleur2013/GainutdinovReadSaleur2013_arxiv.pdf \
+    references/lattice-symmetry/GainutdinovReadSaleur2013/GainutdinovReadSaleur2013_pdftotext.txt
+  ```
+- **Metadata correction:** this entry was requested under the arXiv id
+  `1212.1378`, attributed to "Gainutdinov, Read, Saleur," described as "the
+  associativity/continuum-limit-of-TL paper." Verified against the arXiv
+  abstract page, `1212.1378` is in fact a *different* paper: A. M.
+  Gainutdinov, H. Saleur, I. Yu. Tipunin, "Lattice W-algebras and logarithmic
+  CFTs" (no Read as author; about the $U_q sl(2)$ XXZ chain / W-algebra
+  centralizer construction, not the associativity/gl(1|1) framework). The
+  paper actually matching the requested author list and "associativity"
+  description is `1207.6334` (this entry), whose abstract explicitly says it
+  "develops the principles of an associative algebraic approach to bulk
+  logarithmic conformal field theories," treats the closed $gl(1|1)$ chain
+  and its Jones-Temperley-Lieb algebra $JTL_N$, and relies on two companion
+  papers -- "Continuum limit and symmetries of the periodic $gl(1|1)$ spin
+  chain" and "Bimodule structure in the periodic $gl(1|1)$ spin chain," both
+  Nucl. Phys. B **871** (2013) -- which is presumably the source of the
+  originally-requested "2013" and "1212.13xx"-adjacent numbering. `1212.1378`
+  was **not** fetched; `1207.6334` was fetched in its place under the
+  originally-requested directory name `GainutdinovReadSaleur2013` (kept
+  as-is per the append-only convention, even though this preprint's own
+  `v1`/publication years are 2012/2016).
+- **Why acquired:** algebraic continuum-limit framework for (Jones-)
+  Temperley-Lieb spin chains -- dense-case prior art for the associativity
+  structure (interchiral algebra, Howe duality) expected to generalize to
+  the dilute TL / anyonic-chain setting targeted by the pipeline.
+
+## Notes (2026-07-05 addendum, third batch)
+
+- The two entries directly above (`GransSamuelssonEtAl2020`,
+  `GainutdinovReadSaleur2013`) were acquired in a third batch on 2026-07-05,
+  targeting the Koo-Saleur generator / continuum-limit-of-commutators
+  technical template (`GransSamuelssonEtAl2020`) to be adapted to the dilute
+  Temperley-Lieb algebra for the CA-69+ block, and the associative-algebraic
+  continuum-limit framework for (Jones-)Temperley-Lieb chains
+  (`GainutdinovReadSaleur2013`).
+- The requested arXiv id `1212.1378` was not the paper described in the
+  acquisition request; see the metadata-correction note in the
+  `SRC-GAINUTDINOV-READ-SALEUR-2013` entry above for the substitution
+  (`1207.6334` fetched instead) and rationale.
+
+### SRC-ZHOU-BATCHELOR-1997 -- Zhou and Batchelor, critical behaviour of dilute O(n)/Izergin-Korepin/dilute A_L face models
+
+- **Authors:** Y.-K. Zhou and M. T. Batchelor
+- **Title:** Critical behaviour of the dilute O($n$), Izergin-Korepin and
+  dilute $A_L$ face models: Bulk properties
+- **Journal:** Nucl. Phys. B **485** (1997) 646--664
+- **arXiv:** `cond-mat/9611156` (single version; submitted 1996-11-20;
+  cond-mat.stat-mech)
+- **DOI:** `10.1016/S0550-3213(96)00654-2`
+- **Local arXiv source package:**
+  `references/lattice-symmetry/ZhouBatchelor1997/ZhouBatchelor1997_arxiv_eprint.tar.gz`
+  (this e-print endpoint returns a single gzip-compressed `.tex` file, not a
+  tar archive, despite the `.tar.gz` filename convention kept here for
+  uniformity; original internal filename `9611156.tex`)
+- **Source-package SHA256:**
+  `d4549af9ff780af66152a0f974451a761e27e41f670aa9342adf265734883d6a`
+- **Local arXiv PDF:**
+  `references/lattice-symmetry/ZhouBatchelor1997/ZhouBatchelor1997_arxiv.pdf`
+  (23 PDF pages; 184434 bytes)
+- **PDF SHA256:**
+  `f6924f926db1b4b3c4467e19351eef59f5122c1877e898e1e12682bdd4c8efef`
+- **Extracted source TeX:**
+  `references/lattice-symmetry/ZhouBatchelor1997/source/9611156.tex`
+  (1345 lines; SHA256
+  `c14de0d2c807df7b373b8043b2f266ee26362a55216a969522d2ff01fe039927`)
+- **PDF text extraction:**
+  `references/lattice-symmetry/ZhouBatchelor1997/ZhouBatchelor1997_pdftotext.txt`
+  (1389 lines; SHA256
+  `8ee3d564e69407d119756306e3c82d750c49cd04c80f5addc3e5b4e532abc651`)
+- **Retrieval:** fetched from arXiv on 2026-07-05. Legal source URLs:
+  `https://arxiv.org/abs/cond-mat/9611156`,
+  `https://arxiv.org/e-print/cond-mat/9611156`, and
+  `https://arxiv.org/pdf/cond-mat/9611156`.
+- **Extraction command:**
+  ```bash
+  mkdir -p references/lattice-symmetry/ZhouBatchelor1997/source
+  curl -L https://arxiv.org/e-print/cond-mat/9611156 \
+    -o references/lattice-symmetry/ZhouBatchelor1997/ZhouBatchelor1997_arxiv_eprint.tar.gz
+  curl -L https://arxiv.org/pdf/cond-mat/9611156 \
+    -o references/lattice-symmetry/ZhouBatchelor1997/ZhouBatchelor1997_arxiv.pdf
+  gunzip -c references/lattice-symmetry/ZhouBatchelor1997/ZhouBatchelor1997_arxiv_eprint.tar.gz \
+    > references/lattice-symmetry/ZhouBatchelor1997/source/9611156.tex
+  pdftotext -layout -enc UTF-8 \
+    references/lattice-symmetry/ZhouBatchelor1997/ZhouBatchelor1997_arxiv.pdf \
+    references/lattice-symmetry/ZhouBatchelor1997/ZhouBatchelor1997_pdftotext.txt
+  ```
+- **Verified anchor ranges:**
+  - `source/9611156.tex:81`--`:92` -- abstract: nonlinear-integral-equation
+    finite-size corrections to the transfer-matrix spectra of the critical
+    dilute O($n$) model, giving the operator content of the 19-vertex
+    Izergin-Korepin model and the conformal weights of the dilute $A_L$ face
+    models in all four regimes.
+  - `source/9611156.tex:388`--`:400` -- central-charge subsection: the known
+    central charges $c=1-3\phi^2/[\pi(\pi-2\lambda)]$ (branches 1 & 2) and
+    $c=3/2-3\phi^2/(2\pi\lambda)$ (branches 3 & 4), citing Warnaar-Batchelor-
+    Nienhuis (`WBN:92`) as the source of the branch-3/4 result.
+  - `source/9611156.tex:785`--`:797` -- **regime-1/2 CFT identification**:
+    `ln T(v) = -N f_\infty(v) - (\pi \sin(2i\rho v)/6N)(c-24\Delta)` and the
+    resulting closed-form central charge (eq. `c12`) and conformal weights
+    $\Delta$ (eq. `res12`) for the dilute O($n$) model and dilute $A_L$ face
+    model.
+  - `source/9611156.tex:1044`--`:1055` -- **regime-3/4 CFT identification**:
+    the analogous central charge (eq. `c34`, $c=3/2-3(\pi-4\lambda)^2/(2\pi
+    \lambda)$) and conformal weights (eq. `res34`) including the
+    $\Delta_{\rm Ising}\in\{0,\tfrac12\}$ Ising sector, for all four regimes
+    of the dilute family.
+- **Why acquired:** central-charge and conformal-weight formulas for all four
+  regimes of the dilute O($n$)/Izergin-Korepin/dilute $A_L$ face-model family
+  -- the CFT-identification ground truth needed to anchor the continuum limit
+  of the dilute Koo-Saleur block, and the source that the central charges of
+  the dilute A-D-E models (Warnaar-Nienhuis-Seaton, Warnaar-Batchelor-Nienhuis)
+  are built on top of.
+
+### SRC-VERNIER-JACOBSEN-SALEUR-2014 -- Vernier, Jacobsen, and Saleur, non-compact CFT and the Izergin-Korepin model in regime III
+
+- **Authors:** Eric Vernier, Jesper Lykke Jacobsen, and Hubert Saleur
+- **Title:** Non compact conformal field theory and the $a_2^{(2)}$
+  (Izergin-Korepin) model in regime III
+- **Journal:** J. Phys. A: Math. Theor. **47** (2014) 285202
+- **arXiv:** `1404.4497` (`v1` submitted 2014-04-17, this registration is
+  `v2`; math-ph / cond-mat.stat-mech)
+- **DOI:** `10.1088/1751-8113/47/28/285202`
+- **Local arXiv source package:**
+  `references/lattice-symmetry/VernierJacobsenSaleur2014/VernierJacobsenSaleur2014_arxiv_eprint.tar.gz`
+- **Source-package SHA256:**
+  `9ea1f9280bca54af5385e44a8b01236e4d01c5aff39bcca29c9fce4c2f5baec0`
+- **Local arXiv PDF:**
+  `references/lattice-symmetry/VernierJacobsenSaleur2014/VernierJacobsenSaleur2014_arxiv.pdf`
+  (57 PDF pages; 3385438 bytes)
+- **PDF SHA256:**
+  `c1f757ad0afa1dfce5b76a474076a0ecb46abf5189fe503ab2b212dc22662da6`
+- **Extracted source TeX:**
+  `references/lattice-symmetry/VernierJacobsenSaleur2014/source/RegimeIII-v3.tex`
+  (2712 lines; SHA256
+  `f4fe1334bd2ad4a17dba9dc5d06fb783e68fba62443eb756ae6a4549e1557aac`).
+  Note: the e-print also contains ~28 `.pdf` figure files; only the main
+  `.tex` was copied into `source/` since the figures are not needed for line
+  anchors.
+- **PDF text extraction:**
+  `references/lattice-symmetry/VernierJacobsenSaleur2014/VernierJacobsenSaleur2014_pdftotext.txt`
+  (4163 lines; SHA256
+  `5373c7f13093338559f705cd721a30cae3ff193be6d734dba99e97c36f68fb50`)
+- **Retrieval:** fetched from arXiv on 2026-07-05 (unversioned e-print/PDF
+  endpoints resolve to the latest posted version, `v2`). Legal source URLs:
+  `https://arxiv.org/abs/1404.4497`,
+  `https://arxiv.org/e-print/1404.4497`, and
+  `https://arxiv.org/pdf/1404.4497`.
+- **Extraction command:**
+  ```bash
+  mkdir -p references/lattice-symmetry/VernierJacobsenSaleur2014/source
+  curl -L https://arxiv.org/e-print/1404.4497 \
+    -o references/lattice-symmetry/VernierJacobsenSaleur2014/VernierJacobsenSaleur2014_arxiv_eprint.tar.gz
+  curl -L https://arxiv.org/pdf/1404.4497 \
+    -o references/lattice-symmetry/VernierJacobsenSaleur2014/VernierJacobsenSaleur2014_arxiv.pdf
+  tar -xzf references/lattice-symmetry/VernierJacobsenSaleur2014/VernierJacobsenSaleur2014_arxiv_eprint.tar.gz \
+    -C references/lattice-symmetry/VernierJacobsenSaleur2014/source RegimeIII-v3.tex
+  pdftotext -layout -enc UTF-8 \
+    references/lattice-symmetry/VernierJacobsenSaleur2014/VernierJacobsenSaleur2014_arxiv.pdf \
+    references/lattice-symmetry/VernierJacobsenSaleur2014/VernierJacobsenSaleur2014_pdftotext.txt
+  ```
+- **Verified anchor ranges:**
+  - `source/RegimeIII-v3.tex:144`--`:148` -- abstract: regime III of the
+    $a_2^{(2)}$ Izergin-Korepin 19-vertex model has a continuum limit that is
+    a **non-compact CFT** (the Witten Euclidian black-hole CFT), giving a
+    continuous spectrum of critical exponents and strong scaling corrections;
+    Bethe-ansatz numerical evidence including discrete states.
+  - `source/RegimeIII-v3.tex:649`--`:650` -- Coulomb-gas argument: the regime
+    III continuum limit is a compact plus a **non-compact** boson, adding
+    $c=1$ to the central charge from the non-compact degree of freedom.
+  - `source/RegimeIII-v3.tex:752`--`:757` -- start of "The black hole sigma
+    model and the continuous spectrum": identification with the Witten black
+    hole CFT / coset $SL(2,\mathbb R)_k/U(1)$.
+  - `source/RegimeIII-v3.tex:802`--`:838` -- central charge of the black-hole
+    CFT computed in the flat-region limit, with quantum renormalization
+    $k\to k-2$ for the non-compact part.
+  - `source/RegimeIII-v3.tex:879`--`:925` -- discrete-states quantum numbers
+    of the black-hole CFT and their comparison with the lattice spectrum.
+- **Why acquired:** regime-selection warning for the dilute Koo-Saleur target
+  -- regime III of the (dilute) Izergin-Korepin family is governed by a
+  **non-compact** CFT with a continuous spectrum, not a rational/logarithmic
+  minimal model, so any Koo-Saleur-style lattice Virasoro construction on this
+  family must avoid regime III or explicitly address the non-compact target.
+
+### SRC-MORIN-DUCHESNE-PEARCE-2019 -- Morin-Duchesne and Pearce, fusion hierarchies, T-systems and Y-systems for the dilute A2(2) loop models
+
+- **Authors:** Alexi Morin-Duchesne and Paul A. Pearce
+- **Title:** Fusion hierarchies, $T$-systems and $Y$-systems for the dilute
+  $A_2^{(2)}$ loop models
+- **Journal:** J. Stat. Mech. (2019) 094007
+- **arXiv:** `1905.07973` (single version; submitted 2019-05-20; math-ph /
+  cond-mat.stat-mech / hep-th)
+- **DOI:** `10.1088/1742-5468/ab3412`
+- **Local arXiv source package:**
+  `references/lattice-symmetry/MorinDuchesnePearce2019/MorinDuchesnePearce2019_arxiv_eprint.tar.gz`
+- **Source-package SHA256:**
+  `8eb3b037b4d5c58d32572b7c4ebbec007e97f02182e9e9e49014a8a6d8cca578`
+- **Local arXiv PDF:**
+  `references/lattice-symmetry/MorinDuchesnePearce2019/MorinDuchesnePearce2019_arxiv.pdf`
+  (34 PDF pages; 493719 bytes)
+- **PDF SHA256:**
+  `ee0bdde3b635301da29728e64f29da5d0d920fc2385cc3ff1c6e6b6d0038fd2a`
+- **Extracted source TeX:**
+  `references/lattice-symmetry/MorinDuchesnePearce2019/source/DiluteA22Final.tex`
+  (3255 lines; SHA256
+  `38787028ef03df963b460a376416ec2652d118b3f3c77caac616107f2ca0f150`).
+  Note: the e-print also contains `cleveref.sty`, a compile dependency not
+  needed for line anchors.
+- **PDF text extraction:**
+  `references/lattice-symmetry/MorinDuchesnePearce2019/MorinDuchesnePearce2019_pdftotext.txt`
+  (2357 lines; SHA256
+  `c90d234153c2fc65f2609f591123f837657464f088fc38007a90468629cc86ee`)
+- **Retrieval:** fetched from arXiv on 2026-07-05. Legal source URLs:
+  `https://arxiv.org/abs/1905.07973`,
+  `https://arxiv.org/e-print/1905.07973`, and
+  `https://arxiv.org/pdf/1905.07973`.
+- **Extraction command:**
+  ```bash
+  mkdir -p references/lattice-symmetry/MorinDuchesnePearce2019/source
+  curl -L https://arxiv.org/e-print/1905.07973 \
+    -o references/lattice-symmetry/MorinDuchesnePearce2019/MorinDuchesnePearce2019_arxiv_eprint.tar.gz
+  curl -L https://arxiv.org/pdf/1905.07973 \
+    -o references/lattice-symmetry/MorinDuchesnePearce2019/MorinDuchesnePearce2019_arxiv.pdf
+  tar -xzf references/lattice-symmetry/MorinDuchesnePearce2019/MorinDuchesnePearce2019_arxiv_eprint.tar.gz \
+    -C references/lattice-symmetry/MorinDuchesnePearce2019/source DiluteA22Final.tex
+  pdftotext -layout -enc UTF-8 \
+    references/lattice-symmetry/MorinDuchesnePearce2019/MorinDuchesnePearce2019_arxiv.pdf \
+    references/lattice-symmetry/MorinDuchesnePearce2019/MorinDuchesnePearce2019_pdftotext.txt
+  ```
+- **Verified anchor ranges:**
+  - `source/DiluteA22Final.tex:373`--`:383` -- abstract: fusion hierarchy,
+    $T$-system and $Y$-system for the generic dilute $A_2^{(2)}$ loop models;
+    closure relations at roots of unity $x=e^{i\lambda}$; known central
+    charges $c=1-6(p-p')^2/(pp')$, with critical dense polymers
+    $\mathcal{DLM}(1,2)$ ($c=-2$) and critical site percolation
+    $\mathcal{DLM}(2,3)$ ($c=0$) as prototypical roots-of-unity examples.
+  - `source/DiluteA22Final.tex:615`--`:832` -- **section "The periodic dilute
+    Temperley-Lieb algebra"**, subsection "Definition of the algebra"
+    (`:619`--`:832`): defines $\mathsf{pdTL}_N(\alpha,\beta)$ diagrammatically
+    as the unital, associative algebra spanned by connectivity diagrams on a
+    periodic (cylinder-slice) rectangle with $N$ top and $N$ bottom nodes,
+    vacant-site bookkeeping, and the concatenation product with
+    $\alpha^{n_\alpha}\beta^{n_\beta}$ loop-fugacity prefactors; this is the
+    explicit periodic dilute TL algebra definition (citing earlier
+    appearances in Grimm 2012 and Morin-Duchesne-Pierre-Rasmussen 2018).
+  - `source/DiluteA22Final.tex:833`--`:1067` -- subsection "Standard modules":
+    the link-state representations of $\mathsf{pdTL}_N(\alpha,\beta)$ used
+    to build the transfer-matrix spectrum.
+  - `source/DiluteA22Final.tex:3648`--`:3675` (PDF text extraction anchor;
+    corresponds to the paper's main $T$-/$Y$-system theorems) -- closure
+    relations of the $T$- and $Y$-systems at roots of unity, the paper's
+    stated main result.
+- **Why acquired:** dilute $A_2^{(2)}$ fusion hierarchy and central-charge
+  formulas, and -- directly answering the request to locate a periodic dilute
+  TL algebra definition -- this paper (not the 2025 torus paper, which only
+  cites it) is where $\mathsf{pdTL}_N(\alpha,\beta)$ is explicitly defined via
+  connectivity diagrams on a periodic strip; see `source/DiluteA22Final.tex:615`
+  onward.
+
+### SRC-BOILEAU-MORIN-DUCHESNE-SAINT-AUBIN-2022 -- Boileau, Morin-Duchesne, and Saint-Aubin, dilute A2(2) loop models on a strip
+
+- **Authors:** Florence Boileau, Alexi Morin-Duchesne, and Yvan Saint-Aubin
+- **Title:** Fusion hierarchies, $T$-systems and $Y$-systems for the dilute
+  $A_2^{(2)}$ loop models on a strip
+- **Journal:** J. Stat. Mech. (2023) 033102
+- **arXiv:** `2211.09017` (single version; submitted 2022-11-16; math-ph /
+  cond-mat.stat-mech / hep-th)
+- **DOI:** `10.1088/1742-5468/acb7d7`
+- **Metadata correction:** the acquisition request tentatively attributed
+  this id to "Morin-Duchesne/Pearce area" with directory name
+  `DiluteA22Strip2022`. Verified against the arXiv abstract page, the true
+  authors are **Florence Boileau, Alexi Morin-Duchesne, and Yvan
+  Saint-Aubin** (not Pearce). The directory name `DiluteA22Strip2022` is kept
+  as originally requested (append-only convention). The paper is also **not**
+  a periodic/PBC construction: it explicitly treats the **strip** (open
+  boundary conditions, four boundary-condition combinations SS/CC/SC/CS) and
+  states that it "complements" the periodic study of `MorinDuchesnePearce2019`
+  (`AMDPP19`/`MDP19` in its own citations) -- so it does not itself supply the
+  periodic dilute TL algebra structure that the request's rationale
+  anticipated; that structure is in `MorinDuchesnePearce2019` (see above).
+- **Local arXiv source package:**
+  `references/lattice-symmetry/DiluteA22Strip2022/DiluteA22Strip2022_arxiv_eprint.tar.gz`
+- **Source-package SHA256:**
+  `7af0c60074f8c4ce4f0c607e60b0b88eac8c8842755d65adc8bdeda9d744c433`
+- **Local arXiv PDF:**
+  `references/lattice-symmetry/DiluteA22Strip2022/DiluteA22Strip2022_arxiv.pdf`
+  (67 PDF pages; 876719 bytes)
+- **PDF SHA256:**
+  `4a4be06586451c8f19ddf15c05807973f65cd31372ebda85fcbd992c435239f2`
+- **Extracted source TeX:**
+  `references/lattice-symmetry/DiluteA22Strip2022/source/stripA22.tex`
+  (5128 lines; SHA256
+  `d622a558b599e078afe050f7fa1454cc67228d3addf90d3fd38286b95c0702c6`).
+  Note: the e-print also contains 9 `.eps` figure files; only the main
+  `.tex` was copied into `source/` since the figures are not needed for line
+  anchors.
+- **PDF text extraction:**
+  `references/lattice-symmetry/DiluteA22Strip2022/DiluteA22Strip2022_pdftotext.txt`
+  (4650 lines; SHA256
+  `b4c4c4573f7fa287bb0b6b589fa267f4b961387f8c10dd54649edf49fde8456f`)
+- **Retrieval:** fetched from arXiv on 2026-07-05. Legal source URLs:
+  `https://arxiv.org/abs/2211.09017`,
+  `https://arxiv.org/e-print/2211.09017`, and
+  `https://arxiv.org/pdf/2211.09017`.
+- **Extraction command:**
+  ```bash
+  mkdir -p references/lattice-symmetry/DiluteA22Strip2022/source
+  curl -L https://arxiv.org/e-print/2211.09017 \
+    -o references/lattice-symmetry/DiluteA22Strip2022/DiluteA22Strip2022_arxiv_eprint.tar.gz
+  curl -L https://arxiv.org/pdf/2211.09017 \
+    -o references/lattice-symmetry/DiluteA22Strip2022/DiluteA22Strip2022_arxiv.pdf
+  tar -xzf references/lattice-symmetry/DiluteA22Strip2022/DiluteA22Strip2022_arxiv_eprint.tar.gz \
+    -C references/lattice-symmetry/DiluteA22Strip2022/source stripA22.tex
+  pdftotext -layout -enc UTF-8 \
+    references/lattice-symmetry/DiluteA22Strip2022/DiluteA22Strip2022_arxiv.pdf \
+    references/lattice-symmetry/DiluteA22Strip2022/DiluteA22Strip2022_pdftotext.txt
+  ```
+- **Verified anchor ranges:**
+  - `source/stripA22.tex:297`--`:328` -- title/authors/abstract: dilute
+    $A_2^{(2)}$ loop models on a strip of width $N$, four boundary-condition
+    models (SS/CC/SC/CS), fusion hierarchy and $T$-/$Y$-systems, closure at
+    roots of unity, bulk/boundary free energies; explicitly complements the
+    periodic study of Morin-Duchesne and Pearce (2019).
+  - `source/stripA22.tex:362`--`:658` -- **section "The dilute
+    Temperley-Lieb algebra"**, subsection "Definition of the algebra"
+    (`:369`--`:515`): the (open, strip) dilute TL algebra
+    $\mathsf{dTL}_N(\beta)$ used for this model -- note this is the
+    open/strip incarnation, not the periodic one.
+  - `source/stripA22.tex:2917`--`:2969` -- subsection "$T$-system and
+    $Y$-system": the strip $T$-system (eq. `Tsystem`) and its reduction to a
+    $Y$-system identical in form to the periodic-boundary-condition
+    $Y$-system of `MorinDuchesnePearce2019`.
+  - `source/stripA22.tex:4260`--`:4273` -- conclusion: open question of which
+    conformal weights arise in the continuum limit of the strip loop models,
+    referencing the non-linear-integral-equation programme
+    (Klumper-Pearce) for $c-24\Delta$ and expected boundary-condition-changing
+    field insertions.
+- **Why acquired:** dilute $A_2^{(2)}$ fusion hierarchy on the strip (open
+  boundary conditions) -- companion piece to `MorinDuchesnePearce2019`'s
+  periodic construction; see the metadata-correction note above for the
+  rationale mismatch (it does not itself define a periodic dilute TL
+  algebra).
+
+### SRC-MORIN-DUCHESNE-KLUMPER-PEARCE-2025 -- Morin-Duchesne, Klumper, and Pearce, modular covariant torus partition functions
+
+- **Authors:** Alexi Morin-Duchesne, Andreas Klumper, and Paul A. Pearce
+- **Title:** Modular covariant torus partition functions of dense
+  $A_1^{(1)}$ and dilute $A_2^{(2)}$ loop models
+- **arXiv:** `2501.19288` (single version; submitted 2025-01-31; math-ph /
+  cond-mat.stat-mech / hep-th)
+- **DOI:** none registered at the arXiv abstract page as of retrieval (arXiv
+  DOI `10.48550/arXiv.2501.19288` only; no journal DOI yet).
+- **Metadata correction:** the acquisition request tentatively titled this
+  "dilute A2(2)/dense A1(1) loop models on the torus." Verified against the
+  arXiv abstract page, the actual title is "Modular covariant torus
+  partition functions of dense $A_1^{(1)}$ and dilute $A_2^{(2)}$ loop
+  models"; authors Morin-Duchesne, Klumper, Pearce are confirmed correct as
+  guessed.
+- **Local arXiv source package:**
+  `references/lattice-symmetry/DiluteA22Torus2025/DiluteA22Torus2025_arxiv_eprint.tar.gz`
+- **Source-package SHA256:**
+  `1dfc112a4366a0f2967ba1e37d551e02fabe271eeba3cbd2f64c31d29cc22f8f`
+- **Local arXiv PDF:**
+  `references/lattice-symmetry/DiluteA22Torus2025/DiluteA22Torus2025_arxiv.pdf`
+  (33 PDF pages; 673719 bytes)
+- **PDF SHA256:**
+  `e4aabdb9f95e30cc3831dfa3df5480337eb6fffe056dacbdf57bb9b74f908ea1`
+- **Extracted source TeX:**
+  `references/lattice-symmetry/DiluteA22Torus2025/source/partition.functions.arxiv.tex`
+  (3002 lines; SHA256
+  `625580ec0d24322559c6add59684ee023174c8edfcc687e58b1a25808ec3f1fa`).
+  Note: the e-print also contains 5 `.eps` figure files; only the main
+  `.tex` was copied into `source/` since the figures are not needed for line
+  anchors.
+- **PDF text extraction:**
+  `references/lattice-symmetry/DiluteA22Torus2025/DiluteA22Torus2025_pdftotext.txt`
+  (2544 lines; SHA256
+  `d096beb97bad8a0ca68e8d9afaa00e6fc86206324eb12aa3393c11e60aec8dc0`)
+- **Retrieval:** fetched from arXiv on 2026-07-05. Legal source URLs:
+  `https://arxiv.org/abs/2501.19288`,
+  `https://arxiv.org/e-print/2501.19288`, and
+  `https://arxiv.org/pdf/2501.19288`.
+- **Extraction command:**
+  ```bash
+  mkdir -p references/lattice-symmetry/DiluteA22Torus2025/source
+  curl -L https://arxiv.org/e-print/2501.19288 \
+    -o references/lattice-symmetry/DiluteA22Torus2025/DiluteA22Torus2025_arxiv_eprint.tar.gz
+  curl -L https://arxiv.org/pdf/2501.19288 \
+    -o references/lattice-symmetry/DiluteA22Torus2025/DiluteA22Torus2025_arxiv.pdf
+  tar -xzf references/lattice-symmetry/DiluteA22Torus2025/DiluteA22Torus2025_arxiv_eprint.tar.gz \
+    -C references/lattice-symmetry/DiluteA22Torus2025/source partition.functions.arxiv.tex
+  pdftotext -layout -enc UTF-8 \
+    references/lattice-symmetry/DiluteA22Torus2025/DiluteA22Torus2025_arxiv.pdf \
+    references/lattice-symmetry/DiluteA22Torus2025/DiluteA22Torus2025_pdftotext.txt
+  ```
+- **Verified anchor ranges:**
+  - `source/partition.functions.arxiv.tex:283`--`:323` -- title/authors/
+    abstract: dense $A_1^{(1)}$ and dilute $A_2^{(2)}$ loop models on the
+    torus with $(h,v)$ periodic/antiperiodic boundary conditions; conjectured
+    scaling limits of transfer-matrix traces via Markov traces; conformal
+    partition functions coincide for the dense and dilute models at roots of
+    unity ($\mathcal{LM}(p,p')$ vs. $\mathcal{DLM}(p,p')$).
+  - `source/partition.functions.arxiv.tex:601`--`:602` -- transfer matrix
+    $\Tb(u)$ stated as an element of "the enlarged periodic Temperley-Lieb
+    algebra" (dense case) and "the enlarged **dilute periodic
+    Temperley-Lieb algebra**" (dilute case), **citing `\cite{MDP19}`** --
+    i.e. `MorinDuchesnePearce2019` (this SOURCES.md, above) -- rather than
+    defining it in this paper.
+  - `source/partition.functions.arxiv.tex:684`--`:694` -- standard modules
+    $\repW_{N,d,\omega}$ over the (dilute) periodic Temperley-Lieb algebra,
+    following the conventions of Morin-Duchesne-Klumper-Pearce 2017/2023
+    (`MDKP17`,`MDKP23`), used for the Markov-trace transfer-matrix spectrum.
+  - `source/partition.functions.arxiv.tex:345`--`:353`, `:523` -- logarithmic
+    (non-rational) CFT identification: central charges and conformal weights
+    $\Delta_{r,s}$ of the Kac form, shared with but distinct in
+    representation content from the RSOS minimal models $\mathcal M(p,p')$.
+- **pdTL grep result (per acquisition request item 5):** the macro
+  `\nc{\pdtl}{\mathsf{pdTL}}` is defined at
+  `source/partition.functions.arxiv.tex:85` but is **never actually used**
+  in the paper body (`grep -n '\\pdtl\b'` matches only line 85). The paper's
+  own text spells out "periodic Temperley-Lieb algebra" / "dilute periodic
+  Temperley-Lieb algebra" in prose (lines 601-602, 684) and explicitly
+  **cites `MorinDuchesnePearce2019` (`\cite{MDP19}`)** for the algebra's
+  definition rather than repeating it. **Conclusion: this 2025 torus paper
+  does not itself contain a generator/relation presentation of a periodic
+  dilute TL algebra; the explicit definition lives in
+  `MorinDuchesnePearce2019/source/DiluteA22Final.tex:615`--`:832`** (see that
+  entry above).
+- **Why acquired:** most recent treatment of the dense/dilute torus
+  partition-function problem, confirming the periodic dilute TL algebra is
+  used but not redefined here; the definitional anchor was instead traced to
+  `MorinDuchesnePearce2019`.
+
+### SRC-ZHOU-PEARCE-GRIMM-1995 -- Zhou, Pearce, and Grimm, fusion of dilute A_L lattice models
+
+- **Authors:** Yu-kui Zhou, Paul A. Pearce, and Uwe Grimm
+- **Title:** Fusion of Dilute $A_L$ Lattice Models
+- **Journal:** Physica A **222** (1995) 261--306
+- **arXiv:** `hep-th/9506108` (single version; submitted 1995-06-17;
+  hep-th)
+- **DOI:** `10.1016/0378-4371(95)00287-1`
+- **Local arXiv source package:**
+  `references/lattice-symmetry/ZhouPearceGrimm1995/ZhouPearceGrimm1995_arxiv_eprint.tar.gz`
+- **Source-package SHA256:**
+  `f76c3d1ccbb053d34dc27bc1ba46998f5df245d6f92bfce73df94a8f6a1d2ae2`
+- **Local arXiv PDF:**
+  `references/lattice-symmetry/ZhouPearceGrimm1995/ZhouPearceGrimm1995_arxiv.pdf`
+  (45 PDF pages; 396952 bytes)
+- **PDF SHA256:**
+  `10a7021dc604e519d51bc2f39c62318d99d6c83e4c5887e3b4bd8a76698b0446`
+- **Extracted source TeX:**
+  `references/lattice-symmetry/ZhouPearceGrimm1995/source/9506108.tex`
+  (3925 lines; SHA256
+  `ccebb0f04c2d2615b603992ee35210cf18cb1db1c4a768d4f8652f81829c4a83`).
+  Note: the e-print also contains `su3lev5.ps`, a figure not needed for line
+  anchors.
+- **PDF text extraction:**
+  `references/lattice-symmetry/ZhouPearceGrimm1995/ZhouPearceGrimm1995_pdftotext.txt`
+  (2853 lines; SHA256
+  `c2e43bcfad44344ed9cc5c0023bd427453ecce8e97513fde31d2ef98f6961c45`)
+- **Retrieval:** fetched from arXiv on 2026-07-05. Legal source URLs:
+  `https://arxiv.org/abs/hep-th/9506108`,
+  `https://arxiv.org/e-print/hep-th/9506108`, and
+  `https://arxiv.org/pdf/hep-th/9506108`.
+- **Extraction command:**
+  ```bash
+  mkdir -p references/lattice-symmetry/ZhouPearceGrimm1995/source
+  curl -L https://arxiv.org/e-print/hep-th/9506108 \
+    -o references/lattice-symmetry/ZhouPearceGrimm1995/ZhouPearceGrimm1995_arxiv_eprint.tar.gz
+  curl -L https://arxiv.org/pdf/hep-th/9506108 \
+    -o references/lattice-symmetry/ZhouPearceGrimm1995/ZhouPearceGrimm1995_arxiv.pdf
+  tar -xzf references/lattice-symmetry/ZhouPearceGrimm1995/ZhouPearceGrimm1995_arxiv_eprint.tar.gz \
+    -C references/lattice-symmetry/ZhouPearceGrimm1995/source 9506108.tex
+  pdftotext -layout -enc UTF-8 \
+    references/lattice-symmetry/ZhouPearceGrimm1995/ZhouPearceGrimm1995_arxiv.pdf \
+    references/lattice-symmetry/ZhouPearceGrimm1995/ZhouPearceGrimm1995_pdftotext.txt
+  ```
+- **Verified anchor ranges:**
+  - `source/9506108.tex:1477`--`:1506` -- title/authors/abstract: fusion
+    procedure implemented for the dilute $A_L$ lattice models; fusion
+    hierarchy of functional equations with an $su(3)$ structure for the
+    fused transfer matrices; Bethe ansatz equations; eigenvalue-spectrum/
+    central-charge/conformal-weight solution deferred to a subsequent paper.
+    Note: this file has a long (~1450-line) macro preamble before
+    `\begin{document}` at `:1473`; the title/author macros are redefined at
+    `:35`--`:36` and only invoked once, at `:1477`.
+  - `source/9506108.tex:1512`--`:1552` -- introduction: dilute $A_L$ RSOS
+    models context, prior $A_L$-model fusion/functional-relation results
+    (Bazhanov-Reshetikhin), and the explicit statement that this paper
+    derives the fusion hierarchy while eigenvalue/central-charge/conformal-
+    weight solutions are left to the sequel (`ZhPe:95`, i.e.
+    `ZhouBatchelor1997`-adjacent follow-on work).
+  - `source/9506108.tex:3648`--`:3675` -- **main theorem** ("$su(3)$ Fusion
+    Hierarchy"): functional relations
+    $\T^{(n,0)}_0\T^{(1,0)}_n=\T^{(n-1,1)}_0+\T^{(n+1,0)}_0$ and
+    $\T^{(n,0)}_0\T^{(0,1)}_n=\T^{(n,1)}_0+f^Y_{n-1}\T^{(n-1,0)}_0$, closure
+    $\T^{(n,m)}=0$ for $m+n\ge 2L$, plus the companion symmetry theorem for
+    $\T^{(n,m)}_0$ in terms of transposed/shifted fused transfer matrices.
+- **Why acquired:** dilute $A_L$ fusion-hierarchy backbone -- the original
+  $su(3)$-structured functional-relation derivation that
+  `MorinDuchesnePearce2019` and `Boileau-Morin-Duchesne-Saint-Aubin-2022`
+  build on for the dilute $A_2^{(2)}$ case specifically.
+
+## Notes (2026-07-05 addendum, fourth batch)
+
+- The six entries directly above (`ZhouBatchelor1997` through
+  `ZhouPearceGrimm1995`) were acquired in a fourth batch on 2026-07-05,
+  targeting the dilute Koo-Saleur block: central charges/conformal weights
+  across all four regimes of the dilute O(n)/Izergin-Korepin/dilute A_L face
+  family (`ZhouBatchelor1997`), the regime-III non-compact-CFT
+  regime-selection warning (`VernierJacobsenSaleur2014`), the dilute
+  A_2^{(2)} fusion hierarchy and the periodic dilute Temperley-Lieb algebra
+  definition (`MorinDuchesnePearce2019`), the strip/open-boundary companion
+  paper (`SRC-BOILEAU-MORIN-DUCHESNE-SAINT-AUBIN-2022`, directory
+  `DiluteA22Strip2022`), the most recent torus partition-function treatment
+  (`SRC-MORIN-DUCHESNE-KLUMPER-PEARCE-2025`, directory
+  `DiluteA22Torus2025`), and the original dilute $A_L$ fusion-hierarchy
+  backbone (`ZhouPearceGrimm1995`).
+- **Metadata corrections:** (1) `2211.09017`'s true authors are Florence
+  Boileau, Alexi Morin-Duchesne, and Yvan Saint-Aubin (not Pearce as
+  tentatively guessed), and the paper treats the **strip** (open boundary
+  conditions), not a periodic/PBC construction -- see the
+  metadata-correction note in that entry. (2) `2501.19288`'s true title is
+  "Modular covariant torus partition functions of dense $A_1^{(1)}$ and
+  dilute $A_2^{(2)}$ loop models" (author guesses Morin-Duchesne/Klumper/
+  Pearce were correct).
+- **pdTL algebra search (item 5 of the acquisition request):** grepping
+  `DiluteA22Torus2025/source/partition.functions.arxiv.tex` for
+  `periodic dilute`/`pdTL` finds only a macro definition
+  (`\nc{\pdtl}{\mathsf{pdTL}}` at line 85, never used in the body) and prose
+  citations to `MorinDuchesnePearce2019` (lines 601-602, 684) for the
+  algebra itself. The actual generator/diagrammatic-relation presentation of
+  the periodic dilute Temperley-Lieb algebra $\mathsf{pdTL}_N(\alpha,\beta)$
+  lives in `MorinDuchesnePearce2019/source/DiluteA22Final.tex:615`--`:832`
+  (section "The periodic dilute Temperley-Lieb algebra", subsection
+  "Definition of the algebra"), acquired in this same batch.
+- **Not acquired (flagged for Tobias):** Warnaar, Nienhuis and Seaton, Phys.
+  Rev. Lett. **69** (1992) 710, and Warnaar, Batchelor and Nienhuis, J. Phys.
+  A **25** (1992) 3077, appear to have **no arXiv e-prints**. These two
+  papers define the dilute A-D-E models and the dilute O(n)/Izergin-Korepin
+  quantum chains (the explicit Hamiltonians) that `ZhouBatchelor1997` and
+  `ZhouPearceGrimm1995` build on and cite as `WNS:92`/`WBN:92`; they must be
+  acquired via journal or TIB access rather than arXiv.
