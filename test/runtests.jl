@@ -302,6 +302,101 @@ end
     @test !CftAnyons.solve_conservation_witness(sentinels[:fake_split]).feasible
 end
 
+@testset "qubit full-window moment compactness witnesses" begin
+    # Finite witnesses for shard CA-63: exact feasibility of the full-window
+    # qubit moment hierarchy at every level implies a translation-invariant
+    # state on the quasi-local spin algebra. Each check pins one proof step.
+    I2 = Matrix{ComplexF64}(I, 2, 2)
+
+    # --- (1) density matrix PSD  <=>  moment matrix PSD (eq. 63.4/63.5). ---
+    # Translation-invariant product state, Bloch vector of norm < 1 (an
+    # interior, strictly positive state), on windows N = 0 and N = 1.
+    bloch = [0.3, -0.2, 0.4]
+    @test norm(bloch) < 1
+    for N in (0, 1)
+        start = -N
+        len = 2N + 1
+        y = CftAnyons.product_state_moment_vector(bloch, start, len)
+        rho = CftAnyons.density_matrix_from_moments(y, start, len)
+        words = CftAnyons.window_pauli_words(start, len)
+        M = CftAnyons.moment_matrix_from_moments(words, y)
+
+        # rho is a genuine density matrix: unit trace, Hermitian, and for N = 0
+        # exactly (I + b·σ)/2 (a known closed form, not just "no error").
+        @test tr(rho) ≈ 1
+        @test ishermitian(rho)
+        @test ishermitian(M)
+        # The Pauli product phases are load-bearing: e.g. <X_0 Y_0> = i<Z_0>,
+        # so M carries genuinely imaginary off-diagonal entries (dropping the
+        # phase would silently collapse M to a real matrix).
+        @test !isreal(M)
+        if N == 0
+            expected = (CftAnyons.PAULI_BASIS[1] + bloch[1] * CftAnyons.PAULI_BASIS[2] +
+                        bloch[2] * CftAnyons.PAULI_BASIS[3] + bloch[3] * CftAnyons.PAULI_BASIS[4]) / 2
+            @test rho ≈ expected
+            @test eigvals(Hermitian(rho)) ≈ sort([(1 + norm(bloch)) / 2, (1 - norm(bloch)) / 2])
+            # M[X_0, Y_0] = i * <Z_0> = i * b_z pins the phase exactly.
+            w1 = CftAnyons.window_pauli_words(0, 1)
+            ix = findfirst(==(CftAnyons.pauli_word([1])), w1)
+            iy = findfirst(==(CftAnyons.pauli_word([2])), w1)
+            @test M[ix, iy] ≈ im * bloch[3]
+        end
+
+        @test CftAnyons.is_moment_psd(rho)
+        @test CftAnyons.is_moment_psd(M)
+        @test CftAnyons.is_moment_psd(rho) == CftAnyons.is_moment_psd(M)
+    end
+
+    # --- (2) product-trace extension preserves every window moment (Lemma 4). ---
+    # Positive density matrix on [-1, 1], extended to [-2, 2] by E_N (tensoring
+    # normalized identities). Every Pauli word supported in [-1, 1] keeps its
+    # expectation exactly, so the extension lands in the same level set K_1.
+    y_win = CftAnyons.product_state_moment_vector(bloch, -1, 3)
+    rho_window = CftAnyons.density_matrix_from_moments(y_win, -1, 3)
+    @test CftAnyons.is_moment_psd(rho_window)
+    rho_ext = CftAnyons.extend_density_matrix(rho_window, 1, 1)
+    @test rho_ext ≈ kron(I2 / 2, rho_window, I2 / 2)
+    @test tr(rho_ext) ≈ 1
+    for word in CftAnyons.window_pauli_words(-1, 3)
+        lhs = tr(rho_ext * CftAnyons.pauli_word_matrix(word, -2, 5))
+        rhs = tr(rho_window * CftAnyons.pauli_word_matrix(word, -1, 3))
+        @test lhs ≈ rhs atol = 1e-12
+    end
+
+    # --- (3) empirical nesting  K_2 ⊆ K_1  (Lemma 6). ---
+    # A level-2-feasible (full-window, zero-residual) moment vector restricts to
+    # a level-1-feasible one: same dict of canonical moments, so normalization,
+    # translation equalities, and PSD all descend to the smaller window.
+    y2 = CftAnyons.product_state_moment_vector(bloch, -2, 5)
+    @test CftAnyons.moment_value(y2, CftAnyons.PauliWord()) == 1.0   # normalization
+    level1_words = CftAnyons.window_pauli_words(-1, 3)
+    for word in level1_words
+        # translation equality y_s = y_{τ^k s} for shifts keeping s in [-2, 2].
+        for k in (-1, 1)
+            shifted = CftAnyons.translate_pauli_word(word, k)
+            all(-2 .<= collect(shifted.sites) .<= 2) || continue
+            @test CftAnyons.moment_value(y2, word) ≈ CftAnyons.moment_value(y2, shifted)
+        end
+    end
+    M1_restricted = CftAnyons.moment_matrix_from_moments(level1_words, y2)
+    @test CftAnyons.is_moment_psd(M1_restricted)               # PSD survives restriction
+
+    # --- (4) mutation: a nonpositive moment assignment is rejected. ---
+    # Start from the one-site trace (maximally mixed) moments, force y[X_0] = 1.1
+    # > 1. Then rho = (I + 1.1 X)/2 has a negative eigenvalue and both rho and
+    # the moment matrix fail PSD — the check rejects, it does not merely run.
+    y_bad = CftAnyons.product_state_moment_vector([0.0, 0.0, 0.0], 0, 1)
+    x0 = CftAnyons.pauli_word([1])
+    y_bad[x0] = 1.1
+    rho_bad = CftAnyons.density_matrix_from_moments(y_bad, 0, 1)
+    @test rho_bad ≈ (CftAnyons.PAULI_BASIS[1] + 1.1 * CftAnyons.PAULI_BASIS[2]) / 2
+    M_bad = CftAnyons.moment_matrix_from_moments(CftAnyons.window_pauli_words(0, 1), y_bad)
+    @test !CftAnyons.is_moment_psd(rho_bad)
+    @test !CftAnyons.is_moment_psd(M_bad)
+    @test eigmin(Hermitian(rho_bad)) < -1e-8
+    @test eigmin(Hermitian(M_bad)) < -1e-8
+end
+
 @testset "qubit Hamiltonian candidate scan" begin
     onsite = CftAnyons.qubit_onsite_field_density(; hx = 0.7, hy = -0.3, hz = 0.5, scalar = 0.25)
     @test onsite ≈ CftAnyons.pauli_two_site_coefficients(
@@ -828,4 +923,274 @@ end
         @test all(minimum -> gaussian_symbol_isapprox(minimum.value, 0), data.minima)
     end
     @test_throws ErrorException CftAnyons.periodic_stiffness_matrix([([0, 0], 1.0)], [3])
+end
+
+const RELAXED_MOSEK_OK = try
+    m = JuMP.Model(CftAnyons.MosekTools.Optimizer)
+    JuMP.set_silent(m)
+    JuMP.@variable(m, t >= 0)
+    JuMP.@objective(m, Min, t)
+    JuMP.optimize!(m)
+    JuMP.termination_status(m) == CftAnyons.MOI.OPTIMAL
+catch
+    false
+end
+
+@testset "qubit relaxed residual profiles (CA-64)" begin
+    C = CftAnyons
+
+    # --- tracial coefficient norm and trailing-identity embedding. ---
+    r = reshape(collect(1.0:16.0), 4, 4)
+    @test C.coefficient_l2_norm(r) ≈ norm(vec(r))
+    emb = C.embed_pauli_coefficients(r, 4)
+    @test ndims(emb) == 4
+    @test C.coefficient_l2_norm(emb) ≈ C.coefficient_l2_norm(r)   # padding preserves norm
+    @test emb[2, 3, 1, 1] == r[2, 3]
+    @test_throws ErrorException C.embed_pauli_coefficients(r, 1)
+
+    # --- the all-identity coboundary column is exactly zero (gauge direction). ---
+    scalar_u = zeros(4, 4); scalar_u[1, 1] = 1.0
+    @test C.one_dimensional_coboundary_coefficients(scalar_u) == zeros(4, 4, 4)
+    Mkeep = C.coboundary_matrix(2; target_support = 3, gauge = :keep_scalar)
+    Mzero = C.coboundary_matrix(2; target_support = 3, gauge = :zero_scalar)
+    @test size(Mkeep, 2) == size(Mzero, 2) + 1
+    @test any(all(iszero, col) for col in eachcol(Mkeep))   # a genuinely zero column
+
+    # --- conservation profile: TFIM self-dual (h = -ZZ - (XI+IX)/2). ---
+    tfim = C.qubit_tfim_density(coupling = 1.0, field = 1.0)
+    cons = C.solve_conservation_profile(tfim; max_support = 5)
+    @test cons[1].support == 1
+    @test cons[1].raw_norm ≈ sqrt(10)                         # design prediction eps_c(1)=√10
+    @test all(cons[L].raw_norm < 1e-8 for L in 2:5)           # exact conservation at L≥2
+    # nonincreasing in L (support-L witness embeds into support-(L+1)).
+    @test all(cons[i + 1].raw_norm <= cons[i].raw_norm + 1e-12 for i in 1:4)
+
+    # gauge-invariance: the distance is identical with/without the scalar column.
+    cons_keep = C.solve_conservation_profile(tfim; max_support = 3, gauge = :keep_scalar)
+    @test all(isapprox(cons[i].raw_norm, cons_keep[i].raw_norm; atol = 1e-9) for i in 1:3)
+
+    # current-gate collapse: onsite and classical ZZ carry no current.
+    onsite = C.qubit_onsite_field_density(hx = 1.0)
+    zz = C.qubit_xyz_density(jz = -1.0)
+    @test norm(C.adjacent_bond_current_pauli_coefficients(onsite)) < 1e-12
+    @test norm(C.adjacent_bond_current_pauli_coefficients(zz)) < 1e-12
+
+    # --- exact-conservation boost profile: recorded value + design sequence. ---
+    boost = C.solve_boost_profile(tfim; max_support = 5, min_support = 2)
+    @test boost[1].support == 2
+    @test boost[1].raw_norm ≈ sqrt(6)
+    # L=3 reproduces runs/2026-05-31-qubit-candidate-scan/summary.toml:76 exactly.
+    @test boost[2].raw_norm ≈ 1.8257418583505538 atol = 1e-12
+    @test boost[3].raw_norm ≈ 1.5275252316519468 atol = 1e-12
+    @test boost[4].raw_norm ≈ 1.3416407864998736 atol = 1e-12
+    @test all(boost[i + 1].raw_norm <= boost[i].raw_norm + 1e-12 for i in 1:3)
+    @test all(isapprox(p.metadata[:speed2], -2.0; atol = 1e-9) for p in boost)  # λ=v²=-2
+
+    # bounded speed scan brackets the same optimum.
+    boost_scan = C.solve_boost_profile(tfim; max_support = 3, min_support = 2,
+        speed2_bounds = (-4.0, 0.0))
+    @test boost_scan[2].raw_norm ≈ 1.8257418583505538 atol = 1e-3
+
+    # eps_b^0 is defined only where conservation is exact: requesting the
+    # exact-conservation boost profile at an infeasible support fails loud.
+    @test_throws ErrorException C.solve_boost_profile(tfim; max_support = 1, min_support = 1)
+
+    # joint profile is defined and nonincreasing for a conservation-failing point.
+    generic = C._deterministic_generic_density(1)
+    joint = C.solve_joint_poincare_profile(generic; max_support = 4)
+    @test all(joint[i + 1].raw_norm <= joint[i].raw_norm + 1e-9 for i in 1:3)
+end
+
+@testset "qubit relaxed scan verdicts (CA-64)" begin
+    C = CftAnyons
+    opts = C.QubitRelaxedGateOptions(max_support = 5)
+    mk(nm, h) = C.QubitHamiltonianSample(nm, :probe, Dict{Symbol, Float64}(), h)
+
+    tfim = C.scan_qubit_candidate_relaxed(
+        mk("tfim", C.qubit_tfim_density(coupling = 1.0, field = 1.0)); options = opts)
+    @test tfim.relaxed_verdict == :queued_gns_scaling
+    @test tfim.conservation_exact_support == 2
+    @test tfim.current_status == :currentful
+
+    xxz = C.scan_qubit_candidate_relaxed(
+        mk("xxz", C.qubit_xxz_density(exchange = 1.0, delta = 0.5)); options = opts)
+    heis = C.scan_qubit_candidate_relaxed(
+        mk("heis", C.qubit_heisenberg_density(exchange = 1.0)); options = opts)
+    @test xxz.relaxed_verdict == :queued_gns_scaling
+    @test heis.relaxed_verdict == :queued_gns_scaling
+
+    onsite = C.scan_qubit_candidate_relaxed(
+        mk("onsite", C.qubit_onsite_field_density(hx = 1.0)); options = opts)
+    zz = C.scan_qubit_candidate_relaxed(
+        mk("zz", C.qubit_xyz_density(jz = -1.0)); options = opts)
+    @test onsite.relaxed_verdict == :excluded_current_collapsed
+    @test zz.relaxed_verdict == :excluded_current_collapsed
+
+    # generic dense bilinear: conservation not exact -> profile verdict, not queued GNS.
+    generic = C.scan_qubit_candidate_relaxed(
+        mk("generic", C._deterministic_generic_density(1)); options = opts)
+    @test generic.conservation_exact_support === nothing
+    @test generic.relaxed_verdict in
+          (:excluded_conservation_profile, :queued_conservation_profile)
+
+    # serialization row carries the profile tables and the relaxed scope tag.
+    row = C.qubit_relaxed_result_row(tfim)
+    @test row["scope"] == "relaxed_first_moment_route"
+    @test row["relaxed_verdict"] == "queued_gns_scaling"
+    @test length(row["boost_profile"]) == 4
+    @test row["boost_profile"][2]["raw_norm"] ≈ 1.8257418583505538 atol = 1e-12
+end
+
+@testset "qubit fixed-residual GNS-norm SDP (CA-64)" begin
+    C = CftAnyons
+
+    # tracial norm and R*R algebra from Pauli coefficients.
+    ident = C.identity_residual_terms()
+    @test C.tracial_residual_norm_squared(ident) ≈ 1.0
+    sq = C.residual_square_terms(ident)
+    @test length(sq) == 1 && isempty(only(sq).word.sites)
+    @test only(sq).coeff ≈ 1.0 + 0.0im
+
+    zz = zeros(4, 4); zz[4, 4] = 1.0
+    zz_res = C.coefficient_residual_terms(zz)
+    @test C.tracial_residual_norm_squared(zz_res) ≈ 1.0     # single unit Pauli coefficient
+
+    if RELAXED_MOSEK_OK
+        spec1 = C.QubitSDPSpec(psd_window_length = 1)
+        # zero residual -> objective 0, normalized 0 (τ = 0 guarded).
+        zero_result = C.solve_qubit_residual_norm_sdp(spec1, C.PauliTerm[])
+        @test zero_result.status == :solved
+        @test zero_result.objective_value ≈ 0.0 atol = 1e-7
+        @test zero_result.normalized_value == 0.0
+        # identity residual -> ω(I)=1, τ(I*I)=1, normalized objective 1.
+        id_result = C.solve_qubit_residual_norm_sdp(spec1, ident)
+        @test id_result.status == :solved
+        @test id_result.objective_value ≈ 1.0 atol = 1e-7
+        @test id_result.normalized_value ≈ 1.0 atol = 1e-7
+        # a small nontrivial Mosek instance solves and yields a finite objective.
+        spec2 = C.QubitSDPSpec(psd_window_length = 2)
+        zz_result = C.solve_qubit_residual_norm_sdp(spec2, zz_res)
+        @test zz_result.status == :solved
+        @test isfinite(zz_result.objective_value)
+        @test 0.0 - 1e-7 <= zz_result.normalized_value
+        # a residual whose square spans more sites than the PSD window is still
+        # bounded (|omega(P_s)| <= 1 box bounds); without them Mosek reports
+        # dual infeasibility (observed as solver_unknown in the first scan run).
+        tfim_h = C.qubit_tfim_density(coupling = 1.0, field = 1.0)
+        B4 = C.pauli_n_site_coefficients(
+            C.boost_relation_local_density(C.pauli_two_site_operator(tfim_h)), 4)
+        boost_result = C.solve_qubit_residual_norm_sdp(spec2, C.coefficient_residual_terms(B4))
+        @test boost_result.status == :solved
+        @test isfinite(boost_result.objective_value)
+        @test isfinite(boost_result.normalized_value)
+    else
+        @test_skip "Mosek unavailable: skipping fixed-residual GNS-norm SDP solves"
+    end
+
+    # witness optimization inside the SDP tier is not an SDP: hard error.
+    @test_throws ErrorException C.solve_qubit_residual_norm_sdp(
+        C.QubitSDPSpec(psd_window_length = 1), ident; method = :alternating)
+end
+
+@testset "fibonacci anyonic word algebra and vacuum insertion" begin
+    C = CftAnyons
+    # Signed Fibonacci with F_0 = 0, F_1 = 1 (F_{2L-1} needs the index 2L-1 >= 1).
+    fib(n) = n <= 0 ? 0 : (n == 1 ? 1 : (let a = 0, b = 1
+        for _ in 2:n
+            a, b = b, a + b
+        end
+        b
+    end))
+
+    # --- (a) enumeration == recurrence, and the closed forms (CA-66 T66.2/T66.3). ---
+    for L in 0:6, charge in (:one, :tau)
+        enum = C.fibonacci_word_sector_dimension(L, charge)
+        m1, mτ = C.fibonacci_word_multiplicity_recurrence(L)
+        expected = charge === :one ? m1 : mτ
+        @test enum == expected                       # direct enumeration is the oracle
+        @test enum == length(C.fibonacci_word_sector_basis(L, charge))
+    end
+
+    # multiplicities (m_1, m_τ) = (F_{2L-1}, F_{2L}) for L >= 1; (1, 0) at L = 0.
+    @test C.fibonacci_word_multiplicity_recurrence(0) == (1, 0)
+    for L in 1:6
+        @test C.fibonacci_word_multiplicity_recurrence(L) == (fib(2L - 1), fib(2L))
+    end
+
+    # dim H_L = m_1 + m_τ = F_{2L+1} (2L+1 >= 1 for all L >= 0).
+    for L in 0:6
+        m1, mτ = C.fibonacci_word_multiplicity_recurrence(L)
+        @test m1 + mτ == fib(2L + 1)
+    end
+    # dim A_L = m_1^2 + m_τ^2 = F_{4L-1}; L=0 is the boundary A_0 = 1 (F_{-1}=1,
+    # outside the F_0=0, F_1=1 branch of `fib`), so anchor it directly.
+    @test (m -> m[1]^2 + m[2]^2)(C.fibonacci_word_multiplicity_recurrence(0)) == 1
+    for L in 1:6
+        m1, mτ = C.fibonacci_word_multiplicity_recurrence(L)
+        @test m1^2 + mτ^2 == fib(4L - 1)
+    end
+    @test [sum(C.fibonacci_word_multiplicity_recurrence(L)) for L in 2:4] == [5, 13, 34]
+    @test [(m -> m[1]^2 + m[2]^2)(C.fibonacci_word_multiplicity_recurrence(L))
+           for L in 2:4] == [13, 89, 610]
+
+    # --- (b) O = τ dense-corner recurrence via [[0,1],[1,1]] == CA-09 sequence. ---
+    @test C.fibonacci_dense_corner_pairs(7) == [
+        (1, 0), (0, 1), (1, 1), (1, 2), (2, 3), (3, 5), (5, 8), (8, 13)]
+    @test C.fibonacci_dense_corner_pairs(7) == C.fibonacci_fusion_path_counts(7)
+
+    # --- (c) V isometry per charge block at L = 2. ---
+    V1 = C.vacuum_insertion_matrix(2, :one)
+    Vτ = C.vacuum_insertion_matrix(2, :tau)
+    @test size(V1) == (13, 2)
+    @test size(Vτ) == (21, 3)
+    for (V, m) in ((V1, 2), (Vτ, 3))
+        @test V' * V == Matrix{Int}(I, m, m)         # exact integer isometry
+        @test all(==(1), sum(V; dims = 1))           # one 1 per column
+        P = V * V'
+        @test P == P'                                # self-adjoint
+        @test P * P == P                             # idempotent
+    end
+
+    # --- (d) occupation covariance: V n_j = n_{2j-1} V and n_{2j} V = 0. ---
+    for charge in (:one, :tau)
+        V = C.vacuum_insertion_matrix(2, charge)
+        for j in 1:2
+            nj = C.occupation_number_matrix(2, j, charge)
+            n_odd = C.occupation_number_matrix(4, 2j - 1, charge)
+            n_even = C.occupation_number_matrix(4, 2j, charge)
+            @test V * nj == n_odd * V
+            @test all(iszero, n_even * V)
+        end
+    end
+
+    # --- (e)(i) corrupt {2}->{4} instead of {2}->{3}: covariance must break. ---
+    coarse = C.fibonacci_word_sector_basis(2, :tau)
+    fine = C.fibonacci_word_sector_basis(4, :tau)
+    col = findfirst(b -> b[1] == [2], coarse)
+    row = findfirst(b -> b[1] == [4], fine)
+    @test col !== nothing && row !== nothing
+    Vgood = C.vacuum_insertion_matrix(2, :tau)
+    n4 = C.occupation_number_matrix(4, 4, :tau)
+    @test all(iszero, n4 * Vgood)                    # correct map: no fine-site-4 weight
+    Vc = copy(Vgood)
+    Vc[:, col] .= 0
+    Vc[row, col] = 1
+    @test !(Vc' * Vc == Matrix{Int}(I, 3, 3)) || !all(iszero, n4 * Vc)
+    @test !all(iszero, n4 * Vc)                      # the covariance failure, explicitly
+
+    # --- (e)(ii) inadmissible fine path caught by the fail-loud constructor. ---
+    good = [:one, :tau]
+    @test C._path_admissible([:one, :tau], good)     # empty site keeps charge 1 -> tau
+    bad = copy(good)
+    bad[1] = :tau                                    # empty site 1 cannot raise 1 -> tau
+    @test !C._path_admissible([:one, :tau], bad)
+    @test_throws ErrorException C._require_admissible_path([:one, :tau], bad)
+    bad[1] = :one                                    # restore -> admissible again
+    @test C._path_admissible([:one, :tau], bad)
+
+    # --- fail-loud argument guards. ---
+    @test_throws ErrorException C.fibonacci_word_sector_dimension(-1, :one)
+    @test_throws ErrorException C.fibonacci_word_sector_dimension(2, :sigma)
+    @test_throws ErrorException C.occupation_number_matrix(2, 3, :one)
+    @test_throws ErrorException C.vacuum_insertion_matrix(2, :sigma)
 end

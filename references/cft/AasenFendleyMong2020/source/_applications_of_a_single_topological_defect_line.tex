@@ -1,0 +1,618 @@
+%auto-ignore
+%      this ensures the arxiv doesn't try to start TeXing here.
+%!TEX root = super_lattice_models_draft.tex
+%      prev line helps TeXShop do the right thing
+
+\section{Duality}
+\label{sec:duality}
+In the preceding sections we proved that the defect lines defined by \eqref{eq:def_LDefect} are topological, in that the partition function in their presence is invariant under locally deforming them. The properties of the fusion category, in particular the invariance of evaluations under $F$-moves,  made it simple to solve the potentially huge number of equations arising from the defect commutation relations appearing in Sections~\ref{sec:topological_defect_lines} and \ref{sec:trivalent}.
+
+Here we start developing applications of these results. In this section we show how any defect made from an object $\varphi$ with quantum dimension $d_\varphi>1$ yields a {duality}.  The key observation is in equation \eqref{TDDT}, showing that the operator creating a defect line commutes with the transfer matrix. When this operator is unitary, acting with it implements a symmetry transformation.
+However, typically 
+$\mcd_{\varphi}$ is not unitary, as is obvious from the fusion rules \eqref{DDeqD}: whenever $\mcd_{\varphi}$ fuses to more than one operator, its eigenvalues cannot be of unit norm. Thus whenever the quantum dimension $d_\varphi>1$, the corresponding $\mcd_{\varphi}$ cannot be unitary.  The conventional quantum-mechanical definition of symmetry requires a unitary transformation of the Hilbert space, and so we do not call acting with $\mcd_\varphi$ a symmetry transformation. Instead, we say it implements a {duality}. 
+
+One of our central results is that dualities occur in {\em any} statistical-mechanical model defined in terms of a fusion category as above. Such dualities encompass the Kramers-Wannier duality of the Ising \cite{Kramers1941} and clock \cite{Wu1982} models, but our approach gives many non-trivial generalizations. Such a duality relates different couplings in the same model, as with Kramers-Wannier duality, or sometimes it relates two (seemingly) distinct models. We also describe self-dualities, where defects provide a non-trivial map of a model to itself. 
+
+
+\subsection{Grading and splitting}
+\label{sec:splitting}
+
+In order to understand how topological lattice defects gives symmetries and dualities, we must first describe how the configuration space of many of the models of interest split into sectors.
+Seemingly different theories can originate from the same category even for a fixed $\upsilon$.
+Not surprisingly, the resulting theories are closely related, and we explain subsequently how the generalized duality described here provides a way of mapping between them.
+
+\paragraph{Grading.}
+
+Many fusion categories can be {\em graded} by a finite group $G$~\cite{Etingof_2010,Barkeshli2019}.
+The resulting sectors $\mcc_g$ are indexed by the elements of $G$, while the full fusion category is given by $\mcc = \bigoplus_g \mcc_g$. The fusion rules must obey the $G$ grading: the objects $a_g\in \mcc_g$ and $b_h\in \mcc_h$ obey $a_g \otimes b_h \in \mcc_{gh}$. 
+In this paper we analyze only $\mathbb{Z}_2$-graded fusion categories, but many interesting generalizations exist. 
+In a $\mathbb{Z}_2$-graded fusion category, the objects split into ``even'' and ``odd'' sets, so that fusion of two even or two odd objects gives an even object, while fusion of even and odd gives odd. 
+The $\mathcal{A}_k$ fusion categories are graded in this fashion, with the `even' set $\mcc_{0} = \{ 0,1,2,\dots \}$ and the `odd' set $\mcc_{1} = \{ \frac12, \frac32, \dots \}$.
+The splitting of the spin-1 models as displayed in \eqref{spin1heights} is a manifestation of this grading.
+As apparent from (\ref{clockabelian},\,\ref{clockX}), the Tambara-Yamagami fusion categories~\cite{Tambara1998} used to build the clock models also have a $\mathbb{Z}_2$ grading,  with $\mcc_0 = \{ 0,1,\cdots, n-1\}$ and $\mcc_1 = \{ X \}$.
+
+
+
+
+
+\paragraph{Splitting.}
+A $\mathbb{Z}_2$ grading allows us to split the partition function into two pieces: $Z=Z_0 + Z_1$.  
+The structure of the resulting models depends on whether the object $\upsilon$ used to build the models is even or odd. When $\upsilon$ is even, fusing with it preserves the sectors $\mcc_0$ and $\mcc_1$, so the heights in a given configuration are either all even or all odd. In effect, our construction yields two separate models: a model $M_0$ comprised of entirely of even heights, and a model $M_1$ comprised entirely of odd heights, with partition functions $Z_0$ and $Z_1$ respectively. An example of such splitting is in the $\mathcal{A}_{k+1}$ models with $\upsilon=1$, where the incidence diagrams for $M_0$ and $M_1$ are given in \eqref{spin1heights}. 
+
+When  $\upsilon$ is odd, the grading results in a different sort of splitting. Because the graph $G$ on which the heights live is bipartite, on one of the two sublattices, all the heights are even and the other are odd.  The ABF models have $\upsilon$ odd, and in their transfer-matrix formulation, the vector space $\mathcal{V}$ displayed in   \eqref{eq:fusiontreedef} splits into two disjoint parts $\mathcal{V}_0\oplus \mathcal{V}_1$, where the subscript is $(2h_1+1)\,$mod 2.  
+For example, for Ising, basis elements in each are labelled by the fusion trees
+\begin{subequations} \begin{align}
+&\VplusIsing \in \mathcal{V}_+
+\label{Vplusdef}\\
+&\nonumber\\
+&\VminusIsing \in \mathcal{V}_-
+\label{Vminusdef}
+\end{align} \end{subequations}
+Acting with the transfer matrix preserves these subspaces, and so $T$ is block diagonal in the form 
+\begin{equation}
+T=\begin{pmatrix} T_0&0\cr 0&T_1 \end{pmatrix} .
+\label{IsingTsplit}
+\end{equation}
+We again can think of two separate models $M_0$ and $M_1$ with partition functions $Z_0$ and $Z_1$.
+
+To summarize, the lattice model built from any $\mathbb{Z}_2$ graded fusion category can be split as
+\begin{align*}
+	\upsilon\hbox{ even:} \quad&\begin{cases} M_0\ &\text{all even heights}, \\
+	M_1\ &\text{all odd heights},
+	\end{cases}\cr
+	\upsilon\hbox{ odd:} \quad &\begin{cases} M_0\ 
+	&\text{even heights on $\mathcal{V}_+$, odd on $\mathcal{V}_-$}, \\
+	M_1\ &\text{even heights on $\mathcal{V}_-$, odd on $\mathcal{V}_+$}.
+	\end{cases}
+\end{align*}
+
+
+\subsection{Dualities and Symmetries}
+\label{sec:symm}
+
+Crossing a defect line labeled by $\varphi$ requires fusing with the object $\varphi$. Thus when $\varphi$ is odd, the corresponding defect line separates a region of model $M_0$ from a region of model $M_1$. Since the defect lines are deformable, moving the line in effect gives a mapping from $M_0$ to $M_1$.
+In the transfer matrix, \eqref{TDDT} requires 
+\begin{align}
+T_0\, \mathcal{D}_{\varphi}= \mathcal{D}_{\varphi}\, T_1 \,,\qquad  T_1\,\mathcal{D}_{\varphi}= \mathcal{D}_{\varphi} \,T_0\ ,\qquad\hbox{ for }\varphi\hbox{ odd.}
+\label{TDDTpm}
+\end{align}
+The corresponding partition functions are thus related as well, and when $d_\varphi>1$, we say the defect implements a {\em duality}.  The map \eqref{TDDTpm} gives powerful identities for the corresponding partition functions,  as shown in Part~I for Ising and below more generally.  
+
+
+
+Crossing a defect with even $\varphi$ leaves one in the same model. Such a $\mcd_\varphi$ still commutes with the transfer matrix,  its action is quite non-trivial when $d_\varphi>1$,. We thus say such a defect implements a {\em self-duality}. It results in linear identities relating e.g.\ partition functions with different boundary conditions. Another application is given in section \ref{sec:selfduality}, where we derive non-symmetry-related degeneracies in the spectrum of off-critical models. 
+
+
+
+The $d_\varphi=1$ case is much simpler to understand.
+As the corresponding defects obey $\mcd_\varphi\mcd_{\overline\varphi}=1$, duality is too glorious a name.
+When $d_\varphi=1$ and $\varphi$ is odd, the map is not particularly interesting, as it merely shows $M_0$ and $M_1$ are equivalent by a relabeling.  The $\varphi$ odd case is more interesting, since as apparent in \eqref{TDDTpm}, such a $d_\varphi=1$ defect implements a {\em symmetry}.
+For example, in the $\mathcal{A}_{k+1}$ models, $d_{\frac{k}2}=1$, as \eqref{eq:def_Ak_N} and  \eqref{DDeqD} give for all $h$
+\begin{align}
+\frac{k}2 \otimes h =\frac{k}{2}-h \qquad \implies\qquad \mcd_{\frac{k}{2}}\mcd_h=\mcd_{\frac{k}{2}-h}\,.
+\label{heightflip}
+\end{align}
+Acting with $\mcd_{\frac{k}{2}}$ thus exchanges each height $h_j$ in $\mathcal{V}$ with the height $\tfrac{k}{2} -h_j$. For the ABF models, this exchange reflects the adjacency diagram \eqref{Akadjacency} around its midpoint. The fusion rules respect this exchange,  and it is straightforward to check from the explicit expressions in appendix \ref{app:TetraSym} the Boltzmann weights for any $\upsilon$ are also invariant. For $k$ even, sending each height $h$ to $\tfrac{k}{2}-h$ preserves $\mathcal{V}_0$ and $\mathcal{V}_1$, and so acting with $\mcd_{\frac{k}{2}}$ implements a symmetry. For example, in the Ising case, $\mcd_1=\mcd_\psi$ is the generator of spin-flip symmetry. For $k$ odd, $\mcd_{\frac{k}{2}}$ maps between $\mathcal{V}_0$ and $\mathcal{V}_1$ by a trivial relabeling of the heights, merely showing that the height models ${M}_0$ and ${M}_1$ are identical. 
+
+Similarly, in the clock models, defects defined using the Abelian objects implement the $\mathbb{Z}_N$ symmetries. Namely, the operator $\mcd_a$ cyclically shifts all the spins in $\mathcal{V}$, with the fusion rule \eqref{clockabelian} giving the necessary
+\begin{align}
+\mcd_a\mcd_b = \mcd_{(a+b)\,{\rm mod}\ N}\ .
+\end{align}
+Another defect implements charge-conjugation symmetry in the clock models, sending each height $h\to N-h$. 
+Including it in a fusion algebra with the objectes in the $\mathbb{Z}_N$ Tambara-Yamagami category allows the construction of a larger category,  a $\mathbb{Z}_2$ extension of the $\mathbb{Z}_N$ Tambara-Yamagami category. 
+In the larger category, the subcategory of Abelian simple objects is given by $\text{Vec}_{D_N}$.
+These ``$C$-disorder'' defects are described in the CFT setting in \cite{Zamolodchikov86}. 
+
+
+
+The action of a defect labeled by $\varphi$ in a $\mathbb{Z}_2$ graded theory thus depends on whether $\varphi$ is even or odd, and whether $d_\varphi=1$ or not. 
+To summarize, the dualities and symmetries are
+\begin{align*}
+\varphi\hbox{ even (or no grading):} \quad&\begin{cases} \hbox{self-duality }\ M_0\to M_0,\ M_1\to M_1\quad&d_\varphi>1\quad\\
+\hbox{symmetry}&d_\varphi=1
+\end{cases}\cr
+\varphi\hbox{ odd:} \quad&\begin{cases} \hbox{duality }\ M_0\to M_1,\ M_1\to M_0\qquad\quad&d_\varphi>1\\
+\hbox{relabeling}&d_\varphi=1
+\end{cases}
+\end{align*}
+
+
+
+
+
+
+\subsection{Kramers-Wannier duality defects}
+\label{sec:KWduality}
+
+
+We here describe how topological defects implement Kramers-Wannier (KW) duality, before moving on to the generalizations. As well as giving an elegant setting for the many known results, our framework allows new results to be derived, even in such a well-studied model as Ising. For example, we showed in Part~I how rigorous lattice calculations give precise constraints for critical exponents in any continuum limit for Ising, and we extend the results below in section \ref{sec:twistedbc}.
+
+By a Kramers-Wannier duality we mean those where acting with the duality transformation twice yields a sum over symmetry transformations. Namely, a topological defect $\mcd_{X}$ implementing a KW duality obeys
+\begin{align}
+\left(\mcd_X \right)^2 =\mathds{1}+\sum_{a=1}^{N-1} \mcd_a\qquad\hbox{ with all }d_a=1\ .
+\label{KWdef}
+\end{align}
+In Ising, the duality defect obeys $\mcd_\sigma^2 = \mathds{1} +\mcd_\psi$, where $\mcd_\psi$ is the spin-flip generator.  The definition \eqref{KWdef} therefore provides a natural generalization to the clock/Potts models. 
+
+KW duality defects are not invertible. For example, for Ising the right-hand side of \eqref{KWdef} projects onto all states even under spin-flip. The traditional way of dealing with this fact is to use the symmetries to split the vector space $\mathcal{V}$ into sectors where the duality transformation can be inverted and those where it acts trivially. Although sometimes useful calculationally, this splitting obscures the general structure. Moreover, it makes such dualities seem quite special to the Ising/Potts models, where such a splitting is easy to do. 
+
+The canonical example of Kramers-Wannier duality is in the Ising model. The lack of invertibility of $\mcd_\sigma$ manifests itself in the presence of two free-energy minima in the low-temperature phase (and so two ground states in the quantum-spin-chain limit), while the high-temperature phase has a unique minimum. 
+The duality defects in the clock/Potts models arise from the operator $X$ in the $\mathbb{Z}_N$ Tambara-Yamagami category. The Ising model is the special case with $N=2$, and one of many nice features of our construction is that the generalization to Potts and clock models is very simple.  The fusion rules in  \eqref{clockabelian} and \eqref{clockX} make immediately apparent that $\mcd_X$ obeys \eqref{KWdef}, with the right-hand side the sum over all spin-shift operators. It follows that $(\mcd_X)^3 = N\,\mcd_X$, so that this duality defect is indeed not invertible for $N>1$. 
+
+A special feature of the Ising/clock models is that all the fluctuating degrees of freedom live on one sublattice. One can think of ${M}_0$ and $M_1$ each as being nearest-neighbor models, the former on a graph $G^+$ and the latter on the dual graph $G^-=\widehat{G^+}$. Namely, because $G$ is bipartite, its vertices split into two sets, those of $G^\pm$. The edges in $G^+$ join any two vertices that share a quadrilateral in $G$, and likewise for $G^-$.  The interactions within each of $G^\pm$ are then indeed nearest neighbor. 
+
+As the odd object $X$ labels the KW duality defect, an $X$ is always across from a fluctuating degree of freedom and vice versa. The duality defect therefore maps between a clock model $M_0$ on the graph $G^+$ and $M_1$ on the dual graph $G^-$.  The defect weights are given in terms of tetrahedral symbols by  \eqref{eq:def_LDefect}, with those for Ising given explicitly in Part~I.
+These tetrahedral symbols are found from \eqref{ATY6j} with $A = \mathbb{Z}_N$ and $\chi(a,b) =  \exp\!\left[\frac{-2\pi i}{N}ab\right]$, yielding
+\begin{align}
+\label{Pottsdefect}
+	\DefectSquarex{X}{\,a}{\,b}{X} &= \frac{1}{d_X} \exp\!\left[-\frac{2\pi i}{N}ab\right] \,,
+&	\DefectSquarex{\,a}{X}{X}{\,b} &= \frac{1}{d_X} \exp\!\left[\frac{2\pi i}{N}ab\right] \,.
+\end{align}
+with $a,b=0,\dots, N-1$.
+Their symmetry properties given in \eqref{colexchange}.
+ 
+
+The models ${M}_0$ and ${M}_1$ have the same types of degrees of freedom, and are defined via the {same} couplings $A_Q$ for each quadrilateral $Q$ of $G$. The partition functions $Z_0$ and ${Z}_1$ thus depend on the same amplitudes. However, the duality effectively {\em changes} the couplings. We here explain why using more conventional definitions. The Potts coupling $J_Q$ for a given bond is defined by setting the weight to be $e^{J_Q}$ if the two spins at the end of the bond are the same, and $1$ if they are different. The basis weights given in \eqref{Isingbasisweights} and  \eqref{clockprojectors} depend on whether the fluctuating spins are on the top and bottom of $Q$, or on the sides.  To simplify the discussion, we work in the transfer matrix on the square lattice. Each Boltzmann weight depends only on four heights $h'_{n-1}, h'_{n}, h'_{n+1}, h_{n}$. In ${M}_0$ the spins all reside on vertices with even labels, so the Potts interaction couples the spins $h'_{n}$ and $h_n$ for $n$ even while it couples the spins $h'_{n-1}$ and $h'_{n+1}$ when $n$ is odd. In ${M}_1$, the reverse holds. To further simplify, we let the couplings depend spatially only on whether $n$ is even and odd respectively.  The couplings defined in \eqref{uQdef} then depend on $u_{\rm even}$ and $u_{\rm odd}$ respectively.
+The subtlety comes in relating them to the traditional Potts couplings $J_x$ and $J_y$: which $u$ is horizontal and which is vertical depends on the model. Namely, for $M_0$, using \eqref{WAP} and \eqref{uQdef} gives
+\begin{align}
+	e^{J_x} = \cot \left(\lambda-u_{\rm odd} \right)\ , \qquad  
+	e^{J_y}=	\frac{\sin(2\lambda-u_{\rm even})}{\sin u_{\rm even} }\qquad\hbox{ in }M_0.
+\label{Jxyu}
+\end{align}
+Where for Potts $\lambda$ is defined by $2\cos\lambda=\sqrt{N}$, so that $\lambda$ and $\mu$ are imaginary for $N>4$. At $N=4$, one takes a limit $u\propto\lambda\to 0$. 
+To get $M_1$, we must change the orientation on each $Q$, so
+\begin{align}
+	e^{J_x} =	\cot\left(\lambda-u_{\rm even} \right)\ , \qquad e^{J_y} =\frac{\sin(2\lambda-u_{\rm odd})}{\sin u_{\rm odd} } \qquad\hbox{ in }M_1.
+\label{Jxyu2}
+\end{align}
+Thus while both $M_0$ and $M_1$ are both $N$-state Potts models, in general the two have different couplings and are defined on different graphs. 
+
+
+The ``self-dual'' line in the Potts model (and in an integrable clock model) is therefore described by $u_{\rm even}=u_{\rm odd}$ for every $Q$. We put self-dual in quotes because in our nomenclature we describe this mapping as a (Kramers-Wannier) duality, {\em not} a self-duality, even at the critical point. We justify this naming by the fact that even at $u_{\rm even}=u_{\rm odd}$, this map in general not only changes the model to one on a different lattice but, as detailed in \eqref{sec:bdry}, changes different boundary conditions even on the square lattice.  We reserve self-dual without quotes to mean dualities implemented by $\upsilon$ even, as we discuss next.
+
+
+
+
+\subsection{Self-duality in the eight-vertex model and XXZ spin chain}
+\label{sec:8v}
+
+Here we illustrate self-duality in the eight-vertex model, another fundamental model of statistical mechanics. 
+This self-duality  \cite{Baxter1978,Baxter1982,Wu1989} however comes from an even-$\upsilon$ defect, but is very similar to Kramers-Wannier duality.  We recover it by using topological defects, and make this similarity precise. This calculation provides a useful demonstration of the general approach. 
+
+In our approach, the eight-vertex model arises from considering the $\mathcal{A}_5$ category with $\upsilon=1$, i.e.\ $k=4$.
+The fusion rules for a spin-1 object here are
+\begin{align}
+	1\otimes1 &=0 \oplus1\oplus2 \,, &	1\otimes2 &= 1\,,
+&	\frac12\otimes1 &= \frac12\oplus\frac32 = \frac32 \otimes 1\,, 
+\label{A5fusion}
+\end{align}
+As apparent in \eqref{spin1heights}, with $\upsilon=1$ there are two distinct models, with $M_0$ comprised entirely of integer heights and $M_1$ half-integer.
+
+The model $M_1$ built from \eqref{A5fusion} is the eight-vertex model.
+At each site we have a two-state system with heights either $\tfrac12$ or $\tfrac32$ and no adjacency constraints.
+The weights depend only on whether they are the same or different, because of the spin-flip symmetry.
+We then can rewrite configurations in terms of the domain walls living on the edges of the dual graph $\widehat{G}$.
+A domain wall is placed on such an edge if the neighboring heights on $G$ are different, i.e., one is $\tfrac12$ and the other $\tfrac32$, while the edge is left empty if the two heights are the same.
+On the plane with free boundary conditions the map from heights to domain walls is therefore two to one.
+With only two allowed heights at each vertex of $G$, there must be an even number of domain walls touching each vertex of $\widehat{G}$.%
+	\footnote{The eight-vertex model is usually written in terms of arrows on each edge of $\widehat{G}$ instead of domain walls. Since our $G$ is bipartite, it is easy to define a map between the two.}
+Since these domain walls cannot end, there must be an even number of them touching each vertex of $\widehat{G}$, and so eight possible configurations at each vertex (hence the name).
+These are
+\begin{align}
+\underbrace{
+\text{\rotatebox[origin=c]{45}{$\eva$}}
+\;\; \text{\rotatebox[origin=c]{45}{$\evb$}}
+}_{a_Q}
+\quad\underbrace{
+\text{\rotatebox[origin=c]{45}{$\evc$}}
+\;\;\text{\rotatebox[origin=c]{45}{$\evd$}}
+}_{b_Q}
+\quad\underbrace{
+\text{\rotatebox[origin=c]{45}{$\evh$}}
+\;\; \text{\rotatebox[origin=c]{45}{$\evf$}}
+}_{c_Q}
+\quad\underbrace{
+\text{\rotatebox[origin=c]{45}{$\evg$}}
+\;\; \text{\rotatebox[origin=c]{45}{$\eve$}}
+}_{d_Q}
+\label{eightvertices}
+\end{align} 
+labeled by the corresponding Boltzmann weights $a_Q,b_Q,c_Q,d_Q$ \cite{Baxter1982}. 
+
+Each vertex of $\widehat{G}$ is at the center of a quadrilateral $Q$, so these Boltzmann weights are related to the amplitudes $A_Q(\chi)$.  The projectors can be written in terms of the Pauli matrices $X_{j,j+1}$, $Y_{j,j+1}$ and $Z_{j,j+1}$ acting on the two-state system on the edge of $\widehat{G}$ separating the heights $j$ and $j+1$ in $\mathcal{V}_-$. Since $\upsilon =1$, the first fusion rule in \eqref{A5fusion} means there are three channels $\chi=0,1,2$ in \eqref{WAP}, and the tetrahedral symbols in \eqref{tetrahalf} give
+\begin{subequations} \label{P012} \begin{align}
+	P_Q(0) &\rightarrow \frac{1}{4}\left( X\otimes X - Y \otimes Y + \mathds{1}\otimes \mathds{1} + Z\otimes Z \right) \,,\\
+	P_Q(1) &\rightarrow \frac{1}{2}\left( \mathds{1}\otimes \mathds{1} -X\otimes X  \right) \,,\\
+	P_Q(2) &\rightarrow \frac{1}{4}\left( X\otimes X + Y \otimes Y + \mathds{1}\otimes \mathds{1} - Z\otimes Z \right) \,.
+\end{align} \end{subequations}
+Comparing to \eqref{eightvertices} gives
+\begin{align} \begin{aligned}
+2a_Q&= A_Q(1) + A_Q(2)\ ,\qquad\quad 2b_Q = A_Q(2)-A_Q(1)\ ,\cr 
+2c_Q &= A_Q(0)+A_Q(1)\ ,\qquad\quad 2d_Q=A_Q(0)-A_Q(1)\ .
+\end{aligned} \label{8vweights}
+\end{align}
+These projectors and Boltzmann weights obey a $\mathbb{Z}_2$ symmetry exchanging domain walls with empty edges (which is called the ``zero field'' condition in the eight-vertex language).  
+
+With the fusion rules \eqref{A5fusion}, a spin-1 defect also preserves the integer and half-integer heights, and therefore preserves $M_0$ and $M_1$ individually. As its fusion rules from \eqref{A5fusion} are non-trivial (it has quantum dimension $d_1=2$), it must implement a {self-duality}.  The defect creation operator $\mcd_1$ commutes with the transfer matrix of any eight-vertex model whose Boltzmann weights obey \eqref{8vweights}. Such weights satisfy $a_Q-b_Q=c_Q-d_Q$, which indeed is a self-duality condition of the eight-vertex model \cite{Baxter1978,Wu1989}. While the eight-vertex model is integrable for any choice of $a,b,c,d$ independent of $Q$, this self-duality holds even in the non-integrable case where the weights dependent on $Q$.
+
+Explicitly, the defect weights for $M_1$ are
+\begin{align}
+	\DefectSquarex{a}{\,b}{a'}{\,b'} \;&=\; \Msixj{1 & a &b}{1 & b' & a'}\; =\;
+			\dfrac{1}{\sqrt{3}} \cos\!\left[ \dfrac{\pi(a+b+a'+b')}{2} + \dfrac{\pi}{3} \right] \quad\quad\hbox{for }\       a,a',b,b'\in\big\{\tfrac12,\,\tfrac32\big\} \,,\quad		
+\end{align}
+making apparent how the self-duality implemented by this defect is much more complicated than a symmetry transformation. The corresponding defect-creation operator is then
+\begin{align}
+\label{defopAfive}
+\mathcal{D}_1 | \{ x_j \} \rangle &= \sum_{\{ y_j \} } \prod_{j=1}^N\sqrt{d_{x_j} d_{y_j}} \Msixj{1 & y_j &y_{j+1}}{1 & x_{j+1} & x_j}  | \{ y_j \} \rangle\cr
+&=\sum_{\{ y_j \} } \prod_{j=1}^N\sqrt{d_{x_j} d_{y_j}} 
+\dfrac{1}{\sqrt{3}} \cos\!\left[ \dfrac{\pi(x_j+y_j+x_{j+1}+y_{j+1})}{2} + \dfrac{\pi}{3} \right] | \{ y_j \} \rangle
+\end{align}
+for $x_j,y_j \in \{1/2, 3/2\}$.
+The resulting self-duality is similar to Kramers-Wannier duality as a consequence of the spin-2 defect here generating spin-flip symmetry as in \eqref{heightflip}.
+A shift makes the connection more apparent, as
+\begin{align}
+	\Big(\mcd_1 - \tfrac14 \big(\mathds{1} + \mcd_2\big)\Big)^2\ = \ \tfrac98\big(\mathds{1}+ \mcd_2\big) \,.
+\end{align}
+The right-hand side is of the same form as \eqref{KWdef} for Ising, projecting onto states even under spin-flip (i.e., here eigenvectors of $\mcd_2$ with eigenvalue $1$).
+Thus in this sector, $\mcd_1 -\frac12$ acts in the same fashion as Ising Kramers-Wannier duality. However,  $(\mcd_1)^2-\mcd_1$ annihilates spins odd under spin-flip here, as opposed to the Ising $\mcd_\sigma^2=0$ acting on such states. 
+
+This self-dual transfer matrix can be mapped on the famed XXZ spin chain by taking an appropriate limit. Namely, defining couplings $\Delta$ and $\epsilon$ by
+\begin{align}
+A_Q(0)=1-\epsilon\ , \qquad A_Q(1)=1-\Delta\epsilon\ ,\qquad A_Q(2) = 1 +\epsilon
+\end{align}
+for all $Q$, the transfer matrix can be written as $T=1-\epsilon H$ for small $\epsilon$, where
+\begin{align}
+H_{\rm XXZ}=\sum_j \Big({-}\Delta X_j X_{j+1} - Y_jY_{j+1} + Z_jZ_{j+1}\Big)\ .
+\end{align}
+After a unitary transformation to flip the signs of $X_{2n}$ and $Y_{2n}$, we recover the XXZ Hamiltonian (with $X$ and $Z$ exchanged from the standard conventions). Since our defects commute with the transfer matrix for any choice of the $A_Q(\chi)$, the defect creation operator $\mcd_1$ commutes with $H_{\rm XXZ}$ as well. 
+This Hamiltonian obeys a $U(1)$ symmetry, and standard results \cite{Temperley1971,Baxter1982} show that it is critical when $|\Delta|\le 1$. 
+
+
+\subsection{Generalized dualities from defects}
+\label{sec:generalized}
+
+
+We showed that defects give an elegant way of implementing Kramers-Wannier duality in the Ising, Potts and clock models. The models $M_0$ and $M_1$ related by Kramers-Wannier duality have the same degrees of freedom, albeit on different lattices and with different boundary conditions. Here we give a few examples of dualities that are not Kramers-Wannier. 
+
+
+Using $\varphi=\tfrac12$ generalizes the Ising duality defect to all of the ABF models, mapping between $\mathcal{M}_0$ and $\mathcal{M}_1$. 
+In the ABF models, ${M}_0$ and ${M}_1$ have the same degrees of freedom, but we must keep the $A_Q(\chi)$ (chosen with some orientation) fixed on each quadrilateral $Q$.  
+These defects generalize those found using integrability \cite{Chui2001,Chui2002} to allow for non-uniform couplings and hence no integrability.  
+The ensuing duality results in linear identities relating the partition functions, some of which we discuss below. 
+The generalized duality in the $k=3$ ABF model \cite{Feiguin2007} has already been discussed in the Hamiltonian limit where the $k=3$ chain at the critical point was redubbed the ``golden chain'' and the self-duality called ``topological symmetry''.%
+	\footnote{In \cite{Feiguin2007}, both $\upsilon$ and $\varphi$ are taken to be 1, not 1/2.  However, for $k=3$ the two are equivalent, up to relabeling heights on even and odd sites.}
+The $\varphi=\frac12$ defect weights from \eqref{eq:def_LDefect} are
+\begin{align}
+	\DefectSquarex{a}{b}{a'}{b'} = \begin{bmatrix} \frac12& a & a' \\[3pt] \frac12 & b' & b \end{bmatrix}
+	%	\Msixj{\frac12 & a & a'}{\frac12 & b' & b} .
+	\label{ABFdefect}
+\end{align}
+Using \eqref{tetrahalf} gives them explicitly:
+\begin{subequations} \begin{align}
+	\DefectSquarex{\quad a}{\,a+\frac12}{a+\frac12}{\,a} &= \DefectSquarex{a+\frac12}{\,a}{\quad a}{\,a+\frac12}
+	= \frac{ (-1)^{2a} }{ d_a d_{a+\frac12} } \,,\qquad
+\\	
+	\DefectSquarex{\quad a}{\,a+\frac12}{a+\frac12}{\,a+1}
+	&= \DefectSquarex{a+\frac12}{\,a}{\,a+1}{\,a+\frac12}
+	= \DefectSquarex{\,a+1}{\,a+\frac12}{a+\frac12}{\,a}
+	= \DefectSquarex{a+\frac12}{\,a+1}{\quad a}{\,a+\frac12}
+	= \frac{1}{d_{a+\frac12}} \,.
+\end{align} \end{subequations}
+
+
+An example where $M_0$ and $M_1$ look very different is given by the $\mathcal{A}_5$ category with $\upsilon=1$. As discussed in section \ref{sec:8v}, $M_1$ is the eight-vertex model. In the model $M_0$, the allowed heights $0$, $1$, $2$ are integer-valued. This model also is rather nice, generalizing the ``PXP" model and deformations \cite{Fendley2004} to a two-species hard-particle model. The heights $0$ and $2$ play the role of the two species, while any site with height $1$ is considered empty. The adjacency graph from \eqref{spin1heights} with $k=4$ ensures that the hard particles cannot be adjacent to themselves nor to each other, but only to an empty site.  (This adjacency graph alternatively is the $\widehat{D}_5$ Dynkin diagram \cite{Pasquier1987} if one gives different labels to the heights on $G^+$ and $G^-$.)
+The projectors and transfer matrix/Hamiltonian follow from the $F$-matrix \eqref{Fmat1}.
+
+
+Acting with $\mcd_{\frac12}$ on the eight-vertex model $M_1$ gives a duality to the two-species hard-square $M_0$. Using \eqref{eq:def_LDefect} and the tetrahedral symmetries allows us to use \eqref{tetrahalf} to give the explicit expressions for this duality defect:
+\begin{align} \begin{split}
+	\DefectSquarex{\mkern2mu 0}{\;1}{\frac12}{\,\frac12} = \DefectSquarex{\mkern2mu 0}{\;1}{\frac12}{\,\frac32} = \DefectSquarex{\mkern2mu 2}{\;1}{\frac32}{\,\frac12} = \DefectSquarex{\mkern2mu 2}{\;1}{\frac32}{\,\frac32} &= 2^{-\frac12}3^{-\frac14} \,,
+\\	\DefectSquarex{\mkern2mu 1}{\;1}{\frac12}{\,\frac12} = -\Big(\DefectSquarex{\mkern2mu 1}{\;1}{\frac12}{\,\frac32}\Big) = \DefectSquarex{\mkern2mu 1}{\;1}{\frac32}{\,\frac32} &= 2^{-1} 3^{-\frac14}\,.
+	\label{8vhardsquare}
+\end{split} \end{align}
+The remainder are found by reflecting horizontally.
+The self-dual line of the eight-vertex model maps to a self-dual line in this two-species hard-square model.
+Indeed, the self-duality ($\varphi=1$) of the latter is given by the defect weights
+\begin{align}
+	\DefectSquarex{a}{\,b}{a'}{\,b'} \;=\dfrac{1}{2} \sin\dfrac{\pi(ab'+a'b)}{2} \qquad\quad\hbox{for }  a,a',b,b'\in\{0,1,2\} \,.
+\end{align}
+A section of this integrable self-dual line (that dual to $|\Delta|<1$) is critical. The self-duality is exact on the lattice and the critical line has continuously varying exponents, as opposed to the deformed PXP model. Off the self-dual line, however, it is not guaranteed that the duality \eqref{8vhardsquare} between models persists, although it may. It thus would be interesting to analyze this mapping further, and to explore the phase diagram away from the self-dual line, i.e.\ by allowing for interactions not written in terms of the projectors $P_0$, $P_1$ and $P_2$.
+
+
+
+
+
+
+As any object $\varphi$ with $d_\varphi>1$ in any fusion category results in a non-trivial duality or self-duality, we could give many more examples. The ensuing duality results in linear identities relating the partition functions, some of which we discuss below. Using $\varphi=1$ results in a self-duality in any of the $\mathcal{A}_{k+1}$ models. We use this self-duality in the next section \ref{sec:selfduality} to derive degeneracies in the ground state and the low-lying states of ABF models with Boltzmann weights staggered in space.  Self-duality has already been used to explore phase diagrams of $\mathcal{A}_{k+1}$ Hamiltonian with $\upsilon=\varphi=1$ for couplings uniform in space but with arbitrary amplitudes \cite{Trebst2008,Gils2013}.
+
+
+
+
+
+
+
+\section{Degeneracies from self-duality}
+\label{sec:selfduality}
+
+
+
+One remarkable feature of our setup is that the dualities and self-dualities explained in section~\ref{sec:duality} occur in any lattice model built on a fusion category.
+Whereas dualities help understand how different theories are equivalent to each other, self-dualities allow a given theory to be probed deeper.
+One famed use of self-duality is to locate critical points.
+However, although self-duality is enough information to fix the critical point in a few simple cases like Ising, it does not always.
+For example, in Potts with $N\ge 4$, the self-dual point is gapped.
+The $\mathcal{A}_{k+1}$ models with $\upsilon=1$ are not in general critical even when self-dual and uniform in space, instead having a rich phase diagram explored in \cite{Trebst2008,Gils2013,Vernier2017}.
+We do emphasize however that if one breaks the duality by no longer defining the Boltzmann weights as a sum over the projectors of the fusion category, then typically the models are not critical.
+Thus we believe it is fair to say that typically, critical points in height models are self-dual, but not the converse.
+
+
+We show in this section one striking consequence of self-duality. Acting with duality defect operators explains the presence of unusual degeneracies in the ground and excited states of the spectrum of certain (non-integrable) gapped spin chains. These degeneracies are between states not related by any symmetry. Moreover, in some (perhaps all) such cases, the scaling limit of such chains turns out to be an integrable field theory. The presence of the self-duality provides intuition into why this is so. In an integrable theory, the scattering matrix of the low-energy excitations obeys special properties. We explain how the self-duality provides a simple way of constraining it further.
+
+In this section we study the quantum spin-chain limit, because it is more transparent to probe the structure of the ground states than the minima of the free energy. To simplify further, we consider the case where the Hamiltonian \eqref{HPdef} involves only projectors onto the identity:
+\begin{align}
+H = \sum_{j=1}^L u_j P^{(0)}_j\ .
+\label{HP}
+\end{align}
+This  Hamiltonian acts on the Hilbert spaces $\mathcal{V}_\pm$, where the inner product is defined by making height configurations orthonormal.
+We take periodic boundary conditions, so that we can utilize the defect-creation operators defined in section~\ref{sec:defectcreationop}.
+We make no assumptions about integrability; typically $H$ will be integrable only if the $u_j$ are uniform in space. As we hope will be obvious from our analysis, the methods will apply to more complicated sums of projectors as well. 
+
+For the ABF or Potts models, this Hamiltonian (\ref{HP}) is a standard one. In these cases it is typically written in terms of the Temperley-Lieb generator $e_j=d_{\upsilon}P^{(0)}_j$, as shown for ABF in (\ref{TLproj}) and Potts in \eqref{TLPotts}. In this section we study mainly the staggered case, where $u_j \propto -1 +t(-1)^j$. 
+The staggered Hamiltonian is then
+\begin{align} 
+H_{\rm stag} = 
+H_{\rm crit}+H_{\rm alt} \,,\qquad H_{\rm crit} = -\sum_{j=1}^L e_j \,,\qquad H_{\rm alt} = t\sum_{j=1}^L(-1)^j e_j \,,
+\label{Hcritpert}
+\end{align}
+with $L$ even. Here we put the sign in front of $H_{\rm crit}$ to make the models ferromagnetic. For Potts, one also needs $N\le 4$ to make the uniform case $t=0$ critical like ABF. This Hamiltonian \eqref{Hcritpert} can be obtained directly from the transfer matrix (\ref{Transfermatrixdef}) by taking $u_Q$ from \eqref{uQdef} to be small, as shown in \eqref{HTL} for the critical ABF case.
+Although $H_{\rm alt}$ breaks the integrability, it has long been known from a variety of approaches that it is relevant and results in a gap.
+The Coulomb-gas approach gives the scaling dimension of $H_{\rm alt}$ as $\frac{k+4}{2k+2}$ \cite{denNijs1979}, relevant for any $k$. This operator corresponds to $\Phi_{2,1}$ in the conformal field theory describing the continuum limit of the ABF model \cite{Pasquier:1987} (see section \ref{sec:gmin} for a more thorough explanation of the notation). Interestingly in light of the following, the perturbed conformal field theory is integrable even though this lattice model is not \cite{Smirnov1991,Chim1991}.
+
+
+
+
+\subsection{Degenerate ground states}
+\label{sec:degenerategs}
+
+Diagonalizing $H$ to find its ground states obviously is an intractable problem in general.
+Our strategy therefore is to first consider the completely staggered limit, where the model can be solved trivially.
+We then use self-duality to 
+show that the ground states remain degenerate, up to exponentially small finite-size corrections, throughout an entire phase. 
+
+
+In the completely staggered case $t=1$, the Hamiltonian \eqref{Hcritpert} becomes a sum of commuting operators, as no $e_{2a}$ appear.
+Each term thus can be diagonalized independently and all eigenvalues of $H_{\rm cs}$ computed.
+Since $e_{j}^2=d_{\upsilon} e_j$ by construction, it has only eigenvalues $d_\upsilon$ and 0.
+These ground states are easily constructed explicitly, since the matrix elements of $e_{2a-1}$ vanish unless $h_{2a-2}=h_{2a}$. 
+The ground states are thus labeled by a fixed height $h_{2a-2}=h_{2a}=r$, and are given by
+\begin{align}
+	\kett{r} = \ket{ r\tilde{r}r\tilde{r}r\tilde{r}\cdots } ,\qquad 
+	\ket{\tilde r} \defineas \frac{1}{\sqrt{d_rd_\upsilon}}\sum_{x}N_{r \upsilon}^x \sqrt{d_x} \ket{x} ,
+	\label{staggeredgs}
+\end{align}
+Graphically these states can be written in the fusion-tree basis defined in \eqref{eq:fusiontreedef} as
+\begin{align} 
+	\kett{r} \;=\; \Hcsgsbasis\ ,
+\label{fusiontreebasis}
+\end{align}
+where as always the vertical lines are in the $\upsilon$ representation here.
+Using \eqref{F0c}, this particular tree can be rewritten as
+\begin{align} 
+	\kett{r} \;=\; \Hcsgs \ ,
+\label{csgscupbasis}
+\end{align}
+since the cups are invariant under $e_{2a-1}$. 
+
+The expression \eqref{csgscupbasis} gives the ground states for the more general completely staggered models, where  $e_{j}$ in \eqref{Hcritpert} is replaced with $P_{j}^{(0)}$ as in \eqref{HP}.
+The ground states of all these completely staggered models therefore obey
+\begin{align}
+	H_{\rm cs} = \sum_{a}^{L/2} P^{(0)}_{2j-1} \qquad\implies\qquad
+	H_{\rm cs} \kett{r} = -d_{\upsilon}L\, \kett{r}
+	\label{energycs}
+\end{align}
+for even $L$.
+For ABF, $\upsilon=\tfrac12$, while for Potts $\upsilon=X$.
+
+
+The number of such ground states is simply the number of allowed heights $r$. For the ABF model with $k$ odd, there are $(k+1)/2$ ground states in each of $M_0$ and in $M_1$, corresponding to setting  $r$ integer and half-integer respectively.
+For $k$ even, however, the models $M_0$ and $M_1$ are not equivalent, but rather dual to each other via $\mcd_{\frac12}$.
+Indeed, there are $k/2+1$ ground states in $M_0$, with $r=0,1,\dots,k/2$, but one less ground state in $M_1$, with $r=1/2,3/2,\dots,(k-1)/2$.  
+Since the number of ground states is not invariant under this duality, $\mcd_{\frac12}$ is not invertible for $k$ even. 
+
+The operators $\mcd_\varphi$ commute with the Hamiltonian for any staggering. Their action therefore must therefore take ground states to ground states. We find in general how $\mcd_{\varphi}$ acts on on any of the ground states by using the fusion algebra.
+This is most easily seen by first applying $\mcd_\varphi$ on the state given in \eqref{csgscupbasis}, and then changing basis.  This amounts to fusing an `$\varphi$' strand with an `$r$' stand, yielding the strikingly simple formula
+\begin{align}
+	\mcd_\varphi \kett{r} = \sum_{s} N_{\varphi r}^s \kett{s} .
+	\label{defectongs}
+\end{align}
+In the ABF models, applying $\mcd_{1/2}$ repeatedly to $\kett{0}$ gives all the ground states in the completely staggered limit.
+
+We can easily verify \eqref{defectongs} in the Potts models by using the defect weights in the first line of \eqref{Pottsdefect}, yielding \begin{align}
+\mcd_{X} \kett{a} = \kett{X} , \qquad\quad 
+\mcd_{X} \kett{X} = \sum_{b=0}^{N-1} \kett{b}
+\label{DXa}
+\end{align}
+for any $a=0,\,\dots,\,N-1$.
+The states $\kett{a}$ have all fluctuating spins fixed to be $a$, while $\kett{X}$ is the equal-amplitude sum over all states.
+The former states live in the model $M_0$, while the latter live in $M_1$.
+Thus we recover the usual picture: the $N$ ground states  $\kett{a}$ in $M_0$ means that it is in the ordered phase, while the unique ground state $\kett{X}$ in $M_1$ indicates it is in the disordered phase. The defect-creation operator still implements Kramers-Wannier duality even in this extreme limit. 
+
+
+
+The ground states form a multiplet under the action of the defect creation operators. Since for $d_a>1$ the transformation is not unitary, no symmetry relates different values of $r$ in general. Although a local (in terms of heights) order parameter distinguishes the ground states, the degeneracies are {\em not} due to spontaneously breaking any symmetry. Sometimes this phenomenon is referred to as ``topological symmetry breaking'', as occurs in two-dimensional quantum systems with topological order; see e.g.\  \cite{Bais2009}. 
+In the related 3d Chern-Simons topological field theory, Wilson loops are akin to defect lines, since they have no energy \cite{Nayak2008}. In the non-Abelian case, inserting Wilson loops around cycles thus gives degenerate states unrelated by any symmetry. 
+
+
+The states $\kett{r}$ are exact ground states only in the completely staggered limit $t=1$.
+Nonetheless, the degeneracy must hold away from this limit, up to splitting exponentially small in the size of the system.
+This fact follows from doing perturbation theory around $t=1$, where different states $\kett{r}$ and $\kett{r'}$ mix only at $\big(\frac{L}{2}\big)$\textsuperscript{th} order.
+Indeed, since the perturbation is a sum over terms with next-nearest neighbor interactions, to get a non-vanishing matrix element, the perturbation must change heights $h_{2a}=r$ to $h_{2a}=r'$ for all $a$. 
+Letting $E_r$ be the energy of the eigenstate $\kett{r}$ deformed away from $t$, this perturbative argument shows that the energy splitting $E_r-E_{r'}\propto (1-t)^{L/2}$ is exponentially small for $0<t<1$.
+One thus expects the degeneracies remain throughout the region $0<t\le 1$, and only at the critical point $t=0$ does the splitting finally become proportional to $1/L$.
+Moreover, even though the precise expression of $\kett{r}$ will change, the action 
+(\ref{defectongs}) of $\mcd_a$ on these degenerate ground states will remain throughout the phase.
+
+The Landau-Ginzburg approach gives a  nice heuristic picture for these degenerate ground states \cite{Lassig1990}. Here the ground states are characterized as minima in a potential for some field $\phi$. For $k=3$, there are two such minima.  However, since the two ground states are not related by any symmetry, the potential must be drawn asymmetrically, as in Figure \ref{fig:TwoMinimaPlot}.
+\begin{figure}[htbp]
+   \centering
+   \includegraphics[scale=1.5]{figures/TwoMinimaPlot.pdf} 
+   \caption{A sketch of the effective Landau-Ginzburg potential for the staggered Fibonacci model, i.e.\ ferromagnetic ABF with $k=3$.}
+   \label{fig:TwoMinimaPlot}
+\end{figure}
+
+
+These ground-state degeneracies not required by symmetries resemble those found arising in two-dimensional gapped systems with  non-Abelian topological order \cite{Nayak2008}.
+The degeneracies have the identical mathematical structure, with the self-duality in our models playing the role of topological order.
+This correspondence of course is not a coincidence, as the same fusion categories describing our topological defects also govern the properties of anyons in a theory with topological order.  
+The precise correspondence between degeneracies in 1d and 2d models has already been exploited to build a 2d topological phases with Fibonacci anyons by coupling together quantum chains \cite{Mong2014}.
+Indeed, the Fibonacci structure for the 3-state Potts CFT perturbed by $\Phi_{1,3}$ described below in section \eqref{sec:AFM} is precisely the structure exploited there. 
+This suggests that a two-dimensional quantum version of the self-duality described here will be useful in understanding non-Abelian topological order. Indeed, such self-duality is found in the quantum net models described in \cite{Fendley2008}, and the results here hint that many generalizations of such are possible.
+
+\subsection{Degenerate excited states}
+
+Self-duality allows us to go beyond the ground states to make statements about degeneracies among the low-lying excited states. Acting with the defect operators shows that such degeneracies go hand-in-hand with the degenerate ground states described previously.
+Namely, since the defect creation operators commute with the Hamiltonian, excited states form degenerate multiplets that we can find when some of the states are kinks.
+Moreover, we can show directly and easily that there must exist states other than the kinks called {\em breathers}.
+We then can provide a very simple explanation of degeneracies among the single-particle excitations in certain integrable field theories.
+
+A kink is one kind of low-energy state occurring in theories with multiple ground states.
+An eigenstate with a kink at location $2b-1$ looks locally like distinct ground states to the right and to the left of $2b-1$.
+In the completely staggered case $t=1$,  a single kink corresponds to having $h_{2b-2}\ne h_{2b}$. 
+Elsewhere, the configuration looks like \eqref{staggeredgs}.
+The kinks $K^{r,r+1}$ and $K^{r+1,r}$ in the ABF models at $t=1$ necessarily have the height $h_{2b-1}=r+\frac12$, and are
+{\setmuskip{\medmuskip}{0mu}
+\begin{align}
+	\bigkett{K^{r,r+1}_b} &= \bigket{\cdots \, r \, \tilde{r} \, r \, \tilde{r} \, r \underbracket{ (r+\tfrac12) }_{\mkern-12mu\text{site $2b-1$}\mkern-12mu} \, (r+1) \, \widetilde{r+1} \, (r+1) \, \widetilde{r+1} \cdots} \,,
+\cr
+	\bigkett{K^{r+1,r}_b} &= \bigket{\cdots \, \widetilde{r+1} \, (r+1) \, \widetilde{r+1} \, (r+1) \underbracket{(r+\tfrac12)}_{\mkern-12mu\text{site $2b-1$}\mkern-12mu} r \, \tilde{r} \, r \, \tilde{r} \, r \, \cdots} \,.
+\label{Kdef}
+\end{align}}%
+For example, for $k=2$ or $k=3$ there are two ground states in $M_0$ and so two types of kinks: $K^{0,1}$ and $K^{1,0}$.
+In the Ising case, these are the usual domain walls, while in the Fibonacci case $k=3$ these are much less obvious objects.
+In the effective field theory with potential in figure \ref{fig:TwoMinimaPlot}, the kinks are field configurations that interpolate between the two minima (hence the name). 
+
+
+More generally, these excitations can be expressed as a projector acting on the ground state~\eqref{csgscupbasis}.
+To make a kink on single site, we act with $P^{(x)}_{2b-1}$ from \eqref{Pf}, where $x\in \upsilon\otimes\upsilon\ne 0$.
+Using~\eqref{eq:Trivalent_Bubble}, a kink between ground states $r$ and $w$ takes the form 
+\begin{align}
+	\bigkett{K^{rw ; x}_b } \;=\quad \kinkrwx \ ,
+\label{kinkstate}
+\end{align}
+with $N_{\upsilon \upsilon}^x N_{rw}^x \neq 0$ and $x\ne 0$. 
+The operator $-P^{(0)}_{2b-1}$ annihilates this kink state, while it gives $-d_\upsilon$ acting on the ground state. The kink state therefore has energy $d_\upsilon$ higher than the ground state. Similarly, a multi-kink state must satisfy global fusion constraints. When $n$ excitations are present they live in the vector space $\bigoplus_{\{x_j \in \upsilon \otimes \upsilon \}}V^{r_1 x_1}_{r_2} \otimes V^{r_2x_2}_{r_3} \otimes \cdots \otimes V^{r_{n} x_{n}}_{r_{n+1}}$, a basis for which is given by allowed labelings of the following fusion tree
+\begin{align}
+\kinkconfigr\ .
+\end{align} 
+For periodic boundary conditions, $r_{n+1} =r_1$. The energy of such an $n$-kink configuration relative to the ground state is $nd_\upsilon$ for any allowed choice of the $x_j$. 
+
+One important consequence of the definition \eqref{kinkstate} is that it includes excitations where $r=w$, i.e.\ the ground states on the left and right are identical. Such excitations are typically called ``breathers'' instead of kinks. The name arises from classical field theory, where it is a solution of the equations of motion for a kink and antikink oscillating back and forth.  From the effective-potential point of view illustrated in figure  \ref{fig:TwoMinimaPlot}, the breather $B^r$ is a localized excitation where the field strength is oscillating around the minimum corresponding to $r$.  Although in such a classical picture, such modes occur for any energy, in the quantum chain the breather energies are quantized to specific values. In models such as sine-Gordon, an explicit semiclassical calculation can be done \cite{ZamZam}. 
+One thing to note is that no breather $K^{0,0}$ occurs in the ABF models, as between two heights $0$ is $\tilde{0}=\frac12$, the ground state.  Likewise, there is no $K^{\frac{k}{2},\frac{k}{2}}$ either.  Thus for $k=3$, the breather $K^{1,1}$ only occurs around one of the minima of the potential in figure  \ref{fig:TwoMinimaPlot}, the shallower one.
+
+Since multiple ground states persist in the gapped phase $t>0$, the kink states should remain a part of the spectrum as well. They qualitatively resemble the $t=1$ expressions \eqref{Kdef}, interpolating between two regions that locally look like ground states. Due to \eqref{eq:loop_removal}, each excitation has energy $d_\upsilon$ relative to the ground state at $t=1$, but the expression will vary with $t$, presumably becoming gapless as $t\to 0$. 
+However, while all the kink states will remain in the spectrum,  in general symmetries alone do not guarantee that they all remain degenerate. Moreover, the argument that breathers remain stable and degenerate as $t<1$ no longer automatically holds, as it appears they can mix with other topologically trivial states in perturbation theory. 
+
+Nevertheless, the degeneracies between all kinks and breathers do persist for $t<1$ as a simple consequence of self-duality. This degeneracy was originally observed numerically in the field theory for $k=3$  \cite{Lassig1990}, and generalized to all $k$ by using rather subtle arguments involving the integrability of the perturbed conformal field theory and the (inferred) quantum-group symmetry \cite{Lassig1990,Smirnov1991,Chim1991,Dorey2002a,Dorey2002b}. Our work provides a direct lattice derivation of this striking result.
+
+
+
+As explained in section \ref{sec:generalized}, the operator $\mcd_1$ implements a self-duality in the ABF models. Acting with it on kink configurations gives other configurations with the same energy. Since $\mcd_1$ is non-local it is possible for it to change the type of kinks, or even map to non-kink configurations. Consider again the completely staggered case, where the kink states are ground states everywhere except at one height. Since acting with $\mcd_1$ takes ground states to a linear combination of ground states, it must do the same on kinks except in the region of that height. Since the defect creation operators are defined with periodic boundary conditions, we must consider two-kink configurations. For example, because $\mcd_1$ acting on any height $0$ must give the height $1$, we have
+\begin{align} \begin{split}
+	\mcd_1 \bigkett{K^{0,1}_b K^{1,0}_{b'}} &=
+	\mcd_1 \ket{\cdots 0\tilde{0} 0\tilde{0} 1\tilde{1}1 \cdots 1 \tilde{1}1 \tilde{0} 0\tilde{0} 0 \cdots}
+	\\&= \alpha_{0} \bigkett{ K^{1,0}_b K^{0,1}_{b'} } + \alpha_{1} \bigkett{ K^{1,1}_b K^{1,1}_{b'} } + \alpha_2 \bigkett{ K^{1,2}_b K^{2,1}_{b'} }
+	\label{D1K01}
+\end{split} \end{align}
+for some coefficients $\alpha_j$.
+The state $\bigkett{ K^{1,1}_b }$ is a breather. Explicitly, in the ABF models
+\begin{align}
+	\bigkett{ K^{rr}_b } = \ket{\cdots r \, \tilde{r} \, r \, \tilde{r} \, r \mkern1mu B^r r \, \tilde{r} \, r \cdots} \,,\qquad
+	\ket{B^r} \defineas \frac{1}{\sqrt{d_{\frac12}d_{r}}}\left(\sqrt{d_{r+\frac12}}\, \Ket{r-\tfrac{1}{2}} - \sqrt{d_{r-\frac12}}\, \Ket{r+\tfrac{1}{2}}\right) .
+\end{align}
+
+
+As $\mcd_1$ commutes with the Hamiltonian, the breathers and the kinks are thus degenerate in the completely staggered case, even though the states look quite different.
+The single-particle excited states, both kinks and breathers, thus can be thought of as forming a multiplet under the action of $\mcd_1$, in the same way that the ground states are.    
+Moving away from complete staggering, the computation of the energies using perturbation theory is much more difficult than for the ground states, since the Hamiltonian mixes kink/breather configurations at different sites.
+
+Luckily, we do not need to do this calculation to see that the degeneracies remain throughout the ordered phase.
+All we need is the self-duality. Because the distinct degenerate ground states remain in the gapped case, the kinks remain low-lying excitations.
+Repeatedly applying $\mcd_1$ to these states maps the different kinks among each other as well as to various breather modes.
+Since $\mcd_1$ commutes with the Hamiltonian for any $t$, all the states obtained this way must be degenerate.
+The degeneracies observed in perturbed conformal field theory exactly occur on the lattice.
+
+
+
+Working out the precise action of a defect on kinks and breathers configuration takes a little work.
+In the completely staggered theory for a general category, a kink can be labeled in terms of three objects as $\bigkett{ K^{rw;x}_b }$ (see \eqref{kinkstate}), where $r= h_{2a}$ for $a<b$ and $w=h_{2a}$ for $a \geq b$ while $x$ labels the flavour of kink that sits between the $r$ and $w$ vacua.
+For the state to exist we require $N_{rw}^x \neq 0$, with $x=1$ in the ABF case. 
+Acting with $\mcd_\varphi$ on a basis element results in
+\begin{align}
+\mcd_{\varphi} \left( \kinkconfigr  \right) &\cr
+= \sum_{w_j} \prod_j \sqrt{d_{r_j} d_{w_j}}& \Msixj{x_j & w_j & w_{j+1}}{\varphi &r_{j+1} & r_j} \kinkconfigw\qquad
+\label{defectkink}
+\end{align}
+where we have assumed periodic boundary conditions so that $r_{n+1} = r_1$ and $w_{n+1} = w_1$.
+For the ABF kink in \eqref{D1K01} we can use \eqref{F0c} to get $\alpha_{w'}=\sqrt{d_{w'}/d_1^2}$. 
+
+
+
+
+The self-duality of the (nonintegrable for $t\ne 1$) lattice model gives even more information about the long-distance behavior, providing a strong indication that the corresponding perturbed CFT is integrable. The argument comes from studying the scattering of two-particle states. The scattering matrix must commute with $\mcd_\varphi$, as it describes the asymptotic behavior of the states under time evolution by the Hamiltonian. Knowing the coefficients from \eqref{defectkink} provides a strong constraint on its form. Since in the staggered ABF case the kinks and breather form a degenerate spin-1 multiplet, the two-particle scattering matrices themselves can be written as a sum over projectors (\ref{AQbasis}). The simplest (and only nice) solution of this constraint is for two particles always scatter into two. Having no particle production is the hallmark of an integrable field theory, as a consequence of the additional conserved charges \cite{ZamZam}. Scattering matrices then can be non-diagonal only when there are exact degeneracies of the type we derived using the defect-creation operators. Although our argument goes no further, the much-more-detailed analysis using perturbed conformal field theory does show the model is integrable \cite{Smirnov1991,Chim1991}. Integrability then constrains further the relative coefficients of the projectors  \cite{Smirnov1991,Chim1991,Fendley2002}, and by analyzing the bound-state structure one finds the overall prefactor  \cite{Dorey2002a,Dorey2002b}. The coefficients turn out to be the Izergin-Korepin solution of the Yang-Baxter equation \eqref{IKYBE}.
+
+
+\subsection{The antiferromagnetic case}
+\label{sec:AFM}
+
+The upshot of our analysis is that the self-duality of the ABF models requires that the allowed low-energy {excitations} of the staggered Hamiltonian form a degenerate multiplet. The general form \eqref{defectkink} indicates that the same degeneracies occur in many other theories.  Indeed, any time some completely staggered limit of \eqref{HP} can be found that admits multiple ground states, any $\mcd_\varphi$ preserving $M^\pm$ will map between them. The above arguments suggest that if there is a long-distance perturbed conformal field theory describing this limit, it should be integrable. 
+
+One simple but striking generalization is to consider the antiferromagnetic version of \eqref{Hcritpert} for the ABF models. 
+For these models, translation symmetry in the continuum model corresponds on the lattice to translation by $k$ sites \cite{Huse1984}.
+Translation by a single site becomes a $\mathbb{Z}_k$ internal symmetry of the parafermion CFT describing the continuum limit.
+We should then stagger the couplings on every $k$\textsuperscript{th} site instead of every other, so that the effective field theory describing the perturbation preserves the same translation symmetry. We consider the simplest such possibility
+\begin{align}
+	H^{\rm AF} &= H^{\rm AF}_{\rm crit} - t_{\rm AF}\sum_{a=1}^{L/k} e_{ka} \,,
+&	H^{\rm AF}_{\rm crit} &= -H_{\rm crit} = \sum_{j\in\mathbb{Z}} e_j \,,
+&	H^{\rm AF}_{\rm cs} &= \lim_{t_{\rm AF}\to 1}H^{\rm AF} = \sum_{\frac{j}{k}\notin \mathbb{Z}} e_j
+	\label{HAF}
+\end{align}
+with $L$ a multiple of $2k$. The staggering breaks the $\mathbb{Z}_k$ symmetry of the critical theory.
+
+First consider the completely staggered limit $t_{\rm AF}\to 1$, with Hamiltonian $H_{\rm AF,cs}$ given in \eqref{HAF}. A zero-energy ground state is given by any state annihilated by 
+all $e_j$ with $j$ not a multiple of $k$. One such state in $\mathcal{V}_+$ is 
+\begin{align}
+	\kett{0}_{\rm AF} \defineas \Ket{ \tfrac12\,1\,\tfrac32\,\cdots \tfrac{k-1}{2}\,\tfrac{k}{2}\, \tfrac{k-1}{2}\,\cdots\,\tfrac12\,0\,\tfrac12\,1\cdots \tfrac12\,0 }, \quad\text{ i.e., }
+h_{nk+a}=
+\begin{cases}
+ \tfrac{a}{2}\quad &\hbox{ for } n \hbox{ odd,}\cr
+ \tfrac{k-a}{2}\quad &\hbox{ for } n \hbox{ even}
+ \end{cases}
+\label{AFgs}
+\end{align}
+for $a=0,\dots,k-1$.
+As apparent from \eqref{ABFweights},  $e_j\ket{\cdots h_{j-1}h_jh_{j+1}\cdots}=0$ when $h_{j-1}\ne h_{j+1}$.
+Thus by construction, $e_j \kett{0}_{\rm AF}=0$ for all  $j\ne nk$, and so $H^{\rm AF}_{\rm cs}$ annihilates $\kett{0}_{\rm AF}$.
+
+One can construct other ground states by brute force, but there is no need: we simply act with $\mcd_1$ and can generate the others.
+For example, for the Fibonacci case $k=3$, we use  \eqref{defectFib} for the defect weights, rewriting them in terms $0,\frac{3}{2}\to 0$ and $\frac12,1\to \tau$.
+Along with $\kett{0}_{\rm AF} = \ket{0\,\tau\,\tau\,0\,\tau\,\tau\,0\,\cdots}$, we have the ground state
+\begin{align}
+	\kett{1}_{\rm AF} \defineas \mcd_1\kett{0}_{AF}\propto \ket{ {-\!-} \, \tau \, {-\!-} \, \tau \, {-\!-} \, \tau \, \cdots } ,
+	\qquad\text{where } \ket{-\!-} \defineas \frac{ \ket{0\tau} + \ket{\tau0} }{\phi} - \frac{ \ket{\tau\tau} }{\phi^{3/2}} \,,
+	\label{AFgs1}
+\end{align}
+where $\phi=d_\tau=2\cos(\pi/5) = \tfrac{1}{2}\big(1+\sqrt{5}\big)$, the golden mean.
+Using \eqref{ABFweights} it is straightforward to verify that each term in $H_{\rm AF,cs}$ annihilates $\kett{1}_{\rm AF}$ as well.
+
+Acting with $\mcd_1$ thus gives a degenerate multiplet of ground states, as \eqref{defectongs} requires. What is remarkable here is that because $\mcd_1$ is the same for ferromagnetic and antiferromagnetic ABF models, the ground-state structure is the same as well! We find the same number of ground states and the same action of $\mcd_1$, even though the Hamiltonians, the explicit expressions, and the critical CFTs are completely different. We therefore can run the same argument showing that the ground states will remain stable when $t_{\rm AF}<1$, and expect that they persist until the critical point at $t_{\rm AF}=0$. We also can rerun the same arguments to show that the kinks, breathers and scattering matrices also behave in the same fashion. The low-energy spectra should be identical, although possibly the overall function in front of the scattering matrix could be different. This structure was indeed inferred from quantum-group symmetries in \cite{Fateev1990}, but our approach gives a simple way of seeing it directly and intuitively. 
+
+The antiferromagnetic models have another interesting facet: as apparent from \eqref{HAF}, positive and negative $t_{\rm AF}$ result in distinct theories.
+We have showed that the positive $t_{\rm AF}$ theory is gapped, but as the completely staggered limit $t_{\rm AF}=-1$ is rather trivial, it is possible that the model is gapless for  $t_{\rm AF}$ negative.
+Field-theory arguments  indicate that for $t_{\rm AF}$ negative, the model is indeed gapless with a flow to another CFT \cite{Fateev1991}.
+The fact that all defect lines commute with $H_{\rm AF}$ throughout the flow places an enormous constraint on any CFT describing the endpoint of the flow, as it must have the same duality properties (and e.g.\ the $g$ factors we discuss below).
+The obvious candidate for the endpoint CFT is therefore the $k$\textsuperscript{th} minimal CFT describing the ferromagnetic point.
+Indeed, the much more detailed field-theory arguments  \cite{Fateev1991} indicate that the flow from the $\mathbb{Z}_k$ parafermion theory indeed is to the $k$\textsuperscript{th} minimal CFT.
+For example, for the Fibonacci case $k=3$ the flow is from the three-state Potts CFT with $c=4/5$ to the tricritical Ising CFT with $c=7/10$.
+Our arguments do not prove this flow occurs, but do make this flow from antiferromagnet to ferromagnet rather natural. 
+
+

@@ -1,0 +1,213 @@
+%auto-ignore
+%      this ensures the arxiv doesn't try to start TeXing here.
+%!TEX root = super_lattice_models_draft.tex
+%      prev line helps TeXShop do the right thing
+
+%%%%
+\section{Microscopic to Macroscopic}
+\label{sec:trivalent}
+
+Our approach has enabled the explicit construction of topological defects in a large class of lattice models.
+We here show that these defects possess some remarkable properties.  We saw already in \eqref{DDeqD} that defect lines wrapped around a cycle obey the same fusion algebra as the corresponding objects do. In this section we go much further and show that the topological defects themselves obey the rules of a fusion category described in Section \ref{sec:Fusion_Theory}, the same rules used in the construction of the lattice model. The microscopic definitions thus lead to macroscopic constraints on the partition functions.
+
+To this end, we define junctions of defects in terms of a triangle weight by using \eqref{TV3}, guaranteeing their topological invariance by deriving commutation relations generalizing \eqref{DefComm1}. We then establish how defects describe a diagrammatic calculus with fusion rules, $F$-symbols and so on. We see that the defects belong to the same fusion category used in constructing the model, and so all the quantum dimensions and $F$-symbols are the same. 
+
+\subsection{Closed defect loops}
+
+The simplest rule in a fusion category is that evaluating a closed loop labeled by $\varphi$ gives $d_\varphi$. The analogous statement for topological defect relates the partition functions in the presence and absence of a single defect loop. The derivation of the defect commutation relations is also useful here. Following \eqref{defcommdiagram} from the bottom-left-most diagram to the bottom-right-most diagram gives
+\begin{align}
+\sum_{x,y,z,w}\BWloopdefectG\ =\ d_\varphi\ \BWLoopDefectRemoved\ .
+\label{removeloop}
+\end{align}
+The green defect weights carry label $\varphi$ and so removing the loop results in multiplying the partition function by the quantum dimension $d_\varphi$. 
+The defect commutation relations ensure local deformations of the defect path leave the partition function invariant, so the loop around the quadrilateral in \eqref{removeloop} can be deformed to have any topologically trivial path. The corresponding partition function $Z_\varphi$ is therefore simply related to the partition function $Z$ in the absence of the loop:
+\begin{align}
+Z_\varphi = d_\varphi\,Z\ .
+\label{ZdZ}
+\end{align}
+If a defect loop wraps around a cycle, it cannot be removed so easily, but we show below how the defect $F$-moves derived in this section still yield non-trivial identities between partition functions.
+
+\subsection{Topological trivalent junctions}
+\label{junction_solution}
+
+The basic defining feature of the fusion category is the trivalent vertex, which illustrates the fusion rules. Three defect lines meeting at a point is illustrated on the left in Figure~\ref{fig:Trivalent}, with the lattice cracked open on the right.
+\begin{figure}[h] \vspace{-1cm}
+\centerline{%
+ \xymatrix @!0 @M=9mm @C=65mm{
+ \TrivalentJunctionInserta\ar[r] & \TrivalentJunctionInsertb
+ }}
+ \vspace{-.5cm}
+\caption{
+On the left, a schematic view of a trivalent junction occurring at the termination of three topological defects. 
+On the right, the cracked-open lattice with a triangular face at the junction. 
+}
+\label{fig:Trivalent}
+\end{figure}
+%We therefore need to define a trivalent vertex where three topological defects meet. 
+As apparent, a triangular face occurs at the junction. This triangle defect is labeled by six objects, three coming from the topological defects that it fuses and three from the height labels at the surrounding vertices.
+
+The next step in showing that the defects obey the rules of the fusion category is to find triangle weights that make the trivalent junction topological, so that the partition function is independent of its location.  Namely, we need to impose that Figure~\ref{fig:TrivalentConsistency} is commutative. Along the bottom path of the diagram, a triangle defect weight is moved across two defect Boltzmann weights. 
+\begin{figure}[hb] \centerline{%
+ \xymatrix @!0 @M=2mm @R=32mm @C=52mm{
+ {\quad \TrivalentConsistencya \quad } \ar[rr]\ar[d]& & {\quad \TrivalentConsistencye \quad}  \\
+  {\quad \TrivalentConsistencyb \quad } \ar[r]&{\quad  \TrivalentConsistencyc \quad} \ar[r]       & {\quad \TrivalentConsistencyd \ar[u] \quad}
+}}
+\caption{
+Moving a trivalent junction on the lattice is schematically illustrated in the top row. The precise definition requires two steps, shown in the bottom row. The first step uses the defect commutation relations to move the red defect line around a face. 		The second step uses the triangle defect commutation relation (\ref{eq:trivalent_pentagon}) inside the boxed region. The dots are omitted for clarity. }
+		\label{fig:TrivalentConsistency}
+\end{figure}
+Thus in addition to the defect commutation relations, we also need the consistency conditions
+\begin{equation}
+\sum_\beta \Trivalenta\quad =\quad \Trivalentb\ ,
+\label{eq:trivalent_pentagon}
+\end{equation}
+where the internal height is summed over and external ones fixed.  
+
+As with the defect commutation relations, the triangle commutation relation results in a huge number of constraints. Solving them by brute force is rather difficult, even for the Ising model treated in Part~I \cite{Aasen2016}. 
+Luckily, the shadow-world analysis hands us the solution in \eqref{TV3}, suggesting we define
+the triangle weight as
+\begin{align}
+	\Trivalent = \left( d_{R}d_G d_B\right)^{\frac{1}{4}}
+		\Msixj{R & G & B}{\rho & \gamma & \beta}\ ,
+ \label{eq:def_trivalent}	
+\end{align}
+where $\rho$, $\beta$, $\gamma$ are heights at the corners of the triangle.  We chose the overall constant so that the defects satisfy versions of \eqref{eq:loop_removal} and \eqref{F0c}, as we show below. There are as many different kinds of trivalent junctions as there are non-zero fusion rules $N_{RG}^{B}$. 
+
+
+Proving directly that triangle defects from \eqref{eq:def_trivalent} are topological follows from evaluating the center diagram in 
+\begin{align}
+	\vcenter{\xymatrix @!0 @M=2mm @R=24mm @C=42mm{
+		\TrivalentCommL &\TrivalentComm \ar[r] \ar[l]& \TrivalentCommR\\
+	}}
+	\label{TrivalentProof}
+\end{align}
+in two different ways, identical to the derivation of the pentagon equation \eqref{pentagon} from the diagram \eqref{pentagon_wheel}.
+To get to the left-hand side of (\ref{TrivalentProof}), we use three $F$-moves, and then evaluate it using the bubble removal \eqref{eq:loop_removal}. The ensuing expression is proportional to the left-hand side of \eqref{eq:trivalent_pentagon}:
+\begin{align}
+\TrivalentComm &= \sqrt{d_{xBz}}\sum_\beta d_\beta^{\frac{3}{2}} \Msixj{R & y & x}{\upsilon & \alpha & \beta} \Msixj{B & R & G}{\beta & \gamma & \alpha} \Msixj{G & y & z}{\upsilon & \gamma & \beta}\;  \TrivalentCommL \cr
+& = \sqrt{d_{xyz RBG \alpha \gamma \upsilon}} \sum_\beta d_\beta \Msixj{R & y & x}{\upsilon & \alpha & \beta} \Msixj{B & R & G}{\beta & \gamma & \alpha} \Msixj{G & y & z}{\upsilon & \gamma & \beta} \cr
+& =   \sqrt{d_{xyz RBG \alpha \gamma \upsilon} }\sum_\beta \Trivalenta\ .
+\end{align}
+To get to the right-hand side of (\ref{TrivalentProof}), we do a single $F$-move and then use \eqref{eq:loop_removal}, giving 
+\begin{align}
+\TrivalentComm &= \sqrt{d_{RGy}}  \Msixj{B & x & z}{y & G & R} \;  \TrivalentCommR \cr
+		           & =  \sqrt{d_{xyz RBG \alpha \gamma \upsilon} }  \Msixj{B & x & z}{y & G & R}  \Msixj{B & x & z}{\upsilon & \gamma & \alpha} \cr
+		           & =  \sqrt{d_{xyz RBG \alpha \gamma \upsilon} } \;  \Trivalentb
+\end{align}
+Equating the two shows that \eqref{eq:def_trivalent} indeed solves the trivalent defect commutation relation \eqref{eq:trivalent_pentagon}. 
+
+
+The topological defects thus obey the same fusion algebra as the objects in the category.  For a self-dual category, the $N_{RG}^B$ do not change under permutation of indices, so it does not matter which two we fuse to get the third, as is obvious from the pictures. To generalize to a non-self-dual category such as Tambara-Yamagami, one needs to keep track of the arrows. 
+
+
+
+\subsection{Topological defects as a fusion category}
+
+Using the topological trivalent junction defined by \eqref{eq:def_trivalent},  we can define the partition function with an arbitrary trivalent network of defects, independent of deformations of the defects and their junctions. Here we show the defects have even deeper properties: they satisfy all the properties of a fusion category outlined in Section~\ref{sec:Fusion_Theory}.
+In particular, we show that the defect lines obey \eqref{eq:loop_removal} and \eqref{eq:Fmove_def}, giving linear identities among partition functions with different defect configurations.
+
+We first show that identity defect lines can be removed freely.
+For $\varphi=\mathds{1}$, \eqref{eq:kronecker} and  \eqref{eq:def_trivalent} give
+\begin{equation}
+\mathord{\sideset{^{a}_{\alpha}}{^{b}_{\beta}}{\mathop{\IsingBubbleRightId}}}\ = \Msixj{\mathds{1} & a & \alpha}{\upsilon & \beta & b} = \  \frac{1}{\sqrt{d_a d_b}}\,\delta_{a\alpha}\delta_{b\beta}\  ,\qquad
+\IdentityTerm\; = \; \delta_{bc} N_{ab}^\upsilon N_{ac}^\upsilon \frac{1}{\sqrt{d_b}}\ .
+\end{equation}
+\begin{align}
+\idremovLHS\ =\ \idremovRHS\ .
+\end{align}
+The symmetry of the tetrahedral symbols means this relation holds for any rotated version of this diagram, so we can always remove identity strands.
+
+Next we generalize the defect-loop removal \eqref{removeloop} relation to bubbles, deriving \eqref{bubble}. The only data needed involve the defect lines themselves, so we can write this diagram more abstractly as
+\begin{align}
+	\BubbleDiagram \;=\; \delta_{RB} \sqrt{\frac{d_{P}d_G}{d_R}}  \; \BlueLine \; ,
+\label{bubbleremoval}
+\end{align}
+where $R,P, G,$ and $B$ label the lines.
+This relation is exactly the same as \eqref{eq:loop_removal}, hence generalizing the microscopic definitions to the macroscopic defect lines. In terms of the defect weights \eqref{eq:def_trivalent} and \eqref{eq:def_LDefect}, \eqref{bubbleremoval} is
+\begin{align}
+\sum_{\beta, y } \; \IsingBubbleMicroLeft \; = \delta_{RB} \sqrt{\frac{d_{P}d_{G}}{d_R}} \;\IsingBubbleMicroRight\ ,
+\label{bubble_removal}
+\end{align}
+The elegant method of proving \eqref{bubble_removal} is to evaluate a single diagram in two different ways, as with the proof of the triangle commutation relation. The diagram here is
+\begin{align}
+	\vcenter{\xymatrix @!0 @M=3mm @R=24mm @C=42mm{
+	\BubbleProofL &\BubbleProof \ar[r] \ar[l]& \BubbleProofR
+	}}\ .
+	\label{BubbleProof}
+\end{align}
+Following the arrow to the left results in the left-hand side of \eqref{bubble_removal}, while following the arrow to the right results in the right-hand side of \eqref{bubble_removal}.
+
+
+We finish off our demonstration that the defects obey the rules of the fusion category by deriving their $F$-moves. 
+Just as in \eqref{eq:Fmove_def}, the $F$-symbol tells us how to relate the different ways of fusing four defect lines together. 
+Four defect lines meet at two trivalent junctions. Using \eqref{eq:trivalent_pentagon} and \eqref{DefComm1}, the junctions can always be moved together to give
+\begin{align} 
+\FRight \quad \quad \text{or} \quad \quad \FLeft\ .
+\label{fboxLR}
+\end{align}
+Either side of \eqref{fboxLR} provides a complete basis for the junctions of four defect lines. 
+The two bases are related by noting that \eqref{eq:tetra_Fmove} gives
+\begin{align}
+\FLeftProof \; = \sum_X %\sqrt{d_{ZX}} \Msixj{B & R & Z}{P & G & X}\;   
+\left[F^{BRP}_G \right]_{ZX} \;\FRightProof
+\end{align}
+and that the evaluations of these two diagrams result in the same weights appearing in the two expressions \eqref{fboxLR}, up to an identical overall constant. We thus obtain 
+\begin{align}
+	\FRight \;=\; \sum_X \left[F^{BRP}_G \right]_{ZX} \FLeft \ .
+	\label{eq:quad_move}
+\end{align}
+The tetrahedral symbol in \eqref{eq:quad_move} enforces the fusion rules in each of the four triangles.  The two triangle defects can then be moved back away from each other, giving \eqref{MacroF}.
+We thus have derived the remarkable fact that the defect lines themselves obey the same $F$-moves as the fusion diagrams used to defined the Boltzmann weights for the microscopic degrees of freedom.
+
+The trivalent vertex for the defects and the ensuing bubble removal and $F$-moves are the main results of this section. Together they show that diagrammatic calculus explained in Section~\ref{sec:Fusion_Theory} applies to the topological line defects themselves.
+We have thus defined topological defects and their junctions in a host of lattice models, and established they satisfy a variety of remarkable properties. Some of these properties are summarized in the Table \ref{summarytable}. In the rest of the paper (and in a sequel or two) we exploit these properties. 
+
+\vspace{0.5cm}
+
+
+
+\begin{table}[ht]
+	\fbox{\begin{minipage}{\textwidth}
+	\vspace{3mm}\begin{center}{\begin{minipage}{158mm}
+		{ \setlength{\parskip}{-1.2ex} \begin{itemize}
+      \setlength{\itemsep}{0pt}
+      \setlength{\parskip}{0.7ex}
+      \setlength{\parsep}{0ex}
+			\item[--]	$N^\ast_{\ast\ast}$ are the fusion symbols, defined in \eqref{Nabcdef}.
+			\item[--]	$d_\ast$ are the quantum dimensions defined in \eqref{eq:QD_def}, and $d_{x_1 \cdots x_n} = d_{x_1} \cdots d_{x_n}$.
+			\item[--]	The $F$-symbols relate diagrams via \eqref{eq:Fmove_def} and 	\eqref{eq:quad_move}.
+			\item[--]	The tetrahedral symbols \eqref{eq:def_tetra_NA} relate to the $F$-symbols via $\big[ F_d^{abc} \big]_{xy} = \sqrt{d_{xy}} \smallM{a & b & x}{c & d & y}$.
+   	\end{itemize}}
+		\vspace{-0.8cm}
+\begin{align*}\begin{array}{llc}
+	\text{Partition function:}
+	&	Z = \displaystyle \sum_{\text{heights}} \Bigg( \prod_{\text{vertices}}\! d_v \;\times \prod_{\text{elements}}\!\! W \Bigg)
+\\[4ex]	\text{Plaquette weight:}
+	&	\displaystyle \BWbare \;=\; \sum_\chi A(\chi) \, \BWabcdx{\chi} 
+		\\[5pt]&\displaystyle\mkern52.6mu =\; \sum_\chi A(\chi) \, d_\chi \Msixj{\upsilon & \upsilon & \chi}{a & c & b} \Msixj{\upsilon & \upsilon & \chi}{a & c & b'}
+	&	\eqref{eq:def_chi}
+\\[4ex]	\text{Vertex dot:}
+	&	\displaystyle \text{(full dot)~~} \overset{h}{\fulldot} \;=\; d_h  \qquad\qquad  \text{(half dot)~~} \overset{h}{\halfdot} = \sqrt{d_h}
+	&	\eqref{semidotdef}
+\\[3ex]	\text{Defect line weight:}
+	&	\mathord{\ooalign{$\sideset{^a_\alpha}{^b_\beta}{\mathop{\DefectSquare}}$\cr\hidewidth$\varphi$\hidewidth}}
+				 \;=\; \Msixj{\varphi & a & \alpha}{\upsilon & \beta & b} 
+	&	\eqref{eq:def_LDefect}
+\\[3ex]	\text{Trivalent junction:}
+	&	\Trivalent  \;=\; (d_R d_G d_B)^{\frac14} \Msixj{R & G & B}{\rho & \gamma & \beta}
+	&	\eqref{eq:def_trivalent}
+\\[5ex]	\text{Transfer matrix:}
+	&	T =\; \TransfMxIsingDots
+	&	\eqref{Tmatrixdef2}
+\\[4ex]	\text{Defect-line creation:}
+	&	{\mathcal D}_\varphi \;=\;  \TopologicalSymmetryprime 
+	&	\eqref{eq:BW_duality} 
+\end{array}\end{align*}
+	\end{minipage}}\end{center}
+	\end{minipage}}
+	\caption{Summary of how fusion categories appear in height models.}
+\label{summarytable}	
+\end{table}
+
+
+

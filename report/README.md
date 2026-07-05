@@ -79,6 +79,13 @@ before treating report edits as complete.
 | 59 | `CA-59-QUBIT-CANDIDATE-SCAN-RUN-BUNDLE` | `report/sections/59_qubit_candidate_scan_run_bundle.tex` | Reproducible Scan Bundle Format |
 | 60 | `CA-60-QUBIT-CANDIDATE-SCAN-RESULTS` | `report/sections/60_qubit_candidate_scan_results.tex` | First Candidate Scan Results |
 | 61 | `CA-61-QUBIT-SCAN-TO-SCALING-QUEUE` | `report/sections/61_qubit_scan_to_scaling_queue.tex` | From Scan Failures to Scaling Work |
+| 62 | `CA-62-CATEGORICAL-BU-PIPELINE-VISION` | `report/sections/62_categorical_bu_pipeline_vision.tex` | The Categorical Borchers-Uhlmann Pipeline: a Programme Refinement |
+| 63 | `CA-63-QUBIT-MOMENT-STATE-EXISTENCE` | `report/sections/63_qubit_moment_state_existence.tex` | All-Level Moment Feasibility Gives a Qubit Reference State |
+| 64 | `CA-64-QUBIT-RELAXED-SYMMETRY-GATES` | `report/sections/64_qubit_relaxed_symmetry_gates.tex` | Quantified Relaxations of the Qubit Symmetry Gates |
+| 65 | `CA-65-ANYONIC-WORD-ALGEBRA` | `report/sections/65_anyonic_word_algebra.tex` | Anyonic Word Algebra from a Site Object |
+| 66 | `CA-66-ANYONIC-STATES-VARIABLE-N-FOCK` | `report/sections/66_anyonic_states_variable_n_fock.tex` | Anyonic States and Variable-N Fock Space |
+| 67 | `CA-67-REFINEMENT-REQUIREMENTS-OBSTRUCTIONS` | `report/sections/67_refinement_requirements_obstructions.tex` | Refinement-Map Requirements and Obstructions |
+| 68 | `CA-68-VARIABLE-N-REFINEMENT-MAPS` | `report/sections/68_variable_n_refinement_maps.tex` | Refinement Maps for the Variable-N Anyonic Word Algebra |
 
 ## Adding a shard
 

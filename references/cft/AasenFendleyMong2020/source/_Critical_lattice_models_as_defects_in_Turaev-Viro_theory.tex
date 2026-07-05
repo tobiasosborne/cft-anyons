@@ -1,0 +1,172 @@
+%auto-ignore
+%      this ensures the arxiv doesn't try to start TeXing here.
+%!TEX root = super_lattice_models_draft.tex
+%      prev line helps TeXShop do the right thing
+
+\section{Lattice models as defects in the Turaev-Viro-Barrett-Westbury state sum}
+\label{modules}
+
+
+ 
+ 
+The equivalence of the geometric and height lattice models relied on the shadow-world construction.
+In this section we explain the origin of this construction. Moreover, we show how the same setup can be used to 
+define lattice topological defects with a host of elegant properties. We make use of the Turaev-Viro-Barrett-Westbury state sum (TVBW state sum)~\cite{TuraevViro1992,Barrett1996} to arrive at these results, and to 
+derive further topological properties of the two-dimensional height and geometric models.
+The key formula \eqref{shadoweval2} relating the geometric models to the height models arises directly from evaluating the TVBW state sum on a certain 3-manifold with a particular boundary condition. Even more strikingly, we show how lattice topological defects naturally arise as a consequence of a more complicated boundary condition for the TVBW state sum. In sections~\ref{sec:topological_defect_lines} and \ref{sec:trivalent} we analyze these defects and prove their topological invariance using a more direct approach.  As such the reader should feel free to skip this section on a first reading.
+
+
+\subsection{Turaev-Viro-Barrett-Westbury state sum}
+\label{TVBW state sumwBdry}
+We breifly review the Turaev-Viro-Barrett-Westbury state sum~\cite{TuraevViro1992,Barrett1996}.
+The TVBW state sum describes a 2+1D topological quantum field theory (TQFT). 
+It takes a fusion category $\mcc$ as an input, 
+and assigns a number to every closed 3-manifold and a vector space to every 3-manifold with boundary. 
+Picking a particular boundary condition, as we do below, again results in a number. 
+
+The TVBW state sum can be viewed as a statistical partition function built on a cell decomposition of a 3-manifold $\mcm$. 
+For now we take $\mcm$ to be closed. 
+For convenience we require the cell decomposition to be dual to a triangulation; 
+each 1-cell should belong to the boundary of three 2-cells,
+and each 0-cell should belong to the boundary of six 2-cells and four 1-cells. 
+The states in the TVBW state sum are given by assigning a simple object $x_f \in \mcc$ to each 2-cell $f$.
+The TVBW state sum is given by
+\begin{align}
+	\label{TV0}
+	Z_\text{TVBW}(\mcm) = \mathscr{D}^{-2N_{\text{3-cells}}} \sum_{\{ x_f \}} \,
+		\prod_{\text{2-cells }f} \!\! d_{x_f} \prod_{\text{0-cells }{\rm v}} \!\! \operatorname{Tet}({\rm v})
+\end{align}
+where $N_{\text{3-cells}}$ is the number of 3-cells, $\mathscr{D}^2 = \sum_{x \in \mcc} d_x^2$,
+	and $\operatorname{Tet}({\rm v})$ is a 6j-symbol whose labels are determined by the six 2-cells which meet at ${\rm v}$.
+The 6j-symbol assigned to a vertex ${\rm v}$ depends on the adjacent 2-cell labeling as
+\begin{align}
+\operatorname{Tet}({\rm v} ) =  \Msixj{a & b & c}{x & y & z} \ ,\qquad\qquad
+\TetvTBWSS \;.
+\end{align}
+The face labelled with height $y$ is behind all the other visible faces.
+
+A few comments are in order. 
+If any triple of two cell labels meeting at a 1-cell cannot fuse to vacuum the Boltzmann weight for that labeling vanishes (see \eqref{vanishingF}). 
+This partition function evaluates to $\mathscr{D}^{-2}$ on the three-sphere.
+The partition function is independent of choice of cell decomposition, and as such is describing a topological quantum field theory (TQFT). 
+The TQFT is known as the {\em Drinfeld center} of the fusion category $\mcc$, and is denoted $\mathcal{Z}(\mcc)$.
+The Drinfeld center is a {\em modular tensor category}, a fusion category possessing more structure, namely braiding and a non-degenerate modular $S$-matrix ($\det{\bf S } \neq 0$). 
+Many topological properties of the lattice models we describe in this paper can be understood by viewing them as special boundary conditions to the TVBW state sum as we describe in the next subsection.
+
+We now describe how to incorporate boundaries into the TVBW state sum~\cite{Balsam2010,Kirillov2011}.
+The boundary of an open 3-manifold is a closed 2-manifold.
+The fusion category $\mcc$ associates a vector space to every closed 2-manifold: $X \mapsto V(X,\mcc)$.%
+	\footnote{The dimension of $V(X,\mcc)$ is equal to the number of ground states of $\mathcal{Z}(\mcc)$ on the manifold $X$.  For example, $\Vdim V(S^2,\mcc) = 1$ and $\Vdim V(T^2,\mcc)$ is the number of simple objects of $\mathcal{Z}(\mcc)$.
+	}
+As such, the TVBW topological quantum field theory assigns a vector to $\mcm$ living on $V(\partial\mcm,\mcc)$.
+Furthermore, gluing two manifolds which share a common boundary together to form a closed manifold is equivalent to taking an inner product of their respective vectors, and results in the state sum given by \eqref{TV0}.
+
+Fusion diagrams on 2-manifolds are dual vectors in $V^\ast(\partial\mcm,\mcc)$, that is, they provide a linear map $V(\partial\mcm,\mcc) \to \mathbb{C}$.
+Consequently, the TVBW state sum assigns a number to any fusion diagram $\mathcal{F}$ on the boundary of a manifold $\mcm$.
+To evaluate this number we again pick a cell decomposition of $\mcm$ dual to a triangulation that is compatible with $\mathcal{F}$: the 1-cells (edges) of $\mathcal{F}$ lie at the boundary of 2-cells of $\mcm$, and the 0-cells (vertices) of $\mathcal{F}$ are in the boundary of 1-cells of $\mcm$.
+Again, to each 2-cell of $f\in\mcm$ we assign a simple object $x_f$.
+For the 2-cells $f$ intersecting the boundary, $x_f$ is that $(f \cap \partial\mcm) \in \mathcal{F}$ determined by the boundary diagram $\mathcal{F}$.
+From the cell decomposition,
+\begin{align}
+	\label{TV1}
+	Z_\text{TVBW}(\mcm; \mathcal{F}) =
+		\mathscr{D}^{-2N^\text{bulk}_\text{3-cells}}
+		\prod_{\substack{ \text{boundary}\\\text{1-cells } e\in\mathcal{F} }} \mkern-20mu\sqrt{d_{x_e}}
+		\; \sum_{\{ x_f \}} \,
+		\prod_{\substack{ \text{bulk}\\\text{2-cells } f }} \!\! d_{x_f}
+		\prod_{\substack{ \text{0-cells } {\rm v} }} \!\! \operatorname{Tet}({\rm v})  \;.
+\end{align}
+We sum over the $x_f$ assigned to the bulk 2-cells (those which do not have support on $\partial \mcm$).
+
+We remark that there is some arbitrariness in defining $Z_\text{TVBW}(\mcm; \mathcal{F})$. 
+The bulk weights are fixed by \eqref{TV0}.
+The weights associated with boundary 0- and 1-cells are chosen so that the state sum is invariant under $F$-moves of the fusion diagram $\mathcal{F}$.
+We pick the overall normalization so that that the ``identity diagram'' ($\mathcal{F}$ with only $\I$ lines) evaluates to one on $S^2$.
+
+\subsection{Lattice models as defects in the Turaev-Viro-Barrett-Westbury state sum}
+
+The partition functions of the geometric and height models with and without topological defects are naturally described using TVBW state sums, with the lattice configurations entering into the boundary conditions on the 3d space. 
+We first pick a closed 2-manifold $Y$, and embed in it the graph $G$ used to build the lattice models. 
+We let $\mcm = Y \times I$, and choose boundary conditions on $Y\times \{1 \} $ and $Y \times \{ 0 \}$.  Each boundary condition is a fusion diagram, which we label as $\bra{\mathcal{F}}$ and $\ket{D}$ for $Y\times \{1 \} $ and $Y \times \{ 0 \}$ respectively. 
+Doing the TVBW state sum over $\mcm$ with these boundary conditions produces a number, which we write as $ \braket{\mathcal{F}|D}$. In a picture,
+\begin{align}
+\braket{\mathcal{F}|D} =Z_\text{TVBW}(Y \times I;\mathcal{F} \cup D) =  \TVa
+\label{FDdef}
+\end{align}
+where for clarity we have suppressed the diagram labels, and drawn only a patch of the 3-manifold $Y\times I$.
+Even though we adopt the same physics bra-ket notation, this TQFT inner product is distinct from that defined in \eqref{eq:destroyer}, as here the vector space is spanned by two-dimensional net configurations.  
+
+
+The degrees of freedom in the geometric lattice models are defined in terms of fusion diagrams $\mathcal{F}$ living on a graph $G$ embedded in $Y\times\{1\}$, as described in section~\ref{sec:loopmodels}. We define the state $\bra{\Psi}$ as a linear combination of all such diagrams with
+\begin{align}
+\label{netconfig}
+\bra{\Psi} = 
+\sum_{\mathcal{F}} A\big(\mathcal{F}\big) \big\langle \mathcal{F}\big|
+\end{align}
+where $A\big(\mathcal{F}\big)$ is the local part of the Boltzmann weights  \eqref{ZW}, the product of amplitudes $A_Q$. The partition function of the geometric model in the absence of defect lines is defined by 
+\begin{align}
+Z_{\rm geo} = \big\langle\Psi \big| 0\big\rangle = \sum_{\mathcal{F}} A\big(\mathcal{F}\big) \big\langle\mathcal{F}|0\big\rangle
+\label{Z0}
+\end{align}
+where $|0\rangle$ is diagram with no lines. This expression may be used to define more general lattice models having different amplitudes at each vertex of $\mathcal{F}$, a $G$ not made of quadrilaterals, and/or $\upsilon$ not uniform in space.
+
+
+
+The state-sum setup makes it easy to to define a partition function in the presence of defects. A defect configuration $\ket{D} \in V^*(Y,\mcc)$ is also given by a $\mathbb{C}$-linear combination of fusion diagrams, but now on $Y\times \{0\}$. The inner product  $\langle \Psi |D \rangle =Z_\text{TVBW}(Y \times I;\Psi \cup D)$ is given by evaluating the TVBW state sum on $Y \times I$, subject to the boundary condition $\bra{\Psi}$ on $Y \times \{ 1 \} $, and $\ket{D}$ on $Y \times \{ 0 \}$. The presence of the defects does not affect the amplitudes of the Boltzmann on each quadriateral $Q$ of $G$, so the partition function in the presence of defects is
+\begin{align}
+\big\langle\Psi \big| D\big\rangle = \sum_{\mathcal{F}} A\big(\mathcal{F}\big) \big\langle\mathcal{F}|D\big\rangle\ .
+\label{ZD}
+\end{align}
+To compute $\braket{\mathcal{F}|D}$ using the state sum $\eqref{TV0}$, we choose a cell decomposition where the 1-cells appearing in the fusion diagrams for $\mathcal{F}$ and $D$ are boundaries of 2-cells of $Y \times I$,  and where those 2-cells terminate on the surface $Y \times \{ \frac{1}{2} \}$.
+The 2-cells meeting the surface $Y \times \{ \frac{1}{2} \}$ can do so in the three ways shown in Figure~\ref{TVcells}.
+\begin{figure}[tbp]
+\begin{center}
+$\TVup \quad \quad \quad \quad \TVcross \quad \quad \quad \quad \TVdown$
+\caption{The three types of 0-cells appearing in the TVBW state sum for $\langle \mathcal{F}|D\rangle$.
+The three 0-cells are indicated with ${\rm v}$.
+The grey regions are 2-cells which sit inside the surface $Y \times \{ \frac{1}{2} \}$.
+The red (green) 2-cells are found by extending the nets living on $Y \times \{1 \}$ ($Y \times \{0\}$) into the bulk until they meet $Y \times \{ \frac{1}{2} \}$.
+}
+\label{TVcells}
+\end{center}
+\end{figure}
+An easy way to keep track of these data is by projecting the inner product \eqref{FDdef} into the plane: 
+\begin{align}
+\label{TVproj}
+\braket{ \mathcal{F} | D } =\TVb \ .
+\end{align}
+The green strands represent 2-cells extending from $Y \times \{ 0 \}$ to $Y \times \{ \frac{1}{2} \}$ labeled with $\ket{D}$, while
+the red strands represent 2-cells extending from $Y \times \{ 1 \}$ to $Y \times \{ \frac{1}{2} \}$ labeled by $\ket{\Psi}$. 
+The gray shaded region makes up the remaining 2-cells, the faces of $Y \times \{\frac{1}{2}\}$.
+Each of the latter 2-cells $f$ is labeled by a simple object of $\mathcal{C}$, denoted $h_f$.
+The explicit formula for the inner product in \eqref{TV1} is then
+\begin{align}
+	\label{TVSS}
+	\langle \mathcal{F} |D \rangle  \quad=\;\;
+		\prod_{\substack{\text{red line}\\e}} \mkern-8mu \sqrt{d_e}
+		\prod_{\substack{\text{green line}\\e}} \mkern-15mu \sqrt{d_e}
+		\; \sum_{\{h_f\}} \;
+		\prod_{\substack{\text{gray face}\\f}} \!\!\! d_{h_f}
+		\;\prod_{\substack{\text{vertex}\\\rm v}} \! \operatorname{Tet}({\rm v}) \,,
+\end{align}
+where the sum is over all possible labelings of the gray 2-cells, and the products are over all 2-cells $f$, and vertices labeled $\rm v$. As in Eq.~\eqref{shadoweval2}, all 2-cells must be contractible.
+We comment that the sum in \eqref{TVSS} for the ``identity graph'' (on both sides) evaluates to $\sum_a d_a^{2 \chi}$ where $\chi$ is the Euler characteristic of $Y$.
+Explicitly writing out the tetrahedral symbols that appear from each type of 2-cell termination appearing in Fig.~\ref{TVcells} and in the projection \eqref{TVproj} gives
+\begin{subequations} \begin{align}
+	\TVvertup\;\;\; &= \operatorname{Tet}({\rm v}) = \Msixj{\alpha & \beta & \gamma}{h_1 & h_2 & h_3} ,
+	\label{TV1a}\\
+	\TVvertcross\;\;\; &= \operatorname{Tet}({\rm v})=\Msixj{X& h_1 & h_2}{\alpha & h_3 &h_4} ,
+	\label{TV2}\\
+	\TVvertdown\; &= \operatorname{Tet}({\rm v}) = \Msixj{X & Y & Z}{h_1 & h_2 & h_3} .
+	\label{TV3}
+\end{align} \end{subequations}
+
+
+
+
+The key advantage of defining the lattice models in terms of the TVBW state sum  is that the TQFT inner product is invariant under local deformations of the defect configuration $\ket{D}$. 
+Different configurations are related by the re-triangulation invariance of the TVBW state sum. 
+The local weights in $\bra{\Psi}$ mean however that $\langle \Psi |D \rangle$ is not topologically invariant but instead a more interesting partition function.\footnote{We note that there are choices of $\ket{\Psi}$ which do lead to topologically invariant partition functions. 
+These are parametrized by Frobenius algebra objects in $\mathcal{C}$ and referred to as topological boundary conditions.} The shadow-world formula \eqref{shadoweval2} follows from  \eqref{TV1a} (up to an unimportant overall factor of $\mathscr{D}^{-2}$) by setting $\ket{D}=\ket{0}$, the configuration with no defects. The heights are simply the labels $h_f$ on the faces.  Defects with very nice topological properties come from defining the defect weights using \eqref{TV2}, giving \eqref{eq:def_LDefect} below. By construction, such defects are topological, as they can be moved around at will without changing $\braket{ \Psi | D }$.  In equation \eqref{DefComm1} we show how to express this topological invariance in terms of local relations we name the defect commutation relations, and prove  directly that these weights satisfy them. Topological trivalent junctions of defects arise by defining the triangle weight \eqref{eq:def_trivalent}	using \eqref{TV3}. We again verify directly that they satisfy the appropriate commutation relations, namely \eqref{eq:trivalent_pentagon}.
+
+We explore some further consequences of the Drinfeld center in Sec.~\ref{sec:twists} by relating the behaviour of the lattice models under Dehn twists to idempotents in the tube category, which correspond to objects in $\mcz(\mcc)$. In addition, we note that vertex operators in the lattice models are naturally labeled by objects in $\mcz(\mcc)$, and can be viewed as terminations of bulk Wilson lines on the boundary. 

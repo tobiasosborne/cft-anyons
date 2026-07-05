@@ -1,0 +1,790 @@
+%auto-ignore
+%      this ensures the arxiv doesn't try to start TeXing here.
+%!TEX root = super_lattice_models_draft.tex
+%      prev line helps TeXShop do the right thing
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Statistical mechanics from fusion categories}
+\label{sec:statmech}
+
+Here we explain how to define two classes of statistical-mechanical models using the data of a fusion category described in section \ref{sec:Fusion_Theory}. The degrees of freedom in these two classes are respectively {\em geometric objects}, and {\em heights}. 
+A key advantage of the latter class is that the Boltzmann weights are {\em local}. If the weights are positive as well, any field theory resulting from taking the continuum limit must necessarily be unitary. Thus many of the height models are well known, the most prominent being the Ising model analyzed in depth in Part~I.
+While the connection of the fusion categories to the geometric models is fairly obvious, we explain how many widely studied height models (and some not-so-widely studied) are also best described in terms of category data.
+Although virtually all of the results in this section can be found in various places in the literature (see e.g.\ Refs.~\cite{Wadati1989,Wu1992} for reviews), many of the lessons learned have been neglected in the statistical-mechanical world.
+
+
+A key feature of the formulation here is that, as opposed to most of these studies, we are \emph{not} restricted to the study of integrable models.
+When the Boltzmann weights are chosen to be uniform in space, some of the simpler models we study are integrable (and often critical).
+Examples include the loop models \cite{Baxter1976,Nienhuis1990} coming from the Temperley-Lieb algebra \cite{Temperley1971} and the related ABF height models \cite{Andrews1984}.
+However, beyond Temperley-Lieb, integrability requires even further fine-tuning.
+Moreover, when the Boltzmann weights are staggered or disordered, the models are typically neither critical nor integrable, even when the uniform case is. 
+Thus the tools we develop are among the few reliable analytical ways of understanding their physics. 
+
+
+
+
+The lattice models we study are defined by the following data:
+\begin{enumerate}
+\item A graph $G$ that gives the location of the degrees of freedom. In completely packed geometric models, they live on faces of $G$, while in height models the live on the vertices of $G$. 
+\item	A fusion category $\mathcal{C}$ with the appropriate assumptions laid out in Sec.~\ref{sec:Fusion_Theory}.
+\item	A distinguished object $\upsilon$ from $\mathcal{C}$.
+\item	A choice of amplitudes $A(\chi)$ for each element $\chi$ in the fusion product of $\upsilon$ with itself: $\chi\in \upsilon \otimes \upsilon$.
+\end{enumerate}
+This structure allows us to define two types of closely related models, where the degrees of freedom are written in terms of geometrical objects (Sec.~\ref{sec:loopmodels}) and heights (Sec.~\ref{sec:heights}) respectively.
+In both cases we give the most general possible Boltzmann weights for this configuration space that can be written as the evaluation of diagrams from the fusion category. These are necessarily consistent with the diagrammatic tools developed.
+We will finish the section by giving several examples of well known models recast in this language, as well as some lesser-known ones.
+
+
+\subsection{Loop and geometric models}
+\label{sec:loopmodels}
+We first describe how to to define {\em geometric models} using a fusion category. In these models the degrees of freedom are written most naturally in terms of geometric objects such as loops or nets, the former being the best known.
+The physical space on which these models live is defined in terms of a graph $G$ built of quadrilaterals, such as the square lattice. In this paper we focus on planar quadrilateral graphs, but the methods can be generalized to any cell decomposition of a surface. The degrees of freedom in the geometric models live on the edges and quadrilaterals of $G$, whereas in the height models discussed later in this section they live on the vertices. 
+
+The role of the fusion category ${\cal C}$ in the geometric models is fundamental, giving the framework to define both the degrees of freedom and the most interesting part of the Boltzmann weights. The distinguished object $\upsilon$ in ${\cal C}$ governs the degrees of freedom on the edges of $G$,
+while its fusion channels govern degrees of freedom on each quadrilateral, and each configuration in a geometric model corresponds to a fusion diagram. The topological part of the Boltzmann weights then are defined utilising the evaluation of fusion diagrams. When these elements are chosen appropriately, one recovers many of the well-known examples we discuss below. 
+
+
+Precisely, we associate to each edge of $G$ a strand labeled by $\upsilon$, the distinguished object in the category. Each such strand goes between two adjacent quadrilaterals, so that each quadrilateral has four entering strands and a single fusion channel $\chi\in \upsilon \otimes \upsilon$, pictured as
+\begin{align} 
+\EfRhombii\ .
+\label{loopfusion}
+\end{align}
+We assemble all the strands and fusion channels into a fusion diagram $\mathcal{F}$, for example \begin{align}
+\RhombiiTilingBoundaryRandom
+\label{Zfusion}
+\end{align}
+A ``boundary'' edge of $G$ belongs to only one quadrilateral.  For simplicity, here we imposed a boundary condition by joining the strands through boundary edges to one of their neighbors; we later discuss a variety of possible boundary conditions. 
+The strands of the fusion diagram labeled by a box are those associated with each quadrilateral, whereas those without a box all have labels $\upsilon$. Here the objects $\upsilon$ and $\chi$ are self-dual; for non self-dual objects one must include an arrow. 
+
+
+
+
+For simplicity, we first describe in more detail  the case where $\upsilon$ is a simple object of ${\cal C}$. 
+The resulting geometric model is called {\em completely packed}, because there are effectively no degrees of freedom on the edges; all are fixed to $\upsilon$. 
+The non-trivial degrees of freedom thus live inside each quadrilateral $Q$ of $G$, and correspond to the possible fusion channels $\chi \in \upsilon \otimes \upsilon$.
+In other words, the allowed $\chi$ are the basis vectors of the $V^{\upsilon \upsilon}_{\upsilon \upsilon}$, and each configuration corresponds to specifying one of these per box in (\ref{Zfusion}).
+The number of degrees of freedom per quadrilateral is therefore simply the dimension of this vector space.
+For example, for the geometric models built on ${\cal A}_{k+1}$ with $\upsilon=\tfrac12$, there are two states per quadrilateral labeled $\chi=0,1$. 
+
+
+The Boltzmann weight for each configuration is a product of both locally and non-locally determined pieces. 
+The local weights are most conveniently given by specifying a vector $A_Q \in V^{\upsilon \upsilon}_{\upsilon \upsilon}$ for each $Q$.
+It is a non-simple object, and so can be expanded in terms of the basis vectors $\chi$ as
+\begin{align}
+	A_Q\equiv \fboxa =\sum_{\chi \in \upsilon \otimes \upsilon} A_Q(\chi) \frac{\sqrt{d_\chi}}{d_\upsilon} \; \fBoxprime \ .
+	\label{AQbasis}
+\end{align}
+This local weight amounts to weighting each appearance of $\chi$ on a given face $Q$ with the amplitude $A_{Q}(\chi)$, with the extra quantum dimensions put in to make the amplitude multiply a projection operator (see \eqref{Pf} below).
+We have included the subscript to emphasize that even when the amplitudes are spatially dependent, all our results for topological defects still apply.
+
+The non-local part is more interesting. Labelling each box by one of the allowed $\chi$ gives a fusion diagram ${\cal F}$.
+A natural choice of non-local Boltzmann weight is then the evaluation of ${\cal F}$ using the category ${\cal C}$, which we denote as eval${}_{\cal C}[{\cal F}]$.
+The procedure to compute the evaluation is described in section \ref{sec:evaluation}.
+The result depends only on the topology of the diagram, and is central to the power of our approach. 
+The amplitude for each ${\cal F}$, its full Boltzmann weight, and the partition function for the completely packed model are therefore
+\begin{align}
+	A({\cal F}) &= \prod_Q \frac{\sqrt{d_{\chi_Q}}}{d_\upsilon} \, A_{Q}(\chi_Q) \,,
+&	W({\cal F}) &= A({\cal F}) \operatorname{eval}_{\mcc}[{\cal F}] \,,
+&	Z_{\rm geo}(G) &= \sum_{\cal F} W({\cal F}) \,.
+	\label{ZW}
+\end{align}
+The sum over ${\cal F}$ in the completely packed case is the sum over all allowed labelings $\chi_Q$ for each $Q$.
+
+
+
+In the picture (\ref{Zfusion}), we have made a particular choice of basis on each quadrilateral in order to draw the fusion diagram ${\cal F}$.
+There are two possible ways of drawing this line, i.e., in (\ref{loopfusion}) the fusion can be either in the vertical or horizontal directions. The two bases are related by the $F$-move
+\begin{align}
+\EfRhombii  = \sum_{\widetilde{\chi}}  \Msixj{\upsilon & \upsilon & \chi}{\upsilon & \upsilon & \widetilde{\chi}} \sqrt{d_\chi d_{\widetilde{\chi}}}  \;  \EftildeRhombii
+\label{Frhombus}
+\end{align}
+described in (\ref{eq:Fmove_def}).
+%relates the evaluation of any diagram to a sum over other evaluations. 
+Letting ${\cal F}_{\widetilde{\chi}^{}_Q}$ be the fusion diagram given by replacing some $\chi^{}_Q$ in ${\cal F}$ by $\widetilde{\chi}^{}_Q$ in the other direction,  the corresponding evaluations are related via
+\begin{align}
+	\operatorname{eval}_{\mcc}[{\cal F}]= \sum_{\widetilde{\chi}} [F^{\upsilon\upsilon\upsilon}_{\upsilon}]_{\chi \,\widetilde{\chi}} \operatorname{eval}_{\mcc}[{\cal F}_{\widetilde{\chi}^{}_Q}]\ .
+\end{align}
+Defining
+\begin{align}
+	A_{Q}(\widetilde{\chi}) = \sum_{\chi} d_\chi \Msixj{\upsilon & \upsilon & \chi}{\upsilon & \upsilon & \widetilde{\chi}} A_{Q}(\chi) \,;
+	 \qquad
+	\widetilde{W}({\cal F}_{\widetilde{\chi}^{}_Q })= \operatorname{eval}_{\mcc}[{\cal F}_{\widetilde{\chi}^{}_Q}] \frac{\sqrt{d_{\widetilde{\chi}}}}{d_\upsilon} A_{Q}(\widetilde{\chi}_Q)\prod_{Q'\ne Q } \frac{\sqrt{d_\chi} (\chi_{Q'})}{d_\upsilon}A_{Q'}
+\label{relateweights}
+\end{align}
+and noting that the matrix $F^{\upsilon\upsilon\upsilon}_{\upsilon}$ is invertible gives
+\begin{align}
+	Z_{\rm geo}(G) =\sum_{\cal F} W({\cal F})= \sum_{{\cal F}_{\widetilde{\chi}^{}_Q}} \widetilde{W}({\cal F}_{Q, \widetilde{\chi}})\ .
+	\label{relateweights2}
+\end{align}
+Thus the partition function is independent of choices of direction on any quadrilateral $Q$, as long as the local part of the Boltzmann weights is related by (\ref{relateweights}). 
+
+
+
+More general geometric models come from relaxing the complete-packing constraint and allowing $\upsilon$ to be a non-simple object. Decomposing it into a direct sum of simple objects $\upsilon^{(l)}$ as
+\begin{align}
+\upsilon = \bigoplus_l^{} B_l \upsilon^{(l)}\ ,
+\label{Bupsilon}
+\end{align}
+the coefficients $B_l$ give a weight for each choice of $\upsilon_l$ on a given edge. They can be taken to be $0$ or $1$, since any other values can be absorbed into a redefinition of the amplitudes. Each configuration can still be described by a fusion diagram like in (\ref{Zfusion}), 
+except now each strand $s$ without a box carries a label  $\upsilon^{(l_s)}$ instead of $\upsilon$.
+The labels allowed for $\chi_Q$ are then the allowed fusion channels for the labels  
+%$\upsilon^{(l_1)}, \upsilon^{(l_2)},\upsilon^{(l_3)},\upsilon^{(l_4)}$ 
+on the four strands entering $Q$, i.e., the basis elements of the vector space $V^{\upsilon^{(l_3)}\upsilon^{(l_4)}}_{\upsilon^{(l_1)}\upsilon^{(l_2)}}$.
+The Boltzmann weights and partition function remain of the form (\ref{ZW}), but here the local weights now depend on all four of these labels as well as $\chi$.  In the special case where $\upsilon=0 \oplus \upsilon'$, each edge is either empty or covered by a strand. Such models are called ``dilute". 
+
+
+More complicated geometric models are defined using fusion categories not having the simplifying assumptions outlined in Section \ref{sec:Fusion_Theory}. 
+Relaxing the requirement that all simple objects be self-dual yields geometric models where the strands have arrows. Fusion categories with $N_{ab}^c>1$ results in models with extra degrees of freedom. 
+We could also define a model on any triangulation by splitting each quadrilateral into two triangles and assigning a splitting or fusion operator to each triangle, or on any cell decomposition by choosing an object for each edge, and an element in the fusion space of the edge labels for every face. However, the height models discussed below are naturally defined on the quadrilaterals; on a triangulation or generic cell decomposition, the Boltzmann weights cannot be guaranteed to be positive in an obvious way.
+
+In mathematical language, 
+\begin{align}
+A_Q \in \text{mor}(\mathds{1} \rightarrow  \otimes_{e \in Q} \upsilon),
+\end{align}
+where the $e \in Q$ runs over all the edges adjacent to the face $Q$. 
+A basis for $\text{mor}(\mathds{1} \rightarrow  \otimes_{e \in Q} \upsilon)$ can be decomposed in terms of trivalent fusion spaces. 
+For example if all $B_l=1$, and there are $r$ edges adjacent to face $Q$ then we have $A_Q \in \text{mor}(\mathds{1} \rightarrow  \otimes_{e \in Q} \upsilon) \cong \bigoplus_{l_1, \cdots, l_r} V^{l_1 \cdots l_r}$.
+
+
+
+
+\subsection{Examples of geometric models }
+\label{sec:geometricexamples}
+
+\paragraph{Completely packed self-avoiding loop models.}
+
+The best-known class of geometric models are \emph{loop models}, where the degrees of freedom are closed loops.
+Although avoiding branching seems somewhat antithetical to our approach, we show how $F$-moves make it quite simple to describe loop models in terms of fusion categories.
+One payoff is that even though the Boltzmann weights are non-local in either approach, the $F$-moves give \emph{local} relations between partition functions.
+
+Loop models are built using the ${\cal A}_{k+1}$ fusion category. 
+In a {\em completely packed} loop model, each edge of ${\cal Q}$ has an $\upsilon = \tfrac12$ line passing through it. 
+This object (corresponding to the ``fundamental'' spin-$\tfrac12$ representation in the related quantum-group algebra \cite{Pasquier1990}) obeys the fusion rule $\tfrac12\otimes \tfrac12=0\oplus 1$. 
+There are two degrees of freedom per quadrilateral corresponding to the two fusion channels $\chi = 0$ or $1$.
+This has a very convenient graphical representation. 
+When $\chi=0$, we leave that bit of the fusion diagram as empty, since adding or removing the identity line never changes the evaluation of the diagram.
+When $\chi=1$, we draw this as a zig-zag line. Thus a typical fusion diagram for the geometrical model coming from the ${\cal A}_{k+1}$ fusion category with $\upsilon=\tfrac12$ can be drawn as
+\begin{align} \FExampleSpinZeroOne\ .
+\label{spinzeroone}
+\end{align}
+It is easy to check using the $F$-moves (\ref{relateweights}) that the evaluation vanishes for any graph that contains a ``tadpole'', a $\upsilon=\tfrac12$ loop with a single zig-zag line attached to it.
+
+
+
+$F$-moves make it easy to see why this geometric model is equivalent to the completely packed self-avoiding loop model in its traditional definition.  
+Here they relate the two fusion channels $0,1$ on a given quadrilateral $Q$ to those $\tilde{0},\tilde{1}$ in the other orientation. 
+Written as a matrix where the rows and columns are labeled by $0,1$, the needed $F$-matrix elements are
+\begin{align}
+	\Big[ F^{\frac12 \frac12 \frac12}_{\frac12} \Big] = \frac{1}{d_{\frac12}} \begin{pmatrix} 1 &\sqrt{d_1}\cr \sqrt{d_1} &-1 \end{pmatrix} \,.
+\end{align}
+The quantum dimensions are given by \eqref{eq:def_QD}.
+As (\ref{relateweights2}) indicates, the evaluation and the partition function are invariant if on any $Q$ we replace
+\begin{align}
+\RVZero\; \;  &= \; \; \frac{1}{d_{\frac12}} \; \; \RHZero\; \; + \; \; \frac{\sqrt{d_1}}{d_{\frac12}} \; \; \RHOne \;.
+\label{TLF0} \\[5pt]
+\RVOne \; \;  &=\; \; \frac{\sqrt{d_1}}{d_{\frac12}} \; \; \RHZero \; \; -\;\; \frac{1}{d_{\frac12}} \; \; \RHOne \;.
+\label{TLF1}
+\end{align}
+Any two of the four possible fusion channels $0,1,\tilde{0},\tilde{1}$ are linearly independent, and so form a basis.
+Thus each of the zig-zag lines in the fusion diagrams like (\ref{spinzeroone}) can be replaced with a linear combination of lines that avoid each other, namely
+\begin{align}
+\RVOne \; \;  &=\; \; \frac{d_{\frac12}}{\sqrt{d_1}} \; \; \RHZero \; \; -\;\; \frac{1}{\sqrt{d_{1}}} \; \; \RVZero \;.
+\label{avoidcrossing}
+\end{align}
+All the configurations in this geometric model can be built in terms of diagrams using only ``avoided crossings" labeled $0$ and $\tilde{0}$ on each quadrilateral $Q$
+on each quadrilateral. If we chose a boundary condition where no $\upsilon$ lines end, all the fusion diagrams can be rewritten as linear combinations of fusion diagrams ${\cal F}$ of completely packed self-avoiding loops.
+
+The evaluation of a diagram consisting of self-avoiding loops is easy.
+Since each loop is labelled by the object $\upsilon=\tfrac12$ here, it contributes a factor $d_{\frac12} = 2\cos \tfrac{\pi}{k+2}$ to the evaluation.
+Thus when ${\cal F}$ has $N_\text{loops}$ closed loops, the partition function for completely packed loops is simply 
+\begin{align}
+	Z_{\rm CPL} 
+		= \sum_{\cal F} \big(d_{\frac12}\big)^{N_\text{loops} - N_\text{quadr}} \prod_Q A_{Q} (\chi_Q)
+	\label{ZCPL}
+\end{align}
+where $\chi_Q=0$ or $\tilde 0$ depending on how the two loops avoid on face $Q$. The local weights $A_Q(0)$ and $A_Q({\tilde 0})$ can be related to those $A_{Q}(0)$, and $A_Q(1)$ by using (\ref{relateweights}). 
+
+This partition function of completely packed loops has long been studied, for example in the Fortuin-Kasteleyn expansion for the Q-state Potts model \cite{Fortuin1971}, where Q=$\big(d_{\frac12}\big)^2$.
+While expressing the states in terms of loops is quite elegant and useful, it obscures the fact that there are local manipulations such as $F$-moves that leave (\ref{ZCPL}) invariant. The number of loops is inherently a non-local quantity; one needs to follow the entire path of the loop to know which segments comprise it.
+Being able to do local manipulations on the configurations without changing the partition function is essential to our analysis. Thus even when there are seemingly simpler rewritings, we usually write the partition function as the sum over evaluations of fusion diagrams, rather than expressions like (\ref{ZCPL}).
+Using such a basis also has distinct advantages when studying quantum loop and net models, for example providing a natural inner product for the quantum model \cite{Fendley2008}. 
+
+\paragraph{Dilute loop models.}
+
+
+A well-known example without the complete packing is the ``dilute'' loop model, where $\upsilon = 0\oplus \tfrac12$ in the ${\cal A}_{k+1}$ category, corresponding to unoccupied or occupied edges respectively \cite{Nienhuis1990}.
+Sometimes this model known as the $O(n)$ model, because of its relation to models of magnets when the loop weight is an integer \cite{BN1989}. Since all possible fusion rules preserve the number of strands mod $2$, there must be an even number of strands entering each quadrilateral. This results in nine allowed configurations on each quadrilateral, which can be chosen to be
+\begin{align} \begin{aligned}
+	&\Rblank \,,
+	&&\RVZero \,,
+	&&\RVoD \,,
+	&&\reflectbox{\rotatebox[origin=c]{180}{$\RVoD$}} \,,
+	&&\RHoL \,,
+	&&\reflectbox{{$\RHoL$}} \,,
+	&&\RVtwist \,,
+	&&\reflectbox{\rotatebox[origin=c]{180}{$\RVtwist$}} \,,
+	&&\RVOne \,.
+\label{diluteloops}
+\end{aligned} \end{align}
+As with the completely packed model, one can use \eqref{avoidcrossing} to get rid of the zig-zag line and replace it with self-avoiding loops.
+A particular choice of local Boltzmann weights $A_{Q}$ for these nine configurations results in an interesting integrable model \cite{Nienhuis1990}, to which we return in section \ref{sec:gmin}.
+
+
+
+\paragraph{Higher-spin models.}
+The completely packed loop models defined above are closely related to the Kac-Moody algebra $SU(2)_k$ and the corresponding quantum-group deformation of the $SU(2)$ algebra, with the simple object $\upsilon=\tfrac12$ corresponding to the spin-$\tfrac12$ representation of the algebras.
+An obvious generalization is to take $\upsilon$ to be a higher-spin value.
+For $\upsilon>\tfrac12$ there is no way to rewrite the configurations in terms of loop configurations in the plane, so utilising fusion diagrams is the only sensible way of defining such geometric models. 
+
+For example, when $\upsilon=1$, its fusion algebra is $1\otimes1 = 0\oplus1\oplus2$, so that three numbers $A_Q(0)$, $A_Q(1)$, and $A_Q(2)$ are required to specify the partition function.
+Graphs can be manipulated by using the $F$-matrix
+\begin{align}
+	\big[ F^{111}_{1} \big] = \frac{1}{d_1}
+		\begin{pmatrix} 1 &\sqrt{d_1}&\sqrt{d_2}
+		\\ \sqrt{d_1}& \frac{d_1(d_1-2)}{d_1-1}&-\frac{\sqrt{d_1d_2}}{d_1-1}
+		\\ \sqrt{d_2} & -\frac{\sqrt{d_1d_2}}{d_1-1}&\frac{1}{d_1-1}
+		\end{pmatrix}
+	\label{Fmat1}
+\end{align}
+with the rows and columns are labeled by the $0,1,2$ channels.
+One can generalize (\ref{TLF0},\,\ref{TLF1}) to write three linear relations relating the six possible graphs on each $Q$.
+We see that indeed one cannot reduce configurations to a combination of self-avoiding loops. 
+
+For any $\upsilon$ there exist integrable Boltzmann weights \cite{Kulish:1981}, but as in the dilute case, they require fine-tuning.
+One example for $\upsilon=1$ comes from rewriting the ``19-vertex model'' solution of the Yang-Baxter equation \cite{Zamolodchikov1980} in terms in terms of topological invariants \cite{Wadati1989}, giving
+\begin{align}
+	A_Q(0) &= \frac{\sin(\gamma+u)}{\sin(\gamma-u)} \,,
+&	A_Q(1)&= 1 \,,
+&	A_Q(2) &= \frac{\sin(2\gamma-u)}{\sin(2\gamma+u)} \,.
+\label{spinoneYBE}
+\end{align}
+where $\gamma = \frac{\pi}{k+2}$, while $u$ can vary. 
+A more unusual solution for $\upsilon=1$ comes from the Izergin-Korepin or $A_2^{(2)}$ solution of the Yang-Baxter equation \cite{Izergin:1980,Jimbo:1985}, where the amplitudes obey
+\begin{align}
+	A_Q(0) &= \frac{\cos(3\gamma+u)}{\cos(3\gamma-u)} \,,
+&	A_Q(1) &= \frac{\sin(2\gamma+u)}{\sin(2\gamma-u)} \,,
+&	A_Q(2) &= 1 \,.
+\label{IKYBE}
+\end{align}
+We emphasize again that our results for topological defects do not require tuning the weights to these special integrable cases. 
+
+\paragraph{BMW models.} 
+Not surprisingly, there are fusion categories associated with the quantum-group deformations of Lie algebras more general than $SU(2)$.
+An algebra generalizing the Temperley-Lieb algebra is known as the Birman-Murakami-Wenzl (BMW) algebra \cite{birman1989,murakami1990}.
+It allows the definition of categories labeled by Lie algebras and an integer parameter $k$.
+The corresponding geometric models amount to having $\upsilon$ be the vector representation $V$ of the (quantum-group deformed \cite{Gomez1996}) algebra.
+In the $SO(n)$ and $Sp(n)$ cases for $k\ge 2$, it obeys the fusion algebra
+\begin{align}
+V\otimes V = \I \oplus A\oplus S \,,
+\label{BMWmult}
+\end{align}
+giving the trivial, antisymmetric and symmetric representations respectively.
+In the $SO(3) \sim SU(2)$ case, both the vector and antisymmetric representations are spin 1, because of the existence of the completely antisymmetric invariant tensor $\epsilon_{abc}$.
+
+By choosing  $\upsilon=V$, a completely packed geometric model can be found for these BMW algebras. As follows from \eqref{BMWmult}, each $\chi_Q$ can be in any of three channels.
+An associated solution of the Yang-Baxter equation can be extracted from \cite{Jimbo:1987}, and can be generalized to the dilute case $\upsilon=0\oplus V$  \cite{Grimm1994}.
+More general integrable models exist where multiple strands are allowed on each edge, and so effectively there are different layers  \cite{Grimm1995}.
+In such a case, $\upsilon$ then takes values in some direct product of categories $\mcc^{\text{layer}\,1}  \times \mcc^{\text{layer}\,2}$.
+
+
+
+
+
+\subsection{Heights and shadows}
+\label{sec:shadow}
+
+The role of fusion categories in statistical mechanics goes well beyond geometric models.
+Much less obviously, they play a central role in understanding an important class of lattice models with {\em local} Boltzmann weights.
+Examples of this connection long predate the invention of fusion categories.  For example, the Fortuin-Kasteleyn cluster expansion relates the $Q$-state Potts model, a model with nearest-neighbor Boltzmann weights, to a cluster/loop expansion, as reviewed e.g.\ in Ref.~\cite{Baxter1982}.
+We explain in this subsection how in general, fusion diagrams can be evaluated in terms of local data by using a technique known in the mathematical literature as the \emph{shadow world} \cite{Reshetikhin1988,turaev1990,turaev1992,kauffman1993,turaev2016quantum}.
+Physical explanations of the correspondence in terms of braiding and knot invariants can be found in the review articles \cite{Wadati1989,Wu1992}, and in terms of Chern-Simons theory in \cite{Witten:1989}. 
+
+The shadow-world construction gives the evaluation of a fusion diagram embedded in a sphere  by associating to it a sum over degrees of freedom living on its faces \cite{Reshetikhin1988,TuraevViro1992,Barrett1996}. These degrees of freedom are called {\em heights}, and can be used to define a statistical-mechanical model with many elegant properties. Terms in the sum are weighted by quantum dimensions and tetrahedral symbols of these degrees of freedom, and from these weights the corresponding height model can be constructed. 
+This general class of models is often known as RSOS (restricted solid-on-solid) or IRF (interaction round a face) models, but we simply call them {\em height models}. Thus even though the Boltzmann weights are local in the height models, their partition functions can still be expressed in terms of fusion diagrams as in \eqref{ZW}. Although that seems to be making matters more complicated, the fusion-diagram form makes it much easier to find topological defects. We introduced this picture for the Ising model in Part~I, and found many useful applications. 
+
+
+
+Before describing the construction of topological defects though, we state the shadow-world formula and use it to define the Boltzmann weights of the height models. In the next section \ref{modules} we explain the origin of this formula, and how it can be generalized to define topological defects.  
+
+As we have explained, a fusion diagram ${\cal F}$ is a labelled trivalent graph $\mathcal{G}$ with a collection of vertices $V$, edges $E$, and faces $F$. Each edge $e \in E$ is labelled by an object in the fusion category ${\cal C}$.
+Since ${\cal G}$ is trivalent, the faces of the dual graph $\widehat{\cal G}$ are triangles centered on the vertices of $\cal{G}$. The first step in evaluating the fusion diagram ${\cal F}$ using the shadow world is to assign a ``height'' $h_f \in {\cal C}$ to each face $f \in F$ (or equivalently each vertex of $\widehat{\cal G}$ or the original graph $G$).  The allowed heights are thus in one-to-one correspondence with the simple objects. Thus for the ${\cal A}_{k+1}$ category, the heights take on values $0,\tfrac12,1,\dots \tfrac{k}{2}$. 
+%As a statistical mechanics model, these heights are labelled by (simple) objects in the fusion category.
+
+
+The next step is to assign a weight $w(\{h_f\};{\cal F})$ to each configuration of heights and edge labels. The evaluation of the fusion diagram using the shadow world is then simply given by summing the weight \eqref{shadoweval2} over all the heights:
+\begin{align}
+	\operatorname{eval}_{\cal C}[{\cal F}] = \sum_{\{h_f\}} w(\{h_f\}; {\cal F}) \,,
+\label{shadoweval1}
+\end{align}
+The weight is associated with the vertices, edges, and faces of ${\cal G}$.
+\begin{figure}[h]
+	\begin{align*} \ShadowNotation \end{align*}
+	\caption{Notation for each vertex ${\rm v}$ and adjacent edges and faces.}
+	\label{fig:ShadowNotation}
+\end{figure}
+The vertex weights are the non-trivial part.
+Consider a single vertex $\rm v$ of ${\cal F}$ with adjacent edges $e_1$, $e_2$, $e_3$, and faces $f_1$, $f_2$, $f_3$ as shown in Fig.~\ref{fig:ShadowNotation}.
+The associated weight is in terms of the tetrahedral symbol depending on the labels on the adjacent edges $\epsilon_i(e_i)$ and those on the neighboring faces $h_i(f_i)$:
+\begin{align}
+	\operatorname{Tet}({\rm v}) \;=\; \Msixj{\epsilon_1 & \epsilon_2 & \epsilon_3}{h_{1} & h_{2} & h_{3}} \,,
+\end{align}
+This tetrahedral symbol enforces the adjacency rule $\epsilon_1 \otimes \epsilon_2 = \epsilon_3+\dots$, as necessary for a fusion diagram to have a non-zero evaluation.
+Additional requirements from the tetrahedral symbol such as $N_{h_{1} \epsilon_3}^{h_{2}} > 0$ means that the heights on two adjacent faces must differ by the fusion of the object on the edge they share.
+The locally defined weights are then \cite{Reshetikhin1988}
+\begin{align}
+	w\big(\{h_f\}; {\cal F}\big) = \frac{1}{\sum_{a \in {\cal C}} d_a^2}
+		\prod_{f \in F} d_{h_f} \times \prod_{e \in E} \sqrt{d_{\epsilon_e}} \times
+		\prod_{{\rm v} \in V} \operatorname{Tet}({\rm v})~.
+	\label{shadoweval2}
+\end{align}
+The constant prefactor arises because we include the exterior of the graph as a face, and comes from the useful identity \eqref{ddNdD}.
+Thus as opposed to evaluating fusion diagrams by e.g.\ resolving intersections and counting loops as one does in the Jones polynomial, evaluating using (\ref{shadoweval1}, \ref{shadoweval2}) gives entirely a product of local weights.\footnote{The formula~\eqref{shadoweval2} requires that each face must be simply connected on $S^2$, and that each edge terminates at a pair of (possibly the same) vertices.  If not, $\I$ lines can be inserted to break up closed loops and noncontractible faces; i.e., turn the diagram into a non-empty-connected-graph for which the formula~\eqref{shadoweval2} is applicable.}
+
+ 
+
+
+
+\subsection{Height models}
+\label{sec:heights}
+
+The shadow-world evaluation (\ref{shadoweval1}, \ref{shadoweval2}) makes it obvious how to define a model with the same partition function as a geometric model. The degrees of freedom are the heights, which are simple objects in the category. While the height description partially hides the elegant topological properties, a key advantage is the Boltzmann weights of the height model are local. 
+
+As with the geometric models, the height models are defined using the three criteria listed at the beginning of section \ref{sec:statmech}: a fusion category ${\cal C}$, a distinguished object $\upsilon$ from ${\cal C}$, and a choice of amplitudes $A_{Q}$ for each quadrilateral.
+In the shadow world the heights live on the {\rm faces} of the fusion diagram ${\cal F}$.
+They therefore live on the {\em vertices} $v$ of ${G}$, the graph whose faces are all quadrilaterals.
+The allowed heights are the elements of $\mathcal{C}$, so that each configuration corresponds to labelling each vertex of $G$ by some element of $\mathcal{C}$ subject to an adjacency rule.
+Namely, two heights $h$ and $h'$ are only allowed to be on vertices connected by an edge of $G$ if $h$ appears in the fusion of $h'$ and $\upsilon$, i.e., $N_{h\upsilon}^{h'}\ne 0$.
+The pivotal property \eqref{eq:pivotal_N} we are assuming means that $N_{h'\upsilon}^h$ must be non-vanishing as well. 
+If $\upsilon$ is not self-dual, then one needs to include arrows on the edge connecting the adjacent heights.
+
+
+The Boltzmann weights in the height model are given by a product of weights involving four-site interactions around each quadrilateral \cite{Baxter1982}. 
+We use the notation where a labelled picture denotes a number depending on the heights on its vertices), so that each $\BWsmall$ is a Boltzmann weight which includes the interactions between all four spins $a$, $b$, $c$ and $b'$ around a quadrilateral.
+The partition function thus is of the form
+\begin{align}
+	Z \quad = \sum_{\substack{\text{height}\\\text{configurations}}} \left( \prod_{{v}\in {G}} d_{h_{v}} \right)\, \prod_{Q} \BWabcd \,.
+	\label{eq:Zheightdef}
+\end{align}
+where the factors $d_{h_v}$ are extracted for later convenience.
+The adjacency rule requires that the Boltzmann weights on each quadrilateral obeys
+\begin{align}
+	\BWabcd \;\propto\; N_{ab'}^\upsilon N_{b'c}^\upsilon N_{cb}^\upsilon N_{ba}^\upsilon \,.
+	\label{eq:BWproptoNNNN}	
+\end{align}
+
+The shadow-world construction relates the evaluation of a single fusion diagram to a sum over heights, where each term in the sum is a product over local weights.
+However, the partition function of a geometric model is a sum over different fusion diagrams, given by expanding in fusion channels for each quadrilateral, as displayed in \eqref{AQbasis}.
+This  expansion is over $\chi\in V^{\upsilon \upsilon}_{\upsilon \upsilon}$, i.e., $\chi$ with $N_{\upsilon\upsilon}^\chi>0$.
+We draw the analogous expansion in terms of height-model weights as
+\begin{align}
+\BWabcd \;&=\; \sum_\chi A_Q(\chi) \; \BWabcdx{\chi} \,.
+\label{Wexp}
+\end{align}
+The coefficients $A_Q(\chi)$ in \eqref{Wexp} are arbitrary,  but their precise expression depends on the basis for the space $V^{\upsilon \upsilon}_{\upsilon \upsilon}$ of fusion channels, i.e.\ which pairs of the $\upsilon$ we fuse together to get $\chi$. The two most natural bases have fusion diagrams with the $\chi$ line running horizontally or vertically, and \eqref{Frhombus} shows how the corresponding evaluations are related. As in the geometric model, the partition function is invariant if the corresponding $A_Q(\chi)$ are related by  \eqref{relateweights}. This relation between weights is sometimes referred to in the statistical-mechanical literature as the ``crossing'' property, by analogy with the properties of Feynman diagrams in field theory.
+Inserting \eqref{Wexp} into the height-model partition function \eqref{eq:Zheightdef} then gives it as a sum over both fusion diagrams and heights:
+\begin{align}
+	Z =  \sum_{\text{heights}} \left[ \sum_{\cal F} \prod_{Q} A_Q(\chi_Q) \; \BWabcdx{\chi_{Q}} 
+ \;\times \prod_{\rm v} d_{h_{\rm v}} \right] .
+ \label{Zheightfusion}
+\end{align}
+The product over vertices remains over those in $G$, where the heights are defined.
+
+
+
+We now use the shadow world weight \eqref{shadoweval2} to find Boltzmann weights of the height model that yield the same partition function as the corresponding geometric model. To this end, we change the order of sums in \eqref{Zheightfusion} 
+and consider a particular fusion diagram. If we choose 
+\begin{align}
+	\BWabcdx{\chi} & 
+	\;\defineas\; d_\chi \Msixj{\upsilon & \upsilon & \chi}{a & c & b} \Msixj{\upsilon & \upsilon & \chi}{a & c & b'}
+	\;=\; \frac{\sqrt{d_\chi}}{d_\upsilon^2} \frac{1}{\sqrt{d_a d_b d_{b'} d_c}} \; \omegafNA \,,
+	\label{eq:def_chi}
+\end{align}
+then summing over all allowed heights for this particular diagram gives the correct evaluation. 
+Namely, using \eqref{eq:def_chi} in  \eqref{Zheightfusion} and comparing with (\ref{shadoweval1},\,\ref{shadoweval2}) gives
+\begin{align}
+	Z = \sum_{\cal F} A({\cal F}) \operatorname{eval}_{\mcc}[{\cal F}]
+	= \sum_{\cal F} \operatorname{eval}_{\mcc}[{\cal F}] \prod_Q \frac{\sqrt{d_\chi}}{d_\upsilon} A_{Q}(\chi)\ .
+\label{ZW2}
+\end{align}
+By definition \eqref{ZW}, the partition function of the completely packed geometric model is then the same, provided the boundary conditions are chosen appropriately.
+Namely, for the fusion diagram in the geometric model to evaluate to a number, none of the strands can end on the boundary; they must close as e.g.\ in \eqref{spinzeroone}.
+In the shadow world, each height lives on a face of the fusion diagram.
+Therefore, for the evaluation in  \eqref{ZW2} to give the same answer as  \eqref{ZW}, all heights outside the fusion diagram (i.e., on the face at ``infinity'') must take on the same value. 
+With this choice
+\begin{align}
+Z=Z_{\rm geo} \,.
+\end{align}
+Weights found from the shadow-world construction are not automatically positive, but are in the many examples we describe below.
+
+The relation between height and geometric models applies to more general cases such as the dilute models, where $\upsilon$ is not necessarily a simple object. As explained after (\ref{Bupsilon}), one expands out $\upsilon$ in terms of the simple objects, and then generalizes (\ref{Zheightfusion},\ref{eq:def_chi}) to include labels on different strands. One then finds dilute height models, for example the integrable ones discussed in \cite{Warnaar1992}. 
+
+Lastly we briefly remark on how to define the partition function on a graph with boundary, with a more detailed discussion given in section \ref{sec:bdry}. In geometric models, one can simply sew together adjacent strands, as in \eqref{Zfusion}, or do more complicated sewing by for example embedding $G$ and ${\cal F}$ on a cylinder or torus. In the height models, 
+a fixed boundary condition is given by specifying one height per vertex along the boundary of $G$.
+Of course, adjacent heights $h$ and $h'$ must contain $\upsilon$ in their fusion product, otherwise the Boltzmann weight which shares those heights will evaluate to zero.
+One can design ``free" boundary conditions by taking various linear combinations of the fixed boundary condition. 
+In the next subsection we investigate the transfer matrix, which is given by a special boundary condition on the cylinder.
+
+
+\subsection{The transfer matrix for height models}
+
+
+
+
+
+
+
+
+When the graph $G$ of quadrilaterals is regular, the transfer matrix gives a convenient way to parametrize the partition function.
+The transfer matrix builds up the partition function one row at a time; roughly speaking, it implements Euclidean ``time'' evolution. 
+One can then write the partition function in terms of an operator acting on a vector space ${\mathcal V}$ whose basis elements are the different height configurations. Since the nearest-neighbour heights are restricted to be related by fusion with $\upsilon$, one can represent the heights as labels in a fusion tree, as displayed in Figure \ref{fig:PartitionCut}.  With $\upsilon$ simple, the fusion tree has the main trunk with labels $h_j$ for the heights, and branches all labeled $\upsilon$ to enforce $N_{h_j h_{j+1}}^\upsilon = 1$.  For example, for the ABF models each fusion tree is labelled by requiring each $h_j=0,\tfrac12,1,\dots k/2$ with $|h_j-h_{j+1}|=\tfrac12$ for all $i$.
+\begin{figure}[ht]
+	\begin{align*}\xymatrix @!0 @M=2mm @R=32mm{
+		&\Hilbopenprime \\
+		&\HilbOpenZprime \ar[u]		
+	}\end{align*}
+\vspace{-0.3cm}
+	\caption{%
+		Defining the vector space of the height models in the transfer matrix/1+1D quantum picture.
+		The heights on the 2D lattice are now written as labels on the trunk of the fusion tree.	\label{fig:PartitionCut}}
+\end{figure}
+
+
+
+Fixed boundary conditions correspond to fixing edge heights $h_0$ and $h_{L}$ at the ends of the fusion tree, giving the basis elements as
+\begin{align}
+	\ket{h_0\cdots h_{j-1} h_j h_{j+1} \cdots h_{L}} \;\;=\;\; \dots \HilbOpen \dots \;\;\in\;\; \bigoplus_\eta V^{\cdots \upsilon \upsilon \upsilon \upsilon \cdots}_{h_0 h_{L}} \equiv \mathcal{V}_{h_0h_L}.
+	\label{eq:fusiontreedef}
+\end{align}
+We are allowed to draw the fusion tree horizontally, since the diagrams are trivially pivotal, and all objects have trivial Frobenius-Schur indicators. 
+For periodic boundary conditions, we set $h_{j+L}\equiv h_j$. A complete basis for the states in the corresponding vector space $\mathcal{V}$ is then given by the fusion trees
+\begin{align}
+\mathcal{V}=\bigoplus_{h_L} \mathcal{V}_{h_L h_L} \,.
+\label{vper}
+\end{align}
+For either fixed or periodic boundary conditions, the dimension of ${\mathcal V}$ grows asymptotically as $(d_\upsilon)^L$  in (\ref{eq:QD_asymp}).
+The dimension of the ABF Hilbert space therefore grows as $\big(2\cos\frac{\pi}{k+2}\big)^L$. 
+
+
+The transfer matrix $T$ is a linear operator taking ${\mathcal V}$ to $\mathcal{V}$. 
+Since the Boltzmann weights are local in the height model, it can be built in terms of local operators $W_j$.
+The operator $W_j$ is non-diagonal only on site $j$, i.e.,
+\begin{align}
+	W_j  : 
+	\ket{h_1\dots h_{j-1}h_jh_{j+1}\dots h_L}\quad\to\quad  \ket{h_1\dots h_{j-1}h_j'h_{j+1}\dots h_L} .
+\end{align}
+The matrix elements of $W_j$  are labelled in terms of the heights around the quadrilateral, as in (\ref{eq:Zheightdef}), and so depend non-trivially only on the heights on sites $j-1$, $j$ and $j+1$:
+\begin{align}
+(W_j)_{\{h_j\},\{h'_{j}\}}^{}=\BWfour{\BWbareDotsx{}}{h_{j-1}}{h_j}{h'_j}{h_{j+1}}\   \defineas \ 
+\BWfour{\BWbare}{h_{j-1}}{h_j}{h'_j}{h_{j+1}}\,\sqrt{d_b d_{b'}}
+\label{semidotdef}
+\end{align}
+where the explicit expression is given in \eqref{eq:def_chi}.
+The half-dots correspond to multiplying by $\sqrt{d_{h_{\rm v}}}$, in order to absorb the vertex factors $d_{h_{\rm v}}$ in (\ref{eq:Zheightdef}) into the $W_j$. 
+For the square lattice, $T$ is built from the Boltzmann weights for a zig-zag block of faces, and is of the form
+\begin{align}
+T=\left(\prod_{j\ {\rm odd}} W_j\right)\left(\prod_{j\ {\rm even}} W_j\right) .
+\label{Transfermatrixdef}
+\end{align}
+It can be illustrated by
+\begin{align}
+T = \TransfMxIsingDots\ .
+\label{Tmatrixdef2}
+\end{align}
+The partition function on a torus for periodic boundary conditions is then $ Z = \Tr T^{R}$ for $R$ rows of the form (\ref{Transfermatrixdef}).
+
+
+
+
+A convenient basis for the Boltzmann weights allows has generators that are orthonormal under stacking.  
+Each operator $W_j$ is identified with a vector in the fusion space $V^{\upsilon \upsilon}_{\upsilon \upsilon}$, which according to Eq.~\eqref{eq:Vop_decomp} decomposes into $\bigoplus_\chi V^{\upsilon \upsilon}_\chi \otimes V^\chi_{\upsilon \upsilon}$. 
+A complete basis for the vector space $V^{\upsilon \upsilon}_{\upsilon \upsilon}$ is given in pictorial language by 
+\begin{align}
+	P^{(\chi)} = \frac{\sqrt{d_\chi}}{d_\upsilon} \Ef \in V^{\upsilon \upsilon}_{\upsilon \upsilon} \,.
+	\label{Pf}
+\end{align}
+We have picked the normalization so that 
+\begin{align}
+P^{(\chi)}P^{(\chi')} = \delta_{\chi\chi'}\,P^{(\chi)} \,,
+\label{Pchisq}
+\end{align}
+as can be verified by using \eqref{eq:loop_removal}.
+Since each operator is a projector, it can be thought of as projecting onto a fixed ``charge'' or ``channel'' $\chi \in \upsilon \otimes \upsilon$.
+Using \eqref{eq:def_chi} gives a convenient basis
+\begin{align}
+	P^{(\chi)}  \bigket{v_{ac}^{(\chi)}}= N^a_{c\chi} \bigket{v_{ac}^{(\chi)}}\ ,\qquad\hbox{where }\ 
+	\bigket{v_{ac}^{(\chi)}} = \sum_b \sqrt{d_b d_\chi} \Msixj{\upsilon & \upsilon & \chi}{a & c & b} \ket{a} \otimes \ket{b} \otimes \ket{c}\ .
+\end{align}
+
+
+The matrix elements of the projectors \eqref{Pf} acting on the full fusion tree can be related to the Boltzmann weights by using  \eqref{eq:Trivalent_Bubble}, \eqref{eq:tetra_Fmove} and \eqref{eq:def_chi}, giving
+\begin{align}
+	P_j^{(\chi)} \bigket{\cdots h_{j-1}h_jh_{j+1} \cdots}  = \sum_{h_j'}\, \BWfour{\BWbareDotsx{\chi}}{h_{j-1}}{h_j}{h'_j}{h_{j+1}} \, \bigket{\cdots   h_{j-1}h_j'h_{j+1} \cdots} \,.
+\label{eq:Pf}
+\end{align}
+As one expects, the projectors for each $j$ sum to the identity operator:
+\begin{align}
+	\I = \sum_\chi P^{(\chi)}_j
+\qquad	\Longleftrightarrow\qquad
+	 \delta_{bb'} &= \sum_\chi \BWabcdDotsx{\chi}\ ,
+\label{sumproj}
+\end{align}
+using (\ref{Pf}) and the resolution of the identity operator (\ref{F0c}). Alternatively, it can derived directly using (\ref{eq:Pf}) and the orthogonality relation (\ref{Orthogonality6j}).
+
+
+
+The Boltzmann weights for the height models \eqref{Wexp} therefore are specified by an arbitrary linear combination of the projectors for each $Q$ 
+\begin{align}
+	W_j &= \sum_\chi A_Q(\chi) P_j^{(\chi)}
+	&&\Longleftrightarrow
+	&	\BWabcd &= \sum_\chi A_Q(\chi)  \; \BWabcdx{\chi}\ .
+\label{WAP}
+\end{align}
+An important point is that these Boltzmann weights are {\em not} the most general for a height model with such adjacency restrictions. We are imposing much stronger conditions, in that they determined by evaluating some graph in a fusion category, and depend non-trivially on at most three successive heights. These are the most general weights with these constraints. Moreover, the conditions are in general less restrictive than needed for integrability. For example, in the ``spin-1'' height model found from the ${\mathcal A}_{k+1}$ category with $\upsilon=1$, integrability requires tuning the $A_Q(\chi)$ to be those in (\ref{spinoneYBE}) or (\ref{IKYBE}). In addition, integrability typically requires the $A_Q(\chi)$ be uniform in space (i.e.\ independent of $j$), while the defect lines we study will not require imposing any such restriction.
+
+
+One can define an associated quantum chain by taking an appropriate limit of the Boltzmann weights.
+As there is a one-to-one correspondence between fusion trees and heights along a row of the lattice, the Hilbert space for the open quantum chain remains $\mathcal{V}_{h_0 h_L}$. Choosing each $A_j(\chi_j)= 1 -\epsilon \mathcal{A}_j$ and expanding the transfer matrix in powers of $\epsilon$ gives for the leading nontrivival piece 
+\begin{align} 
+H = \sum_j \sum_{\chi_j} \mathcal{A}_j(\chi_j) P^{(\chi_j)}_j\ ,
+\label{HPdef}
+\end{align}
+This $H$ is a sum over local operators acting on the Hilbert space displayed in \eqref{eq:fusiontreedef}, and so defines a Hamiltonian with nice properties. In particular, this Hamiltonian will commute with the topological defect creation operators defined below. 
+Such Hamiltonians were renamed as ``anyon spin chains'', due to their relation with the restricted Hilbert space enjoyed by a linear array of anyons formed as the gapped excitations in a two-dimensional topological phase \cite{Feiguin2007}. 
+
+A feature of treating these transfer matrices and Hamiltonians in a topological fashion is that it makes apparent how their spectrum splits into distinct sectors. In the models we consider, the $F$-matrix is unitary. Thus fusing the $\upsilon$ together in  \eqref{eq:fusiontreedef} by an $F$-move is a unitary transformation on $\mathcal{V}_{h_0 h_L}$. Repeating, we can make $h_0$ and $h_L$ closer and closer together, eventually leaving them with only a single object $C$ in between. This unitary transformation thus divides the spectrum into symmetry sectors labeled by $C\in h_0\otimes h_L$, giving intuition into why all sectors of the minimal conformal field theories were found in the lattice models by specifying three heights \cite{Saleur1989}. These sectors are reminiscent of those found by diagonalizing the action of a symmetry on $\mathcal{V}_{h_0 h_L}$, but as we will explain, they are not associated with any conventional symmetry. Rather, they can be understood as arising by the action of topological defect creation operators (a method much more practical than implementing this unitary transformation). Such defects are the main topic of this paper, and we define them in section \ref{sec:topological_defect_lines}.
+
+
+\subsection{Examples of height models} 
+\label{sec:heightexamples}
+
+
+
+
+\paragraph{Andrews-Baxter-Forrester (ABF) models.}
+
+The quintessential series of height models was introduced by Andrews, Baxter and Forrester (ABF) \cite{Andrews1984}.    The models we describe here are the trigonometric case of those defined in Ref.~\cite{Andrews1984}. The more general models involve Boltzmann weights defined in terms of elliptic functions, and cannot be written in terms of fusion category data (at least not in any known fashion).
+We do however allow for general graphs $G$ and for non-uniform couplings $u_Q$, as opposed to square-lattice and uniform (and integrable) case considered in Ref.~\cite{Andrews1984}.
+
+The ABF models are built from the ${\mathcal A}_{k+1}$ category,  as defined in (\ref{eq:def_Ak_N}), by taking $\upsilon = \frac12$. The $k+1$ basic objects give $k+1$ possible heights labeled  $\{ 0, \frac{1}{2}, 1, \cdots, \frac{k}{2} \}$ to highlight the similarity with the spins of $SU(2)$ and the quantum-group algebra $U_q(sl_2)$. (In the statistical-mechanics literature they are typically numbered $1,\dots,k+1$.)
+Since fusing $h$ with $\upsilon=\frac{1}{2}$ gives either $h+\frac{1}{2}$ or $h-\frac{1}{2}$ (for $\tfrac{k}{2}>h>0$), adjacent heights can differ only by $\pm \frac{1}{2}$. These rules are conveniently encoded in an {\em adjacency graph}, where the  
+vertices are the allowed heights, with any allowed pair of nearest-neighbour heights are connected by an edge. The adjacency graph for the ABF models is therefore the Dynkin diagram of the $A_{k+1}$ Lie algebra
+\begin{align}\Ak\ .
+	\label{Akadjacency}
+\end{align}
+
+
+The Boltzmann weights follow from \eqref{eq:def_chi}, and are related to projectors by using \eqref{eq:Pf}. For the projector onto $\chi\,$=$\,0$, the diagram is easily evaluated using bubble removal, and the projector onto $\chi\,$=$\,1$ immediately follows because the two must sum to the identity operator. Thus
+\begin{align}
+\BWfour{\BWbareDotsx{0}}{a}{b}{b'}{c }= \delta_{ac} \frac{1}{d_{\frac12}} \sqrt{\frac{d_{b}d_{b'}}{d_ad_c} }\ ,\qquad
+\BWfour{\BWbareDotsx{1}}{a}{b}{b'}{c }= \delta_{bb'} - \BWfour{\BWbareDotsx{0}}{a}{b}{b'}{c }\ .
+\label{ABFweights}
+\end{align}
+It is easy to verify these are projectors using the quantum dimensions (\ref{eq:def_QD}), which obey
+$d_{\frac12}d_h = d_{h+\frac12} + d_{h-\frac12}$ (for $h \geq \tfrac12$). 
+Since there are two channels, ignoring an overall constant the Boltzmann weight for each quadrilateral can be written in terms of a single parameter.
+A convenient rewriting of the amplitudes is in terms of the ``spectral'' parameter $u_Q$ defined by
+\begin{align}
+	\BWabcd & \;=\; {\sin(\lambda-u_Q)} \delta_{bb'}\dfrac{1}{\sqrt{d_bd_{b'}}}
+	\;+\; {\sin u_Q}\ \delta_{ac}\dfrac{1}{\sqrt{d_ad_c}} \,,
+	\label{uQdef}
+\end{align}
+where $\lambda=\pi/(k+2)$, so that  $d_{\frac12} = 2 \cos\lambda$. This expression \eqref{uQdef} applies for the heights on any graph $G$ as defined above. In computing the partition function one must remember to also include the extra weight $d_{h_{\rm v}}$ for each vertex ${\rm v}$.
+The relation of the trigonometric ABF models to the geometric picture from section \eqref{sec:geometricexamples} has long been known \cite{Pasquier:1987}. The two (non-orthogonal) channels on each quadrilateral from \eqref{uQdef} (called $0$ and $\tilde{0}$ near (\ref{avoidcrossing})) correspond to 
+\begin{align}
+	\BWId & \;=\; \sum_\chi \BWabcdx{\chi} = \frac{\delta_{bb'}}{d_b} \,,
+&	\BWTL & \;=\; d_{\frac12} \times \BWabcdx{0} =\frac{\delta_{ac}}{d_a} \,.
+\label{TLgeo}
+\end{align}
+Both \eqref{TLgeo} and  \eqref{uQdef} make apparent that the weights obey a ``crossing'' symmetry: sending $u_Q\to \lambda-u_Q$ is equivalent to rotating the square by 90 degrees.  
+
+
+These projection operators have some famous properties.  Defining $e_j$ by
+\begin{align}
+	e_j = d_{\frac{1}{2}}P^{(0)}\ ,
+\label{TLproj}
+\end{align}
+these generators obey the {\em Temperley-Lieb algebra}  \cite{Temperley1971}.
+\begin{align}
+e_j^2 = d_{\frac12} e_j\,,\qquad
+e_{j}e_{j\pm1}e_j = e_j\,, \qquad
+e_j e_{j'} = e_{j'}e_j \ \text{ for } |j-j'| >1.  
+\label{TLalgdef}
+\end{align}  
+By construction, these are all consistent with the rules in section \ref{sec:evaluation}, as using \eqref{TLgeo} gives
+\begin{align}
+\Esquared = d_\upsilon \Eprime\ ,\qquad\qquad \Epm = \Epmb 
+\end{align}
+The first relation is loop removal \eqref{eq:loop_removal}, while the second reflects isotopy invariance. 
+
+
+An integrable trigonometric ABF model is given by making $G$ the square lattice and the spectral parameter uniform in space: $u_Q=u$ for all $Q$. Integrability means that appropriately defined transfer matrices commute for different $u$.  Here, the model is critical, with its long-distance behavior depending on the sign of $u$. In the ferromagnetic case $0<u<\lambda$, the continuum limits are described by the $A$-series of CFT minimal models with central charge $c = 1 - \frac{6}{(k+1)(k+2)}$ \cite{BPZ:CFT:84, FQS84, Huse1984}; see section \ref{sec:gmin} below for a few more details. The CFTs describing the antiferromagnetic case $0>u>-\lambda$ are the $\mathbb{Z}_k$ parafermion conformal field theories with $c = 2\frac{k-1}{k+2}$ \cite{ZamoFateev:Parafermion:85}. 
+For $k=2$ the CFTs are the same, as the square-lattice Ising ferromagnets and antiferromagnets are equivalent. 
+As we discuss in more depth below, the $\mathcal{A}_{k+1}$ category used to define the lattice model is {\em not} the category describing the topological properties of the primary fields in CFT, but rather is a subcategory. 
+
+One can define a critical quantum Hamiltonian $H$ commuting with the transfer matrix by taking the $u\to 0$ limit of \eqref{Transfermatrixdef}
+\begin{align}
+H_{\rm crit}= |u|^{-1} (1-T) =\pm \sum_j e_j\ .
+\label{HTL}
+\end{align}
+This Hamiltonian is of the form \eqref{HPdef}, with next-nearest-neighbor interactions.
+In section \ref{sec:selfduality} we consider staggering the terms in \eqref{HTL}, leading to a very interesting gapped theory.
+
+
+
+
+\paragraph{Ising model.}
+We showed at great length in Part~I how expressing the Ising model in terms of a fusion category yields a great deal of insight into the construction of topological defects and their consequences. 
+The Ising category is equivalent to the $\mathcal{A}_3$ category, where the standard labels $\I$, $\sigma$ and $\psi$ for the objects in the former are $0,\,\tfrac12,\,1$ in the latter. Fusion with $\sigma$ using \eqref{eq:Ising_fusion_rules} indeed yields the adjacency graph (\ref{Akadjacency}) with $k=2$.
+
+The Ising model is thus the ABF model with $k=2$ \cite{Andrews1984}, but the equivalence is not immediately obvious.
+The conventional definition of the Ising model has only two different degrees of freedom on each site, whereas there are three allowed heights in the $\mathcal{A}_3$ description obeying the adjacency rules. Moreover, by construction the heights live on a bipartite graph, c.f.\ (\ref{Zfusion}).
+Given these constraints, the only allowed height on half of the sites is $\sigma$, while on the other half the heights are either $\I$ or $\psi$.
+The height model on the latter subgraph corresponds to the Ising model, with the $\I$ and $\psi$ corresponding to Ising ``spin'' degrees of freedom $h_n=0$ and $1$ respectively.
+
+The interactions in this Ising model are the standard nearest-neighbor ones, since there only two vertices on each quadrilateral occupied by $h_n=0,1$.
+To see this from the height construction, first note that the tetrahedral symbols for the theory are
+\begin{align}
+	\Msixj{\sigma & \sigma & a}{\sigma & \sigma & b}  = \frac{(-1)^{ab}}{\sqrt{2}} \,,
+	\qquad \qquad  \Msixj{a & b & c}{\sigma & \sigma & \sigma}  = N_{ab}^c \,,
+\label{Isingtetra}	
+\end{align}
+where $a,b,c = 0$ or $1$. 
+The basis for the Boltzmann weights is therefore
+\begin{align}
+	\BWfour{\BWbareDotsx{\chi}}{\sigma}{a}{b}{\sigma} = \frac{1}{2}(-1)^{\chi(a-b)} \,,
+	\qquad \BWfour{\BWbareDotsx{\chi}}{\; \; a}{\sigma}{\sigma}{b \; \;  } =  N_{\chi b}^a=\delta_{\chi,|a-b|} \,.
+\label{Isingbasisweights}	
+\end{align}
+where $\chi$, $a$, $b$ are $0$ or $1$. The relation to the standard Ising Boltzmann weights is given in Part~I and in (\ref{Jxyu},\,\ref{Jxyu2}) below.
+
+
+\paragraph{Higher spin ${\mathcal A}_{k+1}$ models}
+
+The ``higher-spin'' or ``fused'' models  generalize the ABF models by using the same ${\mathcal A}_{k+1}$ fusion category, but with $\upsilon>\tfrac12$.  They  have different adjacency rules, and a height can be adjacent to itself when $\upsilon$ is an integer. Whenever $\upsilon$ is an integer, the adjacency graph splits into two pieces.
+For example, for $\upsilon=1$,  
+\begin{flalign} \qquad & \begin{array}{r @{\quad\quad } c @{\quad \quad \quad \quad } c }
+ &\text{integer heights}&\text{half-integer heights}\\[2ex]
+k\hbox{ odd }&\AintHalfInta&\AintIntb   \\[4ex]
+k\hbox{ even }&\AintInta&  \AintHanfIntb
+		\end{array} & 
+\label{spin1heights}		
+\end{flalign}
+There are effectively two height models in such cases, one comprised of integer heights, and the other half-integer. This splitting into two theories occurs in a more general setting, where two subcategories $M,M' \subset \mathcal{C}$ and an $\upsilon \in \mathcal{C}$ such that $\upsilon \otimes M \subset M$ and $\upsilon \otimes M' \subset M'$. We
+show in section \ref{sec:generalized} how such models are dual to each other by displaying an appropriate topological defect. Namely, if there exists an object $b \in \mathcal{C}$ such that $b \otimes M \subset M'$ and $b \otimes M' \subset M$, the defect labeled by $b$ maps between models with labels in $M$ and labels in $M'$. 
+
+
+The Boltzmann weights for higher-spin ${\mathcal A}_{k+1}$ models are specified as always by fixing the coefficients $A_Q(\chi)$ in each of the $2\upsilon+1$ channels. The projectors are computed using \eqref{eq:def_chi} and \eqref{eq:Pf}, with the appropriate associated tetrahedral symbols needed to define these are given explicitly in Appendix~\ref{app:TetraSym}.  Integrable cases exist for any $\upsilon$ \cite{Kulish:1981,Date:1987}. For example, in the spin-1 case they have amplitudes (\ref{spinoneYBE}) or (\ref{IKYBE}) with $u$ uniform in space and with the projectors written in terms of the heights. The former case with $-\gamma<u<0$ has continuum limit described by the minimal supersymmetric conformal field theories with $c = \frac32 - \frac{12}{k(k+2)}$ \cite{Date:1987}.
+
+
+
+
+
+
+
+\paragraph{$N$-state clock and Potts models.}
+Here we show how to cast the $N$-state clock and Potts models in terms of the Tambara-Yamagami fusion category based on $\mathbb{Z}_N$~\cite{Tambara1998}.
+Not only are these models of fundamental importance in statistical mechanics, but recently they and their parafermionic operators also have been studied intensively in the search for platforms for topological quantum computation \cite{Alicea16}.
+Moreover, they provide a nice example that generalizes the models above to include non-self-dual objects, labeled by arrows to distinguish an element from its conjugate. 
+
+
+The $\mathbb{Z}_N$ Tambara-Yamagami fusion category 
+has $N+1$ simple objects, and
+$N$ of them obey Abelian fusion rules. Labeling the Abelian objects by an integer $a$, $b$ modulo $N$, they obey
+\begin{align}
+	a\otimes b = (a+b) \,.
+\label{clockabelian}
+\end{align}
+with the right-hand side interpreted mod $N$.
+The remaining non-Abelian object we denote $X$, and its fusion rules are
+\begin{align}
+	 a \otimes X = X \otimes a = X, \qquad X \otimes X = \bigoplus_{a= 0}^{N-1} a\ .
+\label{clockX}
+\end{align}
+As apparent from these rules, the quantum dimensions of these objects are $d_{a} = 1$ and $d_X = \sqrt{N}$.
+The abelian objects have conjugates given by $\bar{a} = (N-a)$, while $X$ is self-conjugate. When writing fusion diagrams, we therefore must keep track of arrows. The non-trivial $F$-symbols are
+\begin{align}
+	\left[F^{aXb}_X\right]_{XX} =\left[F^{XaX}_b\right]_{XX} = \omega^{ab}, \qquad \left[ F^{XXX}_X\right]_{ab} = \frac{1}{d_X}\omega^{-ab}\ ,
+	\label{FPotts}
+\end{align}
+where $\omega=e^{2\pi i/N}$. More details on this category are given in Appendix~\ref{app:Potts}. 
+
+
+
+Since the objects here are not self-conjugate, the formalism of sections \ref{sec:Fusion_Theory} and \ref{sec:statmech}  requires generalization.
+We give some detail in appendix \ref{app:notselfdual} on how this works.
+The formula \eqref{eq:def_chi} for the Boltzmann weights in each fusion channel generalizes to 
+\begin{align}
+	\BWabcdx{\chi} & \;\defineas\; \frac{\sqrt{d_\chi}}{d_\upsilon^2 \sqrt{d_ad_bd_{b'}d_c} }
+		\; \omegaf
+	\;=\; d_\chi \Msixj{\upsilon & \upsilon & \chi}{a & c & b} \Msixj{\upsilon & \upsilon & \chi}{a & c & b'}^\ast \,.
+	\label{weightsdef}
+\end{align}
+The rotated version generalizing \eqref{Frhombus} is found from an $F$-move, giving
+\begin{align}
+	\BWabcdx{\raisebox{-0.4ex}{\begin{sideways}$\widetilde{\chi}$\end{sideways}}}
+	\;=\; d_{\widetilde{\chi}} \Msixj{\upsilon & \upsilon & \widetilde{\chi}}{d & b & a} \Msixj{\upsilon & \upsilon & \widetilde{\chi}}{d & b & c} 
+	\;=\; d_{\widetilde{\chi}} \sum_{\chi}
+		\Msixj{\upsilon & \upsilon & \widetilde{\chi}}{\upsilon & \upsilon & \bar{\chi}}
+		\BWabcdx{\chi} \;.
+\end{align}
+
+The lattice models built from the $\mathbb{Z}_N$ Tambara-Yamagami with $\upsilon = X$ are known as {\em clock} models. The adjacency graph generalizes that of the $N=2$ Ising case to
+\begin{align}
+	\APotts\ .
+\end{align}
+The Boltzmann weights are built from the projectors $P^{(\chi)}$, where $\chi=0\dots, n-1$, as $N_{XX}^X=0$.
+Using \eqref{weightsdef} we find
+\begin{align}
+	\BWfour{\BWbareDotsx{\chi}}{X}{a}{b}{X} &= \frac{\omega^{\chi(a-b)}}{d_X^2},
+	\qquad \BWfour{\BWbareDotsx{\chi}}{\; \; a}{X}{X}{b \; \;  } =  N_{\chi b}^a = \delta_{\chi,(a-b)\,{\rm mod}\ n} \,,
+\label{clockprojectors}	
+\end{align}
+The amplitudes and weights defined by \eqref{WAP} have a manifest $\mathbb{Z}_N$ symmetry under a cyclic shift of the $N$ states. Since the graph $G$ is bipartite, all heights on one sublattice will be $X$, while all the degrees of freedom $a=0\dots N-1$ live on the other sublattice.
+The clock models thus provide a natural generalization of the Ising model to a $N$-state system where the interactions are effectively nearest-neighbor.
+
+
+A famous special case of the clock model is known as the Potts model. Here the $\mathbb{Z}_N$ symmetry is enhanced to the permutation group $S_N$, which requires that the couplings obey 
+\begin{align}
+\hbox{Potts: }\quad A_Q(\chi)=A_Q(\chi')\ \hbox{ for all }\chi,\chi'\ne 0\ .
+\end{align}
+The Boltzmann weights then can be parametrized as in the $\mathcal{A}_k$ case \eqref{uQdef}, where here $d_X=2\cos\lambda=\sqrt{N}$.
+Thus for $N>4$, $\lambda$ is imaginary and we must take $u$ imaginary to keep the Boltzmann weights real.
+The Potts model is integrable only when the couplings are uniform in space (i.e., $A_Q$ is independent of $Q$ well) and $G$ is one of certain lattices, including the square \cite{Baxter1982}.
+The Potts models also can be written in terms of generators satisfying the Temperley-Lieb algebra \eqref{TLalgdef}.
+The generators are defined as $e_j=d_X P_j^{(\mathds{1})}$, so that their matrix elements are
+\begin{align}
+(e_j)_{\{h\},\{h'\}}= \begin{cases}
+ \sqrt{N} \delta_{h_{j-1}h_{j+1}}\,\prod_{l} \delta_{h_l\,h'_l}\quad & \hbox{ for }h_j=X\ ,\\
+\tfrac{1}{\sqrt{N}}\, \prod_{l\ne j} \delta_{h_l\,h'_l} & \hbox{ for } h_{j-1}=h_{j+1}=X.
+\end{cases}
+\label{TLPotts}
+\end{align}
+This form enabled the original derivation that Potts models are critical on the square lattice only for $u$ uniform and $N\le 4$  \cite{Temperley1971}. 
+Another interesting case is the ``parafermion'' lattice model \cite{Fateev82}, which is integrable on the square lattice when $u_Q=u$ is uniform in space and the $A_Q$ obey
+\begin{align}
+\hbox{integrable parafermions: }\qquad\  \frac{A_Q(\chi)}{A_Q(\chi-1)}\ =\  
+\frac{1-e^{iu}\omega^{\chi+\frac12}}{e^{iu}-\omega^{\chi+\frac12}}\ .\qquad
+	\label{paraweights}
+\end{align}
+
+These integrable clock models are critical for all $N$, and their critical limit is described by the $\mathbb{Z}_N$-invariant parafermion conformal field theory \cite{ZamoFateev:Parafermion:85}.
+These are the same $c=\frac{2(N-1)}{N+2}$ CFTs that describe the critical antiferromagnetic ABF models, but the lattice models are very different for $N>2$.
+Here the $\mathbb{Z}_N$ symmetry is an internal one, shifting the spins on each site.
+For $N=2,3$, the integrable parafermion and Potts models are the same, but for $N=4$ they are distinct (although both critical). 
+As with the ABF case, the Tambara-Yamagami category used to define the lattice models differs from that governing the fusion of the primary fields in corresponding CFT. Here it is not even a subcategory: the field corresponding to the object $X$ does not appear in the modular tensor category. Rather, both categories have an abelian subcategory involving the objects $a=0\dots n-1$. 
+
+
+
+
+\paragraph{Birman-Murakami-Wenzl (BMW) models. }
+The Boltzmann weights for the integrable BMW height models are given in Ref.~\cite{Jimbo:1987}, and explicit expressions for the projectors can be reverse-engineered from these.
+The projectors also can be found in Ref.~\cite{Reshetikhin1988b}.
+The tetrahedral symbols of the fusion categories associated with the BMW algebra can be inferred from the Racah coefficients derived in Ref.~\cite{Dai2001}.
+
+\paragraph{Fusion multiplicites.}
+
+For theories which have multiple fusion channels, i.e., integers $N_{ab}^c>1$, there are additional degrees of freedom on each link to signify how the adjacent heights fuse together. 
+Our results generalize in an obvious way.
+
+

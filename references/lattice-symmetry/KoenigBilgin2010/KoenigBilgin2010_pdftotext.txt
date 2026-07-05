@@ -1,0 +1,1435 @@
+                                                                                    Anyonic entanglement renormalization
+                                                                                               Robert König and Ersen Bilgin
+                                                                           Institute for Quantum Information, Caltech, Pasadena CA 91125, USA
+
+                                                                  We introduce a family of variational ansatz states for chains of anyons which optimally exploits
+                                                               the structure of the anyonic Hilbert space. This ansatz is the natural analog of the multi-scale
+                                                               entanglement renormalization ansatz for spin chains. In particular, it has the same interpretation as
+                                                               a coarse-graining procedure and is expected to accurately describe critical systems with algebraically
+                                                               decaying correlations. We numerically investigate the validity of this ansatz using the anyonic golden
+                                                               chain and its relatives as a testbed. This demonstrates the power of entanglement renormalization
+arXiv:1006.2478v2 [cond-mat.str-el] 28 Sep 2010
+
+
+
+
+                                                               in a setting with non-abelian exchange statistics, extending previous work on qudits, bosons and
+                                                               fermions in two dimensions.
+
+
+                                                                   I.   INTRODUCTION                                subset of physical states. Furthermore, this leads to a
+                                                                                                                    significant increase in computational complexity, particu-
+                                                                                                                    larly because locality is only approximately preserved by
+                                                     Strongly correlated quantum many-body systems with
+                                                                                                                    such an embedding. Even for one-dimensional anyonic
+                                                  topological order have been proposed as a substrate
+                                                                                                                    systems, these issues complicate the direct application
+                                                  for building fault-tolerant quantum computers1–4 . Un-
+                                                                                                                    numerical methods such as DMRG31 . While such meth-
+                                                  der this proposal, logical information is stored within a
+                                                                                                                    ods may presently be the most powerful and successful
+                                                  subspace of a fixed number of quasi-particles (anyons).
+                                                                                                                    tools available, these difficulties motivate the search for
+                                                  Computation is performed by exploiting the non-abelian
+                                                                                                                    alternative approaches.
+                                                  statistics obeyed by these anyons under braiding. Com-
+                                                                                                                       There is another more profound reason why the naı̈ve
+                                                  pared to more conventional implementations of quantum
+                                                                                                                    application of numerical methods for qudits may be sub-
+                                                  computers, this offers an intrinsic resilience to noise: lo-
+                                                                                                                    optimal: local anyonic operators preserve the total topo-
+                                                  cal perturbations cannot decohere the stored information
+                                                                                                                    logical charge in their support. Since a realisitic Hamil-
+                                                  because of the non-local nature of the encoding.
+                                                                                                                    tonian consists of locally acting terms, topological charge
+                                                     At present, perhaps the most promising candidate               conservation severly constrains the action of the Hamil-
+                                                  systems exhibiting non-abelian statistics are fractional          tonian both at the local level as well as on larger scales.
+                                                  quantum Hall systems5–7 . Some amount of experimental             Incorporating this fact into the method of study should
+                                                  evidence is already available in this setting8–10 . Other         therefore be highly beneficial. With a qudit embedding,
+                                                  proposed systems include topological insulators11–14 and          the meaning of this constraint is obscured and may be
+                                                  lattice spin systems1,15,16 whose local interactions could        hard to make use of.
+                                                  be enginereed artificially17,18 . Independently of the pro-          The purpose of this paper is to introduce a variational
+                                                  posed physical realization, the stability of the topologi-        method for anyonic systems which avoids using unphys-
+                                                  cally ordered phase with respect to (local) perturbations         ical additional states and optimally exploits the special
+                                                  is of great interest for topological quantum computation.         structure of the Hilbert space. This is motivated in part
+                                                  This presents a formidable theoretical challenge. Possi-          by the goal of facilitating numerical studies. Perhaps
+                                                  ble approaches range from the study of concrete physical          more importantly, variational families of ansatz states
+                                                  models (see e.g.,19–22 ) or bounds on the gap for general         can provide significant insight into the nature of quan-
+                                                  families of models23–25 to the investigation of effective         tum correlations in a given system. Even in this regard,
+                                                  Hamiltonians describing the inter-anyon interactions (see         a qudit embedding of anyons is generally undesirable, as
+                                                  e.g.,26 ). In the context of the latter, it is natural to         a physically motivated ansatz for qudit systems may lose
+                                                  study paradigmatic models such as 1-dimensional any-              its significance when applied directly to the anyonic set-
+                                                  onic chains. These are the natural counterpart of spin            ting.
+                                                  chains. The study of such systems has led, e.g., to an ex-           Our scheme is inspired by renormalization group stud-
+                                                  actly solved model called the golden chain27 , and novel          ies of anyonic chains28–30 , composite anyon distillation32
+                                                  realizations of infinite randomness critical phases28–30 .        and the multi-scale entanglement renormalization ansatz
+                                                     A peculiar aspect of anyonic systems is the structure of       (MERA)33,34 for (non-anyonic) spin chains. In fact, it
+                                                  the Hilbert space of N anyons. In contrast to the space           can be understood as the natural anyonic counterpart of
+                                                  of N qudits, this space does not decompose into an N -            the latter and shares many of its properties. In partic-
+                                                  fold tensor product. Instead, its dimension scales as dN ,        ular, it can be seen as a renormalization group scheme
+                                                  where the quantum dimension d is generally not an in-             and is thus especially suited for describing scale-invariant
+                                                  teger. For analytical studies, it is sometimes convenient         systems. The scheme allows – in principle – to extract,
+                                                  to embed this space into a larger tensor product space.           e.g., critical exponents when considering fixed points of
+                                                  However, this approach is inconvenient when using varia-          the renormalization group flow. More generally, it pro-
+                                                  tional methods: with the most straightforward encoding,           vides procedures for computing parameters of the corre-
+                                                  it may be unclear how to vary (numerically) over the              sponding conformal field theory (CFT) in the continuum
+                                                                                                                            2
+
+limit. While such procedures are also available for other              II.   MULTI-SCALE ENTANGLEMENT
+variational methods (e.g., matrix product states35–39 , by                     RENORMALIZATION
+transfer matrix methods), they are particularly natural
+in the present context due to the scale-invariant form of           To motivate our ansatz, we recapitulate the definition
+the ansatz.                                                      of the MERA for 1D qudit chains and that of related ten-
+                                                                 sor network states33,34 . For more details, we refer to51 .
+  We formulate our ansatz for one-dimensional (peri-
+                                                                 The assumption underlying this ansatz is that certain lo-
+odic) chains of anyons. This allows us to numerically
+                                                                 cal degrees of freedom are insignificant for the long-range
+test its validity for the golden chain27 and its relatives40 .
+                                                                 character of the target state. The MERA is a quantum
+Ultimately, though, it is desirable to find methods for
+                                                                 circuit which completely decouples and discards these de-
+two-dimensional systems. Our work makes some progress
+                                                                 grees of freedom using local unitaries. This procedure
+towards this goal: the non-anyonic MERA extends nat-
+                                                                 is subsequently repeated for the resulting coarse-grained
+urally to two dimensions and this is also the case for its
+                                                                 description of the state. As a variational family of states,
+anyonic counterpart. In the appendix, we briefly com-
+                                                                 the MERA consists of those states which are turned into
+ment on such generalizations.
+                                                                 (N -fold) product states by such quantum circuits.
+   Entanglement renormalization, while originally defined           It is convenient to use the diagrammatic formalism of
+for qudit systems, has been extended to free bosons41 and        tensor networks to describe the unitaries and the local
+interacting fermions42 . Anyonic statistics are peculiar to      isometries constituting a MERA (the latter correspond
+two dimensions, encompassing both fermions and bosons            to the elimination of local degrees of freedom, but the
+(which are abelian) in addition to interesting non-abelian       division into “disentangling” unitaries and isometries is
+generalizations. Our ansatz applies to all such models,          often arbitrary). In this formalism, the identity on Cd is
+but its use is especially suggestive in the non-abelian case.    represented by a single directed edge, and operators O :
+This is due to the special form of the Hilbert space men-        (Cd )⊗n → (Cd )⊗m are represented by shaded boxes with
+tioned earlier. Interestingly, the exact details of the ex-      n ingoing and m outgoing (ordered) edges. Labels on the
+change statistics play essentially no role in the definition     edges from 1, . . . , d correspond to the elements of a fixed
+of the ansatz, though they become important when eval-           orthonormal basis of Cd . Products of operators are taken
+uating expectation values of local operators in the case         by connecting outgoing with ingoing edges, and summing
+of e.g., two-dimensional arrangements of anyons.                 over labels of edges with no free ends. The trace of an
+                                                                 operator on (Cd )⊗n is taken by connecting each outgoing
+   In a wider context, entanglement renormalization is           strand with the corresponding ingoing strand, and then
+a special instance of the class of tensor network states,        contracting the tensor network (i.e., summing over all
+which also includes e.g., MPS35–39 , PEPS43 as well as the       edge labelings). Partial traces are computed analogously
+closely related TERG-states44 . These have wide appli-           by connecting up subsets of edges. Tensor products are
+cability beyond qudit systems. In particular, a general          obtained by placing diagrams next to each other.
+framework for fermions has been developed45–49 . Our                With these conventions, the property W† W = I(Cd )⊗n
+focus is on entanglement renormalization because of its          of an isometry W : (Cd )⊗n → (Cd )⊗m (for m ≥ n) takes
+unique operational interpretation, as well as the possi-         the simple form
+bility of efficiently computing expectation values with-
+out approximations, even in two dimensions (in contrast                                 (n strands)
+to e.g., PEPS50 ). Furthermore, anyonic entanglement                              W†
+renormalization is conceptually related to previous ana-                                (m strands) =                     (1)
+lytical studies for anyonic chains28–30 . However, our work
+suggests that anyonic generalizations of other tensor net-                        W
+work states should also be possible along similar lines,                                (n strands)
+though further work may be needed to evaluate their de-
+                                                                 Identity (1) is crucial for the definition of the MERA
+scriptive power.
+                                                                 ansatz.
+   The structure of this paper is as follows. In Section II,        Consider a system of N qudits arranged on a line with
+we review the formulation of the MERA for spin chains.           periodic boundary condtions. For any tensor network
+In Section III, we give some background on anyonic sys-          as shown in Fig. 1, one obtains a variational family of
+tems and their description in terms of fusion diagrams.          states |Ψi = |Ψ|ϕi,{W}i ∈ (Cd )⊗N parametrized by the
+We then present the anyonic entanglement renormaliza-            isometries {W} and the state |ϕi ∈ Cd at the top of
+tion ansatz in Section IV and show how to efficiently            the structure. This is the MERA ansatz. Fig. 1 repre-
+evaluate expectation values of local observables and cor-        sents a map (Cd )⊗N → C which can be understood as
+relation functions. We also discuss an operational inter-        the bra hΨ| of the represented state. The fact that the
+pretation in the context of composite anyon distillation.        recipe specifies hΨ| instead of |Ψi is a matter of prefer-
+In Section V, we apply the ansatz to the golden chain            ence, but the chosen convention has a natural operational
+and identify a renormalization group fixed point. We             interpretation: One may think of Fig. 1 as a renormal-
+conclude in Section VI.                                          ization prescription by decomposing the tensor network
+                                                                                                                                             3
+
+L4          hϕ|
+                                                                           hϕ|                   hϕ|                  hϕ|
+
+
+
+L3
+
+                  W†
+                                                                                    W†                 W†                      W†
+L1           U†
+
+
+
+L0
+                                         (b)
+            (a)
+                                                                                                 O                     O
+
+ FIG. 1: Two examples of MERA structures: For a periodic
+ qudit chain (at the bottom of the figure), a variational family
+ of states is obtained by varying over the contents of the boxes.
+ In (a), these are (adjoints of) isometries W : (Cd )⊗2 → Cd ,
+ unitaries U : (Cd )⊗2 → (Cd )⊗2 and (the adjoint of) a state
+ |ϕi ∈ Cd for the strip at the top. Tree-like structures may also
+ be considered, and lead to particularly simple expressions in                      W                  W                       W
+ the homogenous case52 . Note that we choose to represent
+ the top tensor by a (periodic) strip; the reason for this will
+ become obvious once we move to the anyonic setting.
+
+
+                                                                           |ϕi                   |ϕi                  |ϕi
+                                                                              (a)                  (b)                   (c)
+ along different horizontal cuts Li . The strips [Li , Li+1 [
+ represent coarse-graining maps which reduce the number
+ of degrees of freedom at each level.                               FIG. 2: Tensor networks associated with the MERA of
+                                                                    Fig. 1 (a). The network (a) represents the projection |ΨihΨ|
+    Importantly, local expectation values and pair corre-           onto the state described by the MERA. The contraction of
+ lation functions can be computed efficiently for such a            the network (b) gives the expectation value hΨ|O|Ψi of a lo-
+ state. This is because the expectation value of an observ-         cal operator O. Fig. (c) gives the same value as (b), and is
+ able O is given by the contraction of the tensor network           obtained from it by using (1) repeatedly.
+ obtained by sandwiching O between the MERA network
+ and its adjoint as in Fig. 2 (b). Eq. (1) then allows to
+ simplify the network resulting in a significantly smaller          for L < Lmax and
+ network corresponding to the “causal cone” of the op-
+ erator, see Fig. 2 (c). This network can be efficiently                                                          
+ contracted, as the number of tensors scales logarithmi-                                    W†                                     U†
+ cally with the number of sites N . For example, for the                                                   
+ case of Fig. 2 (b), we get                                         ELmax 
+                                                                           O =
+                                                                                                 , FLmax                 =            .
+                                                                                            O              O                     O
+
+                                                                                            W                                      U
+     hΨ|O|Ψi = hϕ|ELmax ◦ FLmax · · · EL0 ◦ FL0 (O)|ϕi       (2)
+                                                                                                                                        (4)
+ where Lmax = log2 N − 1 and the superopera-
+ tors {EL , FL } associated to a level L are                        In particular, the reduced two-site density operator of
+                                                                    the state |Ψi can be computed using the adjoint super-
+                                                                    operators as
+
+                 
+                          W†
+                                                                     trn−2 |ΨihΨ| = F1† ◦ E1† · · · FL† max ◦ EL† max (|ϕihϕ|) .
+                                                       U†
+                                         
+     EL      =               , FL         =              (3)    Similar expressions can be obtained for translates as well
+           O          O                O    O                   as for pair correlation functions evaluated at certain spe-
+                                                                    cific distances52–54 .
+                          W                            U               Given a MERA-structure as in Fig. 1, we have de-
+                                                                    scribed a recipe giving a variational family of states for a
+                                                                                                                              4
+
+chain of N d-dimensional qudits parametrized by isome-        their physical realization, their state space and exchange
+tries of the form W : (Cd )⊗n → (Cd )⊗m (the con-             statistics are described by the axioms of a topological
+stants n ≥ m depend on the MERA-structure). There             quantum field theory (TQFT) (see e.g.,55 ). This formal-
+is a natural way of enlarging this family: the edges (in      ism is extraordinarily useful for studying low-energy pro-
+higher levels of the network) may be interpreted as corre-    cesses26 as well as for the application to quantum compu-
+sponding to Cχ , where the refinement parameter χ > d         tation2 , as it abstracts out the relevant physics: it spec-
+is larger than the dimension d of the physical qudits.        ifies the particle content, i.e., what particle types occur,
+Increasing this so-called bond dimension χ amounts to         describes what their internal degrees of freedom are, and
+using isometries W : (Cχ )⊗n → (Cχ )⊗m (and corre-            how they are affected by braiding (exchanges) and fusion
+spondingly a state |ϕi ∈ Cχ at the top). To motivate          (which corresponds to bringing particles together). The
+a similar refinement in the anyonic setting, we point out     relation between states of (and operations on) the phys-
+that if χ = ds is an integer power of the physical qu-        ical system and the abstract anyonic state space is dis-
+dit dimension d, then this enlargement of the variational     cussed extensively in the literature, see e.g.,1,2,6,15,16,56 .
+family is equivalent to replacing each edge in the MERA-         The algebraic object underlying such an anyonic theory
+structure by s edges. Note also that, since the number        is a modular category. Roughly, this consists of (i) a finite
+of isometries is of order O(N log N ) and each isometry       set of particle types Ω equipped with an involution ∗ :
+is described by fewer than χn+m parameters, the total         Ω → Ω and containing a distinguished trivial particle 1 ∈
+number of parameters describing a MERA is of order            Ω, (ii) fusion rules, i.e., a set of allowed triples of particles,
+O(poly(χ)N log N ).                                           (iii) a quantum dimension da > 0 associated to every
+   We conclude this short exposition by mentioning two        particle a, (iv) a tensor F indexed by 6 particles and (v) a
+subclasses of MERA-ansatz states which are of partic-         3-index tensor R. These are required to satisfy a number
+ular interest: a translation-invariant MERA has iden-         of consistency conditions (see e.g.,2 ) the most important
+tical isometries within every level. As a consequence,        of which express associativity of fusion and compatibility
+the number of parameters of such a MERA scales                of fusion with braiding.
+as O(poly(χ) log N ). A scale-invariant MERA is one              In more physical terms, the involution associates an
+where all isometries (with identical domain and range)        antiparticle a∗ to every particle a, with 1∗ = 1 corre-
+are chosen to be the same: Here the number of param-          sponding to the absence of a particle. The fusion rule
+eters is only O(poly(χ)) independent of N (see34 for a        summarizes the possible outcomes when bringing two
+more detailed discussion of the complexity of MERA            particles together. The quantum dimensions give a rough
+and51 for concrete examples). For a scale-invariant           measure of the growth of the anyonic state space when
+MERA, it is possible to write down two-point and three-       adding particles, and the F -tensor relates different bases
+point correlators explicitly in terms of eigenvalues of a     of this space (as explained below). Finally, the R-tensor
+certain coarse-graining superoperator defined in terms of     encodes braiding of pairs of particles. This will be mostly
+the isometries as in (3). This allows to numerically ex-      irrelevant for our discussion, but becomes relevant for 2-
+tract critical exponents and paramters from the associ-       dimensional arrangements of anyons as explained in Ap-
+ated CFT, as described e.g., in52–54 .                        pendix B.
+
+
+   III.   ANYONIC STATES AND OPERATORS                        B.    The anyonic Hilbert space and anyon diagrams
+
+   In this section, we provide a short introduction to          We proceed by explaining the construction of the any-
+anyons, emphasizing the aspects relevant to the defini-       onic Hilbert space using the data (i)-(iv) of a modular
+tion of the anyonic entanglement renormalization ansatz:      category. We will mostly follow the detailed exposition
+the anyonic Hilbert space and the isotopy-invariant for-      in57 , but will require slightly more general definitions
+malism for describing states and operators. We also dis-      when dealing with operators (see e.g., appendix of15 for
+cuss the origin of the dynamics, that is, the definition of   more details).
+Hamiltonians for anyons. For a thorough and accessible          The state space of a set of anyons depends on their
+introduction to anyons and topological quantum compu-         types and on the surface the quantum medium is em-
+tation, we recommend2 (see also4 for a recent review).        bedded in. We will discuss two cases in detail below:
+                                                              anyons pinned to fixed locations on a disc and on a
+                                                              torus. Usually, we assume that these are arranged on
+    A.    A unified treatment of topological order            a chain, though one may also consider e.g., regular two-
+                                                              dimensional lattices; their particular geometric arrange-
+  Anyons arise as localized quasi-particle excitations in     ment only becomes important when considering Hamil-
+what can roughly be referred to as two-dimensional topo-      tonians, but does not affect the definition of the Hilbert
+logically ordered quantum media, e.g., qudit lattice sys-     space.
+tems with certain Hamiltonians1,15,16 , quantum Hall sys-       Starting point are certain trivalent graphs with di-
+tems5–7 or topological insulators11–14 . Independently of     rected edges. These correspond to pants decomposition
+                                                                                                                                                                 5
+
+of the surface with punctures inserted at the anyons’ posi-     standard basis given by the vectors
+tions. Fixing such a graph, a basis of the anyonic Hilbert
+space is given by all labelings of the edges with particle                                                       a1            a2      a3               an
+labels from Ω satisfying the fusion rules at every vertex.                                         1/4
+We will give explicit examples for the punctured sphere                                 d
+                                                                  |~a, ~b; cin =       Q c                            b1                                        (5)
+and the torus below.                                                                    i dai
+   Labeled graphs related by reversing the direction of                                                                    bn−2
+an edge and simultaneously replacing its particle label                                                                                c
+by the associated antiparticle represent the same vectors.
+This is somewhat analogous to the formalism of Feynman
+                                                                where ~b ∈ Ωn−1 is such that this diagram is fusion-
+diagrams. Indeed, anyon diagrams may, to some extent,
+                                                                consistent. This corresponds to the decomposition
+be interpreted as particle world-lines, though this anal-
+ogy has its limitations. Note also that in many anyon the-              M                                    bn−3 an−1
+ories of interest, such as the Fibonacci category consid-       Vc~a ∼
+                                                                     =       Vba11 a2 ⊗ Vbb21 a3 ⊗ · · · ⊗ Vbn−2       ⊗ Vcbn−2 an .
+                                                                         ~b∈Ωn−1
+ered below, every particle is its own antiparticle, a∗ = a,
+and it is sufficient to work with undirected graphs.
+                                                                One may switch between different bases using the (uni-
+   Dividing up trivalent graphs into neighborhoods of
+                                                                tary) F move, i.e., the isomorphism between the two de-
+their vertices, one arrives at the following alternative de-
+                                                                compositions of
+scription: the total anyonic Hilbert space is the direct
+                                                            c
+sum of tensor products of two-anyon fusion spaces Vab                           M                 M
+                                             ab                         Vdabc ∼
+                                                                              =     Veab ⊗ Vdec ∼
+                                                                                                =   Vfbc ⊗ Vdaf ,
+(respectively their dual splitting space Vc ) correspond-
+                                                                                            e                                    f
+ing to every vertex, where a, b, c ∈ Ω, and where the
+sum is taken over all fusion-consistent labelings (see be-
+                                                                which is specified by the coefficients [Fdabc ]e,f in
+low). The space Vcab can be thought of as the internal
+degrees of freedom of two anyons of type a and b whose               a         b            c                                    a          b           c
+combined topological charge is c. Equivalently, it is the                                               X
+space of two anyons a and b on a disc with total topo-                                              =           [Fdabc ]e,f                                 .   (6)
+                                                                           e                                                                        f
+logical charge c at the boundary. The latter is – in prin-                                              f
+                                                                                   d
+ciple – a measurable quantity. We assume for simplicity                                                                                         d
+                                              c
+that fusion is multiplicity-free, i.e., dim Vab ∈ {0, 1}, but
+our techniques directly generalize to models with fusion        The matrices [Fdabc ] collectively constitute the F -tensor
+multiplicities (see57 for the necessary adaptations in the      of the modular category mentioned earlier. Matrix ele-
+diagrammatic calculus).                                         ments of related isomorphisms such as
+   We pick a normalized vector |ab; ci ∈ Vcab in each split-                     M                 M f
+                                                                            ab ∼
+ting space and represent it using the isotopy-invariant                  Vcd   =       a
+                                                                                     Vce  ⊗ Vdeb ∼
+                                                                                                 =     Vcd ⊗ Vfab
+formalism57 as                                                                                  e                                f
+
+                               1/4 a        b                 can be expressed as functions of these. Diagrammatically,
+                           dc
+          |ab; ci =                               ∈ Vcab        all basis changes can be computed using (6), the identity
+                          da db       c
+                                 1/4                                                      c                         r
+                           dc                         c                                                                        da db
+          hab; c| =                       c       ∈ Vab ,                                               = δcc′                             c                    (7)
+                          da db          a    b                                        a            b                           dc
+                                                                                            c′
+where a scalar da called quantum dimension is associated
+to every label a. More generally, going from a vector to        and the convention that lines with the trivial label may
+its dual vector corresponds to flipping the diagram along       be added and removed arbitrarily, i.e.,
+the horizontal axis and reversing all the arrows. Isotopy
+invariance means that diagrams may be continuously de-                                                                 a
+                                                                                                                                 1     b
+formed as long as endpoints are held fixed and edges are                                    a               b      =                        .                   (8)
+not passed through each other or around open endpoints.                                                                a               b
+
+
+                                                                                       ~′                                  ′
+                   1.      Anyons on a disc                     An operator U~aa (c) : Vc~a → Vc~a taking the fusion space
+                                                                of m anyons of types ~a = (a1 , . . . , am ) ∈ Ωm with total
+  Consider the space Vc~a of n anyons of types ~a ∈ Ωn          charge c ∈ Ω to n anyons of types a~′ = (a′1 , . . . , a′n ) ∈ Ωn
+pinned to fixed locations on a disc with total charge c ∈ Ω     with total charge c can be represented as a linear com-
+at the boundary. For this space, we will often use the          bination of trivalent graphs with m ingoing edges and
+                                                                                                                                                     6
+
+n outgoing edges attached to open endpoints and car-                                       denote the projection onto the subset of states with anyon
+rying the corresponding labels. For example, using the                                     labels from Γn defined by
+standard basis (5), such an operators can be written as                                                    X X
+                                                                                                    IΓn :=             |~a, ~b; cinn h~a, ~b; c|
+         ~′
+                         X            ~′
+      U~aa (c) =                  [U~aa (c)]b~′ ,~b |a~′ , b~′ ; cinm h~a, ~b; c|    (9)                    ~
+                                                                                                            a∈Γn      c∈Ω
+                                                                                                                   ~b∈Ωn−1
+                         ~b,b~′
+                                                                                                            X
+                                        a′1          a′2       a′3           a′n                        =           a1       a2   a3     an
+                                                                                                            ~
+                                                                                                            a∈Γn
+
+                                               b′1
+                                                                                           Then
+           X            ~′                      b′
+       =            [U~aa (c)]b~′ ,~b α~a,a~′ ,c n−2           c                    (10)
+                                                                                                              UΓΓnm = IΓm UΓΓnm IΓn ,             (13)
+           ~b,b~′                                  bm−2
+                                                                                           which expresses the fact that the domain and range of
+                                              b1                                           the operator is restricted to states with certain particle
+                                                                                           configurations.
+                                        a1               a2    a3            am               Similarly as for tensor network states, we represent
+                                                                                           charge-preserving operators of the form (12) taking the
+with the normalization factor                                                              space of m anyons to the space of n anyons by shaded
+                                         1                                                 boxes with m ingoing and n outgoing (unlabeled) edges;
+              α~a,a~′ ,c = √ Q               Q            .                                summation over these edge labels is left implicit. It is
+                            dc ( i dai )1/4 ( j da′j )1/4                                  important to note, however, that such a box represents a
+                               L ~a       L                                                different object compared to the case of tensor networks:
+                           ~′                     a~′
+Any operator U~aa :              Vc →        c′ Vc′ taking m anyons                        it is defined by a family of maps {UΓΓnm (c)}c∈Ω which spec-
+of types ~a = (a1 , . . . , am ) ∈ Ωm to n anyons of type a~′ =                            ify a weighted superposition of certain labeled trivalent
+(a′1 , . . . , a′n ) ∈ Ωn can also be represented in this fash-                            graphs embedded in the box, with m in- and n outgoing
+ion if it conserves the total charge, i.e., if it has block-                               edges as in (10).
+diagonal form                                                                                 The diagrammatic representation of anyonic operators
+                                                                                           and vectors satisfies simple rules with respect to com-
+                         ′    M  ~′                  ~′
+                                                         
+                                                                                           position, tensor products and (partial) tracing. Adjoint
+                    U~a~a ∼=     U~aa (c) : Vc~a → Vca .       (11)
+                                   c
+                                                                                           operators are obtained by flipping the diagram, reversing
+                                                                                           the arrows and complex conjugating all coefficients. Op-
+Such operators act locally on subsets of n anyons of spec-                                 erators are multiplied or applied to vectors by stacking
+ified types ~a ∈ Ωn and map them to a state of anyons of                                   their representations on top of each other and connecting
+specified types a~′ ∈ Ωm . In fact, (10) (respectively (11))                               up out- with ingoing edges. Tensor products are obtained
+represent the most general locally acting operator, their                                  by placing diagrams next to each other. Traces and par-
+single most important property being charge preserva-                                      tial traces are the result of connecting up in- and out-
+tion. Additional properties such as unitarity impose fur-                                  going strands of an operator, with an additional minor
+                                                     ~′
+ther conditions on the form of the map/matrix U~aa (c) for                                 modification (see Appendix A 2).
+each c.                                                                                       These rules are remarkably similar to the contraction
+                                                                                           of tensor networks, although their origin is distinct. In
+   More generally, we are interested
+                                   L in L operators  which
+                                                  ~
+                                                  a                                        particular, the notion of evaluating of a diagram is very
+act between spaces of the form c           a∈Γn c , where
+                                           ~    V
+                                                                                           different: A tensor network associates a scalar quantity
+Γn ⊂ Ωn specifies a set of n-tuples of available (spa-                                     to every labeling of the edges. This means that contrac-
+tial) particle configurations on a chain. A total charge-                                  tion, i.e., summing over all labelings, results in a scalar.
+preserving operator of this kind takes the form                                            In contrast, anyonic diagrams associate a trivalent graph
+                                                   M                                       to every labeling, and the contraction results in a for-
+                                   UΓΓm
+                                      n
+                                        =                  UΓΓm
+                                                              n
+                                                                (c)                 (12)   mal linear combination of equivalence classes of labeled
+                                                     c                                     trivalent graphs. Equivalence is defined by isotopy and
+                       L             L                                                   the local rules (6), (7) and (8).
+                                                  a′
+where UΓΓm n
+             (c) ∈ End    ~     V
+                           a∈Γm c
+                                  ~
+                                  a
+                                    ,           V
+                                        a~′ ∈Γn c
+                                                  ~
+                                                       . This
+can be understood as the projection of a general charge-
+preserving operator onto inputs and outputs from Γm                                                           2.    Anyons on a torus
+and Γn , respectively. More precisely, let
+                            !                      !                                         Here we are interested in periodic chains of anyons ar-
+               M M               M M                                                       ranged on a line, and a few modifications of the above
+                          ~
+                          a                      ~
+                                                 a
+         IΓn :          Vc →                   Vc                                          formalism are necessary. As in27,40,58 , we consider a
+                        c          a∈Ωn
+                                   ~                           c      a∈Ωn
+                                                                      ~                    chain of anyons arranged on a topologically non-trivial
+                                                                                                                                           7
+
+cycle wrapping around a torus. We denote the space                             coefficient of the emtpy graph, i.e.,
+of n anyons of types ~a = (a1 , . . . , an ) arranged on such                                                                  
+                                                       ~
+                                                       a
+a chain with periodic boundary conditions by Vperiodic      .
+This space does not naturally decompose into subspaces                                                 
+                                                                                                       
+                                                                                                                                
+                                                                                                                                
+with specified total charge. An orthonormal basis is given                     tr                     =                              . (16)
+                                                                                           O                                   
+by the basis vectors
+                                                                                                                       O         vac
+                    1                  a1 a2             an−1 an
+   |~a, ~bin = Q                                                        (14)   Here we denote the coefficient of the empty graph in a
+               ( i dai )1/4
+                                     bn b1 b2      bn−2 bn−1 bn                formal superposition X by [X]vac . That is, it is obtained
+                                                                               by writing X as a superposition of states with flux a, i.e.,
+                                                                               with a line labeled a going around the torus, and taking
+where ~b ∈ Ωn is such that each vertex satisfies the fusion
+                                                                               the coefficient for a = 1. In Appendix A, we show that
+rules. The basis specified by Eq. (14) corresponds to a
+                                                                               the (partial) trace defined in this fashion is equivalent to
+decomposition of the Hilbert space as
+                                                                               the orthonormality of the set of vectors (14).
+                     M
+   ~
+   a
+  Vperiodic ∼
+            =                      VbaN1 b1 ⊗ Vba11 b2 ⊗ · · · ⊗ VbaNN−1
+                                                                       bN
+                                                                          .
+                ~b=(b1 ,...,bN )
+                                                                                 C.    Anyonic Hamiltonians: long-range effective
+                                                                                                    theories
+The representation of the bra h~a, ~b|n of the vector (14) is
+again obtained by flipping the diagram and reversing the                          A remarkable feature of the state space of anyons is its
+arrows, i.e.,                                                                  topological degeneracy: the Hamiltonian of the quantum
+                                                                               medium assigns equal energy to each state. Furthermore,
+                    1       bn b1 b2               bn−2 bn−1 bn                this degeneracy is stable under local perturbations, a fea-
+   h~a, ~b|n = Q        1/4
+                                                                   .    (15)
+               ( i dai )                                                       ture which makes anyons particularly suited for encoding
+                                      a1 a2              an−1 an               and processing quantum information. These properties
+                                                                               hold up to exponentially small corrections in the inter-
+Local operators acting on a subset of the n anyons are                         anyon distances.
+represented as before by shaded boxes, but global oper-                           If the inter-anyon separation falls below a certain
+ators can not be represented as superpositions of graphs                       length scale, the microscopic details of the system be-
+embedded in such a planar surface. Instead, it is con-                         come relevant and the topological degeneracy is generally
+venient to embed the chain and associated anyonic di-                          lifted. Such a degeneracy lifting has been examined in
+agrams along one of the fundamental nontrivial cycles                          various quantum media59–61 . In the system-independent
+of the torus. (This is
+                     Lalready~aimplicit in
+                                         LEq. (14).)  A                        anyonic formalism, Bonderson26 has shown that a gen-
+                                                  ~a
+global operator O : ~a∈Ωm Vperiodic  → ~a∈Ωn Vperiodic                         eral interaction between two anyons can be interpreted
+mapping between periodic chains of (possibly different)                        as tunneling of topological charge, and that generic tun-
+lengths m and n is then represented by a shaded strip                          nelling fully lifts the topological degeneracy.
+parallel to the chain on the torus, with m ingoing and                            Hamiltonian terms responsible for such tunneling and
+n outgoing edges, i.e.,                                                        more generally arbitrary multi-anyon interactions take
+                                                                               the form of Hermitian operators as in (10) with m = n.
+                                                     .                         The exact form of the effective Hamiltonian governing
+                                      O                                        the energy splitting depends on the geometric arrange-
+                                                                               ment of the anyons. In a regular lattice, nearest neigh-
+                                                                               bor (m = 2) and next-to-nearest neighbor (m = 3) in-
+Application of such an operator is again equivalent to                         teractions are most relevant physically as the interaction
+attaching it to a diagram. Finally, (partial) traces are                       strength decays exponentially with distance. Lattice-like
+computed simply by connecting
+                           L up     edges. For example,                        arrangments of anyons arise when certain spatial distri-
+                                ~
+                                a
+for an operator O acting on ~a Vperiodic , the partial trace                   butions are energetically favored, e.g., by inserting de-
+over the n-th anyon is                                                         fects into the quantum medium which couple to addi-
+                                                                               tional quantum numbers (such as electric charge) of the
+                                                                               anyons.
+     trn                                  =                                       Paradigmatic models of such effective Hamiltonians
+                        O
+                                                                               have been considered extensively in the literature. They
+                                                          O                    can be thought of as describing the dynamics of the inter-
+                                                                               nal degrees of freedom of anyons pinned to fixed sites. We
+Here we used isotopy on the torus to get a convenient                          refer to40 for an introductory discussion of such models.
+expression on the rhs. The (complete) trace is the result                      We discuss explicit examples for Fibonacci anyon chains
+of connecting up all strands, and then computing the                           in Section V.
+                                                                                                                        8
+
+        IV.      ANYONIC ENTANGLEMENT                             2. To every intermediate box with m ingoing and
+                  RENORMALIZATION                                    n outgoing strands (m ≥ n), associate the ad-
+                                                                     joint W† of an isometric charge-conserving map
+                     A.   The setting                                                                    
+                                                                                      M          M     ~′
+                                                                          W ∈ End        V ~a ,     Va  ,       (20)
+   We have described the origin of anyonic Hamiltonians                               a∈Ωn
+                                                                                      ~  eff      a~′ ∈Ωm
+as long-range effective descriptions of quantum media in                                                eff
+
+
+Section III C. We now turn to the problem of defining a             that is,
+variational ansatz for such systems. For concreteness,
+we restrict our attention to one-dimensional chains of                                   (n strands)
+anyons, arranged in a periodic fashion along a topolog-                                                  7→ W†
+ically non-trivial cycle on the torus. We discuss more
+general 2-dimensional arrangements in Appendix B.                                       (m strands)
+   One may consider different spatial distributions of
+anyons on the chain. For example, in a setting with sev-          3. Regard the state |ϕi (Eq. (19)) and the family of
+eral non-trivial anyon types, one may be interested in               maps {W} (Eq. (20)) as variational parameters
+the effective behavior of a staggered, i.e., alternating ar-         specifying a state |Ψi = |Ψ|ϕi,{W}i ∈ Hchain,N of
+rangement of anyons. While our ansatz could in principle             the chain. The state is determined by the follow-
+be adapted to such cases, here we consider the simplest              ing recipe: in the MERA-structure of Fig. 1, re-
+non-trivial setting. We assume that a subset Ωeff ⊂ Ω                place every box by the superposition of trivalent
+of anyons is allowed in each site. The Hilbert space of a            labeled graphs representing the associated object
+(periodic) chain of length n on the torus is then given by           (i.e., Eq. (19) and Eq. (20)). The result is a su-
+                                                                     perposition of labeled graphs, each with N ingoing
+                               M                                     edges. This superposition represents hΨ|.
+                 Hchain,n ∼
+                          =             ~
+                                        a
+                                       Vperiodic .     (17)
+                              a∈Ωn
+                              ~  eff
+                                                               More explicitly, the maps (20) are of the form
+                                                                                        M
+The most commonly considered case (e.g., the golden                                 W=      W(c) ,                   (21)
+chain27 ) is when Ωeff = {a} consists of a single anyon a,                                    c
+that is, each site is occupied by a particle of type a. Our                    L            L          ~′
+                                                               with W(c) ∈ End( ~a∈Ωn Vc~a , a~′ ∈Ωm Vca ) satisfying
+formulation is slightly more general, as it allows to con-                              eff               eff
+
+sider Hamiltonians which can create and destroy parti-
+                                                                               W(c)† W(c) = IL~a∈Ωn Vc~a .           (22)
+cles on sites of the chain (resp. change particle types)                                               eff
+
+when Ωeff = Ω. This is important when the quantum
+                                                               Eqs. (21) and (22) severly constrain the set of allowed
+medium assigns nearly degenerate energies to different
+                                                               maps W for certain (m, n) and Ωeff .
+distributions of anyons. Further intermediate cases could
+                                                                  This ansatz is clearly motivated by entanglement
+be considered.
+                                                               renormalization for qudits. In fact, it has the same op-
+                                                               erational interpretation: the MERA-structure of Fig. 1,
+                                                               after replacing each box by the superposition of graphs
+                     B.   The ansatz                           specified by {W}, is a procedure for successively map-
+                                                               ping the chain to a coarse-grained chain by local gates
+   Consider a MERA-structure for a periodic chain              and isometries. Indeed, due to charge conservation, boxes
+with N sites as in Fig. 1. We associate to this structure      with the same number of in- and outgoing edges corre-
+a family of states in the anyon Hilbert space Hchain,N         spond to local unitaries on the anyons, while boxes with
+(cf. (17)) as follows:                                         fewer outputs than inputs correspond to local isometries
+                                                               reducing the number of degrees of freedom. Such reduc-
+   1. To the strip at the top, associate the bra hϕ| of a      tions preserve the total charge in their support. Impor-
+      normalized state                                                                                      †
+                                                               tantly,
+                                                                  L since the range of each operator W is contained
+                                                               in ~a∈Ωm V ~a , states supported on Hchain,N are mapped
+                                                                         eff
+                      |ϕi ∈ Hchain,n ,                 (18)    to coarse-grained chains of the same type at each level in
+                                                               Fig 1, i.e., with particles from the subset Ωeff ⊂ Ω on all
+      that is,                                                 sites.
+
+                                       7→ hϕ| ,        (19)        C.   Efficient evaluation of physical quantites
+
+                                                                 Having introduced a set of variational ansatz states
+      where n is the number of ingoing edges.                  parametrized by (|ϕi, {W}), we argue that quantities of
+                                                                                                                               9
+
+physical interest such as expectation values of local ob-              D.    Computational cost and refinements of the
+servables and correlation functions can be efficiently com-                                ansatz
+puted from these parameters. Here we use the formal
+equivalence of the manipulation rules of anyonic states                 To count the number of parameters needed to de-
+and operators with usual tensor contractions.                        scribe the anyonic ansatz states, let D = maxa∈Ωeff da be
+  The anyonic analog of Eq. (1) is                                   the maximal quantum dimension of the particles used.
+                                                                     Since the number of states of the form (5) can be upper
+                                      (n strands)
+                                                                     bounded by O(D n ), a charge-conserving map as in (20) is
+                             W†                                      described by fewer than O(D n+m ) parameters. Similarly,
+                         =                                           a state |ϕi as in (18) is described by O(D n ) parameters.
+                                      (m strands) ,           (23)
+                                                                        As with the MERA for spin chains, the family of
+                             W                                       ansatz states may be enlarged by replacing an edge
+                                      (n strands)                    by s > 1 edges; this is analogous to increasing the
+                                                                     bond dimension. In this case, isometries are described
+                               L                L          ~′
+                                                                    by O(D s(n+m) ) parameters as opposed to O(ds(n+m) )
+for any operator W ∈ End           a∈Ωn
+                                   ~       V ~a , a~′ ∈Ωm V a        in the qudit case. (Note that, by definition, D <
+                                       eff              eff
+with the required isometry property (where m ≥ n).                   d for any embedding of anyonic states into qudits:
+Each of the small dark boxes represents the projec-                  for example, for the Fibonacci anyons considered be-
+tion IΩeff onto the subset of allowed anyon labels. Note             low, D ≈ 1.618.) In summary, a general anyonic
+that, if the edges on the lhs. of Eq. (23) are connected to          MERA is described by O(poly(D s )N log N ) parameters,
+an operator W′ as specified in the ansatz, these may be              and translation-invariant and scale-invariant MERAs by
+omitted. This is because both the support and range of               O(poly(D s ) log N ) and O(poly(D s )) parameters, respec-
+W′ are already restricted to the set of allowed anyons Ωeff          tively.
+(cf. (20)). In particular, we formally recover the rule                 The remainder of this story is the same as that of the
+Eq. (1) in this case.                                                MERA for spin chains, and we refer to the extensive lit-
+   The second important ingredient is formula (16) for               erature (e.g.,51 ) on this subject. For example, the com-
+the trace of an operator on the chain. Eq. (23) and (16)             putational cost of computing local expectation values is
+immediately imply that expectation values of local op-               roughly the same as for qudit chains (with χ replaced
+erators can be efficiently evaluated for a state |Ψi =               by D s ), and methods used, e.g., for varying over the
+|Ψ|ϕi,{W} i in essentially the same manner as for MERA-              isometries in Fig. 1 can directly be adapted to the any-
+states of qudits. The same is true for two-point correla-            onic framework. Compared to the qudit chain setting,
+tion functions for certain distances of the points related           an additional advantage stems from the fact that the
+to the MERA structure.                                               isometries are charge-preserving and thus take a block-
+   Consider for example a local observable O acting on               diagonal form. Therefore, matrix multiplication and sin-
+two sites of the chain. The expectation value of this                gular value decompositions can be performed on matrices
+operator, given a density matrix ρ, is equal to the dia-             whose dimensions are a constant factor smaller than with
+grammatic expression                                                 a naı̈ve qudit ansatz. Similarly, methods for extracting
+                                                                     critical exponents from scale-invariant MERA states54,62
+                                                                   may be applied in the anyonic setting.
+                                               
+                                               
+          tr(Oρ) =                                      .   (24)
+                                      O                                       E.   Example: Fibonacci anyons
+                                  ρ
+                                                    vac
+                                                                       The Fibonacci theory has one√nontrivial particle τ with
+If ρ = |ΨihΨ| is an anyonic MERA-state corresponding                 quantum dimension dτ = φ = 5+1   2   equal to the golden
+e.g., to the structure of Fig. 1 (a), we conclude from (24)          ratio and fusion rule τ ×τ = 1+τ . The F -matrix is given
+that                                                                 by
+
+                                                                                           = φ1       + √1φ
+                    hΨ|O|Ψi = [X]vac ,
+                                                                                                                            (25)
+                                                                                          = √1φ       − φ1       ,
+where X is the superposition of trivalent labeled graphs
+specified by the diagram in Fig. 2 (b). Using (23), this
+immediately reduces to [X ′ ]vac , where X ′ is the super-           where we use the convention that a solid line represents
+position in Fig. 2 (c). This can be efficiently evaluated            the τ -label, while a dotted line represents the trivial la-
+using the superoperators defined in (3) and (4) (again               bel 1. Consider a periodic chain of τ -anyons. To get a
+interpreted as anyonic expressions). Two-point correla-              corresponding family of ansatz states, we set Ωeff = {τ }.
+tions functions can be computed analogously.                         Using the convention that a solid line represents an edge
+                                                                                                                                  10
+
+with label τ and a dotted line represents an edge with                      From (26), (27) and (28), we conclude that the family
+label 1, the Hilbert spaces Hchain,n of a periodic chains                of states associated to Fig. 1 (a) is rather uninteresting
+with n ∈ {1, 2} particles are spanned by (cf. (14))                      as the variational parameters (|ϕi, {W}) are merely a set
+                                                                         of phases. In contrast, the structure in Fig. 1 (b) gives
+     Hchain,1 = C               =: C|τ i                          (26)   rise to a less trivial family of states due to (29).
+                                                                          We will give additional non-trivial explicit examples in
+     Hchain,2 = span                ,            ,                       Section V.
+
+              =: span {|τ τ i, |1τ i, |τ 1i} .
+                                                                          F.     Distillable states for composite anyon coding
+In general, the space Hchain,n is spanned by vectors cor-
+responding to (periodic) sequences of 1s and τ s, with the
+fusion constraint forbidding neighboring 1s (this defines                   The MERA ansatz for qudits is motivated by quantum
+an embedding into a subspace of (C2 )⊗n ). This deter-                   circuits. Indeed, a MERA-description of a state provides
+mines the form of the state |ϕn i ∈ Hchain,n correspond-                 a circuit preparing the state starting from the top-level
+ing to the top box in structures as in Fig. 1 (a) and (b),               state |ϕi. This is achieved by realizing isometries using
+respectively. Next, we consider the constraints on the                   ancillas prepared in pure states; it corresponds to run-
+maps W = W(n,m) in (21) with n input- and m output                       ning the coarse-graining procedure in reverse. This use
+anyons, for small (n, m). The standard form of charge                    of the MERA has been proposed for example as a way of
+preserving isometries/unitaries is                                       efficiently preparing topologically ordered states63 .
+                                                                            The one-to-one correspondence between preparation
+             eiθ                                                         circuits of a certain form and states described by the
+ W(1,2) =                                                         (27)   entanglement renormalization ansatz clearly extends to
+            φ1/4
+                                                                         anyons. However, there is an additional relation in the
+                                                                         anyonic setting which corresponds to running the coarse-
+            eiθ1         eiθ2                                            graining forwards (instead of backwards as in the qudit
+ W(2,2) =            +                                            (28)   case): a subclass of the anyonic ansatz is in one-to-one
+            φ1/2          φ
+                                                                         correspondence with distillation procedures preparing a
+                                                                         logical state |ϕi of composite anyons. The anyonic renor-
+             α                  β                                        malization ansatz therefore provides an alternative char-
+ W(1,3) =                +                                        (29)   acterization of “distillable” states in the framework of
+            φ1/2             φ1/2
+                                                                         composite anyon coding32 .
+                                                                            The goal of composite anyon coding is to prepare a
+                                                                       suitable state for computation starting from some un-
+          eiθ               1                                           known initial state, but without using measurements.
+ W(2,3) = 5/4            + 3/4 α                 +β        (30)
+         φ                φ                                              In the terminology of anyonic entanglement renormal-
+                                                                         ization, composite anyons are anyons at higher levels in
+                                                                         the coarse-graining scheme. Initial states which allow to
+where θ ∈ [0, 2π[ and |α|2 + |β|2 = 1. In all these cases,
+                                                                         prepare a given target state |ϕi of composite anyons can
+the map is completely specified by a phase and/or a qubit
+                                                                         be characterized as follows. They can be represented by
+state. A less trivial case is W(3,3) , which is equal to a
+                                                                         an anyonic renormalization ansatz (corresponding to the
+phase times the projection onto the span of         plus a               preparation scheme) with the following properties: the
+                                                                         state at the top is fixed to |ϕi, and all adjoints of isome-
+two-by-two unitary W(τ ) on the span of {                 ,         }.   tries W† are implementable by braiding and fusion. The
+                                                                         latter condition means that the renormalization scheme
+For later reference, we also state the most general form                 only consists of unitaries effected by braiding, and coarse-
+of an isometry with two input and four output strands:                   graining, that is, any reduction in the number of anyons,
+                                                                       is achieved by bunching together some particles. Such
+                                                                       fusion-based coarse-graining is given by a product of the
+                 1 
+              = φ3/2
+                                                                        isometry
+ W(2,4)              α                 +β            
+                                                     
+                                                                         X                     X  dc 1/4 a    b
+                                                              (31)          |a, b; cihc| =                        a = a(c), b = b(c)
+                                                                          c                    c
+                                                                                                   da db    c
+                                                             
+          + φ1 γ
+                                                             
+                             +δ              +ε               
+                                                                       whose adjoint describes the fusion of a pair of particles.
+                                                                         An anyonic renormalization ansatz with these proper-
+                                                                         ties can directly be implemented using the operations
+where |α|2 + |β|2 + |γ|2 + |δ|2 + |ε|2 = 1.                              commonly envisioned to be available for manipulating
+                                                                                                                                                            11
+
+anyons. Thus we can regard such schemes as state prepa-
+ration circuits for topological quantum computers.
+
+
+
+
+                                                                                                                       Π
+                                                                                                                                            tan θ = φ/2
+
+
+
+
+                                                                                                                     16
+                                                                                                                    0.3
+                                                                                                                           II
+                                                                                3-state Potts                                      76
+                                                                                                                                        Π
+ V.    APPLICATION TO THE GOLDEN CHAIN                                                                                          0.1
+      AND THE MAJUMDAR-GHOSH CHAIN                                                                                                                   θ
+                                                                                                                                                 ˆ
+                                                                     FM                                                                              AFM
+                                                                               1.075
+                                                                                    Π
+                    A.      The model                                                                      tricritical Ising
+                                                                                Z4 -phase
+   In this section, we consider the use of the anyonic
+
+
+
+
+                                                                                             Π38
+                                                                                                   I
+
+
+
+
+                                                                                                           1.528Π
+MERA ansatz in the context of the golden chain27 and its
+
+
+
+
+                                                                                          ~1.
+relatives. An introduction to these models can be found
+in40 . Specifically, we consider the Fibonacci-anyonic ana-                                        MG
+log of the Heisenberg and the Majumdar-Gosh (MG) spin
+chains. The former was introduced in27 and consists of a      FIG. 3: Phase diagram of the model (34) as obtained in65 .
+uniform chain of N Fibonacci anyons with Hamiltonian          Phases I and II are gapped, with the exact ground states
+terms favoring one of either possible total charge of two     known at the Majumdar-Gosh (MG) point θ = 3π/2 (see
+neighboring τ -particles. Concretely, the Hamiltonian is      Section V B) and at tan θ = φ/2. There are two extended
+given by                                                      criticial phases for which an exact mapping was established
+                                                              to the 3-state Potts and the tricritical Ising model at the FM-
+                                         N
+                                         X                    and AFM-golden chain points, respectively27 . A small sliver
+                        golden
+               J2 · H            = −J2         H2i ,   (32)   of an incommensurate phase is found near θ = 1.075π next to
+                                         i=1
+                                                              a phase with Z4 -symmetry; both these phases are believed to
+                                                              be critical. See65 for a detailed discussion.
+where each term H2i is a projection onto trivial charge of
+the anyons i and i+1, i.e., it has the diagrammatic repre-
+                                                              generalizations to su(2)k anyons and established a con-
+sentation φ1 . In analogy with the familiar SU (2) spin       nection between the gapless modes of these anyon chains
+                                                              to edge states of topological liquids58 , which then pro-
+chains, the case J2 > 0 energetically favoring trivial to-
+                                                              vides some insight into the collective behavior of anyons
+tal charge is referred to as ‘antiferromagnetic’ (AFM)
+                                                              in a two-dimensional setting58,67 . We refer to these ref-
+coupling, whereas J2 < 0 is called ‘ferromagnetic’ (FM)
+                                                              erences for further details, and do not attempt to give
+coupling.
+                                                              a complete account here. Instead, we restrict ourselves
+  The Majumdar-Gosh (MG) chain64 is a model
+                                                              to a few example computations illustrating the power of
+of SU (2) spin-1/2 particles arranged on a chain, with
+                                                              the anyonic MERA ansatz. Specifically, we consider the
+three-particle interactions favoring either total spin 3/2
+                                                              model (34).
+(called ferromagnetic/FM) or 1/2 (called antiferromag-
+netic/AFM). Its anyonic analog65 takes the form
+                                      N                        B.     Exact RG fixed point at the Majumdar-Gosh
+                                      X                                               point
+                         MG
+                J3 · H        = −J3         H3i ,      (33)
+                                      i=1
+                                                                 We first consider the FM (i.e., J3 < 0) case of the MG
+where H3i is the projection onto trivial charge of three      chain, the anyonic analog of the Majumdar-Gosh point
+neighboring anyons. Using the F-matrix (25), it is            of the spin-1/2 Heisenberg chain for the point θ = 3π/2
+straightforward to rewrite the terms H2i and H3i in the       in (34). This point lies in a gapped phase extending
+standard basis (14). Corresponding expressions can            from θ ≈ 1.38π to θ ≈ 1.528π, with four-fold degeneracy
+be found in65 . Expressed in the standard embedding           throughout the phase (for chains with even length)65 .
+into (C2 )⊗n , this leads to 3- and 4-qubit terms, respec-    The ground space at this point is spanned by the states
+tively.
+   The Hamiltonian (32) was studied in detail in27 . Crit-            |1τ 1τ 1τ · · · i      ∝
+icality and a two-dimensional CFT description were es-                                                                                                     (35)
+                                                                    |τ τx τ τx τ τx · · · i ∝
+tablished numerically. Furthermore, an exact mapping to
+a standard integrable 2D classical lattice model66 known      and their translates by one site. Here, a wiggly line de-
+as the RSOS model was given. These studies were ex-           notes a superposition
+tended to the one-parameter family of Hamiltonians
+                                                                                                       1              1
+                                                                                 τx =              =                +√                       .
+          Hθ := cos θ · H golden + sin θ · H MG ,      (34)                                            φ               φ
+which exhibits a rich phase diagram as discussed exten-       We will now argue that the two-dimensional subspace
+sively in65 , see Fig. 3. Subsequent work58,67 considered     spanned by (35) is exactly described by a scale-invariant
+                                                                                                                                 12
+
+anyonic MERA of a simple form. In other words, these                        C.   Numerical variation over ansatz states
+states are fixed points under the corresponding renor-
+malization group procedure. This provides an encoding                     To assess the suitability of the anyonic entangle-
+of a subspace of the ground space, with the property                   ment renormalization ansatz as a numerical method, we
+that the identity of the encoded state is revealed only at             have implemented an algorithm for numerically miniz-
+the top level in the MERA structure. This is analogous                 iming the energy by varying over the parameters of a
+to MERA-descriptions of topologically ordered systems                  translation-invariant ansatz. The algorithm is based on
+which are exact fixed points of a renormalization group                iterative optimization of the (identical) isometries at each
+flow: information encoded in a topologically degenerate                level and the top-level state. It is described in detail
+ground space can be recovered at the top level of the                  in51 for non-anyonic spin chains. For a fixed isometry, it
+MERA-hierarchy63,68 . However, in the case considered                  proceeds by computing its environment, that is, the con-
+here, there is a local order parameter given by the den-               traction of the MERA-network with the isometry omit-
+sity of τ -labels on the chain.                                        ted. The resulting tensor can be interpreted as a linear
+   To specify the scale-invariant MERA-ansatz describ-                 map whose singular value decomposition dictates how the
+ing the ground space (35), consider the MERA-structure                 isometry is updated. Adapting this to the anyonic set-
+of Figure 1(a) with refinement parameter s = 2, i.e.,                  ting is straightforward: here the environment always has
+with every strand replaced by two. Due to this doubling                a block-diagonal form with respect to total charge. Com-
+and scale-invariance, the corresponding ansatz then is de-             pared to the algorithm of51 , the only significant difference
+scribed by an isometry W = W(2,4) of the form (31) and                 lies in the implementation of the ascending and descend-
+a unitary U acting on four τ -anyons. We set the unitary               ing superoperators (see e.g., (3) and (4)) used to compute
+equal to the identity, and the isometry equal to                       the environments. As with all anyonic operations, they
+                             1                                         require applying basis changes into compatible tree-like
+                       W := √                                  (36)    bases (cf. (6)). These basis changes can be precomputed.
+                              φ
+                                                                          This randomized optimization algorithm is suscepti-
+which corresponds to the parameters (α, β, γ, δ, ǫ) =                  ble to local minima, and its convergence depends on the
+( φ1 , √1φ , 0, φ1 , √1φ ) in (31). This completes the specifica-      choice of initial points. In practice, these issues appear
+tion of the MERA up to translation (which we fix later),               to be minor and can be addressed by starting with a
+as the top-level state |ϕi depends on the actual state con-            large number of initial points and postselecting after a
+sidered. Note that the MERA-structure of Figure 1(a)                   few iterations.
+with unitaries equal to the identity is known as a tree-
+tensor network69–71 in the non-anyonic setting.
+    Let us argue that the renormalization group scheme                        Ground state energy and correlation functions
+has the ground states (35) as fixed points. This is most
+easily seen for the state |1τ 1τ 1τ · · · i using the diagram-
+                                                                          We have applied the variational algorithm to periodic
+matic calculus: applying a layer of (adjoints of) isome-
+                                                                       chains of 12 and 16 Fibonacci anyons governed by the
+tries corresponds to stacking N/4 parallel copies of (36)
+                                                                       Hamiltonian (34). These system sizes were chosen to
+on top of the state. We assume that the isometries are
+                                                                       allow for comparison with exact diagonalization data and
+aligned in such as way that this takes the form
+                                                                       to test the suitability of different MERA-structures.
+                                                                          For the 12- and 16-anyon chains, we use the “ternary”
+                                ∝
+                                                                       and “binary” MERA-structures
+
+for the state |1τ 1τ 1τ · · · i, where we suppressed scalar fac-
+tors. Here we used isotopy invariance and (7). With (14),
+it is easy to verify that the operation (W† )⊗N/4 also pre-
+serves the norm of the state. This establishes the claimed                                                               ,     (37)
+fixed-point property for |1τ 1τ 1τ · · · i. To verify the claim
+for the second state |τ τx τ τx τ τx · · · i, it suffices to observe
+that this state is essentially equivalent to the former but
+with τ -flux, i.e.,
+                                ∝                                      with s = 2 (i.e., every strand is doubled). The former
+                                                                       consists of a single level of coarse-graining isometries,
+because of the identity                                                while the latter has two such levels. The variationally ob-
+                                =         .                            tained ground state energy is compared to its exact value
+                                                                       in Fig. 4. As shown, we find good agreement between the
+This immediately implies that this state is fixed by the               variationally estimated ground state energy and its exact
+same renormalization group scheme.                                     value, over a wide range of values of the parameter θ.
+                                                                                                                                 13
+
+
+                                                       exact                                               d 2 E0
+        ∆E                                                                                                  dθ 2 0
+        10−2                                          MERA
+      2                                                                10
+        10−3                                                                                               −100
+        10−4
+      0 −5                                                                                                 −200
+        10                                                               5
+     −2          π/2 π 3π/2                                                                                          π/2 π 3π/2
+E0                   θ                                              dE0                                                  θ
+                                                                     dθ 0
+     −4
+                                                                       −5
+     −6
+                                                                     −10
+     −8
+                                                                                 II      Z4 -phase       3-state I tricritical
+                                                                                                         Potts       Ising
+−10                                                                  −15
+   0       π/4    π/2 3π/4       π    5π/4 3π/2 7π/4                         0   π/4   π/2 3π/4        π 5π/4 3π/2 7π/4
+                                 θ                                                                     θ
+          (a) Ternary MERA-structure applied to 12 anyons
+                                                                    FIG. 5: The first and second (inset) derivative of the ground
+    ∆E                                                exact         state energy with respect to the parameter θ approximately
+  4 10−2                                              MERA          reveals the location of the phase boundaries (red vertical
+       −3                                                           lines). This data was obtained from the binary MERA for
+  2 10                                                              16 anyons used to produce Fig. 4 (b). For each of the 40
+    10−4                                                            points θ0 ∈ [0, 2π], the ground state energies E0 (θ0 ± ∆θ) at
+  0
+    10−5                                                            two neighboring points at distance ∆θ = 10−3 were approx-
+ −2                                                                 imated using the MERA. The plots show the corresponding
+               π/2 π 3π/2                                           discrete approximation to the first and second derivative at
+E0                 θ
+  −4                                                                each point. We stress that only limited information can be
+                                                                    gained from this plot. In particular, it does not reveal the na-
+ −6                                                                 ture of the phase transition. We refer to the detailed discus-
+ −8                                                                 sion in40 , where e.g., the CFT descriptions of the transitions
+                                                                    out of the tricritial Ising phase have been identified.
+−10
+−12                                                                   Fig. 5 shows that ground state energies computed us-
+−14                                                                 ing the binary MERA are sufficient to obtain a rough
+   0       π/4    π/2 3π/4       π    5π/4 3π/2 7π/4                estimate for the location of the phase boundaries.
+                                 θ                                    To study whether the anyonic MERA correctly repro-
+          (b) Binary MERA-structure applied to 16 anyons            duces correlations in the ground state, we have com-
+                                                                    puted the (translation-averaged) two-point correlation
+ FIG. 4: Ground state energy approximated variationally by          functions
+ an anyonic entanglement renormalization ansatz. The in-                             N
+ set in each figure shows the relative error ∆E = (EMERA −                        1 X                                   
+                                                                         C(r) =         hH2i H2i+r i − hH2i i · hH2i+r i       (38)
+ E0 )/(Emax − E0 ). Fig. (a) is based on a ternary anyonic                        N i=1
+ MERA for a system of 12 anyons, while Fig. (b) shows the
+ result of a binary anyonic MERA for a chain of 16 anyons.          of the local topological charge density (as measured in
+ At the Majumdar-Gosh point (θ = 3π/2), the variational             terms of the local projection H2i onto trivial charge for
+ procedure recovers the exact fixed-point discussed in Sec-         a pair). The result of this computation for the AFM-
+ tion V B for the binary MERA. In (b), the approximation
+                                                                    point θ = 0 and the FM-point θ = π are shown in Fig. 6
+ is best around around the golden chain-point with AFM-
+ couplings θ = 0. This is consistent with the fact that the         and Fig. 7, respectively. They exhibit a remarkably good
+ ground state has a Z2 -sublattice ordering27 which is compati-     agreement with the exact values.
+ ble with the coarse-graining structure of a binary MERA. For         In Fig. 8, we show the error when computing nearest-
+ θ = π, the ground state has a Z3 -sublattice ordering for which    neighbor and long-range correlations as a function of the
+ the binary MERA structure is less suited. However, the ap-         Hamiltonian parameter θ. We observe good accuracy in
+ proximation is still better than in intermediate regions where     regions where the ground state energy is well approxi-
+ the Hamiltonian has both 2-local and 3-local terms. Simi-          mated (compare Fig. 4). As expected, the considered
+ larly, Fig. (a) shows that a ternary structure appears to be       MERA-structures are less suited for describing ground
+ suitable for capturing the Z3 -sublattice ordering at the golden   state correlations at intermediate values of θ, where the
+ chain-FM-point θ = π.
+                                                                    Hamiltonian has both 2-anyon and 3-anyon interactions.
+                                                                                                                          14
+
+
+
+
+     (a)C(r) with the ternary MERA at the AFM-point
+                                                                     (a)C(r) with the ternary MERA at the FM-point
+
+
+
+
+     (b)C(r) with the binary MERA at the AFM-point
+
+                                                                      (b)C(r) with the binary MERA at the FM-point
+FIG. 6: Two-point correlation function C(r) (cf. (38)) of the
+local topological charge density at the AFM point. They
+reveal a Z2 -sublattice ordering of the ground state wave       FIG. 7: Two-point correlation function C(r) (cf. (38)) of the
+function. The inset shows the absolute error |δC(r)| =          local topological charge density at the FM point. The inset
+|CMERA (r) − Cexact (r)|.                                       shows the absolute error |δC(r)| = |CMERA (r) − Cexact (r)|.
+
+
+                                                                                       Larger systems
+
+                                                                   To test the scalability of the method, we have ad-
+                                                                ditionally computed the ground state energy of chains
+                                                                of length N ∈ {32, 64, 128} using the binary MERA-
+   We emphasize that the structures (37) with s = 2             structure (with s = 2) obtained by adding levels to (37).
+are two of the simplest possible leading to non-trivial         Since this is beyond the reach of exact diagonalization,
+families of ansatz states for Fibonacci anyons. The             we consider the AFM-point, which allows us to compare
+support of the unitaries/isometries (4 anyons) is only          our results to the CFT-predictions of27 .
+marginally larger than that of the terms in the Hamil-             Explicitly, we use the fact that the low-lying spectrum
+tonian (34). This suggests that the approximation by            of a periodic 1D critical quantum systems of length N
+such states may be rather coarse. Nevertheless, the             takes the form
+ansatz provides reasonable approximations to the ground                                 2πv               c
+state energies (for all θ), and correlation functions at                    E = εN +          hL + hR −        .       (39)
+the AFM- and FM-points where the Hamiltonian con-                                        N                12
+sists of nearest-neighbor-terms. This illustrates that any-     Here ε and v are non-universal constants, c is the cen-
+onic entanglement renormalization successfully exploits         tral charge of the CFT, and hL and hR are the confor-
+the constraints imposed by conservation of topological          mal weights of the holomorphic and antiholomorphic part
+charge. Future work may go beyond this proof of princi-         of the local field associated with the energy level. The
+ple by considering refined families with parameters s > 2.      latter parameters are defined in terms of a representa-
+This should lead to significant improvements as in the          tion of the Virasoro algebra and are tabulated for uni-
+non-anyonic setting: Here accurate results for correla-         tary minimal CFTs. In27 , the CFT corresponding to the
+tion functions are usually obtained only for high bond          AFM-point was unambiguously identified as that describ-
+dimension (e.g., χ = 22 for Ising and Potts chains at           ing the tricritical Ising model at its critical point, with
+criticality51 ).                                                central charge c = 7/10. The ground state energy E0
+                                                                                                                            15
+
+
+
+
+       (a)|δC(1)| and |δC(6)| for the ternary MERA
+
+
+                                                                 FIG. 9: Ground state energy per site obtained for N =
+                                                                 16, 32, 64 and 128 anyons at the AFM-point using the anyonic
+                                                                 MERA (blue crosses). The red line shows the CFT prediction
+                                                                 for the ground state energy obtained by extrapolating from
+                                                                 N = 16 (as discussed in the text). The dotted curves indicate
+                                                                 the (modulus of the) deviation from this prediction when us-
+                                                                 ing N = 8 instead. The inset illustrates the relative error of
+                                                                 the MERA with respect to the CFT prediction.
+
+
+                                                                 cently presented in72 (see note below).
+        (b)|δC(1)| and |δC(8)| for the binary MERA
+
+
+FIG. 8: The absolute error |δC(r)| = |CMERA (r) − Cexact (r)|                     VI.    CONCLUSIONS
+of the nearest-neighbor (r = 1) and long-range (r = 6 re-
+spectively r = 8) charge-charge correlation functions. Quali-
+tatively, these deviations agree with the errors in the ground      We have proposed a variational ansatz for periodic
+state energy (see Fig. 4). Note that at the Majumdar-Gosh        chains of interacting anyons. It is the natural counterpart
+point (θ = 3π/2), the plotted |δC| is large even though the      of entanglement renormalization for spin chains. Based
+MERA accurately represents one of the ground states. This        on the empirical evidence for the numerical accuracy of
+is because of the degeneracy and the fact that Cexact is com-    latter, it is reasonable to expect that the ansatz is a pow-
+puted from the completely mixed state on the ground space.       erful tool for describing critical anyonic systems. Indeed,
+                                                                 we have obtained numerical evidence for its suitability by
+                                                                 comparing with exact diagonalization data in the case of
+corresponds to hL = hR = 0, whereas the first excited            (a variation of) the golden chain.
+energy E1 is determined by hL = hR = 3/80.                          Our ansatz makes optimal use of the anyonic struc-
+   Using the exact values of E0 and E1 for N = 16, we            ture of the Hilbert space by incorporating conservation
+determine the non-universal constants in (39) (approxi-          of topological charge at different scales. We expect this to
+mately). The resulting prediction for the ground state           lead to significant computational savings and improved
+energy density E0 /N for system sizes N ≤ 16 differs by          accuracy compared to more conventional methods based
+only 10−2 % from that obtained in the same way using             on embedding the anyons into qubits. It may be more
+the exact spectrum at N = 8. This suggest that finite-           pronounced for more general anyon models than the Fi-
+size effects are negligible, and we use the prediction (39)      bonacci anyon chains numerically studied here.
+obtained in this fashion to study the anyonic MERA for              Beyond providing an efficient numerical tool, the pro-
+larger systems.                                                  posed ansatz is a starting point for interesting general-
+   Fig. 9 shows the result of this computation. We find          izations. For example, along the lines of51 , one may de-
+that the ground state energy density is well approximated        fine a Hamiltonian renormalization group flow based on
+by the anyonic MERA ansatz even for larger systems.              the ansatz. This flow generalizes the perturbative renor-
+   Throughout this paper, we have considered finite-size         malization prescription analytically considered in28–30 in
+systems. A modification of the optimization algorithm            the context of random couplings. More importantly, the
+for scale-invariant qudit MERA allows to numerically             current work may serve as a stepping stone for the devel-
+estimate data of the associated CFT in the continuum             opment of variational methods for 2D systems of inter-
+limit52–54 . Adapting this to the anyonic setting, this can      acting anyons. We give a rough sketch of corresponding
+provide an additional benchmark when comparing to the            adaptations in Appendix B.
+predictions of27,65 . Indeed, results of this kind were re-         The transition from entanglement renormalization for
+                                                                                                                                                    16
+
+qudits to anyons is remarkably simple on a conceptual                      where
+level: it boils down to the replacement of isometries by                       v
+topological charge-preserving isometries, and a reinter-                      Xu
+                                                                               uY dcj                    b′n        b′1 b′2         b′3
+pretation of networks in terms of the isotopy-invariant                    X=  t                        cn       a 1 c1          a 2 c2
+                                                                                 j
+                                                                                   dbj db′j
+calculus. This suggest that more generally, tensor net-                            ~
+                                                                                   c
+                                                                                                          bn         b1 b2            b3
+work states such as MPS or PEPS may also be adapted
+to the anyonic setting using similar substitutions. This                   Since we are interested in the vacuum coefficient of X,
+should add significantly to the repertoire of variational                  we can set all ci = 1, getting
+methods for topologically ordered systems.                                                                              
+                                                                                        Y δbj ,b′j                                        
+                                                                           [X]vac =                       a1 b 1 b 1        a2 b 2         . (A2)
+                           Acknowledgments                                               j
+                                                                                           db  bn
+                                                                                              j
+                                                                                                                                           
+                                                                                                                                            vac
+
+   The authors thank Simon Trebst and the anonymous                        But each θ-like graph on the rhs. is proportional to the
+referees for numerous useful suggestions. They also thank                  empty graph, with scalar
+Robert Pfeifer, Guifré Vidal and Julien Vidal for com-                                           
+ments, and Jens Eisert for bringing47,48 to their atten-
+tion. RK acknowledges support by the Swiss National                                                                p
+                                                                                             c        a b      =    da db dc .                  (A3)
+Science Foundation (SNF) under grant PA00P2-126220.                                                      
+He also thanks Station Q for their hospitality and Lukas
+                                                                                                           vac
+Fidkowski, John Preskill and Ben Reichardt for discus-
+sions. EB is supported by DoE under grant no. DE-                          This can be verified by applying (7) twice. Inserting (A3)
+FG03-92-E40701 and NSF under grant no. PHY-0803371.                        into (A2) gives
+                                                                                                     Y          q
+Note added: Shortly after posting this work to the arXiv,                                   [X]vac =    δbj ,b′j daj .
+Pfeifer et al. have also presented work on the anyonic                                                     j
+MERA72 . They use the scale-invariant MERA to nu-
+merically extract CFT data in the thermodynamic limit,                     When combined with (A1), this implies the claim.
+studying the Fibonacci-golden chain at the AFM point.
+
+
+             Appendix A: The inner product
+                                                                                                  2.   Anyons on a disc
+                      1.    Anyons on a torus                                                L
+                                                                             For the spaces ~a∈Ωn ,c∈Ω Vc~a of n anyons on a disc, the
+  In                                                  ~                    (partial) trace can be defined
+                                                                                                    L ~in     a similar diagrammatic
+  Lthis~aappendix, we show that the basis states {|~a, bi}                                                 a
+                                                                           manner as for the space ~a Vperiodic   of a periodic chain.
+of ~a Vperiodic (cf. (14)) are indeed orthonormal with re-
+spect to the Hilbert-Schmidt inner product defined by                      This leads to a slight modification when defining the any-
+the trace (16). By definition, we have                                     onic MERA for anyons on a disc. For completeness, we
+                                                                         include a short description here.
+                                                                             A partial trace corresponds to connecting up in- and
+                                    b′n b′1 b′2    b′n−2 b′n−1 b′n       outgoing strands of an operator, while simultaneously in-
+                         Y δai ,a′                                 
+|ha~′ , b~′ |~a, ~bi|2 =         i 
+                                   
+                                                                    
+                                                                          serting the operator
+                             1/2 
+                         i dai          a1 a2           an−1an                                                 X
+                                                                                             D = D = D =                 d−1
+                                                                                                                          c |cihc|                (A4)
+                              bn b1 b2 bn−2 bn−1 bn vac
+                                                                                                                     c
+Inserting the projection I{(e1 ,e2 )} onto a pair of
+anyons (e1 , e2 ) decomposed into total charge c as
+                                                                           into each line. (Here we use the convention that either
+                                           s              e1 e2            input- or output of an operator which acts diagonally on
+                                      X          dc                        anyon labels may be represented by an undirected edge.)
+     I{(e1 ,e2 )} =    e1    e2   =                           c
+                                               de1 de2                     For example, the partial trace over the n-th anyon for an
+                                       c                 e1    e2
+                                                                           operator U acting on n anyons takes the form
+
+into the horizontal lines leads to                                                                                                    D
+                                               !                                       trn                 =                               .
+                                      X Y 1                                                   O                          O
+     |ha~′ , b~′ |~a, ~bi|2 = δ~a,a~′     p      [X]vac             (A1)
+                                      ~
+                                      c i
+                                           dai
+                                                                                                                                                           17
+
+                                                                  anyons. A convenient choice of an ordering is shown in
+                                                                  Fig. 10(b).
+                                                                     Given this ordering, some of the nearest-neighbor
+                 (a)                        (b)                   terms in the Hamiltonian now act on non-neighboring
+                                                                  pairs (i, i + 2) of strands in the diagrammatic represen-
+FIG. 10: Two-chain ladder arrangement of Fibonacci anyons         tation. To make sense of such terms, it is necessary to
+as discussed in40 , with nearest-neighbor interactions. We con-   introduce an additional basis change corresponding to a
+sider the ordering indicated in (b).                              transposition (i, i + 1) 7→ (i + 1, i). Physically, such basis
+                                                                  changes correspond to movements of the anyons, and this
+                                                                  is where the (non-abelian) braid group statistics appears:
+The (complete) trace is obtained by connecting up all             pairs of neighboring anyons may be exchanged in either
+the strands in this way and computing the vacuum coef-            clockwise or anticlockwise fashion. Thus there are two
+ficient, i.e.,                                                    inequivalent ways of transposing neighboring pairs. It is
+                                                                natural to define the Hamiltonian as the result of trans-
+                                                                  posing, applying the charge projection, and undoing the
+                                                                transposition, averaged over either version of exchanging.
+                                                 D   
+                        
+                        
+                                                      
+                                                                    In the diagrammatic formalism, clockwise- and an-
+                                   DD                           ticlockwise exchanges of neighboring anyons are repre-
+ tr                    =   O
+                                                       . (A5)
+            O           
+                        
+                                                      
+                                                                 sented by over- and undercrossings, respectively. The fol-
+                        
+                        
+                                                      
+                                                                 lowing computational rules involving the R-matrix of the
+                                                                modular category are then added to the isotopy-invariant
+                                                                  calculus:
+                                                       vac
+                                                                       b a              b a                         b a                             b a
+The diagram on the rhs. in (A5) is in fact proportional                       = Rcab                                          = Rca∗ b
+                                                                                                                                              ∗ ∗
+
+to the vacuum graph. Using (7) repeatedly, it is straight-                c               c                           c                               c
+forward to check that the states (5) are orthonormal.
+                                                                  With (6)-(8), these rules imply that over- and undercross-
+           Appendix B: Braiding and more general
+                                                                  ings may be resolved according to
+                  arrangements of anyons                                                                                      b       a
+                                                                                b   a             P q dc             ab
+                                                                                              =       c       da db Rc                c
+   In the main text, our focus is on one-dimensional
+chains of anyons. Here we briefly comment on the gen-                                                                         b       a
+eralization of the anyonic entanglement renormalization                                                                                                   (B1)
+                                                                                b   a                                             b       a
+ansatz to systems of anyons arranged in a more general                                        P q dc             a∗ b∗
+way (e.g., a regular lattice). Such systems have been                                     =       c       da db Rc∗                       c
+studied before (see67 ), and the modifications necessary
+                                                                                                                                  b       a
+to define corresponding anyonic Hamiltonians are nicely
+explained in40 . In fact, these modifications directly carry      where the sums are restricted to fusion-compatible la-
+over to anyonic entanglement renormalization when a               bels c. Eq. (B1) gives
+                                                                                       L theabmatrix
+                                                                                                   L elements  of the linear
+linear ordering of the anyons at every level is chosen.           operators B1 , B2 :    c Vc  →     Vc
+                                                                                                       ba
+                                                                                                          corresponding   to
+An analogous situation arises when considering fermionic          the two types of exchanges. They are unitary if a = b.
+tensor networks, and corresponding techniques47,48 can               Given this definition, we can write down the interac-
+thus be extended to anyons.                                       tion corresponding to preferred trivial charge of a ‘hor-
+   For concreteness, we first consider the example of the         izontal’ pair (2j, 2j + 2) of neighboring anyons on the
+two-leg ladder model discussed in40 , closely following           bottom chain in Fig. 10(a) as follows:
+that presentation. This is a system of two chains of
+m anyons each placed next to each other as shown in
+Fig. 10(a) along a non-trivial cycle on the torus. The                        X     a                         X           a
+figure also indicates two-anyon nearest neighbor interac-                                     b           +                           b
+tions, which are e.g., projections onto trivial charge as in                  a,b   a                         a,b         a
+the golden chain.
+                                              ~
+                                              a
+   The Hilbert space of this system is Vperiodic     with ~a =
+(τ, . . . , τ ), as this space depends only on the topology of    These are 3-anyon operators acting on the anyons in-
+| {z }
+      2m                                                          dexed (2j, 2j + 1, 2j + 2). Analogous expressions apply
+the surface (an n = 2m-punctured torus) and the bound-            to pairs on the upper chain.
+ary labels (all equal to τ ). However, the basis (14) is now        The two-chain ladder is one of the simplest examples
+ambiguous and we must choose a linear ordering of the             where transpositions need to be used to define physically
+                                                                                                                          18
+
+interesting Hamiltonians. In a more generally arrang-          tation value for suitable MERA structures in spite of this.
+ment of anyons, such as a regular 2D-lattice, the same         This is because crossings can be pushed past isometries
+procedure applies. Depending the chosen standard or-           to higher levels using the fact that
+dering, however, more transpositions may be required to
+apply a local operator to a subset of anyons. For exam-
+                                                                                d    c               d   c
+ple, a projection onto trivial charge of two anyons may                                      =
+take the form                                                                  a     b           a       b
+
+                  X a                                          (and similarly for undercrossings), and be absorbed into
+                                                       (B2)    the isometries/unitaries by applying the linear maps (B1)
+                    a   a                                      to their inputs and outputs, respectively. This eventu-
+                                                               ally reduces the evaluation to the expectation value of a
+                                                               local operator for a related anyonic MERA-state. The
+where we sum over particles for undirected edges.              efficiency of this procedure depends on the number of
+   The fact that (B2) is a multi-anyon non-local operator      crossings that need to be resolved, and therefore on a
+now appears to be an obstacle to the use of the anyonic        judicious choice of orderings. This feature is identical to
+entanglement renormalization ansatz. But the special           fermionic tensor networks/MERAs, where it is necessary
+structure of (B2) allows to efficiently evaluate its expec-    to keep track of the number of swaps.
+
+
+
+
+1
+   A. Y. Kitaev, Annals of Physics 303, 2 (2003).                 cond-mat/0609048v1.
+2                                                              20
+   J.     Preskill,    “Topological     quantum      compu-       J. Vidal, S. Dusuel, and K. P. Schmidt, Phys. Rev. B 79,
+   tation,”    Lecture    Notes     (Chapter    9)   (2004),      033109 (Jan 2009).
+                                                               21
+   www.theory.caltech.edu/people/preskill/ph229/.                 J. Vidal, R. Thomale, K. P. Schmidt, and S. Dusuel, Phys.
+ 3
+   M. H. Freedman, A. Kitaev, M. J. Larsen, and                   Rev. B 80, 081104 (Aug 2009).
+                                                               22
+   Z. Wang, Bull. Amer. Math. Soc. 40, 31 (2003),                 I. Tupitsyn, A. Kitaev, N. Prokof’ev, and P. Stamp, “Topo-
+   arXiv:quant-ph/0101025.                                        logical multicritical point in the toric code and 3d gauge
+ 4
+   C. Nayak, S. H. Simon, A. Stern, M. Freedman, and              Higgs models,” arXiv:0804.3175.
+                                                               23
+   S. Das Sarma, Rev. Mod. Phys. 80, 1083 (Sep 2008).             S. Bravyi and M. Hastings(2010), arXiv:1001.4363.
+ 5                                                             24
+   G. Moore and N. Read, Nuclear Physics B 360, 362               S. Bravyi, M. B. Hastings, and S. Michalakis(2010),
+   (1991).                                                        arXiv:1001.0344.
+ 6                                                             25
+   N. Read and E. Rezayi, Phys. Rev. B 59, 8084 (Mar 1999).       I. Klich(2009), arXiv:0912.0945.
+ 7                                                             26
+   E. H. Rezayi and N. Read, Phys. Rev. B 79, 075306 (Feb         P. Bonderson, Phys. Rev. Lett. 103, 110403 (Sep 2009),
+   2009).                                                         arXiv:0905.2726.
+ 8                                                             27
+   M. Dolev, M. Heiblum, V. Umansky, A. Stern, and D. Ma-         A. Feiguin, S. Trebst, A. W. W. Ludwig, M. Troyer, A. Ki-
+   halu, Nature 452, 829 (2008), arXiv:0802.0930.                 taev, Z. Wang, and M. H. Freedman, Phys. Rev. Lett. 98,
+ 9
+   I. P. Radu, J. B. Miller, C. M. Marcus, M. A. Kastner,         160409 (Apr 2007), arXiv:cond-mat/0612341.
+                                                               28
+   L. N. Pfeiffer, and K. W. West, Science 320, 899 (2008),       L. Fidkowski, G. Refael, N. E. Bonesteel, and J. E. Moore,
+   arXiv:0803.3530.                                               Phys. Rev. B 78, 224204 (Dec 2008).
+10                                                             29
+   R. L. Willett, L. N. Pfeiffer, and K. W. West, Proceed-        L. Fidkowski, H.-H. Lin, P. Titum, and G. Refael, Phys.
+   ings of the National Academy of Sciences 106 (2009),           Rev. B 79, 155120 (Apr 2009).
+                                                               30
+   arXiv:0807.0221.                                               N. E. Bonesteel and K. Yang, Phys. Rev. Lett. 99, 140405
+11
+   C. L. Kane and E. J. Mele, Phys. Rev. Lett. 95, 226801         (Oct 2007).
+                                                               31
+   (Nov 2005).                                                    S. R. White, Phys. Rev. Lett. 69, 2863 (Nov 1992).
+12                                                             32
+   J. E. Moore and L. Balents, Phys. Rev. B 75, 121306 (Mar       R. König, Phys. Rev. A 81, 052309 (May 2010).
+                                                               33
+   2007).                                                         G. Vidal, Phys. Rev. Lett. 99, 220405 (Nov 2007).
+13                                                             34
+   L. Fu, C. L. Kane, and E. J. Mele, Phys. Rev. Lett. 98,        G. Vidal, Phys. Rev. Lett. 101, 110501 (Sep 2008).
+   106803 (Mar 2007).                                          35
+                                                                  S. Rommer and S. Östlund, Phys. Rev. B 55, 2164 (Jan
+14
+   R. Roy, Phys. Rev. B 79, 195322 (May 2009).                    1997).
+15                                                             36
+   A.     Kitaev,     Ann.    Phys.     321,    2    (2006),      G. Vidal, Phys. Rev. Lett. 93, 040502 (Jul 2004).
+   arXiv:cond-mat/0506438v3.                                   37
+                                                                  F. Verstraete, D. Porras, and J. I. Cirac, Phys. Rev. Lett.
+16
+   M. A. Levin and X.-G. Wen, Phys. Rev. B 71, 045110             93, 227205 (Nov 2004).
+   (2005), arXiv:cond-mat/0404617.                             38
+                                                                  F. Verstraete, V. Murg, and J. I. Cirac, Advances in
+17
+   L.-M. Duan, E. Demler, and M. D. Lukin, Phys. Rev. Lett.       Physics 57, 143 (Mar 2008).
+   91, 090402 (Aug 2003), arXiv:cond-mat/0210564.              39
+                                                                  F. Verstraete and J. I. Cirac, Phys. Rev. B 73, 094423
+18
+   A. Micheli, G. K. Brennen, and P. Zoller, Nature Physics       (Mar 2006).
+   2, 341 (2006), arXiv:quant-ph/0512222.                      40
+                                                                  S. Trebst, M. Troyer, Z. Wang, and A. W. W. Ludwig,
+19
+   S. Trebst, P. Werner, M. Troyer, K. Shtengel, and              Progr. of Theor. Phys. Suppl. 176, 384 (2008).
+   C. Nayak, Phys. Rev. Lett. 98, 070602 (Feb 2007),           41
+                                                                  G. Evenbly and G. Vidal, New Journal of Physics 12,
+                                                                                                                          19
+
+   025007 (2010).                                                   M. Troyer, and Z. Wang, Phys. Rev. Lett. 103, 070401
+42
+   P. Corboz and G. Vidal, Phys. Rev. B 80, 165129 (Oct             (Aug 2009).
+                                                                 59
+   2009).                                                           V. Lahtinen, G. Kells, A. Carollo, T. Stitt, J. Vala, and
+43
+   F. Verstraete and J. I. Cirac, Phys. Rev. A 70, 060302 (Dec      J. K. Pachos, Annals of Physics 323, 2286 (2008), ISSN
+   2004).                                                           0003-4916.
+44                                                               60
+   Z.-C. Gu, M. Levin, and X.-G. Wen, Phys. Rev. B 78,              M. Baraban, G. Zikos, N. Bonesteel, and S. H. Simon,
+   205116 (Nov 2008).                                               Phys. Rev. Lett. 103, 076801 (Aug 2009).
+45                                                               61
+   I. Pižorn and F. Verstraete, Phys. Rev. B 81, 245110 (Jun       M. Cheng, R. M. Lutchyn, V. Galitski, and S. Das Sarma,
+   2010).                                                           Phys. Rev. Lett. 103, 107001 (Aug 2009).
+46                                                               62
+   C. V. Kraus, N. Schuch, F. Verstraete, and J. I. Cirac,          S. Montangero, M. Rizzi, V. Giovannetti, and R. Fazio,
+   Phys. Rev. A 81, 052338 (May 2010).                              Phys. Rev. B 80, 113103 (Sep 2009), arXiv:0810.1414.
+47                                                               63
+   C. Pineda, T. Barthel, and J. Eisert, Phys. Rev. A 81,           M. Aguado and G. Vidal, Phys. Rev. Lett. 100, 070404
+   050303 (May 2010).                                               (Feb 2008).
+48                                                               64
+   T. Barthel, C. Pineda, and J. Eisert, Phys. Rev. A 80,           C. K. Majumdar and D. K. Gosh, J. Math. Phys. 10, 1388
+   042333 (Oct 2009).                                               (1969).
+49                                                               65
+   P. Corboz, R. Orús, B. Bauer, and G. Vidal, Phys. Rev. B        S. Trebst, E. Ardonne, A. Feiguin, D. A. Huse, A. W. W.
+   81, 165104 (Apr 2010).                                           Ludwig, and M. Troyer, Phys. Rev. Lett. 101, 050401 (Jul
+50
+   N. Schuch, M. M. Wolf, F. Verstraete, and J. I. Cirac,           2008), arXiv:0801.4602.
+                                                                 66
+   Phys. Rev. Lett. 98, 140506 (Apr 2007).                          G. E. Andrews, R. J. Baxter, and P. J. Forrester, Journal
+51
+   G. Evenbly and G. Vidal, Phys. Rev. B 79, 144108 (Apr            of Statistical Physics 35, 193 (May 1984).
+                                                                 67
+   2009), arXiv:0707.1454v4.                                        A. W. W. Ludwig, D. Poilblanc, S. Trebst, and M. Troyer
+52
+   P. Silvi, V. Giovannetti, S. Montangero, M. Rizzi, J. I.         arXiv:1003.3453.
+                                                                 68
+   Cirac, and R. Fazio, “Critical properties of homogeneous         R. König, B. W. Reichardt, and G. Vidal, Phys. Rev. B
+   binary trees,” (2009), arXiv:0912.0466.                          79, 195123 (May 2009).
+53                                                               69
+   V. Giovannetti, S. Montangero, and R. Fazio, Phys. Rev.          Y.-Y. Shi, L.-M. Duan, and G. Vidal, Phys. Rev. A 74,
+   Lett. 101, 180503 (Oct 2008).                                    022320 (Aug 2006).
+54                                                               70
+   R. N. C. Pfeifer, G. Evenbly, and G. Vidal, Phys. Rev. A         L. Tagliacozzo, G. Evenbly, and G. Vidal, Phys. Rev. B
+   79, 040301 (Apr 2009), arXiv:0810.0580.                          80, 235127 (Dec 2009).
+55                                                               71
+   K. Walker, “On Witten’s 3-manifold invariants,” (1991),          V. Murg, Ö. Legeza, R. M. Noack, and F. Verstraete
+   available at http://canyon23.net/math/.                          arXiv:1006.3095.
+56                                                               72
+   R. König, G. Kuperberg, and B. W. Reichardt, “Quantum           R. Pfeifer, P. Corboz, O. Buerschaper, M. Aguado,
+   computation with Turaev-Viro codes,” arXiv:1002.2816.            M. Troyer, and G. Vidal, “Simulation of anyons using en-
+57
+   P. Bonderson, M. Freedman, and C. Nayak, Annals of               tanglement renormalisation,” arXiv:1006.3532v1.
+   Physics 324, 787 (2009), 0808.1933.
+58
+   C. Gils, E. Ardonne, S. Trebst, A. W. W. Ludwig,
+

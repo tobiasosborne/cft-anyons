@@ -1,0 +1,245 @@
+% SHARD-ID: CA-62-CATEGORICAL-BU-PIPELINE-VISION
+% SHARD-TITLE: The Categorical Borchers-Uhlmann Pipeline: a Programme Refinement
+% SHARD-SUMMARY: Recasts the indefinite-particle construction as a proposed observable *-algebra-first pipeline rather than a Hilbert-space-first construction.
+% SHARD-SUMMARY: Orders category data, free local-word algebra, categorical relations, state selection, GNS quotient, and OAR/Koo-Saleur continuum limits.
+% SHARD-SUMMARY: Records the Jones no-go and exact-relation scan failure as load-bearing constraints on the programme.
+% SHARD-KEYWORDS: Borchers-Uhlmann, GNS, tensor algebra, anyon chains, Koo-Saleur, OAR, defects, functoriality
+
+\section{The Categorical Borchers--Uhlmann Pipeline: a Programme Refinement}
+\label{sec:categorical-bu-pipeline-vision}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: proposal/question.}  This shard records a programme refinement,
+not a theorem.  Its central proposal is that the CA-02/CA-03
+indefinite-particle grammar should be reinterpreted first as an observable
+\(*\)-algebra of local words, and only later as a Hilbert space after a state
+and GNS quotient have been chosen.
+
+Dependencies: CA-01, CA-02, CA-03, CA-09, CA-43, CA-44, CA-57, CA-60,
+CA-61; CONVENTIONS.md (q); companion shards CA-63, CA-64, CA-65, CA-66
+(this block).
+
+% Source: report/sections/03_indefinite_particle_fock.tex:72--96 -- full Fock
+%   space as Hilbert direct sum and Hilbert completion of the tensor algebra.
+% Source: references/qft/FewsterRejzner2019/source/AQFTIMPRS-Oct2019.tex:724 --
+%   field algebra specified by generators Phi(f) over test functions.
+% Source: references/qft/FewsterRejzner2019/source/AQFTIMPRS-Oct2019.tex:1901--1913 --
+%   free unital *-algebra, two-sided *-ideal of relations, quotient A(M).
+% Source: literature/SYNTHESIS.md:8--18 -- categorical variable-N space
+%   \oplus Mor(X_c, X_{a_1}\otimes...\otimes X_{a_N}) and pair moves.
+% Source: report/sections/09_fibonacci_kinematic_sector.tex:65--93 --
+%   fusion admissibility as a diagonal sector projector.
+% Source: references/text/HollandsAnyonicChainsAlphaInduction.txt:15--35 --
+%   finite anyonic-chain MPO algebra isomorphic to CFT defect algebra; scaling
+%   limit identification is conjectural.
+% Source: references/text/HollandsAnyonicChainsAlphaInduction.txt:1884--1890 --
+%   DHR endomorphisms for Virasoro intervals form a modular tensor category.
+% Source: references/text/HollandsAnyonicChainsAlphaInduction.txt:2016--2035 --
+%   irreducible defects correspond to central projections in the CFT defect
+%   algebra.
+% Source: references/text/HollandsAnyonicChainsAlphaInduction.txt:4399--4402 --
+%   analytic scaling-limit persistence of the defect algebra is an open question.
+% Source: report/sections/43_qubit_vacuum_moment_constraints.tex:77--98 --
+%   GNS relation constraints \omega(X^* R Y)=0 on finite probe spaces.
+% Source: report/sections/44_qubit_sdp_exclusion_hierarchy.tex:75--94 --
+%   infeasibility excludes only the named generator route; feasibility proves
+%   neither state existence nor continuum symmetry.
+% Source: literature/md/2010.11121/2010.11121.md:126--164 -- OAR pipeline:
+%   scaling maps, inductive-limit algebra, projective-limit state, GNS Hilbert
+%   representation, and dynamics question.
+% Source: literature/md/2010.11121/2010.11121.md:178--180 -- projectively
+%   consistent states induce compatible GNS Hilbert-space systems.
+% Source: literature/md/2306.16063/2306.16063.md:1094--1124 -- compatible
+%   representation nets from projective nets of states via GNS.
+% Source: references/text/CFTFromLatticeFermions.txt:221--253 -- Theorem A:
+%   Koo-Saleur approximants converge to continuum Virasoro generators for the
+%   free-fermion scaling limit.
+% Source: references/text/CFTFromLatticeFermions.txt:262--312 -- Theorems B/C:
+%   convergence of fermion and Virasoro correlation functions.
+% Source: literature/md/2201.11562/2201.11562.md:7 -- braiding gives a real-
+%   space RG and the Ising-chain scaling limit gives the Ising CFT vacuum.
+% Source: literature/md/2201.11562/2201.11562.md:48--56 -- anyonic-chain input
+%   from a fusion category and F-symbol local projectors.
+% Source: references/lattice-symmetry/Jones2017NoGo/source/nogo.tex:61--69 --
+%   no-go abstract: the block-spin/Temperley-Lieb Hilbert space supports no
+%   chiral CFT whose Hamiltonian generates rotation as a limit of lattice
+%   rotations.
+% Source: references/lattice-symmetry/Jones2017NoGo/source/nogo.tex:951--955 --
+%   the main no-go theorem for triadic limits of annular TL representations.
+% Source: literature/md/2306.16063/2306.16063.md:1025--1057 -- Thompson/Jones
+%   implementers fail for nonzero central charge; Koo-Saleur route succeeds.
+% Source: references/lattice-symmetry/ZiniWang2018/source/main.tex:588--590 --
+%   scaling limit of quantum theories as a double colimit.
+% Source: references/lattice-symmetry/ZiniWang2018/source/main.tex:871--882 --
+%   Conjecture 4.3: unitary minimal model VOAs as strong scaling limits with
+%   approximating lattice Virasoro observables.
+
+\subsection{Refined North Star}
+
+\textbf{Proposal.}  The 2026-07-05 refinement of the north star is a recipe, as
+functorial as possible, which starts from a unitary fusion category or modular
+tensor category \(\Cc\), together with any conformal data required by the target
+CFT, and produces a family of microscopic lattice models whose scaling limit
+realises a chiral or full CFT whose defects and excitations recover the input
+category.
+
+\textbf{Proposal.}  The key reinterpretation is algebra-first.  CA-03 builds
+\[
+  \Fock(H)=\hoplus_{n\ge0}H^{\hotimes n}
+\]
+as a Hilbert completion and explicitly identifies the underlying tensor
+algebra \(T(H)=\bigoplus_n H^{\otimes n}\).  In this shard, the tensor algebra
+is not primarily the pre-Hilbert finite-particle subspace.  It is the proposed
+free local-word \(*\)-algebra from which observables are generated.  The local
+anchor for this style is the free unital \(*\)-algebra of generators
+\(\Phi(f)\) over test functions, quotiented by a two-sided \(*\)-ideal of
+relations; the registered source builds exactly this object (it does not use
+the name Borchers--Uhlmann, which we keep as informal terminology).
+
+\textbf{Proposal.}  Candidate lattice models emerge only after three extra
+choices: a reference state \(\omega\), approximate discrete Virasoro or
+Koo--Saleur-type residual relations, and quotienting by the state-null
+relations.  In symbols, the intended order is
+\[
+  \text{local-word } *\text{-algebra}
+  \quad\stackrel{\omega,\mathcal R}{\longrightarrow}\quad
+  \mathfrak N_{\omega,\mathcal R}
+  \quad\stackrel{\mathrm{GNS}}{\longrightarrow}\quad
+  (\mathcal H_\omega,\pi_\omega,\Omega_\omega),
+\]
+not ``choose a Hilbert space first, then search for relations''.
+
+\subsection{Five Stages}
+
+\begin{description}
+\item[Stage 0: input data.]
+\textbf{Status: prior-shard question.}  The input is a unitary fusion category
+or modular tensor category, plus conformal/OPE data when the target CFT needs
+more than \(\Cc\).  CA-01 states this as the global programme map.  CA-09 gives
+the first checked kinematic example: Fibonacci fusion admissibility produces a
+sector projector, but full anyons still need coherent \(F/R\)-data.
+
+\item[Stage 1: free algebra of anyonic words.]
+\textbf{Status: proposal.}  Replace the Hilbert-first reading of CA-03 by an
+observable-algebra reading: generate formal local anyonic words from the
+categorical variable-\(N\) sectors
+\[
+  \bigoplus_{N,c,\mathrm{configs}}
+  \operatorname{Mor}(X_c,X_{a_1}\otimes\cdots\otimes X_{a_N}).
+\]
+The precise algebra generators, involution, locality grading, and completion
+policy are fixed in CA-65 and CA-66 (companion shards, this block).
+
+\item[Stage 2: categorical relations.]
+\textbf{Status: mixed checked/proposal.}  Fusion admissibility is already a
+sector-projector relation in CA-09.  Additional categorical relations should
+include defect/MPO relations.  Hollands supplies the finite-size anchor: the
+bipartite anyonic-chain MPO algebra is isomorphic to the CFT defect algebra at
+finite size, while the persistence of that algebra in the scaling limit is
+explicitly left as an analytic question.
+
+\item[Stage 3: reference state and relaxed residuals.]
+\textbf{Status: proposal, currently exclusion-mode.}  The state must be chosen
+before a Hilbert space is claimed.  CA-43 and CA-44 provide the present finite
+architecture: translation-invariant moments, positivity, and residual relation
+constraints of the form
+\[
+  \omega(X^*RY)=0.
+\]
+In the GNS reading, these are the finite probe shadows of the null-relation
+condition.  CA-63 (companion shard, this block) is the construction-mode state
+existence route; CA-64 (companion shard, this block) is the relaxation route.
+
+\item[Stage 4: GNS quotient and lattice model.]
+\textbf{Status: sourced scaffold plus proposal.}  Once \((\Alg,\omega)\) and a
+chosen residual set \(\mathcal R\) are fixed, the candidate Hilbert space and
+operator representation are produced by the GNS quotient.  The local OAR
+sources support this ordering: build scaling maps and an inductive-limit
+algebra, construct compatible/projective limit states, then perform GNS to get
+Hilbert-space representations and compatible representation systems.
+
+\item[Stage 5: continuum limit and fidelity.]
+\textbf{Status: precedent plus question.}  The continuum-limit technology is
+anchored by OAR and the free-fermion Koo--Saleur theorem: lattice Virasoro
+approximants and correlation functions converge in that sourced free-fermion
+setting.  The anyonic precedent is Stottmeister's braiding-RG note, where
+braiding defines a real-space RG for anyonic chains and the Ising-chain example
+reaches the Ising CFT vacuum.  The general shape of the open problem is now
+also locally sourced: Zini--Wang define scaling limits of quantum theories as
+double colimits and conjecture that every unitary minimal model VOA arises as a
+strong scaling limit with approximating lattice Virasoro observables.  The
+categorical fidelity target remains a question:
+\[
+  \text{DHR/defect content of the limit} \simeq \Cc?
+\]
+Hollands makes this a precise open problem by proving a finite algebraic
+defect correspondence and asking whether it persists under scaling limits.
+\end{description}
+
+\subsection{Two Load-Bearing Constraints}
+
+\textbf{Constraint 1: the Jones no-go changes the order.}  The locally
+registered no-go theorem states that the block-spin/Temperley--Lieb
+semicontinuous Hilbert space does not support a chiral CFT whose Hamiltonian
+generates circle translation as a continuum limit of lattice rotations; in the
+main theorem, triadic-rotation-rigid vectors in the triadic limit of an annular
+TL representation are necessarily zero.  The OAR discussion corroborates the
+programme reading: nontrivial Thompson implementers are not implementable in
+the presence of nonzero central charge, and the Koo--Saleur strategy succeeds
+in those situations.  The consequence is load-bearing: do not expect a fixed
+inductive-limit Hilbert space with dyadic rotations to carry the continuum
+geometry first.  The state comes first; geometry and symmetry are recovered
+through state-dependent scaling limits and generator convergence.
+
+\textbf{Constraint 2: exact UV relations are too strict.}  CA-57 defines the
+current, conservation, and exact boost-witness gates.  CA-60 reports the
+checked 99-point scan: no point reaches \texttt{not\_excluded\_algebraic}, and
+the locally sourced self-dual TFIM point fails the exact boost witness.  CA-61
+and CONVENTIONS.md (q) record the route-scoped reading: this rejects the exact
+first-moment route, not the Ising scaling limit.  Therefore Stage 3 must use
+quantified state-level or GNS-norm residuals, not exact coefficient identities,
+as the default relation language.
+
+\subsection{Functoriality and Fidelity Assessment}
+
+\textbf{Proposal.}  Stages 1 and 2 should be functorial in principle: free
+algebras and imposed categorical relations are natural constructions once the
+generator and convention data are fixed.  This is not yet a theorem; CA-65
+records the intended functor on pairs of a category and a site object.
+
+\textbf{Proposal with sourced scaffold.}  GNS should be treated functorially on
+compatible \((\Alg,\omega)\)-pairs.  The local source support is not an
+abstract category theorem; it is the OAR architecture in which projective nets
+of states induce compatible nets of GNS representations and Hilbert-space
+connecting maps.
+
+\textbf{Question.}  The state assignment is the non-functorial crux.  The
+realistic target is canonicity by a universal property: define a compact or
+closed convex set of states satisfying the relaxed residual constraints, then
+prove non-emptiness, uniqueness or controlled faces, and fidelity of the
+resulting limit.  The strongest intended theorem would say that this state set
+exists and its continuum DHR/defect category recovers the input \(\Cc\).
+
+\subsection{Boundary}
+
+This shard does not fix the categorical local-word algebra; the \(F/R\)-symbol
+gauge, object indexing, bracketing, and locality/completion conventions are
+fixed in CA-65/CA-66, not here.
+
+It does not prove existence of the reference state.  CA-43/CA-44 are
+exclusion-mode finite constraints; CA-63 is the companion construction-mode
+shard.
+
+It does not fix the relaxation convention.  The exact-relation scan failure
+only says exact UV boost witnesses are too strict for the current route; CA-64
+must define the norm, scale, tolerance, and limiting quantifiers.
+
+It does not prove a new continuum theorem.  The only continuum precedents cited
+here are the sourced free-scalar/OAR, free-fermion Koo--Saleur, and Ising
+braiding-RG examples; the Zini--Wang minimal-model statement is cited as a
+conjecture, not a result.
+
+It does not claim that SDP feasibility or finite residual smallness implies
+symmetry.  CA-44 already records that feasibility does not prove a global
+state, positive energy, or a continuum Poincare/Virasoro representation.

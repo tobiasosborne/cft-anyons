@@ -1,0 +1,167 @@
+% SHARD-ID: CA-67-REFINEMENT-REQUIREMENTS-OBSTRUCTIONS
+% SHARD-TITLE: Refinement-Map Requirements and Obstructions
+% SHARD-SUMMARY: Collects the sourced OAR conditions a refinement family must satisfy, and the soft relaxations available when exact intertwining fails.
+% SHARD-SUMMARY: Extracts the mechanism of the Jones and Kliesch-Koenig no-go results as a checklist of failure modes to avoid.
+% SHARD-SUMMARY: Locates precisely where fixed anyon number is baked into the braiding-RG refinement, motivating the variable-N family of CA-68.
+% SHARD-KEYWORDS: refinement maps, scaling maps, OAR, soft inductive limit, Jones no-go, Kliesch-Koenig, braiding RG, Koo-Saleur
+
+\section{Refinement-Map Requirements and Obstructions}
+\label{sec:refinement-requirements-obstructions}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: source-local synthesis plus derived checklist.}  Every
+requirement and failure mode below is anchored in a registered local source;
+the checklist assembly and the dense-chain diagnosis are local readings.
+
+Dependencies: CA-14, CA-15, CA-62, CA-65, CA-66; CONVENTIONS.md (r).
+
+% Source: literature/md/2010.11121/2010.11121.md:101--111 -- scaling maps are
+%   unital, completely positive, *-morphisms, with the semigroup property (2.6).
+% Source: literature/md/2010.11121/2010.11121.md:170 -- directed systems of
+%   C*-algebras use unital injective *-morphisms; injective implies isometric.
+% Source: literature/md/2010.11121/2010.11121.md:206--210 -- bounded
+%   N-independent support growth; the scaling map identifies a lattice field
+%   with a smeared continuum field, not a point-like one.
+% Source: literature/md/2010.11121/2010.11121.md:156--164 -- dynamics
+%   convergence: refined evolutions must be Cauchy in the scaling-limit GNS
+%   representation; sensitivity to the choice of scaling maps.
+% Source: literature/md/2010.11121/2010.11121.md:1372--1374 -- block-spin fails
+%   the algebra-level limit, yet the vacuum is recovered via Wightman two-point
+%   functions (Theorem 5.1).
+% Source: literature/md/2010.11121/2010.11121.md:1444 -- point-localization:
+%   continuum local operators only via Wightman-type reconstruction.
+% Source: literature/md/2306.16063/2306.16063.md:185 -- soft inductive systems:
+%   linear contractions with asymptotic transitivity.
+% Source: literature/md/2306.16063/2306.16063.md:355--358 -- operations
+%   converge iff they asymptotically intertwine the connecting maps (eq. 21).
+% Source: literature/md/2306.16063/2306.16063.md:571--575 -- soft C*-systems:
+%   asymptotic multiplicativity condition (eq. 29).
+% Source: literature/md/2306.16063/2306.16063.md:1025--1057 -- Thompson-group
+%   actions exist iff connecting maps come from a single local refinement;
+%   implementers fail for nonzero central charge; Koo-Saleur succeeds.
+% Source: references/lattice-symmetry/Jones2017NoGo/source/nogo.tex:61--69 --
+%   no-go abstract: block-spin/TL semicontinuous space carries no chiral CFT
+%   with rotations as limits of lattice rotations.
+% Source: references/lattice-symmetry/Jones2017NoGo/source/nogo.tex:592--594 --
+%   root cause: the dangling binary tree does not feel the circle topology.
+% Source: references/lattice-symmetry/Jones2017NoGo/source/nogo.tex:694--704 --
+%   the renormalisation (squaring) map is norm-contracting; iterates vanish.
+% Source: references/lattice-symmetry/Jones2017NoGo/source/nogo.tex:951--955 --
+%   main theorem: triadic-rotation-rigid vectors vanish.
+% Source: references/lattice-symmetry/KlieschKoenig2020/source/ms.tex:329 --
+%   discontinuous representations have full measure among isometries; an easily
+%   verified necessary condition for a continuous limit.
+% Source: references/lattice-symmetry/KlieschKoenig2020/source/ms.tex:420--432 --
+%   the necessary-condition lemma implying the main theorem.
+% Source: literature/md/2201.11562/2201.11562.md:48--50 -- anyonic-chain basis:
+%   fusion-tree labels with a sigma-anyon at every site.
+% Source: literature/md/2201.11562/2201.11562.md:70--74 -- the refining step
+%   attaches through-strings and braids their ends into position, increasing
+%   the local density of sigma-anyons; Reidemeister moves give morphism property.
+% Source: references/text/OARWavelets.txt:393--398 -- continuous translations
+%   recovered from dyadic ones via the wavelet scaling map.
+% Source: references/text/OARWavelets.txt:405--406 -- Lorentz/conformal
+%   convergence requires further work.
+
+\subsection{Strict OAR Requirements}
+
+The sourced strict architecture asks of a refinement family
+\(\alpha_{N'}^{N}:\Alg_N\to\Alg_{N'}\):
+\[
+\begin{array}{ll}
+1.&\text{unital and completely positive (states pull back to states);}\\
+2.&\text{a *-morphism, injective, hence isometric;}\\
+3.&\text{the semigroup property }
+   \alpha_{N''}^{N'}\circ\alpha_{N'}^{N}=\alpha_{N''}^{N};\\
+4.&\text{bounded, scale-independent support growth (locality);}\\
+5.&\text{smearing: a lattice field maps to a smeared continuum field,}\\
+  &\text{not a point-like one.}
+\end{array}
+\]
+On the state side, a scaling limit is a projectively consistent family
+\(\omega^{(N)}=\omega^{(N')}\circ\alpha_{N'}^{N}\); on the dynamics side, the
+refined evolutions must form Cauchy sequences in the scaling-limit GNS
+representation, and the source stresses that success depends sensitively on
+the choice of scaling maps.
+
+\subsection{Fallback and Soft Relaxations}
+
+Two sourced fallbacks weaken the strict demands without abandoning the
+continuum target.  First, when the *-morphism property or regularity fails
+(block-spin, point-localization), the algebra-level limit is lost but the
+vacuum can still be recovered through Wightman two-point functions; continuum
+local operators are then only indirectly accessible by reconstruction.
+
+Second, the soft-inductive-system formalism replaces exact structure by
+asymptotic structure: connecting maps need only be contractions with
+asymptotic transitivity; operations converge iff they \emph{asymptotically
+intertwine} the connecting maps,
+\[
+  \lim_{n\gg m}\bigl\|(\tilde\jmath_{nm}T_m-T_n j_{nm})x_m\bigr\|=0,
+\]
+and C*-structure survives under an asymptotic multiplicativity condition.
+For symmetry recovery the same source is explicit: Thompson-group implementers
+fail for nonzero central charge, and the successful strategy is Koo--Saleur
+approximation of conformal symmetries.  \textbf{Consequence [derived]:} for a
+CFT target with \(c\neq0\), ``compatible with the Virasoro action'' can only
+mean \emph{asymptotic} intertwining of normal-ordered Koo--Saleur generators
+on a suitable core --- there is no exact-implementer formulation to aim for.
+
+\subsection{The No-Go Mechanism as a Checklist}
+
+The Jones no-go concerns the semicontinuous limit built from a single
+scale-invariant tree-local refinement element.  The registered source
+identifies the root cause: the underlying dangling binary tree does not feel
+the circle topology, and the pulled-back smallest rotation is a long product
+of local elements controlled by a norm-contracting renormalisation (squaring)
+map, whose iterates vanish --- forcing rotation matrix elements weakly to
+zero.  Kliesch--Koenig extend this: discontinuity has \emph{full measure}
+among tree isometries, and they isolate an easily verified necessary
+condition for a continuous limit.
+
+\textbf{Checklist [derived reading].}  A refinement family risks the no-go
+mechanism when:
+\[
+\begin{array}{ll}
+\mathrm{NG1}&\text{it is generated by a single scale-invariant tree-local}\\
+            &\text{element, decoupled from the circle;}\\
+\mathrm{NG2}&\text{its induced squaring/renormalisation map is norm-}\\
+            &\text{contracting on the relevant subspace;}\\
+\mathrm{NG3}&\text{it embeds point-like, without low-pass smearing;}\\
+\mathrm{NG4}&\text{it operates in the large-loop-parameter regime where}\\
+            &\text{the contraction estimate bites;}\\
+\mathrm{NG5}&\text{it demands exact unitary implementers of the discrete}\\
+            &\text{rotation/conformal action on a fixed limit space.}
+\end{array}
+\]
+Any candidate family must either avoid each mode or verify the
+Kliesch--Koenig necessary condition explicitly.  The wavelet precedent shows
+what success looks like: translation-covariant smearing recovers continuous
+translations, while Lorentz/conformal covariance is separate further work.
+
+\subsection{Where Fixed Anyon Number Enters the Braiding RG}
+
+The braiding-RG refinement for anyonic chains is sourced as: attach new
+through-strings to a string-box diagram and braid their ends into position,
+\emph{increasing the local density of \(\sigma\)-anyons}; the basis carries a
+\(\sigma\)-anyon at every site.  \textbf{Diagnosis [derived].}  Three
+fixed-\(N\) commitments follow: (i) the braid needs a strand at every site it
+acts on, so the map is undefined on empty sites; (ii) the identification of
+local operators with Temperley--Lieb generators presupposes exactly one anyon
+per site; (iii) the refinement doubles the strand count deterministically.
+For the CA-65/CA-66 site object \(O=\one\oplus X\), occupation is a quantum
+variable, so a refinement must be defined on the whole word space including
+empty sites --- the braiding-RG step does not port.  Conversely, dense chains
+have no refinable vacuum: every refined site must carry an anyon, so any
+fine-graining changes the physical content.  The variable-\(N\) tower is
+exactly what removes this obstruction, at the price of the new proof
+obligations recorded in CA-68.
+
+\subsection{Boundary}
+
+This shard proves no convergence theorem and constructs no refinement; it
+fixes the requirement set and the failure modes.  The Kliesch--Koenig
+necessary condition is registered but its verification for any variable-\(N\)
+family is future work.  The Koo--Saleur compatibility target is stated
+precisely in CA-68; nothing here claims it holds.

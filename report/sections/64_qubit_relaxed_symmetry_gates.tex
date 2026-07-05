@@ -1,0 +1,158 @@
+% SHARD-ID: CA-64-QUBIT-RELAXED-SYMMETRY-GATES
+% SHARD-TITLE: Quantified Relaxations of the Qubit Symmetry Gates
+% SHARD-SUMMARY: Replaces exact first-moment gates by coefficient residual profiles and fixed-residual GNS-norm SDP objectives.
+% SHARD-SUMMARY: Keeps current collapse as a hard obstruction for the nonzero-speed first-moment route.
+% SHARD-SUMMARY: Records that witness optimization inside the moment SDP is not a plain SDP without an additional polynomial lift.
+% SHARD-KEYWORDS: relaxed gates, residual profile, GNS norm, SDP objective, TFIM, boost
+
+\section{Quantified Relaxations of the Qubit Symmetry Gates}
+\label{sec:qubit-relaxed-symmetry-gates}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: proposal with checked finite pieces.}  The definitions below
+are finite Pauli-coefficient linear algebra plus fixed-residual moment SDPs.
+This shard answers the CA-61 obligation to relax or quotient the boost
+relation instead of requiring an exact local witness, and it supplies the
+Stage-3 relation language of CA-62.
+
+Dependencies: CA-39, CA-42, CA-43, CA-44, CA-57, CA-60, CA-61, CA-62,
+CONVENTIONS.md (m), (n), (p), (q).
+
+% Source: runs/2026-05-31-qubit-candidate-scan/summary.toml:76 -- the recorded
+%   self-dual TFIM exact boost residual norm 1.8257418583505538.
+% Source: report/sections/57_qubit_algebraic_scan_gates.tex -- the exact
+%   current, conservation-witness, and boost-witness gates being relaxed.
+% Source: report/sections/61_qubit_scan_to_scaling_queue.tex -- the recorded
+%   obligation to relax the boost relation for future SDP work.
+% GAP: register a run bundle for the longer-support residual-profile numbers
+%   before quoting them in this report.
+% GAP: needs local source for any theorem converting coefficient-tail decay
+%   into a continuum symmetry statement.
+
+\subsection{Coefficient Norm and Gauge}
+
+Let \(V_L\) be the Pauli coefficient space of \(L\)-site densities, with
+\[
+  \langle r,s\rangle_\tau=\sum_a\overline{r_a}s_a.
+\]
+This is the normalized tracial Hilbert--Schmidt inner product.  Padding by
+trailing identities is denoted \(\iota_{L,N}:V_L\to V_N\).
+
+The coboundary map of CONVENTIONS.md (n) is
+\[
+  (Du)_{a_0\cdots a_L}
+  =u_{a_0\cdots a_{L-1}}\delta_{a_L0}
+   -\delta_{a_00}u_{a_1\cdots a_L}.
+\]
+Residuals are distances to affine subspaces in this norm.  Scalar witness
+components are gauge directions; they are fixed to zero for reported witnesses,
+but the distance itself is gauge-invariant.
+
+\subsection{Algebraic Profiles}
+
+The current gate remains hard for the nonzero-speed first-moment route:
+\[
+  \|p\|_\tau=0 \quad\Longrightarrow\quad \text{fail this route}.
+\]
+For \(A=i[h_j+h_{j+1},p_j]\), define the conservation profile
+\[
+  \epsilon_c(L;h)
+  =
+  \operatorname{dist}\bigl(\iota_{3,n}A,
+  \iota_{L+1,n}\operatorname{im}D_L\bigr),
+  \qquad n=\max(3,L+1).
+\]
+The reported dimensionless value is
+\[
+  \widehat\epsilon_c(L;h)
+  =
+  \epsilon_c(L;h)/\max(\|A\|_\tau,\varepsilon_{\mathrm{mach}}).
+\]
+
+For candidates with exact conservation at support \(L\), define the
+exact-conservation boost profile
+\[
+  \epsilon_b^0(L;h,\lambda,e)
+  =\min_{u,w:\,D_Lu=A}
+  \|\iota B-\iota u-\lambda\,\iota(h-eI)-D_Lw\|_\tau ,
+\]
+with \(B=i[p_j,h_{j+1}]+2i[p_j,h_{j+2}]\) and \(\lambda=v^2\).  Letting \(u\)
+float freely in the boost residual is wrong: it can absorb boost error while no
+longer witnessing the conservation coboundary.  For candidates without exact
+conservation, use the joint profile
+\[
+  \epsilon_{cb}^2
+  =
+  \min_{u,w}
+  \widehat{\|A-Du\|}_\tau^2
+  +
+  \widehat{\|B-u-\lambda(h-eI)-Dw\|}_\tau^2 .
+\]
+The raw profiles are nonincreasing in \(L\), because a support-\(L\) witness is
+also a support-\(L+1\) witness after padding by an identity.  The speed
+\(\lambda\) is optimized only by external scan or bounded quadratic
+programming, with \(\mu=\lambda e\) as the linear scalar variable; the sign of
+the optimizing \(\lambda\) is a recorded diagnostic, not an assumption.
+
+\subsection{State-Level Residuals}
+
+For a fixed residual density \(R\), the GNS quantity is
+\[
+  \|\pi_\omega(R)\Omega_\omega\|^2=\omega(R^*R).
+\]
+At moment level \(N\), define
+\[
+  v_N(R)=\min_y \omega_y(R^*R)
+\]
+subject to the CA-43--CA-44 moment PSD, translation-invariance, normalization,
+and optional stationarity constraints.  For fixed \(R\), this is an SDP because
+\(\omega_y(R^*R)\) is affine in \(y\).  Normalize by
+\[
+  \nu_N(R)=v_N(R)/\tau(R^*R),
+\]
+when \(\tau(R^*R)>0\); the tracial value \(\tau(R^*R)=\sum_s|r_s|^2\) is
+computable exactly from Pauli coefficients.  A dual (certified) lower bound
+\(\nu_N(R)\ge\delta>0\) is an exclusion certificate for the relaxed route;
+\(\nu_N(R)\) small is survival, never symmetry evidence.
+
+Do not optimize \(u,w,\lambda,e\) jointly with the moments in this SDP tier.
+For \(R(a)=R_0+\sum_i a_iR_i\), the expression
+\(\omega(R(a)^*R(a))\) is quadratic in \(a\) with coefficients affine in \(y\),
+hence bilinear jointly.  That joint minimization is not a plain SDP.
+Alternation gives upper-bound candidates; certified lower bounds require fixed
+witnesses or a bounded polynomial/sum-of-squares lift recorded as a new
+convention before use.
+
+\subsection{Scaling Reading}
+
+A continuum claim is not a fixed-\(N\) claim.  A scaling statement must name:
+state sequence, renormalisation maps, vacuum subtraction, and operator
+topology, as required by CA-14 and CA-15.  The target form is that normalized
+GNS residuals vanish on a growing long-wavelength window:
+\[
+  \sup_{|m|,|n|\le K_N}
+  \nu_N(r^{\sigma\sigma'}_{mn})\to0,
+  \qquad K_N/N\to0,
+\]
+applied to the CA-42 Witt/Virasoro residual densities
+\(r^{++}_{mn},r^{--}_{mn},r^{+-}_{mn}\).  Modes near the Brillouin scale are
+not expected to close first; long-wavelength modes are the diagnostic window.
+
+\subsection{Sentinel Expectations}
+
+These are predictions to be checked by the relaxed re-scan, not results.  The
+self-dual TFIM point is currentful, has an exact conservation witness, and
+fails the exact boost gate with recorded residual norm 1.8257418583505538; the
+relaxed verdict should therefore be survival into a GNS/scaling queue rather
+than terminal exclusion.  Fully on-site and classical commuting densities
+still fail the hard current gate.  Generic dense samples must show actual
+profile decay to survive; a single small value at one support is not a pass.
+
+\subsection{Boundary}
+
+No continuum theorem is claimed.  The profiles and SDP objectives are finite
+diagnostics; converting decay of \(\nu_N\) into a continuum symmetry statement
+requires the scaling payload of CA-15 and remains open.  The longer-support
+TFIM profile values computed during design are not quoted here because their
+run bundle is not yet registered; only the recorded scan artifact is cited.

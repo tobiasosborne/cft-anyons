@@ -1,0 +1,590 @@
+%auto-ignore
+%      this ensures the arxiv doesn't try to start TeXing here.
+%!TEX root = super_lattice_models_draft.tex
+%      prev line helps TeXShop do the right thing
+
+\section{Fusion categories and diagrammatics}
+\label{sec:Fusion_Theory}
+
+In this section we describe the foundational tool in our analysis, a {\em fusion category}.  Many good reviews cover this subject and much more, including \cite{MSReview89,barrett1999,Bakalov2001,etingof2005,
+Kitaev2006}. 
+Fusion categories are well known to play important roles in representation theory, in conformal field theory, in the properties of anyons, and in topological quantum field theory.
+They play an equally important role in the lattice models studied in this paper, essential both in the construction and in the analysis.
+We aim here to provide a practical and computationally useful introduction.
+
+One particularly important aspect of a fusion category is that it allows one to associate a number with a ``fusion diagram'', an example of which is shown in Fig.~\ref{fig:Fusion-diagram}. 
+This association is called ``evaluating'' the diagram, and the resulting number is independent of any local deformations of the diagram.
+The fusion category plays two roles in this evaluation. 
+It provides identities between the evaluations of different diagrams that can be applied repeatedly and judiciously to yield a sum over simple diagrams.  Just as importantly, the fusion category also guarantees that the evaluation of a given diagram is invariant under topology-preserving manipulations (after a few simplifying assumptions).
+For this reason it is a central tool in knot theory, where a topological invariant is associated with a knot or link by evaluating a corresponding sum over fusion diagrams. 
+\begin{figure}[h]
+	\[\FusionDiagram \; = \bra{\psi_{\alpha \nu \delta}} O_{\alpha \beta \gamma \delta} \ket{\psi_{\mu \gamma \delta}}\]
+	\caption{A fusion diagram, i.e., a labeled planar graph. For simplicity we leave out vertex labels and edge orientations. Using the standard notation of quantum mechanics, the diagram here can be viewed as an inner product between bra labeled $\mu, \gamma, \delta$, a ket labeled $\alpha, \nu, \delta$, and an operator with labels $\alpha, \beta, \gamma, \delta$.	 }	
+	\label{fig:Fusion-diagram}
+\end{figure}
+
+
+\subsection{Fusion rules}
+\label{sec:fusionrules}
+
+To begin gently, we first discuss the fusion rules associated with the simple objects of a fusion category. The simple objects $a,b,c$ are the labels on the diagrams to be evaluated. The fusion rules are specified by non-negative integers $N_{ab}^c$ which govern how two simple objects labelled by $a$ and $b$ fuse into $c$:
+\begin{align}
+	a \otimes b  = \bigoplus_c N_{ab}^c \, c.
+\label{Nabcdef}	
+\end{align}
+The tensor product $\otimes$ is the fusing, and the sum is over all simple objects.
+We say $a$ and $b$ fuse to $c$ when $N_{ab}^c> 0$, with this integer giving the number of \emph{fusion channels}.
+In category language, $N_{ab}^c = \text{dim} \; \text{mor}( a \otimes b \rightarrow c) $. 
+We refer to the $N_{\ast\ast}^\ast$ as the \emph{fusion symbols}.
+
+
+A familiar example of fusion rules come from taking tensor products of representations of algebras or groups, where each irreducible representation $a,b,c,\dots...$ corresponds to a simple object of the category. The fusion rules specify how to write the tensor product $a\otimes b$ as sums over irreps labelled by $c$.  
+A physical example arises when simple objects correspond to operators in a field theory,
+with the fusion describing their behaviour under the operator product expansion: $N_{ab}^c$ is the number of times the operator $c$ appears in the operator product expansion of operators $a$ and $b$.
+This example has played a particularly important role in conformal field theory in two \cite{MooreSeiberg:89,MSReview89} and higher \cite{Poland2018} spacetime dimensions. 
+Another physical manifestation arises from the study of anyons in topologically ordered systems.
+Each (isomorphism class of) simple object is identified with a different species of anyon, and the equality in \eqref{Nabcdef} means that at long distances the right- and left-hand sides cannot be distinguished \cite{Kitaev2006}.
+
+
+The simple objects and the corresponding fusion coefficients $N_{ab}^c$ in a fusion category must satisfy a variety of conditions, including \cite{etingof2015,etingof2005}
+\begin{enumerate}
+\item	 A fusion category has a finite number of simple objects. 
+\item
+Among the objects there must be a unique ``identity'', labelled $\I$ or $0$, such that $\I \otimes a = a \otimes \I = a$ for all $a$. 
+This implies that $N_{a \I}^b = N_{\I a}^b = \delta_{ab}$. 
+\item
+For every object $a$ there exists a unique `dual' object $\bar{a}$ such that $\I$ appears in their fusion product.
+For the most part in this paper, we assume that all objects are self-dual, so that in the anyon picture every particle is its own antiparticle.
+This implies that $a \otimes a = \I \oplus \cdots$, with the fusion multiplicity for the identity channel equal to one.
+Equivalently $N^\I_{ab} = \delta_{ab}$.
+\item
+The fusion rules must be associative:
+\begin{align}
+	a \otimes(b \otimes c) = (a\otimes b) \otimes c \quad
+	\Rightarrow \quad \sum_{x} N_{ax}^z N_{bc}^x = \sum_{y} N_{ab}^y N_{yc}^z \,.
+\label{associativity}
+\end{align}
+\item	A pivotal structure of the fusion category implies that if $a \otimes b = c \oplus \cdots$, then $c \otimes b^\ast = a \oplus \cdots$.
+In terms of fusion symbols,
+\begin{align}
+	N_{ab}^c = N_{b \bar{c}}^{\bar{a}} = N_{\bar{c} a} ^{\bar{b}} = N_{\bar{b} \bar{a}} ^{\bar{c}} \,.
+	\label{eq:pivotal_N}
+\end{align}
+Combined with the self-dual condition, the fusion symbol $N_{ab}^c$ are completely symmetric under permutations of the three objects.
+\end{enumerate}
+
+{\em Quantum dimensions} are important quantities associated with a fusion category.  
+We first define a set of matrices $N_a$ based on the fusion coefficients, each of which has entries $(N_a)^c_b=N^c_{ab}$.
+For each simple object, we define its quantum dimension to be
+\begin{align}
+	d_a \defineas \operatorname{maximal\ eigenvalue}\big[ N_a \big] .
+	\label{eq:QD_def}
+\end{align}
+This also known as the Frobenius-Perron dimension.
+As the entries of the matrix $N_a$ are non-negative and the sum of each column is positive ($\sum_c N_{ab}^c > 0$), $d_a$ is unique, real and positive.
+As a consequence of the associativity condition~\eqref{associativity}, the quantum dimensions satisfy
+\begin{align}
+	d_a d_b = \sum_c N_{ab}^c d_c \,.
+	\label{eq:ddNd}
+\end{align}
+As we will explain, the quantum dimension provides a measure of the Hilbert space dimension associated to a simple object.
+
+
+
+We here give a few examples of fusion rules.
+
+
+\paragraph{Ising.}
+One of the most important examples is given by the Ising fusion rules, which arise for example in the operator products of the primary fields in the Ising conformal field theory \cite{BPZ:CFT:84}. There are three elements denoted $\I, \sigma$, and $\psi$. The non-trivial fusion rules are given by:
+\begin{align}
+	\psi \otimes \psi = \I, \quad \sigma \otimes \sigma = \I \oplus \psi, \quad \psi \otimes \sigma = \sigma.
+	\label{eq:Ising_fusion_rules}
+\end{align}
+The remaining fusion rules can be inferred from the rules above, giving for example $N_{\psi \psi}^\I = N_{\sigma \sigma}^\I = N_{\sigma \sigma}^\psi = N_{\psi \sigma}^\sigma = N_{\sigma \psi}^\sigma = 1$.
+The quantum dimensions of these basis elements are given by $d_\I = d_\psi = 1$ and $d_\sigma=\sqrt{2}$.
+
+\paragraph{Fibonacci.}
+Another common example has only two elements, $\I$ and $\tau$, with fusion rules
+\begin{align} 
+	\I \otimes \tau &= \tau \otimes \I = \tau,
+	&	\tau \otimes \tau &= \I \oplus \tau.
+\label{fusionFib}
+\end{align}
+The reason for the name Fibonacci is apparent from the non-trivial fusion rule in (\ref{fusionFib}); continually fusing $\tau$ elements together gives multiplicities of the Fibonacci numbers.
+Here we have $d_\I=1$ and $d_\tau=\frac{1+\sqrt{5}}{2}$ is the golden ratio.
+
+\paragraph{$\SU2$.}  The most familiar example of fusion rules come from the representations of the group or Lie algebra $\SU2$.
+The elements are the irreducible representations, which we label using physics conventions by their spin, the non-negative integers and half-integers $0,\,\frac12,\,\dots$, with $0$ being the identity object.
+Combining two spins gives a direct sum of representations, e.g.\ $\frac12 \otimes \frac12 = 0 \oplus 1$.
+In general, fusion symbols for $\SU2$ are
+\begin{align}
+	N^a_{bc} \;=\; \bigg\{ \begin{tabular}{l @{\qquad} l}
+		1	&	$a+b \geq c$,\; $b+c \geq a$,\; $c+a \geq b$,\; and $a+b+c \in \mathbb{Z}$,
+	\\[0.2ex]	0	&	otherwise.
+	\end{tabular}
+	\label{eq:def_SU2_N}
+\end{align}
+The quantum dimensions coincides with the irrep dimensions: $d_a = 2a+1$.
+
+However, there is no $\SU2$ fusion category, as there are infinite number of irreducible representations. Instead, we consider the
+
+\paragraph{$\mathcal{A}$-series.}
+The fusion category associated to $\mathcal{A}_{k+1}$, with $k$ a non-negative integer, has $k+1$ simple objects labeled $0,\frac12,\dots,\frac{k}{2}$.  
+These fusion rules are very similar to those of $\SU2$ in \eqref{eq:def_SU2_N} but require also the ``truncation'' $a+b+c \leq k$, giving
+\begin{align}
+	N^a_{bc} \;=\; \bigg\{ \begin{tabular}{l @{\qquad} l}
+		1	&	$a+b \geq c$,\; $b+c \geq a$,\; $c+a \geq b$,\; $a+b+c \in \mathbb{Z}$,\; and $a+b+c \leq k$,
+	\\[0.2ex]	0	&	otherwise.
+	\end{tabular}
+	\label{eq:def_Ak_N}
+\end{align}
+The quantum dimensions of these objects are
+\begin{align}
+	d_h = \frac{ \sin\frac{\pi(2h+1)}{k+2} }{ \sin\frac{\pi}{k+2} } = \frac{q^{h+\frac12} - q^{-(h+\frac12)}}{q^{\frac12}-q^{-\frac12}} ,\qquad\quad
+		\textrm{with } q & = \exp\frac{2\pi i}{k+2}\ .
+	\label{eq:def_QD}
+\end{align}
+%$d_{j} = \sin(\frac{\pi (2j+1)}{k+2}) / \sin(\frac{\pi}{k+2})$.
+These fusion rules for $\mathcal{A}_{k+1}$ are identical to those of another fusion category $\SU2_k$, familiar from the study of Wess-Zumino-Witten models in CFT \cite{KZ}. Although closely related, the two categories are not identical, as the additional data described in section \ref{sec:category} differs. 
+This  ``$\mathcal{A}$-series'' encompasses the first two examples:
+The Ising fusion algebra is equivalent to that of $\mathcal{A}_{3}$ with the identification  ($\I,\sigma,\psi \rightarrow 0,\frac12,1$), while Fibonacci is the subcategory of $\mathcal{A}_4$ restricted to integer elements with ($  \I,\tau\rightarrow 0, 1$).
+In general, as we explain below, they are associated with the height models introduced by Andrews, Baxter and Forrester (ABF) \cite{Andrews1984}, and their ``fused'' generalizations.
+
+
+
+\subsection{Fusion category data}
+\label{sec:category} 
+
+%\paragraph{Fusion category data.}
+The following data completely defines a fusion category:
+\begin{itemize}
+\setlength{\itemsep}{0ex}
+\setlength{\parskip}{0.1ex}
+\item	list of simple objects,
+\item	fusion symbols $N^\ast_{\ast\ast}$,
+%\item	quantum dimensions $d_\ast$,
+and \item	the $F$-symbols.
+\end{itemize}
+The $F$-symbols, defined in \eqref{eq:Fmove_def} below, describe linear relations among diagrams. They provide the means to evaluate an arbitrary labeled planar diagram.
+Those involving the identity object are written in terms of quantum dimensions $d_\ast$, and so determine them as well.
+Of course,  these quantities are not independent. As we detail, a number of self-consistency equations must be satisfied.
+
+
+
+
+To give vast simplifications to the computations and diagrammatics, we impose several restrictions on fusion categories utilized.  We emphasize however that the ideas and methods presented in this paper are applicable to a broader class. The simplifying assumptions are:
+\begin{itemize}
+\item	We usually assume that simple objects are self-dual: $a \cong a^\ast$.
+This condition allows us to omit arrows in our diagrams.
+\item There is a non-degenerate trace that can be used to define an inner product; see the discussion around \eqref{dagdef} for details. 
+This condition allows us to treat vector spaces as Hilbert spaces, and ensures that the quantum dimensions are always positive.
+\item	The fusion category is multiplicity-free, i.e., $N_{ab}^c = 0$ or $1$ for all simple objects $a,b,c$.
+\item	The Frobenius-Schur indicators are all $+1$.
+\item	We require that there exist a gauge (i.e., basis of splitting operators) such that all the $A$- and $B$-symbols be $+1$ whenever $N_{ac}^b \neq 0$ (see \eqref{ABsymbols}).
+\end{itemize}
+
+
+
+A fusion category can be presented in many different ways, and also may be extended to contain additional structures such as braiding.
+In this paragraph, we state in a more formal language the type of categories we will be utilizing.
+We are interested in the data associated with a $\mathbb{C}$-linear semi-simple spherical pivotal fusion category. 
+The data are given by a collection of objects built from a finite list of simple objects $\{a, b, c, \cdots \}$;
+	a list of morphisms $\operatorname{mor}(a \to b)$ for each pair of objects $a,b \in \mcc$;
+	as well as two kinds of multiplications: vertical composition $\circ$ of morphisms and a tensor product $\otimes$ for horizontal composition of morphisms and objects.
+The pivotal%
+	\footnote{A pivotal fusion category means that there are isomorphisms $V_c^{ab} \xrightarrow{A} V_{\bar{a}c}^b$ and $V_c^{ab} \xrightarrow{B} V_{c\bar{b}}^a$.
+		Diagrammatically, this allows fusion diagrams to be rotated.  A consequence is Eq.~\eqref{eq:pivotal_N}.}
+ and spherical%
+	\footnote{A spherical fusion category is one where the left and right traces agree. In terms of the fusion diagrams we discuss below [e.g.\ see \eqref{eq:def_Tetra2}], the trace corresponds to evaluating the closed loop formed by connecting a line labelled by the simple object $a$ with itself.
+		The left and right traces differ by the two ways one can close this strand into a loop on the plane.
+		For the categories we are interested in we have $\Tr a = d_a$.}
+	structures are additional constraints on the fusion and morphism spaces.
+
+
+
+
+
+
+
+\subsection{Fusion diagrams}
+\label{sec:fusiondiagrams}
+
+An exceptionally useful tool in our analysis comes from the relation of a fusion category to the calculus of fusion diagrams.
+A fusion diagram is built from a labeled planar graph with no crossings, only trivalent vertices.
+Each edge in the planar graph is labelled by an object in the fusion category, and the 
+vertices by morphisms of the surrounding labeled edges to the vacuum.
+At any trivalent vertex, the labels  $a,b,c$ of the edges touching the vertex must obey $N_{ab}^c=1$. 
+The number of allowed labelings for a given graph and fusion category is computable via a ``crossing'' symmetry \cite{Simon2012}.
+In our setting, trivalent vertices will be fundamental, and can be used to build any fusion diagram. Hence morphisms in higher-valence vertices can always be split up into compositions of morphisms that can be represented as trivalent vertices.
+
+
+We will explain in the next subsection that when the diagram has no ends (boundaries), it is associated with a complex number, the ``evaluation'' of the diagram, and is invariant under smooth deformations which preserve the topology. When the diagram has ends, we associate it with a vector or wave function.
+We are free to add/remove lines with trivial labels (which depending on context we write as $0$ or $\I$) to a diagram without changing its evaluation or the associated vector space. The allowed vertex labelings for the Ising fusion rules are illustrated in Fig.~\ref{fig:Isingfusiondiagram}(a); in \ref{fig:Isingfusiondiagram}(b) we show vertices that are {\em not} allowed here.
+An example of a diagram without ends for the Ising fusion category is given in Fig.~\ref{fig:Isingfusiondiagram}(c).
+
+\begin{figure}
+	\center{
+	\raisebox{10mm}{\small(a)} \begin{minipage}{47mm}
+		\begin{align*} \IsingFusionRulePsiPsiId \quad\quad \IsingFusionRuleSigmaSigmaId \quad\quad \IsingFusionRuleSigmaPsiSigma \end{align*}
+	\end{minipage}
+	\hspace{5mm}
+	\raisebox{10mm}{\small(b)} \begin{minipage}{31mm}
+		\begin{align*} \IsingFusionRuleSigmaSigmaSigma \quad\quad \IsingFusionRuleIdIdPsi \quad \quad \IsingFusionRulePsiPsiPsi \end{align*}
+	\end{minipage}
+	\hspace{5mm}
+	\raisebox{9mm}{\small(c)} \begin{minipage}{35mm}
+		\begin{align*}\IsingFusionDiagram\end{align*}
+	\end{minipage}
+	}
+	\\
+	\caption{
+		(a) Possible vertices permitted by the fusion rules Eq.~\eqref{eq:Ising_fusion_rules} in the Ising fusion category.
+		(b) Examples of vertices forbidden by the Ising fusion rules.
+		(c) An example of a fusion diagram in the Ising fusion category, with elements $\I$, $\sigma$, and $\psi$.
+	}
+	\label{fig:Isingfusiondiagram}
+\end{figure}
+
+
+
+
+We often work with operators acting on vector spaces, as lattice models in statistical mechanics are convenient to analyze using transfer matrices and Hamiltonians. A vector space is associated to a diagram with ends. The simplest are $V^{a_1 a_2 \cdots a_n}$ and $V_{a_1 a_2 \cdots a_n}$, the vector spaces spanned by diagrams with open legs $a_1, \dots, a_n$ emanating upward and downwards respectively. 
+For example, the bottom and top pieces of the fusion diagram in figure \ref{fig:Fusion-diagram} live in the vector spaces
+\begin{align}
+	\FusionDiagramVu &\in V^{\mu \gamma \delta} ,
+&	\FusionDiagramVd &\in V_{\alpha\nu\delta} \,.
+\end{align}
+When the labels on the external legs match, we can glue the two together to give a closed diagram that can be evaluated by the techniques given below. This defines an inner product on the vector spaces, where 
+$V^{a_1 a_2 \cdots a_n}$ and  $V_{a_1 a_2 \cdots a_n}$  are dual to each other. The inner product of two diagrams with mismatched legs is simply defined to be zero.
+These vector spaces are canonically isomorphic via conjugation; we can convert vectors between $V_{a_1a_2\cdots}$ and $V^{a_1a_2\cdots}$ by simply flipping the figure vertically.
+In the context of our example:
+\begin{align}
+	\FusionDiagramVuFlipped = \left( \FusionDiagramVu \right)^\dag .
+\label{dagdef}	
+\end{align}
+This definition yields a Hermitian inner product structure that allows us to treat them as Hilbert spaces. We often utilize the  convenient quantum-mechanical notation of bras and kets to represent the elements of these vector spaces.
+
+Vector spaces with upper and lower indices are defined in the obvious way. The elements of such spaces can be thought of as linear operators: a diagram with legs $a_1,a_2,\dots$ above and $b_1,b_2,\dots$ below maps the vector space $V^{b_1b_2\cdots}$ to $V^{a_1a_2\cdots}$. The vector space spanned by these operators is denoted $V^{a_1\cdots}_{b_1\cdots}$.
+A diagram can be split into many pieces, and evaluated as a product of its constituents. 
+The topmost part becomes the bra, the bottommost the ket, and the intervening slices operators, for example
+\begin{align}
+	\FusionDiagram \;=\; \Braket{\FusionDiagramVd | \FusionDiagramOp | \FusionDiagramVu} .
+	\label{eq:FusionDiagramCut}
+\end{align}
+For example, the middle part of Eq.~\eqref{eq:FusionDiagramCut} is an operator
+\begin{align}
+	\FusionDiagramOp \;\;\in V_{\mu\gamma\delta}^{\alpha\nu\delta}
+\end{align}
+which takes a wavefunction with legs $\nu,\gamma,\delta$ to one with legs $\alpha,\nu,\delta$:
+\begin{align}
+	\left[\FusionDiagramOp\right] \Ket{\FusionDiagramVu} \;\;=\;\; \Bigg|\,\FusionDiagramOpVu\,\Bigg\rangle \,.
+\end{align}
+
+The building blocks for operators are the splitting and fusion vertices, along with ``identity'' operators:
+\begin{align}
+	\Yabc &\in V^{ab}_c \,,
+&	\YabcX &\in V_{ab}^c \,,
+&	\bigg|_a \in V^a_a \,.
+\end{align}
+One also encounters diagrams such as $\UaaSmall \in V^{aa}_0$, but this is simply a special case of the splitting operator.
+The dimensionality of these vector spaces are given by
+\begin{align}
+	\Vdim V^{ab}_c = \Vdim V_{ab}^c = N_{ab}^c  \,,
+	\qquad	\Vdim V^a_b = \delta_{ab}  \,.
+\end{align}
+The physical interpretation of these equations is as follows.
+The former equation says that the number of linearly independent ways to fuse $a \otimes b \rightarrow c$ is precisely given by $N_{ab}^c$.
+The latter equation ensures that simple objects cannot ``mutate'' into another.
+
+
+
+The lattice models we study are conveniently defined in terms of a \emph{fusion tree}.
+For any sequence $\upsilon_1,\upsilon_2,\dots$ and a fusion channel $\eta$, it is a diagram of the form
+\begin{align}
+	\FusionTree \quad\in V^{\upsilon_1 \upsilon_2 \cdots \upsilon_L}_\eta .
+	\label{eq:RFusionTree}
+\end{align}
+The diagram illustrated is a right-branching fusion tree, in that each $\upsilon_i$ sprouts from the main branch with labels $\eta,h_1,h_2,\dots$.
+The labels must satisfy the fusion rules, i.e., $N^{h_{i-1}}_{\upsilon_i h_i} = 1$ for each $i$.
+Here we let $h_0 = \eta$ and $h_{L-1} = \upsilon_L$ to simplify notation.
+The key statement is as follows.
+\begin{align}
+	\text{The set of right-branching fusion trees forms an orthogonal basis for $V^{\upsilon_1 \upsilon_2 \cdots \upsilon_L}_\eta$}.
+\end{align}
+In other words, the basis of states for $V^{\upsilon_1 \cdots \upsilon_L}_\eta$ are enumerated by the set of $h_1,\dots,h_{L-2}$ satisfying the appropriate fusion constraints.
+(These states have non-trivial normalization factors, which we define below.)
+Equivalently, we may define these vector spaces recursively as
+\begin{align}
+	V^{\upsilon_1 \upsilon_2 \cdots \upsilon_L}_\eta &\cong \bigoplus_{h_1} V^{\upsilon_1 h_1}_\eta \otimes V^{\upsilon_2 \upsilon_3 \cdots \upsilon_L}_{h_1} .
+	\label{eq:V_recur_def}
+\end{align}
+In general, for an arbitrary operator space,
+\begin{align}
+	V^{a_1a_2\cdots}_{b_1b_2\cdots} &\cong \bigoplus_x V^{a_1a_2\cdots}_x \otimes V^x_{b_1b_2\cdots} .
+	\label{eq:Vop_decomp}
+\end{align}
+
+Consider a fusion tree with large $L$ and all $\upsilon_j=\upsilon$ the same.
+The asymptotic growth of the dimension of this vector space depends on the quantum dimension $d_\upsilon$ as
+\begin{align}
+	\Vdim V^{\overbrace{\scriptstyle\upsilon\upsilon\upsilon\cdots\upsilon\upsilon\upsilon}^{L\text{ indices}}}_\eta \sim (d_\upsilon)^L \text{ as } L \rightarrow \infty\ .
+	\label{eq:QD_asymp}
+\end{align}
+This follows from the definition (\ref{eq:QD_def}) via the recurrence relation \eqref{eq:V_recur_def}. For example, in the Fibonacci category, it is easy to see that these dimensions are related to Fibonacci numbers, which indeed grow with $L$ as $\big(\frac{1+\sqrt{5}}{2}\big)^L$.
+
+
+
+
+
+
+
+
+\subsection{Evaluating fusion diagrams}
+\label{sec:evaluation}
+
+
+We now turn to the method of evaluation, the process for associating a number with any fusion diagram without ends.
+This is done iteratively by applying successive manipulations to the diagram.
+In this section we introduce all the linear relations on diagrams necessary to evaluate any planar graph. 
+To do so, we will need to introduce additional symbols in our description of a fusion category, namely $\varkappa$-, $A$-, $B$-, and $F$-symbols.
+Many highly constraining self-consistency equations for these symbols are needed so that topologically equivalent graphs evaluate to the same number. 
+
+
+\paragraph{Isotopy moves.}
+The simplest move corresponds to a process where we start with particle $a$, generate an additional pair out of the vacuum, and annihilate one of the newly produced particles with the original.
+Since the vector space $V^a_a$ associated to this process is one-dimensional, the only possibility is to pick up a phase:
+\begin{align}
+	\FSR \;=\; \varkappa_a\, \bubbleb \;=\; \FSL\ ,
+\label{FSdef}
+\end{align}
+where $\varkappa_a$ is called the Frobenious-Schur indicator of $a$ (note that we have assumed that $a$ is self dual), and takes on a value $\pm1$.
+The Frobenius-Schur indicators are invariants of a fusion category, independent of the fusion symbols.
+
+As we discuss the rules for planar calculus, we will also illustrate them by evaluating the diagram in Fig.~\ref{fig:Fusion-diagram}.
+The first move is to remove the bend in the $\delta$ line using \eqref{FSdef}:
+\begin{align}
+	\FusionDiagrama \;=\; \varkappa_{\delta}\, \times\, \; \FusionDiagramb \,.
+\end{align}
+Next we look at the ``pivotal'' structure of the theory, which means there are isomorphisms between fusing and splitting spaces. With the restriction that all $N_{ab}^c=0,1$ these isomorphisms involve only 
+a phase due to bending of the lines, namely
+\begin{align}
+	\ALD= A^{\bar{a} c}_b \ARD\ , \qquad\quad	 \BLD  = \varkappa_b B^{b \bar{c}}_a \BRD	\,.
+	\label{ABsymbols}
+\end{align}
+These define the $A$- and $B$-symbols, which in general are also complex phase factors. As opposed to the Frobenius-Schur indicators, the $A$- and $B$-symbols are not gauge invariant, meaning they depend on the basis chosen.
+Applying an ``$A$-move'' to our example gives
+\begin{align}
+	\FusionDiagramb \; =\; A^{\bar{\alpha} \nu}_\delta \times \; \FusionDiagramc \,.
+\end{align}
+Most of the categories we study have all $\varkappa_\delta=1$, and all $A$- and $B$-symbols $+1$ whenever $N_{ac}^b \neq 0$.
+Along with requiring all particles to be self-dual, these two conditions allow us to make arbitrary deformations to a diagram without incurring any phases.
+
+Lastly, we remark that non-simple objects may also label edges on a fusion diagram.
+Semisimplicity of the category implies that any object can be written as a direct sum of simple objects. 
+Correspondingly, to evaluate a diagram containing a non-simple object $x = a_1 \oplus a_2 \oplus \cdots$ decomposed in terms of simple objects $a_i$, one replaces the evaluation of a diagram with label $x$,
+by a sum of evaluations of diagrams with edges labeled $a_i$. 
+
+
+\paragraph{$F$-moves.}
+The $F$-move is the workhorse of the fusion category. It allows us to make non-trivial transformations on the diagrams that preserve the evaluation.  They arise as basis changes for the vector spaces defined via fusion diagrams.
+There are two ways to write a basis for the operators in $V^{abc}_d$, either as left-branching or right-branching trees.
+\begin{align}
+	\FmoveLNA &\in \bigoplus_x V^{ab}_x\otimes V^{xc}_d \cong V^{abc}_d,
+&	\FmoveRNA &\in \bigoplus_y V^{ay}_d \otimes V^{bc}_y \cong V^{abc}_d,
+	\label{eq:Vabc_decomp}
+\end{align}
+The operators in the left-branching basis are enumerated by $x$ while those of the right-branching basis by $y$, the unitary map between the two bases is referred to as an $F$-move.
+The coefficients for the transformation are provided by the $F$-symbols, which carries six indices: four for the external labels and two internal ones that label orthogonal vectors in each space.
+Diagrammatically it is defined via
+\begin{align}
+	\FmoveLNA = \sum_y \big[ F^{abc}_d \big]_{xy} \FmoveRNA\ . 
+	\label{eq:Fmove_def}
+\end{align}
+The transformation $\big[ F^{abc}_d \big]_{xy}$ is unitary in the indices $x,y$, evident from the fact that it provides the isomorphism between the left/right side of Eq.~\eqref{eq:Vabc_decomp}.
+
+An $F$-move can be applied to any pair of adjacent trivalent vertices in any diagram; adjacent vertices are connected by one (or more) lines. Applying the $F$-move then modifies the diagram. In our ongoing example, this results in
+\begin{align}
+	\FusionDiagramc \; =\; \sum_\rho \big[ F^{\alpha \beta \gamma}_{\bar{\delta}} \big]_{\mu \rho}  \times \; \FusionDiagramd\ .
+\label{ongoingexample}	
+\end{align}
+
+Considering vector spaces with more indices leads to a variety 
+of consistency conditions that guarantee different sequences of $F$-moves produce identical results \cite{MooreSeiberg:89}.
+The pentagon equation, given below in (\ref{pentagon}), is an important one.
+Fusion categories by definition satisfy these conditions, and many solutions are known and classified.
+A general classification does not yet exist, although
+all modular tensor categories (fusion categories that also have a braiding among other constraints) with up to five objects are known \cite{Rowell, Bruillard2016}.
+The consistency conditions for a given fusion algebra do not have a unique solution; $\mathcal{A}_{k+1}$ and $\SU2_k$ have the same fusion rules but different $F$-symbols.
+The main differences are that the latter category has non-trivial Froebenius-Schur indicators, while all quantum dimensions are positive.
+We utilize $\mathcal{A}_{k+1}$ here; its $F$-symbols are written out in Appendix~\ref{app:TetraSym}. 
+
+
+
+\paragraph{Loop and bubble removal}
+
+
+
+Once one has solved for the $F$-symbols then every planar diagram can then be reduced to one that only has bubbles left in it, with each bubble having at most two lines attached to it. A bubble with no lines attached evaluates to the quantum dimension of the label, while one with two lines attached can be reduced to a line with no bubble:
+\begin{align}
+	\QD = d_a \,, \qquad\qquad \bubblea = \delta_{ac}\sqrt{\frac{d_b d_{b'}}{d_a}}\ \bubbleb \;.
+	\label{eq:loop_removal}
+\end{align}
+The former is a special case of the latter with $a=c=0$. Note also that any bubble with only one line attached to it (not including identity labels) evaluates to zero. 
+One can use these to find a special case of the $F$-symbol:
+\begin{align}
+	\recouplinga \;=\; \sum_c \sqrt{\frac{d_c}{d_a d_b}}\ \recouplingb
+	\qquad\Rightarrow\qquad \big[F^{\bar{a}ab}_b\big]_{0c} = \sqrt{\frac{d_c}{d_a d_b}} \,.
+\label{F0c}
+\end{align}
+This relation on the left-hand side follows by joining the $a$ and $b$ lines in two places using the $F$-move, and then using \eqref{eq:loop_removal} to remove the resulting bubble.
+
+
+Using these relations we can finish evaluating Fig.~\ref{fig:Fusion-diagram}. Repeatedly applying \eqref{eq:loop_removal} to \eqref{ongoingexample} gives
+\begin{align}
+	&\FusionDiagramd \; = \;  \delta_{\nu \rho} \sqrt{\frac{d_\beta d_\gamma}{d_\rho}} \; \FusionDiagrame
+	\; = \; \delta_{\nu \rho} \sqrt{\frac{d_\beta d_\gamma}{d_\rho}} \sqrt{\frac{d_\alpha d_\rho}{d_\delta}} d_\delta \ ,	\cr
+	&\implies \qquad \FusionDiagrama \;=\; \big[ F^{\alpha\beta\gamma}_\delta \big]_{\mu\nu} \sqrt{d_\alpha d_\beta d_\gamma d_\delta} \,.
+\end{align}
+We could have evaluated this diagram by using a different initial $F$-move to derive one of the many consistency conditions on $F$-symbols.  For example, the evaluation is also $[F^{\alpha\mu\gamma}_\nu]_{\beta\delta}\sqrt{d_\alpha d_\gamma d_\mu d_\nu}$,
+
+We now can compute the inner product for the fusion trees in Eq.~\eqref{eq:RFusionTree}.
+The inner product of two right-branching trees in $V^{\upsilon_1\cdots\upsilon_L}_\eta$ is 
+\begin{align}
+	\Destroyer  \;\;=\;\; \sqrt{d_\eta} \prod_{j=1}^L \sqrt{d_{\upsilon_j}} \prod_{j=1}^{L-2} \delta_{h_j g_j}  \,.
+	\label{eq:destroyer}
+\end{align}
+This diagram has been evaluated by repeated application of Eq.~\eqref{eq:loop_removal}.
+Notably, the two right-branching fusion trees are orthogonal unless the inner indices $\{h\}$ and $\{g\}$ agree; this justifies our earlier claim that the states form an orthogonal basis.
+
+As an example of the power of the $F$-symbols, we can use them to derive another identity for the quantum dimensions:
+\begin{align}
+\sum_{a,b \in {\cal C}} d_a d_b N_{ab}^z = d_z \mathscr{D}^2\ , \qquad \hbox{where } \mathscr{D}^2\equiv{\sum_{c \in {\cal C}} d_c^2}\ . 
+\label{ddNdD}
+\end{align}
+The sums are over all simple objects in the category, and $\mathscr{D}$ is called the {\em total quantum dimension}. 
+To derive this relation, let $\text{cl}(a)$ denote a closed planar loop labeled by $a$, which of course evaluates to $d_a$. Using \eqref{eq:loop_removal} and \eqref{F0c}, we have 
+\[\mathscr{D}^2 d_z = \sum_{a \in {\cal C}} d_a \,\text{cl}(a) \text{cl}(z) = \sum_{a \in {\cal C}} d_a\, \text{cl}(a\otimes z) = \sum_{a,b \in{\cal C}} d_a N_{az}^b\, \text{cl}(b) =  \sum_{a,b \in{\cal C}} d_ad_b N_{az}^b\ .\] 
+By using the symmetries of the $N_{\ast\ast}^\ast$ symbols described in section~\ref{sec:fusionrules}, \eqref{ddNdD} follows.
+
+
+
+
+
+\subsection{Tetrahedral symbols}
+\label{sec:tetra}
+The $F$-symbols satisfy a number of useful symmetry properties. These are conveniently displayed by utilising \emph{tetrahedral symbols}, which are proportional to the $F$-symbols. We define the tetrahedral symbols in terms of the diagram:
+\begin{align}
+	\Msixj{a & b & c}{\alpha & \beta & \gamma}
+	& \;\defineas\;
+	\frac{1}{\sqrt{d_a d_b d_c d_\alpha d_\beta d_\gamma}} \tetradiagramNA .
+	\label{eq:def_tetra_NA}
+\end{align}
+Recall from Eq.~\eqref{eq:Fmove_def} that the $F$-symbols give the transformation between two fusion trees in $V_d^{abc}$.
+We can thus extract any matrix element of $F_d^{abc}$ via
+\begin{align}
+	\big[ F_d^{abc} \big]_{x,y} = 
+	\frac{\qTr\left[ \left(\,\FmoveRsmallNA\,\right)^{\!\!\dag} \;\; \FmoveLsmallNA \right]}
+	     {\qTr\left[ \left(\,\FmoveRsmallNA\,\right)^{\!\!\dag} \;\; \FmoveRsmallNA \right]}
+%	= \frac{ \FmoveCNA }{ \left|\,\FmoveRsmallNA\,\right|^2 }
+	= \frac{\FmoveCNA}{\FSquared} \;.
+	\label{eq:def_Tetra2}
+\end{align}
+Here $\qTr$ denotes the ``quantum trace'', which simply takes two diagrams with identical external legs joins them together.%
+	\footnote{
+	Here we have shown the right trace.
+	The left trace is given by connecting the line labelled by $d$ on the left side of the picture; 
+	the assumption of a spherical category means that both traces agree.}
+The numerator is identical (up to a relabeling) to the diagram in Eq.~\eqref{eq:def_tetra_NA}, and the denominator is the normalization of the tree diagram given in Eq.~\eqref{eq:destroyer}.
+Therefore, the tetrahedral symbols are related to the $F$-symbols via
+\begin{align}
+	\big[ F_\alpha^{abc} \big]_{x,y} &= \sqrt{d_x d_y} \Msixj{a & b & x}{c & \alpha & y} .
+	\label{Ftosixj}
+\end{align}
+In context of tetrahedral symbols, the $F$-move is thus
+\begin{align}
+	\FmoveHprime = \sum_y \sqrt{d_x d_y} \Msixj{a & b & x}{c & \alpha & y} \FmoveVprime .
+	\label{eq:tetra_Fmove}
+\end{align}
+The definition (\ref{eq:def_tetra_NA}) thus gives a nice way of seeing which $F$-symbols vanish.
+\begin{align}
+\hbox{if }	N^{{a}}_{bc} N^\alpha_{\beta c} N^\beta_{\gamma a} N^\gamma_{\alpha b} = 0\
+	\;\Rightarrow\;\ \Msixj{a & b & c}{\alpha & \beta & \gamma} = 0 \;.
+\label{vanishingF}
+\end{align}
+A special case follows from \eqref{F0c}:
+\begin{align}
+	\Msixj{{a} & a & 0}{b & b & c}
+	= \Msixj{a & b & {c}}{{b} & a & 0}
+	= \frac{N^c_{ab}}{\sqrt{d_ad_b}}\ .
+\label{tetra0}
+\end{align}
+Using an $F$-move and then removing the bubble gives another useful identity
+\begin{align}
+	\vertexabcCNA = \sqrt{d_ \alpha d_\beta d_\gamma} \Msixj{a & b & c}{\alpha & \beta & \gamma} \vertexabcNA\ .
+	\label{eq:Trivalent_Bubble}
+\end{align}
+
+
+
+
+\paragraph{Properties.}
+The tetrahedral symbols are convenient as they possess all the symmetries of a tetrahedron.
+The symbols are invariant under permutation of the columns:
+\begin{align}
+	\begin{array}{ccccccc @{} l}
+		\Msixj{a & b & c}{\alpha & \beta & \gamma}
+	&	=	&	\Msixj{{a} & {c} & {b}}{\alpha & \gamma & \beta}
+	&	=	&	\Msixj{{c} & {b} & {a}}{\gamma & \beta & \alpha}
+	&	=	&	\Msixj{{b} & {a} & {c}}{\beta & \alpha & \gamma}
+	&	.
+	\\[-1.6ex]
+	&&	\hspace{3ex} \underbracket{\hspace{4ex}}_{\text{exchange}} \hspace{0.7ex}
+	&&	\underbracket{\hspace{7ex}}_{\text{exchange}} \hspace{0.7ex}
+	&&	\underbracket{\hspace{4ex}}_{\text{exchange}} \hspace{4ex}
+	\end{array}
+	\label{eq:tetrasym_permute_cols}
+\end{align}
+They are also invariant under interchanging the rows of any two columns:
+\begin{align}
+	\begin{array}{ccccccc @{} l}
+		\Msixj{a & b & c}{\alpha & \beta & \gamma}
+	&	=	&	\Msixj{{a} & \beta & {\gamma}}{{\alpha} & b & {c}}
+	&	=	&	\Msixj{{\alpha} & {b} & \gamma}{{a} & {\beta} & c}
+	&	=	&	\Msixj{\alpha & {\beta} & {c}}{a & {b} & {\gamma}}
+	&	.
+	\\[-1.6ex]
+	&&	\hspace{3ex}\underbracket{\hspace{4ex}}_{\text{swap rows}}
+	&&	\underbracket{\hspace{7ex}}_{\text{swap rows}}
+	&&	\underbracket{\hspace{4ex}}_{\text{swap rows}}\hspace{3ex}
+	\end{array}
+	\label{eq:tetrasym_swap_rows}
+\end{align}
+Exchanging the top and bottom row is \emph{not} a symmetry: $\smallM{a&b&c}{d&e&f} \neq \smallM{d&e&f}{a&b&c}$ in general.
+
+
+\paragraph{Orthogonality and pentagon equations.}
+The tetrahedral symbols inherit all the properties of the $F$-symbols. 
+The unitarity of the $F$-symbols implies
+\begin{align}
+	\sum_y d_y \Msixj{a & b & x}{c & d & y} \Msixj{a & b & x'}{c & d & y}
+	= \frac{ \delta_{xx'} N^{{x}}_{ab} N^{x}_{c{d}} }{d_x} .
+	\label{Orthogonality6j}
+\end{align}
+The pentagon equation
+\begin{align}
+	\sum_x d_x
+		\Msixj{\rho & \nu & g}{\beta & \gamma & x}
+		\Msixj{\mu & \rho & h}{\gamma & \alpha & x}
+		\Msixj{\nu & \mu & j}{\alpha & \beta & x}
+	=	\Msixj{g & h & j}{\alpha & \beta & \gamma}
+		\Msixj{g & h & j}{\mu & \nu & \rho} .
+		\label{pentagon}
+\end{align}
+is a consequence of evaluating the diagram
+\begin{align}
+	\circlespentagonNA.
+	\label{pentagon_wheel}
+\end{align}
+in two different ways. 
+The right-hand side follows from \eqref{eq:Trivalent_Bubble} and \eqref{eq:def_tetra_NA}, while the left-hand side follows from three applications of \eqref{eq:tetra_Fmove}. 
+

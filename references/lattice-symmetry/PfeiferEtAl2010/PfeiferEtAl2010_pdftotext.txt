@@ -1,0 +1,1229 @@
+                                                                            Simulation of anyons with tensor network algorithms
+                                                              R. N. C. Pfeifer,1, ∗ P. Corboz,1 O. Buerschaper,2 M. Aguado,2 M. Troyer,3 and G. Vidal1
+                                                             1
+                                                                 School of Mathematics and Physics, The University of Queensland, St Lucia, QLD 4072, Australia
+                                                                 2
+                                                                  Max-Planck-Institut für Quantenoptik. Hans-Kopfermann-Straße 1, D-85748 Garching, Germany
+                                                                                  3
+                                                                                    Theoretische Physik, ETH Zurich, 8093 Zurich, Switzerland
+                                                                                                   (Dated: September 25, 2018)
+                                                                    Interacting systems of anyons pose a unique challenge to condensed matter simulations due to
+                                                                 their non-trivial exchange statistics. These systems are of great interest as they have the poten-
+                                                                 tial for robust universal quantum computation, but numerical tools for studying them are as yet
+arXiv:1006.3532v3 [cond-mat.str-el] 30 Sep 2010
+
+
+
+
+                                                                 limited. We show how existing tensor network algorithms may be adapted for use with systems of
+                                                                 anyons, and demonstrate this process for the 1-D Multi-scale Entanglement Renormalisation Ansatz
+                                                                 (MERA). We apply the MERA to infinite chains of interacting Fibonacci anyons, computing their
+                                                                 scaling dimensions and local scaling operators. The scaling dimensions obtained are seen to be
+                                                                 in agreement with conformal field theory. The techniques developed are applicable to any tensor
+                                                                 network algorithm, and the ability to adapt these ansätze for use on anyonic systems opens the door
+                                                                 for numerical simulation of large systems of free and interacting anyons in one and two dimensions.
+
+                                                                 PACS numbers: 05.30.Pr, 73.43.Lp, 02.70.-c, 03.65.Vf
+
+
+                                                                     I.   INTRODUCTION                                  2-D versions of Tree Tensor Networks (TTN)16 and of
+                                                                                                                        the Multi-scale Entanglement Renormalisation Ansatz
+                                                     The study of anyons offers one of the most exciting                (MERA)17–19 have been designed specifically to accu-
+                                                  challenges in contemporary physics. Anyons are ex-                    rately describe two-dimensional systems.
+                                                  otic quasiparticles with non-trivial exchange statistics,                In one dimension, many previously studied systems
+                                                  which makes them difficult to simulate. However, they                 of interacting anyons display extended critical phases,4,8
+                                                  are of great interest as some species offer the prospect              which are characterised by correlators exhibiting poly-
+                                                  of a highly fault-tolerant form of universal quantum                  nomial decay.20 Whereas DMRG favours accurate rep-
+                                                  computation,1,2 and it has been suggested3 that the sim-              resentation of short range correlators at the expense of
+                                                  plest such species may appear in the fractional quantum               long-range accuracy, the 1-D MERA21,22 is ideally suited
+                                                  Hall state with filling fraction ν = 12/5. Despite the                to this situation as its hierarchical structure naturally
+                                                  current strong interest in the development of practical               encodes the renormalisation group flow at the level of
+                                                  quantum computing, our ability to study the collective                operators and wavefunctions,21–24 and hence accurately
+                                                  behaviour of systems of anyons remains limited.                       reproduces correlators across a wide range of length
+                                                     The study of interacting systems of anyons using                   scales.21,22,25–27 The development of a general formal-
+                                                  numerical techniques was pioneered by Feiguin et al.,4                ism for anyonic tensor networks is therefore also advan-
+                                                  using exact diagonalisation for 1-D systems of up to                  tageous for the study of 1-D anyonic systems.
+                                                  37 anyons, and the Density Matrix Renormalisation                        This paper describes how any tensor network algo-
+                                                  Group algorithm (DMRG)5 for longer chains. Also re-                   rithm may be adapted to systems of anyons in one or two
+                                                  lated is work by Sierra and Nishino,6 later extended by               dimensions using structures which explicitly implement
+                                                  Tatsuaki,7 which applies a variant of DMRG to spin                    the quantum group symmetry of the anyon model. As a
+                                                  chain models having SU (2)k symmetry. Some of these                   specific example we demonstrate the construction of the
+                                                  models are now known to correspond to SU (2)k anyon                   anyonic 1-D MERA, which we then apply to an infinite
+                                                  chains,8 and using this mapping these systems may also                chain of interacting Fibonacci anyons at criticality. The
+                                                  be studied using the Bethe ansatz9 and quantum Monte                  approach which we present is completely general, and
+                                                  Carlo.10 .                                                            can be applied to any species of anyons and any tensor
+                                                     However, all of these methods have their limitations.              network ansatz.
+                                                  Exact diagonalisation has a computational cost which is
+                                                  exponential in the number of sites, strongly limiting the
+                                                  size of the systems which may be studied. DMRG is                                    II.   ANYONIC STATES
+                                                  capable of studying larger system sizes, but is typically
+                                                  limited to 1-D or quasi-1-D systems (e.g. ladders). Map-                Consider a lattice L0 of n sites populated by anyons.
+                                                  ping to a spin chain is useful in one dimension but is                In contrast to bosonic and fermionic systems, for many
+                                                  substantially less practical in two. There are therefore              anyon models the total Hilbert space VL0 can not be
+                                                  good reasons to desire a formalism which will allow the               divided into a tensor product of local Hilbert spaces. In-
+                                                  application of other tensor network algorithms to sys-                stead, a basis is defined by introducing a specific fusion
+                                                  tems of anyons. Many of these tensor networks, such as                tree (e.g. Fig. 1(i)). The fusion tree is always constructed
+                                                  Projected Entangled Pair States (PEPS),11–15 and the                  on a linear ordering of anyons, and while the 1-D lattice
+                                                                                                                                                                                                            2
+                                                             a1              a2           a3        a4         a5       a6
+ (i)                                                                                                                                                             a1   a2        a3     a4       a5   a6
+                                                                 u1                                     u3
+                                                                  a7 u2                                   a8 u                                                   u1                    u3
+                                                                                                              4
+                                                                                                                                                                  a7 u2                  a8 u
+                       = aΣ
+                          ...a
+                               c a ...a u ...u a    1   10       1           5        9                      a10
+                                                                                                                                                                           a9
+                                                                                                                                                                                     a10
+                                                                                                                                                                                             4
+
+
+                                 1
+                             u1 ...u5
+                                          10
+                                                                                              u5
+                                                                                                                                                                                u5
+                                                                                                         1
+                                                                                                                                                                                            1
+                            a1                     a2
+ (ii)                                                                             a1                    a2
+                                                                                                                                            FIG. 2. The leaves of this fusion tree carry the charge labels a1
+                                                                                                                                            to a6 . An edge which is not a leaf, labelled with charge a10 , is
+                                                                                                   u1
+                                          u1            =R               a1a 2
+                                                                         a3                                                                 indicated by the large grey arrow. The portion of the fusion
+                                                                                              a3                                            tree extending from edge a10 out to the leaves is indicated
+                                         a3                                                                                                 by the grey ellipse. If a degeneracy index µ10 is associated
+                                                                                                                                            with charge a10 , then for a given value of a10 , index µ10 will
+                                                                                                                                            enumerate all compatible labellings of the highlighted portion
+         a1      a2        a3                                                                                      a1        a2        a3
+ (iii)                                                                                                                                      of the fusion tree.
+          u1                                                                                                                       u3
+                                                                                                                                  a6
+            a5
+                 u2        = aΣ  (F aa a a )(a ,u ,u )(a ,u ,u ) u
+                                                         4
+                                                             1       2   3
+
+                                                                                  5       1    2         6    3     4    4
+
+                      a4
+                              uu     6   3     4
+                                                                                                                                   a4       the fusion rules uniquely constrain all ai for i > n, and
+                                                                                                                                            provided there are no constraints on the total charge, the
+FIG. 1. (i) Example representation of a state |ψi in a fusion                                                                               total Hilbert space reduces to a product of local Hilbert
+tree basis for a system of 6 anyons. Labels ai indicate charges                                                                             spaces V, such that VL0 = V⊗n . For nonabelian anyons,
+associated with edges of the fusion tree graph, and labels ui                                                                               additional degrees of freedom arise because some fusion
+are degeneracies associated with vertices. The structure of                                                                                 rules admit multiple outcomes, permitting certain ai (i >
+the tree corresponds to a choice of basis, and does not affect                                                                              n) to take on multiple values while remaining consistent
+the physical content of the theory. (ii) Braiding may be used                                                                               with the fusion rules, and the resulting Hilbert space does
+to change the ordering of the leaves of a fusion tree basis, or                                                                             not necessarily admit a tensor product structure.
+to represent anyon exchange. (iii) F -moves convert between                                                                                   We will now associate a parameter νi,ai with each
+the bases associated with different fusion trees.
+                                                                                                                                            charge on the fusion tree, which we will term the de-
+                                                                                                                                            generacy. This parameter corresponds to the number of
+naturally exhibits such an ordering, for 2-D lattices some                                                                                  possible fusion processes by which charge ai may be ob-
+linear ordering must be imposed. Each line is then la-                                                                                      tained at location i. Where charge ak arises from the
+belled with a charge index ai such that the labels are                                                                                      fusion of charges ai and aj , then νk,ak will satisfy
+consistent with the fusion rules of the anyon model,                                                                                                                X
+                            X                                                                                                                              νk,ak =       νi,ai νj,aj Naaikaj .      (2)
+                                   c
+                    a×b→        Nab  c.                 (1)                                                                                                            ai ,aj
+                                                         c
+                                                                                                                                            For systems where the only degrees of freedom are any-
+For anyon types where some entries of the multiplicity                                                                                      onic, degeneracies on the physical lattice L0 (i.e. νi,ai ,
+           c
+tensor Nab      take values greater than 1, a label ui is also                                                                              1 ≤ i ≤ n) will take values of 0 or 1 depending on whether
+affixed to the vertex which represents the fusion process                                                                                   a charge ai is permitted on lattice site i. Higher values
+to distinguish between the different copies of charge c.                                                                                    of νi,ai may be used on the physical lattice if there is
+The edges of the graph which are connected to a vertex                                                                                      also a need to represent additional non-anyonic degrees
+only at their lower end are termed “leaves” of the fusion                                                                                   of freedom, enumerated by indices b1 . . . bn .
+tree, and we will associate these leaves with the charge                                                                                       Up to this point we have parameterised our Hilbert
+labels a1 . . . an . Different orderings of the leaves on a                                                                                 space in terms of explicit labellings of the fusion tree.
+fusion tree may be interconverted by means of braiding                                                                                      We now adopt a different approach: Consider an edge
+(Fig. 1(ii)), and different fusion trees, corresponding to                                                                                  i of the fusion tree which is not a “leaf”. As well as
+different bases of states, may be interconverted by means                                                                                   labelling this edge with a charge ai we may introduce a
+of F moves (Fig. 1(iii)).28,29 In some situations it may                                                                                    second index µi , running from 1 to νi,ai . Each pair of
+also be useful to associate a further index bi with each of                                                                                 values {ai , µi } may be associated with a unique charge
+the leaves of the fusion tree. For example, if the leaves                                                                                   labelling for the portion of the fusion tree from edge i
+are equated with the sites of a physical lattice, then this                                                                                 out to the leaves, with these labellings being compatible
+additional index may be used to enumerate additional                                                                                        with the fusion rules in the presence of a charge of ai on
+non-anyonic degrees of freedom associated with that lat-                                                                                    site i (for an illustration of this, see Fig. 2). Provided we
+tice. For simplicity we will usually leave these extra in-                                                                                  know the structure of the fusion tree above i and have a
+dices b1 . . . bn implicit, as we have done in Fig. 1, as they                                                                              systematic means of associating labellings of that portion
+do not directly participate in anyonic manipulations such                                                                                   of the tree with values of µi , then in lieu of stating the
+as F moves and braiding.                                                                                                                    values of all aj for edges j involved in that portion of the
+   Let the total number of charge labels on the fusion                                                                                      tree, we may simply specify the value of the degeneracy
+tree be given by m, where m ≥ n. For abelian anyons                                                                                         index µi . In this way we may specify an entire state in
+                                                                                                                                            3
+
+                                 am= 1 ,   =1            am= 1 ,   =2
+                                           m                       m
+                                                                                 anyons by means of the vector c1µm′ . For simplicity of
+                                                                                 notation, we will take greek indices from the beginning
+                                                                                 of the alphabet to correspond to pairs of indices {ai , µi }
+                                 1
+                        :                                                        consisting of a charge index and the associated degener-
+               am , m                          1                       1
+                                                                                 acy index. The vector c1µm′ will therefore be denoted
+                                                                                 simply cα , with the understanding that in this case the
+       am= ,     =1              am= ,     =2            am= ,     =3            charge component am′ of multi-index α takes only the
+                m                          m                       m
+                                                                                 value 1. (Multi-index α is raised as we will shortly in-
+                                                                                 troduce a diagrammatic formalism in which vector c is
+       1                                                                         represented by an object with a single upward-going leg.
+                                     1                                           In this formalism, upward- and downward-going legs may
+                                                                                 be associated with upper and lower multi-indices respec-
+                                                                                 tively.)
+FIG. 3. Example enumeration of states according to am and
+µm for a fusion tree describing four Fibonacci anyons. The
+Fibonacci anyon model has one non-vacuum charge label (τ )
+                                                                                             III.   ANYONIC OPERATORS
+and one non-trivial fusion rule, τ × τ → 1 + τ . Because the
+charges 1 and τ are both self-dual, no arrows are required
+on diagrammatic representations of Fibonacci anyon fusion                           We will divide our consideration of anyonic opera-
+trees.                                                                           tors into two parts. First we shall consider operators
+                                                                                 which map a state on some Hilbert space H into an-
+                                                                                 other state on the same Hilbert space. When applied to
+the form                                                                         a state represented by cα , such an operator leaves the
+                                                                                 degeneracies of the charges in multi-index α unchanged.
+                                X
+                        |ψi =        cam µm |am , µm i                     (3)
+                                µm                                               We will therefore call these degeneracy-preserving any-
+                                                                                 onic operators. Then we will consider those operators
+where am is the total charge obtained on fusing all the                          which map a state on some Hilbert space H into a state
+anyons. The index µm , which is the degeneracy index                             on some other Hilbert space H′ . These operators may
+associated with the total charge of the fusion tree, may                         represent processes which modify the environment, for
+be understood as systematically enumerating all possi-                           example by adding or removing lattice sites, and also
+ble labellings of the entire fusion tree including charge                        play an important part in anyonic tensor networks, for
+labels, vertex labels, and any labels associated with ad-                        instance taking the role of isometries in the TTN and
+ditional non-anyonic degrees of freedom. For an example,                         MERA. As these operators can change the degenera-
+see Fig. 3. Note that for a given edge i, the value of the                       cies of charges in a multi-index α, we will call them
+degeneracy νi,ai may vary with the charge ai and conse-                          degeneracy-changing anyonic operators. More generally,
+quently the range of the degeneracy index µm in Eq. (3)                          the degeneracy-preserving anyonic operators may be con-
+is dependent on the value of the charge am .                                     sidered a subclass of the degeneracy-changing anyonic
+   The notation of Eq. (3) should be contrasted with that                        operators for which H = H′ .
+of Fig. 1(i). In the latter, the number of indices on c
+depends upon the number of charge labels on the fu-
+sion tree, whereas in the former, the tensor describing                             A.    Degeneracy preserving anyonic operators
+the state is always indexed by just one pair of labels—
+charge and degeneracy—which will prove advantageous
+                                                                                    We begin with those operators which map states on
+in constructing a tensor network formalism for systems
+                                                                                 some Hilbert space H into other states on the same
+of anyons.
+                                                                                 Hilbert space H. Examples of these operators include
+   We now choose to restrict our attention to systems hav-
+                                                                                 Hamiltonians, reduced density matrices, and unitary
+ing the identity charge. We may do this without loss of
+                                                                                 transformations such as the disentanglers of the MERA.
+generality as a state on n lattice sites with a total charge
+                                                                                    First, we introduce splitting trees. The space of split-
+am may always be equivalently represented by a state on
+                                                                                 ting trees is dual to the space of fusion trees. While
+n + 1 lattice sites whose total charge is the identity, with
+                                                                                 the space of fusion trees consists of labelled directed
+a charge am on lattice site n + 1. This additional charge
+                                                                                 graphs whose number of branches increases monotoni-
+annihilates the total charge am of sites 1 . . . n to give the
+                                                                                 cally when read from bottom to top, the space of splitting
+vacuum. The expression for |ψi then becomes
+                                                                                 trees consists of labelled directed graphs whose number
+                   |ψi =
+                         X
+                            c1µm′ |1, µm′ i                (4)                   of branches increases monotonically when read from top
+                                µm′
+                                                                                 to bottom. An inner product is defined by connecting the
+                                                                                 leaves of fusion and splitting trees which have equivalent
+where µm′ ranges from 1 to the dimension of the Hilbert                          linear orderings of the leaves (braiding first if necessary),
+space of the system of n sites with total charge am . Con-                       then eliminating all loops as per Fig. 4(i), with F moves
+sequently we may represent the state |ψi of a system of                          performed as required.
+                                                                                                                                                                                                   4
+
+(i)
+                    a1                                                                                a1
+                        u1                                                                                                                                        a
+                                                                                                                                                                      b
+              a2
+                        u2
+                             a3    =                                                                                                                                   c
+                                                                                                                                                                      d
+                    a4                                                                                                                                            e
+
+
+(ii)                                                                                       a'1        a'2
+                                                                                                  u'1                                  FIG. 5. An operator acting on four Fibonacci anyons. The
+                M = Σ M a a a a'a'u u' a                  1   2 3       1 2    1 1
+                                                                                             3                                         values of the coefficients Mabcde may be specified as a block-
+                              a1 a2a3 a'a'                                                        u1
+                                  u1 u'1
+                                         1 2
+                                                                                                                                       diagonal matrix Mαβ , for example as in Table I.
+                                                                                           a1         a2
+
+(iii)                                                                                                                 a'5        a'6   Similarly, values of β correspond to pairs {aj , µj } where
+                                                                                                                                u'6    aj has degeneracy νaj . For degeneracy-preserving any-
+                                                                                                                     a11               onic operators the charge indices ai and aj necessarily
+                                                                                                                         u6
+                                                                                   a1            a2         a3   a4 a5                 take on the same range of values, and νai = νaj when
+                                                                                                                          a6
+                                                                                    u1                           u3
+                                                                                                                   a8 u
+                                                                                                                                       ai = aj . The values of νai may equivalently be calcu-
+                                                                                     a7 u2                                  4
+                                                                                                                                       lated from either the fusion tree making up the top half
+M        = Σ Ma a a a'a'u u' ca ...a u ...u a
+                               5   6   11    5    6   6   6         1         10   1         5
+                                                                                                       9           a10                 or the splitting tree making up the bottom half of the
+           all a, a'                                                                                        u5
+           all u, u'                                                                                                                   operator diagram.
+                                                                                                                  1                       A well-defined anyonic operator M̂ must respect the
+                                                                                                                                       (quantum) symmetry group of the anyon model, and con-
+                                                 a1       a2        a3         a4            a5         a6                             sequently all entries in Mα β for which ai 6= aj will be
+                                                 u1                                u3                                                  zero. However, in contrast with cα we do not require
+                                                  a7 u2                              a8 u
+                                                                                         4                                             that ai = aj = 1. When M̂ is a degeneracy-preserving
+              = aΣ
+                 ...a
+                      c'a ...a u ...u a
+                                   1        10   1        5    9                       a10                                             operator, matrix Mα β is therefore a square matrix of side
+                    1    10
+                   u1 ...u5                                             u5                                                             length
+                                                                                       1                                                                            X
+                                                                                                                                                              ℓM =     ν ai ,                  (5)
+FIG. 4. (i) Loops are eliminated by replacing them with                                                                                                                    ai
+an equivalent numerical factor determined by the normalisa-
+tion convention. The factor given here corresponds to the
+                                                                                                                                       which may be organised to exhibit a structure which is
+diagrammatic isotopy convention employed in Ref. 29. (ii)                                                                              block diagonal in the charge indices ai and aj , and for
+Definition of a simple two-site anyonic operator. (iii) Appli-                                                                         which the blocks are also square. As an example consider
+cation of an operator to a state is performed by connecting                                                                            Fig. 5, which shows an operator acting on four Fibonacci
+the diagrams’ free legs. By performing F moves and elimi-                                                                              anyons. An example matrix Mα β for an operator of this
+nating loops (and in more complex examples, also braiding)                                                                             form is given in Table I, from which the entries of Mabcde
+it is possible to obtain an expression for the resulting state in                                                                      can be reconstructed, e.g. Mτ 1τ 1τ = 3.
+the original basis.
+
+                                                                                                                                            B.   Degeneracy changing anyonic operators
+   Anyonic operators may always be written as a sum
+over fusion and splitting trees, such as the two-site oper-                                                                               We now introduce the second class of anyonic oper-
+ator M̂ shown in Fig. 4(ii), and for degeneracy-preserving                                                                             ators, which map states in some Hilbert space H into
+anyonic operators it is always possible to choose the split-                                                                           some other Hilbert space H′ . These operators may re-
+ting tree to be the adjoint of the fusion tree. To apply an                                                                            duce or increase the degeneracy of any charge present in
+operator to a state the two corresponding diagrammatic                                                                                 the spaces on which they act, and may even project out
+representations are connected as shown in Fig. 4(iii), and                                                                             entire charge sectors by setting their degeneracy to zero.
+closed loops may be eliminated as shown in Fig. 4(i). Se-                                                                              When these operators are written in the conventional no-
+quences of F moves, braiding, and loop eliminations may                                                                                tation of Fig. 4, the fusion and splitting trees will not
+be performed until the diagram has been reduced once                                                                                   be identical. Further, we may choose to allow combina-
+more to a fusion tree without loops on a lattice of n sites.                                                                           tions of degeneracies which do not naturally admit com-
+   Much as the state of an anyonic system may be repre-                                                                                plete decomposition into individual anyons. For exam-
+sented by a vector cα , anyonic operators may be repre-                                                                                ple, a degeneracy-changing operator may map a state on
+sented by a matrix Mα β . Each value of α corresponds to                                                                               five Fibonacci anyons (having total degeneracies ν1 = 3,
+a pair {ai , µi } where ai is a possible charge of the cen-                                                                            ντ = 5) into a state having degeneracies ν1 = 2, ντ = 2.
+tral edge of the operator diagram (e.g. a3 in Fig. 4(ii)),                                                                             As these degeneracies do not admit decomposition into
+and µi is a value of the degeneracy index associated with                                                                              an integer number of nondegenerate anyons, it is neces-
+charge ai . We will denote the degeneracy of ai by νai .                                                                               sary to associate an index ui with the single open leg of
+                                                                                                                                     5
+
+
+                                          aj , µj
+                                 1, 1 1, 2 τ, 1 τ, 2 τ, 3
+                        1, 1      1 0.5 0         0   0
+                                                           
+
+   Mα β =               1, 2    0.5 1       0    0   0     
+               ai ,µi                                      
+                        τ, 1     0    0     1    2 −1      
+                                                                    FIG. 6. Diagrammatic representation of operators P̂ (1) (6)
+                        τ, 2     0    0     2    3 −1
+                                                           
+                                                                     and P̂ (2) (7). The charges on all leaves are non-degenerate.
+                        τ, 3      0    0     1    1   1
+
+              ai µi a b c           aj µj   e d c                     also be used in tensor network algorithms as part of an
+               1   1    1 τ 1       1   1   1 τ 1                     efficient representation of particular states or subspaces
+               1   2    τ τ 1       1   2   τ τ 1
+                                                                      of a Hilbert space, for example the ground state or the
+                                                                      low energy sector of a local Hamiltonian.
+               τ   1    1 τ τ       τ   1   1 τ τ
+                                                                         This distinction between degeneracy-changing and
+               τ   2    τ 1 τ       τ   2   τ 1 τ                     degeneracy-preserving anyonic operators is clearly seen
+               τ   3    τ τ τ       τ   3   τ τ τ                     with a simple example. Let |ψi be a state on six Fi-
+                                                                      bonacci anyons. This state can be parameterised by a
+TABLE I. Matrix representation Mαβ for an example opera-              vector cα , which has five components. We now define
+tor of the form shown in Fig. 5. Multi-index α corresponds            two projection operators, P̂ (1) and P̂ (2) (Fig. 6), each
+to index pair {ai , µi } and multi-index β corresponds to pair
+                                                                      of which acts on the fusion space of anyons τ1 and τ2 .
+{aj , µj }. Subject to an appropriate ordering convention for
+µi and µj , these indices may be related to the fusion tree la-       Operator P̂ (1) is degeneracy-preserving, and projects cα
+bels a, b, c, d, e of Fig. 5 as shown. Note that as c is the charge   into the subspace in which anyons τ1 and τ2 fuse to the
+on the central leg of Fig. 5, all nonzero entries of Mαβ satisfy      identity. Its matrix representation is
+ai = aj = c.                                                                                               !
+                                                                                            (1) β      1 0
+                                                                                          P α =                              (6)
+                                                                                                       0 0
+the fusion tree. This index behaves identically to the ver-
+tex indices ui of Fig. 1, serving to enumerate the different          where the first value of each multi-index corresponds to
+copies of each individual charge, and as with the vertex              a charge of 1, and the second to a charge of τ . Operator
+indices of Fig. 1, it is absorbed into the degeneracy index           P̂ (2) performs the same projection, but is degeneracy-
+µi .                                                                  changing. Its matrix representation is written
+   As a further example, a state having degeneracies ν1 =                                        (2) β
+4, ντ = 4 could be associated with a fusion tree having                                      P      α = ( 1 0 ).                   (7)
+either one leg, or two legs each with degeneracies ν1 = 0,
+ντ = 2. Again, indices ui would have to be associated                 Both operators perform equivalent projections, in the
+with each open leg.                                                   sense that
+   Matrix representations of degeneracy-changing any-
+                                                                                  hψ|P̂ (1)† P̂ (1) |ψi = hψ|P̂ (2)† P̂ (2) |ψi.   (8)
+onic operators may also be constructed, and when they
+are written in block diagonal form, the matrices and                  When P̂ (1) acts on |ψi it leaves the Hilbert space un-
+their blocks may be rectangular rather than square.                   changed, and hence the vector c′α describing state |ψ ′ i =
+Degeneracy-changing anyonic operators therefore repre-
+                                                                      P̂ (1) |ψi is once again a five-component vector, although
+sent a generalisation of the degeneracy-preserving any-
+                                                                      in an appropriate basis some components will now nec-
+onic operators discussed in Sec. III A. It is worth not-
+                                                                      essarily be zero. In contrast P̂ (2) explicitly reduces the
+ing that the presence of indices ui on the open legs of
+                                                                      dimension of the Hilbert space, and the vector c′′α de-
+the fusion or splitting trees of an operator do not auto-
+                                                                      scribing state |ψ ′′ i = P̂ (2) |ψi is of length two, describ-
+matically imply that it is a degeneracy-changing anyonic
+                                                                      ing a fusion tree on only four Fibonacci anyons (as both
+operator: The defining characteristic of a degeneracy-
+                                                                      τ1 and τ2 have been eliminated). One consequence of
+preserving anyonic operator is that it maps a state in a
+Hilbert space H into a state in the same Hilbert space                this distinction is that while (P̂ (1) )2 = P̂ (1) , the value of
+H, and consequently both the matrix as a whole and all                (P̂ (2) )2 is undefined.
+of its blocks are square. Thus a degeneracy-preserving
+anyonic operator may act on states having additional in-
+dices ui on their open legs, and the resulting state may                    IV.    ANYONIC TENSOR NETWORKS
+be expressed in the form of the same fusion tree, with
+the same additional indices on the open legs.                                        A.    Diagrammatic notation
+   Operators which change degeneracies may represent
+physical processes which change the accessible Hilbert                   The diagrammatic notation conventionally employed
+space of a system. As we will see in Sec. V A, they may               in the study of anyonic systems, and used here in Figs. 1
+                                                                                                                             6
+
+      (i)                                                         legs of the grey shapes are each associated with a multi-
+                                                                  index, they carry both degeneracy and charge indices.
+                  =                         M = M                 Consequently it is not necessary to explicitly assign la-
+                                                                  bels to the fusion/splitting trees, as these labellings are
+                               c                                  contained implicitly in the degeneracy index (for example
+                                                                  see Table I, where specifying the values of {ai , µi } and
+                                                                  {aj , µj } is equivalent to fully labelling the fusion and
+      (ii)
+                                                                  splitting trees of Fig. 5).
+                                            M                        The fusion or splitting tree associated with a particu-
+                                                                  lar multi-index may be manipulated in the usual way by
+                                                                  means of braids and F moves, recalling that each compo-
+                                                                  nent of the tensor is associated with a particular labelling
+             M        =                                           of the fusion and splitting trees via the corresponding val-
+                                                                  ues of the multi-indices. Manipulations performed upon
+                                                                  a particular tree thus generate unitary matrices which act
+                                       c                          upon the multi-index that corresponds to the labellings
+                                                                  of that particular tree.
+                                                                     The application of an operator to a state is, unsur-
+                                                                  prisingly, performed by connecting the appropriate dia-
+                      =                                           grams, as shown in Fig. 7(ii). For operators of the type
+                                                                  discussed in Sec. III A, the outcome is necessarily a new
+                                                                  state in the same Hilbert space, which consequently can
+                                       c'                         be described by a new state vector c′α , as shown. How-
+                                                                  ever, in general an operator M̂ will not act on the entire
+FIG. 7. (i) Diagrammatic representation of a state |ψi and        Hilbert space of the system, and so will be described by
+two-site operator M̂ expressed in terms of degeneracy indices.    a tensor constructed on the fusion space of some subset
+(ii) Application of M̂ to state |ψi. Grey shapes represent ten-   of lattice sites, and not on the system as a whole. Oper-
+sors with charge and degeneracy multi-indices, with each leg      ator M̂ acting on state |ψi in Fig. 7(ii) is an example of
+of the shape corresponding to one charge and degeneracy in-
+                                                                  this. Because cα describes a six-site system but Mα β is
+dex pair. These diagrams represent the same state, operator,
+and process as Fig. 1(i) and Fig. 4(ii)-(iii).
+                                                                  constructed on the fusion space of two sites, the multi-
+                                                                  indices of Mα β span a significantly smaller Hilbert space
+                                                                  than that of cα and we cannot simply write
+
+and 4, is well suited to the complete description of any-                                c′β = cα Mα β                     (9)
+onic systems, as it provides a physically meaningful de-
+piction of the entire Hilbert space. However, the number          (using Einstein notation, where repeated multi-indices
+of parameters required for such a description grows expo-         are assumed to be summed). Instead, we must under-
+nentially in the system size, and because it is necessary to      stand how to expand the matrix representation of an op-
+explicitly assign every index to a specific charge or degen-      erator on some number of sites x, to obtain its matrix
+eracy, specification of a tensor network rapidly becomes          representation as an operator on x′ sites, where x′ > x.
+inconveniently verbose (for example see Fig. 4(iii)).
+   In the preceding Sections, we developed techniques
+whereby anyonic states and operators could be repre-
+sented as vectors and matrices, bearing only one or two                  B.   Site expansion of anyonic operators
+multi-indices apiece. We now introduce the graphical no-
+tation which complements this description, and in which                                          c
+                                                                     The multiplicity tensor Nab   describes the fusion of two
+we will formulate anyonic tensor networks. Fig. 7(i) gives        charges without degeneracies. It is easily extended to
+the graphical representations of a state |ψi associated           incorporate degeneracies of the charges, and we will de-
+                                                                                                             γ
+with a vector cα , and of an operator M̂ associated with          note this expanded multiplicity tensor Ñαβu    where multi-
+a matrix Mα β . The circle marked c corresponds to the            indices α, β, and γ are associated with the pairs {a, µa },
+vector cα , and the circle marked M corresponds to the            {b, µb }, and {c, µc } respectively, and for given values of
+matrix Mα β . In general, grey circles correspond to ten-         α, β, and γ, u runs from 1 to Nab c
+                                                                                                      . The degeneracies asso-
+sors, and the number of legs on the circle corresponds            ciated with charges a, b, and c are denoted νa , νb , and νc
+to the number of multi-indices on the associated tensor.          respectively. As with µa , µb , and µc , there is an implicit
+Each multi-index is also associated with a fusion or split-       additional index on each degeneracy νx representing the
+ting tree structure, which is specified graphically. For          edge of the tree on which charge x resides. The values of
+reasons to be discussed shortly, we will require that no          νa and νb may be chosen arbitrarily (for example, νa |a=1
+tensor ever have more than three multi-indices. As the            may differ from νb |b=1 ), but the degeneracies associated
+                                                                                                                               7
+
+                  Pair Assigned pentuplet                          the total number of multi-indices on the tensor does not
+                 {c, µc } {a, µa , b, µb , u}                      at any time exceed three. In constructing and manipu-
+                  1, 1     1, 1, 1, 1, 1                           lating a tensor network for a system of anyons, we will
+                  1, 2     τ, 1, τ, 1, 1                           require only objects which respect the fusion rules of the
+                                                                   anyon model. It is a defining property of such objects
+                  1, 3     τ, 1, τ, 2, 1
+                                                                   that when the number of multi-indices they possess is
+                  τ, 1     1, 1, τ, 1, 1
+                                                                   reduced to 1 by repeated application of Ñ and Ñ † , non-
+                  τ, 2     1, 1, τ, 2, 1                           zero entries may be found only in the vacuum sector. We
+                  τ, 3     τ, 1, 1, 1, 1                           imposed this requirement for states in Sec. II, and it is
+                  τ, 4     τ, 1, τ, 1, 1                           equivalent to the restriction we imposed on anyonic op-
+                  τ, 5     τ, 1, τ, 2, 1                           erators in Sec. III A. In Ref. 30 an equivalent condition
+                                                                   was observed for tensors remaining unchanged under the
+                                  γ
+TABLE II. Construction of Ñαβu     for a fusion vertex for Fi-    action of a Lie group, and these tensors were termed in-
+bonacci anyons. In this example a may take charges 1 and           variant. When working with invariant tensors, we may
+τ each with degeneracy 1, and b may take charges 1 and τ           separately evaluate the components of the tensors act-
+with degeneracies 1 and 2 respectively. By Eq. (2), charge c       ing on the degeneracy spaces (e.g. the nonzero blocks
+may therefore take values 1 and τ with degeneracies 3 and 5        of Mα β ), and the factors arising from loops and vertices
+respectively. A correspondence between the values of multi-
+                                                                   of the associated spin network. This property greatly
+index γ and of multi-indices α and β is established in some
+systematic manner, with each assignation satisfying c ∈ a × b,
+                                                                   simplifies the contraction of pairs of tensors.
+and for Fibonacci anyons the index u is trivial as all multi-         In addition to increasing or decreasing the number of
+           c
+plicities Nab are zero or one. An example assignation is shown     legs of a tensor, we may also use Ñ to “raise” the matrix
+in the table. The corresponding entries of Ñ are then set to      representation of an operator from the space of x sites to
+1, with all other entries zero. For example, the fourth row        the space of (x + x′ ) sites. This is shown in Fig. 8, and
+                  (τ,1)
+indicates that Ñ(1,1)(τ,1)1 = 1.                                  the matrix representation of the raised operator is given
+                                                                   by
+
+with the values of c must satisfy                                                   M ′α β = Mγ δ Ñ †γǫu β
+                                                                                                      α Ñδǫu               (11)
+                         X
+                                    c
+                                                                   where multi-index ǫ describes the fusion space of all sites
+                    νc =     νa νb Nab                     (10)    in (x + x′ ) but not in x. Because the numeric factors
+                            a,b                                    associated with loops, vertices, and braiding (where ap-
+                                                                   plicable) are handled separately, no factors of quantum
+in accordance with Eq. (2). When this constraint is satis-
+                                                                   dimensions appear in Eq. (11).
+fied, every quadruplet of indices {a, µa , b, µb } correspond-
+ing to a unique pair of choices for α and β may be asso-              To act an operator M̂ on a state |ψi in the matrix
+ciated with Nab c
+                  distinct pairs of indices {c, µc } for each      representation, we therefore connect the diagrams for M̂
+c ∈ a × b. These pairs {c, µc } are enumerated by the              and |ψi, eliminate all loops, and then raise the matrix
+additional index u. This defines a 1:1 mapping between             representation of the operator M̂ using Eq. (11), repeat-
+sets of values on {a, µa , b, µb , u} and pairs {c, µc }, and we   edly if necessary, until the resulting matrix M ′α β may be
+                                        γ
+set the corresponding entries in Ñαβu     to 1, with all other    applied directly to the state vector cα . Similarly it is pos-
+entries being zero. A simple example is given in Table II.         sible to combine the matrix representations of operators,
+                                                                   by connecting their diagrams appropriately, eliminating
+                                              c                    loops, and performing any required raising so that both
+   By virtue of their derivation from Nab       , the object
+   γ
+Ñαβu and its conjugate Ñ γ   †αβu
+                                    represent application of       operators act on the same fusion space. Their matrix
+the anyonic fusion rules, and may be associated with               representations can then be combined to yield the ma-
+vertices of the splitting and fusion trees. Under the iso-         trix representation of the new operator:
+topy invariance convention there is an additional factor of                           (1×2) β  (1) γ (2) β
+               1
+[dc /(da db )] 4 associated with the fusion of charges a and                      M        α =M α M γ ,                     (12)
+b into c, where dx is the quantum dimension of charge x,           and the fusion/splitting tree associated with this new op-
+and similarly for splitting, but we will account for these         erator is obtained as shown in Fig. 8.
+factors separately. Thus constructed, the tensors Ñ sat-             Note that as yet, we have not described how two ob-
+       γ
+isfy Ñαβu  Ñ †αβu
+                 ǫ   = δǫ γ .                                      jects may be combined if their multi-indices are both up
+   When used as a representation of the fusion rules, the          or both down, and are connected by a curved line. To
+                                      γ
+generalised multiplicity tensor Ñαβu     and its conjugate        contract such objects together, it is necessary to under-
+Ñ †αβu
+    γ   permit us to increase or decrease the number of            stand how bends act on the central matrix of an opera-
+multi-indices on a tensor in a manner which is consistent          tor. Once this is understood, the bend can be absorbed
+with the fusion rules of the quantum symmetry group.               into one of the central matrices, so that the connection
+This process is reversible provided the symmetry group             is once again between an upper and a lower multi-index
+is abelian or, for a nonabelian symmetry group, provided           as in Eq. (12). This process is described in Sec. IV C.
+                                                                                                                             8
+
+ (i)                                    (ii)                               (i)
+                                                                                                 =
+        M
+
+
+        x         x'            (iii)
+                                                                           (ii)
+ (iv)
+                                                                                                 =
+                                               M
+                         M
+             M'
+                                                                  FIG. 9. (i) F move, and (ii) braiding, performed on a section
+                                                                  of fusion tree in the diagrammatic notation of Sec. IV A.
+
+
+
+                                                                  transformations in the space of labelled tree diagrams.
+                                                                  Identifying the leg on which the unitary matrix is to be
+                                                                  inserted, the relevant region of the space of labelled dia-
+                                                                  grams is then enumerated by the multi-index which can
+                                                                  be associated with this leg (compare Fig. 2).
+FIG. 8. “Raising” of an operator M̂ from sites x to sites            Braiding is of particular importance when working in
+x + x′ : (i) Operator M̂ defined only on sites denoted x. (ii)    two dimensions, as an operator will necessarily be de-
+Resolutions of the identity are inserted above and below M̂ ,     fined with respect to some arbitrary linear ordering of
+being constructed from tensors Ñ and Ñ † . The central por-     its legs, and when manipulating a tensor network it may
+tion of this diagram is identified as corresponding to the new    be necessary to map between this original definition and
+matrix Mα′ β which describes M̂ on x + x′ . (iii) Loop and ver-   other equivalent definitions, corresponding to different
+tex factors in the central region are evaluated separately and    leg orderings. For example, let M̂ be a four-site anyonic
+eliminated. (iv) The tensor network corresponding to the new      operator as shown in Fig. 10(i), which we wish to apply
+central portion is contracted. The Ñ and Ñ † tensors outside    to a 2-D lattice. For the indicated linearisation of this
+the central region become vertices of the fusion and splitting    lattice, application of M̂ will require braiding as shown
+trees associated with Mα′ β . Together the trees and the matrix
+                                                                  in Fig. 10(ii). By evaluating the unitary transformations
+Mα′ β constitute the raised version of M̂ .
+                                                                  corresponding to these braids and absorbing them into
+                                                                  Mα β , we may define a new operator M̂ ′ which acts di-
+                                                                  rectly on the linearised lattice without any intervening
+        C.    Manipulation of anyonic operators                   manipulations of the fusion/splitting trees.
+                                                                     We will also frequently wish to deal with tensor legs
+  As observed in Sec. IV B, when we describe a system             which bend vertically through 180 degrees. If working
+entirely in terms of objects invariant under the action of        with an anyon model that has non-trivial Frobenius–
+the symmetry group, we may account separately for the             Schur indicators, then indicator flags must be applied
+numerical normalisation factors associated with the spin          to all bends. Like F moves and braiding, the reversal
+network. However, as well as affecting these numerical            of a Frobenius–Schur indicator flag is a unitary transfor-
+factors, transformations of the fusion or splitting tree of       mation, and once again this leads to the introduction of
+an anyonic operator will typically also generate unitary          a unitary matrix which can be absorbed into a nearby
+matrices which act on the matrix representation of the            existing tensor. However, we may wish to perform other
+operator. These matrices respect the symmetry of the              operations on bends, such as absorbing them into fusion
+anyon model, and thus can be written as block-diagonal            vertices or the central matrices of anyonic operators. We
+matrices where each block is a unitary matrix acting on           may also need to move a matrix Mα β across a bend. We
+a particular charge sector. In terms of the diagrammatic          must therefore develop the description of bends in the
+notation of Sec. IV A, F moves and braids therefore re-           new diagrammatic formalism.
+sult in the insertion of a unitary matrix, as shown in               In Ref. 29 a prescription for absorbing bends into fu-
+Fig. 9. These matrices, whose entries are derived from            sion vertices is given in terms of tensors (Aab  c )uv and
+the tensors (Fdabc )(euv)(f u′ v′ ) and Rcab respectively, are    (Bcab )uv , derived from the F moves, and corresponding to
+raised if required, as described in Sec. IV B, and then           clockwise and counter-clockwise bends respectively. The
+contracted with Mα β , the matrix representation of the           absorption of a clockwise or counterclockwise bend into
+operator. To compute the unitary matrices involved, it            a fusion vertex is reproduced in Fig. 11(i), and results in
+suffices to recognise that F moves and braids are unitary         a vertex fusing upward- and downward-going legs. We
+                                                                                                                                                                                             9
+
+                                                          1       2       3     4
+               (i)            3       4
+                                                                                                         (i)                   a1      a2
+                                                                                                                                                                          a2
+                         1        2
+
+
+                                                                                                                                a3
+                                                                                                                                     u1
+                                                                                                                                            =Σ
+                                                                                                                                             u
+                                                                                                                                               (A aa a )u u
+                                                                                                                                                        1
+
+                                                                                                                                                        3
+                                                                                                                                                            2
+
+                                                                                                                                                                1   2
+                                                                                                                                                                               u2
+                                                                                                                                                2                        a1    a3
+                                                  =                   M
+                             M                                                                                     a1      a2
+                                                                                                                                                                          a1
+                                                                                                                                                  aa
+                                                                                                                     u1                     =Σ
+                                                                                                                                             u
+                                                                                                                                               (B a )u u
+                                                                                                                                                        1
+
+                                                                                                                                                        3
+                                                                                                                                                            2
+
+                                                                                                                                                                1   2          u2
+                                                                                                                                                2
+                              3       4                                                                                   a3
+                         1        2
+                                                                                                                                                                         a3    a2
+                                                          1       2       3     4
+
+                                              3       2
+                                                                                                         (ii)
+(ii)                                                                          (iii)
+           3         4
+                                          1                   4                     1   3        2   4
+                                                                                                                                                    =
+       1        2
+
+
+                                                                                                                                                                                    To M
+                                                                                                                                     To M
+
+
+
+
+           M                                      M                       =                 M'
+                                                                                                                                                    =
+           3         4
+                                                                                                                                                                        To M
+       1       2                                                                                                                To M
+
+                                          1                   4                     1   3        2   4
+                                                                                                         (iii)
+                                              3       2
+
+
+FIG. 10. (i) An operator M̂ acting on sites on a 2-D lattice is
+defined with respect to some arbitrary linear ordering of these
+sites. (ii) When manipulating the tensor network, it may on                                                                     =                   =                          =
+occasion be computationally convenient for the lattice to be
+linearised according to some alternative linearisation scheme.
+In this example, the imposed linearisation scheme is indicated
+by the dotted line. To apply M̂ to a different linearisation of                                          FIG. 11. Vertical bending of legs (i) in the standard dia-
+the lattice may require braiding. The orientation of the braids                                          grammatic notation, and (ii) in the diagrammatic notation of
+can be determined by putting the fusion tree of (i) onto the                                             Sec. IV A. White triangles represent Frobenius–Schur indica-
+2-D lattice, then smoothly deforming the lattice into a chain                                            tor flags. (iii) Legs on the matrix representations of states
+in accordance with the linearisation prescription. (iii) The                                             and operators may also absorb bends.
+unitary matrices corresponding to the required F moves and
+braiding operations may be absorbed into M̂ , defining a new
+operator M̂ ′ on the linearised lattice.
+                                                                                                            Knowing how the absorption of bends acts on a vertex
+                                                                                                         tensor, we may readily infer how the same process acts on
+now assign new tensors (Ñ CW )†αu             CCW †βu                                                   the matrix representation of an operator. In Fig. 11(iii)
+                                    γβ and (Ñ      ) αγ to
+such vertices, such that writing these transformations in                                                we see a bend absorbed into the matrix Mα β , result-
+                                                                                                                                                                     ′
+the notation of Sec. IV A is trivial. This is shown in                                                   ing in a new object with two lower multi-indices, Mαβ         .
+Fig. 11(ii).                                                                                             First we exploit the freedom to introduce fusion with the
+   Explicit expressions for the new vertex tensors (Ñ CW )†                                             trivial charge (denoted I), with degeneracy 1. The cor-
+and (Ñ CCW )† may be obtained by recognising that                                                       responding Ñ † object takes only one value on its upper
+Fig. 11(i) describes the action of unitary transformations                                               left multi-index, and is fully defined by Ñ †Iβ1
+                                                                                                                                                       γ   = δγ β . Ab-
+on Ñ †αβu . When the bend is counterclockwise, the cor-                                                 sorbing the bend into this fusion vertex as per Eq. (13)
+       γ
+                                                                                                         yields Aγ δ δδ ǫ δǫβ = Aγβ , which may be then combined
+responding unitary matrix is derived from (Aab   c )uv , and
+when the bend is clockwise, the unitary matrix is derived                                                with Mα β to give
+from (Bcab )uv . We will denote these unitary matrices Aγ δ                                                                             ′
+                                                                                                                                       Mαβ = Mα γ Aγβ .                                    (15)
+and Bγ δ respectively. We then have
+                                                                                                         In conjunction with the relationships given in Fig. 12,
+                             (Ñ CW )†αu     δ †αǫu
+                                      γβ = Aγ Ñ δ  δǫβ                                          (13)    this gives us the ability to move a matrix past a bend.
+                         (Ñ CCW )†βu     δ †ǫβu
+                                   αγ = Bγ Ñ δ  δǫα .                                           (14)    An example of this is given in Fig. 13, for which M and
+                                                                                                         M ′ are related according to
+and conjugation describes equivalent vertices Ñ CW and
+Ñ CCW when a bend is absorbed into a splitting tree.                                                                          Mα′ β = Aαγ Mδ γ κǫ δ B †ǫβ                                 (16)
+                                                                                                                                                                                    10
+
+ (i)                           (ii)            (iii)
+
+                  =                                           =           A                                            A'
+
+                                                                                                    (i)                                        (i)
+                                                                                                                                                                     C
+FIG. 12. Opposing pairs of Frobenius–Schur indicators (i) on
+a pair of bends equivalent to the identity, and (ii) on a pair
+of bends such as might be used when computing a quantum                       B                                            B
+trace. (iii) As an anyon model can always be specified such
+that the Frobenius–Schur indicators are ±1, reversing a pair of
+contiguous opposed Frobenius–Schur indicator flags is always
+                                                                                                  (ii)                                          (ii)
+free.
+
+(i)                (ii)               (iii)            (iv)
+                                                                          A                                            A
+       M         =        M'     =        M'           =   M'
+                                                                                                          (ii)                                       (ii)
+                                                                                                                                                                     C'
+
+
+FIG. 13. Moving a matrix across a bend in a tensor network                                                             B'
+                                                                              B
+diagram. (i) Initial diagram. (ii) Bends are absorbed into the
+matrix. (iii) New bends are introduced, in accordance with
+Fig. 12(i). (iv) A pair of contiguous, opposed Frobenius–Schur
+indicators are reversed, as per Fig. 12(iii). The initial and
+final matrices M and M ′ are related as specified in Eq. (16).          FIG. 14. The use of bends may permit the more efficient
+                                                                        contraction of pairs of anyonic operators. In the sequence of
+                                                                        events marked (i), operator Â is first raised to the space of
+where κǫ δ represents reversal of the Frobenius–Schur in-               three sites then contracted with B̂. In sequence (ii) the op-
+dicator flag on the lower bend. Finally, bending may                    erators are instead contracted using bends. For many anyon
+also allow more efficient contraction of pairs of anyonic               models the latter approach offers a significant computational
+operators, as shown in Fig. 14.                                         advantage.
+   Having described the action of bends, it is custom-
+ary also to introduce a second type of F move which is                            a1        a2                                                                  a1             a2
+                                                                                                                                                                          u3
+described by the tensor (Faa31aa42 )(a5 u1 u2 )(a6 u3 u4 ) (Fig. 15).
+                                                                              u1       a5
+This tensor may be derived from (Faa41 a2 a3 )(a5 u1 u2 )(a6 u3 u4 )                                        aa
+by bending, and as with (Faa41 a2 a3 )(a5 u1 u2 )(a6 u3 u4 ) these
+                                                                                             u2    = aΣ
+                                                                                                      uu
+                                                                                                         (F a a ) (a ,u ,u )(a ,u ,u )
+                                                                                                                           1
+
+                                                                                                                           3
+                                                                                                                               2
+
+                                                                                                                               4   5   1   2     6    3     4
+                                                                                                                                                                     a6
+                                                                                                           6   3   4                                                      u4
+F moves perform a transformation of the fusion tree, ac-                          a3        a4                                                                  a3             a4
+companied by the introduction of a unitary matrix which
+can be absorbed into the matrix representation of the                   FIG. 15. Now that we may bend legs up and down it is
+operator. These unitary matrices correspond to the con-                 customary to introduce a further type of F move, derived by
+secutive application of a bend, an F move of the original               applying bends to the one presented in Fig. 1(iii).
+type, and a second bend whose action is the inverse of
+the first.
+                                                                        However, it is conceivable that future algorithms might
+                                                                        involve superoperator-type objects whose graphical rep-
+           D.    Constructing a tensor network                          resentations interleave upward- and downward-pointing
+                                                                        legs. Concavities on these objects may be eliminated
+   Now that we have developed a formalism for anyonic                   by replacing some of their upward-pointing legs with
+tensors, we may convert an existing tensor network al-                  downward-pointing legs (or vice versa), followed by a
+gorithm for use with anyons. First, the tensor network                  bend (Fig. 16(i)-(ii)). A similar treatment may be ap-
+must be drawn in such a manner that every leg has a                     plied to any superoperators which arise during manipu-
+discernible vertical orientation. Although these orienta-               lations of the tensor network, introducing a pair of bends
+tions may be changed during manipulation of the tensor                  as in Fig. 12(i) and then absorbing one into the matrix
+network, an initial assignment of upward or downward                    representation of the object.
+direction is required. Second, all tensors must be repre-                  If working with an anyon model that has non-trivial
+sented by entirely convex shapes, such as circles or reg-               Frobenius–Schur indicators, then indicator flags must be
+ular polygons. For existing tensor network algorithms                   applied to all bends. Initial choices are a matter of con-
+such as MERA and PEPS, this requirement is trivial.                     venience, and it is frequently possible to assign these in-
+                                                                                                                            11
+
+                                                                  alent to those performed on the spin version of the ansatz,
+                                                                  differing only in that the degrees of freedom of the ten-
+                                                                  sor network are now expressed entirely by the at-most-
+                                                                  trivalent central objects, and certain topological elements
+                                                                  such as braids and vertical bends must be accounted for
+                                                                  in accordance with the prescriptions of Sec. IV C. These
+                                                                  changes may naturally imply minor changes to the ma-
+                                                                  nipulation algorithms, and we will see examples of this
+                                                                  in the 1-D MERA. Similar considerations will apply to
+                                                                  other tensor network algorithms.
+                                                                     Our construction of an anyonic tensor network draws
+                                                                  upon two important elements which have previously been
+                                                                  observed in other, simpler, physical systems:
+
+                                                                     1. Tensors in the ansatz exhibit a global symmetry,
+FIG. 16. Construction of an anyonic tensor corresponding                which may be nonabelian. Exploiting a nonabelian
+to a normal tensor with more than three legs. (i) The origi-            symmetry requires that the ansatz be written in
+nal tensor. (ii) If required, any concavities are eliminated by         the form of a trivalent tensor network. This has
+introducing bends. (iii) Frobenius–Schur indicators are as-             previously been observed and implemented for non-
+signed to the bends. (iv) Directions are assigned to all legs,          abelian Lie group symmetries such as SU (2).30
+consistent with the rest of the network. (v) Legs are collected
+together into fusion and splitting trees. The central object,        2. Tensors in the ansatz must be able to account
+representing degrees of freedom of the tensor, now has less             for non-trivial exchange statistics. This has pre-
+than four legs. (vi) If desired, bends can be re-absorbed into          viously been observed in the simulation of systems
+the fusion and splitting trees.                                         of fermions,31–38 where efficient implementation of
+                                                                        particle statistics can be achieved through the use
+                                                                        of “swap gates”.33–35,37
+dicators in opposed pairs, as shown in Fig. 12. If these
+paired indicators are not flipped or are only flipped in          In both cases, anyonic tensor networks extend the con-
+adjacent opposed pairs during subsequent manipulations            cepts introduced in previous work. The symmetry struc-
+of the tensor network, then they may frequently be left           ture of an anyon model may be a quantum group, for
+implicit.                                                         example a member of the series SU (2)k , k ∈ Z+ , rather
+   Next, if there exist charges in the anyon model which          than having to be a Lie group, and this permits repre-
+are not self-dual, a direction (represented by a solid ar-        sentation of nonabelian anyonic systems whose Hilbert
+row) must be assigned to every multi-index. Any tensor            space does not admit decomposition into a tensor prod-
+with more than three legs (e.g. M in Fig. 16) is then             uct of local Hilbert spaces. Similarly, anyonic braid-
+replaced by a trivalent tensor network consisting of a            ing may be implemented using a generalisation of the
+core object, e.g. Mα β , which contains the free param-           fermionic “swap gate” formalism. When braiding, parti-
+eters of the tensor, and as many copies of Ñ or Ñ † as          cle exchange may introduce transformation by a unitary
+are required to provide the correct output legs. These            matrix rather than by a sign, and efficient implementa-
+tensors Ñ , Ñ † correspond to vertices in the fusion and        tion of the resulting swap gates is particularly important
+splitting trees associated with Mα β , yielding the corre-        for the simulation of 2-D systems.
+sponding anyonic tensor. Objects with three legs or less             Although anyonic systems pose a number of unique
+can be directly identified with an anyonic tensor object          challenges, we see that these are addressed by develop-
+carrying the appropriate number of indices (i.e. three            ments based on existing techniques, and we therefore an-
+multi-indices and a vertex index u), though for consis-           ticipate that the resulting generalisations of existing ten-
+tency with the methods described in Sections IV B and             sor network ansätze should still be capable of accurately
+IV C we point out that it is possible to similarly replace        representing the states of an anyonic system.
+three-legged objects with anyonic operators consisting of
+a central matrix Mα β and a fusion or splitting vertex, if
+desired.                                                               E.   Contraction of anyonic tensor networks
+   Any bends introduced earlier may now be reab-
+sorbed, so that some vertices now correspond to (Ñ CW ),            The techniques described in Secs. IV B and IV C (F
+(Ñ CCW ), (Ñ CW )† , and (Ñ CCW )† . This step, however,       moves, braids, bending of legs, elimination of loops, dia-
+is optional as it may be more convenient for subsequent           grammatic isotopy, flipping of Frobenius–Schur indicator
+manipulations of the tensor network if the bends are left         flags, and the use of Ñ (†) tensors) suffice to contract any
+explicit. The anyonic tensors are then connected pre-             network of anyonic tensors written in the form of matrices
+cisely as in the original ansatz.                                 with degeneracy indices, and unlabelled trees. Through
+   Manipulations of the anyonic tensor network are equiv-         careful application of these techniques, and avoiding at
+                                                                                                                                 12
+
+all times processes which would yield a tensor with more         (iii)                           (iv)           (v)
+than three legs, the matrix representations of any pair of
+contiguous tensors in a network may always be brought
+into conjunction such that their multi-indices can be con-                     u          u                            u
+tracted in the manner of Eq. (12), and any tensor net-
+work may be contracted by means of a sequence of such                                                                       =
+pairwise contractions.                                                                           (vi)
+                                                                 (ii)
+   That a tensor network may represent a system of
+                                                                                                                       u
+anyons in this way is possible because throughout the
+                                                                                                        w
+anyonic tensor network, each value of a degeneracy index                 w          w
+is associated with a specific labelling of the correspond-
+ing unlabelled tree. Consequently it is always possible
+to fully reconstruct any operation in terms of the more          (i)                                          =
+verbose representation of Fig. 4.
+   An anyonic tensor network is therefore fully specified
+                                                                               T                        w
+merely by the unlabelled tree (with Frobenius–Schur in-
+dicator flags if required), and the values and locations of
+the matrix representations of its tensors, written in the
+degeneracy index form.                                           FIG. 17. Construction of a 1-D ternary MERA on a periodic
+                                                                 lattice from anyonic operators. (i) The “top” tensor, T̂ . (ii)
+                                                                 Isometries, ŵ. (iii) Disentanglers, û. The fusion tree repre-
+          V.    EXAMPLE: THE 1-D MERA                            senting an anyonic state (or ket) is usually drawn with the
+                                                                 lattice sites at the top, so this MERA has been constructed
+                    A.    Construction                           “upside down” when compared with the diagrams in Refs. 23
+                                                                 and 27. This is unimportant, and we could equally well have
+                                                                 decided to follow the convention usually adopted in tensor
+   To construct an anyonic MERA for a 1-D lattice with           network algorithms, labelled the tensors in (i)-(iii) by T † , w† ,
+n sites, where n satisfies n = 2 × 3k , k ∈ Z+ , we be-          and u† , and identified diagram (i)-(iii) as a bra. (iv) Structure
+gin with a “top” tensor on a two-site lattice Lτ whose           of a 2-site term in the Hamiltonian, ĥ, or a 2-site reduced den-
+matrix representation is of a computationally convenient         sity matrix, ρ̂. (v) Disentanglers and (vi) isometries satisfy
+size. (The top tensor is named for its position in the           the relationships ûû† = I, ŵŵ† = I.
+usual diagrammatic representation of the MERA, where
+diagrams with open legs at the bottom correspond to
+a ket. For anyons the converse convention applies, and           of the physical lattice L0 , and the open legs above the
+consequently in Fig. 17(i) the “top” tensor is ironically        last row of disentanglers are identified with the physical
+located at the bottom.)                                          lattice. For coarse-grained lattices L1 to Lτ , the dimen-
+   To each leg of the top tensor, we now append an isom-         sions of the lattice sites correspond to the lower legs of
+etry (Fig. 17(ii)). The matrix representations of the            the isometries and are chosen for computational conve-
+isometries consist of rectangular blocks, as described in        nience, subject to the requirement that each charge sector
+Sec. III B, and we choose isometries whose fusion trees          is sufficiently large to adequately reproduce the physics
+have three legs, so as to construct a ternary MERA.27            of the low-energy portion of the Hilbert space. For all
+Next, disentanglers are applied above the isometries. For        other legs, their charges and degeneracies are determined
+periodic boundary conditions this must be performed in           by requiring consistency with Eq. (2). Initial choices of
+a manner which respects the anyonic braiding rules, as           which charges to represent on the “top” tensor and on the
+shown in Fig. 17(iii). We identify the open legs of the re-      lower legs of the isometries, and with what degeneracies,
+sulting network as the sites of a lattice Lτ −1 , and the rows   must be guided either by prior knowledge about the phys-
+of disentanglers and isometries may be understood as a           ical system, or by balancing computational convenience
+coarse-graining transformation taking a finer-grained lat-       against the inclusion of a broad and representative range
+tice Lτ −1 into a coarser-grained lattice Lτ , similar to the    of possible charges. When used in a numerical optimisa-
+standard MERA. Note that the geometry of the periodic            tion algorithm, the choice of relative weightings for the
+lattice is reflected by the connections of the disentanglers.    different charge sectors may often be refined by exami-
+Specifically, whether the outside legs are braided over or       nation of the spectra of the reduced density matrices on
+under the other lattice sites reflects whether the lattice       the coarse-grained lattices, after initial optimisation of
+closes towards or away from the observer.                        the tensor network is complete.
+   The application of anyonic isometries and disentan-              This concludes construction of the MERA for a state
+glers is now repeated k times (Fig. 17(i)-(iii) corresponds      on a finite, periodic 1-D anyonic lattice. That this ten-
+to k = 1), until the ansatz has n legs. The final row of         sor network does represent an anyonic state is easily seen
+isometries should be chosen such that each of their upper        by sequentially raising tensors, performing F moves, and
+legs have the same charges and degeneracies as the sites         combining tensors, until the entire network is reduced to
+                                                                                                                                  13
+
+a single vector whose length is equal to the dimension            (i)                     (ii)
+of the physical Hilbert space, and an associated fusion
+tree. These then represent the state of the system as
+per Eq. (4). The structure of this tensor network closely
+resembles that of the normal MERA, according to the                              E                  E
+identifications given in Fig. 17, and consequently we an-                                                    (iii)        (iv)
+ticipate that it will share many of the same properties,
+including the ability to reproduce polynomially decay-
+ing correlators in strongly correlated physical systems.
+Open lattices may also be easily represented by omitting                         M                 M                 M'          M'
+the braided disentanglers at the edge of the diagram.
+   We also note that in common with the MERA for spins,
+the anyonic MERA may be understood as a quantum
+circuit, although one which carries anyonic charges in its
+wires. Any junction in the fusion/splitting trees may be
+associated with a Ñ or Ñ † tensor, and the entire network
+                                                                  FIG. 18. (i) Anyonic operator Ê constitutes the environment
+may be considered as the application of a series of gates to
+                                                                  of operator M̂ . Factors arising from the fusion and splitting
+a Hilbert space of fixed dimension beginning mostly (or           trees should be evaluated and absorbed into matrices E and
+entirely, if the top tensor is considered to be the first gate)   M , following which (ii) matrix E constitutes the environment
+in the vacuum state, with individual gates introducing            of matrix M . After (iii) updating the matrix M to M ′ , (iv)
+entanglement across some limited number of wires.                 the fusion and splitting trees of M̂ should be reinstated, the
+                                                                  numerical factors associated with this process being the in-
+                                                                  verse of the fusion tree factors previously absorbed into matrix
+                B.   Energy minimisation                          M . Frobenius–Schur flags in (i)-(ii) are represented by white
+                                                                  triangles, and are not to be confused with the black arrows
+                                                                  which indicate the orientation of lines in the fusion/splitting
+   The anyonic MERA can be used as a variational ansatz           trees.
+to compute the ground state of a local Hamiltonian.
+The Hamiltonian is introduced as a sum over nearest
+neighbour interactions, each term having the form of              is written E = U SW † , then the updated matrix con-
+Fig. 17(iv), and optimisation of the tensor network is            tent M of the anyonic operator being optimised is given
+carried out in the usual manner.27 Also as per usual,             by −W U † , minimising the value of Tr(EM ) subject to
+Hamiltonians involving larger interactions, such as next-         the usual constraint for disentanglers and isometries that
+to-nearest neighbour, can be accommodated by means of             M̂ M̂ † = I (Fig. 17(v)-(vi)). The fusion/splitting tree
+an initial exact n-into-one coarse-graining of the physical       content of the operator can then be restored, along with
+lattice.                                                          any appropriate numerical factors that may be required.
+   As in Ref. 27, optimisation of the MERA then con-                 As with the standard MERA, the “top” tensor is con-
+sists of repeatedly lifting the Hamiltonian from L0 to the        structed by diagonalising the total Hamiltonian on the
+coarse-grained lattices, updating their isometries and dis-       most coarse-grained lattice, Ĥtot on Lτ . As Lτ is a two-
+entanglers, and lowering the reduced density matrix, or           site lattice, the total Hamiltonian Ĥtot is a sum of two
+the top tensor and its conjugate. When lifting the Hamil-         terms, Ĥ12 and Ĥ21 . For the translation-invariant any-
+tonian or lowering the reduced density matrix, then the           onic MERA, we may formally define Ĥ21 in terms of
+diagrams in Ref. 27 taken in conjunction with the key             Ĥ12 as shown in Fig. 19, and the top tensor T̂ (together
+given in Fig. 17 serve to describe networks of anyonic op-        with any factors arising from the chosen normalisation
+erators which, when contracted to a single operator, yield        scheme) then corresponds to the lowest-energy eigenstate
+the lifted form of the Hamiltonian or lowered form of
+                                                                  of Ĥtot .
+the reduced density matrix respectively. Similarly, when
+optimising disentanglers or isometries, the diagrams of
+Ref. 27 and the identifications in Fig. 17 indicate how to
+construct an anyonic operator which constitutes the envi-                        C.    Scale invariant MERA
+ronment of the anyonic operator being optimised. How-
+ever, once the admissible ranges of charges and degen-               Having identified the anyonic counterparts of the ten-
+eracies on each leg have been fixed, the only optimisable         sors of the standard MERA, and described how these
+content of an anyonic operator is its matrix representa-          tensors may be lifted, lowered, and optimised, the algo-
+tion. Consequently, the fusion and splitting tree contri-         rithm for the scale-invariant MERA described in Ref. 26
+butions should be evaluated and absorbed into the op-             may also be implemented for anyonic systems, simply by
+erator and its environment, reducing them both to their           applying the dictionary of Fig. 17 and the techniques de-
+matrix representations, denoted M and E respectively              scribed in Sec. V B. As with optimisation of û and ŵ, the
+(see Fig. 18). If the singular value decomposition of E           computation of the top reduced density matrix (which is
+                                                                                                                                14
+              1   2          1   2          1   2
+
+
+
+
+                                                                          w
+
+                       =              +
+
+                                                                                               =
+              1   2          1   2          1   2
+
+                             1   2          1   2
+
+
+
+
+                       =              +                                    w
+
+
+
+                             1   2          1   2                 FIG. 20. Determination of eigenoperators (φ) and associated
+                                                                  scaling dimensions (∆) for the one-site scaling superoperator
+FIG. 19. Definition of Ĥ21 in terms of Ĥ12 , on the most        of the anyonic 1-D MERA. Eigenoperators may be classified
+coarse-grained lattice (Lτ ) of the translation invariant peri-   according to the charges on edges y1 and y2 . One interpreta-
+odic MERA. Lattice Lτ is a two-site periodic lattice.             tion of these labels is that, in addition to the sites of the 1-D
+                                                                  lattice, there may exist free charges lying in front of and be-
+                                                                  hind the anyon chain. The labels y1 and y2 then represent the
+a descending eigenoperator of the scaling superoperator           transfer of charge between these regions and the 1-D lattice.
+with eigenvalue 1) may be understood as a calculation of
+the matrix component ραβ of the reduced density matrix
+ρ̂. The ascending eigenoperators of the scaling superop-
+erator, or local scaling operators of the theory, may also
+be computed in this manner.                                       where a multi-index value of 1 corresponds to the vac-
+                                                                  uum charge, 2 corresponds to τ , and the charges are
+                                                                  non-degenerate. We optimised a scale-invariant MERA
+                        D.   Results                              on the golden chain for each of these Hamiltonians, and
+                                                                  computed local scaling operators using the tensor net-
+   To demonstrate the effectiveness of the anyonic gen-           work given in Fig. 20. The operators calculated using
+eralisation of the MERA, we applied it to a 1-D critical          this diagram may be classified according to the values
+system of anyons whose physical properties are already            of the charge labels y1 and y2 , and the scaling dimen-
+well known: The golden chain.4 This model consists of a           sions and conformal spins which we obtained are given
+string of Fibonacci anyons subject to a local interaction.        in Tables III and IV, and Fig. 21.
+Fibonacci anyons have only two charges, 1 (the vacuum)
+and τ , and one non-trivial fusion rule (τ × τ → 1 + τ ).            Comparison of the AFM case with existing results in
+The simplest local interactions for a chain of Fibonacci τ        the literature show that the scaling dimensions obtained
+anyons are nearest neighbour interactions favouring fu-           when y1 = y2 correspond to those obtained when study-
+sion of pairs into either the 1 channel (termed antifer-          ing a system of anyons with a toroidal fusion diagram.4
+romagnetic, or AFM), or the τ channel (termed ferro-              For a system of anyons on the torus it is possible to de-
+magnetic, or FM). Both choices correspond to critical             fine an additional topological symmetry4 and classify lo-
+Hamiltonians, associated with the conformal field the-            cal scaling operators according to whether or not they
+ories M(4, 3) and M(5, 4) for AFM and FM couplings                respect this symmetry. Operators satisfying y1 = y2 = 1
+respectively. Individual lattice sites are each associated        correspond to those which respect the topological sym-
+with a charge of τ .                                              metry, and those satisfying y1 = y2 = τ do not. We
+   The AFM and FM Hamiltonians act on pairs of ad-                will discuss the interpretation of the different sectors and
+jacent Fibonacci anyons. On a pair of lattice sites each          their relationship to anyons on the torus in a forthcoming
+carrying a charge of τ , the matrix representations of the        paper.39
+AFM and FM Hamiltonians are written
+                         !                         !                When y1 6= y2 the scaling operators obtained are chi-
+                  −1   0                     0   0                ral, with those obtained from y1 = 1, y2 = τ and
+  (Hα β )AFM =               (Hα β )FM =              (17)
+                    0 0                      0 −1                 y1 = τ, y2 = 1 believed to form conjugate pairs.
+                                                                                                                               15
+
+         y1 = y2 = 1                    y1 = y2 = τ               (i)                   2
+
+  Exact Numerics Error           Exact Numerics Error                                  1.8
+    0       0     0%              3/40   0.0751 +0.19%                                 1.6
+   7/8   0.8995 +2.80%            1/5    0.2006 +0.28%
+                                                                                       1.4
+
+
+
+
+                                                                   Scaling dimension
+ 7/8 + 1 1.9096 +1.85%          3/40 + 1 1.0730 −0.19%
+ 7/8 + 1 1.9141 +2.09%          3/40 + 1 1.0884 +1.25%                                 1.2
+
+  0+2    2.0124 +0.62%            6/5    1.2026 +0.21%                                  1
+  0+2    2.0181 +0.90%          1/5 + 1 1.2156 +1.30%                                  0.8
+
+                                                                                       0.6
+        y1 = 1, y2 = τ                  y1 = τ , y2 = 1
+                                                                                       0.4
+   Exact Numerics Error            Exact Numerics Error
+   19/40  0.4757 +0.14%            19/40  0.4757 +0.14%                                0.2
+
+    3/5   0.6009 +0.15%             3/5   0.6009 +0.15%                                 0
+ 19/40+1 1.4549 −1.37%           19/40+1 1.4549 −1.37%
+ 19/40+1 1.5022 +1.85%           19/40+1 1.5022 +1.85%
+  3/5 + 1 1.5414 −3.66%           3/5 + 1 1.5414 −3.66%
+  3/5 + 1 1.6129 +0.80%           3/5 + 1 1.6129 +0.80%
+                                                                  (ii) 2
+                                                                                       1.8
+TABLE III. Scaling dimensions for Fibonacci anyons with an-                            1.6
+tiferromagnetic nearest neigbour interactions on an infinite
+chain. Numerical values were computed using an anyonic                                 1.4
+MERA with maximum degeneracies for charges 1 and τ of              Scaling dimension   1.2
+3 and 5 respectively (denoted χ = [3, 5]), and are grouped
+according to their classification by the values of y1 and y2 in                         1
+Fig. 20.                                                                               0.8
+
+                                                                                       0.6
+
+                                                                                       0.4
+
+                                                                                       0.2
+         y1 = y2 = 1                    y1 = y2 = τ
+                                                                                        0
+  Exact Numerics Error           Exact Numerics Error
+    0       0     0%              2/15   0.1329 −0.35%
+   4/3   1.3514 +1.36%            2/15   0.1339 +0.44%
+                                                                  FIG. 21. COLOR ONLINE. Scaling dimensions of leading
+   4/3   1.3695 +2.71%            4/5    0.8134 +1.67%            primary operators and their descendants, computed for (i)
+  0+2    1.9519 −2.41%          2/15 + 1 1.0937 −3.49%            antiferromagnetic and (ii) ferromagnetic local Hamiltonians
+  0+2    1.9742 −1.29%          2/15 + 1 1.1108 −1.99%            (17) on the golden chain. Results are grouped into conformal
+ 1 + 4/3 2.2570 −3.27%          2/15 + 1 1.1622 +2.55%            towers, with a slight horizontal spread introduced to show
+                                                                  the degeneracies of the descendant fields. A circled cross indi-
+                                                                  cates a primary field, and a plain cross indicates a descendant.
+        y1 = 1, y2 = τ                  y1 = τ , y2 = 1           Dashed lines indicate values predicted from CFT.
+   Exact Numerics Error            Exact Numerics Error
+    2/5   0.3993 −0.18%             2/5   0.3993 −0.18%
+                                                                                             VI.   SUMMARY
+   11/15  0.7327 −0.09%            11/15  0.7327 −0.09%
+   11/15  0.7392 +0.80%            11/15  0.7392 +0.80%
+                                                                     Numerical study of systems of interacting anyons is
+  2/5 + 1 1.3699 −2.15%           2/5 + 1 1.3699 −2.15%
+                                                                  difficult due to their non-trivial exchange statistics. To
+  2/5 + 1 1.3823 −1.26%           2/5 + 1 1.3823 −1.26%
+                                                                  date, study of these systems has been restricted to ex-
+ 11/15+1 1.6450 −5.10%           11/15+1 1.6450 −5.10%            act diagonalisation, Matrix Product States (MPS) for 1-
+                                                                  D systems, or special-case mappings to equivalent spin
+TABLE IV. Scaling dimensions for Fibonacci anyons with fer-
+romagnetic nearest neigbour interactions on an infinite chain.
+                                                                  chains. This paper shows how any tensor network ansatz
+Numerical values were computed using an anyonic MERA              may be translated into a form applicable to systems of
+with maximum degeneracies for charges 1 and τ of 3 and 5          anyons, opening the door for the study of large sys-
+respectively (denoted χ = [3, 5]), and are grouped according      tems of interacting anyons in both one and two dimen-
+to their classification by the values of y1 and y2 in Fig. 20.    sions. As an example, this paper demonstrates how the
+                                                                  MERA may be implemented for a 1-D anyonic system.
+                                                                  This ansatz is particularly important as many 1-D sys-
+                                                                                                                              16
+
+tems of anyons are known which exhibit extended critical         MERA on a spin chain.26
+phases.4,8,40 The structure of the MERA is known to be              The anyonic generalisation of the 1-D MERA pre-
+particularly well suited to reproducing long range corre-        sented here is useful in its own right, but the great-
+lations, and the scale-invariant MERA has the additional         est significance of the approach described is that it is
+advantage of providing simple and direct means of com-           equally applicable to 2-D tensor network ansätze, and
+puting the scaling dimensions and matrix representations         hence opens the door to studying the collective behaviour
+of local scaling operators.                                      of large systems of anyons in two dimensions by numer-
+   We applied the scale invariant MERA to infinite chains        ical means, in situations where analytical solutions may
+of Fibonacci anyons under antiferromagnetic and ferro-           not be possible.
+magnetic nearest neighbour couplings, and identified a              The authors acknowledge the support of the Australian
+large number of local scaling operators. Our results for         Research Council (FF0668731, DP0878830, DP1092513,
+the scaling dimensions are in agreement with those pre-          APA). This research was supported in part by the
+viously obtained by exact diagonalisation of closely re-         Perimeter Institute for Theoretical Physics.
+lated systems, and for the relevant primary fields they             Note—While preparing this paper for publication, we
+are within 2.8% of the theoretical values obtained from          became aware of related work by König and Bilgin.41
+conformal field theory. We thus demonstrate that an              They also present the anyonic 1-D MERA, providing
+anyonic MERA with χ = [3, 5] permits conclusive identi-          proof of principle by computing ground state energies for
+fication of the relevant conformal field theory, and gives a     finite systems of Fibonacci anyons with χ = [1, 1] (s = 2
+level of accuracy comparable to that of the scale invariant      in their notation).
+
+
+
+∗                                                                20
+   pfeifer@physics.uq.edu.au                                        P. Di Francesco, P. Mathieu, and D. Sénéchal, Conformal
+1
+   A. Y. Kitaev, Annals of Physics 303, 2 (2003).                   field theory (Springer, New York, 1997).
+ 2                                                               21
+   C. Nayak, S. H. Simon, A. Stern, M. Freedman, and                G. Vidal, Phys. Rev. Lett. 99, 220405 (2007).
+                                                                 22
+   S. Das Sarma, Rev. Mod. Phys. 80, 1083 (2008).                   G. Vidal, Phys. Rev. Lett. 101, 110501 (2008).
+ 3                                                               23
+   J. S. Xia, W. Pan, C. L. Vicente, E. D. Adams, N. S. Sulli-      G. Vidal, in Understanding Quantum Phase Transitions,
+   van, H. L. Stormer, D. C. Tsui, L. N. Pfeiffer, K. W. Bald-      edited by L. D. Carr (Taylor & Francis, Boca Raton, 2010).
+                                                                 24
+   win, and K. W. West, Phys. Rev. Lett. 93, 176809 (2004).         X.     Chen,      Z.-C.    Gu,        and      X.-G.    Wen,
+ 4
+   A. Feiguin, S. Trebst, A. W. W. Ludwig, M. Troyer,               arXiv:1004.3835v1 [cond-mat.str-el] (2010).
+                                                                 25
+   A. Kitaev, Z. Wang,             and M. H. Freedman,              V. Giovannetti, S. Montangero,               and R. Fazio,
+   Phys. Rev. Lett. 98, 160409 (2007).                              Phys. Rev. Lett. 101, 180503 (2008).
+ 5                                                               26
+   S. R. White, Phys. Rev. Lett. 69, 2863 (1992).                   R. N. C. Pfeifer, G. Evenbly,                and G. Vidal,
+ 6
+   G. Sierra and T. Nishino, Nuc. Phys. B 495, 505 (1997).          Phys. Rev. A 79, 040301 (2009).
+ 7                                                               27
+   W. Tatsuaki, Phys. Rev. E 61, 3199 (2000).                       G. Evenbly and G. Vidal, Phys. Rev. B 79, 144108 (2009).
+ 8                                                               28
+   S. Trebst,      E. Ardonne,       A. Feiguin,       D. A.        A. Kitaev, Annals of Physics 321, 2 (2006).
+                                                                 29
+   Huse, A. W. W. Ludwig,                   and M. Troyer,          P. H. Bonderson, Non-Abelian Anyons and Interferometry,
+   Phys. Rev. Lett. 101, 050401 (2008).                             Ph.D. thesis, California Institute of Technology (2007).
+ 9                                                               30
+   F. C. Alcaraz, M. N. Barber, M. T. Batchelor, R. J. Baxter,      S. Singh, R. N. C. Pfeifer,                 and G. Vidal,
+   and G. R. W. Quispel, J. Phys. A 20, 6397 (1987).                arXiv:0907.2994v1 [cond-mat.str-el] (2009).
+10                                                               31
+   S. Todo and K. Kato, Phys. Rev. Lett. 87, 047203 (2001).         P. Corboz, G. Evenbly, F. Verstraete, and G. Vidal,
+11
+   F.       Verstraete       and        J.       I.     Cirac,      Phys. Rev. A 81, 010303 (2010).
+                                                                 32
+   arXiv:cond-mat/0407066v1 (2004).                                 C. V. Kraus, N. Schuch, F. Verstraete, and J. I. Cirac,
+12
+   T.         Nishino         and          K.        Okunishi,      Phys. Rev. A 81, 052338 (2010).
+                                                                 33
+   J. Phys. Soc. Jap. 67, 3066 (1998).                              C.     Pineda,     T.    Barthel,         and    J.   Eisert,
+13
+   Z.-C.    Gu,     M.    Levin,         and     X.-G.   Wen,       Phys. Rev. A 81, 050303 (2010).
+                                                                 34
+   Phys. Rev. B 78, 205116 (2008).                                  P. Corboz, R. Orus, B. Bauer, and G. Vidal, Phys. Rev.
+14
+   H. C. Jiang, Z. Y. Weng,                   and T. Xiang,         B 81, 165104 (2010).
+                                                                 35
+   Phys. Rev. Lett. 101, 090603 (2008).                             T.     Barthel,     C.    Pineda,         and    J.   Eisert,
+15
+   J. Jordan, R. Orús, G. Vidal, F. Verstraete, and J. I.          Phys. Rev. A 80, 042333 (2009).
+                                                                 36
+   Cirac, Phys. Rev. Lett. 101, 250602 (2008).                      Q.-Q. Shi, S.-H. Li, J.-H. Zhao,           and H.-Q. Zhou,
+16
+   L. Tagliacozzo,      G. Evenbly,          and G. Vidal,          arXiv:0907.5520v1 [cond-mat.str-el] (2009).
+                                                                 37
+   Phys. Rev. B 80, 235127 (2009).                                  I.         Pižorn         and         F.         Verstraete,
+17
+   L. Cincio, J. Dziarmaga,            and M. M. Rams,              Phys. Rev. B 81, 245110 (2010).
+                                                                 38
+   Phys. Rev. Lett. 100, 240603 (2008).                             Z.-C. Gu,        F. Verstraete,         and X.-G. Wen,
+18
+   G.          Evenbly          and           G.        Vidal,      arXiv:1004.2563v1 [cond-mat.str-el] (2010).
+                                                                 39
+   Phys. Rev. Lett. 102, 180406 (2009).                             R. N. C. Pfeifer et al., in preparation.
+19                                                               40
+   G.          Evenbly          and           G.        Vidal,      S. Trebst, M. Troyer, Z. Wang, and A. W. W. Ludwig,
+   Phys. Rev. Lett. 104, 187203 (2010).                             Prog. Theo. Phys. Supp. 176, 384 (2008).
+                                                                 41
+                                                                    R. König and E. Bilgin, Phys. Rev. B 82, 125118 (2010).
+

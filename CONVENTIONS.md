@@ -46,9 +46,10 @@ i.e. the monoidal unit of the tensor product `⊗` and the degree-0 (zero-partic
 sector. It is a one-dimensional space carrying the unit vacuum vector `Ω`. It is
 **distinct from the zero space `{0}`**, which is the unit of the direct sum `⊕`
 (empty `⊗` = `ℂ`; empty `⊕` = `{0}`).
-**Choice (index level — NOT YET FIXED):** the 0- vs 1-indexed enumeration of
-`Irr(C)` (a recurring bug in prior work) is a separate question, deferred until a
-specific category's simple objects are enumerated.
+**Choice (index level — FIXED, CA-65/CA-66 block):** enumerations of `Irr(C)`
+list the **unit object first**; Julia implementations use 1-based indexing with
+the unit at index 1 (so Fibonacci is `[1, τ]`, matching the central-edge basis
+order `{1, τ}` of the sourced F-matrix in (b)).
 **Reasoning:** the object-level vacuum is forced by the AND/OR/vacuum grammar
 (CA-02): "vacuum = ℂ" is the ⊗-unit, not the ⊕-unit. The index-level convention is
 orthogonal and not yet needed.
@@ -59,11 +60,31 @@ Structures and Their Units"); `references/cft/Schottenloher2008/Schottenloher200
 (`\zero`) per this convention.
 
 ## (b) F-symbol / R-symbol gauge
-**Choice:** NOT YET FIXED.
-**Reasoning:** unitary vs involutory gauge differ; importing entries across
-gauges gives silently-wrong inner products (TensorCategories.jl is involutory).
-**Source:** —
-**Sweep status:** —
+**Choice (F-symbols — FIXED, CA-65/CA-66 block):** the categorical word-algebra
+block uses the **unitary gauge**: fusion-tree vertex spaces carry orthonormal
+bases, every F-matrix is unitary, and the dagger of a morphism is the entrywise
+conjugate transpose of its fusion-tree matrix presentation.  Trivial-label
+F-symbols are `F^{1ττ} = F^{τ1τ} = F^{ττ1} = 1`-type identities.  For Fibonacci
+the single nontrivial matrix, in central-edge basis `{1, τ}`, is
+`F^{τττ}_τ = [[φ⁻¹, φ^{-1/2}], [φ^{-1/2}, -φ⁻¹]] = (F^{τττ}_τ)† = (F^{τττ}_τ)⁻¹`
+with `φ = (√5+1)/2`.
+**Choice (R-symbols — NOT YET FIXED):** no braiding/R-symbol convention is
+fixed; no shard may use R-data yet.
+**Reasoning:** only in a unitary gauge is the *-operation of the anyonic word
+algebra (CA-65) the naive conjugate transpose of matrix presentations; an
+involutory gauge (TensorCategories.jl) presents the same abstract *-algebra
+with a star that is NOT conjugate-transpose, so importing entries across gauges
+silently corrupts inner products.  For Fibonacci the nontrivial block is
+simultaneously unitary and involutory (real symmetric orthogonal), so the
+ambiguity bites only trivial-label normalizations and cup/cap conventions —
+exactly where drift would be invisible; see (r) for the cup normalization.
+**Source:** `references/text/TrebstShortIntroductionFibonacciAnyons.txt:310`--`:311`
+(trivial-label F's, eq. 2.2), `:318`--`:324` (unitary `F^{τττ}_τ`, eq. 2.4);
+`references/text/FibonacciAnyonModels.txt:299`--`:302` (same matrix, eq. 2.4);
+`references/text/PenneysUnitaryFusionCategories.md:610`--`:631` (unitary Fib data).
+**Sweep status:** CA-65/CA-66 use this convention.  CA-09 is kinematic-only
+(no F-data) and is unaffected.  Any import from TensorCategories.jl must be
+gauge-converted and checked against this entry first.
 
 ## (c) Fusion-tree bracketing and label order
 **Choice (kinematic path basis — FIXED, CA-09):** Fibonacci path-count examples
@@ -606,3 +627,46 @@ and `:1513`--`:1515` (transverse-Ising Hamiltonian and critical-theory claim);
 "qubit Hamiltonian candidate scan" use this convention.  Future scans over
 longer-range, three-site, qutrit, anyonic, or variable-`h` families need a new
 convention entry before their verdicts are compared with this qubit scan.
+
+## (r) Anyonic site object and word-algebra conventions
+**Choice:** The categorical word-algebra block (CA-65/CA-66) works on a
+one-dimensional lattice of **sites**, where a site is one tensor factor
+carrying the **site object** `Y` of a unitary fusion category `C`.  The default
+hard-core mobile tier uses the **maybe-object** `Y = 1 ⊕ X`, with `X` the
+allowed species object (`X = τ` for Fibonacci; `X = ⊕_{a≠1} X_a` for all
+species); the summand `1` means "site empty", `X` means "site occupied", and
+at most one anyon occupies a site (hard-core is built into `Y`, not imposed as
+a dynamical constraint).  For a finite interval `I` the local observable
+algebra is `A(I) = End_C(Y^{⊗|I|})` with **left-associated** bracketing
+(extending (c) from counting-only to the matrix-presentation level), involution
+`f* = f†`, inclusions by tensoring identities on added sites, lattice shift by
+one site, and quasi-local algebra the C*-inductive (AF) limit.  Charge sectors
+of the interval Hilbert space are `Mor(X_c, Y^{⊗L})` with the unit-first
+enumeration of (a).  Open chain is the default; periodic variants need a new
+entry.  **Cup normalization:** pair creation uses the **raw** coevaluation
+`v ∈ C(1 → X_a ⊗ X_{ā})` with `v†v = d_a · id_1` (for Fibonacci `v†v = φ·id_1`);
+the normalized partial isometry is `d_a^{-1/2} v` and any script must say which
+it uses.  **Frobenius–Schur flag:** for self-dual species the FS indicator
+`κ_X = ±1` must be recorded before cup/cap identifications are used; `τ` is
+self-dual (zig-zag relations hold for `v, v†`), but `κ_τ = +1` has **no local
+source yet** — flagged as a gap, do not rely on it.  The canonical spherical
+structure / positivity of quantum dimensions for unitary C is likewise used
+only through the sourced Fibonacci instance (`d_τ = φ > 0`); the general
+theorem has **no local source yet**.
+**Reasoning:** the site object, not the bare category, fixes vacancies, mobile
+species, and boundary type, so the compiler input is the pair `(C, Y)`.  The
+maybe-object is the categorical lift of the sourced "maybe quantum spin"
+`C ⊕ C^d`, and for `C = Hilb` the construction recovers the quasi-local spin
+algebra, which anchors the qubit block as a special case.  Raw-cup bookkeeping
+keeps quantum dimensions visible in invariants (cup-cap = d_a), which is what
+the Julia checks assert.
+**Source:** `references/text/GaugingDefectsQuantumSpinSystems.txt:177`--`:191`
+(maybe-spin `F_{≤1}(C^d) ≅ C ⊕ C^d` and `(C ⊕ C^d)^{⊗N}`, eqs. (4)-(5));
+`references/text/PenneysUnitaryFusionCategories.md:610`--`:625` (Fib: `d_τ = φ`,
+normalized `v, Δ`, zig-zag/self-duality, `v†v = φ·id_1`, `Δ†Δ = √φ`-relation,
+minimal central projections in `End(τ⊗τ)`);
+`references/text/HollandsAnyonicChainsAlphaInduction.txt:15`--`:35` (anyonic
+chain Hilbert space from a unitary fusion category); CONVENTIONS (a), (b), (c).
+**Sweep status:** CA-65/CA-66 use this convention.  No earlier shard uses a
+site object; the qubit block (m)--(q) is the `C = Hilb`, `Y = C²` degenerate
+case but keeps its own independent conventions.

@@ -1,0 +1,2504 @@
+                                                                    Topological Defects on the Lattice I: The Ising model
+                                                                                 David Aasen1 , Roger S. K. Mong2 , Paul Fendley3
+arXiv:1601.07185v1 [cond-mat.stat-mech] 26 Jan 2016
+
+
+
+
+                                                          1
+                                                              Department of Physics and Institute for Quantum Information and Matter, California
+                                                                        Institute of Technology, Pasadena, CA 91125, United States
+                                                      2
+                                                          Department of Physics and Astronomy, University of Pittsburgh, PA 15260, United States
+                                                      3
+                                                          All Souls College and Rudolf Peierls Centre for Theoretical Physics, University of Oxford,
+                                                                             1 Keble Road, Oxford, OX1 3NP, United Kingdom
+
+                                                                                                     January 28, 2016
+
+
+                                                                                                          Abstract
+                                                                   In this paper and its sequel, we construct topologically invariant defects in two-dimensional
+                                                               classical lattice models and quantum spin chains. We show how defect lines commute with the
+                                                               transfer matrix/Hamiltonian when they obey the defect commutation relations, cousins of the
+                                                               Yang-Baxter equation. These relations and their solutions can be extended to allow defect lines
+                                                               to branch and fuse, again with properties depending only on topology. In this part I, we focus on
+                                                               the simplest example, the Ising model. We define lattice spin-flip and duality defects and their
+                                                               branching, and prove they are topological. One useful consequence is a simple implementation
+                                                               of Kramers-Wannier duality on the torus and higher genus surfaces by using the fusion of duality
+                                                               defects. We use these topological defects to do simple calculations that yield exact properties of
+                                                               the conformal field theory describing the continuum limit. For example, the shift in momentum
+                                                               quantization with duality-twisted boundary conditions yields the conformal spin 1/16 of the
+                                                               chiral spin field. Even more strikingly, we derive the modular transformation matrices explicitly
+                                                               and exactly.
+
+
+                                                      Contents
+                                                      1 Introduction                                                                                                2
+
+                                                      2 The Ising model                                                                                             4
+
+                                                      3 The defect commutation relations and their solutions                                               6
+                                                        3.1 The spin-flip defect . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 7
+                                                        3.2 The duality defect . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9
+                                                        3.3 Duality-twisted boundary condition . . . . . . . . . . . . . . . . . . . . . . . . . . . . 12
+                                                        3.4 A Majorana zero mode in the Hamiltonian limit . . . . . . . . . . . . . . . . . . . . 14
+
+                                                      4 Trivalent junctions of defects                                                                              17
+                                                        4.1 The triangular defect . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .           17
+                                                        4.2 Partition function identities . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .           19
+                                                        4.3 Rearranging intersections: F moves . . . . . . . . . . . . . . . . . . . . . . . . . . . .              22
+
+                                                                                                               1
+5 Duality on the torus                                                                              23
+  5.1 Identities for toroidal partition functions . . . . . . . . . . . . . . . . . . . . . . . . . 24
+  5.2 Translation across a duality defect . . . . . . . . . . . . . . . . . . . . . . . . . . . . 25
+
+6 Partition functions and modular invariance                                                       28
+  6.1 Modular transformations of lattice defect lines . . . . . . . . . . . . . . . . . . . . .    28
+  6.2 The Ising CFT partition functions . . . . . . . . . . . . . . . . . . . . . . . . . . . .    31
+  6.3 Identifying lattice partition functions with their continuum counterparts . . . . . . .      33
+
+7 Duality on other surfaces                                                                         35
+  7.1 Disc and annulus . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 35
+  7.2 Manifolds . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 37
+
+8 Conclusion                                                                                       40
+
+A The zero mode                                                                                    41
+
+References                                                                                         43
+
+
+1    Introduction
+The Yang-Baxter equation plays a fundamental role in the study of integrable models and their
+mathematics [1]. Lattice Boltzmann weights satisfying the Yang-Baxter equation can be used to
+construct a family of commuting transfer matrices, yielding the conservation laws necessary for
+integrabilty [2]. This has resulted not only in countless physical insights, but deep mathematics as
+well. For example, taking a limit of these Boltzmann weights yields topological invariants for knots
+and links generalizing the Jones polynomial [3].
+    In this paper and its sequel we explain how cousins of the Yang-Baxter equation allow these
+studies to be extended into further realms. We show how solving the defect commutation relations
+gives topological defects in many lattice models. The partition function is independent of the
+path a topological defect follows except for topological properties, e.g. if and how the path wraps
+around a system with periodic boundary conditions. In this part I, we study solutions of these
+defect commutation relations for the Ising model. In part II, we explain how solutions follow
+from a general mathematical structure known as a fusion category, familiar from studies of anyons,
+rational conformal field theory, and topological quantum field theory.
+    Magic follows. Much can be learned even in the case of a single defect line, where our construc-
+tion gives a simple and systematic way to generalize defects in lattice models previously constructed
+by exploiting integrability [4, 5]. Solving the defect commutation relations allows a uniform way of
+understanding seemingly different observations, for example showing that Kramers-Wannier dual-
+ity [6] can be extended to many other models in a generalisation known as “topological symmetry”
+[7]. It provides a systematic way to define twisted boundary conditions, where a modified trans-
+lation symmetry holds despite the presence of a defect seemingly breaking it. Understanding such
+translation invariance allows us to compute the spin of operators in conformal field theory exactly
+in this lattice model, without using the full apparatus of integrability. For example, we find here
+in part I the conformal spin 1/16 of the chiral spin field in the Ising model simply by computing
+the eigenvalues of the operator for translating around one cycle (i.e., a Dehn twist).
+    We show how to include multiple topological defects by giving a precise method for under-
+standing how they fuse together. Kramers-Wannier duality [6] becomes easily implemented with
+
+
+                                                  2
+the transfer matrix formulation. This clarifies greatly a major subtlety, that duality is not a symme-
+try in the traditional sense [8]; while a duality transformation can be implemented by an operator
+commuting with the transfer matrix/quantum Hamiltonian, this operator is not unitary or even
+invertible. Defining this operator via an insertion of a “duality defect” line [9–12] makes it easy to
+derive what happens when two duality transformations are performed.
+    We show how to allow topological defect lines to branch in a topologically invariant fashion.
+Namely, we define a trivalent vertex where defect lines meet such that the partition function is
+independent of the location of the vertex. This results in a precise lattice definition of operations
+familiar in topological field theory, for example the “F -move” [13] that in our context relates
+the partition functions of systems with different defect branching. This in turn allows some of the
+profound consequences of modular invariance, famed from conformal field theory [14], to be derived
+and utilised directly on the lattice. It also allows a straightforward method for implementing duality
+when space is a higher-genus surface.
+    One of the messages of our papers is that topological defects are an absolutely fundamental
+characteristic of many two-dimensional lattice models, especially but not exclusively at their critical
+points. At a crude level, it is because defects are effectively external probes, and so a system’s
+response to their insertion gives useful information. However, the relation is much more profound,
+both physically and mathematically. Topological defects are intimately related to the symmetry
+structure of the theory, and so deeply ingrained. Indeed, this has long been known in conformal
+field theory: Cardy’s seminal work on boundaries (in particular [15]) led to among other things an
+understanding of how defects play a fundamental role; see e.g. [16–23]. We find similar structure in
+many lattice models. For example, we show how ratios of the non-integer ‘ground-state degeneracy’
+[24] are given easily and exactly by fusing a topological defect with a boundary; they are simply
+the eigenvalues of the defect creation operators.
+    The defect commutation relations are typically a milder constraint than the Yang-Baxter equa-
+tion: we will show how topological defects occur even when the Boltzmann weights are staggered
+or spatially varying. In the Ising model, this makes the model non-critical. In the more general
+models discussed in part II, staggering the Boltzmann weights not only takes the model away from
+criticality, but breaks the integrability.
+    In this part I, we downplay the general structure in favour of describing a particular model
+in depth, the Ising model. This we hope provides a very concrete realisation of the more general
+approach of part II. Even though the two-dimensional Ising model has been studied for the best
+part of a century [25], we believe our approach not only illuminates greatly some known results
+such as duality, but adds some new ones to the canon. For example, we compute the exact modular
+transformation matrices directly on the lattice.
+    In section 2, we review the basics of the two-dimensional Ising model. In section 3, we introduce
+topological defects and the defect commutation relations. We describe in depth two types, the
+spin-flip defect and the duality defect. In section 4, we show how defects can branch and join in a
+topologically invariant fashion. Even more remarkably, in the presence of multiple defect junctions,
+we derive how to reshuffle the junctions, giving linear identities for partition functions. We show
+how useful these identities are in section 5, by giving a simple implementation of duality on the
+torus, as well as deriving the aforementioned 1/16. In section 6, we go further and derive the
+full set of modular transformation matrices for the Ising conformal field theory from purely lattice
+considerations. In section 7 we find similar relations for partition functions on the disc and on
+higher genus surfaces. This in particular allows us to derive the ratios of ground-state degeneracies,
+and give a straightforward procedure for defining duality on any orientable surface.
+
+
+
+
+                                                  3
+2    The Ising model
+The degrees of freedom of the classical Ising model are spins σj = ±1 at each site j of some graph,
+which for this section we take to be the square lattice. To allow for general types of defects we
+illustrate the configurations in a somewhat unconventional fashion in Fig. 1. We draw both the
+square lattice and its dual, leaving the dual empty; we will see that duality maps the original model
+to one on the dual lattice. We also label the degrees of freedom by heights hj = 0, 1, related to
+the customary variables by σj = (−1)hj . These conventions also have the advantage of making the
+generalisation to height models in part II more transparent.
+
+
+
+
+Figure 1: Ising model with a sample configuration on the square lattice. The height variables
+h = 0, 1, corresponding to spins σ = +1, −1 respectively, live on what we call the “original” lattice.
+The original lattice and its dual also form a square lattice drawn in the figure.
+
+    The Ising energy and partition function are given by
+                        X                                                      X
+                                                                                     e−βE[{σ}] .
+                                                              
+       −βE[{σ}] =              Jx σx,y σx+1,y + Jy σx,y σx,y+1 ,         Z=                        (2.1)
+                      x,y ∈ active
+                             sites
+                                                                               {σ}
+
+
+where (x, y) labels the points on the original square lattice. The critical and self-dual line for the
+square lattice is given by couplings Jx and Jy obeying
+                                       (sinh 2Jx )(sinh 2Jy ) = 1 .                                (2.2)
+A convenient reparametrization of this line is given by introducing the “anisotropy parameters” uH
+and uV such that [2]
+                              e2Jy = cot uV ,        e2Jx = cot( π4 − uH ) .                       (2.3)
+The critical line (2.2) then corresponds to uH = uV . The couplings are isotropic when uH =
+π/4 − uV , so that uH = uV = π8 is the critical and isotropic point. Each link of the original lattice
+corresponds to a plaquette on the lattice comprised of the original and its dual, with the four sites
+comprised of two adjacent ones on the original lattice along with two on the dual. Letting a and
+b be the values of the spins on the former two, the vertical and horizontal Boltzmann weights for
+each plaquette are
+                                   a      (
+                                            cos uV a = b,
+                                       =                                                        (2.4a)
+                                            sin uV a 6= b,
+                                   b
+                                            (
+                                              cos π4 − uH
+                                                          
+                                                              a = b,
+                                a      b=                                                      (2.4b)
+                                                  π
+                                                          
+                                              sin 4 − uH      a 6= b,
+
+
+                                                    4
+In this paper we focus mainly on the square lattice (plus defects), but all of our results can be
+generalized greatly, as we explain in section 7. In general, one simply associates a parameter up for
+each plaquette made from the combination of the lattice and its dual.
+    In the absence of defects, the partition function can be defined directly in terms of (2.4). It
+turns out to be much more convenient once defects are introduced to complicate this definition by
+an additional weight per site of the lattice. This additional factor arises naturally in the closely
+related theories of anyons/topological field theory, where it is known as the “quantum dimension”.
+Here it is simply
+                                  (
+                                    1         if there is a spin on site v,
+                            dv = √                                                              (2.5)
+                                      2       if site v is empty.
+
+We thus define the Boltzmann weights as
+                                                                    βp
+                                                    Y                            Y
+                                 −βE[{σ}]                                γp ×
+                             e              =                  αp                         dv .       (2.6)
+                                                plaquettes p                    sites v
+                                                                    δp
+
+Here we explicitly label the spins on the lattice and the dual, but each plaquette has only two active
+degrees of freedom. It is apparent from this definition that in the absence of defects, the extra site
+weight results in an unimportant overall constant.
+    The partition function is conveniently written in terms of the transfer matrix T . The operator
+T acts on the vector space H, whose orthonormal basis states are the spin/height configurations
+along a row of L sites in the original lattice. Each basis state is labelled by |h1 h2 · · · hL i, where
+each hj ∈ {0, 1}. Acting with T represents one step of evolution in the y direction (Euclidean
+“time”), taking one row to the one above it; drawing both the lattice and the dual lattice makes
+the row zig-zag. The on-site weights are essentially gauge factors, and so there exist many ways of
+shuffling them around so that one reproduces the same partition function. We have found the least
+offensive way to include them is to split the weight per site evenly across the vertices in the vertical
+direction. To illustrate this splitting √
+                                        in the diagrams we put a half-dot at each of the vertices which
+serves to multiply the diagram by a dv . Explicitly, the Boltzmann weights with and without the
+half-dots are related by,
+                                            β                  β
+                                                                         p
+                                       α          γ =α              γ×    dβ dδ .                    (2.7)
+                                            δ                  δ
+
+With this in mind, the matrix elements of T are illustrated by
+
+
+                    h{h}| T |{h0 }i =                                                            .   (2.8)
+
+
+To write T explicitly, we define
+
+                                   σjc = 1 ⊗ 1 ⊗ · · · ⊗ 1 ⊗ σ c ⊗ 1 ⊗ · · · ,                       (2.9)
+
+
+
+
+                                                           5
+where the Pauli matrix σ c on the right-hand side acts on the j th spin. We then define the operators
+WjH and WjV with matrix elements
+
+                                                                hj
+
+                    h· · · hj · · ·| WjV |· · · h0j · · ·i =          = cos uV + σjx sin uV h h0 ,
+                                                                                          
+                                                                                                       j j
+
+                                                                h0j
+
+                           H
+                                 |· · · h0j h0j+1 · · ·i = hj                           cos uH + σjz σj+1
+                                                                                                      z
+                                                                                                               
+    h· · · hj hj+1 · · ·| Wj+1/2                                          hj+1 =                          sin uH h h      0 0      ,
+                                                                                                                  j j+1 ;hj hj+1
+
+
+                                                                                                                             (2.10)
+The transfer matrix is given by T H T V , where
+                                                     L
+                                                     Y                                  L
+                                                                                        Y
+                                             H              H                   V
+                                         T       =         Wj+1/2 ,         T       =         WjV .                          (2.11)
+                                                     j=1                                j=1
+
+                                                                      z
+For periodic boundary conditions in the horizontal direction, we let σL+1 ≡ σ1z . Putting periodic
+boundary conditions around the vertical direction as well makes two-dimensional space a torus.
+The toroidal partition function for r rows and L columns is then
+
+                                    Z1,1 (L, r) = Tr (T H T V )r ;
+                                                               
+                                                                                            (2.12)
+
+the reason for the subscripts will be apparent shortly.
+    Duality maps the Ising model on any planar lattice to one on the dual lattice. The partition
+functions of the two are the same when the coupling J in the original model on a given link is
+related to the coupling Jb on the corresponding link in the dual by [6]
+
+                                                       sinh(J) sinh(J)
+                                                                    b =1.                                                    (2.13)
+
+Since the dual of a square lattice is also a square lattice, it is natural to expect that the critical
+point in this case is the self-dual point, J = J,   b and indeed this is so; note (2.2). The transfer matrix
+for the dual model can be defined using the same picture (2.8), but here the heights/spins ĥj−1/2
+live on the dual lattice. We denote this vector space by H,     b and its orthonormal basis elements are
+labelled by |ĥ 1 ĥ 3 · · · ĥL− 1 i. The matrix elements are then given by replacing hj with ĥj−1/2 in
+                2    2            2
+(2.10).
+    In the following, we will describe how dualities of this sort can be derived in a very simple
+way by understanding the topological defects associated with the global symmetries of the model.
+However, studying the Ising model on graphs with non-trivial topology and boundary segments
+will require further restrictions. Each boundary condition on the original graph will result in a
+change or possibly a sum over boundary conditions on the dual lattice. In the following, we provide
+a geometric way of performing the duality that provides a direct and simple way of mapping the
+boundary conditions between the model and its dual.
+
+
+3     The defect commutation relations and their solutions
+We now introduce defect lines, and show that when they and the Boltzmann weights obey certain
+relations, the partition function is independent of the deformations of the defect’s path. We focus
+on the two main types of topological defect lines in the Ising model, the spin-flip defect and the
+duality defect.
+
+                                                                      6
+3.1   The spin-flip defect
+The Ising model has a Z2 symmetry given by flipping the    Q spin    at every site. In the transfer matrix
+formulation, this is generated by the operator Dψ = n σn , which obviously commutes with T H
+                                                                x
+
+and T V . The reason for the mysterious subscript will be explained later. A straight spin-flip defect
+stretching in the horizontal direction is then created by inserting Dψ between two of the rows of
+the transfer matrix. The toroidal partition function in the presence of such a defect line is then
+
+                             Z1,ψ (L, r) = Tr · · · T H T V Dψ T H T V · · · .
+                                                                           
+                                                                                                     (3.1)
+
+We sketch one way to do this diagrammatically in Fig. 2(a), with the defect line corresponding to
+the sequence of parallelograms. The defect spin flip Boltzmann weights are given by:
+                                                            (
+                           a            a    −41            0      a = b,
+                                                  σ x a,b =
+                                                     
+                           b    =       b =2                   − 14
+                                                                                            (3.2)
+                                                             2      a 6= b.
+
+Here we draw the parallelograms as rectangles. As Boltzmann weights,         simply enforces that
+the spins on either side are opposite. In terms of the half-dot notation introduced in (2.7), the
+spin-flip defect creation operator is
+                                                            Y
+                                Dψ =                     =     σjx ,                        (3.3)
+                                                                      j
+
+taking H → H, and H     b → H.b The semi-circles have been introduced so that the operator can
+be inserted into the partition function between rows of the transfer matrix without changing the
+overall constant in front of the partition function. Because (Dψ )2 = 1, inserting two horizontal
+defects successively is equivalent to inserting none.
+
+                                                                (a)                   (b)
+
+
+
+                              /                         /
+
+
+
+
+Figure 2: A defect line by choosing a closed path along the edges of the lattice, and then inserting
+a seam of parallelograms. (a) and (b) are horizontal and vertical spin-flip defects respectively; the
+stars label the locations of the spins. We have omitted the dots (weight per site) for clarity.
+
+    The spin-flip defect line can be moved around without changing the partition function Z1,ψ .
+It is therefore a topological defect. This follows from the fact that the Dψ commutes with each
+individual plaquette operator used to build the transfer matrix:
+                                           H
+                                    [Dψ , Wj+1/2 ] = [Dψ , WjV ] = 0                                (3.4)
+
+for all j. Pictorially, these can be represented as defect commutation relations
+                                                        X             X
+                                     =       ,                   =                                  (3.5)
+                                                            α             β
+
+
+
+                                                    7
+where the two cases correspond to the different possible locations of the spins. Similarly,
+                                      X
+                                                     =         ,                                (3.6)
+                                     internal labels
+
+where here we do not show the (fixed) external labels and the (summed over) internal labels, and
+so only need write the diagram once. The partition function remains invariant under these moves
+when the factor of dv per site, denoted by the full circle, is included. These relations mean that
+the defect line can be deformed without modifying the partition function; for example
+
+
+
+                      ↔                         and                         ↔            .      (3.7)
+
+
+
+Thus Z1,ψ (L, r) is independent of any local deformations of the defect line. This implies that in
+the critical and continuum limits, the partition function remains conformally invariant.
+    Inserting a vertical defect as shown in Fig. 2b can be interpreted as changing the boundary
+condition on the transfer matrix. Such boundary conditions defined using a topological defect are
+called twisted. Twisted boundary conditions are often associated with a discrete symmetry like
+spin-flip one here [26]. The spin-flip defect effectively changes the interaction bridging the defect
+line from ferromagnetic to antiferromagnetic, modifying the Boltzmann weight and corresponding
+operator to
+                                          ( 1
+                                            2− 2 sin π4 − uH
+                                                             
+                                                                 a=b
+                                       =      − 12    π
+                                                                       ,                       (3.8)
+                                            2 cos 4 − uH         a 6= b
+                              H
+                             WL+1/2 =              = cos uH − σLz σ1z sin uH                    (3.9)
+
+respectively. Correspondingly the transfer matrix is modified to give the partition function
+
+                                     Zψ,1 (L, r) = Tr (T V TψH )r ,                            (3.10)
+
+where
+                                                                 L−1
+                                                                 Y
+                             TψH = (cos uH − σLz σ1z sin uH )           H
+                                                                       Wj+1/2 .                (3.11)
+                                                                 j=1
+
+The path independence of the defect can be seen directly in the transfer matrix formulation by
+utilizing a unitary transformation. For example, taking TψH → U TψH U −1 with U = σLx moves a
+defect between sites L and 1 to one between sites L − 1 and L (or vice versa) without changing the
+partition function.
+    Twisted boundary conditions are particularly interesting because the model still obeys a mod-
+ified version of translation invariance. This follows from the path independence of the defect; it
+can be placed between any two sites without changing the partition function. To find the modi-
+fied translation operator, we first define the translation operator T1 , the translation operator for
+untwisted periodic boundary conditions. Precisely, T1 has matrix elements
+                                                        L
+                                                                    !
+                                                        Y
+                                  h{hi }| T1 |{h0i }i =   δhi+1 ,h0i .                         (3.12)
+                                                           i=1
+
+
+                                                       8
+It is simple to check that T1 indeed obeys T1 T V T1−1 = T V and T1 T H T1−1 = T H . However, T1
+does not commute with T ψ , because translating moves the defect over to between sites 1 and 2.
+However, the defect can be moved back by the unitary transformation U = σ1x . Equivalently, one
+can first shift the defect to the left, and then translate it back. Thus the modified translation
+operator
+
+                                           Tψ = σ1x T1 = T1 σLx                                      (3.13)
+
+does indeed commute with the transfer matrix in the presence of these twisted boundary conditions:
+Tψ T V Tψ−1 = T V and Tψ TψH Tψ−1 = TψH . Thus in the continuum and critical limits, the model remains
+conformally invariant even in the presence of a defect.
+    This simple result has another interesting consequence. Because (Tψ )2 = σ1x T1 σ1x T1 = σ1x σ2x (T1 )2 ,
+                                                     L
+                                                     Y
+                                         (Tψ )L =          σjx = Dψ .                                (3.14)
+                                                     j=1
+
+Thus translating around a cycle in the presence of a vertical spin-flip defect is equivalent to inserting
+a horizontal defect! As a map between partition functions, it can be pictured schematically by
+
+                                            (Tψ )L
+                                           −−−→                ≡        .                            (3.15)
+
+In section 4 we define precisely the quadrivalent defect Boltzmann weight at the point where the
+vertical defect meets the horizontal defect, and (see equation 4.12) derive the equality between
+partition functions on the right-hand-side of (3.15). Intuitively, this is a consequence of the fact
+that any path traversing either cycle of the torus will always cross a spin flip defect. Indeed we
+also have the equality
+
+                                                     =             .                                 (3.16)
+
+This can also be verified by explicit calculation using the defect commutation relations.
+   Inserting the operator Tψ ≡ (Tψ )L into the toroidal partition function can be thought of as
+cutting the torus into a cylinder, twisting one end of the cylinder around a full cycle, and gluing it
+back together. This process in topology is known as a Dehn twist, and in geometry as the modular
+transformation T. (Sadly, we now have three objects conventionally labelled by the letter T.) In
+the absence of vertical defects, doing a Dehn twist in the horizontal direction leaves the toroidal
+partition function invariant. In the presence of a vertical defect, it is non-trivial.
+
+3.2    The duality defect
+We now move on to a more intricate example, the duality defect line [9, 23]. This defect line is
+associated with the Kramers-Wannier duality of the Ising model described at the end of section 2.
+We will explain here precisely how to define this defect. In subsequent sections we will show how
+implementing duality via this topological defect proves a powerful tool in understanding duality,
+both on and off the critical point.
+    Since duality replaces a model on any lattice with one on the dual lattice, the parallelogram
+underlying a duality defect line needs to implement this. Thus a duality defect must join a lattice
+and its dual, as illustrated for the square lattice and the dual square lattice in figure 3. Note that
+the spins are located on opposite corners of the parallelogram, in constrast with the spin-flip defect.
+
+                                                      9
+            (a1)                            (b1)                                  (a2)     (b2)
+
+
+
+
+Figure 3: Illustrations of a horizontal duality defect line in (a1) and (a2) and a vertical duality
+defect line in (b1) and (b2), with the spins denoted by stars. The duality defect line splices together
+the lattice with the dual lattice. The only difference between (a1) and (a2) is the position of the
+spins, and likewise for (b1) and (b2).
+
+
+    We saw that the Z2 spin-flip symmetry generator commutes with the individual Boltzmann
+weights, the relation pictorially presented in (3.7). This guaranteed that the partition function
+was independent of continuous deformations of the defect path. This will also hold for the duality
+defect if the analogous relations are satisfied, namely
+                                   X                                                  X
+                                                   =           ,                  =                  (3.17)
+                                    a                                                 β
+
+as well as these relations rotated by 90 degrees, along with (3.6). Commuting a duality defect
+line through a plaquette with its two spins along the vertical axis turns it into one with spins
+along the horizontal, and vice versa. Thus dragging a duality defect through the lattice using the
+commutation relations (3.17) relates a model on one lattice to one on the dual lattice.
+    The solution of the duality defect commutation relations is less obvious than in the spin-flip
+case. The building block is given by
+                                        a                           a         1
+                                                   b = b                = 2− 2 (−1)ab ,              (3.18)
+
+where a and b are heights (related to the traditional spins by σ = (−1)h ). To satisfy (3.17) one
+needs
+√      to include the internal vertex weight as well (recall: a factor of 1 for each Ising spin and
+  2 for the blank vertices). Multiplying (3.18) by a factor (−1)µ (−1)ν(a+b) still solves the defect
+commutation relations, but these cancel out in the string of defect Boltzmann weights. We thus
+set µ = ν = 0 in the following.
+    It is instructive to work out explicitly the weights for a single closed duality defect loop. For
+example, consider the duality defect loop surrounding a vertical Boltzmann weight,
+                    X        √               √
+                =       1×       2×1×            2 × 2−2 (−1)aα (−1)aβ (−1)bβ (−1)bα ×WV (a, b; u)
+                        |         {z             } |               {z              }
+                    a,b internal vertex weights                          duality defect              (3.19)
+                                                       √
+                = cos u + (−1)α+β sin u =                  2             .
+
+The partition function with a single closed loop not wrapped around √  a cycle is therefore simply
+that without the loop, multiplied by the “quantum dimension” dσ = 2. Because of the defect
+commutation relations, this statement holds for any topologically trivial loop. Thus√we can map
+a model on to its dual by nucleating a loop (and dividing the partition function by 2) and then
+
+                                                                   10
+growing it. This is obvious for a planar graph, but by introducing trivalent vertices in section 4,
+we will show how to implement duality on the torus and higher genus surfaces as well.
+    Note that in (3.19), the factor u is associated with a particular plaquette; thus inside the
+closed loop the couplings Jx and Jy are interchanged from those outside. This can be made clear
+by utilising the operator formulation [27]. The operator Dσ creating a duality defect takes a
+spin/height configuration on the original lattice to one on the dual, i.e. takes H → H,
+                                                                                     b or vice versa.
+The graphical picture applicable to both is
+
+                                       Dσ =                                                        (3.20)
+
+so that the matrix elements are
+                           L
+                          Y   1                                           PL
+      h{ĥ}| Dσ |{h}i =       √ (−1)ĥj−1/2 hj (−1)hj ĥj+1/2 = 2−L/2 (−1) j=1 (hj−1 +hj )hj−1/2   (3.21)
+                                                                                          b
+
+                          j=1
+                               2
+
+where h0 ≡ hL and hL+1/2 ≡ h1/2 . It is easy to check that h{h}| Dσ |{ĥ}i = h{ĥ}| Dσ |{h}i.
+Following the standard convention that the Pauli matrices acting on sites in the new vector space
+are denoted by µrj+1/2 , the operator version of (3.17) is
+
+                     Dσ σjz σj+1
+                             z
+                                 = µxj+1/2 Dσ ;       Dσ σjx = µzj−1/2 µzj+1/2 Dσ .                (3.22)
+
+        c V,H be the operators acting on the new vector space analogous to W V,H from (2.10) on
+Letting W j+1/2                                                             j
+the original, these relations then yield
+                               H      cV
+                           Dσ Wj+1/2 =W j+1/2 Dσ ;           Dσ WjV = W
+                                                                      cjH Dσ .                     (3.23)
+
+where Wc H,V are given by W H,V with σ r replaced by µr . Thus the duality relates the corresponding
+transfer matrices by
+
+                                 Dσ T H = TbV Dσ ;        Dσ T V = TbH Dσ .                        (3.24)
+
+Thus if a Boltzmann weight associated with a given plaquette on the square lattice is W H (uH ),
+commuting the duality defect gives a plaquette described by Boltzmann weight W V (uH ). Likewise
+it changes W V (uV ) → W H (uV ).
+    Commuting a duality defect through the lattice thus not only changes the degrees of freedom
+from the original lattice to the dual lattice, it interchanges Jx ↔ Jy as well. This indeed is the
+familiar statement of Ising duality. Our definition of defect lines can be utilized for any lattice or
+graph; one must just keep track of which factors up are associated with each plaquette, i.e., each
+link of the original lattice or graph. Commuting a duality defect through the lattice then changes
+the spins from the original lattice to the dual lattice, but leaves the up for each plaquette the same.
+    Since the µrj satisfy the same algebra as the σjr , Dσ preserves the algebra of Pauli matrices,
+and all local physical properties will be invariant under duality. However, non-local properties
+such as ground-state degeneracy can and typically do change. The reason is that duality is not
+really a symmetry in the traditional sense: Dσ is not unitary, or even invertible. An intuitive way
+of understanding why the duality transformation is not invertible is to note that because duality
+interchanges uH and uV , it interchanges the ordered phase (uH > uV ) with the disordered phase
+(uH < uV ). There are two minima of the free energy in the former case (or equivalently, a two-fold
+degenerate ground state in the quantum Hamiltonian limit). In the latter case, there is a unique
+minimum. Thus the duality map is not one-to-one and cannot be unitary. The way this has been
+
+                                                     11
+traditionally remedied in the operator formulation is to project onto sectors of the theory for which
+duality is invertible, and consider the appropriate boundary conditions in each sector [27–29]. In
+such constructions, duality includes a translation by half a site (to go effectively from lattice to
+dual), which meant that within one of these sectors, doing duality twice gives a translation, not
+the identity. Our scheme provides a different perspective where we explicitly see the sectors over
+which Dσ is invertible and make use of both the lattice and dual lattice all along. This will prove
+particularly useful in section 5.2.
+    Thus, despite the name, the duality defect operator Dσ does not square to the identity. In fact,
+it has a zero eigenvalue. To see this, we work out the defect fusion algebra, which describes what
+happens when two horizontal defects are combined. Putting two duality defects together gives
+                                                                         0         0
+                                             X           P
+                  h{h0j }| Dσ2 |{hj }i = 2−L        (−1) j ĥj+1/2 (hj +hj +hj+1 +hj+1 ) .      (3.25)
+                                           {ĥj+1/2 =0,1}
+
+
+Each sum over the hatted variables imposes the constraint hj + h0j + hj+1 + h0j+1 = 0 mod 2. The
+constraint is satisfied only if h0j = hj for all j or h0j = 1+hj for all j. Thus two duality defects either
+gives the identity, or a spin-flip defect: Dσ2 = 1 + Dψ . The spin-flip defect operator is invertible:
+Dψ2 = 1, so the duality-defect operator is not: Dσ4 = 2Dσ2 . Thus Dσ2 /2 is a projection operator onto
+the sector where Dψ has eigenvalue 1. Putting a duality defect and a spin-flip defect together gives
+just a duality defect:
+                                            P
+      h{ĥj+1/2 }| Dσ Dψ |{hj }i = 2−L/2 (−1)   j (ĥj−1/2 +ĥj+1/2 )(1−hj )   = h{ĥj+1/2 }| Dσ |{hj }i ,   (3.26)
+          P                                                                                    √
+since (−1) j ĥj−1/2 +ĥj+1/2 = 1. Thus Dσ (Dσ2 − 2) = 0, and so the eigenvalues of Dσ are 0, ± 2.
+    The fusion algebra for the topological defects in the Ising model is therefore
+
+                     Dψ2 = 1 ;         Dσ Dψ = Dψ Dσ = Dσ ;                      Dσ2 = 1 + Dψ                (3.27)
+
+Fusion algebras will play an important role in our analysis. In general, the fusion algebra can be
+be expressed in a compact notation
+                                               X
+                                                     c
+                                      Da Db =      Nab Dc .                                  (3.28)
+                                                        c
+
+The Da are normalized so that the Nab   c are non-negative integers. Remarkably, for all the examples
+
+discussed in part II as well, it is always possible to find a topological defects obeying (3.28). This
+is an explicit and exact correspondence between defects on the lattice and a rational conformal
+field theory, because chiral vertex operators in the latter obey such a fusion algebra. This suggests
+strongly that defect lines in the lattice can be associated directly with such operators. For example,
+in the Ising conformal field theory the chiral operators are ψ, the Majorana fermion, and σ the
+chiral part of the spin field. These obey the fusion algebra ψ 2 = 1, σ × σ = 1 + ψ, and σψ = σ, just
+as their namesake defects do. This association of chiral operators with defects explains our naming
+of the defects, but is much more than a coincidence: it will allow us to generalise Kramers-Wannier
+duality to the height models in part II.
+
+3.3    Duality-twisted boundary condition
+Since the duality defect shifts the spins from one sub-lattice to the other, care is needed when
+considering a single duality defect on a manifold with non-trivial topology. Consider a torus with
+
+
+                                                       12
+a single vertical duality defect illustrated in Fig. 4. The weights on the hatched and unhatched
+plaquettes are defined using parameters u and u0 respectively, so that when crossing the duality
+defect on the square lattice, the vertical and horizontal Boltzmann weights change roles. Away
+from the critical point, this glues together the ordered and disordered phases in a seamless way
+– the duality defect is mobile. However, in the presence of a single duality defect (or any odd
+number), the only way to sew together left and right sides is include an immobile, physical domain
+wall between the ordered and disordered phases. At the domain wall, the two types of hatching
+meet so that now the two boundaries can be sewed together with a half vertical translation in either
+direction. The domain wall breaks translation invariance except at the critical point u = u0 , where
+the hatching is unnecessary and the system becomes translation invariant again.
+
+
+
+
+Figure 4: The two types of domain walls present with periodicity in the horizontal direction and a
+vertical defect. The duality defect and the domain wall each separate the ordered phase with the
+disordered phases. Squares with hatching have spectral parameter u while blank ones have u0 ; the
+direction of hatching indicates the locations of the spins. Top and bottom differ by the locations
+of the spins, and dots are omitted for clarity.
+
+    Including a single vertical duality defect is equivalent to a duality twisted boundary condition
+[4, 9–11, 29–32]. Due to the presence of the domain wall, there are two transfer matrices one
+can define in the presence of a vertical duality defect, depending on which sites are occupied by
+heights/spins. The one arising from the bottom part of figure 4 has matrix elements pictured as
+
+
+                  Tσ =                                                          ,             (3.29)
+
+where the one spin in the middle of the defect is summed over. We have left the dots implicit in
+favour of displaying where the Ising spins reside. We denote by Hσ the vector space comprised of
+
+
+                                                13
+the spin configurations on a row, so that Tσ takes Hσ → Hσ . We denote by H
+                                                                          bσ the other vector
+space on which Tσ acts, with
+
+                        Tσ =                                                                     .                   (3.30)
+
+The two transfer matrices differ only by where the Ising degrees of freedom are placed, and the two
+vector spaces Hσ and H  bσ are isomorphic. They are related by a half translation, just as H and Hb
+are. We can thus adopt a unified convention for the Tσ acting on the full vector space Hσ ⊕ Hσ   b
+just as for T in (2.8):
+
+                                         Tσ =                                                                        (3.31)
+
+    To be more explicit, consider Tσ acting on H, and let the duality defect be between sites L and
+1, while the domain wall is at site r. The duality defect modifies the adjacent Boltzmann weight to
+
+                                                  1
+                                             = 2− 2 cos u + σLz ⊗ σ1x sin u aβ;aβ 0 .
+                                                                           
+                                                                                                                     (3.32)
+
+The transfer matrices in the presence of a vertical duality defect are therefore
+
+                                    r−1
+                                     Y                   L
+                                                         Y                         r−1
+                                                                                   Y                  L−1
+                                                                                                      Y
+ TσV =       cos u + σLz ⊗ σ1x sin u         WjV (u0 )         WjV (u) ,   TσH =          H                  H
+                                                                                                                   (u0 ) .
+         
+                                                                                         Wj+1/2 (u)         Wj+1/2
+                                       j=2               j=r                       j=1                j=r
+                                                                                                                     (3.33)
+
+The partition function is then
+
+                                                  Zσ,1 = Tr(TσV TσH ) .                                              (3.34)
+
+The Boltzmann weights W1V and WL+1/2 H      do not appear, and there is only one new weight associated
+with the defect. Thus only 2L − 1 different weights are involved in the transfer matrix here.
+    Since the duality defect is topological, there exists a local unitary transformation Uσ that shifts
+it over one site [9, 29, 30]. The way to find it in our approach is to drag the duality defect over the
+Boltzmann weight using the defect commutation relations. For the defect between L and 1, it is
+
+                                                   Uσ = HL ⊗ CZL,1                                                   (3.35)
+
+where HL = √12 (σLx +σLz ) and CZL,1 = 21 (1+σLz +σ1z −σLz σ1z ) are the Hadamard and control-Z gates.
+However, the domain wall is not movable by a unitary transformation. Thus only at the critical
+point u = u0 does the transfer matrix commute with the modified translation operator Tσ = T Uσ .
+Relating Tσ to the corresponding Dehn twist is subtle, and so we defer this analysis to section 5.2.
+
+3.4   A Majorana zero mode in the Hamiltonian limit
+Here we consider the Hamiltonian limit and study twisted boundary conditions in the Ising quantum
+spin chain. The critical case has been investigated thoroughly [9, 10, 31], so we focus mainly on a
+very interesting piece of physics in the gapped phase. In the presence of a duality defect, a Majorana
+zero mode occurs, localized on the domain wall separating ordered and disordered regions. Such zero
+modes are currently of great current interest in the study of topological order [33]. An interesting
+
+                                                                14
+feature is that this zero mode is unpaired – the “branch cut” or “string” associated with the zero
+mode terminates on the defect instead of another zero mode.
+    Including no defect or a vertical spin defect results in periodic or anti-periodic boundary con-
+ditions on the spin chain. The Hilbert space on which the quantum Hamiltonian H acts is then
+the vector space H on which the transfer matrix acts. In the limit uH , uV → 0, while keeping
+uH /uV = J finite, the transfer matrix approaches the identity matrix. The order u corrections are
+local, and yield the Hamiltonian: T − 1 ∝ uH + O(u2 ), where
+                                         L
+                                         X                L−1
+                                                          X
+                              H± = −            σjx − J         σjz σj+1
+                                                                     z
+                                                                         ∓ JσLz σ1z .                     (3.36)
+                                         j=1              j=1
+
+The top sign is for periodic boundary condition, while the bottom sign is for antiperiodic, a spin-flip
+defect between sites QL and 1. Both Hamiltonians commute with the global spin-flip Z2 symmetry
+generated by Dψ = j σjx . The spectrum is independent of the location of the defect, since the
+defect can be moved at will by a unitary transformation. Multiple vertical spin-flip defect lines
+simply result in minus signs in the corresponding terms Jσkz σk+1
+                                                                z    in the Hamiltonian. However,
+any even number can be removed by a unitary transformation;       e.g. spin-flip defects at (k, k + 1)
+and (L, 1) are removed by the unitary transformation kj=1 σjx . This is the vertical version of the
+                                                        Q
+horizontal defect fusion Dψ Dψ = 1.
+    The Hamiltonian for a duality-twisted boundary conditions includes a domain wall at site r,
+and so acts on the Hilbert space Hσ . Taking u, u0 → 0 with u0 /u = J gives
+                             r−1                r−1           L−1                 L
+                                                                                        σjx − σLz σ1y .
+                             X                  X             X                   X
+                    d
+                  H =−J            σjz σj+1
+                                        z
+                                            −         σjx −         σjz σj+1
+                                                                         z
+                                                                             −J                           (3.37)
+                             j=1                j=2           j=r                 j=r
+
+The final term is the effect of the duality defect, and is unitarily equivalent to the one discussed in
+[9] and [31]. For later convenience we have done a unitary transformation that changes σ1x to σ1y in
+this term, leaving the others untouched. A straightforward calculation shows that if we wrap the
+defect line around the boundary differently, i.e., shifted by half a unit cell so that it wraps around
+WLV , we find the last term in (3.37) is replaced by JσLx − σ1x − JσLx σ1z . The spectra for these three
+spin-chain boundary conditions in the critical case has been found explicitly [31, 34, 35], but we will
+show in sec. 6 that the explicit expressions are not needed to relate the critical partition functions
+to those in conformal field theory.
+    The spin-flip symmetry remains, still generated by Dψ . With a duality defect, as opposed to
+other boundary conditions, the spectrum is identical in both sectors labelled by eigenvalues ±1 of
+Dψ . This double degeneracy is a consequence of Kramers pairing. Precisely, note that conjugating
+H d and Dψ by the operator σ1z gives
+
+                            σ1z H d σ1z = (H d )∗ ,             σ1z Dψ σ1z = −Dψ .                        (3.38)
+
+Since H d is Hermitian, (H d )∗ has the same eigenvalues. Hence the pairing: for each eigenstate |ψi
+of H d and Dψ with eigenvalues E and ω respectively, σz1 |ψi∗ has eigenvalues E and −ω respectively.
+This degeneracy has an interesting consequence for partition functions. Because the spectra with
+Dψ = 1 and −1 are the same,
+                                                    
+                  1 + Dψ −βHd             1 − Dψ −βHd                         
+             tr          e         = tr          e          ⇒ tr Dψ e−βHd = 0 .               (3.39)
+                     2                       2
+
+The analogous statement holds in the classical model on the torus as well; see (5.10).
+
+                                                          15
+     Unless J = 1 so that the system is critical, the domain wall illustrated in figure 4 breaks
+translation invariance. In (3.37), the coupling J changes roles at the domain wall. Thus on one
+side the system is ordered, and on the other it is disordered; which is which depends on whether
+|J| < 1 or |J| > 1. As a consequence, a zero mode operator “localised” on the domain wall appears.
+This is straightforward to understand by using a Jordan-Wigner transformation of the Hamiltonian
+into free fermions; see Appendix A for details. In the gapped phase, the Hamiltonian includes a
+mass term for the fermions that changes sign at the location of the domain wall. Thus one would
+expect a Majorana zero mode localised there [33], an expectation confirmed in the appendix.
+     Its construction is similar to that of the zero mode occurring at the edge of the Ising/Kitaev
+chain with open boundary conditions [36], and utilises the iterative procedure described in [37].
+We consider the case |J| < 1, so that the region from r to L is ordered (i.e. the two-point function
+hσjz σkz i in the ground state approaches a non-zero constant in the limit r  j  k  L ), while
+the region from 1 to r is disordered. The starting point for the iteration is the operator
+                                                          r−1
+                                                          Y
+                                          Ψ0 = iσ1z σrz           σkx ,                          (3.40)
+                                                          k=1
+
+which commutes with the Hamiltonian in the extreme limit J = 0. The string of spin-flip operators
+terminating at the duality defect means that the only terms in the full Hamiltonian not commuting
+with Ψ0 are in the region around the duality defect. Moreover, these terms are of order J. The
+resulting commutator can be written as a commutator of H d with an order J operator, up to
+corrections of order J 2 :
+                  h        i                               h         i
+                   H d , Ψ0 = −2J(σrx + σr−1
+                                           z
+                                               σrz )Ψ0 = − H d , Ψ1 + O(J 2 ) .             (3.41)
+
+where
+                                                  r                       r−2
+                                                                                      !
+                                                  Y                       Y
+                             Ψ1 = iJσ1z     z
+                                           σr+1         σkx   +     z
+                                                                   σr−1         σkx       .      (3.42)
+                                                  k=1                     k=1
+
+Thus [H d , Ψ0 + Ψ1 ] contains only terms of order J 2 . These terms can then be written as −[H d , Ψ2 ]
+and the iteration continues. The analysis in the appendix shows that that the iteration can stop,
+giving an operator Ψ = Ψ0 + Ψ1 + Ψ2 + · · · + ΨL that commutes with the Hamiltonian. For |J| > 1,
+there is an analogous construction, given in the appendix.
+    All the terms in the zero mode have strings of spin flips terminating at the duality defect. This
+string is familiar from the Jordan-Wigner transformation: it means the zero mode is non-local in
+terms of the spins, but local in terms of the fermions. Thus if the fundamental degrees of freedom
+are fermions, Ψ0 and Ψ1 are localised at the domain wall. As the operators get farther from r, the
+norm of each term falls off exponentially, up to one (important) subtlety discussed in the appendix.
+One other feature worthy of note is that there is just one zero mode for a given value of J, as
+opposed to the case of an open Ising chain, where there is a zero mode at each end [36]. Here
+the duality defect plays the role of the other end, but there is no zero mode localised there. The
+operator σ1z does result in the Kramers pairing, but it is not a zero mode, as it does not commute
+with H d .
+    A nice picture also emerges in terms of the spins: the zero mode contains a spin-flip defect
+stretching from the domain wall to the duality defect. As we have repeatedly emphasised, the
+duality defect is topological and so can be moved without changing the energy. This suggests
+that in the full 2d classical model, there is a trivalent junction of defects where a spin-flip defect
+terminates at the duality defect, and that its location can be changed without changing the free
+energy/partition function. In the next section 4 we define such a junction precisely.
+
+                                                    16
+4     Trivalent junctions of defects
+Having described two different types of defects, our next step is to show how they can intersect.
+In this section we show how to branch and fuse defect lines at intersections. We show that in our
+construction, it is quite straightforward to find intersections that can be moved around without
+changing the partition function. Understanding these intersections is essential for defining and
+analysing partition functions on the torus twisted along multiple cycles.
+
+4.1   The triangular defect
+
+
+
+
+                                                         /
+
+
+
+
+Figure 5: On the left, a schematic view of a trivalent junction of vertex lines. On the right, how
+this is defined precisely by introducing a triangular face.
+
+    The basic object is a trivalent junction of defect lines. The three lines meeting need not be
+of the same type (and in Ising, cannot be). In our construction of defects using quadrilaterals,
+a trivalent junction requires introducing a triangular face, as illustrated in figure 5. A nontrivial
+statement we elaborate on below is that any higher valency junction of defect lines can always
+be decomposed into trivalent junctions. Each side of the triangle is labelled by the type of defect
+coming into that side of the junction, as well as a height label at each vertex:
+
+
+                                                                                                   (4.1)
+
+
+    In the interest of studying topological defects we will also enforce the condition that the triangle
+defect is free to move without changing the value of the partition function. We thus require
+that the triangle defect commutes locally with the transfer matrix. The analogous triangle defect
+commutation relations to be solved are given by
+
+                                X
+                                                    =                 ,                            (4.2)
+                                 β
+
+
+When this is satisfied, triangle defects indeed can be moved around without changing the partition
+function, as illustrated in figure 6.
+    Finding solutions to (4.2) appears to be quite an imposing problem, since it involves the defect
+Boltzmann weights and the triangle weights. However, as we will explain in detail in part II, there
+is a procedure for finding solutions. The general structure developed there requires that the weight
+
+
+                                                  17
+                                                                        /
+
+
+
+                                                                                         O
+
+            
+
+
+
+
+                                  /                                         /
+
+
+
+
+Figure 6: Moving a trivalent junction on the lattice is schematically illustrated in the top row.
+Doing this precisely requires two steps, shown in the bottom row. The first step uses the defect
+commutation relations to move the red defect line around a plaquette. The second step uses the
+triangle defect commutation relation (4.2) inside the boxed region. The dots are omitted for clarity.
+
+
+of the triangle is non-vanishing only when the labels obey certain conditions. These conditions work
+in much the same way as the defect lines themselves – they occur at a termination point of three
+defect lines with a rule on how to fuse them together. We used the word “fuse” in the previous
+section to describe for example how creating two successive horizontal duality defects is equivalent
+to the sum of the identity operator and a horizontal spin-flip defect, i.e. Dσ2 = 1 + Dψ in operator
+language. This same algebra (3.27) is utilised to constrain the allowed triangles at a given trivalent
+junction. For this to make sense, the heights themselves must be labelled by elements of the fusion
+algebra. In the Ising model, the heights 0 and 1 (i.e. spin up and down) correspond respectively to
+1 and ψ, while the empty site corresponds to σ. The condition that the triangle be non-vanishing
+is that at each vertex, the two defect labels must fuse to the height variable at that vertex.
+     Precisely, this means that for the weight of (4.1) not to vanish, Nβρ G N B N R 6= 0, where the
+                                                                               ργ γβ
+   c
+Nab are the non-negative integers defined by the fusion algebra (3.28). Since the fusion algebra is
+associative, this implies that NRGB > 0 as well. This correspondence between heights and defect
+
+labels seems rather ad hoc and coincidental. However, as will be apparent in the more general height
+models of part II, it is not, but instead a fundamental part of the definitions of the theory itself.
+This indicates rather strongly that the defect lines we study are themselves a fundamental part of
+the theory, and gives excellent intuition into why their topological properties are so remarkable.
+     We therefore need to introduce the identity “defect”, which leaves the partition function in-
+variant, even if wrapped around a cycle. We draw it with dashed lines, and its Boltzmann weights
+are
+                                     a         b        1
+                                                  = 2− 4 δaα δbβ .                               (4.3)
+                                      α        β
+                 1
+The factor of 2− 4 is needed to cancel the weights (2.5) associated with the extra sites arising from
+the defect insertion. The identity defect obviously satisfies the defect commutation relations.
+   The identity defect also can terminate along another defect at a trivalent junction. It is easy
+
+
+                                                   18
+to find the corresponding solution of (4.2); the only non-trivial part is to again compensate for the
+weights from the extra sites. In our conventions the triangle weights that occur at the termination
+of an identity defect are then:
+
+                                              1
+                                      = 2− 4 ,                = δhh0 ,
+
+                                                                                                   (4.4)
+                                              1
+                                      = 2− 4 ,                 = [σ x ]hh̃ δhh0 ,
+
+
+where h can be the height 0 or 1 (i.e. 1 or ψ, i.e. spin up or down), and the σ height corresponds
+to an empty site. We can then insert an identity defect between say two duality defect lines that
+touch at a single site. At that site, we can insert two triangle defects using (4.4):
+
+
+
+
+                                                  =                                                (4.5)
+
+
+
+
+                     √
+A possible factor of 2 coming from (4.4) is cancelled by the extra weight coming from increasing
+the number of sites by one.
+    The Ising triangle defect commutation relations are fairly straightforward to solve in general,
+since the only non-vanishing NRGB in the Ising model not involving the identity defect are N ψ =
+                                                                                              σσ
+  σ = N σ = 1. Thus the only non-trivial trivalent junction here involves two duality defects and
+Nσψ      ψσ
+one spin flip defect. There are two distinct types of labelings of the heights around the triangle,
+and the weights are
+
+                                  1
+                             = 2− 4 (−1)h ,                                = σ x hh0 .
+                                                                             
+                                                                                                   (4.6)
+
+
+It is straightforward to check directly that indeed these triangle weights satisfy (4.2).
+
+4.2   Partition function identities
+The fact that the partition function is independent of the locations of trivalent junctions has a
+number of remarkable consequences. Here we show that there are local relations between different
+ways defect lines can join, resulting in linear relations among partition functions with different
+defects present. We develop a toolset that relates microscopic properties of the defect lines to
+macroscopic pictures, making deriving these linear relations very easy.
+    We showed in (3.19) that the partition
+                                       √        function including a closed isolated defect loop not
+wrapped around any cycle is simply 2 times that without the loop. Let us now consider a more
+general situation with a closed loop, still topologically trivial, but with two defect lines terminating
+at it. A concrete example is two spin-flip defects terminating at a duality defect loop. To express
+such configurations in a uniform fashion, we use the trivalent defect commutation relations (4.2)
+
+                                                  19
+to push the two trivalent junctions so that they are both on top of one defect Boltzmann weight.
+Furthermore, using the standard defect commutation relations (3.17) we rearrange the picture so
+that the defect loop is in line with the defect lines that terminate at it. In a picture,
+
+
+
+                                                        /                                        (4.7)
+
+
+
+It applies for any allowed external heights, while the internal heights (the dots) are summed over.
+    In part II we explain a general method for simplifying the right-hand-side of (4.7). The result is
+very elegant. First, (4.7) is zero unless R = B. One can check this in Ising by direct computation;
+more generally it follows from an orthogonality relation satisfied by the trivalent junction weights.
+If P = 1 then obviously (4.7) is simply δRB δGB , and likewise with P ↔ G. We can explicitly
+compute the non-trivial ones to give
+                 √                                                                    √
+             =       2        ,                  =             ,                  =       2
+                                                                                                 (4.8)
+
+where these apply independently of the heights at the corners. This special property means the
+macroscopic defect lines can be manipulated independently of the microscopic configurations, mak-
+ing the analysis quite tractable. Indeed, all these rules are summarized with the following macro-
+scopic picture,
+
+                                                   r
+                                                       dG dP
+                                           = δRB                                                 (4.9)
+                                                        dR
+
+             √
+where dσ = 2 and d0 = dψ = 1.
+    This relation, and its successors, are local, meaning that they can be applied to any subgraph
+of defects: (4.9) applies no matter what the lines going out are connected to. Any loop with zero,
+one or two external defects attached can thus be removed. In fact, setting B = 1 and R = ψ shows
+that any partition function containing a “tadpole” vanishes, e.g.
+
+                                                       = 0.                                    (4.10)
+
+The zigzag around the edge illustrates that this could be a sub-part of any partition function. The
+two colours of shading correspond to the two types of staggering of the couplings. These necessarily
+change across the duality defect, as indicated by the types of hatching in figure 4. At the critical
+point u = u0 , so there is no staggering and no need for the shading.
+    We already came across a simple example of such a partition function identity when implement-
+ing translation invariance in the presence of a vertical spin-flip defect: translating fully around a
+cycle results in the crossing red lines appearing in (3.15). The junction is given by two spin-flip
+defects meeting at a point and then leaving. The termination of the spin-flip defect lines at that
+
+
+
+                                                 20
+point defines a quadrivalent defect Boltzmann weight:
+                                      ( 1
+                                       2− 2              a = b = c = d = σ,
+                                    =   x σx σx σx
+                                                                                               (4.11)
+                                       σab  bc cd da     otherwise
+
+Either the defect lines terminate at a dual lattice point shown in the first line or a point on the
+lattice shown in the second line. The quadrivalent defect of spin flips can be decomposed into two
+trivalent junctions in two distinct ways. Using the explicit weights (4.4) shows that the two are the
+same for any labelling of the heights:
+
+
+                                          =             =             .                        (4.12)
+
+
+The trivalent junctions give a linear relation between these. Since the trivalent junctions in (4.12)
+are free to move we indeed have
+
+                                              =         =                                      (4.13)
+
+as promised.
+    The analogous situation for duality defects is even more interesting. Here the relations between
+pairs of triangle defects is more intricate; the corresponding identity is
+                                                                  !
+                                               1
+                                          = √             +        ,                           (4.14)
+                                                2
+as is easily verified from (4.4,4.6). This identity also holds rotated by 90 degrees, so
+                                                                   !
+                                               1
+                                           = √             −         ,                         (4.15)
+                                                2
+for any labelling of the external vertices. The trivalent defect commutation relations (4.2) allow
+the junctions to be moved apart, connected by a defect of the type stretched across. The ordinary
+defect commutation relations allow the individual lines to be moved at will.
+    All these manoeuvres leave the partition function invariant. Therefore (4.14) and (4.15) can be
+recast as linear identities for various partition functions under local rejoining. Schematically,
+                                                                    !
+                                                1
+                                          = √              +          ,                         (4.16)
+                                                 2
+                                                                    !
+                                                1
+                                          = √              −          .                         (4.17)
+                                                 2
+Again, the two colours of shading correspond to the two types of staggerings and the zig-zag
+boundary signifies that it could be a sub-part of any partition function. As a consistency check,
+we can rederive the vanishing of the ‘barbell” graph from (4.10):
+                                               !                                 !
+                   1                                   1
+              = √                 −               = √                −             = 0 . (4.18)
+                    2                                   2
+using first the reshuffling and then (4.9) with P = ψ and G = R = B = σ.
+
+                                                  21
+4.3   Rearranging intersections: F moves
+We have shown how to manipulate defect lines at the macroscopic level without any reference to the
+microscopic details of how the defect lines fuse together. What is even more remarkable is that the
+macroscopic rules they obey are precisely those of the underlying microscopic degrees of freedom.
+This of course is not a coincidence, but rather both are consequences of a deep mathematical
+structure. These linear relations are called in the context of topological field theory F -moves.
+These are precisely the rules obeyed by defect lines in the conformal field theory describing the
+continuum limit of the critical model [23]. The rules we derive here apply off the critical point as
+well. Here we say a little about their general structure. In part II we will go much further.
+    Whenever four defect line segments meet at a point, the intersection can be decomposed into
+trivalent vertices in two distinct ways. However, as apparent in (4.12, 4.14, 4.15), there are linear
+relations between the two ways the lines join. The F moves governing this reshuffling are in general
+                                               Xh      i
+                                           =     FPRGB              .                           (4.19)
+                                                         XY
+                                               Y
+                      h      i
+where the coefficients FPRGB         are called F -symbols. Conjoined with the trivalent defect com-
+                                XY
+mutation relations (4.2) and the standard duality defect relations (3.17), the analogous statement
+to (4.9) holds:
+
+
+                                               X
+                                                 FPRGB XY
+                                                      
+                                           =                                                    (4.20)
+                                                Y
+
+
+
+The F -symbols form a unitary matrix for fixed external legs R, G, B, P , and in simple examples
+like Ising are independent of the heights at the corners.
+    We have already worked out most of the F -symbols for Ising. For example, the relation (4.12)
+or (4.13) arises hbecause
+                        i spin flip defects can only fuse to the identity defect. The corresponding F -
+                    ψψψ
+symbol is thus Fψ           = 1. The nontrivial F -symbols arise when the external legs have duality
+                       11
+defects, and follow from (4.14) and (4.15):
+                              1
+                 [Fσσσσ ]ab = √ (−1)ab ,                   Faσbσ = Fσaσb = (−1)ab .             (4.21)
+                               2
+where a or b = 0 for the identity defect 1, and 1 when it is the spin-flip defect ψ (the same notation
+as for the height labels). The other non-zero F -symbols are equal to one when allowed by the fusion
+rules. If not allowed by the fusion rules, they of course give zero.
+    The F -moves allow one to decompose any higher-valency junction of defect lines into trivalent
+junctions, as promised. Crucially, the F -symbols are independent of the microscopic height config-
+urations at the corners of the square. This is why we have always been able to omit writing them,
+and why the schematic pictures contain all the information necessary. The F moves are macroscopic
+operations; they only depend on the types of defect lines present and how they fuse. However, they
+are uniquely determined by the microscopic rules we have used to define the Boltzmann and defect
+weights. This beautiful relation between microscopic and macroscopic properties illustrates how
+defect lines and junctions are fundamental objects in the theory. The relations between them and
+
+
+                                                    22
+the continuum results we derive in subsequent sections are natural consequences of this common
+structure.
+    This common structure is known as a fusion category, and arises in studies of rational conformal
+field theory, anyonic particles, and topological quantum field theory [38]; for reviews relevant to our
+story, see [13, 39, 40]. The fusion category provides a general set of rules for manipulating these
+lines. Written in abstract form, these are summarized as
+
+                                                  r                                                   s
+                                                      db d
+                                                         b0
+                                                                                           X
+                                                                                                 c         dc
+                     = da ,               = δac                   ,                    =        Nab               ,
+                                                       da                                   c
+                                                                                                          da db
+
+                                                                                                                      (4.22)
+                                                             Xh               i
+                                                        =             Fdabc                       .
+                                                                                  xy
+                                                              y
+
+
+
+These should be understood as diagrammatic rules for the defect lines – i.e. each line in the picture
+corresponds to some defect line with the corresponding label in the Ising model. The first two
+generalize (4.9) and (4.20), while the third is a special case of the F -symbol, whose general form is
+given in the last. In fact, the triangle and defect weights themselves are expressed in terms of the
+F -symbols:
+
+
+                                   dR dG 1 h RGρ i                a                    b         1 h aαβ i
+                              =(          ) 4 Fγ      ,                                    =√         F               (4.23)
+                                   dB d2β          Bβ             α                    β        dG dσ b    Gσ
+
+
+
+    The specific rules analysed in this paper are those of the Ising fusion category.1 In part II we
+will extend this correspondence to a large class of lattice models, including for example the height
+models of Andrews, Baxter and Forrester [41]. In our lattice defects, we have only required the
+rules of a fusion category; we have not utilised the braiding appearing in the additional structure
+present in a modular tensor category. It thus would be quite interesting to see if lattice models
+could be defined using fusion categories that cannot be extended to allow braiding.
+
+
+5       Duality on the torus
+With these diagrammatic rules we can prove some remarkable facts about the Ising model on
+the torus with relatively little amounts of work. One particularly useful application is a very
+straightforward way to implement Kramers-Wannier duality on the torus. Our analysis makes it
+possible to do all the manipulations using macroscopic pictures that only depend on the topology
+of the defects. Using such manipulations, we show how to easily derive identities between toroidal
+partition functions on the lattice and those on the dual lattice. Even more strikingly, by studying
+the translation operator in the presence of duality defects, we derive the conformal dimension 1/16
+of the chiral spin field directly in the critical lattice model.
+    1
+    It turns out there are two solutions of (4.22) compatitble with the Ising fusion rules σ × σ = 1 + ψ. Another
+              ˆ
+is known as su(2) 2 and involves a sign known as the Frobenius-Schur indicator for the σ label. We have chosen the
+positive sign here; in part II will elaborate.
+
+
+
+
+                                                             23
+5.1   Identities for toroidal partition functions
+A simple example is two defect loops wrapped around the same cycle of a torus. Applying (4.14)
+gives
+                                                           !
+                                          1
+                                      = √           +        .                           (5.1)
+                                           2
+
+The fact that the trivalent junction is free to move allows us to pull the duality defect loop around
+the torus and find a linear combination of two duality defect bubbles, one having no defect loops
+terminating at it, the other having two spin-flip defects terminating at it. Using equation (4.9)
+allows these loops to be removed at the expense of some quantum dimensions:
+                                                         !
+                                 1              √
+                              =√              + 2          =         +         .                 (5.2)
+                                  2
+
+We thus recover Dσ Dσ = 1 + Dψ from section 3.2 by purely local moves, and without any need to
+manipulate the explicit definitions of the operators.
+    Since (5.2) shows the operator creating a duality defect wrapped around a cycle is not invertible,
+it is not immediately obvious how to define a duality transformation on the torus. If it were
+invertible, the procedure would be to create such a line and its inverse, move one around the other
+cycle, and then annihilate the two. This would leave behind couplings with the other staggering on
+the dual lattice, and so show that the partition function for the model and its dual on the torus are
+the same. The fact that Dσ is not invertible means that they are not. We can however use (5.2)
+to derive a first identity between toroidal partition functions. We move one of the duality defect
+lines on the left-hand side around the torus in the vertical direction before fusing it with the other.
+This then leaves the dual lattice behind, so that
+
+                                        +         =          +         .                           (5.3)
+
+In words, the partition function of the model and its dual are the same, when restricted to the even
+sector of the Z2 symmetry generated by Dψ [27].
+    Using our defect lines, there is a simple way to derive a less obvious relation between the partition
+functions of the Ising model and its dual. This exploits the fact that creating a topologically trivial
+defect loop is invertible:
+
+                                           1              1
+                                        = √             = √            .                           (5.4)
+                                            2               2
+The first relation follows from (3.19), while the second follows from using the defect commutation
+relations to move the loop. Using the F -moves derived above we also have the equality
+                                                                   !
+                                 1              1
+                                √           =            +           .                       (5.5)
+                                  2             2
+
+All spins between the defect lines reside on the dual lattice, as indicated by the darker shading.
+Next we drag one σ defect line around the vertical cycle, giving
+                                                               !
+                                            1
+                                         =            +          .                           (5.6)
+                                            2
+
+
+                                                   24
+Finally, using another F -move and (4.22) we annihilate these duality defect lines to find
+                                                                        !
+                                 1
+                              =             +        +         +           .                     (5.7)
+                                 2
+
+All the partition functions on the right-hand side are defined solely on the dual lattice with the
+opposite staggering. A more traditional way of deriving this would be to rewite the Ising model in
+terms of dimers [25] and utilise the analogous result there [42]. Here we have a direct and simple
+proof valid both off the critical point and on the lattice. This linear constraint is also familiar
+in conformal field theory [43], and indeed it will prove quite useful in section 6 studying modular
+transformations on critical partition functions.
+    Combining (5.3) with (5.7) yields another relation between toroidal partition functions:
+
+                                      −             =             +     ,                        (5.8)
+
+This provides a nice consistency check, since it also is obtained by directly annihilating the defects
+in first picture on the right-hand side of (5.6).
+    F -moves give an easy way of seeing that one particular toroidal partition function vanishes.
+An F move relates two partition functions with a duality defect wrapped around one cycle and a
+spin-flip defect around the other:
+
+                                     = [Fσψσψ ]σσ                = −        ,                    (5.9)
+
+where we have left the domain wall unlabelled and so omitted the shading here. However, shifting
+the defects part way around the vertical direction shows that the two partition functions are equal
+as well as opposite, and hence vanish:
+
+                                                =                = 0.                          (5.10)
+
+This is the full 2d classical version of (3.39), a consequence of the double degeneracy of the Hamil-
+tonian H d in the presence of a vertical duality defect.
+
+5.2   Translation across a duality defect
+We have shown in the previous section how F moves of defect lines result in identities for toroidal
+partition functions. Here we extend this analysis further by studying the Dehn twist Tσ , the
+translation around a complete cycle of the torus in a direction orthogonal to a duality defect. We
+use this to compute the exact shift in the momenta, enabling us to give a direct and exact (mod 1/2)
+lattice derivation of the conformal spin 1/16 of the chiral spin field in the corresponding conformal
+field theory. This Dehn twist will also play a large role in section 6 when we explore the modular
+transformations of the partition functions and their continuum limits.
+    The presence of a conserved translation operator guarantees conservation of momentum, with
+the momentum operator Pϕ in the presence of a twisted boundary condition defined via
+                                                2πiPϕ
+                                            e     L     = Tϕ .                                 (5.11)
+
+With periodic boundary conditions (no vertical defects), (T1 )L = 1, so the total momenta (the
+eigenvalues of P1 ) are constrained to be integers. With anti-periodic boundary conditions from a
+
+                                                    25
+vertical spin-flip defect, this is modified. Here (Tψ )L = Dψ , as detailed in (3.14). Since Tψ commutes
+with the transfer matrix, we can group the states into sectors labelled both by momentum and the
+eigenvalue ±1 of Dψ . The momenta in the sector with Dψ = −1 and anti-periodic boundary
+conditions are therefore given by half integers.
+    This seemingly innocuous half-integer shift in the momentum gives an exact result in the confor-
+mal field theory describing the continuum limit. In a CFT, one can think of a conformally twisted
+boundary condition as being “created” by pair producing an operator and its conjugate, dragging
+one around the torus in the vertical direction, and then re-annihilating the two [15]. A classic
+result relates the eigenvalues of the energy and momentum operators in the CFT to the scaling
+dimensions of operators [44, 45]. Up to an integer, the conformal spin (the difference of its right and
+left scaling dimensions) of the operator creating the twisted boundary condition is then precisely
+the momentum shift. Thus in the Ising CFT there must be an operator with conformal spin 1/2
+modulo an integer. The fermion field ψ indeed has conformal spin 1/2. Thus simple manipulations
+on the lattice model in the presence of conformally twisted boundary conditions yield exact results
+for the boundary-condition changing operator in the corresponding conformal field theory!
+    Finding the shift in momentum quantisation for duality-twisted boundary conditions requires
+more work, but ultimately becomes a calculation similar to those in the preceding subsection 5.1.
+Since a duality-twisted boundary condition requires a domain wall, only at the critical point is
+it possible to define a translation operator that commutes with the transfer matrix, as explained
+above by (3.35). However, a suitably defined Dehn twist Tσ does commute for all u and u0 . The
+Dehn twist Tψ in the presence of a vertical spin-flip defect was described at the end of section 3.1.
+and qualitatively the effect is the same for Tσ : doing a Dehn twist in the presence of a vertical
+duality defect creates a horizontal defect. At the putative crossing of the vertical and horizontal
+lines in Tσ , the lines avoid, just as for Tψ in (4.12). Therefore, schematically, the Dehn twist
+implements a map of partition functions
+                                                   Tσ
+                                                  −−→                                             (5.12)
+
+just as in (4.13). For simplicity we specialise to the critical point, where we can omit the shading
+and the domain wall.
+    Precisely, the operator Tσ takes Hσ to H  bσ and vice-versa; these vector spaces were defined in
+section 3.3. The matrix elements acting on H are given graphically by
+
+                   Tlσ =                                                            .             (5.13)
+
+The superscript l is to note that the spins have effectively shifted half a unit cell to the left at the
+defect. The analogous operator acting on H  bσ has matrix elements
+
+                   Trσ =                                                            .             (5.14)
+
+The superscript r indicates the half-unit-cell shift to the right of the spins. Similarly to the transfer
+matrix, the pictures (5.13) and (5.14) differ only in where the Ising spins are placed. A unified
+notation for the two in the same fashion as (3.20) is therefore
+                                   Tσ =                                                           (5.15)
+Unlike the single insertion of a horizontal duality defect by Dσ , the Dehn twist is invertible (in fact
+unitary). Reversing the orientation of how the full twist is glued back together gives
+                                  T−1
+                                   σ  =                                                           (5.16)
+
+
+                                                   26
+Using the defect commutation relations gives T−1         −1 = 1 where
+                                              σ Tσ = Tσ Tσ     σ
+
+
+                                  1σ =                                 ,                         (5.17)
+
+is the identity operator for Hσ and Hbσ .
+    It is now straightforward to use the defect commutation relations to show that the Dehn twist
+commutes with the transfer matrix:
+
+                                          Tσ Tσ = Tσ Tσ .                                        (5.18)
+
+However, one interesting characteristic of Tσ is that it is not a product of the translation operators
+Tσ , even at the critical point. Instead, a tedious calculation gives
+
+                                           T2σ = Tσ2L−1 .                                        (5.19)
+
+The effective length of the system is therefore Leff = L − 12 for L Ising spins. This is also apparent
+from (A.3) in the appendix; there are two fermions per site, but only 2L − 1 of them appear in the
+fermionic version of the Hamiltonian. As a consequence, the L-dependence of the momenta is in
+units of 2π/(L − 12 ) instead of the usual 2π/L [11].
+    To compute the shift in momenta, we need not diagonalize the 2L ×2L matrix. Instead we derive
+identities for products of Tσ using the F moves, and so constrain the momenta. The product T2σ
+is easy to compute by fusing together the defect lines locally, as done without the vertical duality
+defect in (5.2). Here this results in
+                       1                                                            
+                T2σ = √                                  +                                       (5.20)
+                        2
+
+Away from the vertical duality defect, this resembles (Dσ )2 = 1 + Dψ . However, the presence of
+the vertical duality defect results in the trivalent junctions at the end points of the spin-flip defect
+lines. These leave Tσ invertible, unlike Dσ .
+    This operator identity also can be derived in the same spirit as those for the partition function
+in section 5.1. We label
+
+                      Tσ =            ,     1σ =             ,   ψσ =            .               (5.21)
+
+The multiplication rule for these operators is simply to stack the first one on top of the second.
+Thus (5.20) can be rederived simply via
+                            X 1              1                                1
+       T2σ =
+                                                                                     
+                        =     √            = √               +             = √ 1σ + ψσ .         (5.22)
+                            x   2              2                               2
+
+The subtleties involving the half-lattice translations and dislocation are immaterial in this method,
+since this relies only on the topological properties of the defect lines.
+    We have just one more identity to derive. As opposed to Dψ2 = 1, the operator ψσ squares to
+−1σ :
+                                               h      i
+                 ψσ2 =          =           = Fσψσψ              = −          = −1σ            (5.23)
+                                                        σσ
+
+In the first step we fuse the spin flip defects locally, which gives the identity. In the second step we
+used another F -move defined in (4.21) to pull the spin flip defects past each other on the duality
+
+                                                   27
+defect. Lastly we used the relation for the bubble diagrams in (4.22) to remove the spin flip defects
+from the duality defect. Therefore
+                                                 1         2
+                                      T4σ =        1σ + ψσ    = ψσ .                              (5.24)
+                                                 2
+Thus
+                              √
+                     T4σ =        2 T2σ − 1σ ,      T8σ = −1σ ,        T16
+                                                                        σ = 1σ .                  (5.25)
+
+   The identities (5.25) strongly constrain the allowed momenta. The relation (5.19) means that
+when e2πipσ /Leff is an eigenvalue of the translation operator Tσ , then e4πipσ is an eigenvalue of T2σ .
+Therefore (5.25) requires
+                                                                          1    7
+                     pσ = hσ + n,        where     n ∈ Z and hσ = ±         ,±   .                (5.26)
+                                                                         16 16
+The momentum offset given by hσ is one of our main results. This discrete quantity cannot change
+as one takes the continuum limit, so it indicates that there is a field of conformal spin exactly
+±1/16 in the Ising conformal field theory, up to a half integer. It of course has long been known
+that the chiral part of the spin field indeed has conformal spin 1/16, but our derivation required
+none of the detailed apparatus of integrability, just simple manipulations using the F moves. We
+will explore this and other consequences in detail in the next section.
+
+
+6      Partition functions and modular invariance
+By analysing the behaviour of the partition function in the presence of horizontal and vertical
+duality defects, we showed in the preceding section how to extract an exact continuum quantity,
+the conformal spin (mod half an integer) of the chiral spin field at criticality. In this section, we
+show that this correspondence between lattice and continuum results can be extended substantially.
+By including the appropriate defect lines, we find lattice analogs of the Ising conformal field theory
+partition functions in all sectors.
+    The method is to exploit modular transformations. The partition functions of conformal field
+theories on a torus exhibit remarkable mathematical structure, and often can be computed exactly.
+A key tool in this analysis is modular invariance, a consequence of the fact that the physics must
+be invariant under reparametrizations of the torus [14]. We show that modular transformations
+are not solely a continuum property: we derive the complete and exact modular transformations
+for the critical Ising model purely by lattice considerations. Although the Ising lattice model is
+special in that partition functions can be computed exactly even in the presence of defects [11], this
+knowledge is not necessary for our computation. Indeed, in part II we will derive similar results
+for models where it is not possible to compute partition functions on the lattice.
+
+6.1    Modular transformations of lattice defect lines
+We went to great lengths in preceding sections to show precisely how to define defect lines branching,
+fusing, and wrapping around cycles of the torus. Therefore in this section we do all the calculations
+using schematic pictures, since all have precise lattice definitions, up to ambiguities of half-lattice
+translations that do not affect the partition functions in the continuum limit. We restrict to the
+
+
+
+
+                                                     28
+critical point (uH = uV or u = u0 on the square lattice), so we need no shading in the presence of
+the duality defect. The most general defects we need consider have toroidial partition functions
+
+                                       b                          b
+                                      Zac ≡                    : Nac 6= 0 .                                 (6.1)
+
+
+Any other toroidal partition functions involving defect lines can be reduced to sums over these by
+utilising the F moves described in section 4.3, summarized in (4.22).
+    Modular transformations form a group with two generators, both of which were discussed above.
+One generator, conventionally labelled S, simply exchanges the two cycles of the torus. The other
+is the Dehn twist T, discussed at length in section 5.2, with the precise lattice definitions of the
+particular cases Tσ and Tψ given by (5.15) and (3.14) respectively. The modular transformations
+act on the defect partition functions as
+
+                                  S                                           T
+                               −−→             ,                            −−→                         .   (6.2)
+
+
+Using the F moves and other transformations described above, the right-hand side of the latter
+can be written as a linear combination of the Zab c .
+
+    We now show explicitly how the lattice modular transformations act on all the states Zac        b ,
+
+deriving a general formula for S and T in the critical Ising lattice model. It turns out to be slightly
+nicer to compute STS instead of T; since S2 = 1, T of course can be extracted. A critical toroidal
+partition function with no defects (i.e. periodic boundary conditions around both cycles) must be
+invariant under both modular transformations, since they simply reparamaterise the torus:
+
+                              S                                                   STS
+                             −
+                             →                                                    −−−→                      (6.3)
+
+When defects are present, however, they need not be. Wrapping a spin-flip defect around one or
+both cycles results in anti-periodic boundary conditions. These three types of configurations close
+under the action of both T and S:
+
+             S    /                            S     /                                      S   /
+
+
+                                                                                                            (6.4)
+
+            STS   /                           STS    /                                  STS         /
+
+
+   It is a little more work to find modular transformations involving duality-twisted boundary
+conditions. Obviously,
+
+                                      S                                 S
+                                      −
+                                      →                  and            −
+                                                                        →                                   (6.5)
+
+For a duality defect wrapping around both cycles of the torus,
+                                                                                   !
+                                      S               1
+                                      −
+                                      →             =√                +                 ,                   (6.6)
+                                                       2
+
+
+                                                         29
+where the equality follows from using an F move in the middle of the figure. Another configuration
+with duality-twisted boundary conditions around both cycles has a spin-flip defect beginning and
+ending on the duality defect. The analogous computation gives
+                                                                    !
+                                    S          1
+                                   −
+                                   →        =√            −            .                     (6.7)
+                                                 2
+
+The last ones to consider correspond to a mix of boundary conditions; duality twisted in one
+direction and anti-periodic in the other. These are given by
+
+                          S                                                     S
+                         −
+                         →                =−               and                  −
+                                                                                →                 =−                     (6.8)
+
+where the right hand side of each equality follows again from (4.22). Finally, the action of STS on
+the partition functions involving duality defects is a fun exercise to compute, yielding
+
+                                  STS                                                STS
+                                  −−−→                  and                      −−−→ −                                  (6.9)
+
+as well as
+                                                  !                                                             !
+             STS  1                                                        STS  1
+             −−−→ √                   +               and                  −−−→ √                      −            .   (6.10)
+                    2                                                             2
+
+   We now summarize the transformations in matrix form. To do so we pick the basis given by
+    (                                                                           )
+             ,       ,            ,           ,        ,           ,             ,            ,             ,           (6.11)
+
+so that
+                                                                                                    
+                            1                                                                    1
+                              1                ⊕ √1 1 1 ⊕ 
+                                                                −1                                   
+                         S=                                                                                           (6.12)
+                            1                      2 1 −1   −1                                      
+                                              1              1
+
+and
+                                                                                     
+                                                                           1
+                                                 
+                           1
+                                                                                −1
+                                                                                           
+                           1                       
+                                                   ⊕                                  −1
+                    STS =                                                          ⊕         .                         (6.13)
+                                                                                  
+                                                      1          √1
+                                                  1  √2                                  1
+                                                                                 
+                                                                    2             
+                                          1                √1    − √12
+                                                             2
+
+As with all the results in this paper, these are special cases of the general results described in
+part II. Indeed, all the above modular transformations are summarized in a remarkably elegant
+fashion:
+                          Xh        i                           Xh        i
+                     b
+                 S(Zac )=      Fabab Zbγa
+                                              and     T(Zacb
+                                                             )=      Fbaba Zγab
+                                                                                 .           (6.14)
+                                           cγ                                                          cγ
+                              γ                                                           γ
+
+                                                                       b as in (6.2), and then
+These can be found by applying the transformation to the basis states Zac
+using (4.22) and the F -moves to simplify the resulting expression.
+
+                                                            30
+    We conclude this subsection by showing that indeed S and T acting on the Zac    b provide a
+
+representation of the modular group. The group is determined by two constraints: S2 = 1 and
+(ST)3 = 1. The definition of S given by (6.2) makes it obvious that S2 = 1. (More formally, it is
+                                                         0 = N 0 = 1.) Hence we only need to
+because both kinds of defects are their own conjugates: Nψψ      σσ
+verify that (ST)3 = 1. Because the T transformation defined by (6.2) is obviously invertible, this
+is equivalent to TST = ST−1 S. The latter is a consequence of the commutativity of the diagram
+
+                                                T−1         /
+                         S        7                                       S
+                                                                                  '
+                                                                                              (6.15)
+                          T                                             T     7
+                              '
+                                                 S              /
+
+
+
+The last step along the lower path is the only non-obvious identity. It follows by moving lines
+around the torus as
+
+
+                                      T   /           /             /                         (6.16)
+
+
+The proof that (6.15) commutes is competely independent of any basis choice – it only requires
+that the defect lines can move without changing the value of the partition function.
+
+6.2   The Ising CFT partition functions
+We briefly review the Ising CFT and its partition functions on the torus [14, 43, 46]. The con-
+formal field theory describing the continuum limit of the critical lattice Ising model has long been
+understood. More recently, it has been rigorously proven that the critical Ising lattice model does
+converge to this CFT upon taking the appropriate limit [47].
+    Conformal symmetry in two dimensions is infinite dimensional, and so is quite powerful, often
+allowing the partition function to be computed exactly. For the most part, this is an exercise
+in the representation theory of the Virasoro algebra, the algebra of the generators of conformal
+symmetry. These generators split into left- and right-moving sectors, with those in each sector
+obeying the Virasoro algebra. Irreducible representations of the Virasoro algebra are called (chiral)
+Verma modules; every state in the Hilbert space of the 1+1 dimensional quantum theory belongs
+to some module which is a product of left and right Verma modules. Each Verma module is labeled
+by a “highest weight” state, the state of lowest energy in that sector, created from the vacuum by
+an operator called a primary field. The infinite tower of states belonging to each Verma module
+can be found by acting with the generators of conformal symmetry. The Ising CFT is minimal,
+meaning there are only a finite number of Verma modules, and the three primary fields are the
+fermion ψ of scaling dimension hψ = 1/2, the chiral spin field σ of dimension hσ = 1/16, as well as
+the identity of dimension h1 = 0. A remarkable fact is that after an overall rescaling, each state in
+the Verma module of a primary field A has energy on the circle determined up to a positive integer
+N , namely E = N + hA − c/24, where c is the central charge of the theory [14, 44, 45]. The exercise
+in representation theory is then to find the multiplicities for each N . A convenient way to package
+
+
+                                                 31
+this information is through the Virasoro character for each module, given by summing q E over all
+states in the module, for some parameter q. For the Ising model, the central charge c = 1/2, and
+the chiral characters are [14, 43]
+                                    1 X  (24k+1)2 /48            2
+                                                                      
+                            χ1 =            q          − q (24k+7) /48 ,                 (6.17a)
+                                   η(q)
+                                        k∈Z
+                                    1 X  (24k+2)2 /48              2
+                                                                       
+                            χσ =            q          − q (24k+14) /48 ,                (6.17b)
+                                   η(q)
+                                        k∈Z
+                                    1 X  (24k+5)2 /48              2
+                                                                       
+                            χψ =            q          − q (24k+11) /48 ,                (6.17c)
+                                   η(q)
+                                                k∈Z
+                     1   Q∞    k
+where η(q) = q      k=1 (1 − q ). The k = 0 terms in the summands indeed give the correct h − c/24
+                    24
+
+in each sector. Because of the minus signs, it is not obvious that each term is q E times a non-
+negative integer coefficient, but expanding out 1/η(q) in powers of q, one finds it is indeed so. These
+all can be written in terms of Jacobi elliptic theta functions2 ; see e.g. [43].
+    The partition function of the Ising model with various boundary conditions can be built from
+these characters. We consider here a torus, which need not be square or even rectangular. In
+general, a torus is specified by two complex numbers c1 and c2 and identifying all points in the
+complex plane through the equivalence relations z ∼ z + c1 and z ∼ z + c2 . Conformal symmetry
+allows us to rescale and rotate the torus so that one of the periods is unit norm and on the real
+axis. Each torus can thus be labelled by the modular parameter τ = c2 /c1 , the ratio of the two
+periods. On a torus with periodic boundary conditions around both cycles, the left- and right-
+Virasoro algebras remain independent, so the states belong to Verma modules of both chiralities.
+The partition functions are given by sesquilinear forms defined on the characters,
+                                              X
+                                    ZM (τ ) =     χ̄α (q̄)Mαβ χβ (q).                             (6.18)
+                                                        αβ
+
+where q = e2πiτ is called the nome. The 3 × 3 matrix M thus completely specifies the partition
+function on the torus, which can be written in the form
+                                          
+                                           χ1                                 
+             ZM (τ ) = v̄M v,    v(τ ) =  χσ  ,        v̄(τ̄ ) = χ̄1 χ̄σ χ̄ψ .        (6.19)
+                                          χψ
+For the partition function to be real as in the lattice model, we require M = M † .
+    The characters transform nicely under the modular group. Since the modular S transformation
+interchanges the two cycles, it corresponds to taking τ → −1/τ . The Dehn twist implemented by
+the modular T transformations corresponds to τ → τ + 1. They are linear transformations on the
+characters, and so take the form [14]
+                              ZM (−1/τ ) = v̄s† M sv ,             ZM (τ + 1) = v̄t† M tv,               (6.20)
+where for Ising the matrices s and t are
+                                √                                                              
+                             1      2    1                                           1
+                       1 √               √                                −1 
+                    s=  2        0
+                                  √     − 2 ,                       t = ζ48             ζ16     ,      (6.21)
+                       2
+                             1 − 2       1                                                     −1
+where ζr = e2πi/r . Using these relations partition functions with the desired modular transformation
+properties can be built quite easily.
+  2
+                                                                            √
+      or directly as Weber modular functions: f(τ ) = χ1 + χψ , f2 (τ ) =    2χσ , f1 (τ ) = χ1 − χψ .
+
+
+                                                             32
+6.3   Identifying lattice partition functions with their continuum counterparts
+It is natural to expect that the topological defects we have defined in this paper will in the continuum
+limit turn into the topological defects studied in the CFT [23]. The purpose of this section is to
+make this notion precise. Namely, for any configuration of topological defects in the critical lattice
+model, we identify the corresponding CFT partition function.
+     To do this, we utilise the modular transformation properties derived for the lattice and contin-
+uum in sections 6.1 and 6.2 respectively. The algebra that the defect lines satisfy strongly constrains
+the kinds of partition functions appearing in the continuum limit. In particular, the modular trans-
+formations in the continuum limit must preserve the structure of the modular transformations on
+the lattice, i.e., the map from lattice to continuum partition functions must be equivariant. Since
+in both cases they are linear, these manipulations are not difficult.
+     It is useful to start by counting all the inequivalent partition functions. The 10 lattice partition
+functions listed in (6.11) form a closed set under modular transformations. However, using a duality
+defect and the F -moves, in (5.7) we found a relation between the partition function without defects
+and a linear combination of dual partition functions. At the critical point, the Ising model on the
+square lattice is self-dual, so the relation 5.7 reduces the number of independent lattice partition
+functions on the torus to nine. In the continuum expression (6.18) there are also nine different
+real partition functions arising from the independent numbers in M = M † . It is straightforward to
+check that all nine can be found by applying S and T to the three partition functions with twisted
+boundary conditions:
+
+                                             ,          ,         .                               (6.22)
+
+Hence, if we can find three matrices M1 , Mσ and Mψ such that the corresponding ZM transforms
+under modular transformations identically as these three lattice lattice partition functions, then
+the remaining identifications will follow automatically.
+    The first thing to check is for modular invariants, combinations that are invariant under both
+S and T. Of the 10 lattice partition functions in (6.11), there only two modular invariants, and
+(5.7) says they are same at the critical point:
+                                                                        !
+                                    1
+                                 =             +        +      +          .                  (6.23)
+                                    2
+There is indeed only one modular-invariant CFT partition function, having M1 the identity matrix.
+Thus we identify
+                                                             
+                                                     1
+                                       −→ ZM1 = v̄  1  v                                 (6.24)
+                                                            1
+in the continuum limit. Thus, not surprisingly, the lattice partition function with no defects present
+corresponds to the well-known Ising modular-invariant partition function.
+    Others are not quite as obvious. Consider now a single vertical duality defect line. As we
+showed at great length in section 5.2, the eigenvalues of the T operation here are ±e±2πi/16 . As
+seen in (6.21), the only way of picking up such a factor is from χσ or χ̄σ . This guarantees that the
+matrix Mσ must obey
+                                                                 
+                                                             a
+                                        −→ ZMσ = v̄ a∗          b v                           (6.25)
+                                                             b∗
+
+
+                                                   33
+for some complex numbers a and b. The partition function for a single horizontal line also has a
+simple form: the corresponding matrix M is diagonal. The reason is that a horizontal defect com-
+mutes with the transfer matrix locally, so it presumably commutes with the full energy-momentum
+tensor3 generating conformal transformations. Since the Verma module is built by acting on the
+highest weight state by these generators, the operator creating a horizontal defect acts identically
+on all states in a given module. Therefore the continuum partition function for a single horizontal
+duality defect is of the form
+                                                            
+                                                    α
+                                            −→ v̄     β     v                              (6.26)
+                                                           γ
+
+for real numbers α, β and γ. Horizontal and vertical duality defects are related by the S modular
+transformation, and the resulting consistency condition is
+                                                                           
+                             !                    α                     a
+                   S           =          −→ s†      β      s = a∗        b .          (6.27)
+                                                          γ            b ∗
+
+                                                                           √
+Carrying through the algebra gives β = 0, γ = −α, and a = b = −γ/ 2. Thus both partition
+functions are determined up to an overall constant ασ :
+                                                                               
+                                   1                                    1
+                         ασ
+                     −→ √ v̄ 1        1 v ,                 −→ ασ v̄           v .     (6.28)
+                           2       1                                           −1
+
+The partition function for a vertical spin-flip defect line is found in a similar fashion, giving
+                                                                                  
+                                        1                                   1
+                     −→ αψ v̄  1  v ,                          −→ αψ v̄  −1  v                (6.29)
+                                1                                                   1
+
+for some constant αψ .
+    To determine the overall constants requires one additional input. The operators creating hori-
+zontal defects obey the fusion algebra, so the partition function Za,b in the presence of two horizontal
+defects of types a and b must obey
+                                                 X
+                                                       c
+                                         Za,b =      Nab ZM c .                                   (6.30)
+                                                           c
+
+This is illustrated for two duality defects in (5.2). Now consider the limit where torus is rectangular
+and much longer in the vertical direction, so τ is imaginary and large so that q → 0. When two
+horizontal defects are taken very far apart in this limit, the partition function must therefore
+factorise into Za,b → ZMa ZMb . Comparing this with (6.30) means that the overall constants in the
+partition functions must also obey the fusion algebra:
+                                                    X
+                                                         c
+                                           αa αb =     Nab αc .                                  (6.31)
+                                                               c
+                                                                            √
+This yields, α1 = 1 and because Dσ2 = 1 + Dψ and Dψ2 = 1, this yields ασ = ± 2 and αψ = 1.
+  3
+      incidentally, the fourth object in this paper conventionally labelled T
+
+
+                                                            34
+   This is enough to find the continuum partition functions for all nine independent defect config-
+urations. The three basic ones are
+                                                                               
+                  1                                1                               1
+           −→ v̄  1  v,             −→ ±v̄ 1       1 v,           −→ v̄  1  v.         (6.32)
+                         1                         1                          1
+
+The partition functions with horizontal defects alone are given in (6.28,6.29). The Dehn twist T
+gives then
+                                                                                
+                                      −1                                   ζ16
+                                                                        −1      7 v
+                =        −→ v̄     1     v,                  −→ v̄ ζ16      ζ16         (6.33)
+                                −1                                          9
+                                                                           ζ16
+
+where we chose the + sign in ασ . Lastly, we have three non-trivial partition functions which involve
+combinations of S and T :
+                                                    −3                                    
+                    i                                 ζ16                        √            i
+                                                   3       −5 
+        −→ v̄ −i       −i v,             −→ v̄ ζ16     ζ16   v,           −→ 2v̄            v.
+                    i                                   5
+                                                      ζ16                               −i
+                                                                                                (6.34)
+
+   This gives all ten partition functions, and we have several nice consistency checks between CFT
+and lattice. The constraint 5.8 is immediate:
+
+                                  −          = 2χ̄σ χσ =           +        .                    (6.35)
+
+By explicitly plugging in q real into the first of (6.34) yields
+
+                                                     = 0.                                        (6.36)
+
+just as derived from an F move in (5.10) and from the double degeneracy in (3.39). From the same
+derivations, every term in the partition function of a single vertical duality defect must appear with
+coefficient that is a multiple of two. This is indeed apparent for q real in the middle relation in
+(6.32).
+
+
+7     Duality on other surfaces
+In this section we briefly describe how to perform Kramers-Wannier duality in the Ising model on
+other surfaces. Our approach makes this calculation very staightforward. We begin with the disc
+and annulus, and finish off with a pair of pants. These three objects can be used to cover any
+2-manifold, and we discuss how the corresponding duality works in this more general setting.
+
+7.1   Disc and annulus
+We begin with the Ising model on a disc. One way to construct a lattice that is topologically a
+disc is by starting with a square lattice, choosing a closed path C along the lattice and discarding
+all edges, and vertices on the exterior of this loop. The spins live on the sites of the lattice, and we
+
+
+                                                   35
+define a vector space B whose basis states are the configurations of spins along the boundary, e.g.
+|Bi = |li1 li2 . . . liL i.
+    We first describe the partition function with a given fixed boundary condition |Bi. The weight
+per configuration is given by
+                                                      βp
+                                            Y                       Y               Y p
+                           −βH({hi })                      γp ×
+                         e              =        αp                          dv ×      dv                     (7.1)
+                                             p                    v∈D\∂D            v∈∂D
+                                                      δp
+
+where D is comprised of all sites in the disc, and v ∈ ∂D all those on the boundary. The disc
+partition function is
+                                                  X
+                          Z(D, |Bi) =                           e−βH({hi }) =                                 (7.2)
+                                            {hi } : hi∈∂D =li                              |Bi
+
+where the schematic picture on the right represents the partition function defined on the left. The
+partition function is complex linear in the boundary condition,
+
+                                                 = α×                       +β×                    .          (7.3)
+                               α|B1 i+β|B2 i                        |B1 i                  |B2 i
+
+Hence understanding how the duality acts on a disc with one fixed boundary condition allows us
+to understand it for arbitrary boundary conditions.
+    The technique is the same as what we used for the torus, but much simpler since there are no
+nontrivial cycles. We insert a closed loop in the bulk and push it out to the boundary using the
+defect commutation relations and eventually find the partition function on the dual lattice with
+dual boundary conditions found by acting with Dσ on the original boundary condition,
+                                1                      1                          1
+                              =√                     = √                        =√                        .   (7.4)
+                          |Bi
+                                 2               |Bi
+                                                         2                  |Bi
+                                                                                   2             Dσ |Bi
+
+If |Bi yields a conformal boundary condition in the continuum limit (i.e. conformal invariance is
+preserved√in the presence of the boundary), then that given by Dσ |Bi must also be conformal. The
+factor of 2 in (7.5) is the relative non-integer ‘ground-state degeneracy’ familiar in conformal field
+theory [24]; its log is the difference in the ground-state entropies coming from the two boundary
+conditions. At the critical point√it says that the partition function with free boundary conditions
+on a given lattice on the disc is 2 times that on the dual lattice with fixed boundary conditions.
+            √ directly here as a consequence of the fact that the non-zero eigenvalues of Dσ have
+It arises very
+magnitude 2.
+    When the boundary conditions are fixed-up |ui = |· · · 000 · · ·i or fixed-down |di = |· · · 111 · · ·i,
+then acting with duality gives
+                                                                           E
+                   Dσ |ui = Dσ |di = · · · |0i+|1i
+                                             √
+                                               2
+                                                      |0i+|1i
+                                                        √
+                                                          2
+                                                                 |0i+|1i
+                                                                   √
+                                                                     2
+                                                                           · · ·   ≡ |freei .       (7.5)
+
+This free boundary condition is the equal-amplitude sum over all possible boundary spin config-
+urations. Thus the partition function with fixed-up √ or fixed-down is equal to that with the dual
+couplings and free boundary conditions, up to the 2 in (7.4). As we have taken pains to empha-
+sise, the operator Dσ is not invertible. Thus the duality transform (7.4) with |Bi = |freei does not
+return |+i or |−i. Rather, it gives the sum of the two:
+                           Dσ |freei = Dσ2 |ui = |ui + Dψ |ui = |ui + |di .                                   (7.6)
+
+
+                                                           36
+The ground-state boundary entropy for |Bi = |ui + |di is indeed ln 2 greater than that for |ui.
+    The extension to an annulus is straightforward. We just choose two paths on the square lattice,
+one enclosing the other, and to the spins along each path we associate a boundary condition |B1 i
+and |B2 i. The analog of the duality transformation (7.4) for the annulus was essentially already
+done in (5.4, 5.5). We nucleate a duality defect loop inside the annulus and then do an F move to
+fuse together opposite ends of the loop. The result is two duality defects wrapped around the cycle,
+with a linear combination of a spin flip defect and an identity defect connecting them. Fusing one
+duality defect with each boundary changes the two boundary conditions gives
+                                                                       
+                                       1 
+                                     =√                  +             .                      (7.7)
+                                                                        
+                                        2
+
+
+In the second term, a spin-flip defect then stretches from the inside to the outside. If |B1 i and
+|B2 i are both fixed initially, then the resulting inside and outside boundary conditions are both
+free. The spin-flip defect stretching across does not affect the free boundary conditions, since
+σ x (|0i + |1i) = (|0i + |1i).
+
+7.2   Manifolds
+Here we use the duality defect commutation relations to study Kramers-Wannier duality of the Ising
+model on graphs embedded in orientable 2-manifolds. Procedures for defining integrable models
+on general manifolds have been developed in e.g. [48] and [49]. The basic idea for constructing
+the lattice is to take a graph embedded in the manifold, and overlay it with its geometric dual.
+The edges of the embedded graph and its geometric dual then naturally create a skeleton for the
+quadrilaterals; see Fig. 7d. As above, we then can define the Boltzmann weights for the spins on
+these quadrilaterals. Since the defect commutation relations are local, it is then simple to define
+defect lines as seams between the quadriaterals as well. Then we use the pants decomposition
+theorem to dissect the manifold into manageable pieces, apply the duality to each pair of pants,
+and then glue them back together. As with the torus, everything can be done by using the schematic
+pictures, since we have gone to great pains to show how to justify them locally.
+     We begin with a compact, connected, orientable 2-manifold Σ with no boundary components.
+Following [48] we choose a cellular decomposition of the manifold Σ. One can think of this as a
+locally planar embedding of a simple 2-connected graph G in Σ; both [50] and [51] give excellent
+expositions of the graph theory needed. The decomposition is a set of vertices V , edges E, and
+faces F which we collectively denote Γ. The sets V , E and F are disjoint, and chosen so that
+V ∪ E ∪ F = Σ. The collection of edges and vertices define a graph embedded in the manifold Σ.
+Each face F is homeomorphic to the disc; see Fig. 7a. The dual decomposition is then easy to find,
+as in Fig. 7abc. To each face fρ ∈ F we define a dual vertex fbρ ∈ Vb ⊂ F . To every pair of faces
+fρ , fσ ∈ F that share an edge e ∈ E we define a dual edge eb ∈ E   b that connects the vertices fbρ
+and fσ and intersects e transversally. To each vertex vi ∈ V we define a dual face vbi ∈ Fb whose
+       b
+boundary coincides with the eb that intersect the edges e ∈ E connected to vi . This defines the dual
+decomposition Γ.b Here we use unoriented edges so that Γ  b = Γ.
+                                                          b
+     The Ising model is defined by taking spins hi = 0, 1 to reside on the vertices vi ∈ V , or for
+the dual model, on vbρ ∈ Vb . Interactions occur either between every two spins that share an edge
+e ∈ E, or eb ∈ E.
+               b These interactions are parametrized by a coupling ue and ueb respectively for each
+edge. Each quadrilateral is comprised of the four vertices who lie on the endpoints of a given e and
+
+
+                                                 37
+              (a)                    (b)                    (c)                    (d)
+
+
+
+
+Figure 7: In part (a) we show a graph and label some of its vertices, edges, and faces. In part (b)
+we show its dual graph and label some of its dual edges, dual vertices and dual faces. Part (c)
+depicts how one constructs the dual graph. Duality maps vertices to faces and vice verse, and edges
+to edges: f ↔ vb, e ↔ eb and v ↔ fb. Part (d) shows how one can parse the space into quadrilaterals
+that we use to depict the Boltzmann weights.
+
+
+its dual edge eb; see Fig. 7d. The Boltzmann weight is defined on the quadrilateral as,
+                       (                                      (
+                                                               cos π4 − ueb b
+                                                                           
+                        cos ue    hi = hj ,                                  hρ = bhσ ,
+                     =                                      =      π
+                                                                                               (7.8)
+                        sin ue    hi 6= hj ,                   sin 4 − ueb   hρ 6= hσ .
+                                                                             b     b
+
+The partition function is given by the sum over all heights of the product over all Boltzmann
+weights multiplied by the weight per site dj .
+     We now describe how to perform Kramers-Wannier duality on the Ising partition function
+defined by the spectral parameters ue and the graph defined through Γ. The duality works in
+much the same way as it did for the torus, disc, and annulus. We insert a small duality defect
+loop around one Boltzmann weight, just as in (3.19). We then stretch it across the entire system
+and perform various manipulations using F moves, leaving us with linear relations between the
+partition function and its dual. For this to work, as before we must have ueb = ue .
+     The process of dragging the duality defect across the entire manifold is most easily done by
+first dissecting the manifold into more manageable parts, performing the duality on each part and
+gluing it back together. Any orientable, compact, connected 2-manifold admits a pants decompo-
+sition [52]. A pants decomposition is a way of splitting the manifold into disjoint unions of pants –
+two-manifolds which are homeomorphic to the three-punctured sphere. We choose a pants decom-
+position P of Σ such that for each p ∈ P the boundary ∂p does not intersect any of the edges in E
+or E.
+    b As illustrated in Fig. 8, ∂p then goes through the vertices, and we can unambiguously identify
+each edge in E and E  b as being on one side of the cut or the other. Any pants decomposition of Σ
+is homotopic to one of this form. We  √ also choose to distribute the vertex weight per site equally
+across the boundary, i.e., we assign dv for each boundary site and dv for all others as usual.
+     Each pair of pants has three boundary components and each boundary component has a fixed
+spin configuration. The partition function on it is then
+
+
+                                 Z(p, |αi , |βi , |γi) ≡          .                             (7.9)
+
+
+Here we have denoted the fixed spin configurations as |αi , |βi, and |γi. The pants partition
+
+                                                  38
+                                                             /
+
+
+
+
+Figure 8: We cut the graph by choosing a closed path on the vertices in V ∪ Vb that does not
+intersect E ∪ E,
+              b e.g. runs along the quadrilaterals. This forces every other vertex along the path
+to be on the dual lattice.
+
+function is complex linear in its three arguments: Z(p, α |αi + α0 |α0 i , ∗, ∗) = αZ(p, |αi , ∗, ∗) +
+α0 Z(p, |α0 i , ∗, ∗).
+    Two pants partition functions are glued together by identifying spins on one boundary of each
+partition function and then summing over all spin configurations along the (former) boundary. For
+example, the partition function on the punctured torus with boundary condition |γi at the puncture
+can be found from Z(p, |αi , |βi , |γi) by identifying and summing over |αi and |βi:
+
+                                   X                                  X
+                    Z(T 2 , γ) =         Z(p, |αi , |βi , |γi)δαβ =                                     (7.10)
+                                   α                                  α
+
+The toroidal partition function then can be found by gluing in the disc partition function, i.e.
+identifying its boundary spins with those of this punctured torus, and then summing over all spins.
+An obvious generalization allows defect lines to terminate at the punctures as well. These can
+be glued together in a similar fashion when the terminating defect lines are of the same type and
+meet at the same point. Fusion constraints dictate that the defect lines terminating at the three
+punctures must always be able to fuse to the identity.
+    The pants with the various defect lines terminating at the boundary span the entire configuration
+space. Starting with a pair of pants with no duality defect lines present, we nucleate a duality defect,
+and manipulate it like we did on the torus. Precisely, we wrap it around the pair of pants and fuse
+it with itself and then move it behind the pants:
+
+
+                    1                   1                        1 X                            1 X
+                  =√                   =√                    =                              =
+                     2                   2                       2                              2
+                                                                   a=1,ψ                        a=1,ψ
+
+                                                                                                        (7.11)
+For clarity, we omit the shading, but all these manipulations apply both on and off the critical
+point. Next we fuse together the duality defect lines near the spin-flip defect, use the F -move
+(4.21), and then remove a bubble using (4.22):
+
+
+        1 X                        1     X                            3     X
+                             =                                   = 2− 2                c
+                                                                                      Nab               (7.12)
+        2                          4
+          a=1,ψ                        a,b,c=1,ψ                          a,b,c=1,ψ
+
+
+
+                                                        39
+We are left with a sum over configurations involving 1 and ψ defect lines terminating at duality
+defects on the boundary. Explictly, the relation between the partition function and its dual is given
+by:
+                                        3 X
+             Z(p, |αi , |βi , |γi) = 2− 2       c
+                                              Nab Z d (p, Dσ (a) |αi , Dσ (b) |βi , Dσ (c) |γi) (7.13)
+                                       a,b,c=1,ψ
+
+where Dσ (1) = Dσ is the standard duality defect creation operator, while Dσ (ψ) creates a duality
+defect with a spin-flip defect emanating from it. The superscript in Z d is a reminder that it is the
+partition function for the dual lattice, while Z is on the original.
+    It is now easy to sew the pants together to obtain any manifold desired. When sewing two
+boundaries together, one can directly identify spins across the boundary, with the appropriate
+vertex weights inserted, then fuse the duality defects together. Equivalently, one can act on the
+boundary with the duality defects, then sew the boundaries together again by directly identifying
+each spin configuration in the sum. As an example, we sew two pants together with the former
+prescription. Using (7.13) and then doing our (we hope by now) standard manipulations gives
+
+                                                       √
+                         1                                 2 X              c         c0
+                       = 3                         =                       Nxy δc,c0 Nxy      .   (7.14)
+                        2                              23
+                                                             a,b,c,
+                                                            a0 ,b0 ,c0 ,
+                                                               x,y
+
+    With these building blocks we can construct the duality on any oriented, compact, 2-manifold.
+Allowing for arbitrary initial defect line configurations is straightforward, as is allowing for a bound-
+ary. To insert a boundary, we just take one pair of pants to terminate along the boundary of interest
+and discard the vertices, edges, and faces p on one side of the boundary. The vertex weight per site
+associated to the boundary is given by dhi for each i ∈ ∂p, as on the disc (7.1). We suspect that
+similar methods can be used to describe dualities on non-orientable manifolds as well.
+
+
+8    Conclusion
+We have examined in considerable detail topological defects in the Ising lattice model, showing how
+their branching and fusing can be characterized by a set of very precise rules. A key ingredient in
+our construction was the connection of the microscopic definition of the model to the macroscopic
+behaviour of the defects. In particular, we showed that the rules used to define the microscopic
+degrees of freedom and those governing branching and fusing of defects were one and the same.
+These rules go by the name of a fusion category, and much is known about them both from the
+physics point of view and the mathematical one. Indeed, integrable lattice models such as the
+Ising model played a fundamental role in understanding them at the beginning of the story, when
+knot and link invariants were first being derived [3]. We believe the time is right for revisiting this
+connection. There are many other fusion categories known, and we have taken pains here to exhibit
+much of the general structure so that the generalisations given in part II appear natural.
+    Our study of defects make it straightforward to find twisted boundary conditions, where a
+modified form of translation invariance still holds. At the critical point, these result in conformal
+boundary conditions, again of fundamental importance in the continuum [15]. The calculation in
+a two-dimensional classical model gives a simple and direct way to find the analogous boundary
+conditions in quantum spin chains, much easier that the traditional brute force methods. Off the
+
+
+                                                       40
+critical point, it makes it easy to find an unpaired Majorana zero mode at the domain wall present
+with duality-twisted boundary conditions on the spin chain.
+    It is quite clear from work on conformal field theory that defects play a fundamental role there
+[12, 23]. Our results indicate that they play a fundamental role in understanding the connection
+between lattice and continuum as well. The calculation of the conformal spin in the continuum
+via a Dehn twist in the lattice model provides a way of matching a given lattice model with its
+corresponding conformal field theory. This is quite a strong constraint, since in rational conformal
+field theories, the dimensions of operators can take on only certain rational values. In the Ising
+case, this of course is not necessary; which conformal field theory describes the continuum limit has
+long been known [46] and indeed been rigorously proven [47]. However, in other models typically
+much less is known, and so our technique may prove quite useful.
+    Even still in Ising, we have shown how understanding the branching and fusing of the duality
+defect allows a derivation of the modular transformation matrices valid both in the lattice and
+continuum. It also gives a simple method for understanding Kramers-Wannier duality on the torus
+and higher-genus surfaces on and off the critical point. All these results can be greatly generalised,
+and in part II we plan to start exploring them in the context of height models. A few of the many
+generalisations conceivable are allowing the defect loops to fluctuate, exploring boundary-condition
+changing operators from defects terminating at boundaries, and building a 2d quantum theory from
+these topological defects.
+
+    Acknowledments We thank Jason Alicea for illuminating discussions. DA gratefully acknowl-
+edges the support of the NSERC PGSD program. RM is grateful for support from the Sherman
+Fairchild Foundation and the Institute for Quantum Information and Matter.
+
+
+A     The zero mode
+Here we provide a more in-depth analysis of the zero mode appearing due to the presence of the
+duality defect, as discussed in section 3.4. It is most easily studied by rewriting the Hamiltonian
+in terms of free-fermionic variables. Unlike conventional zero modes (e.g. [36]), it does not provide
+a pairing between states of equal energy in different sectors; that here follows from Kramers pair-
+ing. However, we explain below that when the fermions are the physical degrees of freedom, the
+corresponding boundary conditions for the Hamiltonian change. In this case, the zero mode here
+does provide a natural pairing between equal energy states, i.e. is a strong zero mode in the sense
+of [37].
+    For convenience here we undo the unitary transformation done to get the Hamiltonian (3.37),
+and study the quantum Hamiltonian arising directly from taking the Hamiltonian limit of the
+transfer matrix:
+                              r−1
+                              X                        r−1
+                                                       X              L−1
+                                                                      X                   L
+                                                                                          X
+                 H d± = − J         σjz σj+1
+                                         z
+                                             −                σjx −         σjz σj+1
+                                                                                 z
+                                                                                     −J         σjx ∓ σLz σ1x .   (A.1)
+                              j=1                      j=2            j=r                 j=r
+
+The Z2 symmetry generator commuting with H d± is modified to Ω = iσ1z Dψ . It turns out to be
+quite useful to consider both ± signs on the term arising from the duality defect. Since the unitary
+transformation U = σ1z toggles this sign, H d+ and H d− have the same spectra.
+   The free fermionic operators are defined using the Jordan-Wigner transformation:
+                                     j−1
+                                      Y                                     j−1
+                                                                              Y 
+                           aj =             σkx       σjz ,           bj = i      σkx σjz σjx ,                   (A.2)
+                                     k=1                                        k=1
+
+
+                                                                41
+so that aj and bj satisfy {aj , aj 0 } = {bj , bj 0 } = 2δj,j 0 and {aj , bj 0 } = 0. The set aj and bj form
+a set of real “Majorana” fermions. We have defined the strings so that they terminate at the
+duality defect, just as explained in section (3.4). These operators satisfy σjz σj+1     z   = −ibj aj+1 and
+  x                                     z x
+σj = −iaj bj . The boundary term σL σ1 becomes Ω(−ibL b1 ). The Hamiltonian (A.1) in terms of
+fermions is thus
+                              r−1
+                              X                  L−1
+                                                 X                  r−1
+                                                                    X                  L
+                                                                                       X
+                    d±
+                H        =J         ibj aj+1 +         ibj aj+1 +         iaj bj + J         iaj bj ± iΩbL b1   (A.3)
+                              j=1                j=r                j=2                j=r
+
+where the domain wall remains at site r. The mapping to Majorana operators is shown schemati-
+cally in Fig. 9. One very interesting fact is that a1 is left entirely out of the Hamiltonian. At the
+critical point J = 1, the Hamiltonian therefore obeys a fermionic version of translation invariance
+relating the other 2L − 1 fermions. This gives a simple explanation of why the effective length is
+Leff = L − 1/2, as derived above.
+
+
+
+
+Figure 9: Anisotripic limit shown in pictorial form when translated over to Majorana variables.
+The relation between the staggering of the spectral parameters and the hatchings is given in Fig. 4.
+
+     This Hamiltonian is non-local when written in terms of the fermions. The  Qreason is that the
+operator Ω appears in the Hamiltonian, and in terms of fermions, Ω = −b1 L       j=2 (−iaj bj ). One
+can of course work in sectors of fixed Ω, but for the situation where the fermions are the physical
+degrees of freedom, it is more appropriate to modify the Hamiltonian. We discuss this below. Note
+also that the operator Ω is a product of an odd number of Majorana operators and does not involve
+a1 . As a result it obeys the following algebra with respect to the Majorana operators:
+                          Ωa1 = −a1 Ω,            Ωaj6=1 = aj6=1 Ω,         and    Ωbj = bj Ω .                 (A.4)
+This means that even though a1 = σ1z does not appear in the Hamiltonian H d± , it does not
+commute with it. It thus is not a zero mode, but rather is a boundary-condition-changing operator:
+a1 H d± a1 = H d∓ .
+    The spectrum of the Hamiltonian in a fixed charge sector can be found by solving for eigen-
+operators Λn such that [H d± , Λn ] = En Λn where the Λn are linear in the Majorana variables. A
+particularly interesting mode is the one at zero energy: Λ such that [H d± , Λ] = 0. The calculation
+of Λ is straightforward via the iterative construction. We define the operators
+                A = J r−2 a2 + · · · + Jar−1 + ar + ar+1 + Jar+2 + · · · + J L−r−1 aL
+                                                                                                                (A.5)
+                B = J 2−r b1 + · · · + J −1 br−2 + br−1 + br + J −1 br+1 + · · · + J r−L bL , .
+With a little work one finds that these satisfy
+                                       [H d± , ±ΩB] = 2i(J 2−r bL − J r−L b1 ),
+                                                                                                                (A.6)
+                                           [H d± , A] = 2i(J r−2 b1 − J L−r bL ).
+
+                                                             42
+There are two linear combinations of A and B that commute with H d± , but only one zero mode
+for a given value of J. The reason is that in the L → ∞ limit, when acting on a normalizable state,
+the zero mode must give another normalizable one. The normalizable zero modes are
+                                         (
+                                           A ± ΩJ L−2 B |J| < 1,
+                                   Λ=                                                        (A.7)
+                                           J 2−L A ± ΩB |J| > 1.
+The normalization is easy to check. Because the fermionic operators all aj and bj anticommute and
+square to 1, {A, B} = 0 and
+                               2 − J 2r−2 − J 2L−2r                   2 − J 2−2r − J 2r−2L−2
+                     A2 =                           ,      B2 =                                              (A.8)
+                                      1 − J2                                 1 − J −2
+so that limL→∞ Λ2 is finite except at the critical point |J| = 1. The magnitude of each term in Λ
+exponentially decreases as the index is moved away from r, but because of the explicit Ω the zero
+mode is non-local even in fermionic variables.
+    As noted above, the presence of Ω inside the Hamiltonian (A.1) makes it local in terms of the
+spins, but non-local in terms of the fermions. It is precisely this factor of Ω on the boundary
+link of the fermions that spoils the conventional wisdom attributed to the zero mode found here.
+A conventional Majorana zero mode commutes with the Hamiltonian up to exponentially small
+corrections, but does not commute with the global charge (proposals for obtaining them in the
+lab are reviewed in [33]). The spectrum reflects this by a near-perfect degeneracy between states
+in the different global charge sectors, a degeneracy that becomes exact as the exponentially small
+corrections go to zero. The zero mode (A.7) found here exactly commutes with the Hamiltonian.
+This is implied by the fact that the duality defect is free to move. If the zero mode were not exact,
+then changing the location of the duality defect would presumably change the energy of the zero
+mode, contradicting the freedom of movement. Note also that [Ω, Λ] = 0, so that the zero mode
+does not map between Ω = ±1 sectors.
+    A local and physical boundary condition for fermions yielding conventional zero modes comes
+from omitting the Ω in (A.1) to obtain
+                         r−1
+                         X                   L−1
+                                             X                  r−1
+                                                                X                L
+                                                                                 X
+                H̃ ± =         iJbj aj+1 +         ibj aj+1 +         iaj bj +         iJaj bj ± ibL b1 .    (A.9)
+                         j=1                 j=r                j=2              j=r
+
+These can be rewritten in terms of the previous Hamiltonian via a “mixed” Hamiltonian:
+                                                                                       1±Ω
+                          H̃ ± = H d+ P± + H d− P∓ ,            where      P± =            .                (A.10)
+                                                                                        2
+It is then straightforward to construct the eigenstates of H d± from those of H̃ ± .
+    A zero mode Λ e for H̃ ± can be obtained as above, yielding simply (A.7) with Ω omitted. Hence
+the zero mode in the physical fermionic Hamiltonian is truly localized around the domain wall.
+Another difference is that there are now two zero modes: [a1 , H̃ ± ] = 0 as well. Moreover, now the
+zero modes do map between sectors. Namely, there is a second Z2 symmetry generator (−1)F =
+ia1 Ω obeying
+               [(−1)F , H̃ ± ] = 0 ,      {an , (−1)F } = {bn , (−1)F } = {Λ,
+                                                                           e (−1)F } = 0 .                  (A.11)
+Because the zero modes do not commute with (−1)F and square to 1, they toggle between the
+sectors with (−1)F = ±1. Because they commute with H̃ ± , the states related by a1 or Λ e must
+have the same energy. Thus a1 and Λ are both strong zero modes, localised at the duality defect
+                                     e
+and by the domain wall respectively.
+
+                                                         43
+References
+ [1] J. H. H. Perk and H. Au-Yang, contribution to Encyclopedia of Mathematical Physics (2006),
+     math-ph/0606053 .
+
+ [2] R. J. Baxter, Exactly solved models in statistical mechanics (Academic, 1982).
+
+ [3] M. Wadati, T. Deguchi, and Y. Akutsu, Phys. Rept. 180, 247 (1989).
+
+ [4] C. Chui, C. Mercat, W. P. Orrick, and P. A. Pearce, Phys. Lett. B 517, 429 (2001).
+
+ [5] C. O. Chui, C. Mercat, and P. A. Pearce, J. Phys. A36, 2623 (2003), arXiv:hep-th/0210301 .
+
+ [6] H. A. Kramers and G. H. Wannier, Phys. Rev. 60, 252 (1941).
+
+ [7] A. Feiguin, S. Trebst, A. W. W. Ludwig, M. Troyer, A. Kitaev, Z. Wang, and M. H. Freedman,
+     Phys. Rev. Lett. 98, 160409 (2007).
+
+ [8] D. Gaiotto, A. Kapustin, N. Seiberg, and B. Willett, JHEP 02, 172 (2015), arXiv:1412.5148 .
+
+ [9] G. Schutz, J. Phys. A 26, 4555 (1993).
+
+[10] M. Oshikawa and I. Affleck, Nucl. Phys. B 495, 533 (1997).
+
+[11] U. Grimm, in Proceedings, 24th International Colloquium on Group Theoretical Methods in
+     Physics (GROUP 24) (2002) pp. 395–398, arXiv:hep-th/0209048 .
+
+[12] J. Fröhlich, J. Fuchs, I. Runkel, and C. Schweigert, Phys. Rev. Lett. 93, 070601 (2004).
+
+[13] G. W. Moore and N. Seiberg, in 1989 Banff NATO ASI: Physics, Geometry and Topology
+     Banff, Canada, August 14-25, 1989 (1989).
+
+[14] J. L. Cardy, Nucl. Phys. B 270, 186 (1986).
+
+[15] J. L. Cardy, Nucl. Phys. B324, 581 (1989).
+
+[16] V. Petkova and J.-B. Zuber, Phys. Lett. B 504, 157 (2001).
+
+[17] V. Petkova and J.-B. Zuber, Nuclear Physics B 603, 449 (2001).
+
+[18] J. Fuchs, I. Runkel, and C. Schweigert, Nuclear Physics B 646, 353 (2002).
+
+[19] J. Fuchs, I. Runkel, and C. Schweigert, Nuclear Physics B 678, 511 (2004).
+
+[20] J. Fuchs, I. Runkel, and C. Schweigert, Nuclear Physics B 694, 277 (2004).
+
+[21] J. Fuchs, I. Runkel, and C. Schweigert, Nuclear Physics B 715, 539 (2005).
+
+[22] J. Fjelstad, J. Fuchs, I. Runkel, and C. Schweigert, Theory and Applications of Categories
+     16, 342 (2006).
+
+[23] J. Fröhlich, J. Fuchs, I. Runkel, and C. Schweigert, Nucl. Phys. B763, 354 (2007), arXiv:hep-
+     th/0607247 .
+
+[24] I. Affleck and A. W. W. Ludwig, Phys. Rev. Lett. 67, 161 (1991).
+
+
+                                                44
+[25] B. McCoy and T. Wu, The Two-Dimensional Ising Model: Second Edition, Dover books on
+     physics (Dover Publications, 2014).
+[26] J.-Y. Choi, D. Kim, and P. A. Pearce, Journal of Physics A: Mathematical and General 22,
+     1661 (1989).
+[27] L. P. Kadanoff and H. Ceva, Phys. Rev. B3, 3918 (1971).
+[28] V. Pasquier and H. Saleur, Nuclear Physics B 330, 523 (1990).
+[29] D. Levy, Phys. Rev. Lett. 67, 1971 (1991).
+[30] U. Grimm and G. Schütz, J. Stat. Phys. 71, 923 (1993).
+[31] U. Grimm, J. Phys. A 35, L25 (2002).
+[32] A. Poghosyan, R. Kenna, and N. Izmailian, Europhys. Lett. 111, 60010 (2015).
+[33] J. Alicea, Rept. Prog. Phys. 75, 076501 (2012), arXiv:1202.1293 [cond-mat.supr-con] .
+[34] D. L. O’Brien, P. A. Pearce, and S. O. Warnaar, Physica A 228, 63 (1996).
+[35] C. H. O. Chui and P. A. Pearce, J. Stat. Phys. 107, 1167 (2002).
+[36] A. Y. Kitaev, Physics-Uspekhi 44, 131 (2001).
+[37] P. Fendley, e-print (2015), arXiv:1512.03441 [cond-mat.stat-mech] .
+[38] G. Moore and N. Seiberg, Commun. Math. Phys. 123, 177 (1989).
+[39] P. H. Bonderson, Non-abelian anyons and interferometry, Ph.D. thesis, Caltech (2007).
+[40] A. Kitaev, Annals Phys. 321, 2 (2006).
+[41] G. Andrews, R. Baxter, and P. Forrester, J. Stat. Phys. 35, 193 (1984).
+[42] G. Tesler, Journal of Combinatorial Theory, Series B 78, 198 (2000).
+[43] P. H. Ginsparg, in Les Houches Summer School in Theoretical Physics: Fields, Strings, Critical
+     Phenomena Les Houches, France, June 28-August 5, 1988 (1988) arXiv:hep-th/9108028 .
+[44] H. W. J. Blöte, J. L. Cardy, and M. P. Nightingale, Phys. Rev. Lett. 56, 742 (1986).
+[45] I. Affleck, Phys. Rev. Lett. 56, 746 (1986).
+[46] A. A. Belavin, A. M. Polyakov, and A. B. Zamolodchikov, Nucl. Phys. B 241, 333 (1984).
+[47] H. Duminil-Copin and S. Smirnov, in Probability and Statistical Physics in Two and More
+     Dimensions, Clay Mathematics Proceedings, Vol. 15 (2012) pp. 213–276, arXiv:1109.1549 .
+[48] C. Mercat, Comm. Math. Phys. 218, 177 (2001).
+[49] A. I. Bobenko and Y. B. Suris, International Mathematics Research Notices 2002, 573 (2002),
+     http://imrn.oxfordjournals.org/content/2002/11/573.full.pdf+html .
+[50] B. Mohar and C. Thomassen, Graphs on surfaces, Vol. 10 (JHU Press, 2001).
+[51] J. L. Gross and T. W. Tucker, Topological graph theory (Courier Corporation, 1987).
+[52] A. Hatcher and W. Thurston, Topology 19, 221 (1980).
+
+                                                    45
+

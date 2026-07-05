@@ -1,0 +1,2471 @@
+                                               Algebraic Quantum Field Theory – an introduction
+                                                                  Christopher J Fewster∗1 and Kasia Rejzner†1
+                                               1 Department of Mathematics, University of York, Heslington, York YO10 5DD, United Kingdom.
+
+
+
+
+                                                                                   November 19, 2019
+arXiv:1904.04051v2 [hep-th] 18 Nov 2019
+
+
+
+
+                                                                                            Abstract
+                                                     We give a pedagogical introduction to algebraic quantum ﬁeld theory (AQFT), with the aim
+                                                of explaining its key structures and features. Topics covered include: algebraic formulations of
+                                                quantum theory and the GNS representation theorem, the appearance of unitarily inequivalent
+                                                representations in QFT (exempliﬁed by the van Hove model), the main assumptions of AQFT
+                                                and simple models thereof, the spectrum condition, Reeh–Schlieder theorem, split property, the
+                                                universal type of local algebras, and the theory of superselection sectors. The abstract discussion
+                                                is illustrated by concrete examples. One of our concerns is to explain various ways in which
+                                                quantum ﬁeld theory diﬀers from quantum mechanics, not just in terms of technical detail, but
+                                                in terms of physical content. The text is supplemented by exercises and appendices that enlarge
+                                                on some of the relevant mathematical background. These notes are based on lectures given by
+                                                CJF for the International Max Planck Research School at the Albert Einstein Institute, Golm
+                                                (October, 2018) and by KR at the Raman Research Institute, Bangalore (January, 2019).
+
+
+                                          Contents
+                                          1 Introduction                                                                                               2
+
+                                          2 Algebraic quantum mechanics                                                                                4
+                                            2.1 Postulates of quantum mechanics . . . . . . . . . . . . . . . . . . . . . . . . . . .                  4
+                                            2.2 Algebraic approach . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .                 5
+                                            2.3 States and representations . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .               7
+
+                                          3 Case study: the van Hove model                                                                            10
+
+                                          4 Algebraic QFT                                                                                             13
+                                            4.1 Basic requirements . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .                13
+                                            4.2 Examples . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .                15
+                                            4.3 Quasifree states for the free scalar ﬁeld . . . . . . . . . . . . . . . . . . . . . . . .             20
+
+                                          5 The spectrum condition and Reeh–Schlieder theorem                                                         24
+                                            5.1 The spectrum condition . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .                24
+                                            5.2 The Reeh–Schlieder theorem . . . . . . . . . . . . . . . . . . . . . . . . . . . . .                  25
+                                            ∗ chris.fewster@york.ac.uk
+                                            † kasia.rejzner@york.ac.uk
+
+
+
+
+                                                                                                1
+6 Local von Neumann algebras and their universal type                                                27
+
+7 The split property                                                                                 30
+
+8 Superselection sectors                                                                             32
+  8.1 Representations of interest in particle physics . . . . . . . . . . . . . . . . . . . .        34
+  8.2 Localized endomorphisms . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .            36
+  8.3 Intertwiners and permutation symmetry . . . . . . . . . . . . . . . . . . . . . . .            38
+
+9 Conclusions                                                                                        41
+
+A Some basic functional analysis                                                                     42
+
+B Construction of an algebra from generators and relations                                           43
+
+C Fock space                                                                                         44
+
+
+1 Introduction
+Algebraic Quantum Field Theory (AQFT) is one of two axiomatic programmes for QFT that emerged
+in the 1950s, in response to the problem of making QFT mathematically precise. While Wightman’s
+programme [SW00] maintains an emphasis on quantum ﬁelds, AQFT [Haa96, Ara99], developed
+initially by Haag, Kastler, Araki and others, takes the more radical step on focussing on local
+observables, with the idea that ﬁelds can emerge as natural ways of labelling some of the observables.
+Like Wightman theory, its primary focus is on setting out a precise mathematical framework into
+which all QFTs worthy of the name should ﬁt. This permits one to separate the general study of
+the structure and properties of QFT from the problem of constructing (by whatever means) speciﬁc
+QFT models that obey the assumptions. The early development of AQFT is well-described in
+the monographs of Haag [Haa96] and Araki [Ara99]. Mathematically, it makes extensive use of
+operator algebra methods and indeed has contributed to the theory of von Neumann algebras in
+return. Relevant aspects of operator algebra theory, with links to the physical context, can be found in
+the monographs of Bratteli and Robinson [BR87, BR97]. AQFT also comprises a lot of machinery
+for treating speciﬁc QFT models, which have some advantages relative to other approaches to QFT.
+During the last 20 years it has also been adapted to provide rigorous constructions of perturbative
+QFT, and also of some low-dimensional models, and its overall viewpoint has been particularly
+useful in the theory of quantum ﬁelds in curved spacetimes. A recent edited collection [BDFY15]
+summarises these developments, and the two recent monographs [Rej16, Düt19] in particular
+describe the application to perturbation theory, while [HS18] concerns entanglement measures in
+QFT. An extensive survey covering some of the topics presented here in much greater depth can be
+found in [HM07].
+    The purpose of these lectures is to present an introduction to AQFT that emphasises some of
+its original motivations and de-mystiﬁes some of its terminology (GNS representations, spectrum
+condition, Reeh–Schlieder, type III factors, split property, superselection sectors...). We also
+emphasise features of QFT that sharply distinguish it from quantum mechanics and which can be
+seen particularly clearly in the AQFT framework. Our treatment is necessarily limited and partial;
+the reader is referred to the literature mentioned for more detail and topics not covered here.
+    The idea of algebraic formulations of quantum theory, which we describe in Section 2, can
+be traced back to Heisenberg’s matrix mechanics, in which the algebraic relations between ob-
+servables are the primary data. Schrödinger’s wave mechanics, by contrast, starts with spaces of
+wavefunctions, on which the observables of the theory act in speciﬁc ways.
+
+                                                   2
+    As far as position and momentum go, and for systems of ﬁnitely many degrees of freedom,
+the distinction is rather inessential, because the Stone-von Neumann theorem guarantees that any
+(suﬃciently regular1) irreducible representation of the commutation relations is unitarily equivalent
+to the Schrödinger representation. However, the angular momentum operators provide a classic
+example in which inequivalent physical representations appear, and it is standard to study angular
+momentum as an algebraic representation problem. However, it was a surprise in the development
+of QFT that unitarily inequivalent representations have a role to play here, and indeed turn out to
+be ubiquitous. Section 3 is devoted to the van Hove model, one of the ﬁrst examples in which this
+was understood. The van Hove model concerns a free scalar ﬁeld with an external source, and
+is explicitly solvable. However, one can easily ﬁnd situations in which a naive interaction picture
+approach fails to reproduce the correct solution – a failure that can be clearly ascribed to a failure
+of unitary equivalence between diﬀerent representations of the canonical commutation relations
+(CCRs).
+    After these preliminaries, we set out the main assumptions of Algebraic Quantum Field Theory
+in Sec. 4. In fact there are many variants of AQFT and we give a liberal set of axioms that can be
+strengthened in various ways. We also describe how some standard QFT models can be formulated
+in terms of AQFT. Although we focus on free theories, it is important to emphasise that AQFT
+is intended as a framework for all quantum ﬁeld theories worthy of the name, and successfully
+encompasses some nontrivial interacting models in low dimensions. AQFT distinguishes between
+two levels of structure: on the one hand, the algebraic relations among observables and on the other,
+their concrete realisation as Hilbert space operators. The link is provided by the GNS representation
+theorem (described in Sec. 2.3) once a suitable state has been given. For this reason we spend some
+time on states of the free scalar ﬁeld, describing in particular the quasi-free states, which have
+representations on suitable Fock spaces. These include the standard vacuum state as well as thermal
+states.
+    The remaining parts of the notes concern general features of AQFT models, where the power
+of the technical framework begins to come through. Among other things, we prove the Reeh–
+Schlieder theorem and discuss some of its consequences in Section 5, before turning in Section 6
+to the structure of the local von Neumann algebras in suitable representations and the remarkable
+result (which we describe, but do not prove) that they are all isomorphic to the unique hyperﬁnite
+factor of type III1 . The distinction between one theory and another therefore lies in the way
+these algebras are situated, relative to one another, within the algebra of bounded operators on the
+Hilbert space of the theory. Finally, Sections 7 and 8 discuss the split property and the theory of
+superselection sectors. Like the theory in Section 6, these are deep and technical subjects and our
+aim here is to present the main ideas and some outline arguments, referring the dedicated reader to
+the literature. On the subject of literature: in this pedagogical introduction we have tended to give
+references to monographs rather than original papers, so the reference list is certainly not intended
+as a comprehensive survey of the ﬁeld.
+    These notes represent a merger and expansion of lectures given by CJF at the AEI in Golm
+(October, 2018) and by KR at the Raman Research Institute, Bangalore (January, 2019). We are
+grateful to the students and organisers of the lecture series concerned. We are also grateful to the
+organisers of the conference Progress and Visions in Quantum Theory in View of Gravity (Leipzig,
+October 2018) for the opportunity to contribute to their proceedings.
+   1To deal with the technical problems of using unbounded operators.
+
+
+
+
+                                                        3
+2 Algebraic quantum mechanics
+2.1 Postulates of quantum mechanics
+The standard formalism of quantum theory starts with a complex Hilbert space H , whose elements
+φ ∈ H are called state vectors. (For convenience some basic deﬁnitions concerning operators on
+Hilbert space are collected in Appendix A.) The key postulates of quantum mechanics say that:
+
+    • Pure states of a quantum system are described by rays in H , i.e. [ψ] := {λψ|λ ∈ C}. Mixed
+      states are described by density matrices, i.e., positive trace-class operators ρ : H → H ,
+      with unit trace.
+
+    • Observables are described by self-adjoint operators A on H . However, the self-adjoint
+      operators corresponding to observables may be a proper subset of the self-adjoint operators
+      on H ; in particular, this occurs if the system is subject to superselection rules.
+
+    The probabilistic interpretation of quantum mechanics2 is based on the idea that one can associate
+to a self-adjoint operator A and a normalised state vector ψ ∈ H a probability measure µψ,A, so
+that the probability of the measurement outcome to be within a Borel subset ∆ ⊂ R (for instance,
+an interval [a, b]) is given by
+                                              ∫
+                             Prob(A ∈ ∆; ψ) =    µψ,A(λ) = hψ|P A (∆)ψi ,
+                                                       ∆
+
+where P A (∆) is the spectral projection of the operator A associated with ∆, and indeed ∆ → P A (∆)
+determines a projection-valued measure. The probability measure µψ,A depends only on the ray [ψ]
+and has support contained within the spectrum of A. The moments of this measure are given by
+                                         ∫
+                                   νn :=     λn µψ,A(λ) = hψ, An ψi ;
+
+conversely, the moments determine the measure uniquely subject to certain growth conditions. For
+example, the Hamburger moment theorem [Sim98] guarantees uniqueness provided that there are
+constants C and D such that
+
+                                       |νn | ≤ CDn n!          for all n ∈ N0 .                                   (1)
+
+Note, however, that there are many examples in quantum mechanics in which the moments grow
+too fast for the unique reconstruction of a probability measure.
+
+Example 1. Consider the quantum particle confined to an interval (−a, a) subject to either Dirichlet
+or Neumann boundary conditions at the endpoints, with corresponding Hamiltonian operators HD
+or HN respectively. Measurements of the energy in a state ψ ∈ L 2 (−a, a) supported away from
+the endpoints are distributed according to probability distributions µψ,HD and µψ,HN , which differ
+because the spectra of HD and HN differ. However, they share a common moment sequence because
+HD and HN agree on state vectors supported away from the endpoints.
+
+    One can combine eﬀects from two physical states described by state vectors ψ1 and ψ2 by
+building their superposition, which, however depends on the choice of representative state vectors,
+since the ray corresponding to
+                                         ψ = αψ1 + βψ2
+   2For simplicity, we restrict to sharp measurements, avoiding the introduction of positive operator valued measures.
+
+
+
+                                                           4
+typically depends on the choice of α and β. However, sometimes the relative phase between the
+state vectors we are superposing cannot be observed. For example, this occurs if ψ1 is a state of
+integer angular momentum, while ψ2 is a half-integer angular momentum state. The physical reason
+for this is that a 2π-rotation cannot be distinguished from no rotation at all. Of course there are
+self-adjoint operators on the Hilbert space that do sense the relative phase: the point is that these
+operators are not physical observables.
+    Let us give a brief argument for the existence of superselection sectors when the theory possesses
+a charge Q, which is supposed to be conserved in any interactions available to measure it. For
+simplicity, we assume that Q has discrete spectrum. Let ψ be any eigenstate Qψ = qψ and let P
+be any projection corresponding to a zero-one measurement. After an ideal measurement of P in
+state ψ returning the value 1, the system is in state Pψ. But as charge is conserved, Pψ must be an
+eigenstate of Q with eigenvalue q, so
+                                         QPψ = qPψ = PQψ.
+We deduce that [Q, P]ψ = 0 and, as the Hilbert space is spanned by eigenstates of Q, it follows
+that Q and P commute. Furthermore, Q commutes with every self-adjoint operator representing
+a physical observable because any spectral projection of such an operator also corresponds to a
+physical observable.
+    Mathematically, the allowed physical observables are all block diagonal with respect to a
+decomposition of the Hilbert space H as
+                                              Ê
+                                        H=         Hi ,
+                                                    i∈I
+
+where I is some index set and the subspaces Hi are called superselection sectors, which would be
+the charge eigenspaces in our example above. The relative phases between state vectors belonging to
+diﬀerent sectors cannot be observed. One of the main motivations behind AQFT was to understand
+how superselection sectors arise in QFT. We will see that the diﬀerent superselection sectors
+correspond to unitarily inequivalent representations of the algebra of observables.
+
+2.2 Algebraic approach
+The main feature of the algebraic description of quantum theory is that the focus shifts from states
+to observables, and their algebraic relations. It is worth pausing brieﬂy to consider the motivation
+for an algebraic description of observables – this is a long story if told in full (see [Emc72]), but
+one can explain the essential elements quite brieﬂy.
+    The central issue is to provide an operational meaning for the linear combination and product
+of observables. Let us suppose that a given observable is measured by a certain instrument;
+for measurements conducted in each particular state, the numerical readout on the instrument is
+statistically distributed in a certain way, so the observable may be thought of as a mapping from
+states to random variables taking values in R. Given two such observables, we can form a third,
+by taking a ﬁxed linear combination of the random variables concerned, restricting to real-linear
+combinations in the ﬁrst instance. So there is a clear justiﬁcation for treating the set of observables as
+a real vector space. Similarly, we may apply a function to an observable by applying it to the random
+variables concerned; this may be regarded as repainting the scale on the measuring instruments.
+Given any two observables A and B it is now possible to form the observable
+                                            1                       
+                                   A ◦ B :=     (A + B)2 − A2 − B 2 ,                                  (2)
+                                            2
+simply by forming linear combinations and squares. This may be regarded as a symmetrised
+product of A and B. The remaining problem, which is naturally where the hard work lies, is to ﬁnd
+
+                                                    5
+appropriate additional conditions under which the vector space of observables can be identiﬁed with
+the self-adjoint elements of a ∗-algebra, so that A ◦ B = AB + B A. We refer the reader to [Emc72];
+however, it is clear that observables naturally admit some algebraic structure beyond that of a vector
+space.
+    The main postulates of quantum theory, in its algebraic form, are now formulated as follows:
+   1. A physical system is described by a unital ∗-algebra A, whose self-adjoint elements are
+      interpreted as the observables. It is conventional though slightly imprecise to call A the
+      algebra of observables. In many situations we impose the stricter condition that A be a unital
+      C ∗ -algebra.
+
+   2. States are identiﬁed with positive, normalized linear functionals ω : A → C, i.e. we require
+      ω(A∗ A) ≥ 0 for all A ∈ A and ω(1) = 1 as well as ω being linear. The state is mixed if it is
+      a convex combination of distinct states (i.e., ω = λω1 + (1 − λ)ω2 with λ ∈ (0, 1), ω1 , ω2 )
+      and pure otherwise.
+Some deﬁnitions are in order.
+Definition 2. A ∗-algebra (also called an involutive complex algebra) A is an algebra over C,
+together with a map, ∗ : A → A, called an involution, with the following properties:
+   1. for all A, B ∈ A: (A + B)∗ = A∗ + B ∗ , (AB)∗ = B ∗ A∗ ,
+
+   2. for every λ ∈ C and every A ∈ A: (λA)∗ = λA∗ ,
+
+   3. for all A ∈ A: (A∗ )∗ = A.
+The ∗-algebra is unital if it has an element 1 which is a unit for the algebraic product (A1 = 1A = A
+for all A ∈ A) and is therefore invariant under the involution. Unless explicitly indicated otherwise,
+a homomorphism α : A1 → A2 between two ∗-algebras will be understood to be an algebraic
+homomorphism that respects the involutions ((αA)∗ = α(A∗ )) and preserves units (α1A1 = 1A2 ).
+   The bounded operators B(H ) on a Hilbert space H form a ∗-algebra, with the adjoint as the
+involution, but there are other interesting examples.
+Exercise 3. (Technical – for those familiar with unbounded operators.) Given a dense subspace D
+of a Hilbert space H , let L(D, H ) be the set of all (possibly unbounded) operators A on H defined
+on, and leaving invariant, D, (i.e., D(A) = D, AD ⊂ D) and having an adjoint with D ⊂ D(A∗ ).
+Then L(D, H ) may be identified with a subspace of the vector space of all linear maps from D
+to itself. Verify that L(D, H ) is an algebra with respect to composition of maps and that the map
+A 7→ A∗ |D is an involution on L(D, H ), making it a ∗-algebra. Show also that L(H, H ) = B(H ).
+(Hint: Use the Hellinger–Toeplitz theorem [RS80, §III.5].)
+    The algebra of bounded operators also carries a norm that is compatible with the algebraic
+structure in various ways. In general we can make the following deﬁnitions:
+Definition 4. A normed algebra A is an algebra equipped with a norm k.k satisfying
+
+                                          k ABk ≤ k Ak kBk .
+
+If A is unital, then it is a normed unital algebra if in addition k1k = 1. If A is complete in
+the topology induced by k · k then A is a Banach algebra; if, additionally, A is a ∗-algebra and
+k A∗ k = k Ak, then A is a Banach ∗-algebra or B ∗ -algebra.
+   A C ∗ -algebra is a particular type of B ∗ -algebra.
+
+                                                    6
+Definition 5. A C ∗ -algebra A is a B ∗ -algebra whose norm has the C ∗ -property:
+
+                              k A∗ Ak = k Ak k A∗ k = k Ak 2,   ∀A ∈ A .
+
+    The bounded operators B(H ), with the operator norm, provide an important example of a
+C ∗ -algebra. A useful property of unital C ∗ -algebras is that homomorphisms between them are
+automatically continuous [BR87, Prop. 2.3.1], with unit norm.
+    Turning to our second postulate, the role of the state in the algebraic approach is to assign
+expectation values: if A = A∗ , we interpret ω(A) as the expected value of A if measured in the
+state ω. At ﬁrst sight this deﬁnition seems far removed from the notion of a state in conventional
+formulations of quantum mechanics. Let us see that it is in fact a natural generalisation.
+    Suppose for simplicity (and to reduce notation) that A is an algebra of bounded operators acting
+on a Hilbert space H , with the unit of A coinciding with the unit operator on H . Then every unit
+vector ψ ∈ H induces a vector state on A by the formula
+
+                                          ωψ (A) = hψ| Aψi,
+
+as is seen easily by computing hψ|1ψi = 1 and hψ| A∗ Aψi = k Aψk 2 ≥ 0.
+
+Exercise 6. Show that every density matrix (a positive trace-class operator ρ on H with tr ρ = 1)
+induces a state on A according to
+
+                                     ω ρ(A) = tr ρA        A ∈ A.
+
+    However it is important to realise that, in general, not all algebraic states on A need arise
+from vectors or density matrices in a given Hilbert space representation. A further important
+point is that the deﬁnition of a state is purely mathematical in nature. It is not guaranteed that all
+states correspond to physically realisable situations, and indeed a major theme of the subject is to
+identify classes of states and representations that, by suitable criteria, may be regarded as physically
+acceptable.
+
+Exercise 7. By mimicking the standard arguments from quantum mechanics or linear algebra, show
+that every state ω on a ∗-algebra A induces a Cauchy–Schwarz inequality
+
+                                    |ω(A∗ B)| 2 ≤ ω(A∗ A)ω(B ∗ B)                                   (3)
+
+for all A, B ∈ A. Show also that ω(A∗ ) = ω(A), for any A ∈ A. (Hint: consider the linear
+combination 1 + αA, for α ∈ C.)
+
+2.3 States and representations
+The Hilbert space formulation of quantum mechanics is too useful to be abandoned entirely and
+the study of Hilbert space representations forms an important part of AQFT. Let us recall a few
+deﬁnitions.
+
+Definition 8. A representation of a unital ∗-algebra A consists of a triple (H, D, π), where H is a
+Hilbert space, D a dense subspace of H , and π a map from A to operators on H with the following
+properties:
+
+    • each π(A) has domain D(π(A)) = D and range contained in D,
+
+    • π(1) = 1|D ,
+
+
+                                                   7
+    • π respects linearity and products,
+               π(A + λB + CD) = π(A) + λπ(B) + π(C)π(D),               A, B, C, D ∈ A, λ ∈ C
+
+    • each π(A) has an adjoint with D ⊂ D(π(A)∗ ), whose restriction to D obeys π(A)∗ |D = π(A∗ ).
+In short, π is a homomorphism from A into the ∗-algebra L(D, H ) deﬁned in Exercise 3. Note that
+every π(A) is closable, due to the fact that π(A)∗ is densely deﬁned. We will also use the shorthand
+notation (H, π) for a representation (H, H, π). In this case, π is a homomorphism π : A → B(H ),
+and is necessarily continuous if A is a C ∗ -algebra.
+
+A representation π is called faithful if ker π = {0}. It is called irreducible if there are no subspaces
+of H invariant under π(A) that are not either trivial or dense in H .
+
+Definition 9. Two representations (H1, D1, π1 ) and (H2, D2, π2 ) of a ∗-algebra A are called unitarily
+equivalent, if there is a unitary map U : H1 → H2 which restricts to an isomorphism between D1
+and D2 , and Uπ1 (A) = π2 (A)U holds for all A ∈ A. They are unitarily inequivalent if they are not
+unitarily equivalent.
+    On a ﬁrst encounter, algebraic states feel unfamiliar because one is so used to the Hilbert space
+version. However algebraic states are not too far away from a Hilbert space setting. The connection
+is made by the famous GNS (Gel’fand, Naimark, Segal) representation theorem.
+Theorem 10. Let ω be a state on a unital ∗-algebra A. Then there is a representation (Hω, Dω, πω )
+of A and a unit vector Ωω ∈ Dω such that Dω = πω (A)Ωω and
+                               ω(A) = hΩω |πω (A)Ωω i,        ∀ A ∈ A.                              (4)
+Furthermore (Hω, Dω, πω, Ωω ) are unique up to unitary equivalence. If A is a C ∗ -algebra, then,
+additionally, (i) each πω (A) extends to a bounded operator on Hω ; (ii) ω is pure if and only if
+the representation is irreducible; and (iii) if πω is faithful [i.e., πω (A) = 0 only if A = 0] then
+kπω (A)k = k AkA .
+   Due to the fact that πω (A)Ωω is dense in Hω , we say that Ωω is cyclic for the representation.
+The existence of a link between purity and irreducibility is easily understood from the following
+example: if ψ, ϕ ∈ H are linearly independent (normalised) vector states on a subalgebra A of
+B(H ), then the density matrix state
+                            ρ = λ|ψihψ| + (1 − λ)|ϕihϕ|   0<λ<1
+                                        √      √
+can be realised as the vector state Ψρ = λψ ⊕ 1 − λϕ in the reducible representation
+                                             A 7→ A ⊕ A
+of A on H ⊕ H .
+Proof. The construction of the GNS representation has several steps:
+    • Deﬁne a subset Iω ⊂ A by
+                                       Iω = {A ∈ A : ω(A∗ A) = 0}.
+      Using the Cauchy–Schwarz identity (3), one may prove that Iω is a left ideal: if A ∈ Iω then
+                          |ω((B A)∗ (B A))| 2 = |ω(C ∗ A)| 2 ≤ ω(C ∗ C)ω(A∗ A) = 0,
+      where C = B ∗ B A, so B A ∈ Iω . A similar argument shows that Iω is a subspace of A and
+      that the subspace Iω∗ is a right ideal. (Exercises!)
+
+                                                   8
+• Deﬁne a quotient vector space
+                                            Dω := A/Iω
+  and note that Dω carries an inner product deﬁned by
+                               h[A]|[B]i = ω(A∗ B)         A, B ∈ A,
+  which is well-deﬁned (i.e., independent of the choice of representatives, and has the properties
+  of an inner product) due to the Cauchy–Schwarz inequality and deﬁnition of Iω (Exercises!).
+  For example,
+         h[A]|[A]i = 0     ⇐⇒       ω(A∗ A) = 0       ⇐⇒          A ∈ Iω   ⇐⇒     [A] = 0.
+
+• Deﬁne the Hilbert space Hω as the completion of Dω with respect to the inner product just
+  mentioned; by construction Dω is dense in Hω .
+• Deﬁne Ωω = [1] ∈ Dω ⊂ Hω , noting that kΩω k 2 = ω(1) = 1.
+• Deﬁne πω as follows: for each A ∈ A, πω (A) is the linear operator Dω → Dω given by
+                                  πω (A)[B] := [AB],        B∈A
+  which is well-deﬁned due to the left-ideal property yet again. The properties
+                                        πω (1) = 1H
+                                  πω (A + λB) = πω (A) + λπω (B)
+                                      πω (AB) = πω (A)πω (B)
+  are easily veriﬁed as identities of operators on Dω , and it is clear that πω (A)Ωω = Dω , so Ωω
+  is cyclic as Dω is dense.
+  Now observe that
+                 hπω (A∗ )[B]|[C]i = h[A∗ B]|[C]i = ω(B ∗ AC) = h[B]|πω (A)[C]i
+  for all [B], [C] ∈ Dω . This shows that πω (A) has an adjoint with dense domain including Dω
+  and indeed
+                                       πω (A∗ ) = πω (A)∗ |Dω .
+  Therefore (Hω, Dω, πω ) is a representation of A, and the calculation
+                      hΩω |πω (A)Ωω i = h[1]|πω (A)[1]i = h[1]|[A]i = ω(A)
+  veriﬁes (4).
+• For uniqueness, suppose that another Hilbert space H , dense domain D, distinguished vector
+  Ω and representation π are given with the properties stated above. Now deﬁne a linear map
+  U : D → Dω by
+                                     Uπ(A)Ω = πω (A)Ωω
+  noting that this is well-deﬁned because
+  π(A)Ω = 0      =⇒                 2
+                         0 = kπ(A)ΩkH = ω(A∗ A) = kπω (A)Ωω kH
+                                                             2
+                                                               ω
+                                                                           =⇒      πω (A)Ωω = 0.
+  Essentially the same calculation shows that U is an isometry, and as it is clearly invertible, U
+  therefore extends to a unitary U : H → Hω so that UD = Dω , UΩ = Ωω and
+                                       Uπ(A)U −1 = πω (A)
+  acting on any vector in Dω . This is the promised unitary equivalence.
+
+                                              9
+    • The special features of C ∗ -algebras are addressed e.g., in [BR87, Prop. 2.3.3 and §2.3.3] .
+
+
+Exercise 11. Work through all the details in the proof of the GNS representation theorem.
+
+
+3 Case study: the van Hove model
+Our aim in this section is to present a version of van Hove’s model, one of the ﬁrst instances in
+which it became clear that unitarily inequivalent representations of the CCRs arise naturally in QFT.
+van Hove’s work provided part of the motivation for Haag’s theorem on the nonexistence of the
+interaction picture and the subsequent development of AQFT.
+    The van Hove model [VH52] describes the interaction of a neutral scalar ﬁeld with an external
+source; physically, it is a slightly simpliﬁed version of Yukawa’s model [Yuk35] of the mediation of
+internucleon forces by pions, and correctly accounts for the Yukawa interaction. The Lagrangian is
+                                        1              1
+                                   L = (∇ µ φ)∇ µ φ − m2 φ2 − ρφ
+                                        2              2
+using the +−−− signature conventions,3 where the source ρ = ρ(x) is a time-independent real-
+valued function, or even a distribution: a simple nucleon model might have ρ as a linear combination
+of δ-functions.4 The ﬁeld equation is
+                                              ( + m2 )φ = −ρ.                                        (5)
+Of course, ρ = 0 is the familiar massive real scalar ﬁeld, and in general we know how to solve an
+inhomogeneous equation by ﬁnding a particular integral and reducing to a homogeneous equation.
+So this model ought to be (and is) exactly solvable. However, let us forget this for a moment and
+proceed according to standard lore (and in the ﬁrst instance, a little formally), so as to exhibit the
+limitations of naive QFT.
+   We shall outline three quantization approaches. The ﬁrst two follow the spirit of wave mechanics.
+Namely, having established a Hilbert space representation for the free ﬁeld, we stick with it.
+
+Method 1: Schrödinger picture We work in the standard Fock space of the ρ = 0 model, in
+which there are ‘time zero’ ﬁelds ϕ(x), π(x) obeying the equal time commutation relations
+                                         [ϕ(x), π(y)] = iδ(x − y)1.                                   (6)
+To treat the ‘interacting’ model, one constructs its Hamiltonian Hρ in terms of the canonical variables
+ϕ(x), π(x), obtaining the Schrödinger picture evolution e−iHρ t of states. If desired, one can then
+pass to the interacting ﬁeld in the Heisenberg picture as
+                                         Φ ρ(t, x) = eiHρ t ϕ(x)e−iHρ t .
+
+Method 2: Interaction picture In the interaction picture, the time-dependent ﬁeld is given by
+the free ﬁeld Φ0 (t, x) acting on the usual Fock space. The interaction picture state evolution may
+be obtained e.g., using a perturbative Dyson expansion.
+    Methods 1 and 2 work perfectly well if ρ is a smooth compactly supported function. However,
+one encounters problems if ρ has δ-singularities (for UV reasons) or if either m = 0 or ρ ≡ 1 (for
+IR reasons). The third method does not suﬀer these problems. It is more algebraic in nature and
+does not start from a prejudice about what the Hilbert space of the theory should be. Rather than
+treating the van Hove model as a modiﬁcation of the free ﬁeld, we quantize it directly.
+   3We also adopt units in which the speed of light and ~ are both set to 1.
+   4The Compton wavelength of the pions is approximately seven times that of a proton.
+
+                                                       10
+Method 3: Canonical quantization from scratch Start again with classical canonical variables
+ϕ ρ and π ρ . Making a Fourier analysis we may (without loss) write them in the form
+
+                                        d3 k 1
+                                       ∫
+                                                              ∗ ik ·x
+                            ϕ ρ(x) =          √ (a(k) + a(−k) )e
+                                       (2π)3 2ω
+                                           d3 k ω
+                                       ∫       r
+                          π ρ (x) = −i             (a(k) − a(−k)∗ )eik ·x
+                                          (2π)3 2
+                                                               p
+for complex coeﬃcients a(k); here, the free mode frequency ω = k k k 2 + m2 has been inserted for
+later convenience. Now promote the a(k)’s to ‘operators’ and impose the equal time commutation
+relations (6), whereupon the a(k) must obey the CCRs
+
+                                   [a(k), a(k ′)∗ ] = (2π)3 δ(k − k ′)1                         (7)
+
+and other commutators vanishing. Note that this is an entirely algebraic procedure and that nothing
+has yet been said about any Hilbert space representation. So the term ‘operator’ is a bit misleading
+as there is, as yet, nothing to operate on.
+    The next step is to introduce the Hamiltonian, which diﬀers from the free Hamiltonian by the
+addition of the ρφ terms. Written in normal order, it is
+
+                               d3 k
+                          ∫                                                    
+                                            ∗        1                       ∗
+                    Hρ =              ωa(k) a(k) + √     ρ̂(k)a(k) + ρ̂(k)a(k) ,                 (8)
+                              (2π)3                 2ω
+where                                            ∫
+                                       ρ̂(k) =       d 3 x ρ(x)e−ik ·x                          (9)
+
+is the Fourier transform of ρ.
+     We now need to ﬁnd a Hilbert space representation in which (give or take a constant) H ρ is
+self-adjoint and the CCRs (7) are valid, and ideally we would like to ﬁnd a vacuum state for H ρ.
+This can be accomplished easily, by completing the square in (8) to give
+
+                                          d3 k
+                                     ∫
+                               Hρ =            ω ã(k)∗ ã(k) + E ρ1,                       (10)
+                                         (2π)3
+where
+                                                          ρ̂(k)
+                                           ã(k) = a(k) + √     1,                             (11)
+                                                            2ω3
+and the constant E ρ is
+
+                                 d 3 k | ρ̂(k)| 2 1
+                            ∫                          ∫
+                   Eρ = −                        =          d 3 x d 3 y ρ(x)VY (x − y)ρ(y) ,   (12)
+                                (2π)3 2ω2          2
+in which
+                                                    e−mk x k
+                                             VY (x) = −
+                                                    4πk x k 2
+is the Yukawa potential, responsible for the inter-nucleon force in this model. An important point
+is that the ã(k) operators clearly obey the same CCRs as the a(k).
+     It is now clear how to proceed: we should represent the ã(k)’s and ã(k)∗ ’s as Fock space
+annihilation and creation operators, writing Ω̃ for the ‘vacuum vector’ annihilated by the ã(k)’s.
+Then Ω̃ is automatically a state of lowest energy for H ρ and, by discarding the constant, we may
+arrange that it is a state of zero energy. Of course, the Fock space is just the usual bosonic Fock
+
+                                                       11
+space over a 1-particle space L 2 (R3, d 3 k) with Ω̃ as the vacuum vector, and our Hamiltonian is just
+the standard Hamiltonian of the free ﬁeld on this space,
+
+                                                  d3 k
+                                             ∫
+                                      H̃0 =            ω ã(k)∗ ã(k).
+                                                 (2π)3
+It may seem that this simply reproduces the situation of methods 1 or 2. However, the redeﬁnition (11)
+provides the crucial diﬀerence, because the time-zero ﬁelds here are deﬁned in terms of the original
+operators a(k). Indeed, a calculation shows that the time-dependent Heisenberg picture ﬁeld is
+
+                          Φ̃ ρ(t, x) = ei H̃0 t ϕ ρ(x)e−i H̃0 t = Φ̃0 (t, x) + φ ρ (x)1,           (13)
+
+where
+                                           d 3 k ρ̂(k) ik ·x
+                                          ∫
+                            φ ρ (x) = −               e      = −(VY ⋆ ρ)(x)                        (14)
+                                          (2π)3 ω2
+is (formally) a time-independent solution to the ﬁeld equation (5), and
+
+                                      d3 k 1
+                                   ∫
+                      Φ̃0 (t, x) =        √ (ã(k)e−iωt+ik ·x + ã(k)∗ eiωt−ik ·x )                (15)
+                                     (2π)3 2ω
+
+is the standard free real scalar ﬁeld on the Fock space.
+     On reﬂection, we see that the canonical quantization procedure amounts precisely to solving the
+inhomogeneous equation using a particular integral and a solution to the homogeneous equation,
+which we then quantize as a free scalar ﬁeld with Ω̃ as its vacuum vector.
+     Provided that φ ρ is at least a weak solution to (5), the ﬁnal quantized model will be well-deﬁned,
+in the sense that the ﬁelds give operator-valued distributions weakly solving the ﬁeld equations and
+obeying the covariant commutation relations [which are actually the same as for the free ﬁeld, as
+can be veriﬁed easily using Peierls method]. In particular, for m > 0, ρ could be any tempered
+distribution, so linear combinations of δ-functions, or ρ ≡ 1 are certainly permitted.
+     We can now discuss the relation of this model to the approach in Method 1, which started from
+the assumption that the time-zero ﬁelds of the van Hove model are exactly those of the free ﬁeld.
+Our construction has actually shown that
+
+                            ϕ ρ(x) = ϕ0 (x) + φ ρ(x)1,             π ρ(x) = π0 (x)                 (16)
+
+where ϕ0 and π0 are standard free-ﬁeld time-zero ﬁelds in the vacuum representation. So methods
+1 and 3 are equivalent if and only if there is a unitary map U on the free ﬁeld Fock space so that
+ϕ ρ(x) = Uϕ0 (x)U −1 , π ρ (x) = Uπ0 (x)U −1 , or equivalently, a(k) = U ã(k)U −1 .
+    As the following exercise shows, a necessary (and in fact suﬃcient) condition for the existence
+of U is that
+                                             d 3 k | ρ̂(k)| 2
+                                        ∫
+                                                              < ∞,                               (17)
+                                            (2π)3 2ω3
+which fails for both δ-function singularities and the limit ρ → 1. Whenever the integral in (17)
+diverges, method 1, and similarly method 2, therefore fail to reproduce the exact solution to the van
+Hove model.
+
+Exercise 12. Supposing that U exists, deduce that ψ = U Ω̃ is annihilated by all a(k). Show that
+the n-particle wavefunction component of ψ is
+
+                                   1                                     ρ̂(k)
+                              ψn = √ χρ ⊗s ψn−1,                χρ (k) = √     ,
+                                    n                                      2ω3
+
+                                                       12
+which implies that ψ = 0 unless χρ ∈ L 2 (R3, d 3 k/(2π)3 ), i.e., only if (17) holds. If it does hold,
+show further that
+                                                   ∞
+                                                 Õ    χρ⊗n
+                                       ψ=N           √
+                                                  n=0 n!
+                                                                       2
+for some nonzero constant N ∈ C, and hence kψk = |N |e k χρ k /2 .
+
+    The lessons to be drawn from the van Hove model are:
+
+    • Unitarily inequivalent representations of the CCRs appear naturally in QFT, even in simple
+      models. In fact, were we to replace ρ 7→ λρ, we would ﬁnd that the corresponding CCR
+      representations are unitarily inequivalent for any distinct values of λ, when the integral in (17)
+      diverges.
+
+    • The interaction picture does not exist in general. Haag’s theorem, a general result proved
+      partly in response to the diﬃculties pointed out by van Hove, shows that the interaction
+      picture is of very limited applicability: any QFT on Minkowski space whose time-zero ﬁelds
+      coincide with those of a free ﬁeld theory is necessarily a free ﬁeld theory. It is sometimes
+      said that Haag’s theorem applies only to translationally invariant theories; this is true of the
+      formal statement, but the van Hove model with δ-function potentials shows that the interaction
+      picture can fail in nontranslationally invariant situations as well, or even in a ﬁnite volume
+      box as in van Hove’s original paper.
+
+    • The success of Method 3 may be attributed to the way it separates the problem of determining
+      the algebraic relations, treated ﬁrst, from the problem of ﬁnding a Hilbert space representation,
+      treated second.
+
+
+4 Algebraic QFT
+The appearance of unitarily inequivalent representations of the CCRs even in simple QFT models
+motivates an approach based in the ﬁrst instance on algebraic relations. In this section we set out
+some minimal axioms for AQFT and then give constructions of some simple free QFTs in the AQFT
+framework and describe the class of quasifree states for the free scalar ﬁeld.
+
+4.1 Basic requirements
+The minimum requirements (more or less) of AQFT on Minkowski spacetime M are:
+
+A1 Local algebras
+   There is a unital ∗-algebra A(M) and, to each open causally convex5 bounded region O ⊂ M,
+   a subalgebra A(O) containing the unit of A(M), so that the A(O) collectively generate A(M).
+   We call A(M) the quasi-local algebra of the theory.
+
+A2 Isotony6
+   Whenever O1 ⊂ O2 , the corresponding local algebras are nested,
+
+                                                 A(O1 ) ⊂ A(O2 ).                                            (18)
+    5A subset is causally convex if it contains every causal curve whose endpoints belong to it; see Fig. 1 for an
+illustration.
+    6Doubtless to avoid ‘monotony’.
+
+
+
+                                                       13
+                                       (a)                          (b)
+
+
+Figure 1: Sketches of two spacetime regions. (a) A double cone region, which is an example of a
+causally convex set; (b) illustrates a non-causally convex set because points in the region may be
+joined by a causal curve (e.g., the black line) that leaves it. Sketch of a double cone region.
+
+A3 Einstein causality
+   If O1 and O2 are causally disjoint then
+                                                 [A(O1 ), A(O2 )] = 0,                                              (19)
+    i.e.,
+                                  [A1, A2 ] = 0,        for all Ai ∈ A(Oi ), i = 1, 2.                              (20)
+A4 Poincaré covariance
+   To every transformation ρ in the identity connected component P0 of the Poincaré group, there
+   is an automorphism α(ρ) of A(M) such that
+                                               α(ρ) : A(O) → A(ρO)                                                  (21)
+    such that α(id) = idA(M) and naturally α(σ) ◦ α(ρ) = α(σ ◦ ρ) is required for any σ, ρ ∈ P0 .
+A5 Existence of dynamics
+   If O1 ⊂ O2 and O1 contains a Cauchy surface of O2 ,7 then
+                                                   A(O2 ) = A(O1 ).                                                 (22)
+    Sometimes this condition is weakened.
+The interpretation of this structure is that the self-adjoint elements of A(O), i.e., A = A∗ ∈ A(O)
+are observables that are associated with the region O. Loosely, we may think of them as being
+measureable within O; this can be made more precise, see [FV18] and the short account [Few19].
+We will use the term local observable algebra to describe A(O). The set of open causally convex
+bounded regions is a directed system under inclusion: given any two regions O1 and O2 , there exists
+a further region O3 containing them both. For this reason the assignment O 7→ A(O) is often called
+a net of local algebras. In this situation, the condition that the A(O) collectively generate A(M)
+                                                             Ð
+reduces to the issue of whether A(M) is equal to the union On A(On ) [or its closure, if the algebras
+                                                                                        Ð
+carry suitable topologies; see below], where On is any nested family of regions with n On = M.
+    We will add more conditions in due course.
+
+Remarks
+    • The prototypical local region is a double cone: namely, the set of all points lying on smooth
+      timelike curves between two points p and q (with p and q excluded). By scalings, boosts
+      and translations, all double cones in Minkowski space can be obtained from the elementary
+      example
+                                    O = {(t, x) ∈ R4 : |t | + k x k < ℓ0 }
+      for some length-scale ℓ0 > 0; see Fig. 1. All double cones are causally convex.
+   7Recall that a Cauchy surface for O2 is a subset met exactly once by every inextendible timelike curve in O2 .
+
+                                                         14
+    • For technical reasons it is often useful to require that each A(O) is in fact a C ∗ -algebra, but
+      we need not insist on this, nor even that the A(O) carry any topology. In the C ∗ -case, one
+      would require A(M) to be generated in a C ∗ -sense by the local algebras – technically it is their
+      C ∗ -inductive limit. In particular, the union O A(O) would be dense in A(M).
+                                                    Ð
+
+    • Sometimes (particularly in curved spacetimes) it is convenient to allow for local algebras
+      indexed by unbounded (= noncompact closure) regions.
+    • Einstein causality requires elements of algebras of spacelike separated regions to commute.
+      Therefore Fermi ﬁelds can only appear in products involving even numbers of ﬁelds. We
+      return to this later.
+    • As mentioned, these are minimal requirements for AQFT but do not, by themselves, suﬃce
+      to distinguish a quantum ﬁeld theory from other relativistic models.
+    • Nothing has yet been said about Hilbert spaces, or about what algebraic states on the observable
+      algebras are to be regarded as physical; we will discuss these issues later. Note that one can
+      do quite a lot without ever going into Hilbert spaces. For example, let A(M) be the algebra of
+      the free real scalar ﬁeld [see below], and let ω be a state on A(M). Then the smeared n-point
+      function is
+                  Wn ( f1, f2, . . . , fn ) := ω(Φ( f1 )Φ( f2 ) · · · Φ( fn )),     f1, . . ., fn ∈ C0∞ (M)
+      and if this is suitably continuous w.r.t. the fi , it deﬁnes a distribution Wn ∈ D ′(Mn ). Here,
+      Φ( f ) denotes a ‘smeared ﬁeld’ as will be described shortly. Therefore suﬃciently regular
+      states ω deﬁne a hierarchy of distributional n-point functions, without ever using a Hilbert
+      space. Here, as elsewhere in these notes, C0∞ (M) denotes the space of smooth, complex-valued
+      functions on M with compact support (i.e., vanishing outside a bounded set).
+
+4.2 Examples
+We continue by giving some speciﬁc examples of ﬁeld theories in the framework of AQFT, drawing
+out various lessons as we go.
+
+Free real scalar field Consider the ﬁeld equation
+                                                  ( + m2 )φ = 0                                              (23)
+and let E + and E − be the corresponding retarded and advanced Green operators, i.e., φ = E ± f
+solves the inhomogeneous equation
+                                        ( + m2)φ = f                                     (24)
+and the support of φ is contained in the causal future (+, retarded) or causal past (−, advanced) of
+the support of f . Also deﬁne the advanced-minus-retarded solution operator E = E − − E + and
+write                                      ∫
+                               E( f , g) =   f (x)(E g)(x) dvolM (x) ,                          (25)
+                                            M
+where dvolM          4
+              (x) ≡ d x. The integral kernel is familiar from standard QFT:
+                                                          d 3 k sin k · (x − y)
+                                                     ∫
+                                    E(x, y) = −                                 ,                             (26)
+                                                         (2π)3         ω
+                              p
+where k • = (ω, k), ω =           k k k 2 + m2 , and we use standard inertial coordinates on Minkowski
+spacetime.
+
+                                                           15
+Exercise 13. Show that E(x, y)| y0 =x 0 = 0, and ∂y0 E(x, y)| y0 =x 0 = δ(x − y).
+
+    To formulate the quantized ﬁeld in AQFT, we give generators and relations for the desired algebra
+A(M), thus specifying it uniquely up to isomorphism. For completeness, a detailed description of
+the construction is given in Appendix B. The generators are written Φ( f ), labelled by test functions
+ f ∈ C0∞ (M) – for the moment this just a convenient way of writing them; there is no underlying ﬁeld
+Φ(x) to be understood here. The relations imposed, for all test functions f , g ∈ C0∞ (M), are:
+
+SF1 Linearity f 7→ Φ( f ) is complex linear
+
+SF2 Hermiticity Φ( f )∗ = Φ( f )
+
+SF3 Field equation Φ(( + m2 ) f ) = 0
+
+SF4 Covariant commutation relations [Φ( f ), Φ(g)] = iE( f , g)1.
+
+As a consequence of the identities in Exercise 13, SF4 is a covariant form of the equal time commu-
+tation relations; a nice way of seeing this directly is to follow the on-shell Peierls’ method [Pei52]
+to ﬁnd a covariant Poisson bracket for the classical theory. The axioms we have just stated may be
+regarded as the result of applying Dirac’s quantisation rule to this bracket, with Φ( f ) regarded as
+the quantization of the observable
+                                                  ∫
+                                        F f [φ] =     f φ dvolM                                   (27)
+
+on a suitable solution space to the Klein–Gordon equation.
+   One should check, of course, that the algebra A(M) is nontrivial. It is not too hard [though
+we will not do this here] to show that the underlying vector space of A(M) is isomorphic to the
+symmetric tensor vector space
+                                    ∞
+                                    Ê
+                               C⊕          Q ⊙n,    Q = C0∞ (M)/PC0∞ (M),
+                                    n=1
+
+where P =  + m2 and ⊙ denotes a symmetrised tensor product. Therefore the nontriviality of
+A(M) reduces to the question of whether the quotient space Q is nontrivial. The latter follows from
+the properties of the Green operators, which can be summarised in an exact sequence [BGP07]
+                                       P            E            P
+                                                  ∞
+                      0 −→ C0∞ (M) −→ C0∞ (M) −→ Csc         ∞
+                                                     (M) −→ Csc (M) −→ 0,                         (28)
+
+where the subscript sc denotes a space of functions with ‘spatially compact’ support, which means
+that they vanish in the causal complement of a compact set. Together with the isomorphism theorems
+for vector spaces, this gives
+
+   Q = C0∞ (M)/im P = C0∞ (M)/ker E  im E = ker P = {φ ∈ Csc
+                                                           ∞
+                                                              (M) : Pφ = 0} =: Sol(M).            (29)
+
+Thus Q is isomorphic to the space of smooth Klein–Gordon solutions with spatially compact
+support, and is therefore nontrivial. Consequently, A(M) is a nontrivial unital ∗-algebra.
+    Now deﬁne, for each causally convex open bounded O ⊂ M, the algebra A(O) to be the
+subalgebra of A(M) generated by elements Φ( f ) for f ∈ C0∞ (O), along with the unit 1. Then it is
+clear that, if O1 ⊂ O2 , then A(O1 ) ⊂ A(O2 ). Then properties A1, A2 are automatic. Next, because
+E( f , g) = 0 when f and g have causally disjoint support (as E g is supported in the union of the
+causal future and past of supp g) it is clear that all generators of A(O1 ) commute with all generators
+of A(O2 ); hence A3 holds. Next, let ρ ∈ P0 . Then the Poincaré covariance of  + m2 and E can be
+
+                                                    16
+used to show that the map of generators α(ρ)Φ( f ) = Φ(ρ∗ f ), (ρ∗ f )(x) = f (ρ−1 (x)), is compatible
+with the relations and extends to a well-deﬁned unit-preserving ∗-isomorphism
+
+                                       α(ρ) : A(M) → A(M) .                                      (30)
+
+Clearly α(ρ) maps each A(O) to A(ρO); as we also have α(σ) ◦ α(ρ) = α(σ ◦ ρ), condition A4
+holds.
+    Finally, let O1 ⊂ O2 such that O1 contains a Cauchy surface of O2 . Then any solution φ = E f2
+for f2 ∈ C0∞ (O2 ) can be written as φ = E f1 for some f1 ∈ C0∞ (O1 ). An explicit formula is
+
+                                              f1 = P χφ
+
+where χ ∈ C ∞ (O2 ) vanishes to the future of one Cauchy surface of O2 contained in O1 and equals
+unity to the past of another (since O1 contains a Cauchy surface of O2 , it actually contains many of
+them). Then Φ( f2 ) = Φ( f1 ), which implies that A(O2 ) = A(O1 ) as required by A5.
+    In fact this whole construction can be adapted to any globally hyperbolic spacetime, which is
+the setting in which (28) was proved [BGP07]. Here, we recall that a globally hyperbolic spacetime
+is a time-oriented Lorentzian spacetime containing a Cauchy surface.
+
+Real scalar field with external source (van Hove encore) Let ρ ∈ D ′(M) be a distribution that
+is real in the sense ρ( f ) = ρ( f ), and let φ ρ ∈ D ′(M) be any weak solution to ( + m2 )φ ρ = −ρ.
+    The AQFT formulation of the real scalar ﬁeld with external source ρ is given in terms of the
+same algebras A(O) as in the homogeneous case. The only diﬀerence is that we deﬁne smeared
+ﬁelds
+                                          Φ ρ ( f ) = Φ( f ) + φ ρ( f )1,
+where Φ( f ) are the generators used to construct A(M) by SF1–SF4, and observe that they obey the
+algebraic relations
+
+vH1 f 7→ Φ ρ( f ) is complex linear
+
+vH2 Φ ρ( f )∗ = Φ ρ( f )
+
+vH3 Φ ρ(( + m2 ) f ) + ρ( f )1 = 0
+
+vH4 [Φ ρ( f ), Φ ρ(g)] = iE( f , g)1
+
+which are the relations that would be obtained from Dirac quantisation of the classical theory. Two
+remarks are in order:
+
+    • We see that the algebra is not so speciﬁc to the theory in hand – this is a general feature of
+      AQFT: what is more interesting is how the local algebras ﬁt together and how the elements
+      can be labelled by ﬁelds.
+
+    • All the diﬃculties encountered in section 3 appear to have vanished. Actually, they have been
+      moved into the question of the unitary (in)equivalence of representations of the algebra A(M).
+      The separation between the algebra and its representations makes for a clean conceptual
+      viewpoint.
+
+
+
+
+                                                 17
+Weyl algebra     We return to the real scalar ﬁeld and note two formal identities: ﬁrst, that
+
+                                         (eiΦ( f ) )∗ = e−iΦ( f ) = eiΦ(− f )                            (31)
+
+if f is real-valued; second, from the Baker–Campbell–Hausdorﬀ formula, that
+
+                     eiΦ( f ) eiΦ(g) = eiΦ( f )+iΦ(g)−[Φ( f ),Φ(g)]/2 = e−iE( f ,g)/2 eiΦ( f +g) .       (32)
+
+As there is no topology on A(M) we cannot address any convergence questions, so these are to be
+understood as identities between formal power series in f and g. We may also note that Φ( f ) and
+E( f , g) depend only on the equivalence classes of f and g in C0∞ (M)/PC0∞ (M)  Sol(M). Moreover,
+the exponent in (32) is related to the symplectic product on the space of real-valued Klein–Gordon
+solutions, SolR (M)  C0∞ (M; R)/PC0∞ (M; R) by
+
+                                             σ([ f ], [g]) = E( f , g).                                  (33)
+
+    These considerations motivate the deﬁnition of a unital ∗-algebra, generated by symbols W([ f ])
+labelled by [ f ] ∈ C0∞ (M; R)/PC0∞ (M; R) and satisfying relations mimicking (31) and (32). In fact,
+any real symplectic space (S, σ) determines a unital ∗-algebra, generated by symbols W(φ), φ ∈ S
+and satisfying the relations:
+
+W1 W(φ)∗ = W(−φ)
+                             ′
+W2 W(φ)W(φ′) = e−iσ(φ,φ )/2 W(φ + φ′).
+
+It is a remarkable fact that this algebra can be given a C ∗ -norm and completed to form a C ∗ -algebra
+in exactly one way (up to isomorphism) [BR97]. This is the Weyl algebra W(S, σ). In our case
+of interest S = C0∞ (M; R)/PC0∞ (M; R), the symplectic form is given by (33), and we will denote the
+corresponding Weyl algebra by W(M) for short. As before, we can form local algebras by deﬁning
+W(O) as the C ∗ -subalgebra generated by W([ f ])’s with supp f ⊂ O and O being any causally
+convex open bounded subset of M.
+
+Exercise 14. In a general Weyl algebra W(S, σ), prove that W(0) = 1, the algebra unit.
+
+    It is worth pausing to examine the explicit construction of the Weyl algebra W(S, σ). Consider
+the (inseparable) Hilbert space H = ℓ 2 (S) of square-summable sequences a = (aφ ) indexed by
+φ ∈ S, and deﬁne
+                                                       ′
+                                   (W(φ′)a)φ = e−iσ(φ ,φ)/2 aφ+φ′ .                           (34)
+Obviously the W(φ)’s are all unitary. The Weyl algebra W(S, σ) is the closure of the ∗-algebra
+generated by the W(φ)’s in the norm topology on B(H ), equipped with the operator norm.
+                                                                                                     ′
+Exercise 15. Check that (34) implies W(φ) = W(−φ)∗ and W(φ)W(φ′) = e−iσ(φ,φ )/2 W(φ + φ′).
+
+Exercise 16. Let Ω ∈ ℓ 2 (S) be the sequence (δφ,0 ), where
+                                                (
+                                                  1 φ=0
+                                         δφ,0 =
+                                                  0 φ , 0.
+
+If φ , φ′, show that W(φ)Ω and W(φ′)Ω are orthogonal and deduce that
+
+                                             k W(φ) − W(φ′)k = 2.
+
+This shows that there are no nonconstant continuous curves in the Weyl algebra.
+
+                                                         18
+    A corollary of the exercise is that one cannot diﬀerentiate λ 7→ W([λ f ]) within the Weyl algebra
+in the hope of recovering a smeared ﬁeld operator, nor can we exponentiate iΦ( f ) within the algebra
+A(M) to obtain a Weyl operator. The heuristic relationship W([ f ]) = eiΦ( f ) does not hold literally
+in either of these algebras.
+
+Exercise 17. Show that the GNS representation of the (abstract) Weyl algebra over symplectic
+space (S, σ) induced by the tracial state ωtr (W(φ)) = δφ,0 coincides with the concrete construction
+of a representation on H = ℓ 2 (S) given earlier, with the GNS vector Ωtr = (δφ,0 ), i.e., ωtr (A) =
+hΩtr | AΩtr i.
+
+Complex scalar field The algebra of the free complex scalar ﬁeld C(M) may be generated by
+symbols Φ( f ) ( f ∈ C0∞ (M)) subject to the relations
+
+CF1 Linearity f 7→ Φ( f ) is complex linear
+
+CF2 Field equation Φ(( + m2 ) f ) = 0
+
+CF3 Covariant commutation relations [Φ( f ), Φ(g)] = 0 and [Φ( f )∗, Φ(g)] = iE( f¯, g)1.
+
+It is also usual to write Φ⋆( f ) := Φ( f¯)∗ , so that f 7→ Φ⋆( f ) is also complex-linear. This algebra
+admits a family of automorphisms ηα given on the generators by
+
+                                         ηα (Φ( f )) = e−iα Φ( f ),                                (35)
+
+corresponding to a global U(1) gauge symmetry of the classical complex ﬁeld.
+
+Exercise 18. Check that (35) extends to a well-defined automorphism for each α ∈ R. Show also
+that there is an isomorphism between C(M) and the algebraic tensor product A(M) ⊗ A(M) of two
+copies of the real scalar field algebra (with the same mass m) given on generators by
+                                 1
+                      Φ( f ) 7→ √ (Φr ( f ) ⊗ 1 + i1 ⊗ Φr ( f )) ,    f ∈ C0∞ (M),
+                                  2
+where we temporarily use Φr ( f ) to denote the generators of A(M). In this sense, the complex field
+is simply two independent real scalar fields.
+
+    We may identify local algebras C(O) in the same way as before, and within each of these, identify
+the subalgebra Cobs (O) consisting of all elements of C(O) that are invariant under the global U(1)
+gauge action. These are the local observable algebras.
+    The reader may notice that the real scalar ﬁeld admits a global Z2 gauge symmetry generated
+by Φ( f ) 7→ −Φ( f ), and that the theory of two independent real scalar ﬁelds with the same mass
+admits an O(2) gauge symmetry, of which the U(1) symmetry corresponds to the SO(2) subgroup.
+Why, then, do we not restrict the observable algebra of the real scalar ﬁeld, or further restrict the
+observable algebras of the complex ﬁeld? The answer is simply that these are physical choices.
+The U(1) gauge invariance of the complex scalar ﬁeld is related to charge conservation, while the
+additional Z2 symmetry in the isomorphism O(2)  U(1) ⋊ Z2 corresponds to charge reversal. If
+the theory is used to model a charge that is conserved in nature, but for which states of opposite
+charge can be physically distinguished, then the correct approach is to proceed as we have done.
+
+
+
+
+                                                    19
+Dirac field One can proceed in a similar way to deﬁne an algebra F (M) with generators Ψ(u)
+and Ψ+ (v) labelled by cospinor and spinor test functions respectively, and with relations abstracted
+from standard QFT (this is left as an exercise). However, the resulting local algebras F (O) do not
+obey Einstein causality – if u and v are spacelike separated then Ψ(u) and Ψ+ (v) anticommute. Of
+course we do not expect to be able to measure a smeared spinor ﬁeld by itself, and what one can do
+instead is consider algebras generated by second degree products of the spinor and cospinor ﬁelds,
+labelled by (co)spinor test functions in supported in O. The resulting algebras A(O) then obey the
+axioms A1–A5.
+    Meanwhile, the algebras F (O) obey A1, A2, A4, A5 and a graded version of A3. We describe
+them as constituting local field algebras, to emphasise the fact that they contain elements carrying
+the interpretation of smeared unobservable ﬁelds. We will come back to the discussion of F (O)
+and their relation to A(O) in section 8 on superselection sectors.
+
+4.3 Quasifree states for the free scalar field
+We have seen how local algebras for the free scalar ﬁeld may be constructed. As emphasised in
+Sec. 2.2, however, this is only half of the data needed for a physical theory: we also need some states,
+and (for many purposes) the corresponding GNS representations. These are nontrivial problems in
+general: one needs to ﬁx the value of ω(A) and verify the positivity condition that ω(A∗ A) ≥ 0 for
+every element A ∈ A(M); furthermore, while the GNS representation is fairly explicit, it evidently
+involves a lot of work to do it by hand.
+    Fortunately, in the case of free ﬁelds, there is a special family of quasifree states where quite
+explicit constructions can be given. In particular, these states are determined by their two-point
+functions and all the conditions required of a state can be expressed in those terms. Moreover, the
+eventual GNS Hilbert space is a Fock space, and the smeared ﬁeld operators in the representation
+may be given by explicit formulae. It is important to note that these include representations that are
+unitarily inequivalent to the representation built on the standard vacuum state. Once again, many
+of the arguments we will use carry over directly to curved spacetimes.
+    Let W be any bilinear form on C0∞ (M) obeying
+                         W( f , g) − W(g, f ) = iE( f , g),       ∀ f , g ∈ C0∞ (M)                 (36)
+and which induces a positive semideﬁnite sesquilinear form on Sol(M) by the formula
+                             w(E f , E g) = W( f , g),        ∀ f , g ∈ C0∞ (M).
+In particular, W must be a weak bisolution to the Klein–Gordon equation so that w is well-deﬁned.
+Exercise 19. Check that the positivity condition W( f¯, f ) ≥ 0 implies that W( f , g) = W(ḡ, f¯). Also
+derive the Cauchy–Schwarz inequality
+                       | Im w(φ, φ′)| 2 ≤ w(φ, φ)w(φ′, φ′),          φ, φ′ ∈ Sol(M).                (37)
+    Under the above conditions, it may be proved (cf. Prop 3.1 in [KW91]) that there is a complex
+Hilbert space H and a real-linear map K : SolR (M) → H so that K SolR (M) + iK SolR (M) is dense
+in H and
+                        hKE f |KE giH = W( f , g),       f , g ∈ C0∞ (M; R).                 (38)
+(These structures are unique up to unitary equivalence.)
+   The full construction is essentially explicit, but slightly involved. However, there is a particularly
+simple and interesting case, arising when the Cauchy–Schwarz inequality (37) is saturated, i.e.,
+                               | Im w(φ, φ′)| 2
+                        sup               ′ ′
+                                                =1        for all 0 , φ ∈ SolR (M),                 (39)
+                        φ ′,0 w(φ, φ)w(φ , φ )
+
+
+                                                     20
+                             1       2      3      4        5    6     7       8
+
+
+
+                                   Figure 2: An example graph in G8 .
+
+where the supremum is taken over nonzero elements of SolR (M). This occurs if and only if
+the quasifree state constructed below is pure. Under these circumstances, H is ﬁrst deﬁned as
+a real Hilbert space by completing SolR (M) in the norm kφkw = w(φ, φ)1/2 with inner product
+hφ1 |φ2 iw = Re w(φ1, φ2 ). Due to (39), H carries an isometry J deﬁned so that
+                                 Im w(φ1, φ2 ) = hφ1 | Jφ2 iw,       φi ∈ H,
+and which fulﬁls the conditions J 2 = −1, J † = −J. Hence J is a complex structure on H , and we
+can make H into a complex Hilbert space in which multiplication by i is (annoyingly) implemented
+by −J and the inner product is
+                                   hφ1 |φ2 iH = hφ1 |φ2 iw + ihφ1 | Jφ2 iw .
+(See Appendix A for more details.) The map K is just the natural inclusion of SolR (M) in H and it
+is clear that K SolR (M) is dense in H (hence K SolR (M) + iK SolR (M) is also dense). Veriﬁcation
+of (38) is left as an exercise.
+    Returning to the general case, it may be shown that there is a state on A(M) given, as a formal
+series in f , by
+                               ω(eiΦ( f ) ) = e−W( f , f )/2, f ∈ C0∞ (M; R).                   (40)
+Expanding each side of (40) in powers of f , and equating terms at each order, all expectation values
+of the form ω(Φ( f )n ) are ﬁxed. Arbitrary expectation values may then be formed using multilinear
+polarisation identities (see e.g., [Tho14] and references therein) and linearity. It may be shown that
+all odd n-point functions vanish, while
+                                                         Õ Ö
+                             ω(Φ( f1 ) · · · Φ( f2n )) =     W( fs(e), ft(e) ),
+                                                       G∈G2n e∈G
+
+where G2n is the set of directed graphs with vertices labelled 1, . . . , 2n, such that each vertex is met
+by exactly one edge and the source and target of each edge obey s(e) < t(e). An example for n = 4 is
+given in Figure 2. Another characterisation of the n-point functions is that all the truncated n-point
+functions vanish for n , 0, 2. This type of state is described as quasifree.
+Exercise 20. Using (40), show that ω(Φ( f )2n+1 ) = 0 for all n ∈ N0 , while
+                           ω(Φ( f )2n ) = (2n − 1)!! W( f , f )n,       ∀n ∈ N0 .
+Deduce that the sequence µn = ω(Φ( f )n ) satisfies the growth conditions in the Hamburger moment
+theorem. Therefore these are the moments of at most one probability measure – which is of course
+a Gaussian probability distribution.
+   Although we have called ω a state, it is not yet clear that it has the required positivity property.
+This is most easily justiﬁed by noting that there is an explicit Hilbert space representation of A(M)
+containing a unit vector whose expectation values match those of ω. To be speciﬁc, the Hilbert
+space is the bosonic Fock space
+                                                   Ê ∞
+                                         F(H ) =        H ⊙n                                      (41)
+                                                        n=0
+
+                                                       21
+over H , on which the ﬁeld is represented according to the formula
+                           πω (Φ( f )) = a(KE f ) + a∗ (KE f ),            f ∈ C0∞ (M; R),                       (42)
+and
+                                  πω (Φ( f )) := πω (Φ(Re f )) + iπω (Φ(Im f ))
+for general complex-valued f ∈ C0∞ (M). Here a(φ) and a∗ (ψ) are the annihilation and creation
+operators on the Fock space which obey the CCRs
+                                   [a(φ), a∗ (ψ)] = hφ|ψiH 1,           φ, ψ ∈ H,                                (43)
+on a suitable dense domain in F(H ) (note that a is antilinear in its argument, and that a(φ) = a∗ (φ)∗ ).
+Readers unfamiliar with the basis-independent notation used here should refer to Appendix C.
+    We will not give a detailed proof of the claims (40–43), which would require consideration
+of operator domains. At the level of formal calculation, however, it is easily checked that these
+operators do indeed lead to a representation of A(M).
+Exercise 21. Verify formally that f 7→ πω (Φ( f )) is C-linear, obeys the field equation in the sense
+πω (Φ(P f )) = 0, and is hermitian in the sense that πω (Φ( f ))∗ = πω (Φ( f )).
+      For the CCRs, we compute
+[πω (Φ( f )), πω (Φ(g))] = (hKE f |KE giH − hKE g|KE f iH ) 1 = (W( f , g) − W(g, f )) 1 = iE( f , g)1,
+using (43), (38) and (36). Finally, it may be veriﬁed that the Fock vacuum vector Ωω satisﬁes
+                          hΩω |πω (Φ( f1 )) · · · πω (Φ( fn ))Ωω i = ω(Φ( f1 ) · · · Φ( fn )).
+Consequently, ω is seen to be a vector state on A(M) and the quadruple (F(H ), Dω, πω, Ωω ) is its
+GNS representation, where the dense domain Dω consists of ﬁnite linear combinations of ﬁnite
+products of operators a∗ (KE f ) acting on Ωω .
+   The ‘one-particle space’ H may be interpreted as follows. By (42), we see that
+                          πω (Φ( f ))Ωω = a∗ (KE f )Ωω = (0, KE f , 0, . . .) ∈ F(H ),
+which is an eigenstate of N with unit eigenvalue. Elements of H can be identiﬁed with (complex
+linear combinations of) vectors generated from Ωω by a single application of the ﬁeld. Due to
+assumption SF3, these vectors may be identiﬁed with certain complex-valued solutions to the
+ﬁeld equation, which may be regarded as wavepackets of ‘positive frequency modes’ relative to a
+decomposition induced by the choice of quasifree state.
+
+Examples We describe two important examples. The Minkowski vacuum state8 ω0 is a quasifree
+state with two-point function
+                       d 3 k fˆ(−k)ĝ(k)
+                   ∫                                                          ∫
+                                                       •
+       W( f , g) =                       ,     where k = (ω, k),      ĝ(k) =   d 4 x eik·x g(x),
+                      (2π)3      2ω
+          p
+and ω = | k | 2 + m2 .9 The corresponding one-particle space is H = L 2 (Hm+, dµ), where Hm+ is the
+hyperboloid k · k = m2, k 0 > 0 in R4 , and the measure of S ⊂ Hm+ is
+                                                               (
+                                     d 3 k χS (k)
+                                 ∫
+                                                                 1 k∈S
+                         µ(S) =            3
+                                                      χS (k) =
+                                    (2π) 2ω                      0 otherwise.
+
+    8A general deﬁnition of what a vacuum state should be will be given in Deﬁnition 25.
+    9There is a notational conﬂict with the symbol used to denote states but it will always be clear from context which
+is meant.
+
+                                                          22
+The map K : SolR (M) → H is
+                                               KE g = ĝ|Hm+ ,
+which already has dense range – as mentioned above, this signals that the vacuum state is pure.
+Consequently, the vacuum representation π0 is given by
+
+                        π0 (Φ(g)) = a(ĝ|Hm+ ) + a∗ (ĝ|Hm+ ) ,       g ∈ C0∞ (M; R),
+
+which may be written in more familiar notation using sharp-momentum annihilation and creation
+operators obeying (7) using
+
+                           d3 k 1                                    d3 k 1
+                        ∫                                         ∫
+                                                   ∗                             ∗
+           a(ĝ|Hm+ ) =        √   ĝ(k)a(k),    a   ( ĝ| H +) =        √ ĝ(k)a (k) .
+                          (2π)3 2ω                          m
+                                                                    (2π)3 2ω
+
+Recalling that ĝ(k) = ĝ(−k) for real-valued g, we retrieve the ﬁeld with sharp position as the
+operator-valued distribution
+
+                                       d3 k 1 
+                                   ∫                                         
+                                                        −ik·x     ∗     ik·x
+                       π0 (Φ(x)) =          √     a(k)e       + a   (k)e       .
+                                      (2π)3 2ω
+
+   Our second example is the thermal state of inverse temperature β, with two-point function
+
+                                     d 3 k 1 fˆ(−k)ĝ(k) fˆ(k)ĝ(−k)
+                                  ∫                                    
+                   W β ( f , g) =                          + βω           .
+                                    (2π)3 2ω 1 − e−βω          e −1
+
+Here, Hβ = H ⊕ H with H as before, and (cf. [Kay85])
+
+                                               (Kφ)(k)    (Kφ)(k)
+                                 (K β φ)(k) = √          ⊕√
+                                                1 − e−βω    e βω − 1
+(remember that K β only has to be real-linear!). The range of K β E is not dense in Hβ , but its complex
+span is, reﬂecting the fact that the thermal states are mixed.
+
+Exercise 22. Check that the analogue of (38) holds for Hβ , K β and W β .
+
+    A nice feature of the algebraic approach is that, while the representations corresponding to the
+vacuum and thermal states are unitarily inequivalent, they can be treated ‘democratically’ as states
+on the algebra A(M). There are many other quasifree states; indeed one can start with any state and
+construct its ‘liberation’, the quasifree state with the same two-point function.
+    All quasifree representations carry a representation π̃ω of the Weyl algebra as well, so that
+
+                                         π̃ω (W([ f ])) = eiπω (Φ( f ))
+
+and also
+                                                    1 d
+                                    πω (Φ( f )) =        W([λ f ])     .
+                                                    i dλ           λ=0
+Remember that these relationships cannot hold literally either in A(M) or W(M), but here we see
+that they do hold in (suﬃciently regular) representations.
+    Summarising, the quasifree states provide a class of states for which explicit Hilbert space
+representations may be given with the familiar Fock space structure, and in which the Weyl operators
+and smeared ﬁeld operators are related as just described.
+
+
+
+                                                      23
+5 The spectrum condition and Reeh–Schlieder theorem
+In this section we begin to draw general conclusions about the properties of QFT in the AQFT
+framework, proceeding from the basic axioms and additional requirements that will be introduced
+along the way. We shall emphasise features that distinguish QFT from quantum mechanics. The
+starting point is a more detailed discussion of the action of Poincaré transformations.
+
+5.1 The spectrum condition
+Assumption A4 required that the Poincaré group should act by automorphisms of A(M). An
+important question concerning Hilbert space representations of the theory is whether or not these
+automorphisms are unitarily implemented, i.e., whether there are unitaries U(ρ) on the representation
+Hilbert space such that
+                                 π(α(ρ)A) = U(ρ)π(A)U(ρ)−1 .
+In such cases, we say that the representation is Poincaré covariant. As we now show, the GNS
+representation of a Poincaré invariant state ω is always Poincaré covariant. Here, Poincaré invariance
+of ω means that
+                            ω(α(ρ)A) = ω(A),          ∀A ∈ A(M), ρ ∈ P0
+(written equivalently as α(ρ)∗ ω = ω for all ρ ∈ P0 , with the star denoting the dual map). Of course,
+the same question can be asked of any automorphism or automorphism group on a ∗-algebra.
+Theorem 23. Let α be an automorphism of a unital ∗-algebra A. If a state ω on A is invariant
+under α, i.e., α∗ ω = ω, then α is unitarily implemented in the GNS representation of ω by a unitary
+that leaves the GNS vector invariant. Any group of automorphisms leaving ω invariant is unitarily
+represented in Hω .
+Proof. Observing that ω(α(A)∗ α(A)) = (α∗ ω)(A∗ A) = ω(A∗ A), we see that α maps the GNS ideal
+Iω to itself. Therefore the formula
+                                       U[A] = [α(A)]
+gives a well-deﬁned map U from the GNS domain Dω to itself, which ﬁxes the GNS vector Ωω = [1]
+and is obviously invertible (consider α−1 ). Now
+
+                       hU[A]|U[B]i = ω(α(A)∗ α(A)) = ω(A∗ A) = h[A]|[B]i,
+
+so U is a densely deﬁned invertible isometry, and therefore extends uniquely to a unitary on Hω .
+The calculation
+
+  πω (α(A))[B] = [α(A)B] = [α(Aα−1 (B))] = U[Aα−1 (B))] = Uπω (A)[α−1 B] = Uπω (A)U −1 [B]
+
+shows that U implements α.
+   If β is another automorphism leaving ω invariant, let V be its unitary implementation as above.
+Then
+                              UV [A] = [α(β(A))] = [(α ◦ β)(A)]
+shows that UV implements α ◦ β.
+    Among other things, this result may be applied to states that are translationally invariant.
+Thermal equilibrium states, for example, are spatially homogeoneous but not Poincaré invariant
+because they have a deﬁnite rest frame. Although typical states are not translationally invariant,
+many interesting states are in a suitable sense local deviations from such invariant states. Even so,
+not all invariant states are physically acceptable. One way of doing narrowing the ﬁeld is to require
+the spectrum condition:
+
+                                                 24
+Definition 24. Let ω be a translationally invariant state so that the unitary implementation of the
+translation group U(x) is strongly continuous, i.e., the map x 7→ U(x)ψ is continuous from R4
+to Hω for each ﬁxed ψ ∈ Hω , where x = (x 0, . . . , x 3 ) ∈ R4 . By Stone’s theorem, there are four
+commuting self-adjoint operators P µ such that (lowering the index using the metric)
+                                                                     µ
+                                                     U(x) = eiPµ x .
+
+To any (Borel) subset ∆ ⊂ R4 we may assign a projection operator E(∆) corresponding to the
+binary test of whether the result of 4-momentum measurement P µ would be found to lie in ∆. The
+assignment ∆ 7→ E(∆) is a projection-valued measure, and in fact one can write
+                                             ∫
+                                               eipµ x dE(p• ).
+                                                     µ
+                                      U(x) =
+
+The state ω is said to satisfy the spectrum condition if the support of E lies in the closed forward
+cone V + = {p• ∈ R4 : p µ p µ ≥ 0, p0 ≥ 0}, i.e.,
+
+                                                      supp E ⊂ V + .
+
+This is sometimes expressed by saying that the joint spectrum of the momentum operators P µ lies
+in V + .
+
+    An important consequence of the spectrum condition is that the deﬁnition of U(x) can be
+extended to complex vectors x ∈ R4 + iV + , with analytic dependence on x: to be precise, U(x) is
+strongly continuous on R4 + iV + and holomorphic on R4 + i V + , where V + = intV + .
+    One can check that the usual vacuum and thermal states of the free ﬁeld obey the spectrum
+condition. More generally, we will make the following deﬁnition:
+
+Definition 25. A vacuum state10 is a translationally invariant state obeying the spectrum condition,
+whose GNS vector is the unique translationally invariant vector (up to scalar multiples) in the GNS
+Hilbert space. The corresponding GNS representation is called the vacuum representation.
+
+5.2 The Reeh–Schlieder theorem
+We come to some general results that show how diﬀerent QFT is from quantum mechanics. For
+simplicity, suppose that the theory is given in terms of C ∗ -algebras. Let Ω be the GNS vector of
+a state obeying the spectrum condition (we drop the ω subscripts). Suppose the theory obeys the
+following condition:
+
+A6 Weak additivity
+   For any causally convex open region O, π(A(M)) is contained in the weak closure11 of BO , the
+   ∗-algebra generated by the algebras π(A(O + x)) as x runs over R4 .
+
+Weak additivity asserts that arbitrary observables can be built as limits of algebraic combinations
+of translates of observables in any given region O (as one would expect in a quantum ﬁeld theory).
+In combination with the spectrum condition it has a striking consequence. Our proof is based on
+that of [Ara99].
+    10The term ‘vacuum’ is used in various ways by various authors,diﬀering, for example, on whether Poincaré invariance
+is required as well. Somewhat remarkably, there is an algebraic criterion on the state that implies translational invariance,
+the spectrum condition and (if the state is pure) that the there is no other translationally invariant vector state in its GNS
+representation. See [Ara99].
+    11A sequence of operators converges in the weak topology, w- lim An = A, if hψ| An ϕi → hψ| Aϕi for all vectors ψ
+and ϕ.
+
+                                                             25
+Theorem 26 (Reeh–Schlieder). Let O be any causally convex bounded open region. Then (a)
+vectors of the form AΩ for A ∈ π(A(O)) are dense in H ; (b) if A ∈ π(A(O)) annihilates the
+vacuum, AΩ = 0, then A = 0.
+    Part (a) says that Ω is cyclic for every local algebra; part (b) that it is also separating. The
+existence of a cyclic and separating vector on a (von Neumann) algebra is the starting point of
+Tomita–Takesaki theory (see, e.g., [BR87]).
+    These are quite remarkable statements: if a local element of A(O) corresponds to an operation
+that can be performed in O, it seems that we can produce any state of the theory up to arbitrarily
+small errors by operations in any small region anywhere. To give an extreme example: by making
+a local operation in a laboratory on earth one could in principle modify the state of the theory to
+one approximating a situation in which there is a starship behind the moon, if such things can be
+modelled by the theory (e.g., as a complicated state of the standard model). It is an expression of
+how deeply entangled states in QFT typically are.
+Proof. (a) Suppose to the contrary that the set of vectors mentioned is not dense. Then it has a
+nontrivial orthogonal complement, so there is a nonzero vector Ψ ∈ H such that
+                                  hΨ| AΩi = 0,            ∀A ∈ π(A(O)).
+Now let O1 be a slightly smaller region with O1 ⊂ O. For any n ∈ N and any Q 1, . . ., Q n ∈ π(A(O1 ))
+we have U(x)Qi U(x)−1 ∈ π(A(O)) for suﬃciently small |x|, whereupon
+                  hΨ|U(x1 )Q 1U(x2 − x1 )Q 2U(x3 − x2 ) · · · U(xn − xn−1 )Q n Ωi = 0            (44)
+for suﬃciently small x1, . . ., xn . By what was said above, the function
+                      F : (ζ1, . . . , ζn ) 7→ hΨ|U(ζ1 )Q 1U(ζ2 )Q 2 · · · U(ζn )Q n Ωi
+is a continuous function on (R4 )n extending to an holomorphic function in (R4 + iV + )n ⊂ (C4 )n ,
+whose boundary value on (R4 )n moreover vanishes in some neighbourhood of the origin. The
+‘edge of the wedge’ theorem [SW00, Vla66] implies that F vanishes identically in its domain of
+holomorphicity, which means that the boundary value also vanishes identically. This means that
+(44) holds for all xi , or put another way, that
+                                              hΨ|BO Ωi = 0
+where BO is the algebra generated by the algebras π(A(O1 + x)) for x ∈ R4 . By weak additivity,
+we now know that hΨ|π(A(M))Ωi = 0. But Ωω is cyclic, so Ψ = 0. This proves the ﬁrst assertion.
+For the second, suppose that A ∈ π(A(O1 )) annihilates Ω. Choose O2 causally disjoint from O1 ,
+and note that for each ψ ∈ H and all B ∈ π(A(O2 )) we have
+                              hA∗ ψ|BΩi = hψ| ABΩi = hψ|B AΩi = 0
+using Einstein causality. By the ﬁrst part of the theorem, A∗ ψ is orthogonal to a dense set and
+therefore vanishes; as ψ ∈ H is arbitrary we have A∗ = 0 and hence A = 0.
+Corollary 27. All nontrivial sharp local binary tests (with possible outcomes ‘success’ or ‘failure’)
+have a nonzero success probability in the vacuum state. (All local detectors exhibit ‘dark counts’).
+Proof. A binary test can be represented by a projector P, with ‘failure’ corresponding to its kernel.
+Suppose P ∈ π(A(O)) is a projector with vanishing vacuum expectation value, i.e., a zero success
+probability. Then
+                               kPΩk 2 = hPΩ|PΩi = hΩ|PΩi = 0,
+so PΩ = 0 and hence P = 0 by the Reeh–Schlieder theorem (b).
+
+                                                     26
+Corollary 28. For every pair of local regions O1 and O2 there are vacuum correlations between
+A(O1 ) and A(O2 ) (assuming dim H ≥ 1).
+
+Proof. For suppose to the contrary that there are states ωi on A(Oi ) such that
+
+                       hΩ|π(A1 )π(A2 )Ωi = ω1 (A1 )ω2 (A2 )       Ai ∈ A(Oi ).
+
+By setting A1 = 1, and then repeating for A2 , this implies
+
+                  hΩ|π(A1 )π(A2 )Ωi = hΩ|π(A1 )ΩihΩ|π(A2 )Ωi           Ai ∈ A(Oi )
+
+Fixing A2 and letting A1 vary in A(O1 ), the Reeh–Schlieder theorem gives
+
+                            π(A2 )Ω = hΩ|π(A2 )ΩiΩ,           A2 ∈ A(O2 )
+
+which contradicts the Reeh–Schlieder theorem (a) unless dim H = 1.
+    The correlations indicated by Corollary 28 become small at spacelike separation due to the
+cluster property (a general feature of vacuum states in AQFT), which implies
+
+                        hΩ|π(A1 )π(α(x)A2 )Ωi → hΩ|π(A1 )ΩihΩ|π(A2 )Ωi
+
+as x → ∞ in spacelike directions, with exponentially fast convergence if the theory has a mass
+gap, i.e., σ(P · P) ⊂ {0} ∪ [M 2, ∞) for some M > 0. See [Ara99, §4.3-4.4]. The Reeh–Schlieder
+theorem does not present a very practical method for constructing starships.
+
+
+6 Local von Neumann algebras and their universal type
+So far, we have encountered AQFTs given in terms of ∗-algebras or C ∗ -algebras. The theory is
+considerably enriched when expressed in terms of von Neumann algebras.
+    Consider any net of local C ∗ -algebras O 7→ A(O) obeying A1–A5. Given any state ω on A(M),
+form its GNS representation. For any open bounded causally convex O ⊂ M we can deﬁne an
+algebra
+                                        Mω (O) := πω (A(O))′′,
+namely, the double commutant of the represented local algebra. Recall that the commutant is deﬁned
+for any subalgebra B of the bounded operators B(H ) on Hilbert space H by
+
+                              B ′ = {A ∈ B(H ) : [A, B] = 0 ∀B ∈ B}.
+
+A basic result asserts that the algebra Mω (O) is also the closure of πω (A(O)) in the weak topology
+of Hω – as such, and because it contains the unit operator and is stable under the adjoint, Mω (O) is
+a (concrete) von Neumann algebra.
+
+Exercise 29. Show that for any subalgebra B of B(H ) one has B ⊂ B ′′ and B ′′′ = B ′. Therefore
+Mω (O)′′ = Mω (O).
+
+    There is a good rationale for this construction. The norm topology of the C ∗ -algebra (which
+coincides with the norm topology B(Hω ) in a faithful representation) is quite stringent: we have
+already seen that there are no nonconstant continuous curves in the Weyl algebra. For example,
+a Weyl generator diﬀers from all its nontrivial translates by operators of norm 2. The situation
+is diﬀerent in the weak topology: if translations are implemented in a strongly continuous way
+then matrix elements of an observable change continuously as the observable is translated. This
+
+                                                 27
+motivates the weak topology as a better measure of proximity than the norm topology. Note also
+that Einstein causality implies that the commutant πω (A(O))′ contains all local algebras πω (A(O1 ))
+where O1 is causally disjoint from O. As πω (A(O))′ = πω (A(O))′′′ = Mω (O)′, we see that also
+Mω (O1 ) ⊂ Mω (O)′. It is natural to interpret Mω (O)′ in terms of (limits of) observables localised in
+the causal complement of O and further natural to assume that there are no nontrivial observables
+that can be localised both in O and its causal complement. This motivates an assumption that
+
+                                       Mω (O) ∩ Mω (O)′ = C1,
+
+that is, that the local algebras are factors, so called because an equivalent statement is that
+
+                                     Mω (O) ∨ Mω (O)′ = B(H ),
+
+i.e., Mω (O) and its commutant generate [in the sense of von Neumann algebras] the full algebra of
+bounded operators on H .
+     The connection to von Neumann algebras permits a vast body of technical work to be brought
+to bear on AQFT, and indeed some of it was spurred by developments in AQFT. One of the most
+striking examples is the 1985 result of Fredenhagen [Fre85] that for physically reasonably states
+ω of reasonable theories obeying the AQFT axioms, every Mω (O) is a type III1 factor. Shortly
+afterwards, Haagerup [Haa87] proved that there was a unique hyperfinite type III1 factor. A further
+paper of Buchholz, D’Antoni and Fredenhagen [BDF87] pointed out the local algebras of QFT
+are hyperﬁnite, therefore ﬁxing them uniquely up to isomorphism. Remarkably, the local algebras
+themselves are completely independent of the theory! Therefore the distinction between diﬀerent
+theories lies purely in the ‘relative position’ of the local algebras within the bounded operators on
+Hilbert space.
+     To appreciate these results and their consequences, we need to delve into the classiﬁcation of
+von Neumann factors. Type I factors are easily deﬁned and familiar.
+
+Definition 30. A von Neumann factor M on Hilbert space H is of type I if there is a unitary
+U : H → H1 ⊗ H2 , for some Hilbert spaces Hi , so that M = U ∗ (B(H1 ) ⊗ 1H2 )U. The type is
+further classiﬁed according to the dimension of H1 .
+
+   One could say that type I factors are the natural playground of quantum mechanics: in an
+obvious way, they are the observables of one party in a bipartite system. The result mentioned
+above indicates that QFT prefers type III for its local algebras.
+
+Definition 31. A von Neumann factor M on an inﬁnite-dimensional separable Hilbert space H is
+of type III if every nonzero projection E ∈ M may be written in the form
+
+                       E = WW ∗,        for some W ∈ M obeying W ∗W = 1H .
+
+(It is then the case that every two projections E and F in M can be written as E = WW ∗ , F = W ∗W
+for some W ∈ M.)
+
+    Type III1 is a further subtype whose deﬁnition would take us too far aﬁeld, but it should already
+be clear that types I and III are quite diﬀerent. The foregoing deﬁnitions are quite technical in nature.
+However the proof that the local algebras have type III is founded on physical principles, namely that
+(a) the theory should have a description in terms of quantum ﬁelds, (b) that the n-point functions
+of these ﬁelds have a well-behaved scaling limit at short distances and (c) that there are no local
+observables localised at a point, other than multiples of the unit. In more detail, the assumptions
+are:
+
+
+                                                   28
+  (a) There is a dense domain D ⊂ Hω and a linear map φ from real-valued test functions to
+      symmetric operators f 7→ φ( f ) deﬁned on D and obeying φ( f )D ⊂ D, so that φ( f ) has a
+      closure aﬃliated12 to Mω (O) for any O containing supp f . Furthermore, the n-point functions
+      of the ﬁelds φ( f ) deﬁne distributions
+
+                                       Wn ( f1, . . ., fn ) = hΩω |φ( f1 ) · · · φ( fn )Ωω i.
+
+  (b) Deﬁning scaling maps on test functions by (βp,λ f )(x) = f ((x − p)/λ), there should be a
+      positive monotone function ν so that the scaling limit n-point functions
+
+                                Wns.l. ( f1, . . ., fn ) = lim+ ν(λ)nWn (βp,λ f1, . . ., βp,λ fn )
+                                                        λ→0
+
+      exist and satisfy the (vacuum) Wightman axioms [SW00]. One may think of this theory as
+      living in the tangent space at p; it is not usually the same theory as the one we started with.
+                         Ñ
+  (c) It is required that O∋p Mω (O) = C1, where the intersection is taken over all local regions
+      containing the point p.
+
+Assuming condition (a), we say that ω has a regular scaling limit at p ∈ M if the conditions (b) and
+(c) hold. Fredenhagen’s result [Fre85] can now be stated precisely.
+
+Theorem 32. Let O be a double-cone. If the state ω has a regular scaling limit at some point of
+the spacelike boundary of O (i.e., its equatorial sphere) then Mω (O) has type III1 .
+
+     Conversely, if any local von Neumann algebra of a double-cone has type other than III1 , then at
+least one of the assumptions (b),(c) must fail at every point on its spacelike boundary, or (a) fails.
+One application of this argument has been to prove that ‘SJ states’ of the free ﬁeld on double-cone
+regions do not extend to Hadamard states on a larger region - typically because the stress-energy
+tensor diverges as the boundary is approached [FV13]. We will say a little more about this below.
+     Various key distinctions between quantum mechanics and QFT can be attributed to the diﬀer-
+ences between factors of types I and III, and the fact that the local algebras of QFT are typically type
+III. To conclude this section, we collect some properties of type III factors and their consequences
+for QFT, gathered under some catchy slogans. We assume that the Hilbert space on which the type
+III factors act is inﬁnite-dimensional and separable.
+
+All eigenvalues have infinite degeneracy No type III factor can contain a ﬁnite-rank projection;
+for if E is ﬁnite rank, then writing E = WW ∗ for an isometry W, we see that W ∗ EW = W ∗WW ∗W =
+1H is also ﬁnite rank, contradicting our assumption on the dimension of H . It follows that no
+self-adjoint element of a local algebra M(O) can have a ﬁnite-dimensional eigenspace, which is far
+removed from the situation of elementary textbook quantum mechanics. In particular, if Ω is the
+vacuum vector, then the projection |ΩihΩ| belongs to no local algebra M(O), nor to any commutant
+Mω (O)′ [because the commutant of a type III factor is also of type III].
+
+Local states are impure Any state ω on A(M) restricts in a natural way to a state ω|A(O) on each
+local algebra A(O). What sort of state is it? To start, we note the simple:
+
+Lemma 33. Suppose ω is a pure state on a C ∗ -algebra A. Then the von Neumann algebra
+M = πω (A)′′ in the GNS representation of ω is a type I factor.
+  12That is, in the polar decomposition φ( f ) = U|φ( f )| of the closure φ( f ) of φ( f ), the operator U and any bounded
+function of |φ( f )| belong to Mω (O).
+
+
+                                                            29
+Proof. The GNS representation of a pure state is irreducible. So the commutant πω (A)′ consists
+only of multiples of the unit, and M = B(H ), which is evidently type I.
+   In the light of this result, it may not be so much of a surprise that:
+
+Theorem 34. Under the hypotheses of Theorem 32, the algebra πω| A(O) (A(O))′′ is of type III.
+Therefore ω|A(O) is not pure, nor is it a normal state in the GNS representation of a pure state
+of A(O). Furthermore, in the case where Mω (O) is a factor, the previous statements hold if ω is
+replaced by any state in its folium.
+
+Proof. This requires a few standard results from von Neumann theory and can be found as Corollary
+3.3 in [FV13].
+   The SJ states mentioned above induce pure states and therefore it follows that they cannot be
+induced as restrictions of states on A(M) with good scaling limit properties. See [FV13].
+
+Local experiments can be prepared locally Suppose E is any projection in M(O) and let ω be
+any state on the C ∗ -algebra formed as the closure of O M(O) in B(H ). By the type III property,
+                                                      Ð
+we may write
+                                              E = WW ∗
+for some isometry W ∈ M(O). Then the modiﬁed state (Exercise: check that it is a state!)
+
+                                        ωW (A) := ω(W ∗ AW)
+
+obeys
+                                    ωW (E) = ω(W ∗WW ∗W) = 1
+so the yes/no test represented by E is certainly passed in state ωW . On the other hand, if A ∈ M(O1 )
+where O1 is causally disjoint from O, then A ∈ M(O)′ and so
+
+                            ωW (A) = ω(W ∗ AW) = ω(W ∗W A) = ω(A).
+
+So by changing the state in this way we can prepare a state with a desired property in our lab without
+changing the rest of the world.
+    For a brief survey of this and other features of type III factors and their relevance to QFT,
+see [Yng05, Yng15].
+
+
+7 The split property
+The fundamental postulates of relativistic physics entail that two spacelike separated laboratories
+should not be able to communicate. Consequently, an experimenter situated in one of these
+laboratories should be able to conduct experiments independently of the actions (or even the
+presence) of an experimenter in the other region. The Einstein causality condition A3 reﬂects
+this idea, because any observable from one local algebra will commute, and be simultaneously
+measurable, with any observable from the other. However, this is far from being the only way in
+which the two regions must be independent. For example, the two observers should be able to prepare
+their experiments for measurement independently, too. In quantum mechanics this independence is
+modelled by assigning each of the two local systems their own Hilbert space, H1 and H2 , on which
+the observables in the two laboratories respectively act. If the experimenters prepare states ψi , the
+global state is then taken to be ψ1 ⊗ ψ2 on the tensor product H1 ⊗ H2 . This section describes
+
+
+                                                  30
+the split property which provides conditions under which a similar level of independence may be
+established in QFT.
+    First, we introduce some terminology: two von Neumann algebras M1 and M2 acting on a
+Hilbert space H are said to form a split inclusion if there is a type I von Neumann factor N so that
+
+                                           M1 ⊂ N ⊂ M2 .
+
+By Deﬁnition 30, this means that there is a unitary U : H → H1 ⊗ H2 with N = U ∗ (B(H1 ) ⊗ 1H2 )U
+for some Hilbert spaces H1 and H2 . The commutant of N is easily described:
+
+                                      N′ = U ∗ (1H1 ⊗ B(H2 ))U
+
+and it follows from the split inclusion that
+
+                    M1 ⊂ U ∗ (B(H1 ) ⊗ 1H2 )U,           M2′ ⊂ U ∗ (1H1 ⊗ B(H2 ))U.
+
+Suppose that states ω1 and ω2 are given on M1 and M2′ that may be expressed in terms of density
+matrices ρi on Hi , so that
+
+                 ω1 (A) = tr((ρ1 ⊗ 1H2 )U AU ∗ ),        ω2 (B) = tr((1H1 ⊗ ρ2 )UBU ∗ )
+
+for A ∈ M1 , B ∈ M2′ . Then there is an obvious joint state
+
+                                     ω(C) = tr((ρ1 ⊗ ρ2 )U AU ∗ )
+
+with the property (Exercise: prove it!) that
+
+                   ω(AB) = ω1 (A)ω2 (B) = ω(B A),           for all A ∈ M1, B ∈ M2′ .
+
+With a little more technical work it can be shown that this construction is possible whenever ωi are
+given as density matrices on H (see e.g., [Few16] for an exposition).
+   Returning to QFT, we make the following deﬁnition.
+
+Definition 35. A net O 7→ M(O) of von Neumann algebras has the split property if, whenever
+O1 ⊂ O2 , the inclusion M(O1 ) ⊂ M(O2 ) is a split inclusion.
+
+    Note that we only require a split inclusion when O2 contains the closure of O1 , so that there is
+a ‘safety margin’ or collar around O1 within O2 . We can also make the less restrictive assumption
+that the split inclusion holds when this safety margin has a minimum size, in which case one speaks
+of the distal split property.
+    If the split property holds, and O1 and O3 are spacelike separated pre-compact regions whose
+closures do not intersect, then we may certainly ﬁnd a pre-compact neighbourhood O2 of O 1 within
+the causal complement of O3 . Then M(O1 ) ⊂ M(O2 ) is split and M(O3 ) ⊂ M(O2 )′. It follows that
+experimenters in O1 and O3 are able to independently prepare and measure observables of the ﬁeld
+theory. Moreover, there is an isomorphism of von Neumann algebras
+
+                                       ¯
+                                 M(O1 )⊗M(O3 )  M(O1 ) ∨ M(O3 )
+
+extending the map A ⊗ B 7→ AB, where the left-hand side is a spatial tensor product of von Neumann
+algebras and the right-hand side is the von Neumann algebra generated by sums and products of
+elements in M(O1 ) and M(O3 ).
+    In situations where the Reeh–Schlieder theorem applies, and there is a vector that is cyclic and
+separating for all causally convex bounded regions, the split inclusions have more structure and are
+
+                                                    31
+called standard split inclusions. A deep analysis by Doplicher and Longo [DL84] shows, among
+many other things, that there is a canonical choice for the type I factor appearing in standard split
+inclusions.
+    The split property is enjoyed by free scalar ﬁelds of mass m ≥ 0 and the observable algebra
+for the Dirac ﬁeld, but also for certain interacting models in 1 + 1-dimensions (see [Lec15] for a
+survey and exposition). It is intimately connected to the way in which the number of local degrees
+of freedom available to the theory grows with the energy scale. These are expressed technically in
+terms of various nuclearity conditions, which we will not describe in detail here (but see [Few16]
+for discussion and a relation to yet a further topic – Quantum Energy Inequalities). Instead, we limit
+ourselves to some examples involving a theory comprising countably many independent free scalar
+ﬁelds of masses mr (r ∈ N). It may be shown, for instance, that this theory has the split property if
+the function
+                                                    Õ∞
+                                           G(β) :=      e−βmr /4
+                                                  r=1
+
+is ﬁnite for all β > 0 and grows at most polynomially in β−1 as β → 0+ . This is the case if mr = rm1 ,
+for instance. On the other hand, if
+
+                                       mr = (2d0 )−1 log(r + 1)
+
+for some constant d0 > 0 then the series deﬁning G(β) diverges for β ≤ 8d0 . Further analy-
+sis [DDFL87, Thm 4.3] shows that the split property fails in this situation, but that the distal split
+condition holds provided that the ‘safety margin’ is suﬃciently large. For concentric arrangements
+of double cones of base radii r and r + d, splitting fails if d < d0 and succeeds if d > 2d0 .
+     The overall message is that a (well-behaved) tensor product structure across regions at spacelike
+separation can only be expected in well-behaved QFTs and with a safety margin between the regions.
+It turns out that the split property is closely related both to the existence of well-behaved thermal
+states (absence of a Hagedorn temperature) and to whether the theory satisﬁes quantum energy
+inequalities – see [Few16] for discussion and original references. Intuitively, the reason for this is
+that there is a cost associated with disentangling the degrees of freedom between the two regions.
+For example, a joint state ‘glued together’ from two states given on their local algebras might be
+expected to have a higher energy than the sum of the two original energies, with the excess in energy
+being higher if the ‘gluing’ has to take place over a smaller gap between the regions. If the number
+of degrees of freedom available grows excessively with the energy scale, it becomes impossible to
+achieve the gluing with a ﬁnite excess energy, or possible only if the regions are suﬃciently distant
+from one another.
+
+
+8 Superselection sectors
+We come back to the discussion of superselection sectors, mentioned in section 2.1. In the algebraic
+viewpoint on quantum theory, superselection sectors correspond to a class of unitarily inequivalent
+representations of the algebra of observables. One of the major structural results in algebraic
+quantum ﬁeld theory [DHR69a, DHR69b, DHR71, DHR74, DR89] was to show that these sectors
+are related to irreducible representations of some compact Lie group G (the global gauge group).
+The key idea of algebraic QFT is that all the relevant information is contained in the net of
+observables, and from this net one can construct an algebra of ﬁelds F (O), which then contains
+non-observable objects, e.g. smeared Dirac ﬁelds ψ( f ) (see section 4.2). This algebra is uniquely
+fixed by the net and it carries the action of the gauge group G, so that local algebra A(O) consists
+of elements of F (O) invariant under G. The reconstruction of both F and G is achieved through
+the DHR (Doplicher–Haag–Roberts) analysis [DHR69a, DHR69b, DHR71, DHR74] together with
+
+                                                  32
+the Doplicher–Roberts reconstruction theorem [DR89]. The brief exposition in Sections 8.1-8.3 is
+based on [Fre95].
+    As motivating example, we consider the complex scalar field, whose algebra C(M) was described
+in Sec. 4.2. Its vacuum representation π is given by
+
+                                π(Φ(g)) = a(ĝ|Hm+ ) ⊗ 1 + 1 ⊗ a∗ (ĝ|Hm+ )
+                               π(Φ⋆(g)) = a∗ (ĝ|Hm+ ) ⊗ 1 + 1 ⊗ a(ĝ|Hm+ )
+
+for real-valued g [with Φ(g) = Φ(Re g) + iΦ(Im g) in general, compare with the real scalar ﬁeld
+in Section 4.3], on F(H ) ⊗ F(H ), where H = L 2 (Hm+, dµ) and a∗, a are creation and annihilation
+operators on the Fock space F(H ). The charge operator is
+
+                                         Q = N ⊗1−1⊗ N,
+
+where N is the number operator on F(H ) (see Appendix C for deﬁnition). The theory has a global
+U(1) gauge symmetry generated by Q:
+
+                            eiαQ π(Φ( f ))e−iαQ = e−iα π(Φ( f )),      α ∈ R,                       (45)
+
+which implements the automorphisms ηα described earlier, and the Fock space decomposes into
+charged sectors                                 Ê
+                                F(H ) ⊗ F(H ) =       Hq,
+                                                          q∈Z
+
+each Hq being the eigenspace of Q with eigenvalue q. Assuming that Q is conserved in all
+interactions available to the observer, the argument described in Sec. 2.1 shows that the observables
+of the theory should commute with Q and be block-diagonal in this decomposition. Clearly, this is
+not the case for the smeared ﬁelds π(Φ( f )) or π(Φ⋆( f )), which are consequently unobservable. On
+the other hand, operators of the form π(Φ⋆( f )Φ( f )) is gauge-invariant, as is (any smearing of) the
+Wick product of the ﬁeld π(Φ⋆(x)) with π(Φ(x)).
+    The main point of interest for us is that the local observable algebras Cobs(O) are gauge-invariant
+by deﬁnition and therefore π(Cobs (O)) consists of block-diagonal operators. More than that, we can
+see that there are representations πq of Cobs(O) on each Hq , given by
+
+                                          πq (A) = Pq π(A)Pq,
+
+where Pq is the orthogonal projector onto Hq within F(H ) ⊗ F(H ). In particular, π0 is a represen-
+tation in H0 , the charge-zero sector, which contains the vacuum vector Ω ⊗ Ω ∈ F(H ) ⊗ F(H ) and
+will be called the vacuum sector for the observables.
+    We now have a whole family of representations of the algebras Cobs(O) on diﬀerent Hilbert
+spaces. It is easy to argue (at least heuristically) that these are mutually unitarily inequivalent,
+because the charge operator itself can be regarded as a limit of local observables, i.e., local integrals
+of the Noether charge density associated with the global gauge symmetry. Therefore, if there were
+a unitary U : Hq → Hq ′ obeying πq′ (A) = Uπq (A)U −1 for all A ∈ Cobs (O) and all local regions O,
+it would follow that the charge operators in the two representations should be equivalent under the
+same mapping, giving
+                                    q′1Hq ′ = qU1Hq U −1 = q1Hq ′
+which can only happen in the case q′ = q. The physical distinction between diﬀerent sectors is
+precisely that they have diﬀerent charge content, and the central insight of the DHR programme
+is that the relevant charges might be gathered in some local region, outside which the distinction
+can be, as it were, gauged away. An extra charged particle behind the moon ought not to change
+
+                                                   33
+our description of particle physics on earth.13 As we will describe this physical insight allows a
+remarkable reversal of the process we have just followed: instead of starting with an algebra of
+unobservable ﬁelds transforming under a global gauge group and obtaining from it a collection of
+unitarily inequivalent representations of the algebra of observables, one starts from a suitable class
+of representations of the observable algebras and attempts to reconstruct the unobservable ﬁelds
+and the a unifying gauge group.
+
+8.1 Representations of interest in particle physics
+In the ﬁrst step of DHR analysis we want to single out a class of representations relevant for study
+of superselection sectors. We focus on theories without long range eﬀects, for example strong
+interactions in hadron physics. Loosely speaking, the representations of interest correspond to
+states that are generated from the vacuum by (possibly unobservable) local ﬁeld operators. The
+intuition is that these states have diﬀerent global charges (e.g. QCD charges) but which are localized
+in compact regions.
+    Let O 7→ A(O) be a net of C ∗ -algebras and let A be the quasilocal algebra (to reduce clutter,
+we write A(M) ≡ A in this section). Let π0 be the vacuum representation (assumed here to be
+faithful).
+    We are interested in reconstructing the ﬁeld algebras F (O) realized as von Neumann algebras
+of operators on some common Hilbert space Htot , i.e. F (O) ⊂ B(Htot ). We want them to satisfy
+(among others) the following properties:
+F1 F (O) carries a strongly continuous representation of the (covering group) of the Poincaré group
+   and there exists a unique vector Ω ∈ Htot (up to phase) that is invariant under this action.
+F2 There exists a compact group G (the gauge group) and a strongly continuous faithful represen-
+   tation U of G in Htot such that the automorphism A 7→ αg (A) = AdU(g) (A) = U(g)AU(g)−1
+   obeys
+                               αg (F (O)) = F (O) ,   U(g)Ω = Ω ,
+    and the U(g)’s commute with the representation of the Poincaré group mentioned above.
+    On general grounds, the Hilbert space Htot decomposes into superselection sectors as:
+                              Ê                           Ê
+                      Htot =       H̃σ ⊗ Hσ ,      U(g) =     Uσ (g) ⊗ 1Hσ ,                                       (46)
+                                       σ                                   σ
+
+    where the sum is taken over equivalence classes σ of unitary irreps (H̃σ, Uσ ) of G, with
+    representation space H̃σ and Hσ reﬂects the multiplicity with which these representations
+    appear (including the possibility that Hσ has zero dimension, in which case σ does not appear).
+
+F3 Reconstructing the observables: Htot carries a representation π of A(O) and
+
+                       π(A(O))′′ = F (O) ∩ U(G)′ = {A ∈ F (O), αg (A) = A, ∀g ∈ G}.
+
+    By construction, this representation decomposes w.r.t. (46) as
+                                              Ê
+                                          π=     1H̃σ ⊗ πσ
+                                                          σ
+
+    where each πσ is a representation of A(O) on Hσ . In particular, the representation correspond-
+    ing to the trivial representation of G should coincide with π0 , the vacuum representation.
+  13This picturesque statement applies to conﬁned charges rather than those with long range interactions such as electric
+charges. We discuss this issue brieﬂy later on.
+
+                                                          34
+    The task of reconstructing the ﬁeld algebra therefore amounts to determining the relevant
+representations πσ , and corresponding (irreducible) representations Uσ of G, which can then be
+assembled to form Htot . It may be shown that the representations πσ of interest are those which
+satisfy the following criterion (due to DHR [DHR71]):
+Definition 36. A representation π of a net of C ∗ -algebras O 7→ A(O) is a DHR representation if it
+is Poincaré covariant and the following holds:
+                                               π A(O ′ )  π0 A(O ′ )                              (47)
+
+for all double-cones14 O, where O ′ is the causal complement of O and  means unitary equivalence,
+i.e. there exists a unitary operator between the appropriate Hilbert spaces V : H0 → Hπ such that
+V π0 (A) = π(A)V for all A ∈ A(O ′).
+    In the above deﬁnition, the region O ′ is unbounded, so A(O ′) is not given a priori in the
+speciﬁcation of the theory. It is deﬁned to be the C ∗ -algebra generated by all local algebras A(O1 )
+for bounded O1 ⊂ O ′.
+    The intertwining unitary V has the interpretation of a charge-carrying field. To get some intuition
+about these objects, consider the example of a complex scalar ﬁeld mentioned at the beginning of
+this section. Consider a test function f ∈ C0∞ (M; R) with Φ⋆( f ) , 0. Firstly, we note that the charge
+is related to the phase of the ﬁeld π(Φ⋆( f )), so in order to extract an intertwiner V , we consider
+the polar decomposition π(Φ⋆( f )) = V f |π(Φ⋆( f ))|, where the overline denotes an operator closure.
+The partial isometry V f may be taken to be unitary because π(Φ⋆( f )) is normal; acting on vectors
+                                                  q                  q
+in the vacuum sector H0 , it has the property V f π0 (A) = πq (A)V f , where A ∈ C(M) and πq is the
+representation with charge q ∈ Z. We see that V f creates a single unit of charge and the support of
+ f determines the region, where the charge is localized. If f is supported in a double cone O and
+                                                                q −q
+we take f1 supported inside another double cone O1 , then V f1 V f transports q units of charge from
+O to O1 .
+    There exists a generalization of the DHR framework to the situation, where charges are not
+localized in bounded regions, but rather in cone-like regions (space-like cones formed as a causal
+completions of spacial cones). This is relevant if one wants to apply this analysis to theories with
+long-range interactions, e.g. quantum electrodynamics (QED). It is expected that the electron is a
+charged particle with this type of localization. The corresponding version of the DHR construction
+has been developed by Buchholz and Fredenhagen (BF analysis) in [BF82] and the full analysis of
+superselection sectors for QED has been achieved in [BR14].
+    We may now turn things around and phrase our problem as follows: starting with the abstract
+algebra of observables and its vacuum representation we want to classify the equivalence classes
+of its (irreducible) representations satisfying (47). Following the literature [Haa96, DHR69a,
+DHR69b, DHR71, DHR74], we call each of these equivalence classes a superselection sector (also
+called charge superselection sectors, whereupon the labels σ are referred to as charges, though they
+need not be numbers).
+    A special case is the situation where (Uσ, H̃σ ) is a one-dimensional representation. Remarkably,
+such simple sectors are distinguished by the following property of πσ :
+Definition 37. We say that a representation π satisﬁes Haag duality, if
+                                     π(A(O ′ ))′′ = π(A(O))′ ∩ π(A)′′ ,                            (48)
+for any double-cone O. If π is irreducible then the intersection with π(A)′′ is superﬂuous, whereupon
+one also has
+                                       π(A(O ′))′ = π(A(O))′′ .                                   (49)
+  14The criterion can be weakened so as to refer to suﬃciently large double-cones.
+
+                                                        35
+(Exercise!)
+
+    One can show that πσ satisﬁes Haag duality if and only if H̃σ is one-dimensional [DHR69a].
+In particular, the vacuum sector is always simple; however, if the global gauge group is nonabelian,
+there will necessarily be some non-simple sectors.
+
+Exercise 38. If A is a C ∗ -algebra with Hilbert space representations π1 and π2 on Hilbert spaces
+H1 and H2 , define the representation (π1 ⊕ π2 )(A) = π1 (A) ⊕ π2 (A) on H1 ⊕ H2 . Compute the
+commutant (π1 ⊕ π2 )(A)′ and double commutant (π1 ⊕ π2 )(A)′′ within B(H1 ⊕ H2 ), which may
+be regarded as consisting of 2 × 2 ‘block matrices’ of operators, and compare the results with
+π1 (A)′′ ⊕ π2 (A)′′.
+
+8.2 Localized endomorphisms
+We now want to introduce some algebraic structures on the space of representations of interest,
+following closely the exposition presented in [Fre95]. Our standing assumptions are that the
+vacuum representation π0 is faithful and irreducible, satisﬁes Haag duality, and that the local
+algebras π0 (A(O)) are weakly closed, π0 (A(O))′′ = π0 (A(O)), so they are actually von Neumann
+algebras.15 Together with Haag duality, this gives
+
+                                            π0 (A(O ′ ))′ = π0 (A(O))                                      (50)
+
+for every double-cone O.
+    Let us ﬁx a double cone O. Consider a representation π of A satisfying the DHR criterion with
+a unitary V : H0 → Hπ implementing the equivalence in (47) for O, and deﬁne a representation π̃
+on H0 by
+                                 π̃(A) = V −1 π(A)V , A ∈ A .
+Take O1 ⊃ O and A ∈ A(O1 ), B ∈ A(O1′ ). Since A(O1′ ) ⊂ A(O ′) and π̃ = π0 on A(O ′) (by the
+DHR criterion), we have
+                              [π0 (B), π̃(A)] = π̃([B, A]) = 0 ,
+so π̃(A) ∈ π0 (A(O1′ ))′ = π0 (A(O1 )), where the last assertion follows from Haag duality (50). We
+conclude that π̃(A(O1 )) ⊂ π0 (A(O1 )), so π̃(A) ⊂ π0 (A), as local operators are dense in A. Since
+π0 is faithful, there exists an endomorphism ρ of the abstract C ∗ -algebra A with ρ = π0−1 ◦ π̃.
+    There is an obvious equivalence relation on endomorphisms:
+
+                                            ρ1 ∼ ρ2 ⇔ ρ1 = ι ◦ ρ2 ,                                        (51)
+
+for some inner automorphism ι, i.e. one that can be written as ι(A) = AdU (A) = U AU −1 for some
+unitary U ∈ A.
+    Endomorphisms ρ obtained from representations satisfying the DHR criterion for a given O
+have the following properties: [Fre95]
+LE1 Localised in O: ρ(A) = A, A ∈ A(O ′ ).
+
+LE2 Transportable: ∀O1, O2 with O∪O1 ⊂ O2 , there is a unitary U ∈ A(O2 ) with AdU ◦ρ(A) = A,
+    A ∈ A(O1′ ), i.e. for every region O1 there exists an endomorphism equivalent to ρ under (51)
+    that is localized in O1 .
+
+LE3 ρ(A(O1 )) ⊂ A(O1 ), ∀O1 ⊃ O. In fact, this is a consequence of LE1 and LE2 by an argument
+    similar to show π̃(A(O1 )) ⊂ π0 (A(O1 )) above.
+  15If weak closure does not hold, one can apply this discussion to the net O 7→ M0 (O) := π0 (A(O))′′ .
+
+                                                         36
+                                 Õ1             O                 Õ2
+                        Ô1            O1                  O2             Ô2
+
+
+
+
+               Figure 3: Conﬁguration of doublecones in the proof of Proposition 41.
+
+Changing the perspective, we can use the properties above as deﬁning properties for the following
+class of endomorphisms of A:
+Definition 39. Given a double-cone O, let ∆(O) be the set of all transportable endomorphisms of
+                                                                                    Ð
+A localised in O, i.e. those satisfying LE1 and LE2 (and hence LE3). We deﬁne ∆  O ∆(O).
+   It can be shown that the equivalence classes ∆/∼ (where ∼ is given by (51)) are in one to
+one correspondence with unitary equivalence classes of representations satisfying (47) (i.e. with
+superselection sectors). ∆/∼ is equipped with a natural product (given by the composition of
+endomorphisms of A), which induces a product on the space of sectors, namely:
+
+                                         [π1 · π2 ]  [π0 ◦ ρ1 ρ2 ] ,                                      (52)
+
+where πi  π0 ◦ ρi , i = 1, 2.
+Exercise 40. Show that the composition of representations introduced in (52) is well defined and
+the resulting representation satisfies the DHR criterion.
+   It can also be shown (see e.g. [Fre95]) that the · product of two representations that are Poincaré
+covariant and satisfy the spectrum condition also has these two features. The space of sectors
+equipped with the composition product is a semigroup with the vacuum sector as the identity. One
+can verify that simple sectors correspond to morphisms ρ that are in fact automorphisms of A, i.e.
+ρ(A) = A. Hence the space of simple sectors equipped with · is a group.
+   Transportability of endomorphisms LE2 is crucial for the DHR analysis, since it allows us to
+“move morphisms around”. First we establish the following:
+Proposition 41. Endomorphisms ρ are locally commutative, i.e. for O1 ⊂ O2′ and ρi ∈ ∆(Oi ) we
+have ρ1 ρ2 = ρ2 ρ1 .
+Proof. Fix an arbitrary double cone O and choose double cones Ôi , Õi , i = 1, 2 with the following
+properties: Ôi ⊂ O ′, Ôi ∪ Oi ⊂ Õi , i = 1, 2 and Õ1 ⊂ Õ2′ (see Figure 3). LE2 implies that there
+exist unitaries Ui ∈ A(Õi ) such that AdUi ◦ ρi = ρ̂i ∈ ∆(Ôi ), i = 1, 2. Hence for any A ∈ A(O) we
+have ρi (A) = AdUi∗ ◦ ρ̂i (A) = AdUi∗ (A), as O is causally disjoint from both Ô1 and Ô2 and we have
+also used LE3. Hence
+
+      ρ1 ρ2 (A) = ρ1 ◦ AdU2∗ (A) = Ad ρ1 (U2∗ ) ◦ AdU1∗ (A) = AdU2∗ U1∗ (A) = AdU1∗U2∗ (A) = ρ2 ρ1 (A) ,
+
+where we used LE1 to conclude that ρ1 (U2∗ ) = U2∗ , while U1∗U2∗ = U2∗U1∗ follows from A3. We can
+repeat the same reasoning for any double cone O, so ρ1 ρ2 = ρ2 ρ1 .
+
+                                                     37
+     We can now use this result to show that the product of representations is commutative, i.e.
+[π1 · π2 ] = [π2 · π1 ]. Let ρ1, ρ2 ∈ ∆(O) and take two spacelike separated double cones O1 , O2 . By
+LE2 there are morphisms ρ̃i , i = 1, 2 localized in Oi and unitaries Ui , i = 1, 2 such that ρ̃i = AdUi ◦ ρi .
+It follows by Prop. 41 that
+
+                   ρ2 ρ1 = Ad ρ2 (U1∗ )U2∗ ◦ ρ̃2 ρ̃1 = Ad ρ2 (U1∗ )U2∗ ◦ ρ̃1 ρ̃2 = Adε(ρ1,ρ2 ) ◦ ρ1 ρ2 ,
+
+with the unitary
+                                     ε(ρ1, ρ2 ) = ρ2 (U1∗ )U2∗U1 ρ1 (U2 ) ∈ A .                             (53)
+This proves the equivalence of ρ2 ρ1 and ρ1 ρ2 , so the commutativity of the product of representations
+follows. Hence the space of all sectors, equipped with · is an abelian semigroup and the space of all
+simple sectors equipped with · is an abelian group.
+    The unitary operator ε(ρ1, ρ2 ) that we have discovered here is called the statistics operator. It
+depends only on ρ1 , ρ2 and not on ρ̃i nor the choice of Ui , i = 1, 2.
+    Let ε ρ ≡ ε(ρ, ρ). In spacetime dimension d > 2 we have ε 2ρ = id. For simple sectors π0 ◦ ρ2
+is irreducible, so ε ρ is a multiple of 1 and in d > 2 this implies that ε ρ = ±1. Physically this
+corresponds to the alternative between Fermi and Bose statistics. For general sectors in d > 2 one
+can also have para-statistics or even inﬁnite statistics. In lower dimensions (d ≤ 2), ε ρ is instead
+related to representations of the braid group. This kind of behaviour appears also for cone-localized
+charges (BF analysis), but in this case the braided statistics appears already in d ≤ 3. More details
+relating ε ρ to statistics will be given in the next section.
+    The physical interpretation of the product of representations can be understood as follows
+[DHR71]. Let ω0 be the vacuum state and ρi ∈ ∆(Oi ), i = 1, 2. We have the two states ωi = ω0 ◦ ρi ,
+which are vector states in their respective representations π = π0 ◦ ρi ; indeed, one suitable vector is
+the vacuum vector Ω that is the GNS vector induced by ω0 . Clearly, ω = ω0 ◦ ρ1 ρ2 is a vector state
+in representation [π1 · π2 ], with the same representing vector. Let O1 be spacelike to O2 . Then ω
+looks like the vector state ω0 ◦ ρ1 with respect to observations in O2′ and like ω0 ◦ ρ2 for observations
+in O1′ . Hence, taking the product [π1 · π2 ] has a physical interpretation of composing two vector
+states that are localized “far apart”.
+
+8.3 Intertwiners and permutation symmetry
+As stated in the previous section, states ω0 ◦ ρ k , k = 1, . . ., n obtained from transportable localized
+morphisms ρ k ∈ ∆ are interpreted as vector states corresponding to localized charged particles and
+composition of morphisms describes creating several such charges in spacetime. Now we want
+to understand how one may create these charges in a given order. As the state ω0 ◦ ρ1 . . . ρn is
+independent of the ordering of the ρ k ’s, this must be done by permuting a family of vectors all of
+which representing this state. In order to do this, we need some notation.
+
+Definition 42. Let ρ, σ ∈ ∆. Deﬁne the space of intertwiners between ρ and σ by16
+
+                               (σ, ρ)  {T ∈ A| σ(A)T = T ρ(A), ∀ A ∈ A} .
+
+    We can now deﬁne some algebraic operations on intertwiners. Let S ∈ (τ, σ) and T ∈ (σ, ρ) be
+intertwiners. We can compose them to obtain ST ∈ (τ, ρ) and can also deﬁne the adjoint T ∗ ∈ (ρ, σ).
+Moreover, there is a natural product between intertwiners in diﬀerent spaces. Let T1 ∈ (σ1, ρ1, ) and
+T2 ∈ (σ2, ρ2 ). We deﬁne T1 × T2 ∈ (σ1 σ2, ρ1 ρ2 ) as
+
+                                         T1 × T2  T1 ρ1 (T2 ) = σ1 (T2 )T1
+  16In [DHR71, DHR74] the intertwiners are denoted by T ≡ (σ|T | ρ), to emphasize to which space they belong.
+
+
+                                                           38
+(using the fact that T1 ∈ (σ1, ρ1 ) for the last equality). The ×-product is associative, and distributive
+with respect to the composition of intertwiners (i.e., their product in A).
+    Next we discuss localization properties of the intertwiners. Consider T ∈ (σ, ρ), where ρ is
+supported in O1 and σ in O2 . We call O2 the left support and O1 the right support of the intertwiner
+T. If A ∈ A(O1′ ) ∩ A(O2′ ), then the support and intertwining properties imply
+
+                                      T A = T ρ(A) = σ(A)T = AT
+
+so T is bilocal, in the sense that T ∈ (A(O1′ ) ∩ A(O2′ ))′ (here the commutant is taken in A). In the
+case O1 = O2 = O, we have T ∈ A(O) by Haag duality (50) in the vacuum representation and the
+assumption that π0 is faithful.
+    We call two intertwiners causally disjoint if their right supports lie space-like to each other and
+the same holds for their left supports.
+Proposition 43. Let Ti ∈ (σi, ρi ), where ρi, σi ∈ ∆(Oi ), i = 1, 2, with O1 and O2 spacelike separated
+(i.e. T1 and T2 are causally disjoint), then
+
+                                            T1 × T2 = T2 × T1 .
+
+Proof. To see this, note that Ti ∈ A(Oi ), so T1 × T2 = T1 ρ1 (T2 ) = T1T2 = σ2 (T1 )T2 = T2 × T1 .
+    The statistics operator ε ρ is also an intertwiner and it has a nice expression in terms of products
+of other intertwiners.
+Exercise 44. Let ρ1, ρ2 ∈ ∆(O) and ρ̃i = Ui ρi Ui−1 , i = 1, 2, as in the construction leading to (53).
+Show that ε(ρ1, ρ2 ) ∈ (ρ2 ρ1, ρ1 ρ2 ) and
+
+                                    ε(ρ1, ρ2 ) = (U2∗ × U1∗ )(U1 × U2 ) .
+
+    Clearly, ε ρ ∈ (ρ2, ρ2 ), which means that ε ρ commutes in A with every element of ρ2 A,
+ε ρ ∈ (ρ2 A)′, and therefore π0 (ε ρ) commutes with all observables in the representation π0 ◦ ρ2 .
+    Now take Ti ∈ (σi, ρi ), where ρi, σi ∈ ∆, i = 1, 2. One can also easily check (Exercise) that
+
+                                ε(σ1, σ2 )(T1 × T2 ) = (T2 × T1 )ε(ρ1, ρ2 ) ,                           (54)
+
+so in particular, for σ1 = σ2 and ρ1 = ρ2 , we have
+
+                                       εσ (T1 × T2 ) = (T2 × T1 )ε ρ .
+
+Hence ε changes the order of factors in ×-product.
+Exercise 45. Prove (54). You will need to use Proposition 43.
+
+   Using ε ρ, we can construct a representation ε (n)
+                                                    ρ of the braid group for each ρ. The braid group
+Bn with n strands is the group generated by ς1, . . . ςn−1 with relations:
+
+                                         ςi ς j = ς j ςi , if |i − j | > 2 ,
+                                    ςi ςi+1 ςi = ςi+1 ςi ςi+1 .
+
+Let ςi , i ∈ {1, . . ., n − 1} be a generator of Bn , then we set ε (n)
+                                                                    ρ (ςi )  ρ
+                                                                               i−1 ε . The following exercise
+                                                                                    ρ
+shows that this is indeed a representation of the braid group.
+Exercise 46. Show that ε ρ ρ(ε ρ) = ε(ρ2, ρ) and use this together with (54) to prove ε ρ ρ(ε ρ)ε ρ =
+ρ(ε ρ)ε ρ ρ(ε ρ).
+
+                                                      39
+    In d > 2, this also gives us a representation of the permutation group Sn (as ε 2ρ = 1). In the more
+detailed analysis that follows we will focus on the d > 2 case and we refer the reader to [FRS89]
+                              (n)
+for the general case. Let ε ρ (P) denote the representative of P ∈ Sn . More generally, we may also
+deﬁne ε(ρ1, . . ., ρn ; P) ∈ (ρP−1 (1) . . . ρP−1 (n), ρ1 . . . ρn ) by
+
+                                      ε(ρ1, . . ., ρn ; P) := U ∗ (P)U(e) ,
+
+where (in analogy with the n = 2 case) ρ̃i = Ui ρi Ui−1 are auxiliary morphisms localized in spacelike
+separated regions Oi , i = 1 . . ., n and we use the notation U(P) := UP−1 (1) × · · · × UP−1 (n) . One can
+easily check (Exercise) that ε(ρ, . . . , ρ; P) = ε (n)
+                                                    ρ (P). Note that in n = 2 case we implicitly have
+ε(ρ1, ρ2 ; τ) ≡ ε(ρ1, ρ2 ), where τ is the transposition of 1 and 2. Property (54) generalizes to:
+
+                              ε(σ1 . . . , σn ; P)T (e) = T (P)ε(ρ1, . . . , ρn ; P) ,
+
+where Ti ∈ (σi, ρi ) i = 1, . . ., n. If σi = σ, ρi = ρ for all i = 1, . . . , n, we have
+
+                                         εσ(n) (P)T (e) = T (P)ε (n)
+                                                                 ρ (P) .
+
+
+    To understand better the physical interpretation of ε (n)
+                                                           ρ (P), ﬁx a morphism ρ and consider a
+family of intertwiners Uk ∈ (σk , ρ), where σk are morphisms localized in spacelike separated
+regions Ok , k = 1, . . ., n. Let Ω ∈ H0 be the vacuum vector. Clearly,
+
+      π0 (Uk∗ )Ω, π0 (ρ(A))π0 (Uk∗ )Ω = Ω, π0 (Uk ρ(A)Uk∗ )Ω = hΩ, π0 (σk (A))Ωi = ω0 ◦ σk (A) ,
+
+so ω0 ◦ σk is a vector state on ρA with the distinguished vector π0 (Uk∗ )Ω.
+   Now consider vectors of the form
+
+                                      ΨP = π0 (U ∗ (P))Ω ,          P ∈ Sn,
+
+which can be interpreted as a product of n state vectors with identical charge quantum numbers but
+                                                    (n)
+with an ordering determined by P. The operator ε ρ (Q) changes the order of factors in this vector
+                                          (n)
+[DHR71]. To see this, recall that Q 7→ ε ρ (Q) ∈ A is a unitary representation of Sn , whereupon
+           (n)
+ΨP = π0 (ε ρ (P)U ∗ (e))Ω and
+                   (n)                 (n)     (n)                        (n)
+              π0 (ε ρ (Q))ΨP = π0 (ε ρ (Q)ε ρ (P)U ∗ (e))Ω = π0 (ε ρ (QP)U ∗ (e))Ω = ΨQP
+
+Maybe: Each vector ΨP induces the same state on ρn A, namely ω0 ◦ σ1 . . . σn . Therefore, the
+            (n)
+action of εQ is analogous to permutations of the wave functions of n identical particles in quantum
+mechanics, which also leaves expectation values of observable quantities unchanged.
+    In the next step one introduces the notion of a conjugate sector. Physically, the relation between
+a sector and its conjugate is that of having a charged particle localized in some compact region
+versus having the corresponding antiparticle localized in that region. We have already mentioned
+that sectors can be equipped with the structure of a semigroup and simple sectors form a group.
+In the latter case, the conjugate sector is just given by the group inverse ε ρ = ±1, so we have the
+simple fermion/boson alternative.
+    More generally, to obtain a left inverse to a given ρ, we want to ﬁnd a map φ : A → A with
+
+                         φ(ρ(A)Bρ(C)) = Aφ(B)C ,             φ(A∗ A) ≥ 0 ,      φ(1) = 1 .
+
+Note that φ on ρ(A) can be set as ρ−1 . We then use the Hahn-Banach theorem to extend the state
+ω0 ◦ ρ−1 on ρ(A) to A. Let (π, H, Ω) be the corresponding GNS triple and deﬁne an isometry
+
+                                                        40
+V : H0 → H , by means of V AΩ = π ◦ ρ(A)Ω̃. We then deﬁne the left inverse of the given sector ρ
+as φ(A) = V ∗ π(A)V .
+    The left inverse is used to study the representations of the permutation group in d > 2 (or the
+braid group in low dimensions). We note that
+
+                           φ(ε ρ )ρ(A) = φ(ε ρ ρ2 (A)) = φ(ρ2 (A)ε ρ ) = ρ(A)φ(ε ρ ) ,
+
+which for irreducible ρ implies
+                                                   φ(ε ρ ) = λ ρ1 ,
+where λ ρ is the statistics parameter and it characterizes the statistics of the sector ρ. One ﬁnds that
+the allowable values for this parameter are:
+
+    • λ = d1 , d ∈ N giving para Bose statistics of order d;
+
+    • λ = − d1 , d ∈ N is giving para Fermion statistics of order d;
+
+    • λ = 0, giving inﬁnite statistics.
+
+In DHR theory, d is called the statistical dimension.17
+    To obtain the sector ρ conjugate to a given sector [ρ], one shows (under appropriate, physically
+motivated assumptions, including the ﬁnite statistics λ , 0 [DHR71]) that π satisﬁes the DHR
+criterion, so there exists a morphism ρ ∈ ∆(O) such that π = π0 ◦ ρ and an isometry R such that
+ρρ(A)R = RA.
+    In fact, in the language of category theory, localized morphisms and intertwiners form a sym-
+metric (or braided in d < 2) monoidal category, where the monoidal structure is given by ×. The
+existence of conjugate sectors (unique up to equivalence) means that the category is rigid.
+    The reconstruction theorem of Doplicher and Roberts [DR89] allows one to reconstruct the ﬁeld
+net F (O) and the gauge group G from the above data completing the programme set out in Sec. 8.1.
+Abstractly, ﬁrstly they show the equivalence of the DHR category to a category of representations
+of some compact group and then reconstruct the group from that category (this step is a version of
+the Tannaka–Krein duality), together with the algebra of ﬁelds on which this group acts.
+
+
+9 Conclusions
+In these notes, we have summarized some important aspects of quantum ﬁeld theory in the algebraic
+formulation of Haag and Kastler, focusing on the features that make it very diﬀerent from quantum
+mechanics. One such feature is the existence of inequivalent representations. This was illustrated
+by the case study of the van Hove model in Section 3, and further emphasized in Section 8, where
+inequivalent representations corresponding to diﬀerent charges were discussed. In both situations,
+one can see that all the physical information can be recovered from the abstract net of algebras, so it
+is more advantageous to think of the net rather than the collection of Hilbert space representations
+as the fundamental object. The axioms for the net have been formulated in Section 4.1, followed
+by some simple examples in Section 4.2. The connection between the algebraic and the Hilbert
+space centred approaches can be made through the choice of an algebraic state. In particular, for
+QFT on Minkowski spacetime18, one can consider the distinguished Poincaré invariant state, the
+vacuum; we have also described the more general class of quasi-free states that can be speciﬁed by
+  17Mathematically, as discovered by Longo in [Lon89], d is in fact the square root of the Jones index of the inclusion
+ρ(A(O)) ⊂ ρ(A(O ′ ))′ , i.e. it quantiﬁes how badly is the Haag duality broken in the given sector.
+  18Here we focused only on QFT on Minkowski spacetime, but the algebraic approach also easily generalizes to curved
+spacetimes [BFV03, FV15, FR16].
+
+
+                                                         41
+their two-point functions and have Fock space representations. In Section 5, we showed that QFT
+in the vacuum representation has some peculiar features that make it very diﬀerent from quantum
+mechanics, the most dramatic being the Reeh-Schlieder theorem.
+     A net of C ∗ -algebras together with a state induces a net of von Neumann algebras via weak
+completion. In Section 6 we pointed out that the type of von Neumann algebras that arise in QFT
+(type III) is very diﬀerent from the type characteristic for quantum mechanics (type I). We discussed
+the main consequences of this fact in Section 7, in the context of independence of measurements by
+spacelike observers, in the guise of the split property.
+     To close, let us emphasize that AQFT, although very diﬀerent from quantum mechanics, is not to
+be regarded as disjoint from “traditional” QFT as presented in standard textbooks. To the contrary,
+it is a framework that allows one to derive and study common structural and conceptual features of
+QFT, which then become realized in physical, experimentally testable models.
+
+
+A Some basic functional analysis
+A general reference for this brief summary is [RS80]. Recall that a Hilbert space H is a complex
+inner product space, with an inner product h·|·i that isplinear in the second slot and conjugate-linear
+in the ﬁrst, and for which the associated norm kψk := hψ|ψi is complete, i.e., all Cauchy sequences
+converge. The Hilbert space is separable if it has a ﬁnite or countably inﬁnite orthonormal basis,
+and inseparable otherwise.
+    A linear operator A : H1 → H2 between Hilbert spaces H1 and H2 is bounded iﬀ k Ak 
+sup k x k1 =1 k Axk2 is ﬁnite, where we use the subscript to denote the Hilbert space norm concerned.
+For maps between Hilbert spaces, boundedness and continuity are equivalent properties. In this
+case A has an adjoint A∗ : H2 → H1 , with the deﬁning property
+                                        hϕ| Aψi2 = hA∗ ϕ|ψi1 ,                                    (55)
+for all ψ ∈ H1 , ϕ ∈ H2 . Several interesting classes of bounded operator may be deﬁned: a bounded
+operator A : H → H is self-adjoint if A = A∗ ; while A is a projection if A = A∗ = A2 (more strictly,
+this deﬁnes an ‘orthogonal projection’ but we follow common usage in simply saying ‘projection’).
+A bounded operator U : H1 → H2 is unitary if U ∗U = UU ∗ = 1, and a partial isometry if U ∗U
+and UU ∗ are projections. Every bounded operator A : H → H has a unique polar decomposition
+A = U| A| such that U is a partial isometry with ker U = ker A, and | A| is a positive operator such
+that | A| 2 = A∗ A. Here, a self-adjoint operator A : H → H is said to be positive if hψ| Aψi ≥ 0 for
+all ψ ∈ H . For obvious reasons | A| is called the positive square root of A∗ A. An operator A on H
+                                Í
+is said to be of trace class if α heα | | A|eα i is ﬁnite, where eα is some orthonormal basis of H ; in
+                             Í
+this case, the trace tr A := α heα | Aeα i is ﬁnite and independent of the basis used to compute it.
+    If A is a partially deﬁned linear map between Hilbert spaces H1 and H2 , we denote its domain
+of deﬁnition within H1 by D(A). We typically only consider the situation where D(A) is dense.
+If sup{k Axk2 : x ∈ D(A), k xk1 = 1} is ﬁnite, then A can be extended by continuity to a unique
+bounded operator from H1 to H2 ; otherwise, A is described as an unbounded operator. The adjoint
+A∗ of a densely deﬁned unbounded operator A is again deﬁned through (55) and D(A∗ ) is the set of
+all ϕ ∈ H for which this deﬁnition makes sense: ϕ ∈ D(A∗ ) if and only if there exists η ∈ H such
+that hϕ| Aψi = hη|ψi holds for all ψ ∈ D(A), whereupon we write A∗ ϕ = η. An unbounded densely
+deﬁned operator A is called self-adjoint if hϕ| Aψi = hAϕ|ψi for all ϕ, ψ ∈ D(A) and in addition
+D(A∗ ) = D(A). Any operator is completely described by its graph
+                              Γ(A) := {(x, Ax) ∈ H × H : x ∈ D(A)}.
+One says that A is a closed operator if Γ(A) is a closed subset of H × H with respect to the norm
+of H ⊕ H ; it is closable if Γ(A) has a closure that is the graph of some (closed) operator A, which
+
+                                                  42
+is naturally called the closure of A. All densely deﬁned operators with densely deﬁned adjoints are
+closable and their adjoints are closed, so in particular self-adjoint operators are closed. The polar
+decomposition extends to closed operators.
+    The spectrum σ(A) of a (bounded or unbounded) operator A on a Hilbert space H is the set of
+z ∈ C for which A − z1 fails to have a bounded two-sided inverse. In particular, eigenvalues lie in
+the spectrum but not every spectral point is an eigenvalue. The spectrum of a self-adjoint operator
+is real, σ(A) ⊂ R, while the spectrum of a unitary operator lies on the unit circle in C.
+    Finally, suppose that H is a real Hilbert space (i.e., a real inner product space with a complete
+induced norm). To distinguish real spaces from complex ones in this appendix, we write the real
+inner product with round brackets and the adjoint with a dagger. A complex structure on H is a
+linear map J : H → H obeying J 2 = −1, J † = −J. Then we may convert H into a complex
+Hilbert space by adding two structures: ﬁrst, the operation of multiplication by a complex scalar,
+                           C × H ∋ (z, ψ) 7→ (Re z)ψ − (Im z)Jψ ∈ H,
+in which sense multiplication by i is implemented by −J (this convention is annoying but avoids
+a proliferation of minus signs elsewhere in the main body of the text), and second, a sesquilinear
+inner product
+                                    hψ|ϕi = (ψ, ϕ) + i(ψ, Jϕ).
+Exercise 47. Check that H , with these additional structures, is indeed a complex Hilbert space.
+
+
+B Construction of an algebra from generators and relations
+Several algebras encountered in Sec. 4.2 were presented in terms of generators and relations. Here,
+we give more details on how an algebra may be constructed in this way, taking the real scalar ﬁeld
+as our example.
+    • First consider the free unital ∗-algebra U containing arbitrary ﬁnite linear combinations of
+      ﬁnite products of the Φ( f )’s and Φ( f )∗ ’s and unit 1.
+    • Construct a two-sided ∗-ideal I in U generated by the relations. Thus I contains all ﬁnite
+      linear combinations of terms of the form
+                                            A(Φ( f )∗ − Φ( f ))B
+      as A and B range over U and f ranges over C0∞ (M), and similar terms obtained from the other
+      relations, and all terms obtained from these by applying ∗. Recall that a two-sided ∗-ideal is a
+      subspace of the algebra that is stable under multiplication by algebra elements on either side,
+      and under the ∗-operation.
+    • The algebra A(M) is deﬁned as the quotient U/I, namely, the vector space quotient, equipped
+      with product and ∗-operations so that
+                          [A][B] = [AB],        [A]∗ = [A∗ ],      1A(M) = [1U ].
+      One may check that the fact that I is a two sided ∗-ideal guarantees that these operations are
+      well-deﬁned (independent of the choice of representatives).
+    • For future reference: let B be another algebra obtained as a quotient B = V/J , where J
+      is a two-sided ∗-ideal in a unital ∗-algebra V. Then any function mapping the Φ( f ) into
+      V extends uniquely to a unit-preserving ∗-homomorphism from U to V, and induces a
+      unit-preserving ∗-homomorphism from A(M) to B, provided every element of I is mapped
+      into J , i.e., the map on generators is compatible with the relevant relations.
+
+                                                 43
+C Fock space
+Let H be a complex Hilbert space. As usual, H ⊙n denotes the n’th symmetric tensor power of H ,
+with H ⊙0 = C, whereupon the bosonic Fock space over H is
+                                                        ∞
+                                                        Ê
+                                            F(H ) =            H ⊙n .
+                                                         n=0
+
+Thus, a typical Fock space vector is a sequence Ψ = (Ψn )n∈N0 , where Ψn ∈ H ⊙n is called the
+n-particle component of Ψ. In particular the Fock vacuum vector is Ω = (1, 0, . . .), and the number
+operator N is deﬁned by
+                                        (NΨ)n = nΨn      n ∈ N0
+                                              Í∞ 2
+on the domain of all Ψ ∈ F(H ) for which n=0 n kΨn k 2 < ∞. We will describe the annihilation
+and creation operators and the number operator on F(H ) in the basis-free notation used in Sec. 4.3.
+See references [BR97, §5.2.1] and [RS75, §X.7] for more details.
+    In this framework, each ψ ∈ H labels annihilation and creation operators a(ψ) and a∗ (ψ) on
+F(H ), with ψ 7→ a(ψ) being antilinear, and ψ 7→ a∗ (ψ) := a(ψ)∗ being linear in ψ. These operators
+are unbounded and have to be deﬁned on suitable dense domains within F(H ), which may be taken
+as the domain of N 1/2 , i.e., those Ψ ∈ F(H ) for which ∞          2
+                                                        Í
+                                                          n=0 nkΨn k < ∞. The annihilation operator
+acts (on vectors in the domain) by
+                                                √
+                                     (a(ϕ)Ψ)n = n + 1ℓn+1 (ϕ)(Ψn+1 )
+
+where ℓn+1(ϕ) : H ⊗(n+1) → H ⊗n is deﬁned by
+
+                        ℓn+1 (ϕ)(ψ1 ⊗ · · · ⊗ ψn+1 ) = hϕ|ψ1 iψ2 ⊗ · · · ⊗ ψn+1
+
+and restricts to a map H ⊙(n+1) → H ⊙n . It follows in particular that a(ϕ)Ω = 0 for all ϕ ∈ H . One
+may check that the adjoint operators obey
+                                                    √
+                (a∗ (ϕ)Ψ)0 = 0,    (a∗ (ϕ)Ψ)n+1 = n + 1Sn+1(ϕ ⊗ Ψn ),         n ∈ N0
+
+where Sn+1 is the orthogonal projection onto H ⊙(n+1) in H ⊗(n+1) . Acting on vectors Ψ in the domain
+of N, the canonical commutation relations hold in the form
+
+                                    [a(ψ), a∗ (ϕ)]Ψ = hψ|ϕiH Ψ,                                 (56)
+
+and vectors obtained by acting with sums of products of a∗ (ϕ) operators on Ω are dense in F(H ).
+    This presentation of the annihilation and creation operators may seem unfamiliar to those who
+prefer their annihilation and creation operators to look more like ai and a∗j . But let (ei ) be any
+orthonormal basis for H and deﬁne ai = a(ei ), ai∗ = a(ei )∗ = a∗ (ei ). Then the CCRs become
+
+                                        [ai, a∗j ] = hei |e j iH 1 = δi j 1
+
+(understood as acting on a suitable domain) and of course ai Ω = a(ei )Ω = 0, which provides a
+set of annihilation and creation operators labelled by a discrete index. At least formally (because
+inﬁnite sums of unbounded operators should be handled with care)
+                                  Õ                          Õ
+                           a(ψ) =     hψ|ei iai,    a∗ (ϕ) =    hei |ϕiai∗ .
+                                    i                                    i
+
+The advantage of the basis-independent approach is that it does not give any basis a privileged
+status, and avoids the need for inﬁnite series of the type just given if changing basis, for example.
+
+                                                       44
+The number operator can also be related to the annihilation and operators in the basis-independent
+form – see [BR97, §5.2.3].
+    It is also common in QFT to use annihilation and creation operators indexed by a continuous
+momentum variables, in situations where H is a space of square-integrable functions of momentum.
+This is essentially a matter of using a continuuum-normalised ‘improper basis’ for H , but one
+should be aware that, while a(k) does deﬁne an (unbounded) operator, it is suﬃciently poorly-
+behaved that it does not have a densely deﬁned operator adjoint. Nonetheless, any normal-ordered
+string a∗ (k 1 ) · · · a∗ (k m )a(k ′1 ) · · · a(k ′n ) can be given meaning as a quadratic form, that is, deﬁning
+its matrix elements as
+
+          hΨ|a∗ (k 1 ) · · · a∗ (k m )a(k ′1 ) · · · a(k ′n )Ψ′i := ha(k m ) · · · a(k 1 )Ψ|a(k ′1 ) · · · a(k ′n )Ψ′i
+
+on suitable vectors Ψ, Ψ′ ∈ F(H ). For more on this viewpoint, see [RS75, §X.7].
+
+
+References
+[Ara99]     Huzihiro Araki, Mathematical theory of quantum fields, International Series of Monographs on
+            Physics, vol. 101, Oxford University Press, New York, 1999, Translated from the 1993 Japanese
+            original by Ursula Carow-Watamura. MR 1799198
+
+[BDF87]     D. Buchholz, C. D’Antoni, and K. Fredenhagen, The universal structure of local algebras, Comm.
+            Math. Phys. 111 (1987), 123–135. MR 896763 (88j:46055)
+
+[BDFY15] Romeo Brunetti, Claudio Dappiaggi, Klaus Fredenhagen, and Jakob Yngvason (eds.), Advances
+         in algebraic quantum field theory, Mathematical Physics Studies, Springer International Publish-
+         ing, 2015.
+
+[BF82]      D. Buchholz and K. Fredenhagen, Locality and the structure of particle states, Commun. Math.
+            Phys. 84 (1982), no. 1, 1–54.
+
+[BFV03]     R. Brunetti, K. Fredenhagen, and R. Verch, The generally covariant locality principle—A new
+            paradigm for local quantum field theory, Commun. Math. Phys. 237 (2003), 31–68.
+
+[BGP07]     Christian Bär, Nicolas Ginoux, and Frank Pfäﬄe, Wave equations on Lorentzian manifolds and
+            quantization, European Mathematical Society (EMS), Zürich, 2007.
+
+[BR87]      Ola Bratteli and Derek W. Robinson, Operator algebras and quantum statistical mechanics.
+            1, second ed., Texts and Monographs in Physics, Springer-Verlag, New York, 1987, C ∗- and
+            W ∗ -algebras, symmetry groups, decomposition of states. MR 887100
+
+[BR97]              , Operator algebras and quantum statistical mechanics. 2, second ed., Texts and Mono-
+            graphs in Physics, Springer-Verlag, Berlin, 1997, Equilibrium states. Models in quantum statistical
+            mechanics. MR 1441540
+
+[BR14]      D. Buchholz and J. E. Roberts, New light on infrared problems: sectors, statistics, symmetries
+            and spectrum, Communications in Mathematical Physics 330 (2014), no. 3, 935–972.
+
+[DDFL87] C. D’Antoni, S. Doplicher, K. Fredenhagen, and R. Longo, Convergence of local charges and
+         continuity properties of W ∗-inclusions, Comm. Math. Phys. 110 (1987), 325–348. MR 888004
+         (88h:81078)
+
+[DHR69a] S. Doplicher, R. Haag, and J. E. Roberts, Fields, observables and gauge transformations. I,
+         Commun. Math. Phys. 13 (1969), no. 1, 1–23.
+
+[DHR69b]            , Fields, observables and gauge transformations. II, Commun. Math. Phys. 15 (1969),
+            no. 3, 173–200.
+
+                                                              45
+[DHR71]         , Local observables and particle statistics I, Commun. Math. Phys. 23 (1971), no. 3,
+          199–230.
+
+[DHR74]            , Local observables and particle statistics II, Commun. Math. Phys. 35 (1974), no. 1,
+          49–85.
+
+[DL84]    S. Doplicher and R. Longo, Standard and split inclusions of von Neumann algebras, Invent.
+          Math. 75 (1984), 493–536. MR 735338 (86h:46095)
+
+[DR89]    S. Doplicher and J. E. Roberts, A new duality theory for compact groups, Inventiones Mathemat-
+          icae 98 (1989), no. 1, 157–218.
+
+[Düt19]   M. Dütsch, From classical field theory to perturbative quantum field theory, Progress in Mathe-
+          matical Physics, Springer International Publishing, 2019.
+
+[Emc72]   G.G. Emch, Algebraic methods in statistical mechanics and quantum field theory, Interscience
+          monographs and texts in physics and astronomy, Wiley-Interscience, 1972.
+
+[Few16]   Christopher J. Fewster, The split property for quantum field theories in flat and curved spacetimes,
+          Abh. Math. Semin. Univ. Hambg. 86 (2016), no. 2, 153–175. MR 3561860
+
+[Few19]   Christopher J. Fewster, A generally covariant measurement scheme for quantum field theory in
+          curved spacetimes, arXiv e-prints (2019), arXiv:1904.06944.
+
+[FR16]    K. Fredenhagen and K. Rejzner, Quantum field theory on curved spacetimes: Axiomatic frame-
+          work and examples, Journal of Mathematical Physics 57 (2016), no. 3.
+
+[Fre85]   Klaus Fredenhagen, On the modular structure of local algebras of observables, Comm. Math.
+          Phys. 97 (1985), 79–89. MR 782959 (86f:81069)
+
+[Fre95]   K. Fredenhagen, Superselection sectors, 1995, lecture notes.
+
+[FRS89]   K. Fredenhagen, K.-H. Rehren, and B. Schroer, Superselection sectors with braid group statistics
+          and exchange algebras, Communications in Mathematical Physics 125 (1989), no. 2, 201–226.
+
+[FV13]    Christopher J. Fewster and Rainer Verch, The necessity of the Hadamard condition, Classical
+          Quantum Gravity 30 (2013), no. 23, 235027, 20. MR 3129302
+
+[FV15]    C. J. Fewster and R. Verch, Algebraic quantum field theory in curved spacetimes, pp. 125–189,
+          Springer, 2015.
+
+[FV18]    C. J. Fewster and R. Verch, Quantum fields and local measurements, ArXiv e-prints (2018),
+          arXiv:1810.06512.
+
+[Haa87]   Uﬀe Haagerup, Connes’ bicentralizer problem and uniqueness of the injective factor of type III1 ,
+          Acta Math. 158 (1987), 95–148. MR 880070 (88f:46117)
+
+[Haa96]   Rudolf Haag, Local quantum physics, second ed., Texts and Monographs in Physics, Springer-
+          Verlag, Berlin, 1996, Fields, particles, algebras. MR 1405610
+
+[HM07]    Hans Halvorson and Michael Müger, Algebraic Quantum Field Theory, Philosophy of Physics
+          (J. Butterﬁeld and J. Earman, eds.), Handbook of the Philosophy of Science, Elsevier Science,
+          2007, arXiv:math-ph/0602036, pp. 731–922.
+
+[HS18]    S. Hollands and K. Sanders, Entanglement measures and their properties in quantum field theory,
+          SpringerBriefs in Mathematical Physics, Springer International Publishing, 2018.
+
+[Kay85]   Bernard S. Kay, A uniqueness result for quasifree KMS states, Helv. Phys. Acta 58 (1985), no. 6,
+          1017–1029. MR 821118
+
+
+                                                    46
+[KW91]    Bernard S. Kay and Robert M. Wald, Theorems on the uniqueness and thermal properties of
+          stationary, nonsingular, quasifree states on spacetimes with a bifurcate Killing horizon, Phys.
+          Rep. 207 (1991), no. 2, 49–136. MR 1133130
+
+[Lec15]   Gandalf Lechner, Algebraic constructive quantum field theory: Integrable models and deforma-
+          tion techniques, Advances in Algebraic Quantum Field Theory (Romeo Brunetti, Claudio Dap-
+          piaggi, Klaus Fredenhagen, and Jakob Yngvason, eds.), Mathematical Physics Studies, Springer
+          International Publishing, Springer International Publishing, 2015, pp. 397–448.
+
+[Lon89]   R. Longo, Index of subfactors and statistics of quantum fields. I, Communications in Mathematical
+          Physics 126 (1989), no. 2, 217–247.
+
+[Pei52]   R. E. Peierls, The commutation laws of relativistic field theory, Proc. Roy. Soc. London. Ser. A.
+          214 (1952), 143–157. MR 0051725
+
+[Rej16]   Kasia Rejzner, Perturbative algebraic quantum field theory: An introduction for mathematicians,
+          Mathematical Physics Studies, Springer, Cham, 2016. MR 3469848
+
+[RS75]    Michael Reed and Barry Simon, Methods of modern mathematical physics. II. Fourier analysis,
+          self-adjointness, Academic Press [Harcourt Brace Jovanovich, Publishers], New York-London,
+          1975. MR 0493420
+
+[RS80]           , Methods of modern mathematical physics. I, second ed., Academic Press, Inc. [Harcourt
+          Brace Jovanovich, Publishers], New York, 1980, Functional analysis. MR 751959
+
+[Sim98]   Barry Simon, The classical moment problem as a self-adjoint finite difference operator, Adv.
+          Math. 137 (1998), 82–203.
+
+[SW00]    R. F. Streater and A. S. Wightman, PCT, spin and statistics, and all that, Princeton Landmarks
+          in Physics, Princeton University Press, Princeton, NJ, 2000, Corrected third printing of the 1978
+          edition. MR 1884336
+
+[Tho14]   Erik G. F. Thomas, A polarization identity for multilinear maps, Indag. Math. (N.S.) 25 (2014),
+          no. 3, 468–474, With an appendix by Tom H. Koornwinder. MR 3188841
+
+[VH52]    Léon Van Hove, Les difficultés de divergences pour un modèle particulier de champ quantifié,
+          Physica 18 (1952), 145–159. MR 0049093
+
+[Vla66]   Vasiliı̆ Sergeevič Vladimirov, Methods of the theory of functions of many complex variables,
+          Translated from the Russian by Scripta Technica, Inc. Translation edited by Leon Ehrenpreis,
+          The M.I.T. Press, Cambridge, Mass.-London, 1966. MR 0201669
+
+[Yng05]   Jakob Yngvason, The role of type III factors in quantum field theory, Rep. Math. Phys. 55 (2005),
+          no. 1, 135–147. MR 2126421
+
+[Yng15]           , Localization and entanglement in relativistic quantum physics, The Message of Quantum
+          Science: Attempts Towards a Synthesis (Philippe Blanchard and Jürg Fröhlich, eds.), Springer
+          Berlin Heidelberg, Berlin, Heidelberg, 2015, pp. 325–348.
+
+[Yuk35]   Hideki Yukawa, On the Interaction of Elementary Particles I, Proc. Phys. Math. Soc. Jap. 17
+          (1935), 48–57, [Prog. Theor. Phys. Suppl.1,1(1935)].
+
+
+
+
+                                                   47
+

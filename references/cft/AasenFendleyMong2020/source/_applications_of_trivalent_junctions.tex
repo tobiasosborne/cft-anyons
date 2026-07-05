@@ -1,0 +1,844 @@
+%auto-ignore
+%      this ensures the arxiv doesn't try to start TeXing here.
+%!TEX root = super_lattice_models_draft.tex
+%      prev line helps TeXShop do the right thing
+
+
+\section{Boundary states, conformal and otherwise}
+\label{sec:bdry}
+
+The topological defects constructed in this paper have several fundamental properties. The basic one is that the partition function remains invariant under their deformation. Even more profoundly, the properties derived in section \eqref{sec:trivalent} allow partition functions with different defect configurations to be related. This simplest such property $Z_\varphi = d_\varphi\,Z$ from (\ref{removeloop},\ref{ZdZ}) relates partition functions with and without a loop. More intricate but still incredibly useful are the invariances under  $F$-moves. 
+
+In this section we use these invariances to derive a variety of properties of boundary conditions. Our results provide a natural lattice version of the boundary-state formalism in CFT \cite{Cardy1989}, and generalize it to off-critical models as well. The precise definition of linear combinations of boundary conditions allows us to define linear operators acting on them, including the defect-creation operators.  The ensuing equivalences between partition functions with different boundary conditions allows us to derive exact values of certain universal quantities. 
+In particular, we give an exact and rigorous lattice derivation of ratios of the universal ``$g$-factors'' \cite{AffleckLudwig} characterizing conformal boundary conditions.  The only assumption required is the standard physicist one that a lattice model becomes a CFT in the continuum limit. As such, it provides a strong constraint on any such identification. Our method gives a precise way of finding $g$-factors not only in CFT, but in non-critical theories as well.
+
+\subsection{Gluing defects to the boundary}
+\label{sec:gluing}
+
+We start our study of boundaries by considering height models on a planar graph $G$ embedded in a disc, so that the $\upsilon$ lines (which live on edges of the dual graph) dangle across the single boundary.  These dangling ends and the heights between them form a periodic fusion tree \eqref{eq:fusiontreedef}.  The space of all boundary conditions we study is therefore given by $\mathcal{V}$ from \eqref{vper}, with each basis element $\ket{\mathcal{B}}$ labeled by a particular height configuration around the boundary.
+For $L_b$ heights in this tree, the dimension of $\mathcal{V}$ grows for large $L_b$ as $d_\upsilon^{L_b}$.
+In standard language, each $\ket{\mathcal{B}}$ amounts to taking a {\em fixed} boundary condition.
+All other boundary conditions we study are linear combinations $\ket{B} = \sum_{\mathcal{B}} \alpha_{\mathcal{B}} \ket{\mathcal B}$ for some coefficients $\alpha_{\mathcal B}$. 
+
+The most convenient definition of the Boltzmann weights is to consider some fixed boundary condition with heights $h_j$ for $j=1,\dots,L_b$ along the boundary, and then take 
+\begin{align}
+e^{-\beta H(\{ h_{\rm v} \})} = \prod_{p} \BWx{\alpha_p}{\beta_p}{\delta_p}{\gamma_p}\, \times \prod_{{\rm v}\ {\rm in}\ \rm {bulk}}d_{h_{\rm v}} \times \prod_{j=1}^{L_b} \sqrt{d_{h_j}} \,,
+\label{discweight}
+\end{align}
+so that the heights along the boundary each receive a weight $\sqrt{d_{h_j}}$, the half-dot in the notation in \eqref{semidotdef}.
+The disc partition functions for a fixed and arbitrary boundary conditions are then 
+\begin{align}
+Z\big(\ket{\mathcal{B}}\big) = \sum_{ \{ h_{\rm v}\}\ {\rm in}\ {\rm bulk}} e^{-\beta H( \{ h_{\rm v} \}) } \,,\qquad Z\big(\ket{B}\big) =\sum_{\alpha_{\mathcal{B}}} \alpha_{\mathcal{B}} Z\big(\ket{\mathcal{B}}\big) \equiv\  \ZDisc \Bigg|_{\ket{B}} \,.
+\label{Zbdry}
+\end{align}
+We have defined a convenient pictorial notation here. The value of the partition function will of course depend on the precise graph $G$ used to define the model, but we suppress this label.
+One nice thing about the definitions (\ref{Zbdry}) is that the partition function is a linear function on $\mathcal{V}$:
+\begin{align}
+\ZDisc \Bigg|_{\alpha \ket{A}+\beta \ket{B}}  =\ \alpha \times \ZDisc \Bigg|_{ \ket{A}}+\beta \times \ZDisc \Bigg|_{\ket{B}} \,.
+\label{Zlin}
+\end{align} 
+
+We therefore can define linear operators acting on the boundary state. A particularly useful set are the defect creation operators, defined as in \eqref{TsymmGoldenChain}, with the local weights given in \eqref{eq:BW_duality}. These by construction are linear operators in $\mathcal{V}$. Because of the defect commutation relations, it is rather simple to prove  all sorts of equivalences between partition functions with different boundary conditions. The easiest is to exploit
+ (\ref{removeloop}), which in pictures yields
+ \begin{align}
+\ZDisc \Bigg|_{\ket{B}} =  \frac{1}{d_\varphi}\, \ZDiscGLoop \Bigg|_{\ket{B}} =\ \frac{1}{d_\varphi}\, \ZDiscGDual \Bigg|_{\ket{B}}  = \frac{1}{d_\varphi} \, \ZDiscG \Bigg|_{\D_\varphi |B\rangle} \,.
+\label{Bdual}
+\end{align}
+The proof of \eqref{Bdual} amounts to explaining what the pictures mean. We ``nucleate'' a loop of type $\varphi$ in the bulk using  (\ref{removeloop}), The shading in the picture is a reminder that  the models on the inside and outside of the loop are different when $\varphi$ is odd. We then stretch the loop to the boundary using the defect commutation relations. For a fixed boundary condition $\ket{\mathcal{B}}$, the heights $h_j$ on the outside of the defect loop are those in the fusion tree of $\mathcal{B}$.  Given the definition \eqref{eq:BW_duality} of the defect line, the ensuing partition function is exactly the same as if we omit the defect line and instead have boundary state $\mcd_\varphi\ket{\mathcal{B}}$. Because this action is linear as in \eqref{Zlin}, this argument works for any boundary condition $\ket{B}$, yielding \eqref{Bdual}. Nucleating a defect loop and ``gluing'' it to the boundary thus gives a rigorous and exact relation between different partition functions. 
+
+For example, applying  \eqref{Bdual} gives a simple way of understanding how Kramers-Wannier duality acts on boundary conditions.
+In the clock models, the boundary state $\kett{a} \equiv \ket{aXaX\cdots}$ corresponds to the ``fixed-$a$" boundary condition, where all fluctuating spins on the boundary are fixed to be the same value $a=0,\dots,N-1$. (The length $L_b$ of the boundary must be even, as $G$ is bipartite.)
+We have recycled the notation of section \ref{sec:degenerategs}, as these boundary states are identical to the ground states in the completely staggered limit. 
+Using \eqref{Bdual} with a spin-shift defect gives then $Z\big(\kett{a}\big) = Z\big(\kett{b}\big)$ for all $a,b$.
+The effect of gluing a duality defect $\mcd_X$ to $\kett{a}$ is already given in \eqref{DXa}:  $\mcd_X |A\rangle = \kett{X}$.
+The boundary state $\kett{X}$ is the equal-amplitude sum over all fixed boundary states in $M_0$.
+It corresponds to a ``free'' boundary condition in conventional language. The equivalence \eqref{Bdual} means
+\begin{align}
+	{Z}_1\big(\kett{X}\big) = \sqrt{N}\, Z_0(\kett{a}\big) \,.
+	\label{Zfreefixed}
+\end{align}
+where the dual partition functions $Z_0$ and $Z_1$ are as described in section \ref{sec:duality}. Using  \eqref{KWdef} gives 
+$\mcd_{X}\ket{{\rm free}} = \sum_{b}\ket{b}$, so no other types of boundary conditions are generated by gluing again.
+In the $N=2$ Ising case, these relations reduce to the Ising case discussed in Part~I as they must. 
+
+On the cylinder, a distinct fusion tree describes each boundary, and the definitions \eqref{discweight} and  \eqref{Zbdry} generalize in the obvious way.
+The partition function is then a linear function on $\mathcal{V} \times \mathcal{V}$, so we label it as $Z\big(\ket{A},\ket{B}\big)$.
+The defect creation operators act on each boundary individually, as they do for the disc. 
+Since the defects can be moved through the bulk, we can unglue a defect loop from one boundary, move it across the cylinder, and glue it to the other boundary. Such loops cannot be removed as in \eqref{Bdual}, as they cannot be shrunk to surround a single quadrilateral. More generally, we can take advantage of the fusion rules for the defect lines \eqref{DDeqD} and fuse together defect operators coming from both boundaries. This fusion yields the remarkably simple identity between partition functions with distinct boundary conditions:
+\begin{align}
+\begin{split}
+	\substack{\mathcal{D}_a |A\rangle\\
+	\annulusx\\
+	\mathcal{D}_b |B\rangle}\ =\  \substack{\ket{A} \\  \annulusy \\ \ket{B}}\ &=\  \sum_{c}N^c_{ab}\, \substack{\ket{A} \\
+	 \annulusz \\
+	  \ket{B}}  
+	\\[6pt]
+	\implies\quad 
+	Z\big(\mcd_a|A\rangle,\mcd_b|B\rangle\big) &= \sum_c N_{ab}^c\, Z\big(\mcd_c|A\rangle,\ket{B}\big)
+	\label{annulusfusion}
+\end{split}
+\end{align}
+for any $A$, $B$, $a$ and $b$. 
+We have drawn a cylinder by identifying the left and right edges of the gray square.
+When the fusion ring is commutative, i.e., $a\otimes b \cong b\otimes a \Rightarrow N_{ab}^c = N_{ba}^c$, the identity extends to
+$Z\big(\mcd_a|A\rangle,\mcd_b|B\rangle\big) = Z\big(\mcd_b|A\rangle,\mcd_a|B\rangle\big)$.
+
+Applied to Potts/clock, \eqref{annulusfusion} yields
+\begin{align}
+	Z\big( \kett{a},\kett{b} \big) = Z\big( \kett{a{+}c} , \kett{b{+}c} \big) \,,\qquad
+	Z_0\big( \kett{a} , \kett{X} \big) = Z_1\big( \kett{X},\kett{a} \big) \,.
+\end{align}
+Here we let $\kett{a+b} \defineas \kett{ (a+b)\bmod N }$.
+While the first relation follows from the $\mathbb{Z}_N$ symmetry, those in the second are not so obvious, as dragging a duality defect from one boundary to the other changes the weights to their duals.
+Even less obvious is the consequence of \eqref{KWdef}, which is
+\begin{align}
+	Z_0\big( \kett{X},\kett{X} \big) = \sum_{b=0}^{N-1} Z_1\big( \kett{a},\kett{b} \big)
+	\label{Zff}
+\end{align}
+for any $a$. The dual of free boundary conditions on both boundaries of the cylinder is proportional to the sum over all fixed-$a$ boundary conditions on both sides. 
+This linear relation is of course consistent with the corresponding conformal field theory results \cite{Cardy1986b}, but  applies to any Potts or clock couplings on any graph with the topology of a cylinder.
+
+\subsection{Boundary states in and from conformal field theory}
+\label{sec:conformal}
+
+Changing boundary conditions by gluing defect lines provides a powerful method for understanding boundary states.  Here we show how the boundary-state formalism used to understand conformal boundary conditions \cite{Cardy1989} is intimately related to our setup. The payoff in linking the two approaches goes both ways: our work provides a precise lattice way of deriving identities for partition functions such as \eqref{annulusfusion}, and provide exact lattice calculations of universal quantities. In particular, we show how our exact results for the $g$-factor characterizing conformal boundary states match perfectly the CFT results.
+
+Conformal invariance still holds in the presence of boundaries when the boundary conditions are chosen appropriately. Such a conformal boundary condition (CBC) can be found for each primary field in a rational conformal field theory  \cite{Ishibashi1988}. These ``Ishibashi states'' are constructed by a boundary-state formalism, where one treats the boundary as a Hilbert space on which the generators of conformal symmetry act. By clever arguments using modular invariance, Cardy showed how to relate take linear combinations of these boundary states to reproduce boundary conditions expected from taking the continuum limit of a lattice model \cite{Cardy1989}.  Both types of boundary states can be labeled using primary operators in (not necessarily the same) CFT.  We show here how the ``Cardy states" in CFT naturally correspond to the continuum limit of states built using defect-creation operators.
+
+For many (perhaps all) of the statistical-mechanical models built from a fusion category, at least one choice of lattice and couplings $A_Q$ yields a critical model. Typically, a CFT is believed to describe the corresponding continuum limit, a fact rigorously shown for the Ising model \cite{Smirnov2012}.  In this event, it is natural to expect that the lattice topological defects found by our construction become conformal defects, with the partition function in their presence remaining conformally invariant. Then if a given lattice boundary condition $\ket{B}$ becomes a CBC in the continuum limit, we expect that the state $\D_\varphi|B\rangle$ found by gluing a topological defect to it will yield a CBC. 
+
+In a rational conformal field theory on the cylinder with conformal boundary conditions labeled by primary fields $\mathscr{A}$ and $\mathscr{B}$, the partition function is of the form \cite{Cardy1989}
+\begin{align}
+Z_{\mathscr{AB}} = \sum_\mathscr{C} N^\mathscr{C}_{\mathscr{AB}}\chi^{}_\mathscr{C} \,,
+\label{ZABCFT}
+\end{align}
+where $\mathscr{A}$ and $\mathscr{B}$ label the two boundary conditions, $N^\mathscr{C}_{\mathscr{AB}}$ is a non-negative integer, while $\chi_\mathscr{C}$ is the character corresponding to the primary field $\mathscr{C}$ in the CFT.  
+In a rational conformal field theory, there are a finite number of such fields. Note we use subscripts to distinguish the CFT partition function from the lattice one.
+The central tenet of the boundary-state formalism is that this partition function also can be written as 
+\begin{align}
+	Z_{\mathscr{AB}} = \Braket{\mathscr{A} | e^{-R H_L} | \mathscr{B} }
+\label{ZAHB}
+\end{align}
+where $H_L$ is the CFT Hamiltonian on a circle of circumference $L$, $R$ the length of the cylinder, and $\ket{\mathscr{A}}$ and $\ket{\mathscr{B}}$ are the boundary states labeled by particular primary fields.
+We expect that when the lattice couplings are tuned to make the model critical, there exist appropriate identifications of boundary states and conditions so that $Z\big(\ket{A},\ket{B}\big) \to Z_{\mathscr{AB}}$ in the continuum limit.
+
+All three labels in \eqref{ZABCFT} correspond to primary fields in a rational CFT (RCFT).
+They must therefore also correspond to objects in a fusion category~\cite{MooreSeiberg:89} associated with the RCFT. 
+It is natural therefore to expect that the integers $N^\mathscr{C}_{\mathscr{AB}}$ correspond to the fusion coefficients in this category.
+Cardy's boundary-state formalism \cite{Cardy1989} provides a method for understanding how and why. Here we show how similar considerations apply directly on the lattice, so that we can compute some universal quantities exactly without having to appeal to any CFT results. As we mentioned above and will discuss in more detail below, the fusion categories of the lattice model and the CFT typically are not the same (Ising providing one of the few examples where they are). Our work therefore provides powerful constraints on which CFT can describe the continuum limit of a given lattice model. 
+
+
+
+A valuable tool for characterizing boundary conditions is known as the ``$g$-factor'' \cite{AffleckLudwig}. It is something like a ground-state degeneracy, and is easiest to define when space is a cylinder. In the limit the cylinder is very long, i.e.\ $R\gg L$, the leading contribution to \eqref{ZAHB} comes from the lowest eigenvalue $E_0$ of $H_L$. Denoting by $\ket{0}_{\rm CFT}^{}$ the corresponding eigenstate, \eqref{ZAHB} reduces to 
+\begin{align}
+	Z_{\mathscr{AB}}  \rightarrow g_\mathscr{A}g_\mathscr{B} e^{-R E_0 } \,,\qquad g_\mathscr{B}\equiv \braket{\mathscr{B}|0}_{\rm CFT}^{}\,.
+	\label{gCFT}
+\end{align}
+This number $g_\mathscr{B}$ associated with each boundary state is the $g$-factor.   Its logarithm can be thought of as the entropy associated with the boundary condition. For this reason, $g_\mathscr{A}g_\mathscr{B}$ is sometimes referred to as the ``ground-state degeneracy", but this degeneracy need not be an integer, as apparent from the definition \eqref{gCFT}.
+
+In a CFT, the ground state is unique, and the $g$-factor is universal \cite{AffleckLudwig}.  Indeed, doing a modular transformation on the characters in \eqref{ZABCFT}, i.e.\ exchanging space and time, gives \cite{Cardy1989,AffleckLudwig}
+\begin{align}
+g_\mathscr{A} g_\mathscr{B} = \frac{1}{\mathscr{D}_{\rm CFT}^{}}\sum_\mathscr{C} N^\mathscr{C}_{\mathscr{AB}} d_\mathscr{C} \,,\qquad \mathscr{D}_{\rm CFT}^{}=\sqrt{\sum_{\mathscr{A}} d_\mathscr{A}^2}
+\label{ggS}
+\end{align}
+where the sum in the total quantum dimension $\mathscr{D}_{\rm CFT}^{}$ from \eqref{ddNdD} is over all primary fields in the CFT, or equivalently, all the simple objects in the category governing the fusion and braiding in the CFT. The quantum dimensions arise from the explicit expression of the modular $S$ matrix entries involving the identity, see e.g.\ equation (225) in \cite{Kitaev2006}. When objects are not all self-dual one must again keep track of arrows, but the idea is the same. 
+A simple exact expression for the $g$ factors applies when the boundary conditions correspond to the Cardy states associated with primary fields. Then $N^\mathscr{C}_{\mathscr{AB}}$ is the fusion symbol for the corresponding primary fields in the CFT \cite{Cardy1989}. Doing the sum in \eqref{ggS} by exploiting  \eqref{eq:ddNd}  yields 
+\begin{align}
+g_\mathscr{A} g_\mathscr{B} =  \frac{d_\mathscr{A}d_\mathscr{B}}{\mathscr{D}_{\rm CFT}^{}} \qquad \implies \qquad g_\mathscr{A}= \frac{d_\mathscr{A}}{\sqrt{\mathscr{D}_{\rm CFT}^{}}} \,.
+\label{ggdd}
+\end{align}
+
+
+With topological defects, we can derive closely related equations exactly and rigorously on the lattice. We define the partition function on a $L_b\times R$ square lattice analogously to \eqref{ZAHB} as
+\begin{align} 
+	Z\big(\ket{A},\ket{B}\big) = \Braket{A | T^{R} | B }\,,
+\end{align} 
+where the transfer matrix $T$ acts on the usual vector space $\mathcal{V}$ defined by a periodic tree. In the long-cylinder limit where $R/L_b$ is large, the largest eigenvalue $\Lambda$ of the transfer matrix dominates. (In a quantum Hamiltonian limit like \eqref{ZAHB}, the lowest energy level $E_0\propto -\ln \Lambda$.)  When the corresponding eigenstate $\ket{\Lambda}$ is unique, we then define the lattice $g$-factor as
+\begin{align}
+Z\big(\ket{A},\ket{B}\big)  \sim g\big(\ket{A}\big)g\big(\ket{B}\big) \Lambda^R \,,\qquad g\big(\ket{B}\big)\equiv \braket{\Lambda| B}\,.
+\label{gdef}
+\end{align}
+Nowhere in the lattice definition of $g$-factor did we utilize conformal invariance, so the definition \eqref{gdef} applies equally well for any lattice model and boundary condition. A test of this universality is that $g$ factors computed in various geometries give the same answer. 
+
+
+Non-universal subleading terms in the bulk part of the partition function complicate extracting the universal contribution from coming from the boundary. We therefore compute only {\em ratios} of $g$ factors, where the bulk contributions cancel. (In CFT, the $g$ factors can be computed directly, as bulk free energy is exactly zero and the leading subleading term universal \cite{Blote1986,Affleck1986}.) For any graph with topology of the disc,
+\begin{align}
+\frac{g\big(\ket{A}\big)}{g\big(\ket{B}\big)} = \lim_{L_b\to\infty}\frac{Z\big(\ket{A}\big)}{Z\big(\ket{B}\big)} \,.
+\label{gratiodef}
+\end{align}
+The corresponding expression on the cylinder follows from \eqref{gdef}, with the ratio making the factors of $\Lambda$ cancel. A remarkable consequence of our work is that any time two boundary conditions are related by gluing a topological defect, the corresponding ratio of $g$ factors follows instantly. Namely, on a disc, \eqref{Bdual} gives for any $L_b$
+\begin{align}
+\frac{g\big(\mcd_\varphi \ket{B}\big)}{g\big(\ket{B}\big)} = d_\varphi \,.
+\label{gdphi}
+\end{align}
+This exact relation holds for {\em any} boundary state $\ket{B}$ in any lattice model built using a fusion category: the quantum dimensions give exact ratios of $g$ factors!
+The identity \eqref{annulusfusion} for cylinder partition functions gives a nice consistency check. Using it with the definition \eqref{gdef} gives
+\begin{align}
+g\big(\mcd_a|A\rangle\big)g\big(\mcd_b|B\rangle\big)=\sum_a N_{ab}^c\, g\big(\mcd_c |A\rangle\big) g\big(\ket{B}\big) \,.
+\end{align}
+Using \eqref{gdphi} then yields \eqref{eq:ddNd}.
+
+
+Comparing \eqref{gdphi} with \eqref{ggdd} makes clear how our lattice result fits in beautifully with the CFT analysis. 
+We expect that with appropriately chosen couplings and boundary states,
+\begin{align}
+\frac{g\big(\ket{A}\big)}{g\big(\ket{B}\big)}\quad\longrightarrow\quad \frac{g_\mathscr{A}}{g_\mathscr{B}}
+\end{align}
+in the continuum limit. These relations between $g$-factors and quantum dimensions had an earlier physical interpretation in a correspondence between thermodynamic entropy and topological entanglement entropy \cite{Fendley2006,Qi2012}. This correspondence provides a very strong justification for believing that the continuum limit of these lattice models at a critical point corresponds to a conformal field theory, and gives exact information to make the identification precise.
+
+\subsection{From lattice to CFT}
+
+We showed in section \ref{sec:conformal} the similarities between the CFT boundary-state formalism and the lattice approach of section \ref{sec:gluing}.
+Here we deepen the correspondence by identifying specific lattice boundary states that yield
+conformal boundary conditions labeled by primary fields in the rational CFT. 
+
+
+\subsubsection{Three-state Potts and parafermions}
+
+We have already seen three distinct boundary conditions in Ising: fixed $+$, fixed $-$, and free, corresponding to the boundary states $\kett{0}$, $\kett{1}$ and $\kett{X}$ respectively. 
+They are related by defect creation operators in \eqref{Zfreefixed} and \eqref{DXa}, so that \eqref{gdphi} requires 
+\begin{align}
+g\big(\kett{X}\big)=\sqrt{2} g\big(\kett{0}\big)=\sqrt{2} g\big(\kett{1}\big) \,.
+\label{gIsing}
+\end{align}
+In the (chiral) Ising CFT and category, there are three primary fields $1,\psi$ and $\sigma$, with quantum dimensions $1,1,\sqrt{2}$ respectively, so that the total quantum dimension is $\mathscr{D}_{\rm CFT}^{}=2$. The detailed CFT analysis identifies the corresponding CBCs (Cardy states) with fixed $+$, fixed $-$ and free boundary conditions respectively \cite{Cardy1989}, so that $g_+=g_-=1/2$ and $g_{\rm free}=1/\sqrt{2}$. From \eqref{gIsing} it is apparent that our lattice analysis gives these ratios exactly, rigorously and directly. 
+
+For Potts and clock models, \eqref{gIsing} for free and fixed boundary conditions generalize easily to
+\begin{align}
+g\big(\kett{X}\big)=\sqrt{N}\, g\big(\kett{a}\big)
+\label{gfixedfreePotts}
+\end{align}
+for any fixed boundary condition with $a\,$=$\,0,\dots, N-1$. The connection with the corresponding CFTs here however is not as immediate as Ising. The free boundary condition does {\em not} correspond to a field in the Potts or parafermion CFT \cite{Cardy1989}. In category language, this distinction arises because the $\mathbb{Z}_N$ Tambara-Yamagami category used to define the lattice model is not a subcategory of the parafermion CFT category, as apparent from the CFT analysis \cite{ZamoFateev:Parafermion:85}. In CFT language, the field $X$ is one of the $C$-disorder operators described in \cite{Zamolodchikov86}. Our exact lattice result \eqref{gfixedfreePotts} requires that $g_{\rm free} = \sqrt{N} g_{a}$ in the CFT describing the continuum limit, whether or not the states corresponds to a primary field. In the $N=3$ case, it was argued  \cite{Affleck1998} that one can identify the appropriate field in the orbifold theory, and one indeed recovers the appropriate ratio $\sqrt{3}$. 
+
+On the other hand, there are primary fields in the parafermion CFT not in the Tambara-Yamagami category. To find lattice analogs, we apply \eqref{gdphi} starting with some boundary condition not free or fixed. 
+A classic paper \cite{Saleur1989} provides valuable guidance. By numerical analysis of the three-state Potts lattice model at its critical point, conformal boundary conditions corresponding to all six primary fields in the three-state Potts CFT are identified. The three fixed boundary conditions $\kett{a}$ with $a=0,1,2$ correspond to the three Cardy states for the identity and the two parafermion fields. The other three correspond to the ``not-$a$'' states $\bigkett{\overline{a}}$, where the state is an equal-amplitude sum over all basis states where the height $a$ does {\em not} appear, e.g.
+\begin{align}
+\bigkett{\overline{0}} = \Ket{\overline{0}\,X\,\overline{0}\,X\cdots} \,,\qquad    \Ket{\overline{0}} \defineas \frac{1}{\sqrt{2}}\big( \ket{1}+\ket{2}\big)\,.
+\label{not0state}
+\end{align}
+Acting with a spin-shift defect on a not-$a$ states gives another one: $\mcd_b\bigkett{\overline{a}} = \bigkett{\overline{a+b}}$ where the sum is interpreted mod $3$. More intriguing is when we act with the duality defect on any of the not-$a$ states, giving an eighth conformal boundary condition \cite{Affleck1998}, corresponding to lattice boundary state $\bigkett{\overline{X}} \equiv D_X \bigkett{\overline{a}}$.
+This boundary state (dubbed ``new'' in 1998) can be written out explicitly as a two-channel matrix-product state \cite{OBrien2019}. Applying \eqref{gdphi} then yields for the exact $g$-factor ratios
+\begin{align}
+	g\big(\bigkett{\overline{X}}\big)=\sqrt{3}\, g\big(\bigkett{\overline{a}}\big) \,.
+\label{gnewPotts}
+\end{align}
+in agreement with the CFT analysis of the three-state Potts critical theory \cite{Saleur1989,Affleck1998}, where $g_{\rm new}=\sqrt{3}\,g_{\overline{a}}$. One can generalize \eqref{not0state} and \eqref{gnewPotts} in the obvious way to the $N$-state clock models, with the likely outcome that the analogous states will correspond to CBCs in the continuum $\mathbb{Z}_N$ parafermion theories.
+
+While we can construct defect operators that map between $\kett{a}$ and $\bigkett{\overline{a}}$, such defects are not topological in the three-state Potts model, and so are not very useful. However,  lattice analogs of CFTs of course are not unique. Indeed, we have already discussed in section \ref{sec:AFM} how the antiferromagnetic integrable critical points in the ABF models also yield the parafermion CFTs in the continuum limit. The $\mathbb{Z}_k$ symmetry is generated by a lattice translation by two sites, while translation by $2k$ sites corresponds to translation symmetry in the continuum limit. The factors of two arise because translation by a single site merely maps between the models $M_0$ and ${M}_1$. 
+
+With this identification, we can recover ratios of $g$-factors for the parafermion theories distinct from \eqref{gfixedfreePotts} and \eqref{gnewPotts}. Namely, from \eqref{gdphi} and \eqref{eq:def_QD} we have 
+\begin{align}
+\frac{g\big(\mcd_b|B\rangle\big)}{g\big(\ket{B}\big)} = d_b =\frac{\sin{\frac{(2b+1)\pi}{k+2}}}{\sin\frac{\pi}{k+2}}
+\label{ggPotts}
+\end{align}
+for any boundary state $\ket{B}$. This ratio is agreement with the quantum dimensions of the primary fields in the parafermion CFT. Indeed, all such fields are found by taking a field of the $SU(2)_k$ Wess-Zumino-Witten CFT and modding out its $U(1)$ component, leaving the quantum dimension unchanged. Since the fusion algebra of the $\mathcal{A}_{k+1}$ category used to build the ABF models is the same as that of $SU(2)_k$, the quantum dimensions in the parafermion CFT are all given by \eqref{ggPotts} for some $b$. Note that in general, $\sqrt{N}$ does not appear in this list, confirming our earlier assertion that free boundary conditions are not associated with any primary field in the CFT. 
+
+By considering two distinct lattice models, we thus have obtained all the ratios of $g$-factors corresponding to primary fields in the parafermion CFT, along with the free boundary condition and its dual. We can understand a little more about the explicit boundary states in 
+the antiferromagnetic ABF models.
+The state $\kett{0}_{\rm AF}$ defined in \eqref{AFgs} is the ground state of the completely staggered model, where the $\mathbb{Z}_k$ symmetry is explicitly broken, and a natural candidate for a state becoming a Cardy state in the conformal limit.
+In this state, the heights obey $h_j=h_{j+2k}$, so that they correspond to a translation-invariant state in the continuum limit.
+Moreover, this state is part of a multiplet of $k$ states, differing by translation by two sites.
+Reinterpreting these states as boundary conditions, they provide the simplest candidates for the antiferromagnetic ABF analog of fixed boundary conditions.
+Define $\mct$ as the translation operator by one site (to the left).
+Its matrix elements are
+\begin{align}
+	{\mct}_{\{h\},\{h'\}} = \prod_{j=1}^{L} \delta_{h_j h'_{j+1}} \,,
+\label{transdef}
+\end{align}
+we thus conjecture that in the continuum limit
+\begin{align}
+\mct^{2a} \kett{0}_{\rm AF} \to \ket{a}_{\rm CFT}^{} \,.
+\label{Pottsconj1}
+\end{align}
+Further support comes from examining $\kett{1}_{\rm AF}=\mcd_1\kett{0}_{\rm AF}$, given explicitly in \eqref{AFgs1} for the $k=3$ case. For any $k$, it remains a product state, repeating every $2k$ sites. Thus it also is rather simple, suggesting it is also a conformal boundary condition. The not-$a$ states also are product states, and so we conjecture that in the continuum limit 
+\begin{align}
+\mct^{2a} \mcd_1\kett{0}_{\rm AF} \to \ket{\overline{a}}_{\rm CFT}^{} \,.
+\label{Pottsconj2}
+\end{align}
+for $k=3$. The conjectures (\ref{Pottsconj1}, \ref{Pottsconj2}) are consistent with the ratio of $g$-factors known from the 3-state Potts CFT: $g_{\overline{a}}=\phi\,g_a$, where $\phi=2\cos\tfrac{\pi}{5} = (1+\sqrt{5})/2$ is the golden mean.
+
+
+\subsubsection{Minimal models}
+\label{sec:gmin}
+ 
+Here we generalize the Ising results to find lattice analogs of all conformal boundary conditions in the unitary minimal models of CFT, the ``$A$-series'' \cite{BPZ:CFT:84,DiFrancesco1997}.
+Our results are in harmony with the results of \cite{Behrend1998,Behrend2001,Chui2003}, but are obtained more directly and without exploiting integrability.
+
+The connection between lattice models and minimal CFTs is more straightforward than in the parafermion models, as here the lattice category is a subcategory of the CFT category.
+The CFTs in the $A$-series  % are labelled by $\mathcal{M}(k+1,k+2)$ 
+have central charge $c=1 - \frac{6}{(k+1)(k+2)}$ for integer $k\ge 2$.  The fusion category describing the topological properties of its fields can be written as $\mathcal{A}_k \times \mathcal{A}_{k+1} / \mathbb{Z}_2$.
+The standard labeling of the CFT primary fields $\Phi_{r,s}$ is by a pair of integers $(r,s)$ in the range $1 \leq r \leq k$ and $1 \leq s \leq k+1$, and relates to ours by $r=2a+1$ for $a \in \mathcal{A}_{k}$, and $s = 2b+1$ for $b \in \mathcal{A}_{k+1}$. Modding out by the $\mathbb{Z}_2$ identifies the 
+label $(r,s)$ with $(k+1-r,k+2-s)$, so there are only $\tfrac{k(k+1)}{2}$ primary fields in the $A$-series CFT.
+The fields $\Phi_{2a+1,1}$ and $\Phi_{1,2b+1}$ obey the fusion rules of $\mathcal{A}_{k}$ and $\mathcal{A}_{k+1}$ respectively, and $\Phi_{r,s}$ (as an object in the fusion category) can be written as $\Phi_{r,1} \otimes \Phi_{1,s}$. The quantum dimensions of the primary fields are then simply the product of those in the two categories:
+\begin{align}
+	d_{r,s} = d_{\frac{r-1}2}^{(k)}d_{\frac{s-1}2}^{(k+1)} = \frac{ \sin\frac{r\pi}{k+1} \sin\frac{s\pi}{k+2} }{ \sin\frac{\pi}{k+1} \sin\frac{\pi}{k+2} } \,,
+\label{drsdef}
+\end{align}
+where the superscripts label the category.
+A thorough treatment of CBCs in this $A$-series was given in \cite{Behrend1999}. 
+There are no ``extra'' boundary conditions here like in Potts, so we need consider only CBCs obeying \eqref{ggdd}.
+All their $g$-factors are therefore given by \eqref{ggdd} and \eqref{drsdef} as
+\begin{align}
+	g_{r,s}=\frac{d_{r,s}}{\sqrt{\mathscr{D}_k}}\,,\qquad\quad
+	\mathscr{D}_{k} = \frac{\sqrt{(k+1)(k+2)}}{\sqrt{8} \, \sin\frac{\pi}{k+1}\sin\frac{\pi}{k+2}} \,.
+\label{gmin}
+\end{align}
+
+
+As with the parafermions, we analyze two distinct lattice models in the universality class of each $A$-series minimal model. One is the ferromagnetic $\mathcal{A}_{k+1}$ ABF model discussed at length above.
+The other is the dilute-$\mathcal{A}_k$ height model \cite{Warnaar1992}.
+The latter is described in our setup by  using the $\mathcal{A}_k$ category with $\upsilon=0\oplus \frac{1}{2}$, as opposed to the ABF $\upsilon=\frac12$.
+Since $\upsilon$ is not a simple object, one must sum over configurations with either $0$ or $\frac12$ on each edge of $G$ (with an even number of each at each vertex), as displayed in \eqref{diluteloops}.
+Using the shadow-world construction described in section \ref{sec:heights} gives a lattice height model in the same fashion as the ABF models, but here adjacent heights can be the same as well as differing by $\pm \frac12$.  
+
+A special choice of weights in the dilute-$\mathcal{A}_k$ model gives a critical point described in the continuum limit as the same CFT coming from the ABF model built on the $\mathcal{A}_{k+1}$ category \cite{Nienhuis1990,Warnaar1992}.
+Since a minimal CFT involves both $\mathcal{A}_k$ and $\mathcal{A}_{k+1}$ categories, we have the pleasant feature that different aspects of this CFT are described more naturally by the two different lattice models.
+The simplest fixed boundary states in the dilute-$\mathcal{A}_{k}$ models are given by the completely ordered states
+\begin{align}
+\kett{a}_{\rm dilute} \equiv \ket{aaaa\cdots} = \mcd_a \kett{0}_{\rm dilute}
+\label{totallyfixed}
+\end{align}
+for $a=0, \frac12,\dots,\frac{k-1}{2}$.
+The ratios of $g$ factors for these states therefore obey
+\begin{align}
+\frac{g\big(\kett{a}_{\rm dilute})}{g\big(\kett{a'}_{\rm dilute})} = \frac{g\big(\kett{a}_{\rm dilute})/g\big(\kett{0}_{\rm dilute})}{g\big(\kett{a'}_{\rm dilute})/g\big(\kett{0}_{\rm dilute})} =\frac{d_a^{(k)}}{d_{a'}^{(k)}}  \,,
+\label{diluteratio}
+\end{align}
+using \eqref{gdphi} as usual.
+For the ABF models, the simplest boundary state is the completely ordered one $\kett{0} = \Ket{0\frac12 0\frac12\cdots}$.
+Other nice ones $\kett{b}=\mcd_b\kett{0}$ defined by acting with the defect creation operators, and are given explicitly in various forms in \eqref{staggeredgs}, \eqref{fusiontreebasis} and \eqref{csgscupbasis}. For these, we have 
+\begin{align}
+\frac{g\big(\kett{b}\big)}{g\big(\kett{b'}\big)} = \frac{g\big(\kett{b})/g\big(\kett{0}\big)}{g\big(\kett{b'}\big)/g\big(\kett{0}\big)} =\frac{d_b^{(k+1)}}{d_{b'}^{(k+1)}} 
+\label{ABFratio}
+\end{align}
+for $b,b'=0, \frac12,\dots,\frac{k}{2}$.
+In \eqref{diluteratio} and \eqref{ABFratio} we indeed recover exact ratios of $g$-factors arising from the two distinct categories arising in the CFT.
+
+To give intuition into how to identify such boundary states with CBCs, we analyze the Fibonacci case $k=3$ in detail. The best intuition into the corresponding CFT comes from a two-dimensional classical model that can {\em not} be written in terms of a fusion category. The Blume-Capel model is an Ising model with vacancies \cite{Blume1971}, so that each site is occupied by $+$, $-$ or is left empty. In addition to the usual Ising nearest-neighbor coupling, it includes a fugacity controlling the vacancy probability. The latter is an irrelevant perturbation of the Ising critical point, so a small fugacity preserves the critical phase transition between order and disorder. However, at large fugacity, vacancies dominate the disordered phase and make the transition first order. The critical and first-order lines meet at a tricritical point,  where all phases all coexist. The continuum limit of this Ising tricritical point is described by the $k=3$ minimal CFT with $c=7/10$. The phase diagram is nicely given by the Landau-Ginzburg theory. The tricritical point has a pure $\phi^6$ potential, while the potential along the first-order transition line has three degenerate minima corresponding to the two ordered and the one (vacancy-dominated) disordered states.
+
+The three states $h=0,\frac12,1$ in the dilute-$\mathcal{A}_3$ model are naturally identified with  $+$, vacancy, and $-$ in the Blume-Capel model respectively, consistent with the $h\to 1-h$ symmetry. The main distinction between the two is that heights $0$ and $1$ are not allowed to be adjacent, as $\upsilon=0\oplus \tfrac12$. With appropriate tuning of Boltzmann weights it indeed has a critical point in the $c=7/10$ universality class \cite{Warnaar1992}.  The first-order transition line corresponds to coexistence among the corresponding ordered states $\kett{0}_{\rm dilute}$, $\bigkett{\tfrac12}_{\rm dilute}$, and
+$\kett{1}_{\rm dilute}$.
+
+The $\mathcal{A}_4$ ABF model is not so obviously similar to the Blume-Capel model. It has four possible heights with the rule that adjacent heights must differ by $\pm\tfrac12$. A useful piece of intuition comes from the fact that deforming the critical $\mathcal{A}_4$ ABF model along the first-order transition line preserves the integrability \cite{Andrews1984,Fendley2004}. The three coexisting ground states are the staggered ones: \cite{Huse1984}
+\begin{align}
+	\kett{0} = \Ket{0\,\tfrac{1}{2}\,0\,\tfrac{1}{2}\cdots} \,,\qquad \Ket{1\,\tfrac{1}{2}\,1\,\tfrac{1}{2}\cdots} \,,\qquad
+	\mct\bigkett{\tfrac{3}{2}} = \mct\mcd_{\frac{3}{2}}\kett{0}=
+	\Ket{1\,\tfrac{3}{2}\,1\tfrac{3}{2}\cdots} \,.
+\label{firstordergs}
+\end{align}
+The translation operator $\mct$ is to preserve integer and half-integer heights on the sublattices. The first and last states were already encountered in e.g.\ \eqref{staggeredgs} and \eqref{ABFratio}.  Comparing \eqref{firstordergs} with the ground states in Blume-Capel or dilute-$\mathcal{A}_3$ shows that the analogs of the states $+$, vacancy and $-$ in the former are given by the nearest-neighbor pairs $0\tfrac12$, $1\tfrac12$ and $1\tfrac32$ in the latter.
+
+There are six primary fields and hence six conformal boundary conditions in the tricritical Ising CFT. We can find lattice analogs of all of them in the $\mathcal{A}_4$ ABF model. The defect operators $\mcd_{\frac12}$ and $\mcd_1$ do not mix the states in \eqref{firstordergs}, but rather generate three more states
+\begin{align}
+	\mct\bigkett{\tfrac12} = \mct\mcd_{\frac12}\kett{0} \,,
+	\qquad\mcd_1\Ket{1\,\tfrac{1}{2}\,1\,\tfrac{1}{2}\cdots} \,,\qquad \kett{1}=\mcd_1\kett{0} \,.
+\label{Fibstates}
+\end{align}
+There are only six instead of twelve distinct states because $\mcd_{\frac32}\mcd_b=\mcd_{\frac32-b}$ here. Since $d_b\ge 1$ for all $b$, acting with a defect creation operator cannot decrease a state's $g$-factor.
+We then identify those in \eqref{firstordergs} with the Cardy states $\Ket{\Phi_{r,1}}$ in the tricritical Ising CFT with $r=1,2,3$ respectively.
+The remainder are identified by noting that 
+for $k=3$ (c.f.\  \eqref{ABFratio})
+\begin{align}
+\frac{g\big(\mcd_{\frac12}\kett{B}\big)}{g\big(\kett{B}\big)} =
+\frac{g\big(\mcd_1\kett{B}\big)}{g\big(\kett{B}\big)} =  \frac{1+\sqrt{5}}{2}= \frac{g_{r,2}}{g_{r,1}} \,,
+\end{align}
+strongly suggesting that each of the three states in \eqref{Fibstates} become the Cardy states $\Ket{\Phi_{r,2}}$. 
+
+Going back to the dilute-$\mathcal{A}_3$ model, we already noted the three ordered states $\kett{0}_{\rm dilute}$, $\bigkett{\tfrac12}_{\rm dilute}$, and $\kett{1}_{\rm dilute}$ are analogous to the three in \eqref{firstordergs}, and so give a distinct lattice realization of the Cardy states $\Ket{\Phi_{r,1}}$.
+As opposed to ABF, these states are related by defect-creation operators, and so we obtain from \eqref{diluteratio}
+\begin{align}
+\frac{g\big(\bigkett{\tfrac12}_{\rm dilute}\big)}{g\big(\kett{0}_{\rm dilute}\big)} =
+\frac{ g\big(\bigkett{\tfrac12}_{\rm dilute}\big)}{g\big(\kett{1}_{\rm dilute}\big)}  
+= \sqrt{2} = \frac{g_{2,1}}{g_{1,1}}=  \frac{g_{2,1}}{g_{3,1}} \,.
+\end{align}
+Thus we indeed obtain distinct exact $g$-factor ratios in the two lattice models.
+Although the defects in the dilute-$\mathcal{A}_3$ model do not relate these to a state giving $\Ket{\Phi_{1,2}}$, the analogy with the ABF model suggests that it is a not-$0$ state.
+Arguments using the Blume-Capel model and flows between conformal field theories \cite{Chim1995,Affleck2000} suggest that it is an equal-amplitude sum over all states not including height $0$ just like those in the Potts model. (Note, however, the analogous ABF state is a sum, the amplitudes are not equal.) Thus defining
+\begin{align}
+	\bigkett{\overline{0}}_{\rm dilute} \equiv \Ket{\overline{0}\,\overline{0}\,\overline{0}\cdots}  \,,\qquad    \Ket{\overline{0}} \equiv \tfrac{1}{\sqrt{2}}\Big( \Ket{\tfrac12}+\ket{1}\Big)\,,
+\label{not0state2}
+\end{align}
+we conjecture that $\bigkett{\overline{0}}_{\rm dilute}$ becomes the Cardy state $\Ket{\Phi_{1,2}}$ in the continuum.
+Likewise, $\bigkett{\overline{1}}_{\rm dilute}$ will become $\Ket{\Phi_{3,2}}$.
+We then can identify $\mcd_{\frac12}\bigkett{\overline{0}}_{\rm dilute}=
+\mcd_{\frac12}\bigkett{\overline{1}}_{\rm dilute}$ with the Cardy state $\Ket{\Phi_{2,2}}$, yielding the correct $g$-factor ratio $\sqrt{2}$.
+These identifications agree with those made using the Blume-Capel model in \cite{Chim1995,Affleck2000}, and integrability in \cite{Behrend2001}. 
+
+The upshot is that we conjectured lattice analogs of the Cardy states $\Ket{\Phi_{r,1}}$ in the ABF $\mathcal{A}_4$ model, and then acted with the defect creation operators to give the remaining  $\Ket{\Phi_{r,1}}$ states.
+In the dilute-$\mathcal{A}_3$ model we conjectured lattice versions of the $\Ket{\Phi_{1,s}}$, and used defects to find the rest.
+Any time two states are related by a $\mcd_a$, the corresponding lattice $g$-factor ratio is exact. The generalization to all $k$ is now apparent. In all the ferromagnetic ABF models, a first-order line with analogous degeneracies between $k$ states \cite{Andrews1984,Huse1984} suggests that we conjecture 
+\begin{align}
+	\mct^{r+s}\mcd_{\tfrac{s-1}{2}} \Ket{\tfrac{r-1}{2}\,\tfrac{r}{2}\,\tfrac{r-1}{2}\,\tfrac{r}{2}\,\cdots} \to \Ket{\Phi_{r,s}}_{\rm CFT}^{} \,.
+\label{ABFconj3}
+\end{align}
+where the translation operator $\mct$ from \eqref{transdef} keeps even and odd heights on the appropriate sublattices, and so preserves the models $M_0$ and ${M}_1$.
+This correspondence is consistent with the fact that $\mcd_{\frac{k}2}\kett{0} = \Ket{\frac{k}{2}\frac{k-1}{2}\frac{k}{2}\frac{k-1}{2}\cdots} = \bigkett{\frac{k}{2}}$ and that $\Phi_{r,s}$ and $\Phi_{k+1-r,k+2-s}$ are the same field.
+It also gives the correct lattice $g$ factor ratios \eqref{gmin} for any $r$, $s$ and $s'$. In the dilute-$\mathcal{A}_k$ models, we have 
+\begin{align}
+	\mcd_{\frac{r-1}2}\kett{0}_{\rm dilute}=
+	\bigkett{\tfrac{r-1}{2}}_{\rm dilute} \to\ \Ket{\Phi_{r,1}}_{\rm CFT}^{}
+\label{diluteconj1}
+\end{align}
+for $r=1,\dots,k$.
+This conjecture gives the correct ratios $g_{r,1}/g_{r',1}$ for any $r$ and $r'$.
+Between the two lattice models, we then have exact lattice computations for all ratios of $g$ factors.
+
+
+Various generalizations of these boundary states to higher-spin $\upsilon$ are straightforward to conjecture, as results from integrability \cite{Date:1987} give strong hints.  The same goes for the BMW models \cite{Jimbo:1987} and dilute BMW models \cite{Grimm1994}. It would be interesting to see if lattice analogs of all the boundary states could be conjectured as for the minimal CFTs. 
+
+
+
+
+
+
+\section{Twists and tubes}
+\label{sec:twists}
+
+Topological defects can be used to define {\em twisted boundary conditions} where the partition function is independent of the location of the twist. 
+Here we introduce the rich structure describing such partition functions and compute universal quantities, the eigenvalues of the Dehn twist. When the continuum limit is a CFT, these yield exact results for conformal spins.
+
+
+
+\subsection{Twisted boundary conditions}
+
+
+
+
+
+We consider twisted boundary conditions given by defect lines stretching from one end of a cylinder to the other, and so terminating on the boundaries. 
+The corresponding fusion tree $\mathcal{V}^{(\varphi)}$ has an extra line coming from the defect line running into the bulk of the system, as illustrated in fig.~\ref{fig:PartitionCutTwisted}.
+%\eqref{tetra0}
+ \begin{figure}[hb] \centerline{%
+ \xymatrix @!0 @M=2mm @R=30mm{
+				&\HilbTwisted \\
+				&\HilbFromZTwisted \ar[u]		
+	}}
+\caption{Ending a defect line in the boundary defines a twisted vector space $\mathcal{V}^{(\varphi)}$. }
+\label{fig:PartitionCutTwisted}
+\end{figure}
+The heights on the boundary adjacent to the defect line must have a non-zero fusion product with $\varphi$.  
+The corresponding square-lattice transfer matrix $T^{(\varphi)}$ acts downwards in figure \ref{fig:PartitionCutTwisted}, perpendicularly to the defect line, and is said to have a {\em twisted} boundary condition. 
+A famous example is the antiperiodic boundary condition in the Ising model, which play a crucial role in the mapping to free fermions \cite{Lieb61}. 
+Examples with $d_\varphi>1$ have been found by exploiting integrability \cite{Chui2001,Chui2002,Chui2003}, for example the $(1,s)$ defects in the ferromagnetic ABF models.
+
+Partition function identities like (\ref{annulusfusion}) generalize to twisted boundary conditions. 
+The simplest relation is given by inserting a closed loop.
+The partition functions with and without the loop are related by \eqref{ZdZ} as always. 
+We stretch the loop around the periodic direction, and then form a defect line running across the cylinder by fusing opposite sides of the loop together using \eqref{F0c} and gluing to the boundaries. In pictures,
+\begin{align*}
+d_a & \substack{\ket{A} \\ \annulusx \\ \ket{B} } 
+= \substack{\ket{A}  \\ \annulusaloop  \\ \ket{B} }= \substack{ \ket{A}  \\ \annulusaloopprime \\  \ket{B}} =\sum_{\varphi} N_{aa}^{\varphi}\sqrt{\frac{d_\varphi}{d_a^2}}\,  \substack{ \ket{A} \\ \annulusaH \\ \ket{B} }
+=\sum_{\varphi} N_{aa}^{\varphi}\sqrt{\frac{d_\varphi}{d_a^2}}\; \substack{ \mathcal{D}_a^{(\varphi)}|A\rangle \\ \annulusphi \\  \mathcal{D}_a^{(\varphi)} \ket{B}}\quad
+\end{align*}
+where have denoted by $\mcd_a^{(\varphi)}$ the defect creation operator acting on $\mathcal{V}^{(\varphi)}$. In an equation,
+\begin{align}
+	Z\big(\ket{A},\ket{B}\big) =\frac{1}{d_a} Z\Big(\mcd_a|A\rangle,\mcd_a|B\rangle\Big) + 
+	\frac{1}{d_a}\sum_{\varphi\ne 0} N^\varphi_{aa} \sqrt{d_\varphi}\, Z^{(\varphi)}\mkern-2mu \Big(\mcd_a^{(\varphi)}|A\rangle,\mcd_a^{(\varphi)}|B\rangle\Big) \,.
+\label{Zstretch}
+\end{align}
+We can generalize the defect creation operator further via
+\begin{align}
+\substack{  \ket{\mathcal{B}}\\ \bca}\quad \longrightarrow\quad \substack{ \ket{\mathcal{B}}\\ \bcb}\quad \equiv\quad  \substack{ \mathcal{D}^{(B)}_{RG} \ket{\mathcal{B}}\\ \bcc}
+\end{align}
+For $G\ne B$, $\mathcal{D}^{(B)}_{RG}$ resembles the boundary-condition-changing operators used in boundary CFT \cite{Cardy1989}. 
+The operators here, however, are topological in that the triangle defects and hence the regions of distinct boundary conditions can be moved around at will without changing the partition function. 
+
+
+A more general identity relates twisted partition functions to untwisted ones. We reverse the logic leading to \eqref{Zstretch}, and start with boundary states $\mcd_a^{(\varphi)}|A\rangle$ and $\mcd_b^{(\varphi)}|B\rangle$. Pulling the defects off the boundary and doing an $F$-move leaves a line wrapped around the cycle with a bubble in it. The bubble can be removed using \eqref{bubbleremoval}, giving
+\[
+\substack{\mathcal{D}_a^{(\varphi)}|A\rangle \\ \annulusphi \\ \mathcal{D}_b^{(\varphi)} |B\rangle}=
+\substack{\ket{A} \\ \AnnulusHa \\ \ket{B} }= \sum_{c} \sqrt{d_ad_bd_\varphi}\,
+\Msixj{a& a& \varphi}{ b&b & c} \substack{ \ket{A}\\  \annulusz \\ \ket{B}} \,.
+\]
+For $\varphi=0$, this relation reduces to \eqref{annulusfusion}.
+The partition functions therefore obey
+\begin{align}
+	Z^{(\varphi)}\mkern-2mu \Big(\mcd_a^{(\varphi)}|A\rangle,\mcd_b^{(\varphi)}|B\rangle\Big)
+		= \sum_c \sqrt{d_ad_bd_\varphi}\, \Msixj{a& a& \varphi}{ b&b & c} Z\Big(\mcd_c|A\rangle,|B\rangle\Big) \,.
+	\label{defectacross}
+\end{align}
+Using \eqref{defectacross} allows these twisted cylinder partition functions of this from to be expressed as sums over those without the twist.
+As an example we apply \eqref{defectacross} to Ising with a spin-flip defect around the cylinder to get
+\begin{align}
+	Z^{(\psi)}\mkern-2mu \Big(\kett{\rm free},\kett{\rm free}\Big) = Z\big(\kett{+},\,\kett{+}\big) - Z\big(\kett{+},\,\kett{-}\big)
+\end{align}
+where $\kett{+}$ and $\kett{-}$ are fixed-up and fixed-down boundary conditions, $\kett{\rm free}$ are free boundary conditions, and we used the tetrahedral symbols \eqref{Isingtetra}. 
+This twisted partition function is the difference of the same two fixed ones that give the untwisted one, \eqref{Zff} with $N=2$, generalizing the CFT expression \cite{Cardy1989} to any couplings. The extension to clock models and the spin-shift defects is fairly obvious, with the minus sign replaced by an $N$th roots of unity.
+
+
+
+One important feature of twisted boundary conditions is that they do not break translation invariance. 
+For twisted boundary conditions one needs to follow a translation by one site with a local unitary transformation in order to place the defect back into its original position.
+This unitary transformation is given by an $F$-move. 
+In the absence of the defect, translation is defined by \eqref{transdef}, so that $T\mct=\mct T$ when the Boltzmann weights are independent of position.
+In the presence of a defect $\varphi$ between sites $j$ and $j+1$ as in figure \ref{fig:PartitionCutTwisted}, the matrix elements of the modified single site translation operator are given by
+\begin{align}
+	\big(\mct^{(\varphi)}\big)_{\{h\},\{h'\}} =  \sqrt{d_{h^{}_j} d_{h'_{j+1}}} 
+	\Msixj{\varphi & h_j & h_{j+1}}{\upsilon & h'_{j+1} & h'_{j}} \;  \prod_{l\ne j} \delta_{h^{}_l h'_{l+1}}
+\label{transmod}
+\end{align}
+so that as long as $A_Q(\chi)$ is independent of $Q$,
+\begin{align}
+T^{(\varphi)}\mct^{(\varphi)} =\mct^{(\varphi)} T^{(\varphi)}
+\label{TTTT}
+\end{align}
+acting on $\mathcal{V}^{(\varphi)}$. 
+This explicit form of the translation operator is very useful for doing momentum-resolved exact diagonalization. 
+
+
+
+
+\subsection{Scaling dimensions from Dehn twists}
+\label{sec:twistedbc}
+
+Twisted boundary conditions let us compute another set of universal quantities,  the eigenvalues of ``Dehn twists'' in the presence of a defect. Prosaically, a Dehn twist $\modT$ amounts to cutting open the cylinder around a cycle, twisting one side of the cut by $2\pi$, and then gluing the cylinder back together. 
+In the presence of twisted boundary conditions it can mix different defect configurations. 
+For example, the Dehn twist $\modT^{(\varphi)}$ in the presence of a defect $\varphi$ perpendicular to the cut gives
+\begin{align}
+\modT^{(\varphi)}: \; \TxGG\quad \rightarrow\quad \TGGx \,,
+\label{Tphi}
+\end{align}
+in essence inserting a horizontal defect line.  
+
+In a translation-invariant system, $\modT$ amounts to acting with the translation operator repeatedly to move the heights back to their original positions.  Without the twist, we have $\modT = (\mct)^L=1$ on the lattice, yielding the usual momentum quantization $e^{ikL}=1$ for the eigenvalues $e^{ik}$ of $\mct$. With twisted boundary conditions, the modified translation operator \eqref{transmod} commutes with the transfer matrix as displayed in \eqref{TTTT}. The translation operator still can be diagonalized in terms of its momentum eigenvalues, but the momentum eigenvalues and hence those of $\modT^{(\varphi)}$ are shifted. 
+
+In a CFT, standard arguments relate the eigenvalues of the Dehn twist in the presence of twisted boundary conditions to the {\em conformal spin} $s_\varphi$ of a chiral operator.
+Heuristically, one can think of this operator as creating the defect at the bottom of the cylinder, and then annihilating it at the top. In a CFT,  the energy difference between an excited state and the ground state is proportional to the sum of the right and left scaling dimensions $(\Delta_\varphi,\,\overline{\Delta}_\varphi)$ of the operator $\varphi$ creating the state: 
+\begin{align}
+E^{(\varphi)} - E_0 = \frac{2\pi}{L}\Big( \Delta_\varphi +\overline{\Delta}_\varphi\Big)  
+\end{align}
+where the fermi velocity (and $\hbar$) are set to be 1. 
+In a gapless system, the right and left momenta are proportional to the right and left energies, so that 
+\begin{align}
+k_\varphi = \frac{2\pi}{L}\Big( \Delta_\varphi - \overline{\Delta}_\varphi\Big) \equiv \frac{2\pi}{L} s_\varphi  \,.
+\label{kDelta}
+\end{align}
+assuming the ground state is chirally invariant.  We also identified the length in the continuum with the number of sites $L$ of the lattice, an assumption we discuss further below. 
+
+When the continuum limit of a lattice model becomes a CFT, the Dehn-twist eigenvalues must be identical, as they are independent of system size. These eigenvalues thus provide another set of universal quantities computable exactly on the lattice. Letting $e^{i2\pi t_\varphi}$ be the eigenvalue of $\modT^{(\varphi)}$, using \eqref{kDelta} relates it to the conformal spin:
+\begin{align}
+s_\varphi = \frac{n}{2} + t_\varphi
+\label{confspin}
+\end{align}
+for some integer $n$.
+The reason for the half-integer ambiguity in \eqref{confspin} is explained in Part~I: When $\varphi$ is odd (as with the duality defect $X$ in parafermion models), one must act with $\modT^{(\varphi)}$ twice to leave the model invariant. When $\varphi$ is even or there is no grading, the ambiguity is up to an integer. Another subtlety is described in the discussion around \eqref{confspin2} below. 
+
+In Part~I, we found $s_\sigma=\tfrac{1}{16}$ in Ising by explicit analysis of $(\modT^{(\sigma)})^2$. A similar computation gives the shifts for Fibonacci model in the presence of the $\tau$ defect, i.e.\ spin 1 in the ABF model at $k=3$. A basis of non-trivial $\tau$-defect configurations with twisted boundary conditions is 
+\begin{align}
+\label{FibTube}
+\mathds{1}^{(\tau)} =  \TxGG \,, \qquad \quad \modT^{(\tau)} =   \TGGx \,, \qquad \quad \psi^{(\tau)} = \TGGG \,.
+\end{align}
+All other $\tau$-defect configurations with twisted boundary conditions can be related to these by doing $F$-moves. 
+We take the Hilbert space in the horizontal direction so that multiplication of operators amounts to stacking the right-hand side of \eqref{Tphi} in the vertical direction. Using the $F$-moves \eqref{defectFib} to simplify yields then 
+the non-trivial identities
+\begin{align}
+\big(\modT^{(\tau)}\big)^2&=\frac{1}{\phi} \mathds{1}^{(\tau)} + \frac{1}{\sqrt{\phi}}\psi^{(\tau)} \,,\cr
+\modT^{(\tau)}\, \psi^{(\tau)} &= \frac{1}{\sqrt{\phi}}\mathds{1}^{(\tau)} - \frac{1}{\phi} \psi^{(\tau)} \,.
+\end{align}
+Putting the two together gives
+\begin{align}
+\label{FibSpins}
+\big(\modT^{(\tau)}\big)^3=\mathds{1}^{(\tau)} +\frac{1}{\phi}\modT^{(\tau)}-\frac{1}{\phi}\big(\modT^{(\tau)}\big)^2 \quad\implies\ 
+\big(\modT^{(\tau)}-\mathds{1}^{(\tau)}\big)\Big((\modT^{(\tau)})^2+\phi \modT^{(\tau)} +\mathds{1}^{(\tau)}\Big)=0 \,.
+\end{align}
+The eigenvalues of $\modT^{(\tau)}$ are therefore $1,e^{\pm i 4\pi/5}$. Using \eqref{confspin} gives shifts $t_\varphi=0,\pm\tfrac25 $ up to an integer ambiguity (here the defect implements a self-duality). These shifts do correspond to conformal spins: a dimension $2/5$ operator occurs in the three-state Potts CFT for the antiferromagnetic critical point, and a dimension 3/5 operator appears in the tricritical Ising CFT for  the ferromagnetic. 
+
+The vector space $\mathcal{V^{(\varphi)}}$ can be split into the sectors with these eigenvalues by utilizing the tube category described in the next subsection \eqref{sec:tube}. As the Dehn twist commutes with the transfer matrix, these sectors can be thought of as having a conserved ``flux'', and the tube category allows this idea to be generalized as well. In fact, the tube category yields a general procedure allowing all eigenvalues $t_\varphi$ and hence the shifts to be computed, see Sec.~\ref{sec:tube} below. 
+
+
+
+
+We content ourself here with giving another nice example of a Dehn twist, by generalizing the Ising computation of Part~I to all the Potts and clock models. We consider the Dehn twist $\modT^{(X)}$ in the presence of the duality defect, and define 
+\begin{align}
+\psi_a=\psia
+\end{align}
+so that $\psi_0^{}=\mathds{1}^{(X)}$. 
+Using $F$-moves from \eqref{FPotts} then gives
+\begin{align}
+\Big(\modT^{(X)}\big)^2&= \frac{1}{\sqrt{N}} \sum_{a=0}^{N-1} \psi_a \,,\qquad\quad
+\psi_a\psi_b = \omega^{ab} \psi_{(a+b)\,{\rm mod}\,N} \,.
+\label{PottsDehn}
+\end{align}
+
+Finding the eigenvalues of $\modT^{(X)}$ is an amusing exercise. The easiest way we found is to rewrite the $\psi_a$ in terms of projection operators (the tube idempotents) using
+\begin{align}
+\psi_a = \omega^{-a(a-1)/2}\big(\psi_1\big)^a \,,\qquad\quad
+\big(\psi_1\big)^N  = (-1)^{(N-1)/2} \psi_0^{} \,,
+\end{align}
+as follows from \eqref{PottsDehn}. The projection operators for even $N$ are
+\begin{align}
+\Psi_r = 
+\frac{1}{N}\sum_{a=1}^{N} \omega^{ar} \big(\omega^{\frac12}\psi_1\big)^a
+\quad\implies\quad \big(\omega^{\frac12}\psi_1\big)^a= \sum_{r=1}^{N} \omega^{-ar} \Psi_r \,.
+\label{projdef}
+\end{align}
+They obey $\Psi_r\Psi_{r'}=\delta_{rr'}\Psi_r$. Rewriting \eqref{PottsDehn} thus gives
+\begin{align} 
+\Big(\modT^{(X)} \Big)^2 
+= \frac{1}{\sqrt{N}}  \sum_{r=0}^{N-1} \Psi_r\; \omega^{\frac12r^2}\,
+\sum_{a=0}^{N-1} \omega^{-\frac12 (a+r)^2}\quad\hbox{ for even }N.
+\label{Tsqsum}
+\end{align}
+For odd $N$, the projection operators are as in \eqref{projdef} without the $\omega^{-\frac12}$, and
+\begin{align} 
+\Big(\modT^{(X)}\Big)^2 = \frac{1}{\sqrt{N}}  \sum_{r=0}^{N-1} \Psi_r\; \omega^{\frac12 (r-\frac12)^2}\,\sum_{a=0}^{N-1} \omega^{-\frac12 (a+r-\frac12)^2} \quad\hbox{ for odd }N.
+\label{Tsqsum2}
+\end{align}
+The sums over $a$  in \eqref{Tsqsum} and \eqref{Tsqsum2} are called quadratic Gauss sums, and are independent of $r$. They can be evaluated by using an analog of quadratic reciprocity \cite{Gelaki2009}, giving
+\begin{align*}
+\frac{1}{\sqrt{N}}\sum_{a=0}^{N-1} \omega^{-\frac12(a+r)^2} = e^{-i\frac\pi4}\ \hbox{ for even }N \,,\qquad
+\frac{1}{\sqrt{N}}\sum_{a=0}^{N-1} \omega^{-\frac12(a+r-\frac12)^2} = e^{-i\frac\pi4}\ \hbox{ for odd }N \,,\qquad
+\end{align*}
+The square of the Dehn twist is therefore
+\begin{align} 
+\Big(\modT^{(X)}\Big)^2 = e^{-i\frac\pi4} \sum_{r=0}^{N-1} \alpha_r \Psi_r  \,,\qquad\quad\hbox{with }\alpha_r = 
+\begin{cases}
+\omega^{\frac{r^2}{2}}\qquad&\hbox{for even }N,\\
+\omega^{\frac12 (r-\frac12)^2}\qquad&\hbox{for odd }N.
+\end{cases}
+\label{Tsq}
+\end{align}
+
+The projection operators in \eqref{Tsq} are complete and orthogonal, so the eigenvalues of $\modT^{(X)}$ must be
+$\pm\sqrt{\alpha_r}\,e^{-i\pi/8}$. The nicest way to write out the resulting momentum shifts is in terms of an integer $m$ defined by $m = \tfrac{N}{2}-r$ for even $N$ and $m=\tfrac{N-1}{2}-r$ for odd $N$, yielding
+\begin{align}
+t_m=  \frac{N-1}{16} -\frac{m(N-m)}{4N} + \frac{n}{2} \,.
+\label{paradim}
+\end{align}
+The index $m$ can be restricted to be non-negative and less than $N/2$, as other values result in at most half-integer shifts. Nowhere in this calculation did we fix the values $A_Q(\chi)$, so the values given in \eqref{paradim} constrain any field theory arising in a continuum limit of the $\mathbb{Z}_N$ clock model.
+
+The conformal spins implied by \eqref{paradim} look somewhat unfamiliar in parafermion CFTs describing the continuum limits of the ferromagnetic clock model with $A_Q$ fine-tuned (for $N>3$) to \eqref{paraweights}. The reason is that the CFT spectrum with twisted boundary conditions contains non-integer-spin operators as well as  ``$C$-disorder'' operators  \cite{Zamolodchikov86} with dimensions
+\begin{align}
+\Delta_p = \overline{\Delta}_p = \frac{N-1}{16} -\frac{p(N-p)}{4(N+2)} \,,
+\end{align}
+for $p\le \tfrac{N}{2}$ a non-negative integer. The similarity to \eqref{paradim} is striking, but only $t_0$ can be identified with $\Delta_0$, coming from the chiral part of the $C$-disorder operator with $p=0$. Moreover, in any event only for $N=3$ is the critical behavior generically that of the parafermion CFT, as otherwise it is typically governed by a $c=1$ CFT \cite{Nienhuis1984}. 
+
+The other eigenvalues in \eqref{paradim} therefore must arise in CFT from combining left and right sectors in unusual ways. This observation is in accord with the spins seen from extensive numerical simulations of clock chains with twisted boundary conditions \cite{Yu2017}. There is a catch, however. For the $N=3$ ferromagnetic chain described by the three-state Potts CFT in the continuum limit, CFT and numerics (table IX of \cite{Yu2017}) strongly suggest that twisted boundary conditions result in states with spins $\pm \tfrac{1}{8}$ and  $\pm \tfrac{1}{24}$ and half-integer shifts of these. These numbers are in perfect accord with the Dehn twist results \eqref{paradim} using \eqref{confspin}. For the antiferromagnetic $N=3$ case, however, the states in table X of \cite{Yu2017} have conformal spins $\pm \tfrac{1}{16}$ and $\pm \tfrac{1}{48}$, up to {\em quarter}-integer shifts. As our analysis is blind to the couplings, we obtain the same momentum shifts in both cases.  We account for the difference by noting that the unit cell of this antiferromagnet is two sites, so the effective length of the lattice model is $L_{\rm eff}=L/2$. If we use the effective length in the continuum results, the CFT formula \eqref{kDelta} and thus the correspondence to the lattice \eqref{confspin} are modified to
+\begin{align} k_\varphi= \frac{2\pi}{L_{\rm eff}} s_\varphi \,,\qquad \implies \qquad
+s_\varphi = \frac{L_{\rm eff}}{L} \Big( t_\varphi + \frac{n}{2}\Big) \,.
+\label{confspin2}
+\end{align}
+giving the correct answer for both ferromagnet and antiferromagnet with $N=3$. Comparing the results of \cite{Yu2017} for mixed ferromagnet/antiferromagnets with $N=4$ and $N=5$ to \eqref{paradim} suggests that $L_{\rm eff}=L/4$ in these cases, whereas for $N=6$ no modification is needed. 
+
+
+
+\subsection{Tube category and the cylinder partition functions}
+\label{sec:tube}
+
+We have shown how diagonalizing the Dehn twist (in the basis of cylinder partition functions) allows us to extract universal quantities such as the momentum eigenvalues in the presence of twisted boundary conditions. 
+In this section we describe how this can be formalized using the {\em tube category}.
+The cylinder partition functions form representations of the tube category,
+and the irreducible representations give an explicit definition of the `flux' sectors.
+
+
+We begin by writing down a basis of topological defect configurations for the cylinder with twisted boundary conditions. 
+Ultimately, any cylinder partition function can be reduced to one of the form $(T^{(R)})^N \circ Q_{BPR}^G$.
+Where
+\begin{align}
+	Q_{BPR}^G \; \defineas \;\; \tubeDefect  \,.
+	\label{twisted_symmetry}
+\end{align}
+The operator $Q_{BPR}^G$ provides a map from $\mathcal{V}^{(B)}$ to $\mathcal{V}^{(R)}$. 
+It generalizes the dualities in the presence of a twisted boundary condition. 
+When $B=R$, this operator commutes with the transfer matrices, 
+while in general it provides linear relations between transfer matrices with different duality twisted boundary conditions. 
+That is when $B\neq R$ in \eqref{twisted_symmetry} it allows us to understand how duality can ``change'' boundary conditions.
+The representation theory then tells us what properties from a given $B$ twisted boundary condition carry over to an $R$ twisted boundary condition.
+These facts are a simple consequence of the defect commutation relations \eqref{DefComm1} and \eqref{eq:trivalent_pentagon}:
+\begin{align*}
+T^{(R)} Q_{BPR}^G &= \TransferSymma
+=\TransferSymmb \\
+&=\TransferSymmc
+ =\TransferSymmd \\
+&=\TransferSymme 
+=\TransferSymmf \\[7pt]
+&=\ Q_{BPR}^G T^{(B)}
+\end{align*}
+and so
+\begin{align}
+\big(T^{(R)}\big)^N Q_{BPR}^G = Q_{BPR}^G \big(T^{(B)}\big)^N
+\label{TXXT}
+\end{align}
+for any $N$. 
+The relation \eqref{TXXT} applies for any Boltzmann weight built from the category. 
+The relations \eqref{FibSpins}, \eqref{Tsq} for $\modT$ thus still apply without imposing translation invariance, so for example the off-critical staggered cases discussed in section \ref{sec:selfduality} still split into sectors with the same eigenvalues under the Dehn twist. The only reason to impose translation invariance is to be able to compare these eigenvalues with the conformal spins, as we did in section \ref{sec:twistedbc}.
+Moreover we can use the representation theory of the algebra generated by $Q_{BPR}^G$ to decompose the transfer matrices, and the Hilbert spaces which they act on into sectors.
+These sectors are defined by irreducible representations of the algebra generated by $Q_{BPR}^G$.  
+Analyzing this action yields a host of linear identities between partition functions and their duals on the cylinder and the torus, generalizing those described for Ising in Part~I. 
+
+
+
+The algebra generated by $Q_{BPR}^G$ is called the {tube category}: $\tube(\mcc)$~\cite{ocneanu1994}.
+The tube category is a $\mathbb{C}$-linear category whose objects are given by labeled circles,
+\begin{align}
+	\operatorname{obj}\tube(\mcc) = \Big\{\; \TubeObja \quad\raisebox{-1mm}{,}\quad \TubeObjb \quad\raisebox{-1mm}{,}\quad \TubeObja\oplus\TubeObjb \quad\raisebox{-1mm}{,}\quad \dots \;\Big\} \,,
+\end{align}
+where we have identified the left black dot with the right black dot, and $B, P, G \in \tube(\mcc)$.
+Morphisms in the tube category are diagrams on tubes (equivalently cylinders/annuli):
+For example,
+\begin{align}
+	\TubeMor \;,\, \TubeBPRG \; \in \operatorname{mor}\tube(\mcc) \,.
+\end{align}
+The collection of all possible objects (labeled boundaries) and morphisms (labeled tubes) is the tube category.
+In practice, it is helpful to pick a representation of the tube category.
+The following ``single strand'' representation is particularly convenient
+\begin{align}
+\label{rep1}
+	\operatorname{Rep}_1 \tube(\mcc) &= \mathbb{C}\Bigg[ \TubeBPRG \Bigg].
+\end{align}
+Once we pick a representation such as the one above, $\tube(\mcc)$ is a finite-dimensional $C^*$ algebra with multiplication given by stacking the diagrams vertically, and denoted by $\circ$.
+The basis in \eqref{rep1} constitutes a representation of $\operatorname{mor}\tube(\mcc)$ as any tube-diagram in $\operatorname{mor}\tube(\mcc)$ can be reduced to one in our representation by fusing together the strands on the boundary, and applying a finite number of $F$-moves. 
+Any other representation of the tube category, when viewed as an algebra, will be Morita equivalent to $\operatorname{Rep}_1 \tube(\mcc)$ as algebras.
+Labeling basis elements of this representation by $Q$, $Q'$ and $Q''$ gives
+\begin{align}
+Q \circ Q' = \sum_{Q''} M_{QQ'}^{Q''} Q'' \,,
+\label{XXMX}
+\end{align}
+where $M_{QQ'}^{Q''}$ are the structure constants. 
+In the basis given by the $Q_{BPR}^G$ from \eqref{twisted_symmetry}, the structure constants are found by $F$-moves, and are
+\begin{align}
+	M_{Q_{BPR}^G , Q_{B' P' R'}^{G'}}^{Q_{B''P''R''}^{G''}} &=
+	\delta_{RR''}\delta_{B' B''}\delta_{B R'} \sqrt{d_{GG'G''PP'P''B}}
+\Msixj{G & P & B}{G' & P' & P''} \Msixj{G & P & R}{P'' & G'' & G'} \Msixj{G'' & P'' & B'}{P' & G' & G} .
+\end{align}
+In a different basis for the tube category, for example the basis with two strands coming into and out of the tube, the multiplication would have looked quite a bit different. 
+The spectrum of the transfer matrix, however, is independent of the choice of basis, as the irreducible representations of the tube category are independent of how it is represented.  For example, a collection of $F$-moves allow us to fuse two strands into one, and so map between the 1-strand basis and the 2-strand basis. 
+
+
+The algebra \eqref{XXMX} can be block diagonalized. The blocks are labeled by irreducible representations, while the diagonal elements of the blocks correspond to the minimal idempotents of the tube category. The collection of all minimal idempotents in a block is referred to as the isomorphism class of a given minimal idempotent.
+Off-diagonal elements in each block are isomorphisms between minimal idempotents. 
+The sum of minimal idempotents within a given block is called a minimal central idempotent. 
+The minimal central idempotents of $\tube(\mcc)$ are in one-to-one correspondence with the simple objects of the Drinfeld center $\mcz(\mcc)$~\cite{Muger2003}. 
+
+
+Here we define a minimal idempotent in a way that is useful for computing them.
+The complete set of minimal idempotents is denoted by $E_{R,i}$ and by definition can be expanded in terms of the $Q$ as
+\begin{align} 
+E_{R,i} = \sum_{P,G}C_{GPR}^{(i)} Q_{RPR}^G \,,
+\end{align}
+where $C_{GPR}^{(i)} \in \mathbb{C}$.
+They are completely characterized by requiring they be orthogonal, minimal and complete.
+Orthogonality means that
+\begin{align}
+E_{R,i} \circ E_{B,j} = \delta_{RB} \delta_{ij} E_{R,i} \,.
+\label{idempconda}
+\end{align}
+The collection of idempotents is minimal if $E_{R,i}\circ \operatorname{mor}\tube(\mcc) \circ E_{B,j}$ is at most one dimensional, i.e.,
+\begin{align}
+	E_{R,i}\circ \operatorname{mor}\tube(\mcc) \circ E_{B,j} \cong  
+\begin{cases} 
+\mathbb{C} \quad \text{if $E_{R,i}$ is isomorphic to $E_{B,i}$}\\
+0. \quad  \text{otherwise}\\
+\end{cases}
+\label{idempcondb}
+\end{align}
+In practice this means that the vector space $\{ E_{R,i}\circ  Q \circ E_{B,j} : Q \in \operatorname{mor}\tube(\mcc) \}$ is one dimensional if $E_{R,i}$ and $E_{B,j}$ are isomorphic (see \eqref{isomorphic} below), and equal to $0$ otherwise. 
+If $\dim(E_{R,i}\circ \operatorname{mor}\tube(\mcc) \circ E_{B,j}) >1$ then one or both of the idempotents is not minimal.
+Completeness of the idempotents means that for any $Q \in \operatorname{mor}\tube(\mcc)$ there exist morphisms $u_{R,i},v_{R,i} \in \operatorname{mor}\tube(\mcc)$ such that, 
+\begin{align} 
+Q = \sum_{R,i} u_{R,i} \circ E_{R,i} \circ v_{R,i} \,.
+\end{align}
+In particular, $\sum_{i}E_{R,i} = \operatorname{id}_R$.
+We say minimal idempotents $E$ and $E'$ are isomomorphic when there exist morphisms $U$, $V \in \operatorname{mor}\tube(\mcc)$ such that,
+\begin{align}
+\label{isomorphic}
+E = U \circ V \quad \text{and} \quad E' = V \circ U \,.
+\end{align}
+
+We now can make some universal statements about the spectrum of the transfer matrix. 
+First, all the minimal idempotents commute with the transfer matrix and with each other. 
+Using the above properties it follows that the spectrum of the transfer matrix $T_R$ can be decomposed as
+\begin{align} 
+	T^{(R)}  = \sum_i E_{R,i}\circ T^{(R)}  \circ  E_{R,i} = \sum_i T_{R,i} \,. 
+\label{TETE}
+\end{align} 
+Correspondingly, the vector space $\mathcal{V}^{(R)}$ on which $T^{(R)}$ acts also can be split.
+Letting $\mathcal{V}_{R,i}= \{ \ket{\psi} \in \mathcal{V}^{(R)} \; : \; E_{R,i} \ket{\psi} = \ket{\psi} \} $, completeness of the minimal idempotents guarantees that
+\begin{align}
+	\mathcal{V}^{(R)} \cong \bigoplus_{i} \mathcal{V}_{R,i} \,.
+\end{align}
+Every tube, including the minimal idempotents, also commutes with the Dehn twist $\modT^{(R)} = Q_{R  \mathds{1} R}^R$. Thus $ E_{R,i} \modT^{(R)} = \modT^{(R)} E_{R,i}$, and therefore $E_{R,i} \modT^{(R)} E_{R,i} = \modT^{(R)} E_{R,i}$. 
+Since the Dehn twist is unitary, we have $E_{R,i} \modT^{(R)} E_{R,i} = \theta_{R,i} E_{R,i} $ for some complex phase $\theta_{R,i}$. 
+Hence in the basis of minimal idempotents
+\begin{align}
+	\modT^{(R)} = \sum_{i} \theta_{R,i}\, \operatorname{id}_{R,i}
+\end{align}
+where $\operatorname{id}_{R,i}$ is the identity operator on $\mathcal{V}_{R,i}$.
+
+As pointed out above, the isomorphism classes of minimal idempotents of $\tube(\mcc)$ are in one-to-one correspondence with the simple objects of $\mathcal{Z}(\mcc)$.
+Thus by simply knowing the fusion category $\mathcal{C}$ described by the topological defects, 
+and the Drinfeld center $\mathcal{Z}(\mathcal{C})$ we can compute many properties about the annulus partition functions. 
+For example, when $\mathcal{C}$ is a modular tensor category, $\mathcal{Z}(\mathcal{C}) \cong \mathcal{C} \times \mathcal{C}^*$ and so the momentum eigenvalues for object $(x,y) \in \mathcal{C} \times \mathcal{C}^*$ take the form $k= h_x-h_y + n$, where $n \in \mathbb{Z}$ and $\theta_{x/y} = e^{2\pi i h_{x/y}}$ is the topological spin.
+Lets illustrate this identification explicitly with the Fibonacci model. 
+The diagrams in \eqref{FibTube} are the generators of the Fibonacci tube category in the sector where a $\tau$ strand terminates on the boundaries at the top and bottom of the cylinder. The minimal idempotents of the tube category are eigenstates of $\modT$. 
+Because the Fibonacci category is modular, $\mathcal{Z}(\mathcal{C}) \cong \mathcal{C} \times \mathcal{C}^*$ here, and in particular the simple objects are labeled $(\mathds{1}, \mathds{1})$, $(\tau, \mathds{1})$, $(\mathds{1}, \tau)$, and $(\tau, \tau)$.
+The topological spins of those simple objects are given by, $1, e^{i 4 \pi /5}, e^{-i 4 \pi /5}$ and $1$ respectively. 
+The tube idempotents labeled $(\tau, \mathds{1})$, $(\mathds{1}, \tau)$, and $(\tau, \tau)$ are the irreducible representations of the algebra generated by \eqref{FibTube}, and therefore also give rise to the topological spins computed using \eqref{FibSpins}.  
+This correspondence explains the somewhat counterintuitive result that even in the presence of twisted boundary conditions, there remains a sector with no momentum shift in the Fibonacci theory.
+
+
+
+We now hammer out the tube category for the case when $\mcc$ is the Fibonacci theory, which we denote $\mathrm{Fib}$.
+The tube category can be split up based on its boundary conditions. 
+Tubes which have the same boundary condition on top and bottom are called endomorphisms, and the algebra generated by all such endomorphisms is called the endomorphism algebra. 
+The Fibonacci fusion category has two endomorphism algebras, one for each simple object:
+\begin{align} \begin{split}
+	\operatorname{End}(\mathds{1}) &= \mathbb{C} \Bigg[\; \Txxx\;,\ \TGZG \;\Bigg]\ =\ \mathbb{C} \big[\mathds{1},\, \mcd_\tau\big] \,,
+\\	\operatorname{End}(\tau) &= \mathbb{C}\Bigg[\; \TxGG\,,\ \TGGx\;,\ \TGGG \;\Bigg]\ =\ \mathbb{C} \Big[\mathds{1}^{(\tau)},\,\modT^{(\tau)},\,\psi^{(\tau)}\Big] \,.
+\end{split} \end{align}
+Each endomorphism algebra can be decomposed into minimal idempotents independently.
+In this case both endomorphism algebras are commutative, and so we have as many minimal idempotents as we do diagrams, i.e., $\operatorname{End}(\mathds{1}) \cong \mathbb{C} \oplus \mathbb{C}$ and $\operatorname{End}(\tau) \cong \mathbb{C} \oplus \mathbb{C}\oplus \mathbb{C}$.
+A simple direct computation gives the minimal idempotents for $\operatorname{End}(\mathds{1})$ as
+\begin{subequations} \begin{align}
+	(\mathds{1},\mathds{1})_{\mathds{1}} &=\frac{1}{{1+ \phi^2}}\, \Txxx \;+\; \frac{\phi}{{1+ \phi^2}}\, \TGZG \;,
+\\	(\tau ,\tau)_{\mathds{1}} &=\frac{\phi^2}{{1+ \phi^2}}\, \Txxx \;-\; \frac{\phi}{ {1+ \phi^2}}\, \TGZG \;.
+\end{align}
+The notation $(a,b)$ is chosen so that the idempotent can be easily identified with the simple object in the Drinfeld center, and the subscript denotes the boundary condition.
+Both of these minimal idempotents have eigenvalue $+1$ under the Dehn twist operator $\modT^{(\mathds{1})}$.
+The remaining minimal idempotents are given by\footnote{In practice, it is helpful to diagonalize the Dehn twist $\modT^{(G)}$ in the tube basis in order to quickly and efficiently find many of the idempotents.
+	For the Fibonacci theory the eigenstates of $\modT^{(\tau)}$ completely determine the minimal idempotents with boundary condition $\tau$.} 
+\begin{align}
+	(\tau, \mathds{1})_\tau &= \frac{1}{1+\phi^2}\,
+		\Bigg(\; \TxGG \;+\; e^{4\pi i/5}\, \TGGx \;+\; \sqrt{\phi}\, e^{-3\pi i/5}\, \TGGG \;\Bigg) \,,
+\\	(\mathds{1}, \tau)_\tau &= \frac{1}{1+\phi^2}\,
+	\Bigg(\; \TxGG \;+\; e^{-4\pi i/5}\, \TGGx \;+\; \sqrt{\phi}\, e^{3\pi i/5}\, \TGGG \;\Bigg) \,,
+		\\	 (\tau, \tau)_\tau & = \frac{1}{1+\phi^2}
+		\Bigg( \phi\, \TxGG \;+\; \phi\, \TGGx \;+\; \frac{1}{\sqrt{\phi}}\, \TGGG \;\Bigg) \,.
+\end{align} \end{subequations}
+The Dehn twist $\modT^{(\tau)}$ eigenvalues are given by $\theta_{(\tau,\mathds{1})_\tau}=\theta_{\tau} = e^{6 \pi i/5}$, $\theta_{(\mathds{1},\tau)_\tau} = \theta_{\tau}^*= e^{-6 \pi i/5}$, and $\theta_{(\tau,\tau)_\mathds{1}} = \theta_\mathds{1} = 1$ respectively.
+Notice that the $(\tau, \tau)$ idempotent has support on both $\operatorname{End}(\mathds{1})$ and $\operatorname{End}(\tau)$. 
+This reflects the fact that the full tube algebra, which includes all diagrams on the tube is non-Abelian. 
+It is a consequence of the fact that some tube diagrams connect tubes with the $\tau$ boundary condition to tubes with the $\mathds{1}$ boundary condition.
+
+The tube category thus lets us reproduce the Dehn-twist results in an elegant fashion. We can go further and use \eqref{isomorphic} to construct isomorphisms mapping between idempotents, i.e., find $U$ and $V$ where 
+\begin{align}
+	(\tau, \tau)_\mathds{1} = U \circ V \quad\quad \text{and} \quad\quad (\tau, \tau)_\tau = V \circ U \,.
+\end{align}
+The only remaining tube diagrams are off-diagonal and provide exactly the maps we are looking for: 
+\begin{align}
+	\operatorname{mor}(\mathds{1} \to \tau ) = \mathbb{C} \Bigg[\; \TTadb \;\Bigg] \,,\qquad\quad
+	\operatorname{mor}(\tau \to \mathds{1} ) = \mathbb{C} \Bigg[\; \TTada \;\Bigg] \,.
+\end{align}
+The notation means the right-hand side is the collection of morphisms in the tube category which take a circle with one marked point labeled by $\mathds{1}$ to a circle with one marked point labeled by $\tau$.
+These morphism spaces are one-dimensional and so up to a constant we have, 
+\begin{align} 
+	U \propto \TTada \quad\quad \text{ and} \quad\quad V \propto \TTadb \;.
+\end{align}
+An immediate consequence of these isomorphisms is an identity for the partition functions found from from gluing the ends of the cylinder into a torus. Namely, the partition function found from gluing the $(\tau, \tau)_\mathds{1}$ idempotent into a torus is identical to the partition function found from gluing the $(\tau, \tau)_\tau$ idempotent into a torus. 
+In a sequel we will revisit the consequences for toroidal partition functions in more detail.
+
+
+%More generally, if two minimal idempotents $E_{R,i}$ and $E_{R',i'}$ are isomorphic then not only do the have same eigenvalue under the Dehn twist, the spectra of the transfer matrices $T_{R,i}$ and $T_{R',i'}$ are identical.
+%In our Fibonacci example, this means there is an identical copy of the spectrum in the sector with periodic boundary conditions and the Fibonacci-twisted boundary conditions. 
+%A similar identity leads to linear relations on the annulus partition functions.
+%Similarly, if we glue the $E_{R,i}$ idempotent into a torus and evaluate the partition function it will have an identical spectrum to the to $E_{R',i'}$.
+
+
+
+
+
+
+
+
+
+

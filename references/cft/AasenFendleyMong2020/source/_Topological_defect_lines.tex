@@ -1,0 +1,259 @@
+%auto-ignore
+%      this ensures the arxiv doesn't try to start TeXing here.
+%!TEX root = super_lattice_models_draft.tex
+%      prev line helps TeXShop do the right thing
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Topological defect lines}
+\label{sec:topological_defect_lines}
+
+We now focus on central topic of our paper, the construction of topological defect lines in lattice statistical-mechanical models and quantum spin chains. In the presence of a topological defect, the partition function is independent of any continuous deformation of the path of this defect.
+
+The requirement that a defect be topological results in a huge number of constraints, prohibitively difficult to solve by brute force. We show here that the way to make progress is to rewrite
+lattice models in terms of fusion categories, as described in Sections~\ref{sec:Fusion_Theory}, \ref{sec:statmech} and \ref{modules}.
+The rewriting gives a simple construction of topological defects in an enormous set of models.
+Our method is to use \eqref{TV2} to define the defect weights, and give a direct proof that such defects are topological.
+Our work thus substantially generalizes and systematizes a construction applicable to certain integrable and critical lattice models \cite{Chui2001,Chui2002,Chui2003}.
+Not only does our method allow extensions to many more critical and off-critical models, but it also gives a construction of topological defects that branch and fuse. This additional structure is instrumental in allowing the exact computation of universal quantities.
+
+\subsection{The definition}
+
+The defects we describe are defined by choosing a one-dimensional path along the edges of the quadrilaterals  comprising $G$ and insert a set of defect Boltzmann weights, as depicted in Figure~\ref{fig:LineDefect}.
+\begin{figure}[t] \centerline{%
+\xymatrix @!0 @M=1mm @R=24mm @C=55mm{
+		\LineDefectInserta \ar[r] & \LineDefectInsertb \ar[r] & \LineDefectInsertc \\	
+	}}
+\caption{
+To insert a defect line we choose a path along the edges of the lattice, shown by the zig-zag line in the leftmost diagram.
+We then split open the lattice along this path, as in the middle diagram. 
+Finally we ``glue" the lattice back together with a line of defect weights inserted along the path to find the diagram on the right.
+The resulting partition function is written in \eqref{partition_function_defect}.}
+\label{fig:LineDefect}
+\end{figure}
+Each vertex along the path is split into two, thus creating a string of defect quadrilaterals. 
+We use the same notation for the defect weights as the Boltzmann weights, namely each defect weight is a number depending on the labels of the four surrounding vertices:
+\begin{align}
+\DefectSquarex{a}{b}{\alpha}{\beta},
+\label{defectsquare}
+\end{align}
+The heights $a$,$b$ live on one side of the defect's path and the heights $\alpha$, $\beta$ the other.
+
+The partition function in the presence of non-intersecting defect lines is now easy to define. Diagrammatically it is given by far right of Figure~\ref{fig:LineDefect}, with the convention that we sum over all heights. To be more precise, let $P$ be a path along the edges in the lattice, and $l \in P$ denote the edges in this path.
+To each edge of $P$ we assign one defect weight \eqref{defectsquare}.
+The partition function is
+\begin{align}
+	\mathcal{Z}_{D,P} = \sum_{\text{heights}} \left( \prod_{\text{faces}} \BWabcd \;\times \; \prod_{l \in P} \DefectSquarex{a}{b}{\alpha}{\beta} \times  \prod_{\text{vertices}} d_v \right). 
+	\label{partition_function_defect}
+\end{align}
+%When the defect is topological, $Z_{D,P}$ is independent of deformations of $P$. We describe the necessary conditions on the defect weights and their solution next. 
+
+\subsection{Defect commutation relations}
+\label{sec:defects}
+
+For a defect weight to be topological, the partition function defined in \eqref{partition_function_defect} must obey $\mathcal{Z}_{D,P} = \mathcal{Z}_{D,P'}$ for any two paths $P$ and $P'$ that can be continuously deformed into one another.
+A necessary condition for a topological defect is that its weight (\ref{defectsquare}) and the Boltzmann weights obey the {\em defect commutation relations} defined in Part~I \cite{Aasen2016}:
+\begin{align}
+	\sum_d \DefectCommuteDprime \;=\; \sum_\beta \DefectCommuteUprime\ \ , \qquad\quad \sum_{b,c} \DefectCommuteSprimeprime=\DefectCommuteNSprimeprime\ .
+	\label{DefComm1}
+\end{align}
+This set of equations holds for any choice of fixed heights around the outside, while the summations are over all allowed internal heights. The equations coming from rotating the pictures  must hold as well. 
+The first of (\ref{DefComm1}) resembles the Yang-Baxter equation, but is a less demanding constraint. For example, it places no requirement that the Boltzmann weights be uniform in space, since it involves only one non-defect weight. Indeed, we will find topological defects for non-uniform and hence non-integrable models.
+If the statistical-mechanical model were instead defined on a generic cell decomposition one would need to solve the analogous relations for every 2-cell.
+
+
+
+
+Solving these equations by brute force is quite difficult, even for the Ising model analysed in Part~I.  However, when the Boltzmann weights are written as evaluations of diagrams in an underlying fusion category as described in Section~\ref{sec:statmech}, solving the defect commutation relations is straightforward.
+In Section~\ref{modules} we showed how to define topological defect weights from the data associated with the Drinfeld center of the fusion category used to define the model. Here we prove directly that these weights obey the defect commutation relations, without appealing to the TVBW state sum. 
+We find one solution for each simple object  $\varphi$ of the fusion category $\mathcal{C}$. A direct consequence of such a solution is that the partition function can only depend on the topology of the defect lines, for example which cycle(s) of a torus they wrap around.
+
+
+The topological defect weight is nonzero only if the heights labeling its vertices satisfy fusion constraints similar to (\ref{eq:BWproptoNNNN}), but here involving $\varphi$ as well as $\upsilon$.
+Namely, a height $a$ on one side of the defect path is related to the adjacent height $\alpha$ on the other side of the defect path by fusion with $\varphi$, i.e., $N_{a\varphi}^\alpha\ne 0$.
+Adjacent heights on the same side of the defect still must have $\upsilon$ appearing in their fusion product as before.
+Thus in analogy with (\ref{eq:BWproptoNNNN}) we have
+\begin{align} 
+\DefectSquarex{a}{b}{\alpha}{\beta} \propto N_{ab}^{\upsilon}N_{\alpha \beta}^{\upsilon}N_{a \alpha}^\varphi N_{b \beta}^{\varphi} \,,
+\label{DWproptoNNNN}
+\end{align}
+for a topological defect specified by simple object $\varphi$.
+The topological defect weights themselves turn out to have a remarkably simple form. 
+They are proportional to an $F$-symbol, but are more naturally written using the tetrahedral symbols
+\begin{align}
+		\DefectSquarex{a}{b}{\alpha}{\beta} =
+			\Msixj{\varphi & a & \alpha}{\upsilon & \beta & b} .
+		\label{eq:def_LDefect}
+\end{align}
+{}From (\ref{vanishingF}) this symbol vanishes automatically unless $N_{a\alpha}^\varphi N^{\upsilon}_{ab} N_{\varphi b}^\beta  N^b_{a\upsilon} \ne 0$, so we do not need to impose the adjacency conditions in \eqref{DWproptoNNNN} separately. 
+When the defect type is trivial ($\varphi = \mathds{1}$), the symbol reduces to
+\begin{align}
+	\Msixj{\mathds{1} & a & \alpha}{\upsilon & \beta & b}
+	= \frac{N_{ab}^{\upsilon} \delta_{a\alpha}\delta_{b\beta}}{\sqrt{d_a d_b}} \label{eq:kronecker}\ 
+\end{align}
+so that the heights across this ``identity defect'' are equal. As described above in (\ref{semidotdef}) and represented by the dot on each vertex, the partition function includes a factor of $d_h$ for each vertex with height $h$ on it. 
+These cancel the factors of $\sqrt{d_ad_b}$ coming from (\ref{eq:kronecker}), so including an identity defect line indeed changes absolutely nothing.
+
+The corresponding defect weights for Ising are given in Part~I. Another simple example comes from the Fibonacci fusion category.
+It is given by the subcategory of $\mathcal{A}_4$ consisting of two objects $\{0, 1 \}$, written as $\{0, \tau \}$ in the language common to the study of anyons \cite{Feiguin2007}.
+The corresponding model is the $k=3$ ABF model where we label heights $\{0,\frac{3}{2}\}$ by $0$ and the heights $\{\frac12,1\}$ by $\tau$; because $G$ is bipartite we can restore the original heights if desired.
+(In the language introduced in section~\ref{sec:duality} below, we consider one of the models $M^+$, $M^-$.)
+We take $\varphi=\upsilon=\tau$, so that the only non-obvious fusion rule is $\tau\otimes\tau=0\oplus\tau$.
+The non-zero defect weights are given by
+\begin{align}
+\DefectSquarex{\tau}{\tau}{\tau}{\tau} = -\frac{1}{d_{\tau}^2}\ , \qquad \DefectSquarex{0}{\tau}{\tau}{0} = \DefectSquarex{\tau}{0}{0}{\tau} = \DefectSquarex{0}{\tau}{\tau}{\tau}=\DefectSquarex{\tau}{0}{\tau}{\tau} = \DefectSquarex{\tau}{\tau}{0}{\tau} = \DefectSquarex{\tau}{\tau}{\tau}{0} = \frac{1}{d_{\tau}} \,,
+\label{defectFib}
+\end{align}
+where $d_\tau=2\cos(\pi/5)=\phi=(1+\sqrt{5})/2$. 
+It is quite tedious to check by brute force that they satisfy the defect commutation relations. Luckily, there is a better way.
+
+The diagrammatic techniques developed in Section \ref{sec:Fusion_Theory} provide an efficient means to proving that (\ref{eq:def_LDefect}) indeed provides a solution to the defect commutation relations for all fusion categories. The key simplifying feature is that since all the weights are defined using quantities coming from evaluations in the fusion category, we can use $F$-moves to relate various combinations of them. 
+For example, the series of steps to show that \eqref{eq:def_LDefect} solves 
+\begin{align}
+\sum_h \DefectCommuteDprimeprime\quad =\quad \sum_\beta\; \DefectCommuteUprimeprime
+\end{align}
+can be summarized by the following diagram:
+\begin{align}
+	\vcenter{\xymatrix @!0 @M=2mm @R=39mm @C=57mm{
+		 \DefCommSolLa \ar[d] &\DefCommSol \ar[r] \ar[l]& \DefCommSolRa \ar[d] \\
+		\DefCommSolLb & & \DefCommSolRb	
+	}}
+\label{defcommdiagram}
+\end{align} 
+The bottom two pictures each evaluate to a Boltzmann weight (recall \eqref{eq:def_chi}) with a single closed defect line present, with the two related by dragging the line through.  The arrows correspond to doing $F$-moves and other manipulations to relate various evaluations to each other. 
+
+To write out these manipulations explicitly, we start at the middle-top diagram of \eqref{defcommdiagram} and follow the path left and downward.
+(The arrows in \eqref{defcommdiagram} are drawn to show the following steps, but all steps are reversible, as $F$-matrices are invertible.)
+Putting in the explicit $F$-symbols yields
+\begin{align}
+	\nonumber
+\DefCommSol &= \sum_{h, h'} \Msixj{\varphi & a & \alpha}{\upsilon & \delta & h} \Msixj{\varphi & c & \gamma}{\upsilon & \delta & h'} \sqrt{d_{\alpha h \gamma h'}} \; \; \DefCommSolLa  \\
+	\nonumber
+		&=  \sum_{h} \Msixj{\varphi & a & \alpha}{\upsilon & \delta & h} \Msixj{\varphi & c & \gamma}{\upsilon & \delta & h} \sqrt{d_{\alpha h \gamma h}} \sqrt{\frac{ d_\delta}{d_{\varphi h}}} \; \; \DefCommSolLb \\
+	\nonumber
+		&=  \sum_{h} \Msixj{\varphi & a & \alpha}{\upsilon & \delta & h} \Msixj{\varphi & c & \gamma}{\upsilon & \delta & h} \sqrt{\frac{ d_{\alpha\gamma h\delta} }{ d_{\varphi} }} \times d_\varphi \times \frac{d_\upsilon^2}{\sqrt{d_\chi}} \sqrt{d_{abhc}} \;  \BWfour{\BWbarex{\chi}}{a}{b}{h}{c}\\
+	\nonumber
+		& = \frac{d_\upsilon^2}{\sqrt{d_\chi}}  \sqrt{d_{abc \alpha \gamma \delta \varphi}} \,  \sum_{h} d_h\Msixj{\varphi & a & \alpha}{\upsilon & \delta & h} \Msixj{\varphi & c & \gamma}{\upsilon & \delta & h}  \,  \BWfour{\BWbarex{\chi}}{a}{b}{h}{c} \\ 
+		&=  \frac{d_\upsilon^2}{\sqrt{d_\chi}}  \sqrt{d_{abc \alpha \gamma \delta \varphi}} \,  \sum_h \DefectCommuteDprimeprime \;.
+\label{Defcomm1proof}				
+\end{align}
+We have used a compact notation for the product of quantum dimensions $d_{abc\cdots} \defineas d_a d_b d_c \cdots$. 
+Starting from the middle-top of~\eqref{defcommdiagram} and traversing the diagram right and downward results in
+\begin{align}
+	\nonumber
+	\DefCommSol \; &=  \frac{d_\upsilon^2}{\sqrt{d_\chi}}  \sqrt{d_{abc \alpha \gamma \delta \varphi}} \sum_{\beta} d_\beta \Msixj{\varphi & \alpha & a}{\upsilon & b & \beta} \Msixj{\varphi & \gamma & c}{\upsilon & b & \beta}  \; \BWfour{\BWbarex{\chi}}{\alpha}{\beta}{\delta}{\gamma}
+	\\[-4ex]
+	& =  \frac{d_\upsilon^2}{\sqrt{d_\chi}}  \sqrt{d_{abc \alpha \gamma \delta \varphi}} \sum_\beta \DefectCommuteUprimeprime \;.
+	\label{Defcomm2proof}
+\end{align}
+Together these imply the first set of the defect commutation relations shown in (\ref{DefComm1}). The rotated version of these commutation relations can be found in an identical way.
+In fact, since a complete basis of fusion channels also occurs for $\chi$ going horizontally instead of vertically, one can literally rotate the diagrams and use the same proof.
+
+The second set of commutation relations in \eqref{DefComm1}  follows from
+\begin{align}
+	\vcenter{\xymatrix @!0 @M=3mm @R=0mm @C=35mm{
+	\DefCommSolprimed &	 \DefCommSolprimea \ar[l] \ar[r] &\DefCommSolprimeb \ar[r] & \DefCommSolprimec
+	}} \,.
+	\label{three-to-one-defcomm}
+\end{align}
+For clarity, we left out all the height and $\upsilon$ labels, keeping only the defect label $\varphi$ and the channel label $\chi$.
+The proof of (\ref{three-to-one-defcomm}) comes from evaluating the fusion diagram shown second from the left in two ways.
+Following the arrow directed to the left yields one tetrahedral symbol multiplied by the Boltzmann weight.
+Following the arrows directed to the right yields three tetrahedral symbols multiplied by the Boltzmann weight, along with appropriate summations. The remaining equations in \eqref{DefComm1} are then proved by translating the pictures back into quadrilaterals and including the explicit expressions as in (\ref{Defcomm1proof}) and (\ref{Defcomm2proof}).
+
+One nice feature of giving proofs in this fashion is that it makes it straightforward to extend the results of this paper to models on more general lattices and graphs. In fact, these methods give solutions to the defect commutation relations for a partition function defined on {\em any} cell decomposition in a similar way, as long as all Boltzmann weights are written as evaluations of diagrams in a fusion category.
+
+\subsection{The defect-line creation operator}
+\label{sec:defectcreationop}
+
+Many applications of topological defects are easiest to see in the transfer-matrix formalism.  In this set-up, a $\varphi$-defect in the horizontal direction is created by acting with an operator ${\mathcal D}_\varphi$ on the same vector space $\mathcal{V}$ on which the transfer matrix acts. Since the path of any topological defect can be deformed by using the defect commutation relations, we show here how $\mathcal{D}_\varphi$ must {\em commute with the transfer matrix}. The ensuing symmetries and dualities are described in Section~\ref{sec:duality}. 
+
+For simplicity we here consider a square lattice with transfer matrix given by \eqref{Tmatrixdef2}
+and work in terms of height models, although are results are easily extended to geometric models and to other graphs. The defect-creation operators are easiest to define with periodic boundary conditions, so they act on the $\mathcal{V}$ described in (\ref{eq:fusiontreedef},\,\ref{vper}). This space is spanned by all configurations of heights that satisfy the fusion rules.
+Labeling by $Z_\varphi$ the toroidal partition function in the presence of a $\varphi$ defect line wrapped around this cycle, the defect-creation operator ${\mathcal D}_\varphi$ is then defined so that
+\begin{align}
+Z_\varphi= \hbox{tr}\,\mathcal{D}_{\varphi}\left(T_L \right)^M\ .
+\label{Zphidef}
+\end{align}
+where $T_L$ is the transfer matrix acting on $L$ sites with periodic boundary conditions. Since $Z_\varphi$ remains invariant under deformations of the path of the defect, this definition does not determine ${\mathcal D}_\varphi$ uniquely. We fix the ambiguity by requiring $\mathcal{D}_\varphi$ to create a straight horizontal defect.  Its matrix elements for taking a state $\ket{h'_0 h'_1 \cdots h_{L-1}'}$ to  $\ket{ h_0 h_1 \cdots h_{L-1}}$ are then
+\begin{align}\
+({\mathcal D}_\varphi)_{\{h\},\{h'\}}
+	& \;=\; \cdots \TopologicalSymmetryprime \cdots
+	\notag
+	\\ &	\;=\;	\prod_{n=0}^{L-1} \Msixj{\varphi & h_n & h'_n}{\upsilon & h'_{n+1} & h_{n+1}} \sqrt{d_{h_n} d_{h'_n}}\ .
+	\label{eq:BW_duality}
+\end{align}
+
+Repeatedly applying the defect commutation relations \eqref{DefComm1} makes it easy to show that {\em any} topological defect can be commuted through the transfer matrix, and that a stronger statement holds:
+\begin{align} 
+P^{(\chi)}_j \mathcal{D}_\varphi = \mathcal{D}_\varphi P^{(\chi)}_j\ ,
+\label{PDDP}
+\end{align}
+where $j$ denotes the spatial location of the projector $P^{(\chi)}$ defined in \eqref{eq:Pf}.
+%T(\{A_Q\}) \mathcal{D}_\varphi = \mathcal{D}_\varphi T(\{A_Q\}).
+To prove \eqref{PDDP}, we note that the defect commutation relations give for any choice of external labels
+\begin{align}
+\nonumber
+T(\{A_Q\}) \mathcal{D}_\varphi  &= \Topologicalsymmetrya \\
+&=   \TopologicalSymmetryb
+\label{TDDT}\\
+%\label{TopoSymmCommuteTransfer}\\
+\nonumber
+&=\TopologicalSymmetryc\qquad =\quad  \mathcal{D}_\varphi T(\{A_Q\})\ .
+\end{align}
+We here and henceforth adopt the convention that in such pictures, the internal heights are summed over, while external are fixed. The commutation \eqref{TDDT} holds for any choice of the amplitudes $A_Q$ of the projectors in each Boltzmann weight, even when they are not uniform in space and when they are not integrable ones. Because we can choose all the $A_Q$ to give the identity  away from $j$, \eqref{PDDP} holds as well.
+
+The commutation relation (\ref{TDDT}) makes the defect-creation operator $\mathcal{D}_\varphi$ look like a symmetry generator: It is a non-trivial operator that commutes with the transfer matrix. When the quantum dimension $d_\varphi=1$, the eigenvalues of $\mcd_\varphi$ are of unit norm and it is unitary.  It can indeed generate a symmetry, as we describe in section \ref{sec:symm}. In general, however, $\mcd_\varphi$ is not unitary and instead generates a duality, as described in section \ref{sec:duality}. It is worth noting that one always can split ${\cal V}$ into sectors labelled by distinct eigenvalues of ${\mathcal D}_\varphi$. Using the nomenclature coming from systems with topological order, these eigenvalues label a global ``flux'' \cite{Feiguin2007}.  
+
+
+A nice feature of the topological defect-creation operators is that they satisfy the same fusion rules as the objects that label them, namely
+\begin{align}
+\mcd_A \mcd_B = \sum_C N_{AB}^C \mcd_C
+\label{DDeqD}
+\end{align}
+This identity can be proved by brute force,  by manipulating diagrams as in \eqref{defcommdiagram}, or by 
+showing that the defect lines themselves satisfy \eqref{eq:loop_removal} and \eqref{F0c}. Here we present the brute-force proof. 
+By definition,
+\begin{align}
+({\mcd}_A \mcd_B)_{\{h\},\{h'\}} \;=\;	\sum_{\{ x \}} \prod_{n=0}^{L-1} d_{x_n}\Msixj{A & h_n & x_n}{\upsilon & x_{n+1} & h_{n+1}}
+	 \Msixj{B & x_n & h'_n}{\upsilon & h'_{n+1} & x_{n+1}} \sqrt{d_{h_n} d_{h'_n}}\ ,
+	 \label{DADB}
+\end{align}
+where the sum is over all all heights $x_n$. We expand each pair of tetrahedral symbols into three by using the pentagon equation \eqref{pentagon}, giving
+\begin{align*}
+	\big({\mcd}_A \mcd_B\big)_{\{h\},\{h'\}} = \! \sum_{\{ C\},\{ x \}} \prod_{n=0}^{L-1} 
+	d_{C_n} \Msixj{C_n & h_n & h_n'}{\upsilon & h_{n+1}' & h_{n+1}}
+	d_{x_n}  \Msixj{A & B & C_n}{h_n' & h_n & x_n}\Msixj{A & B & C_{n-1}}{h_n'& h_n & x_n} \sqrt{d_{h_n} d_{h'_n}}.
+\end{align*}
+Conveniently, the sum over all $x_n$  now can be performed using the orthogonality relation \eqref{Orthogonality6j}.
+All $C_n$ then must be equal while the factors of $d_{C_n}$ cancel, leaving us with (\ref{DDeqD}): 
+\begin{align} 
+({\mcd}_A \mcd_B)_{\{h\},\{h'\}} \; = \; \sum_{C} N_{AB}^C \prod_{n=0}^{L-1} \Msixj{C & h_n & h_n'}{\upsilon & h_{n+1}' & h_{n+1}}  \sqrt{d_{h_n} d_{h'_n}} = \sum_C N_{AB}^C (\mcd_C)_{\{h\},\{h'\}}\ .
+\end{align}
+A more elegant  and general proof uses the trivalent junctions we describe in section \ref{sec:trivalent}. We prove that all defect loops fuse as do their labels, no matter what their path. 
+
+An illuminating way of viewing the defect-creation operators is in terms of the diagrammatic techniques used to prove the defect commutation relations.
+This picture was utilized in the study of spin chains with Hamiltonian \eqref{HPdef}, where the fact that $[\mcd_\varphi, H]=0$ was derived and termed ``topological symmetry'' \cite{Feiguin2007}.
+In this picture, acting with $\mcd_\varphi$ corresponds to fusing a closed loop $\varphi$ wrapped around a cycle into the ``spine" of the fusion tree \eqref{eq:fusiontreedef} with periodic boundary conditions  \eqref{vper}, starting with
+\begin{align}
+\nonumber
+\mathcal{D}_{\varphi}&\left( \DomainTransfermatrixUpsilon \right)& \\
+&\qquad = \; \TSymmprime&
+\label{TsymmGoldenChain} \ .
+\end{align}
+We then fuse the defect line into the fusion tree using \eqref{F0c}, i.e.\
+\begin{equation}
+ \TSymmbprime  = \sum_{h_i'} N_{\varphi \mkern1mu h_i}^{h_i'} \sqrt{\frac{d_{h_i'}}{{d_{\varphi}d_{h_i}}}} \TSymmcaprime \ .
+ \label{tsymmbprime}
+\end{equation}
+Doing this fusion on every horizontal edge of the tree gives for each $\upsilon$ vertex a picture
+\begin{align}
+\TSymmcprime &= \sqrt{d_{\varphi} d_{\upsilon} } \Msixj{\varphi & h_i & h_{i+1}}{\upsilon & h_{i+1}' & h_{i}'} \TSymmdprime
+\notag\\
+&= \sqrt{d_{\varphi} d_{\upsilon} } \Msixj{\varphi & h_i & h_{i+1}}{\upsilon & h_{i+1}' & h_{i}'}  \sqrt{\frac{d_{h_i} d_{h_{i+1}}}{d_\upsilon}} \, \TSymmeprime \,.
+\label{downstrand}
+\end{align}
+Utilizing \eqref{tsymmbprime} and \eqref{downstrand} for every edge and vertex shows that the definitions  \eqref{TsymmGoldenChain} and \eqref{eq:BW_duality} are equivalent.
+In this picture the fusion of defects \eqref{DDeqD} is obvious, and it also makes apparent how the eigenvalues of $\mcd_\varphi$ can be thought of as a flux through the cylinder or torus.
+
+
+

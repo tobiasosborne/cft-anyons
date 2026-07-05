@@ -1,0 +1,194 @@
+% SHARD-ID: CA-63-QUBIT-MOMENT-STATE-EXISTENCE
+% SHARD-TITLE: All-Level Moment Feasibility Gives a Qubit Reference State
+% SHARD-SUMMARY: Proves that exact feasibility of the monotone full-window qubit moment hierarchy yields a genuine state on the quasi-local spin algebra.
+% SHARD-SUMMARY: Shows that the all-level relation constraints vanish as bounded operators in the GNS representation.
+% SHARD-SUMMARY: Separates this compactness result from uniqueness, ground-state, clustering, continuum-limit, and Virasoro claims.
+% SHARD-KEYWORDS: moment hierarchy, compactness, state space, GNS, qubit chain, residual quotient
+
+\section{All-Level Moment Feasibility Gives a Qubit Reference State}
+\label{sec:qubit-moment-state-existence}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: derived compactness theorem, conditional on standard
+C*-algebra facts.}  This upgrades CA-44 only for the exact monotone
+full-window hierarchy.  It does not apply to optional weight truncations,
+arbitrary implemented diagnostic levels, solver-unknown statuses, or
+nonmonotone residual lists.
+
+Dependencies: CA-43, CA-44, CA-62, CONVENTIONS.md (n), CONVENTIONS.md (p).
+
+% Source: literature/md/2010.11121/2010.11121.md:126--180 -- inductive-limit
+%   states, projective-limit state architecture, and GNS representation.
+% Source: literature/md/2010.11121/2010.11121.md:226--243 -- vacuum invariance
+%   and warning that Poincare covariance is additional.
+% Source: references/qft/FewsterRejzner2019/source/AQFTIMPRS-Oct2019.tex:337--447 --
+%   states and representations of unital *-algebras and the GNS representation
+%   theorem with its construction steps.
+% Source: references/qft/FewsterRejzner2019/source/AQFTIMPRS-Oct2019.tex:318--323 --
+%   density matrices induce states; not all algebraic states arise this way.
+% GAP: needs local source for Banach-Alaoglu compactness of the state space of
+%   a unital C*-algebra.
+% GAP: needs local source for product-trace conditional expectations onto
+%   finite tensor factors of the spin-chain UHF algebra.
+
+\subsection{Canonical Full-Window Levels}
+
+Let
+\[
+  I_N=[-N,N],\qquad
+  \Alg_N=\bigotimes_{j\in I_N}M_2(\mathbb C),
+\]
+and let \(\mathcal W_N\) be the set of all Pauli words supported in \(I_N\).
+For this shard, a level means the full-window problem:
+\[
+  y_\emptyset=1,\qquad y_s=y_{\tau^k s}
+  \tag{63.1}
+\]
+whenever both words fit in the level window,
+\[
+  M_N(y)_{u,v}=\omega(P_u^*P_v)\succeq0,
+  \qquad u,v\in\mathcal W_N,
+  \tag{63.2}
+\]
+and every fixed residual relation
+\[
+  \omega(X^*RY)=0
+  \tag{63.3}
+\]
+whose product support fits in \(I_N\).  The residual family is fixed in
+advance, or is enlarged monotonically.  This monotonicity is part of the
+theorem; without it the compactness argument below has no nesting premise.
+
+\subsection{Finite Moments Are Finite States}
+
+Given a feasible \(y\) at level \(N\), define a linear functional on
+\(\Alg_N\) by
+\[
+  \omega_N(P_s)=y_s
+\]
+and extend linearly in the Pauli-word basis.  If
+\(X=\sum_{u\in\mathcal W_N}c_uP_u\), then
+\[
+  \omega_N(X^*X)
+  =
+  \sum_{u,v}\overline{c_u}c_v\,\omega_N(P_u^*P_v)
+  =
+  c^*M_N(y)c
+  \ge0.
+  \tag{63.4}
+\]
+Since every positive element in a finite matrix algebra has a square root,
+(63.4) makes \(\omega_N\) positive.  The normalization \(y_\emptyset=1\)
+makes it unital, hence a state on \(\Alg_N\).
+
+Equivalently, with \(d_N=2^{|I_N|}\),
+\[
+  \rho_N=d_N^{-1}\sum_{s\in\mathcal W_N}y_sP_s
+  \tag{63.5}
+\]
+satisfies \(\omega_N(A)=\Tr(\rho_NA)\), the density-matrix presentation of the
+finite state.  Thus \(M_N(y)\succeq0\) if and only if \(\rho_N\succeq0\).
+
+\subsection{Compactness}
+
+Let \(\Alg\) be the quasi-local spin C*-algebra, the norm closure of the
+local algebras.  The normalized product trace outside \(I_N\) gives a unital
+completely positive conditional expectation
+\[
+  E_N:\Alg\to\Alg_N.
+\]
+Therefore \(\omega_N\circ E_N\) is a global state and agrees with
+\(\omega_N\) on \(\Alg_N\).  This proves nonemptiness of the level set
+below whenever the level moment problem is feasible.
+
+Let \(K_N\subset S(\Alg)\) be the set of global states whose restriction
+to \(\Alg_N\) satisfies the affine level-\(N\) translation and residual
+constraints.  Positivity is automatic for elements of the state space.  Each
+constraint is a finite linear equation in evaluations
+\(\varphi\mapsto\varphi(A)\), hence \(K_N\) is weak-* closed.  Since
+\(S(\Alg)\) is weak-* compact, each \(K_N\) is compact.
+
+The full-window levels are nested.  Every level-\(N\) translation equality and
+every level-\(N\) residual test also appears at level \(N+1\).  Hence
+\[
+  K_{N+1}\subseteq K_N.
+  \tag{63.6}
+\]
+If every full-window level is feasible, the \(K_N\) are nested nonempty compact
+sets, so
+\[
+  \bigcap_{N\ge0}K_N\neq\emptyset.
+  \tag{63.7}
+\]
+Choose \(\omega\) in this intersection.
+
+For any Pauli word \(s\) and any integer shift \(k\), choose \(M\) so large
+that the intermediate translates from \(s\) to \(\tau^k s\) fit in \(I_M\).
+Since \(\omega\in K_M\), (63.1) gives
+\[
+  \omega(P_s)=\omega(P_{\tau^k s}).
+\]
+By linearity, density of the local Pauli algebra, and continuity of the shift
+automorphism, \(\omega\circ\tau^k=\omega\) on all of \(\Alg\).
+
+\subsection{Residual Relations in the GNS Representation}
+
+Let \((\mathcal H_\omega,\pi_\omega,\Omega_\omega)\) be the GNS
+representation.  Fix one residual density \(R\).  For local Pauli words
+\(X,Y\), choose \(N\) so that \(X^*RY\) fits the level window.  Because
+\(\omega\in K_N\),
+\[
+  \langle \pi_\omega(X)\Omega_\omega,
+          \pi_\omega(R)\pi_\omega(Y)\Omega_\omega\rangle
+  =
+  \omega(X^*RY)
+  =
+  0.
+  \tag{63.8}
+\]
+The vectors \(\pi_\omega(A)\Omega_\omega\), with \(A\) local, are dense in the
+GNS Hilbert space.  Since \(\pi_\omega(R)\) is bounded, (63.8) on this dense
+subspace implies
+\[
+  \pi_\omega(R)=0.
+  \tag{63.9}
+\]
+Translation-invariant states implement the lattice shift by a GNS unitary, so
+the translated residual densities vanish as well.
+
+\subsection{Exact Alternative}
+
+Conversely, if a translation-invariant state \(\omega\) satisfies all residual
+relations, then \(y_s=\omega(P_s)\) is feasible at every full-window level.
+Indeed, \(y_\emptyset=1\), translation invariance gives (63.1), positivity of
+\(\omega\) gives (63.2), and the residual hypothesis gives (63.3).
+
+Thus, for fixed exact residual data, there is no third mathematical
+possibility:
+\[
+  \text{some full-window level is infeasible}
+  \quad\text{or}\quad
+  \text{a global reference state exists.}
+  \tag{63.10}
+\]
+This is an exact compactness statement, not a finite-time algorithm.
+
+\subsection{Non-Implications}
+
+The state in (63.7) need not be unique.  It need not be a ground state, a
+positive-energy state, a clustering state, or a scaling-limit state.  The
+argument does not construct a continuum limit and does not produce a
+projective-unitary Poincare or Virasoro representation.  It only proves that
+the imposed finite residual relations have a genuine C*-algebraic state model.
+
+\subsection{Boundary}
+
+Finite feasibility at checked levels still proves no existence theorem.  The
+compactness result requires exact feasibility at every monotone full-window
+level.  Numerically, exclusion remains semi-decidable by finding a certified
+infeasible finite level; existence is not certified by any finite prefix of
+feasible solver runs.  The finite witnesses for the proof ingredients
+(density-matrix reconstruction, extension moment preservation, level nesting,
+and a positivity mutation) are checked in the Julia testset
+``qubit full-window moment compactness witnesses''.

@@ -1,0 +1,278 @@
+% SHARD-ID: CA-66-ANYONIC-STATES-VARIABLE-N-FOCK
+% SHARD-TITLE: Anyonic States and Variable-N Fock Space
+% SHARD-SUMMARY: Builds the finite hard-core anyonic Fock space H_L as a direct sum of charge Hom spaces for the site object O=1 plus X.
+% SHARD-SUMMARY: Identifies a charge-diagonal finite-state/GNS target and records the residual minimal-projection freedom.
+% SHARD-SUMMARY: Shows how birth/death maps, Hollands' dense-chain corner, and Fibonacci dimension targets fit the adopted word-algebra tower.
+% SHARD-KEYWORDS: anyonic Fock space, variable particle number, hard-core anyons, charge sectors, GNS, Fibonacci, pair creation
+
+\section{Anyonic States and Variable-\(N\) Fock Space}
+\label{sec:anyonic-states-variable-n-fock}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: proposal shard from the adopted W4 design.}  The finite
+carrier and Fibonacci arithmetic are local derivations from sourced fusion
+rules; no Julia invariant test has been added yet.
+
+Dependencies: CA-02, CA-03, CA-06, CA-09, CA-62, CA-63, CA-64, CA-65,
+and CONVENTIONS.md (a), (b) (fixed with this block), (c), (f), (g), and (r).
+
+% Source: literature/SYNTHESIS.md:8--17 -- target variable-N anyon Fock space.
+% Source: references/text/GaugingDefectsQuantumSpinSystems.txt:174--190 --
+%   vacuum, maybe spin, and tensoring maybe sites.
+% Source: references/text/GaugingDefectsQuantumSpinSystems.txt:200--218 --
+%   binomial dimension check and hard-core configuration interpretation.
+% Source: references/text/GaugingDefectsQuantumSpinSystems.txt:219--221 --
+%   F_{<=n} supplies kinematical data; dynamics is additional.
+% Source: references/text/HollandsAnyonicChainsAlphaInduction.txt:181--201 --
+%   chain states as sequences of intertwiners and operators as relative commutants.
+% Source: references/text/HollandsAnyonicChainsAlphaInduction.txt:214--235 --
+%   Jones projections as local chain operators.
+% Source: references/text/HollandsAnyonicChainsAlphaInduction.txt:606--630 --
+%   UFC, Hom spaces, *, and tensor/DHR product.
+% Source: references/text/HollandsAnyonicChainsAlphaInduction.txt:700--715 --
+%   Hom spaces carry Hilbert inner products and ONBs.
+% Source: references/text/HollandsAnyonicChainsAlphaInduction.txt:762--780 --
+%   conjugates, solutions to conjugacy relations, and dimension normalization.
+% Source: references/text/PenneysUnitaryFusionCategories.md:168 --
+%   finite-dimensional C*-algebra faithful state condition.
+% Source: references/text/PenneysUnitaryFusionCategories.md:219--235 --
+%   orthogonal projections and splittings.
+% Source: references/text/PenneysUnitaryFusionCategories.md:610--621 --
+%   Fib, tau tensor tau, phi, and v^\dagger v=phi id_1.
+% Source: references/text/PenneysUnitaryFusionCategories.md:631 --
+%   id_{tau tensor tau} decomposes into minimal central projections.
+% Source: references/text/TrebstShortIntroductionFibonacciAnyons.txt:317--325 --
+%   unitary Fibonacci F^{tau tau tau}_tau matrix.
+% Source: references/text/FibonacciAnyonModels.txt:297--304 --
+%   same unitary Fibonacci F-matrix in the local extraction.
+% Source: references/qft/FewsterRejzner2019/source/AQFTIMPRS-Oct2019.tex:889--890 --
+%   local field algebras as field-carrying algebras distinct from observables.
+
+\subsection{The Finite Hard-Core Carrier}
+
+Fix the site object \(O=\one\oplus X\) from CA-65.  For \(L\) open sites, define
+\[
+  H_L(\Cc,O)
+  :=
+  \bigoplus_{c\in\Irr(\Cc)}
+  \Hom_{\Cc}(X_c,O^{\otimes L}).
+\]
+The inner product on each Hom space is the categorical one: if \(s,t\) have
+irreducible source \(X_c\), then \(s^\dagger t\) is a scalar multiple of
+\(\operatorname{id}_{X_c}\).  The direct sum over charges is orthogonal.
+
+Expanding the maybe-object gives the variable-particle grading.  For one
+species \(X\),
+\[
+  O^{\otimes L}
+  =
+  (\one\oplus X)^{\otimes L}
+  \cong
+  \bigoplus_{S\subseteq\{1,\ldots,L\}} X^{\otimes S},
+\]
+where \(S\) records the occupied sites and the tensor factors are kept in
+increasing site order.  Hence
+\[
+  H_L(\Cc,O)
+  \cong
+  \bigoplus_{N=0}^{L}\ 
+  \bigoplus_{|S|=N}\ 
+  \bigoplus_{c\in\Irr(\Cc)}
+  \Hom_{\Cc}(X_c,X^{\otimes S}).
+\]
+This is the sourced variable-\(N\) target from \texttt{literature/SYNTHESIS.md}.
+The hard-core condition is built into the site object: each site contributes
+either \(\one\) or one non-vacuum summand, never two particles at the same site.
+
+For multiple species, take \(X=\bigoplus_{a\neq\one}X_a\).  The same formula
+refines by a species labelling of the occupied set \(S\).
+
+\subsection{Action of the Word Algebra}
+
+The finite algebra
+\[
+  \Alg_L(\Cc,O)=\operatorname{End}_{\Cc}(O^{\otimes L})
+\]
+acts on every charge sector by postcomposition:
+\[
+  T\cdot w:=T\circ w,\qquad
+  T\in\Alg_L,\quad w\in\Hom_{\Cc}(X_c,O^{\otimes L}).
+\]
+Thus \(H_L\) is the direct sum of the defining modules for the matrix blocks
+\[
+  \Alg_L\cong\bigoplus_c M_{m_c(L)}(\mathbb C),
+  \qquad
+  m_c(L)=\dim\Hom(X_c,O^{\otimes L}).
+\]
+This is the finite carrier on which the kinematic quotient from CA-65 acts.
+
+A charge-diagonal finite state can be written after choosing one minimal
+projection \(e_c\) in each nonzero charge block.  Let
+\[
+  p:=\bigoplus_c e_c .
+\]
+Using the ordinary finite matrix trace in the chosen block presentation, set
+\[
+  \omega_{L,p}(T)
+  :=
+  \frac{\Tr(pTp)}{\Tr(p)}.
+\]
+The corresponding GNS quotient is intended to recover one cyclic column from
+each charge block, hence a space of dimension \(\sum_c m_c(L)=\dim H_L\).
+The choice of \(e_c\) is not canonical when \(m_c(L)>1\); coherent choices in
+\(L\) are an open point in this construction.
+
+\subsection{Birth and Death Operators}
+
+Let \(a\) be a simple object with conjugate \(\bar a\), and choose the raw cup
+\[
+  v_a:\one\to a\otimes\bar a .
+\]
+The raw normalization is
+\[
+  v_a^\dagger v_a=d_a\,\operatorname{id}_{\one}.
+\]
+At adjacent sites \(j,j+1\), define the local birth map
+\[
+  b^a_{j,j+1}
+  :=
+  (\iota_a\otimes\iota_{\bar a})
+  \circ v_a
+  \circ
+  (\pi_{\one}\otimes\pi_{\one}),
+\]
+where \(\iota_a:a\to O\) is the site summand inclusion and
+\(\pi_{\one}:O\to\one\) is the vacuum summand projection.  Its adjoint
+\[
+  d^a_{j,j+1}:=(b^a_{j,j+1})^\dagger
+\]
+is the death map.  These maps change the occupation number by \(N\leftrightarrow
+N\pm2\), and annihilate configurations not matching the two-vacuum or
+\(a,\bar a\) local pattern.
+
+The default convention is raw cups with explicit \(d_a\) bookkeeping:
+\[
+  (b^a_{j,j+1})^\dagger b^a_{j,j+1}
+  =
+  d_a\,P_{\one\one}.
+\]
+The normalized cup \(d_a^{-1/2}v_a\) would make the birth map a partial
+isometry on the two-vacuum corner, but that is not the default convention.
+
+\subsection{Hollands' Dense Chain as a Corner}
+
+Hollands' chain Hilbert space \(V^L\) is built from sequences of intertwiners,
+and the corresponding operators are relative commutants.  In the present
+tower it is recovered by two compressions.  First take the fixed-\(N=L\) corner
+that drops the vacuum summand at every site:
+\[
+  O=\one\oplus\tau
+  \quad\leadsto\quad
+  P_\tau O^{\otimes L}\cong \tau^{\otimes L}.
+\]
+Then take the total-charge-\(\one\) corner:
+\[
+  e_{\one}P_\tau H_L
+  \cong
+  \Hom_{\Cc}(\one,\tau^{\otimes L}).
+\]
+Hollands' Jones projections are local elements in this compressed corner.  The
+extra Q-system/subfactor data used in the dense-chain source are not supplied
+by a bare UFC input and remain deferred.
+
+\subsection{Fibonacci Test Targets}
+
+For Fibonacci, take
+\[
+  \Irr(\mathrm{Fib})=\{\one,\tau\},
+  \qquad
+  \tau\otimes\tau=\one\oplus\tau,
+  \qquad
+  O=\one\oplus\tau .
+\]
+With \(F_0=0\), \(F_1=1\), the multiplicities are
+\[
+  (m_{\one}(L),m_{\tau}(L))=(F_{2L-1},F_{2L})
+  \qquad(L\ge1).
+\]
+Therefore
+\[
+  \dim H_L=m_{\one}(L)+m_{\tau}(L)=F_{2L+1},
+\]
+and
+\[
+  \dim\Alg_L=m_{\one}(L)^2+m_{\tau}(L)^2=F_{4L-1}.
+\]
+The first arithmetic targets are
+\[
+  \dim H_2=5,\quad \dim H_3=13,\quad \dim H_4=34,
+\]
+and
+\[
+  \dim\Alg_2=13,\quad \dim\Alg_3=89,\quad \dim\Alg_4=610.
+\]
+For the dense-chain corner \(O=\tau\), the same recurrence reduces to CA-09's
+\((a_n,b_n)\) path-count sequence.
+
+For the raw Fibonacci cup
+\[
+  v:\one\to\tau\otimes\tau,
+\]
+Penneys gives
+\[
+  v^\dagger v=\phi\,\operatorname{id}_{\one},
+  \qquad
+  \phi=\frac{1+\sqrt5}{2}.
+\]
+Thus the local cup-cap invariant for the raw birth/death pair is \(\phi\), not
+\(1\).  The unitary Fibonacci recoupling matrix is
+\[
+  F^{\tau\tau\tau}_{\tau}
+  =
+  \begin{pmatrix}
+    \phi^{-1} & \phi^{-1/2}\\
+    \phi^{-1/2} & -\phi^{-1}
+  \end{pmatrix}
+  =
+  \left(F^{\tau\tau\tau}_{\tau}\right)^\dagger .
+\]
+For this nontrivial block the matrix is also involutory, but the adopted
+convention is still the unitary gauge so that matrix presentations use the
+ordinary adjoint.
+
+\subsection{Lamport Dependency Skeleton}
+
+{\small
+\[
+\setlength{\arraycolsep}{2pt}
+\begin{array}{rcl}
+D66.1&:& H_L(\Cc,O)=\bigoplus_c\Hom(X_c,O^{\otimes L}).\\
+D66.2&:& O=\one\oplus X\Rightarrow
+         H_L\cong\bigoplus_{N,S,c}\Hom(X_c,X^{\otimes S}).\\
+D66.3&:& \Alg_L=\operatorname{End}(O^{\otimes L})\text{ acts by }T\cdot w=T\circ w.\\
+D66.4&:& p=\bigoplus_c e_c,\quad
+         \omega_{L,p}(T)=\Tr(pTp)/\Tr(p).\\
+D66.5&:& b^a_{j,j+1}=(\iota_a\otimes\iota_{\bar a})v_a
+         (\pi_{\one}\otimes\pi_{\one}),\quad d=b^\dagger.\\
+T66.1&:& (b^a)^\dagger b^a=d_aP_{\one\one}\text{ for raw cups}.\\
+T66.2&:& O=\one\oplus\tau:\ (m_{\one}(L),m_\tau(L))=(F_{2L-1},F_{2L}).\\
+T66.3&:& \dim H_L=F_{2L+1},\quad \dim\Alg_L=F_{4L-1}.\\
+T66.4&:& \text{Hollands fixed-}N\text{, charge-}\one\text{ chain is a corner of }H_L.
+\end{array}
+\]
+}
+
+\subsection{Boundary}
+
+This shard does not prove existence or uniqueness of a dynamical vacuum.  The
+finite state \(\omega_{L,p}\) is a useful charge-diagonal target, not a canonical
+vacuum.  The categorical Markov trace is the expected natural
+``infinite-temperature'' state only after the spherical/pivotal convention is
+locally sourced.  The residual choice of \(e_c\) for \(m_c>1\) is open.
+
+The general statement ``unitary UFC implies canonical spherical structure and
+positive quantum dimensions'' is still a source gap for this block.  The
+Fibonacci self-duality sign \(\kappa_\tau=+1\) is also not locally sourced.
+Approximate Virasoro relations becoming exact in the scaling-limit GNS null
+space remains a programme conjecture, not a result of this shard.

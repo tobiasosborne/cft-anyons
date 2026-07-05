@@ -1,0 +1,205 @@
+% SHARD-ID: CA-68-VARIABLE-N-REFINEMENT-MAPS
+% SHARD-TITLE: Refinement Maps for the Variable-N Anyonic Word Algebra
+% SHARD-SUMMARY: Defines vacuum-insertion refinement for the site object O=1 plus X and proves its exact locality, isometry, and charge preservation.
+% SHARD-SUMMARY: Separates the nonunital corner algebra map from strict OAR unital scaling maps, and proposes dressed refinements for Virasoro compatibility.
+% SHARD-SUMMARY: Records the Fibonacci H_2 to H_4 test target and the archived-project deficit/pair-creation precedent as re-derivation targets.
+% SHARD-KEYWORDS: refinement maps, variable-N anyons, vacuum insertion, OAR, Koo-Saleur, Virasoro, Fibonacci, dilute Temperley-Lieb
+
+\section{Refinement Maps for the Variable-\(N\) Anyonic Word Algebra}
+\label{sec:variable-n-refinement-maps}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: proposal plus local derivations.}  The vacuum-insertion map is
+an exact finite-level construction in the CA-65/CA-66 tower.  Its Virasoro
+compatibility is an open scaling problem, not a theorem.
+
+Dependencies: CA-62, CA-63, CA-64, CA-65, CA-66, CA-67, and CONVENTIONS.md
+(a), (b), (c), and (r).
+
+% Source: report/sections/62_categorical_bu_pipeline_vision.tex:148--160 --
+%   state-first ordering: algebra and state before Hilbert representation.
+% Source: report/sections/64_qubit_relaxed_symmetry_gates.tex:127--140 --
+%   long-wavelength GNS residuals are the scaling diagnostic window.
+% Source: report/sections/65_anyonic_word_algebra.tex:46--79 --
+%   site object, local algebra, and charge block dimensions.
+% Source: report/sections/66_anyonic_states_variable_n_fock.tex:54--89 --
+%   hard-core variable-N carrier and occupied-subset expansion.
+% Source: report/sections/66_anyonic_states_variable_n_fock.tex:126--161 --
+%   raw birth/death maps and cup normalization.
+% Source: report/sections/66_anyonic_states_variable_n_fock.tex:184--206 --
+%   Fibonacci multiplicity targets.
+% Source: literature/md/2010.11121/2010.11121.md:101--111 --
+%   OAR scaling maps are unital CP *-morphisms with the semigroup property.
+% Source: literature/md/2010.11121/2010.11121.md:170 --
+%   strict directed systems use unital injective *-morphisms.
+% Source: literature/md/2306.16063/2306.16063.md:571--575 --
+%   soft C*-systems allow CP contractions with asymptotic multiplicativity.
+% Source: references/text/CFTFromLatticeFermions.txt:221--253 --
+%   KS approximants converge strongly in the sourced free-fermion scaling limit.
+% Source: literature/md/2201.11562/2201.11562.md:70--74 --
+%   braiding RG increases string density in dense anyon chains.
+% Source: references/lattice-symmetry/Jones2017NoGo/source/nogo.tex:61--69 --
+%   block-spin/TL semicontinuous Hilbert-space no-go statement.
+% Source: archive/legacy-consolidation/src/MobileAnyons/finegraining.jl:1--23 --
+%   [DEAD PRIOR ART] normalised product fine-graining isometry, head notes.
+% Source: archive/legacy-consolidation/test/test_number_changing_finegraining.jl:1--10 --
+%   [DEAD PRIOR ART] deficit-filling pair-creation isometry hypothesis.
+
+\subsection{Vacuum Insertion}
+
+\textbf{Definition [choice].}  Fix \(O=\one\oplus X\).  Let
+\(\iota_{\one}:\one\to O\) be the empty-site summand inclusion.  The canonical
+site-doubling refinement is
+\[
+  V_L:O^{\otimes L}\longrightarrow O^{\otimes 2L},
+  \qquad
+  \text{old site }j\mapsto 2j-1,\quad \text{fine site }2j\mapsto\one .
+\]
+Equivalently, in each two-site fine cell the local factor is
+\(\operatorname{id}_O\otimes\iota_{\one}:O\to O\otimes O\), with the fixed
+left-associated bracketing of CONVENTIONS.md (r).
+
+\textbf{Lemma [derived].}  \(V_L\) is an isometry:
+\(V_L^\dagger V_L=\operatorname{id}_{O^{\otimes L}}\).  Each inserted factor
+contributes \(\iota_{\one}^\dagger\iota_{\one}=\operatorname{id}_{\one}\), and
+tensor products of isometries are isometries.
+
+\textbf{Lemma [derived].}  The induced map on charge sectors
+\[
+  J_{L,c}:\Hom(X_c,O^{\otimes L})\to\Hom(X_c,O^{\otimes 2L}),
+  \qquad
+  w\mapsto V_L\circ w,
+\]
+is isometric and preserves the total charge \(c\).  It is strictly local: the
+cellwise factors act on disjoint fine two-site cells.
+
+\subsection{Algebra Map}
+
+\textbf{Observation [derived].}  Let \(P_L=V_LV_L^\dagger\).  The map
+\[
+  \theta_L(T)=V_LT V_L^\dagger,\qquad
+  T\in \Alg_L:=\operatorname{End}_{\Cc}(O^{\otimes L}),
+\]
+is a *-isomorphism from \(\Alg_L\) onto the corner \(P_L\Alg_{2L}P_L\).  It is
+not a unital embedding into \(\Alg_{2L}\), because \(\theta_L(1)=P_L\neq1\).
+
+\textbf{Boundary [open].}  Strict OAR, as locally sourced, wants unital
+injective *-morphisms of algebras.  Thus \(\theta_L\) is not yet a strict OAR
+scaling map on the full \(\Alg_{2L}\).  A unital extension needs complement
+data that this shard does not canonically supply; the honest alternatives are
+a unital completely positive completion inside a \emph{soft} C*-system with
+asymptotic multiplicativity (CA-67), or the state/GNS corner formalism.
+
+\subsection{State Consistency}
+
+\textbf{Exact corner consistency [derived].}  If a state \(\omega_{2L}\) on
+\(\Alg_{2L}\) satisfies \(\omega_{2L}(P_L)=1\), then
+\(\omega_L:=\omega_{2L}\circ\theta_L\) is a state on \(\Alg_L\).  For the
+CA-66 charge-diagonal states, exact consistency is obtained by choosing fine
+minimal projections \(e_c^{(2L)}=V_Le_c^{(L)}V_L^\dagger\).
+
+\textbf{Dynamical-vacuum condition [open].}  A physical scaling vacuum should
+satisfy exact or asymptotic GNS consistency \(J_L\Omega_L\approx\Omega_{2L}\).
+Bare vacuum insertion supplies a candidate reference subspace, not a
+dynamical-vacuum theorem.
+
+\subsection{Density Reading}
+
+\textbf{Observation [derived].}  A word with \(N\) occupied sites refines to a
+word with the same \(N\) occupied sites on \(2L\) fine sites: the site-filling
+fraction halves while the \emph{physical} particle number at fixed physical
+volume is unchanged as the lattice spacing halves.  Dense chains cannot do
+this: every refined site must carry the chain anyon, which is the CA-67
+diagnosis of why the braiding-RG route does not port.
+
+\textbf{Boundary [open].}  This reading fits fixed-particle and finite
+physical-density sectors.  Whether a \emph{critical} vacuum sector is
+reachable depends on the dressed state and coupling flow below.
+
+\subsection{Virasoro Compatibility Target}
+
+\textbf{Target [open].}  Let \({:}L^{(L)}_{k,\pm}(g_L){:}\) denote
+normal-ordered Koo--Saleur approximants at renormalized coupling \(g_L\)
+(vacuum subtraction per CA-14).  A refinement family \(W_L\) should satisfy,
+on a low-energy GNS core and a growing long-wavelength window,
+\[
+  \sup_{|k|\le K_L}
+  \bigl\|
+    {:}L^{(2L)}_{k,\pm}(g_{2L}){:}\,W_L\psi
+    -W_L\,{:}L^{(L)}_{k,\pm}(g_L){:}\,\psi
+  \bigr\|\longrightarrow0,
+  \qquad K_L/L\to0.
+\]
+This is the CA-67 asymptotic-intertwining condition specialised to Koo--Saleur
+modes, the anyonic analogue of the sourced free-fermion convergence theorem.
+Per CA-67 there is no exact-implementer formulation to aim for when
+\(c\neq0\); asymptotic intertwining in a soft system is the target statement.
+
+\textbf{Proposal [open].}  Bare \(V_L\) is not expected to satisfy the target
+for a fixed local Hamiltonian.  Use a dressed family
+\[
+  W_L=U_LV_L,
+\]
+with \(U_L\in\Alg_{2L}\) a bounded-depth, charge-preserving local circuit,
+scale- and coupling-dependent.  \(W_L\) remains local, isometric, and
+charge-preserving; the role of \(U_L\) is to create the short-range
+entanglement that bare empty-site insertion lacks, playing the part of the
+wavelet low-pass filter (and of the braiding disentangler in the dense
+setting) so that NG1--NG3 of CA-67 are avoided.
+
+\subsection{Dead Prior Art: the Deficit/Pair-Creation Precedent}
+
+The archived predecessor project (dead, not canonical; re-derive before use)
+validated two fine-graining isometries numerically for Fibonacci/Ising at
+small size under D4 wavelets: a \emph{normalised product map} (spread each
+anyon through a one-particle wavelet isometry, column-normalise the diagonal
+Gram matrix) and an experimental \emph{number-changing isometry} \(V_0+V_2\)
+in which the isometry deficit \(I-V_0^\dagger V_0\) of the raw fixed-\(N\)
+wavelet map is filled by a pair-creation channel into the \(N{+}2\) sector.
+\textbf{Reading [derived].}  The deficit phenomenon is structural evidence for
+the present programme: fixed-\(N\) wavelet refinement fails isometry exactly
+where indefinite anyon number can repair it, using the CA-66 birth maps.  The
+archived construction was never reconciled with any algebraic framework,
+never connected to Virasoro data, and its existence conditions were not
+proved; those are re-derivation targets for this block, not inherited results.
+
+\subsection{Fibonacci \(H_2\to H_4\) Test}
+
+\textbf{Data [derived].}  For Fibonacci \(O=\one\oplus\tau\),
+\((m_{\one}(2),m_{\tau}(2))=(2,3)\) and
+\((m_{\one}(4),m_{\tau}(4))=(13,21)\).
+
+\textbf{Matrix target [derived].}  In the occupied-subset path basis, \(V_2\)
+sends \(S\subseteq\{1,2\}\) to \(2S-1\subseteq\{1,2,3,4\}\): the \(\one\)-block
+maps \(\emptyset\mapsto\emptyset\), \(\{1,2\}\mapsto\{1,3\}\); the
+\(\tau\)-block maps \(\{1\}\mapsto\{1\}\), \(\{2\}\mapsto\{3\}\),
+\(\{1,2\}\mapsto\{1,3\}\).  The charge-block matrices are \(13\times2\) and
+\(21\times3\) zero-one isometries.  Julia invariants: \(V_c^\dagger V_c=I\)
+on both charge blocks, \(P=VV^\dagger\) idempotent self-adjoint, occupation
+covariance \(Vn_j=n_{2j-1}V\) and \(n_{2j}V=0\).
+
+\textbf{Birth covariance [derived].}  For the CA-66 adjacent birth
+\(b^a_{j,j+1}\),
+\[
+  V_Lb^a_{j,j+1}=\widetilde b^{\,a}_{2j-1,2j+1}V_L,
+\]
+where \(\widetilde b\) creates the pair on fine sites \(2j-1,2j+1\) and keeps
+fine site \(2j\) in the vacuum.  The naive adjacent-fine-site covariance is
+false for this insertion convention; a mutation test must pin this.
+
+\subsection{Comparison and Boundary}
+
+The braiding RG refines dense chains by increasing string density through
+braiding; the present family refines a vacuum-capable word algebra by adding
+empty sites.  This shard does not claim to evade all rotation obstructions:
+it avoids the specific fixed TL semicontinuous Hilbert space of the no-go,
+and any future discrete-rotation action on this tower must be checked against
+the CA-67 checklist, including the registered Kliesch--Koenig necessary
+condition.  The expected algebraic home of the Fibonacci word tower --- a
+dilute Temperley--Lieb-type diagram algebra --- and any Koo--Saleur
+construction for \emph{dilute} loop models are open research targets; the
+dilute-algebra sources are registered but not yet used.  No continuum limit,
+Virasoro representation, or category-fidelity theorem is proved here.  The
+output is a local, isometric, charge-preserving refinement candidate, its
+dressing proposal, and its proof obligations.

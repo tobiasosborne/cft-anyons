@@ -1,0 +1,240 @@
+% SHARD-ID: CA-65-ANYONIC-WORD-ALGEBRA
+% SHARD-TITLE: Anyonic Word Algebra from a Site Object
+% SHARD-SUMMARY: Defines the local anyonic observable tower as End_C(O^{tensor L}) for a chosen site object O, not for a bare category alone.
+% SHARD-SUMMARY: Separates the BU-style free word layer from the kinematic fusion quotient and the later dynamical GNS quotient.
+% SHARD-SUMMARY: Records the tube/double-triangle algebra as a deferred defect and symmetry layer, not as the observable algebra.
+% SHARD-KEYWORDS: anyonic word algebra, site object, AF algebra, fusion quotient, BU algebra, double triangle, tube algebra
+
+\section{Anyonic Word Algebra from a Site Object}
+\label{sec:anyonic-word-algebra}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: proposal shard from the adopted W4 design.}  The finite local
+algebras are source-local C*-algebra objects; the free presentation and
+functoriality clauses are the adopted interface and still need implementation
+tests.
+
+Dependencies: CA-02, CA-03, CA-09, CA-62, CA-63, CA-64, and
+CONVENTIONS.md (a), (b) (fixed with this block), (c), (f), (g), and (r).
+
+% Source: references/text/PenneysUnitaryFusionCategories.md:122--124 --
+%   semisimplicity gives finite direct sums of simples and multimatrix endomorphisms.
+% Source: references/text/PenneysUnitaryFusionCategories.md:163--168 --
+%   finite-dimensional C*-algebras are multimatrix *-algebras.
+% Source: references/text/PenneysUnitaryFusionCategories.md:195 --
+%   a unitary category has unitary endomorphism *-algebras.
+% Source: references/text/PenneysUnitaryFusionCategories.md:219 --
+%   orthogonal direct sums give isometries and mutually orthogonal projections.
+% Source: references/text/PenneysUnitaryFusionCategories.md:235 --
+%   orthogonal projections are p^2=p=p^\dagger with orthogonal splittings.
+% Source: references/text/HollandsAnyonicChainsAlphaInduction.txt:606--630 --
+%   UFCs, intertwiners, *, and tensor/DHR product.
+% Source: references/text/HollandsAnyonicChainsAlphaInduction.txt:700--715 --
+%   decomposition isometries and Hom-space inner products.
+% Source: references/text/HollandsAnyonicChainsAlphaInduction.txt:1508--1547 --
+%   double triangle algebra definition and product.
+% Source: references/text/GaugingDefectsQuantumSpinSystems.txt:174--190 --
+%   vacuum, maybe spin C plus C^d, and tensoring maybe sites.
+% Source: references/qft/FewsterRejzner2019/source/AQFTIMPRS-Oct2019.tex:724--730 --
+%   fields by generators and relations.
+% Source: references/qft/FewsterRejzner2019/source/AQFTIMPRS-Oct2019.tex:1901--1919 --
+%   free unital *-algebra, two-sided *-ideal, quotient, and universal property.
+
+\subsection{Site Object First}
+
+The input to the word algebra is a pair \((\Cc,O)\), not the category \(\Cc\)
+alone.  Here \(\Cc\) is a unitary fusion category and \(O\in\Cc\) is the
+one-site object.  The default mobile hard-core choice is
+\[
+  O=\one\oplus X,
+\]
+where \(X\) is the allowed non-vacuum species object.  For Fibonacci,
+\(X=\tau\); for an all-species hard-core site, \(X=\bigoplus_{a\neq\one}X_a\).
+
+For a finite open interval \(I\) with \(|I|=L\), fix the left-associated tensor
+power from CONVENTIONS.md (c),(r):
+\[
+  O_I := (((O\otimes O)\otimes O)\cdots)\otimes O .
+\]
+The local anyonic observable algebra is
+\[
+  \Alg_I(\Cc,O):=\operatorname{End}_{\Cc}(O_I),
+  \qquad f^*:=f^\dagger .
+\]
+Because endomorphism algebras in a unitary category are finite-dimensional
+unitary *-algebras, each \(\Alg_I\) is a finite-dimensional C*-algebra.
+
+Choose representatives \(\{X_c\}_{c\in\Irr(\Cc)}\), with \(\one\) first by
+CONVENTIONS.md (a) as fixed in this block, and define
+\[
+  m_c(L):=\dim_{\mathbb C}\Hom_{\Cc}(X_c,O_I).
+\]
+After choosing orthonormal bases of these Hom spaces,
+\[
+  \Alg_I(\Cc,O)\cong \bigoplus_{c\in\Irr(\Cc)} M_{m_c(L)}(\mathbb C).
+\]
+This matrix form is a presentation.  The abstract algebra
+\(\operatorname{End}_{\Cc}(O_I)\) is basis-free; fusion-tree bases and
+\(F\)-symbols enter only when we write matrices.
+
+\subsection{Placed Matrix Blocks}
+
+Let \(w,w'\in\Hom_{\Cc}(X_c,O_I)\) be basis isometries in the same charge block
+and let \(f\in\operatorname{End}_{\Cc}(X_c)\).  The corresponding placed matrix
+block is
+\[
+  E_I(w',f,w):=w'\circ f\circ w^\dagger\in\Alg_I(\Cc,O).
+\]
+For basis vectors \(u,v,w,z\) in compatible charge blocks,
+\[
+  E_I(u,g,v)\,E_I(w,f,z)
+  =
+  \delta_{v,w}\,E_I(u,g\circ f,z),
+\]
+and
+\[
+  E_I(w',f,w)^*=E_I(w,f^\dagger,w').
+\]
+For simple \(X_c\), \(f\) is a scalar multiple of \(\operatorname{id}_{X_c}\),
+so these are ordinary matrix units inside the \(c\)-block.  This is the
+categorical replacement for positioned Pauli words in CA-47: rows and columns
+are not bare strings of letters, but charge-resolved fusion-tree basis vectors.
+
+\subsection{Inclusions, Shift, and AF Limit}
+
+For \(I\subset J\), the local inclusion is obtained by tensoring with identities
+on the added site factors, using the fixed bracketing convention:
+\[
+  f\longmapsto
+  \operatorname{id}_{O}^{\otimes \ell}\otimes f\otimes
+  \operatorname{id}_{O}^{\otimes r}.
+\]
+On a one-sided chain the shift is
+\[
+  \alpha(f)=\operatorname{id}_{O}\otimes f .
+\]
+The quasi-local observable algebra is the inductive-limit C*-algebra
+\[
+  \Alg(\Cc,O):=\overline{\bigcup_I \Alg_I(\Cc,O)}.
+\]
+It is AF by construction: it is the norm closure of an increasing union of
+finite-dimensional C*-algebras.
+
+The Bratteli diagram is the fusion graph of \(O\).  If
+\(O_I\cong\bigoplus_c m_c(L)X_c\), then
+\[
+  m_d(L+1)=\sum_c m_c(L)\,N_{c,O}^{d},
+  \qquad
+  N_{c,O}^{d}:=\dim\Hom_{\Cc}(X_d,X_c\otimes O).
+\]
+Sanity check: for \(\Cc=\Hilb_{\mathrm{fd}}\) and
+\(O=\mathbb C\oplus\mathbb C^d\), this gives
+\[
+  \Alg_L\cong M_{(d+1)^L}(\mathbb C),
+\]
+and the inductive limit is the ordinary UHF spin-chain algebra with a
+\((d+1)\)-dimensional maybe-spin site.
+
+\subsection{The BU-Style Free Pre-Layer}
+
+The adopted free layer is the tensor *-algebra
+\[
+  \mathcal{BU}_0(\Cc,O):=T(V),
+  \qquad
+  V:=\bigoplus_{j\in\mathbb Z}\ \bigoplus_{a\neq\one}
+      \Hom_{\Cc}(X_a,O)_j .
+\]
+The subscript \(j\) records the lattice site.  The involution is the formal
+dual/adjoint operation fixed by CONVENTIONS.md (b),(r); in a fusion-tree matrix
+presentation the unitary gauge is mandatory so that \(*\) is entrywise conjugate
+transpose.
+
+The intended presentation map is
+\[
+  \pi:\mathcal{BU}_0(\Cc,O)\twoheadrightarrow \Alg(\Cc,O),
+\]
+with
+\[
+  J_{\mathrm{fus}}:=\ker\pi .
+\]
+Thus
+\[
+  \mathcal{BU}_0(\Cc,O)/J_{\mathrm{fus}}
+  \cong
+  \Alg(\Cc,O).
+\]
+The ideal \(J_{\mathrm{fus}}\) is kinematic.  It contains the hard-core site
+relations, fusion admissibility, \(F\)-coherence, and the matrix-block
+relations above.  This mirrors the AQFT construction in which one starts from a
+free unital *-algebra and quotients by a two-sided *-ideal of relations.
+
+The load-bearing split is therefore
+\[
+  \mathcal{BU}_0
+  \xrightarrow{\ \pi\ \text{(kinematic fusion)}\ }
+  \Alg(\Cc,O)
+  \xrightarrow{\ \text{state/GNS}\ }
+  H_\omega .
+\]
+Fusion is not deferred to the state.  The GNS null space may impose dynamical or
+scaling relations, but category fidelity lives already in \(J_{\mathrm{fus}}\).
+
+\subsection{Defect Algebra Is a Different Layer}
+
+Hollands' double triangle algebra is a finite-dimensional vector space built
+from Hom spaces such as \(\Hom_M(cd,\bar a b)\), with its own vertical product.
+That algebra is not the local observable algebra \(\Alg_I(\Cc,O)\).  In this
+programme it is the deferred defect/MPO/symmetry layer represented on, or
+acting by endomorphisms of, the observable tower.  A later shard must specify
+that representation and its compatibility with the shift.
+
+\subsection{Functoriality Target}
+
+For a unitary monoidal dagger functor
+\(F:\Cc\to\Cc'\) and a chosen unitary \(F(O)\cong O'\), the expected finite-level
+map is
+\[
+  \operatorname{End}_{\Cc}(O^{\otimes L})
+  \longrightarrow
+  \operatorname{End}_{\Cc'}((O')^{\otimes L}),
+\]
+given by applying \(F\) and conjugating by the chosen site-unitary tensor power.
+The coherence data make this pseudofunctorial rather than strictly functorial
+on the nose.  The free construction \(\mathcal{BU}_0\) is natural at the
+generator level, and \(\pi\) should be natural once \(J_{\mathrm{fus}}\) is
+implemented.
+
+\subsection{Lamport Dependency Skeleton}
+
+{\small
+\[
+\setlength{\arraycolsep}{2pt}
+\begin{array}{rcl}
+D65.1&:& \text{Input pair }(\Cc,O),\quad O=\one\oplus X\text{ by default}.\\
+D65.2&:& O_I=O^{\otimes |I|}\text{ with fixed left bracketing}.\\
+D65.3&:& \Alg_I(\Cc,O)=\operatorname{End}_{\Cc}(O_I),\quad f^*=f^\dagger.\\
+D65.4&:& m_c(L)=\dim\Hom_{\Cc}(X_c,O^{\otimes L}),\quad
+         \Alg_L\cong\bigoplus_c M_{m_c(L)}(\mathbb C).\\
+D65.5&:& E_I(w',f,w)=w'f w^\dagger.\\
+D65.6&:& \mathcal{BU}_0=T\!\left(\bigoplus_{j,a\neq\one}\Hom(X_a,O)_j\right).\\
+D65.7&:& J_{\mathrm{fus}}=\ker(\mathcal{BU}_0\twoheadrightarrow\Alg).\\
+T65.1&:& E(u,g,v)E(w,f,z)=\delta_{v,w}E(u,g\circ f,z).\\
+T65.2&:& E(w',f,w)^*=E(w,f^\dagger,w').\\
+T65.3&:& m_d(L+1)=\sum_c m_c(L)N_{c,O}^d.\\
+T65.4&:& \Alg(\Cc,O)=\overline{\bigcup_I\Alg_I}\text{ is AF.}
+\end{array}
+\]
+}
+
+\subsection{Boundary}
+
+This shard does not construct the dynamical vacuum, prove a scaling limit, or
+derive Virasoro generators.  Approximate Virasoro relations becoming exact in a
+continuum limit remain a programme conjecture.  The categorical Markov trace
+and its naturality under spherical/unitary functors are not used here because
+the local source chain for canonical spherical structure is still open.  The
+exact generator-level implementation of \(\mathcal{BU}_0\), the endpoint-closing
+rule for charged words, and the double-triangle representation on \(\Alg\) are
+implementation tasks, not completed results.
+```

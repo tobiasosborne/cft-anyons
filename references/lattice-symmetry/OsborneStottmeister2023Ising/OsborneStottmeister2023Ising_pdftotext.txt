@@ -1,0 +1,942 @@
+                                              On the renormalization group fixed point of the two-dimensional Ising model at criticality
+                                                                                  Alexander Stottmeister1 and Tobias J. Osborne1
+                                                       1
+                                                           Institut für Theoretische Physik, Leibniz Universität Hannover, Appelstr. 2, 30167 Hannover, Germany
+
+                                                           We analyze the renormalization group fixed point of the two-dimensional Ising model at criticality. In
+                                                        contrast with expectations from tensor network renormalization (TNR), we show that a simple, explicit
+                                                        analytic description of this fixed point using operator-algebraic renormalization (OAR) is possible. Specif-
+                                                        ically, the fixed point is characterized in terms of spin-spin correlation functions. Explicit error bounds for
+                                                        the approximation of continuum correlation functions are given.
+
+
+                                             Introduction.—The statistical mechanics of classical lat-           of continuum limits – is still an outstanding challenge for
+arXiv:2304.03224v1 [math-ph] 6 Apr 2023
+
+
+
+
+                                          tice systems continue to present fascinating and remarkable            tensor-network methods.
+                                          physics. The stochastic geometry exhibited by models as                   The desire for an explicit RG capable of describing the
+                                          fundamental and elementary as the Ising model [1] exhibits             continuum limit of lattice discretizations of quantum field
+                                          a beautiful structure whose active study persists to the cur-          theories has led to the recent development of operator al-
+                                          rent day [2]. Most intriguing here is the critical phenomena           gebraic renormalization (OAR) [33–40]. This emerging
+                                          of the model as it approaches a phase transition [3]. Ap-              RG method is closely related to tensor network meth-
+                                          plications of the Ising model and its generalisations range            ods such as the multi-scale entanglement renormalization
+                                          from superconductivity [4], fault-tolerant quantum compu-              ansatz (MERA) [41–43], and has enjoyed notable recent
+                                          tation [5], high energy physics [6], to genetics [7, 8] and the        successes in the computational and analytic approximation
+                                          social sciences [9] and beyond. The two-dimensional case               of a variety of quantum field theories, from conformal field
+                                          of the Ising model is one of the most well-studied systems             theories to higher-dimensional models. It is an intrigu-
+                                          in statistical physics, with nearly 80 years of history dat-           ing open question to determine whether OAR is applicable
+                                          ing back at least to 1944, with the celebrated work of Lars            in the context of classical criticality and, if so, whether it
+                                          Onsager [10], who solved the the model on a square lat-                can furnish any information about the fixed-point tensor at
+                                          tice in the absence of external magnetic field. This solution          phase transitions.
+                                          is the cornerstone of much of modern statistical physics,                 In this Letter we demonstrate that OAR is capable of ex-
+                                          and thereby the Ising model has become the benchmark for               actly representing critical points of classical lattice models.
+                                          analytic and numerical methods alike.                                  To do this we generalize OAR to apply to partition func-
+                                             During the past decade tensor networks [11] have risen              tions of classical lattice models and analytically compute
+                                          to prominence as a powerful tool to study complex sys-                 the action of the OAR group on the transfer operator of the
+                                          tems. These have a rich history originating in the works               2D Ising model. We obtain thereby an explicit and analytic
+                                          of Kadanoff [12, 13] and Wilson [14, 15], the density ma-              representation of the fixed-point tensor. In accordance with
+                                          trix renormalization group [16], and branching out into a              expectations arising in previous TRG studies we find that
+                                          multitude of methods with a wide variety of applications               this tensor requires an infinite bond dimension.
+                                          from 2D systems through to models with anyonic excita-                    Basics of 2d Ising. The two-dimensional anisotropic
+                                          tions. One fascinating area of such works applies modern               Ising model on a N × M square lattice with periodic
+                                          tensor-network techniques to classical models of statistical           boundary conditions can be naturally formulated as a ten-
+                                          physics. This was arguably revolutionized by the tensor                sor network (see Fig. 1), i.e. its canonical partition,
+                                          renormalization group (TRG) of Levin-Nave [17] having a                                  X     N
+                                                                                                                                         Y −1   M−1
+                                                                                                                                                Y
+                                          wide range of applications [18–21], which has been refined                  ZMN =                           Aµj,k µj+1,k σj,k σj,k+1 ,   (1)
+                                          in various forms, in particular to deal with entanglement                               {σ},{µ} k=−N j=−M
+                                          of local degrees of freedom such as tensor entanglement-
+                                          filtering renormalization group [22, 23], high-order tensor            is given in terms of the tensor,
+                                          renormalization group [24–29], tensor network renormal-                                                          ′       ′
+
+                                          ization (with or without positivity) [30–32]. Here impres-                                Aµµ′ σσ′ = δµ.σ eK1 µµ eK2 σσ ,                (2)
+                                          sive numerical results suggest the general applicability of            with µ, µ′ , σ, σ ′ ∈ {±1} as well as horizontal and vertical
+                                          the TRG, and relatives such as tensor network renormal-                coupling constants K1 , K2 . Spin-spin and other correla-
+                                          ization, as a general purpose method for investigating par-            tion functions are conveniently expressed using the hori-
+                                          tition functions of classical lattice models. Although the             zontal transfer matrix VM (see Fig. 2) naturally given in
+                                          TRG does flow to a fixed point off criticality – i.e., an infi-        the σ (3) -basis [44, 45]:
+                                          nite bond dimension is required to express the fixed-point
+                                          tensor – it is still useful for the study of critical phenom-                         X M−1
+                                                                                                                                  Y                 M−1
+                                                                                                                                                    Y                   ′
+
+                                          ena. The goal of explicitly computing fixed-point tensors                heσ ,VM e i =
+                                                                                                                             σ′     Aµj µj+1 σj σj = eK1 σj σj+1+K2 σj σj , (3)
+                                                                                                                                                 ′
+
+
+                                          for critical systems – closely related to the approximation                               {µ} j=−M             j=−M
+                                                                                                                                                                 2
+
+    (a)                                                      (b)                          ACAR (hM ) with one-particle Hilbert space hM = ℓ2 (ΛM ),
+                                                                                          ΛM = {−M, ..., M − 1}[47]. We define the renormal-
+          A     A     A          A      A      A                                          ization group transformation[48], E : S2M → SM , that
+                                                                      σ                   coarse grains states on the chain of twice the length, S2M ,
+                                                                                          to those on the given length, SM , by its dual quantum chan-
+                                                              µ       A        µ′
+          A     A     A          A      A      A                                          nel, α : AM → A2M :
+                                                                      σ′                     tr(E(ρ)A) = tr(ρα(A)),              ρ ∈ S2M , A ∈ AM .             (7)
+          A     A     A          A      A      A
+                                                                                          The dual quantum channel is naturally given by an isome-
+                                                                                          try [36], R : hM → h2M :
+FIG. 1: Illustration of the partition function ZMN in (a) as                                                                     M−1
+  a two-dimensional tensor network built from the local                                                                          X           X
+                                                                                           α(a(ξ)) = a(R(ξ)), R(ξ)j′ =                  ξj         hn δ2j,j′ −n (8)
+tensor A in (b). Dashed lines indicate contractions due to
+                                                                                                                              j=−M           n∈Z
+               periodic boundary conditions.                                                                              PM−1
+                                                                                          for ξ ∈ hM and a(ξ) = j=−M ξ¯j aj . The coefficients
+                                                                                          hn are given by the low-pass filter of a real, orthonormal,
+                                 (3)
+where eσ = ⊗M  j=−M eσj , σj eσj = σj eσj . As an operator on                             compactly supported scaling function s ∈ C r (R), satisfy-
+                                     2
+                                                                                                                               P            1
+the Hilbert space HM = ⊗M     j=−M C , associated with each                               ing the scaling equation s(x) = n∈Z hn 2 2 s(2x−n) (ap-
+row of the lattice, the transfer matrix VM takes the form,                                propriately periodized to comply with the boundary con-
+                      M
+                                PM −2   (3) (3)          ∗ PM −1 (1)                      ditions) [49]. The renormalization group transformation
+    VM = C(2K2 ) 2 eK1            j=−M σj σj+1    eK2       j=−M σj        ,        (4)   takes a particularly simple form in momentum space,
+                                                                                                                                           X
+where tanh(K2∗ ) = e−2K2      and C(K2 ) = 2 sinh(2K2 ),                                                1
+                                                                                            R(ξ̂)θ′ = 2 2 m0 (θ ′ )ξ̂2θ′ , m0 (θ ′ ) = √12
+                                                                                                                                                     ′
+                                                                                                                                              hn e−iθ n , (9)
+which decomposes into operators associated         with verti-
+                                                PM −1 (1)                                                                                    n∈Z
+                  (1)                   M K∗
+cal couplings, VM = (2 sinh(2K2 )) 2 e 2 j=−M σj , and                                                  PM−1                   π
+                                     (3)
+                                                 PM −1 (3) (3)                            where ξ̂θ = j=−M e−iθj ξj for θ ∈ M    {−M, ..., M−1}. In
+horizontal coupling respectively VM = eK1 j=−M σj σj+1 .                                  this way, we realize (discrete) renormalization group flow
+While the partition function is given by the trace of the                                 lines within the state space SM by,
+horizontal transfer matrix, ZMN = tr(VM ), the correla-                                           (m)
+tion functions are more naturally expressed using the sym-                                       ρMN = E m (ρ(M+m)N ),              0 ≤ m < ∞,                 (10)
+metrized transfer matrix,                                                                 using the Gibbs state ρMN as an input. On the Pauli al-
+                (sym)     (3) 
+                                1
+                                  (1)    (3) 
+                                               1
+                                                                                          gebra PM , the coarse graining takes the form: E( · ) =
+              VM      = VM 2 VM VM 2 ,                      (5)
+                                                                                          ptr(UM∗ (·)UM ), where ptr is the partial trace with respect
+which results in:                                                                         to the natural embedding HM2 ⊂ HM , and UM is a uni-
+                                                                                        tary parametrized by the low-pass filter hn which coincides
+                                   (sym) N (3)       (3)
+ hσj1 ,k1 ...σjn ,kn i = ZM1 N tr VM       σj1 k1 ...σjn kn , (6)                         with the wavelet disentangler in [50, 51] (see the appendix
+                    (sym) k                   −k                                        for further details). Fig. 3 illustrates how (10) can be inter-
+          (3)
+where σjk = VM                 σj(3) VM(sym)         .                                    preted in terms of TNR which is dual to the construction of
+                                                                                          a MERA as we will further explain in [52].
+                          σ−M σ−M+1 σ−M+2            σM−3     σM−2     σM−1
+                                                                                             Infinite volume formulation. We can avoid additional
+    heσ ,VM eσ′ i =
+                                                                                          complications in the discussion of the renormalization
+                           A      A     A                A        A        A
+                                                                                          group fixed point due to boundary conditions, necessary
+                           ′
+                          σ−    ′     ′
+                             M σ−M+1 σ−M+2
+                                                      ′
+                                                     σM−3
+                                                               ′
+                                                              σM−2
+                                                                        ′
+                                                                       σM−1
+                                                                                          for the algebras PM , AM at finite M and N by passing to
+                                                                                          an infinite volume formulation, i.e. M, N → ∞: First, we
+ FIG. 2: Illustration of the Horizontal transfer matrix VM                                observe that imposing the asymptotic scaling conditions,
+               associated with the tensor A.                                                       K1 ∼ βt(3) N −1 ,              K2∗ ∼ βt(1) N −1 ,           (11)
+
+   OAR for 2d Ising. Exploiting the operator-algebraic                                    for β, t(3) , t(1) > 0 for N → ∞, provides a Gibbs state,
+                                                                                                N →∞
+structure of the transfer matrix formulation, we can ap-                                  ρMN → ρM = Z1M e−βHM , of the transverse-field Ising
+ply OAR to analyze the large-scale behavior of correlation                                Hamiltonian at inverse temperature β [54] as a conse-
+             (sym)
+functions: VM      is a positive, trace-class operator on HM                              quence of Trotter’s product formula [53],
+                                                  1       (sym) N
+inducing a quasi-free Gibbs state, ρMN = ZMN           VM          ,                                           M−1
+                                                                                                               X           (3)    (3)              (1) 
+on the quantum spin chains given in terms of the Pauli al-                                           HM = −          t(3) σj σj+1 +t(1) σj                 .   (12)
+gebra PM = ⊗M−1 j=−M M2 (C). By the Jordan-Wigner trans-                                                      j=−M
+                   Q            (1)  1
+form [46], aj =       −M≤l<j σl       2
+                                        (σj(3)+iσj(2) ), the latter                       Second, we note that the definition of the dual quantum
+is isomorphic to the algebra of complex fermions AM =                                     channels α : AM → A2M is compatible with taking the
+                                                                                                                                                     3
+
+                                                                                     infinite volume limit, limM AM = ∪M AM = A, in the
+   (0)
+  ρM1 = ZM 1
+             1
+                   A         A   A            A         A       A                                            −→
+                                                                                     sense of quasi-local algebras [55], which leads to a descrip-
+                                                                                     tion of the limit M → ∞ in terms of the fermion algebra,
+                                        E                                            A = ACAR (h), with one-particle space h = ℓ2 (Z), and the
+                                                                                     renormalization group transformation, α : A → A, defined
+                       ptr                        ptr
+                                                                                     by the analogue of (8). The dynamics on A is determined
+                                      UM∗
+                                                                                     by the Hamiltonian H , formally given by (12) for M → ∞,
+   (1)                                                                               which is still well-defined as a derivation on strictly local
+ ρM 1 = Z1         A         A   A            A         A       A
+   2         M1                                                                      elements of A [55]. In this limit, the Gibbs states ρM pro-
+                                      UM                                             vide quasi-free KMS-states ωβ : A → C determined by the
+                                                                                     two-point function:
+                       ptr                        ptr
+                                                                                                             (1)                            (2)
+                                                                                      ωβ (a(ξ)a†(η))=hξ,Cβ ηi,ωβ (a†(ξ)a†(η))=hξ̄,Cβ ηi. (13)
+                                                                                                                         (1)    (2)
+            1
+         = ZM       A(1)         A(1)          A(1)             A(1)                 The covariance operators Cβ , Cβ have momentum-
+              1
+                                                                                     space kernels,
+                                                                                                                                  
+FIG. 3: Illustration of a single renormalization group step                             Cβ(1)(θ, θ ′ ) = π 1+ℜ |zzθθ | tanh(β|zθ |) δ(θ−θ ′ ), (14)
+  in OAR applied to the transfer matrix VM (indices are                                   (2)                      
+                                  (1)
+                                                                                        Cβ (θ, θ ′ ) = −iπℑ |zzθθ | tanh(β|zθ |)δ(θ−θ ′ ),
+suppressed, note that ZM1 = ZM 1 ). The disentangler UM
+                                  2
+can be decomposed into 2-local operations which defines                              where zθ = t(1) − eiθ t(3) . The expressions remain mean-
+ the renormalized tensor A(1) with increased horizontal                              ingful in the limit β → ∞ providing a ground state of H
+  bond dimension by the results of [51] combined with                                on A. Evaluating the renormalization group flow (10) re-
+                                                                                                                                 (m)
+               singular value decomposition.                                         sults in sequences of renormalized states ωβ = ωβ ◦αm
+                                                                                     which are quasi-free by construction and, thus, determined
+                                                                                     by their two-point functions:
+
+
+
+                                                                                                       m−1
+                                                                    Z π                                  Y               
+       (m)                                  (1)                                         
+   ωβ (a(ξ)a† (η)) = hRm (ξ), Cβ Rm (η)i = 4π
+                                            1
+                                                                          dθ 1+ℜ |zzθθ | tanh(β|zθ |) 2m     |m0 (2n θ)|2 ξ̂2m θ η̂2m θ , (15)
+                                                                       −π                                          n=0
+                                                                       Z π
+                                                                                                           m−1
+                                                                                                             Y                 
+                                                                                                                   |m0 (2n θ)|2 ξˆ−2m θ η̂2m θ .
+    (m)                                     (2)
+  ωβ (a† (ξ)a† (η)) = hRm (ξ̄), Cβ Rm (η)i = − 4π
+                                                i
+                                                                             dθ ℑ |zzθθ | tanh(β|zθ |)2m
+                                                                        −π                                  n=0
+
+
+
+
+Fixed points and admissible scaling limits are determined                            by (11)), i.e. the critical line of the two-dimensional Ising
+by analyzing the convergence of (15) for m → ∞ under                                 model given by the tensor (2) corresponding to the√well-
+suitable renormalization conditions imposed on the cou-                              know critical coupling K = K1 = K2 = 12 ln(1 + 2) in
+plings t(1) , t(3) and the inverse temperature β .                                   the isotropic case. In view of (15), we have zθ = t(1 − eiθ )
+   The fixed point at criticality. In the quantum spin-chain                         and |zθ |2 = 4t2 sin( 12 θ)2 . Using the change of variables
+formulation, the critical line corresponds to equal cou-                                                                         β→∞
+plings t(3) = t(1) = t in the Hamiltonian (12) in the limit                          k = 2m θ and noting that tanh(β|zθ |) → 1−δθ,0 , we find:
+β → ∞, which is equivalent to K1 ≈ K2∗ (at large N ≫ 1
+
+
+                                     Z 2m π                                   m
+                                                                             Y                                 Z ∞
+        (m)                                                       −m
+                                                                     k)                                   m→∞ 1
+       ωβ=∞ (a(ξ)a† (η)) = 4π
+                            1
+                                              dk    1+ 2|1−cos(2
+                                                               1 −m
+                                                          sin( 2 2   k)|
+                                                                                     |m0 (2−n      2
+                                                                                                k)| ξ̂k η̂k → 4π     dk |ŝ(k)|2 ξ̂k η̂k ,         (16)
+                                      −2m π                                    n=1                                       −∞
+                                     Z 2m π                             m
+                                                                       Y                                Z ∞
+        (m)                                         sin(2   −m
+                                                            k)                                      m→∞ i
+       ωβ=∞ (a† (ξ)a† (η)) = 4π
+                              i
+                                              dk 2| sin( 1 −m
+                                                          2   k)|
+                                                                              |m0 (2−n k)|2 ξ̂−k η̂k → 4π     dk sign(k)|ŝ(k)|2 ξ̂−k η̂k ,
+                                                            2
+                                      −2m π                             n=1                                         −∞
+
+
+
+
+by Lebesgue’s dominated convergence theorem applied to                               for an adapted decay estimate for m0 . By passing to the
+Qm         −n   m→∞
+  n=1 m0 (2   k) → ŝ(k) [49], see also [36, Lem. 3.7]
+                                                                                                                                             4
+                                                                                                                            m→∞
+self-dual chiral Majorana fields, ψ±|j = e±i 4 aj +e∓i 4 a†j ,
+                                                        π      π
+                                                                           Ccrit. = Cβ=∞ (t, t) is unstable, because |zzθθ | → sign(λ)
+we recognize that the limits in (16) are the vacuum two-                            m→∞                                              (3)
+                                                                           and |zθ | → t(1) |λ| for θ = 2−m k and λ = 1 − tt(1) ∈
+point functions of the c = 21 free-fermion conformal field
+                                                                           [−∞, 0)∪(0, 1] (non-critical). In particular, at β = ∞, the
+theories (CFTs) of the two chiral halves of the critical Ising
+                                                                           states are driven towards: (1) the disorder fixed point λ = 1
+fixed point:
+                         Z ∞                                               (t(1) = const., t(3) = 0) for λ ∈ (0, 1], or (2) the order fixed
+                                                                           point λ = −∞ (t(1) = 0, t(3) = const.) for λ ∈ [−∞, 0). By
+                    ∗
+ω(ψ±(ξ ∗s)ψ±(η∗s) ) = π dk 21 (1±sign(k))|ŝ(k)|2 ξ̂k η̂k ,
+                         1
+                                 −∞
+                                                                           a similar reasoning that led to (16), the disorder fixed point
+ω(ψ±(ξ ∗s)ψ∓(η∗s) ) = 0, ∗
+                                                       (17)                is given by the Fock state with respect to a, a† while the
+                     P                                                     order fixed point is given by the anti-Fock state (resulting
+where (ξ ∗ s)(x) = j∈Z ξj s(x − j) for ξ ∈ h. We di-                       from an equal weight mixture of the two extremal ground
+rectly infer from (17) that the scaling function s controls                states of HM at t(1) = 0).
+the resolution at which the CFT is probed.                                    Spin-spin correlations. The correspondence between
+  Error bounds on fermions correlations. It is an imme-                    quasi-free states on A and even states on the infinite-
+diate consequence of the construction that explicit error                  volume Pauli algebra P = ⊗j∈Z M2 (C) [46] allows for a
+bounds on the approximation of dynamical fermionic n-                      characterization of the critical fixed point in terms of spin-
+point functions of the scaling limit state ω can be derived                spin correlation functions,
+using the methods of [36, 37]:
+          (†)       (†)                (†)        (†)
+  |ω (m)(at(0)(ξ1)...at(0)(ξn))−ω(at1 (ξ1)...atn (ξn))| ≤ δ, (18)
+          1          n                                                                               n
+                                                                                                    Y      j2k −1                      
+                                                                                   (3)    (3)
+                                                                                                             Y
+given a set of one-particle vectors ξ1 , ..., ξn ∈ h and                      ω(σj1 ...σj2n ) = ω                Ψ(0, iδlk )Ψ(δlk+1 , 0) ,
+                             (0)
+effective lattice times t1 ,..., t(0)n   as well as continuum                                        k=1 lk =j2k−1
+                                                                               (3)    (3)
+times t1 , ..., tn (referring to the effective dynamics H after             ω(σj1 ...σj2n+1 ) = 0, j1 ≤ ... ≤ j2n ≤ j2n+1 ,           (20)
+rescaling m-times and the massless free-fermion dynamics
+in the scaling limit respectively). In particular, we find,
+                   δ = δ(m, T ) ≤ 2−m CT ,                      (19)       where Ψ(ξ, η) = a(ξ − iη) + a† (ξ +iη), ξ, η ∈ ℓ2 (Z), is
+                                                               (0)         Araki’s self-dual field [58]. These correlation functions are
+for |t1 |, ..., |tn | ∈ [0, T ], large effective lattice times ti ∼
+                                                                           precisely the scaling limits of the Ising correlation func-
+2m ti , and some constant CT > 0 otherwise only depending
+                                                                           tions (6) at criticality K1 = K2∗ for k1 , ..., kn = 0. The
+on one-particle norms of ξ1 ,..., ξn and the scaling function
+                                                                           quasi-free structure of ω allows for the evaluation of (20)
+s. In general, the error in (18) can only be small for large
+                                                                           in terms of a Pfaffian [46], which further reduces to well-
+effective lattice times just as the equal-time correlation ap-
+                                                                           known Toeplitz determinant [44, 59] with the crucial dif-
+proximate their continuum counterparts at large distances,
+                                                                           ference that scaling-limit two-point function is given by
+as seen from (17). But, here an exponential separation of
+                                                                           (16). The real-time, analytic continuations of the critical
+effective lattice and continuum times is not necessary at the
+                                                                           Ising correlation functions with k1 , ..., kn 6= 0 can be ob-
+expense of a slower decay of the error δ (see appendix).
+                                                                           tained from (16) by means of the scaling limit of the time-
+   Instability of the fixed point at criticality. The question
+                                                                           evolution of HM (see the appendix for a sketch).
+of stability of fixed points in the framework of TNR has
+been of interest recently [56, 57]. Although, we cannot                       Other scaling limits. Inspecting (15) it is straightfor-
+address this question for OAR in full detail in this Letter,               ward to construct massive and finite-temperature scaling
+we can make the following observation: In the space of                     limits: If we impose the renormalization conditions λ =
+                                                                                (3)
+quasi-free (initial) states characterized by covariance oper-              1− tt(1) ∼ 2−m µ0 > and β ∼ 2m β0 for arbitrary µ0 ≥ 0 and
+ators C = Cβ (t(1) , t(3) ) in the sense of (13), it is an im-             β > 0, we will obtain the equilibrium state at temperature
+mediate consequence of (15) that the critical state given by               β0 of a free fermion quantum field of mass m0 :
+
+
+                                                             Z ∞
+                                              †
+                                                                                                
+                                                        1
+                             ωµ0 ,β0(a(ξ ∗s)a (η∗s)) = 4π       dk 1+ ωµµ0(k) tanh(β0 tωµ0 (k)) |ŝ(k)|2 ξ̂k η̂k ,                    (21)
+                                                                           0
+                                                              −∞
+                                                             Z ∞
+                             ωµ0 ,β0(a† (ξ ∗s)a† (η∗s)) = 4π
+                                                           i
+                                                                dk ωµk(k) tanh(β0 tωµ0 (k))|ŝ(k)|2 ξ̂−k η̂k
+                                                                       0
+                                                              −∞
+
+
+
+                                                                                                        P
+where ωµ0(k)2 = µ20 +k 2 is the massive continuum disper-                  sion relation, (ξ ∗s)(x) =       j∈Z ξj s(x−j) for ξ ∈ h, and
+                                                                                                                               5
+    m→∞
+t(3) → t. As before, the scaling function s controls the
+resolution at which the continuum quantum field is probed.
+                                                                  [1] E. Ising, Beitrag zur Theorie des Ferromagnetismus,
+                                                                      Zeitschrift für Physik 31, 253 (1925).
+   Discussion. We have presented an explicit description          [2] G. Grimmett, The Random-Cluster Model, edited by
+of the critical fixed point of the two-dimensional classi-            M. Berger, P. Harpe, F. Hirzebruch, N. J. Hitchin,
+cal Ising model using OAR which may be understood as a                L. Hörmander, A. Kupiainen, G. Lebeau, M. Ratner,
+Wilson-Kadanoff RG scheme dual to tensor-network meth-                D. Serre, Y. G. Sinai, N. J. A. Sloane, A. M. Vershik, and
+ods. In particular, if OAR is applied to density matrices             M. Waldschmidt, Grundlehren Der Mathematischen Wis-
+given in terms of transfer matrices of classical lattice sys-         senschaften, Vol. 333 (Springer, Berlin, Heidelberg, 2006).
+tems, it is operationally dual to a (thermal) MERA derived        [3] D. V. Schroeder, An Introduction to Thermal Physics
+from TNR [43]. Our explicit representation of the criti-              (Addison-Wesley, San Francisco, 2000).
+                                                                  [4] W. Li, J. Huang, X. Li, S. Zhao, J. Lu, Z. V. Han, and
+cal fixed point relies on an implementation of OAR using
+                                                                      H. Wang, Recent Progresses in Two-Dimensional Ising
+wavelet methods that was previously introduced in [35–                Superconductivity, Materials Today Physics 21, 100504
+38], and the duality with TNR is manifestly exhibited by              (2021).
+the unitary defining the coarse-graining channel E (see (26)      [5] J. K. Pachos, Introduction to Topological Quantum Compu-
+in the appendix), which directly corresponds to the exact             tation (Cambridge University Press, Cambridge, 2012).
+disentangler of Evenbly and White for the ground state of         [6] N. Iqbal and J. McGreevy, Toward a 3d Ising Model with
+the Ising quantum chain [50, 51]. In our construction of              a Weakly-Coupled String Theory Dual, SciPost Physics 9,
+the scaling limit, a particularly important role is played            019 (2020).
+by the scaling function associated with a given low-pass          [7] J. Majewski, H. Li, and J. Ott, The Ising Model in Physics
+filter, as this function controls the resolution at which the         and Statistical Genetics, The American Journal of Human
+                                                                      Genetics 69, 853 (2001).
+fixed-point tensor is probed at unit scale – either in terms
+                                                                  [8] J. Krishnan, R. Torabi, A. Schuppert, and E. D. Napoli,
+of fermionic or spin-spin correlation functions. As a direct          A Modified Ising Model of Barabási–Albert Network with
+consequence of this feature we explicitly observe a univer-           Gene-Type Spins, Journal of Mathematical Biology 81, 769
+sal large-scale behavior independent of the specific choice           (2020).
+of scaling functions. Another important advantage of our          [9] A. Lipowski, D. Lipowska, and A. L. Ferreira, Phase Tran-
+method over other approaches such as the exact MERA is                sition and Power-Law Coarsening in an Ising-doped Voter
+the provision of explicit, provable error bounds on the ap-           Model, Physical Review E 96, 032145 (2017).
+proximation of correlation functions for sufficiently regular    [10] L. Onsager, Crystal Statistics. I. A Two-Dimensional Model
+scaling functions that are independent of the design prob-            with an Order-Disorder Transition, Physical Review 65, 117
+lem of Hilbert-pair wavelets [60]. Such error bounds allow            (1944).
+for a direct understanding of the simulation of QFTs/CFTs        [11] J. C. Bridgeman and C. T. Chubb, Hand-Waving and In-
+                                                                      terpretive Dance: An Introductory Course on Tensor Net-
+by quantum computers [37]. We have exhibited a direct                 works, Journal of Physics A: Mathematical and Theoretical
+correspondence of the critical fixed point with the vacuum            50, 223001 (2017).
+(or Neveu-Schwarz) sector of the Ising CFT with an ex-           [12] L. P. Kadanoff, Notes on Migdal’s Recursion Formulas, An-
+plicit formula for the two-point functions of the self-dual           nals of Physics 100, 359 (1976).
+chiral Majorana field (see (17)). By our method, it is pos-      [13] L. P. Kadanoff, Scaling laws for Ising models near Tc ,
+sible obtain fixed points corresponding to other sectors,             Physics Physique Fizika 2, 263 (1966).
+e.g., the Ramond sector, by working in a finite-volume set-      [14] K. G. Wilson, The renormalization group: Critical phenom-
+ting including different, e.g., anti-periodic, boundary con-          ena and the Kondo problem, Reviews of Modern Physics 47,
+ditions, which will be discussed elsewhere [61]. In ad-               773 (1975).
+dition, we are planning to further clarify the relation of       [15] K. G. Wilson, The Renormalization Group and Critical Phe-
+                                                                      nomena, Reviews of Modern Physics 55, 583 (1983).
+our construction of the scaling limit of the Ising model
+                                                                 [16] S. R. White, Density matrix formulation for quantum
+with previously known results about the Ising QFT/CFT –               renormalization groups, Physical Review Letters 69, 2863
+specifically via spin-spin correlation functions [45, 62–66]          (1992).
+and the explicit construction of the spin field operator [67].   [17] M. Levin and C. P. Nave, Tensor renormalization group
+                                                                      approach to 2D classical lattice models, Phys.ical Review
+                                                                      Lett.ers 99, 120601 (2007), cond-mat/0611687.
+  This work was supported, in part, by the Quantum               [18] H. H. Zhao, Z. Y. Xie, Q. N. Chen, Z. C. Wei, J. W. Cai,
+Valley Lower Saxony, the Deutsche Forschungsgemein-                   and T. Xiang, Renormalization of Tensor-Network States,
+schaft (DFG, German Research Foundation) – Project-ID                 Physical Review B 81, 174411 (2010).
+274200144 – SFB 1227, and under Germanys Excellence              [19] B. Dittrich, F. C. Eckert, and M. Martin-Benito, Coarse
+                                                                      Graining Methods for Spin Net and Spin Foam Models,
+Strategy EXC-2123 QuantumFrontiers 390837967. AS                      New Journal of Physics 14, 035008 (2012).
+was in part supported by the MWK Lower Saxony within
+the Stay Inspired program.
+                                                                                                                                    6
+
+[20] D. Kadoh, Y. Kuramashi, Y. Nakamura, R. Sakai, S. Takeda,     [38] A. Stottmeister, V. Morinelli, G. Morsella, and Y. Tanimoto,
+     and Y. Yoshimura, Investigation of Complex Φ4 Theory at            Operator-algebraic renormalization and wavelets, Physical
+     Finite Density in Two Dimensions Using TRG, Journal of             Review Letters 127, 230601 (2021), 2002.01442.
+     High Energy Physics 2020, 161 (2020).                         [39] T. J. Osborne, Continuum Limits of Quantum Lattice Sys-
+[21] Y. Kuramashi and Y. Yoshimura, Tensor Renormalization              tems, Preprint, arXiv: 1901.06124 (2019).
+     Group Study of Two-Dimensional U(1) Lattice Gauge The-        [40] A. Stottmeister, Anyon braiding and the renormalization
+     ory with a θ Term, Journal of High Energy Physics 2020, 89         group, Preprint, arXiv: 2201.11562 (2022), 2201.11562.
+     (2020).                                                       [41] G. Vidal, Entanglement Renormalization, Physical Review
+[22] Z.-C. Gu and X.-G. Wen, Tensor-Entanglement-Filtering              Letters 99, 220405 (2007).
+     Renormalization Approach and Symmetry-Protected Topo-         [42] G. Vidal, Entanglement Renormalization: An Introduc-
+     logical Order, Physical Review B 80, 155131 (2009).                tion, in Understanding Quantum Phase Transitions, edited
+[23] Z.-C. Gu, M. Levin, and X.-G. Wen, Tensor-Entanglement             by L. D. Carr (CRC Press, Golden, 2011) pp. 115–138,
+     Renormalization Group Approach as a Unified Method                 arXiv:0912.1651.
+     for Symmetry Breaking and Topological Phase Transitions,      [43] G. Evenbly and G. Vidal, Tensor Network Renormaliza-
+     Physical Review B 78, 205116 (2008).                               tion Yields the Multiscale Entanglement Renormalization
+[24] Z. Y. Xie, H. C. Jiang, Q. N. Chen, Z. Y. Weng, and T. Xi-         Ansatz, Physical Review Letters 115, 200401 (2016).
+     ang, Second Renormalization of Tensor-Network States,         [44] T. D. Schultz, D. C. Mattis, and E. H. Lieb, Two-
+     Physical Review Letters 103, 160601 (2009).                        dimensional Ising model as a soluble problem of many
+[25] Z. Y. Xie, J. Chen, M. P. Qin, J. W. Zhu, L. P. Yang,              fermions, Reviews of Modern Physics 36, 856 (1964).
+     and T. Xiang, Coarse-Graining Renormalization by Higher-      [45] M. Sato, T. Miwa, and M. Jimbo, Holonomic quantum
+     Order Singular Value Decomposition, Physical Review B              fields. V, Publications of the Research Institute for Math-
+     86, 045139 (2012).                                                 ematical Sciences, Kyoto University 16, 531 (1980).
+[26] A. Bazavov, S. Catterall, R. G. Jha, and J. Unmuth-Yockey,    [46] D. E. Evans and Y. Kawahigashi, Quantum symmetries on
+     Tensor Renormalization Group Study of the Non-Abelian              operator algebras, Oxford Mathematical Monographs (The
+     Higgs Model in Two Dimensions, Physical Review D 99,               Clarendon Press, Oxford University Press, New York, 1998)
+     114507 (2019).                                                     pp. xvi+829, oxford Science Publications.
+[27] N. Butt, S. Catterall, Y. Meurice, R. Sakai, and J. Unmuth-                                                                   (3)
+                                                                   [47] The boundary conditions for hM are chosen such that VM
+     Yockey, Tensor Network Formulation of the Massless                 is an exponential of quadratic expression in annihilation and
+     Schwinger Model with Staggered Fermions, Physical Re-              creation operators [44]. For finite M , the eigenstate corre-
+     view D 101, 094509 (2020).                                         sponding to the largest eigenvalue of VM
+                                                                                                                (sym)
+                                                                                                                      is obtained with
+[28] J. Bloch, R. G. Jha, R. Lohmayer, and M. Meister, Ten-             anti-periodic boundary conditions for hM .
+     sor Renormalization Group Study of the Three-Dimensional      [48] A trace-preserving quantum channel.
+     O(2) Model, Physical Review D 104, 094517 (2021).             [49] I. Daubechies, Ten Lectures on Wavelets, CBMS-NSF Re-
+[29] G. Li, K. H. Pai, and Z.-C. Gu, Tensor-Network Renormal-           gional Conference Series in Applied Mathematics, Vol. 61
+     ization Approach to the $q$-State Clock Model, Physical            (SIAM, 1992).
+     Review Research 4, 023159 (2022).                             [50] G. Evenbly and S. R. White, Entanglement Renormalization
+[30] G. Evenbly and G. Vidal, Tensor Network Renormalization,           and Wavelets, Physical Review Letters 116, 140403 (2016).
+     Physical Review Letters 115, 180405 (2015).                   [51] G. Evenbly and S. R. White, Representation and design of
+[31] M. Bal, M. Mariën, J. Haegeman, and F. Verstraete, Renor-         wavelets using unitary circuits, Physical Review A: Atomic,
+     malization Group Flows of Hamiltonians Using Tensor Net-           Molecular, and Optical Physics 97, 052314 (2018).
+     works, Physical Review Letters 118, 250602 (2017).            [52] T. J. Osborne and A. Stottmeister, Operator algebraic renor-
+[32] S. Yang, Z.-C. Gu, and X.-G. Wen, Loop Optimization for            malization and tensor network renormalization, in prepara-
+     Tensor Network Renormalization, Physical Review Letters            tion (2023).
+     118, 110504 (2017).                                           [53] M. Reed and B. Simon, Methods of Modern Mathematical
+[33] A. Brothier and A. Stottmeister, Canonical Quantization of         Physics: Vol.: 1.: Functional Analysis (Academic Press,
+     1+1-dimensional Yang-Mills Theory: An Operator Alge-               1972).
+     braic Approach, Preprint, arXiv: 1907.05549 (2019).           [54] Suzuki, Sei and Inoue, Jun-ichi and Chakrabarti, Bikas
+[34] A. Brothier and A. Stottmeister, Operator-algebraic Con-           K., Quantum Ising phases and transitions in transverse
+     struction of Gauge Theories and Jones’ Actions of Thomp-           Ising models, 2nd ed., Lecture Notes in Physics, Vol. 862
+     son’s Groups, Communications in Mathematical Physics               (Springer, 2012).
+     376, 841 (2019), 1901.04940.                                  [55] O. Bratteli and D. W. Robinson, Operator Algebras and
+[35] V. Morinelli, G. Morsella, A. Stottmeister, and Y. Tani-           Quantum Statistical Mechanics 2: Equilibrium States, Mod-
+     moto, Scaling limits of lattice quantum fields by wavelets,        els in Quantum Statistical Mechanics, 2nd ed., Theoreti-
+     Communications in Mathematical Physics 387, 299 (2021),            cal and Mathematical Physics (Springer Berlin, Heidelberg,
+     2010.11121.                                                        1997).
+[36] T. J. Osborne and A. Stottmeister, Conformal field the-       [56] T. Kennedy and S. Rychkov, Tensor RG Approach to High-
+     ory from lattice fermions, Communications in Mathematical          Temperature Fixed Point, Journal of Statistical Physics 187,
+     Physics 10.1007/s00220-022-04521-8 (2022), 2107.13834.             33 (2022).
+[37] T. J. Osborne and A. Stottmeister, Quantum Simulation of      [57] T. Kennedy and S. Rychkov, Tensor Renormalization Group
+     Conformal Field Theory, arXiv: 2109.14214 (2021).                  at Low Temperatures: Discontinuity Fixed Point, Preprint,
+                                                                        arXiv: 2210.06669 10.48550/ARXIV.2210.06669 (2022),
+                                                                                                                                      7
+
+     arXiv:2210.06669 [math-ph].                                             (1977).
+[58] H. Araki, On the XY -model on two-sided infinite chain,            [64] D. B. Abraham, n-point functions for the rectangular Ising
+     Publications of the Research Institute for Mathematical Sci-            ferromagnet, Communications in Mathematical Physics 60,
+     ences 20, 277 (1984).                                                   205 (1978).
+[59] E. W. Montroll, R. B. Potts, and J. C. Ward, Correlations and      [65] R. Z. Bariev, Many-point correlation functions of the two-
+     Spontaneous Magnetization of the Two-Dimensional Ising                  dimensional Ising model, Modern Physics Letters A. Par-
+     Model, Journal of Mathematical Physics 4, 308 (1963).                   ticles and Fields, Gravitation, Cosmology, Nuclear Physics
+[60] J. Haegeman, B. Swingle, M. Walter, J. Cotler, G. Even-                 64, 169 (1977).
+     bly, and V. B. Scholz, Rigorous free-fermion entanglement          [66] D. B. Abraham, The Riemann Problem, Complete Integra-
+     renormalization from wavelet theory, Physical Review X 8,               bility and Arithmetic Applications (Springer Berlin, Hei-
+     011003 (2018).                                                          delberg, 1982) Chap. Planar Ising ferromagnet: correlation
+[61] D. Cadamuro, N. Galke, T. J. Osborne, and A. Stottmeis-                 functions and the inverse scattering method, pp. 37–56, 1st
+     ter, Quantum scaling limit of the transverse Ising model I.             ed.
+     Fermionic correlation functions, Virasoro generators, and          [67] S. N. M. Ruijsenaars, Integrable Quantum Field Theories
+     disorder automorphisms, in preparation (2023).                          and Bogolyubov Transformations, Annals of Physics 132,
+[62] B. M. McCoy, C. A. Tracy, and T. T. Wu, Two-Dimensional                 328 (1981).
+     Ising Model as an Exactly Solvable Relativistic Quantum            [68] O. Bratteli and D. W. Robinson, Operator Algebras and
+     Field Theory: Explicit Formulas for n-Point Functions,                  Quantum Statistical Mechanics 1: C ∗ -and W ∗ -Algebras,
+     Physical Review Letters 38, 793 (1977).                                 Symmetry Groups, Decomposition of States, 2nd ed., Theo-
+[63] D. B. Abraham, n-point functions for the rectangular                    retical and Mathematical Physics (Springer Berlin, Heidel-
+     Ising ferromagnet, Modern Physics Letters A. Particles and              berg, 1987).
+     Fields, Gravitation, Cosmology, Nuclear Physics 61, 271
+
+
+
+
+                                                               Appendix
+
+                                             Coarse graining E : spin chain representation
+
+  Let us briefly explain the structure of the coarse graining channel E in the spin chain representation (additional details
+can be found in [52]): For finite-length spin chains, the Jordan-Wigner transformation,
+                                     Y      (1)    (3)     (2)
+                           aj =            σl 21 (σj +iσj ),                              j∈Z                          (22)
+                                     −M≤l<j
+
+provides a ∗-isomorphism between the Pauli algebra PM and the complex fermion algebra AM . In terms of Araki’s
+self-dual field [58], Ψ(ξ, η) = a(ξ −iη)+a† (ξ +iη), the inverse of this transformation can be written as:
+                     (3)
+                              Y                                                 (1)
+                   σj =           Ψ(δl , 0)Ψ(0, iδl ) Ψ(δj , 0),                σj = Ψ(δj , 0)Ψ(0, iδj ).  (23)
+                            −M≤l<j
+
+We can now exploit the Jordan-Wigner transformation to find an explicit representation of the dual renormalization group
+channel α given in (8).First, we observe the associated state correspondence between the natural representations of PM on
+HM = ⊗M−1      2
+        j=−M C and AM on the anti-symmetric Fock space F−(hM ):
+
+ |j1 ,...,jn i=a†j1...a†jnΩM =(−1)|j||−i−M⊗...⊗|+ij1⊗...⊗|+ijn⊗...⊗|−iM−1=(−1)|j||−−M ,...,+j1 ,...,+jn ,...,−M−1 i, (24)
+
+                                                                                                                  Pn
+for −M ≤ j1 < ... < jn ≤ M−1, where ΩM = ⊗M−1      j=−M |−i = |−, ..., −i is the Fock vacuum, |j| = (−1)
+                                                                                                             j
+                                                                                                          i=1 i , and |±i are
+
+
+the ±1-eigenstates of σ (1) . Second, we decompose the one-particle isometry R = u2M ◦ι given in (8) into a unitary u2M
+on h2M and the trivial embedding ι(hM ) ⊂ h2M given by the identification of the scaled lattice 2ΛM as sublattice of Λ2M .
+Clearly, the unitary is not uniquely fixed on the orthogonal complement of ι(hM ), but there is a natural choice associated
+with a length-2N low-pass filter {hn } given by a corresponding high-pass filter {gn = (−1)n h̄−n+1+2N } [49]:
+                              X      X                  X           X
+               (u2M ξ)j =         ξl     hn δl+n,j +           ξ l′     gn+1 δl′ +n,j ,            ξ ∈ h2M .            (25)
+                             l∈2ΛM     n∈Z               l′ ∈Λ2M \2ΛM     n∈Z
+
+This choice precisely corresponds to the representation of the discrete wavelet transform (on L2 (S 1 ) or L2 (R)) as a
+unitary circuit by Evenbly-White [51]. We note that by construction the unitary U2M = Γ(u2M ) in Fig. 3 acting on
+H2M = F−(h2M ) is given by the multiplicative second quantization of uM , while the unital ∗-morphism Γ(ι) is dual to
+                                                                                                                                                 8
+
+the partial trace ptr : H2M → HM . In the limit M → ∞, (25) is still meaningful if the low-pass filter is considered in
+non-periodic form as arising from a scaling function s ∈ Cr (R). Similarly, the partial trace is performed with respect to
+every other site of the infinite-length spin chain. In summary we have,
+                                                           E = ptr ◦ AdU ,                                                                   (26)
+
+and U has the following matrix elements with respect to the σ (1) -basis:
+                                                                                                n
+                                                                                               XY
+                                                                                        ′
+                    h−...+j1′ ...+jn′ ...−|U |−...+j1 ...+jm ...−i = δn,m (−1)|j |+|j|                      cn(jll ) δjl′ ,jl +nl ,          (27)
+                                                                                               {n} l=1
+              
+                 hn : j ∈ 2Z
+where c(j)
+       n =                        .
+                gn+1 : j ∈ Z \ 2Z
+
+
+                                              Even states: spin-spin correlation functions
+
+  We provide additional details on the computation of spin-spin correlation functions and the definition of dynamics on
+the Pauli algebra P following [44, 58]. The Pauli algebra P and the fermion algebra A are both Z2 -graded in a compatible
+way, i.e. we have order-2 automorphisms Θ of P and A (denoted by the same symbol) given by:
+                                        (1)    (1)                                          (3)             (3)
+                               Θ(σj ) = σj ,                                          Θ(σj ) = −σj ,                                         (28)
+                               Θ(a(ξ)) = −a(ξ),                                            ξ ∈ h.
+It is known that there is a bijective correspondence between even states, those invariant under Θ, on P and A, and it is
+easy to see that the Gibbs states ωβ as well as the ground state ω∞ are even states on A [46]. While the Jordan-Wigner
+transformation (22) does not extend to a ∗-isomorphism between the infinite-length Pauli algebra P and the complex
+fermion algebra A, it does so for the even parts P (0) and A(0) with respect to the Z2 -grading Θ. In particular, we have:
+     (3) (3)
+                          Y †                          Y                            Y
+   σj σj′ = (aj +a†j )        [al , al ] (aj′ +a†j′ ) =   (al −a†l )(al+1 +a†l+1 ) =    Ψ(0, iδl )Ψ(δl+1 , 0), j ≤ j ′ , (29)
+                          j≤l<j ′                       j≤l<j ′                             j≤l<j ′
+
+where Ψ(ξ, η) = a(ξ − iη)+ a† (ξ +iη) is Araki’s self-dual field. This allows for a direct evaluation of even quasi-free
+states, e.g., ωβ and ω , on P in terms of A: By means of (29) we obtain the following expression for n-point spin-spin
+correlation functions (cp. (20)):
+                           Y                                 Y                           
+           (3)   (3)
+      ω(σj1 ...σj2n ) = ω         Ψ(0, iδl1 )Ψ(δl1 +1 , 0)...     Ψ(0, iδln )Ψ(δln +1 , 0) ,                        (30)
+                             j1 ≤l<j2                             j2n−1 ≤l<j2n
+       (3)    (3)
+    ω(σj1 ...σj2n+1 ) = 0,                                                                                            j1 ≤ ... ≤ j2n ≤ j2n+1 ,
+which can be evaluated for quasi-free state on A as these are determined by their two-point function [46] (odd correlators
+vanish identically):
+                                                                          X                      n
+                                                                                                 Y
+                                                                                 (−1)( 2 ) ε(J,K) ω(Ψ(ξji ,ηji )Ψ(ξki ,ηki )). (31)
+                                                                                      n
+  ω(Ψ(ξ1 ,η1 )...Ψ(ξ2n ,η2n )) = Pf((ω(Ψ(ξi ,ηi )Ψ(ξj ,ηj )))ij ) =
+                                                                       J,K∈DI2n ,                     i=1
+                                                                        J⊔K=I2n ,
+                                                                      |J|=|K|,J<K
+
+Here, I2n = {1, ..., 2n} and DI2n denotes the ordered subsets of I2n . In particular, the sum runs over disjoined partitions
+of I2n into equally sized ordered subsets J = {j1 , ..., jn }, K = {k1 , ..., kn } such that ji < ki , i = 1, ..., n. The sign
+                                                          I            1,...,2n
+ε(J, K) is given by the signature of the permutation JK       = j1 ,...,jn ,k1 ,...,kn
+                                                                                       . For the infinite-length transverse-field Ising
+spin chain at criticality, the relevant two-point functions of the self-dual field are determined by (16):
+                                                                 Z
+                                           †        † †                                                                      
+    ω(Ψ(0, iδj )Ψ(δj′ , 0)) = 2ℜ ω(aj aj′ )−ω(aj aj′ ) = 2π dk |ŝ(k)|2 cos((j −j ′ )k)+sign(k) sin((j −j ′ )k) , (32)
+                                                              1
+
+                                                            
+   ω(Ψ(0, iδj )Ψ(0, iδj′ )) = −2iℑ ω(aj a†j′ )−ω(a†j a†j′ ) = 0,
+                                                          
+     ω(Ψ(δj , 0)Ψ(δj′ , 0)) = 2iℑ ω(aj a†j′ )+ω(a†j a†j′ ) = 0.
+                                                                                                                            9
+
+As only the mixed correlations between Ψ(0, iδj ) and Ψ(δj′ , 0) are non-vanishing, the Pfaffian in (31) can be further
+reduced. Specifically, the two-point spin-spin correlation function can, thus, be evaluated in terms of a Toeplitz determinant
+[54, 59]:
+                                                             (3)     (3)         (3)
+                                                                                       
+                                                            C−1 C−2 ... Cj−j′
+                                                             (3)     (3)       (3)    
+                                        (3) (3)          C0        C−1 ... Cj−j′ +1 
+                                   ω(σj σj′ ) = det                                   ,                                 (33)
+                                                         ...       C0(3) ...     ... 
+                                                            (3)                    (3)
+                                                         Cj′ −j−2 ... ... C−1
+         (3)                                                             (3)
+where Cj−j′ = ω(Ψ(0, iδj )Ψ(δj′ , 0)) = −ω(Ψ(δj , 0)Ψ(0, iδj′ )) = Cj′ −j .
+  The evaluation of dynamical spin-spin correlation functions corresponding to real-time analytic continuations of the
+spin-spin correlators of the two-dimensional Ising model in infinite-volume (6) requires additional effort. To this end,
+following [58] we introduce tail and string operators,
+                                      Y      (1)
+                                                     Y †            Y
+                              TM =          σl =       [al , al ] =         Ψ(δl , 0)Ψ(0, iδl ),                    (34)
+                                    −M≤l≤0          −M≤l≤0             −M≤l≤0
+                                  (Q
+                                           [a† , a ] : j > 0
+                              Sj = Q0<l<j l† l                ,
+                                     j≤l≤0 [al , al ] : j ≤ 0
+
+which entails,
+                                                   σj(3) = TM Sj (aj +a†j ),                                             (35)
+to understand the relation between PM and AM via the Jordan-Wigner transformation (22) in the infinite-length limit
+M → ∞ (see also [55, Ex. 6.2.14]). Although, TM does not exist in this limit,the induced order-2 quasi-free automorphism
+                                                                               +1 : 0 < j ≤ M −1
+by its adjoint action ΘM|− (aj ) = AdTM (aj ) = sign(j)aj , where sign(j) =                          remains well-defined
+                                                                               −1 : −M ≤ j ≤ 0
+(denoted by Θ− ). Therefore, P and A can be realized as subalgebras of the crossed product Â = A⋊θ− Z2 , i.e., the algebra
+generated by A and a self-adjoint unitary T such that:
+                                Θ− (a(ξ)) = T a(ξ)T,                                       ξ ∈ h.                        (36)
+
+Explicitly, the Pauli algebra P is given by (23) with TM replaced by T , i.e., P = A(0) + T A(1) , where A(1) is the odd
+subalgebra with respect to the Z2 -grading Θ (see (28)). The infinite-length dynamics τt of the Hamiltonian H in (12)
+exists on P by general methods for spin systems [55, Ex. 6.2.14] as well as on A, where it is quasi-free for the self-dual
+fields, τt (Ψ(ξ, η)) = Ψ(eith (ξ, η)), and given by the diagonal one-particle Hamiltonian,
+                                                   
+                                            0 −izθ
+                               h(θ) = 2                ,                          θ ∈ [−π, π),                        (37)
+                                           izθ 0
+in momentum space. Thus, to evaluate the dynamical spin-spin correlation functions we essential need to understand the
+dynamics of the tail operator T . Because of the identity,
+                                     (3)     (3)
+                                   σj τt (σj′ ) = (aj +a†j )Sj T τt (T )τt (Sj′ (aj′ +a†j′ )),                           (38)
+we essentially need to control the expression T τt (T ) which is given by perturbation theory for inner automorphisms [68,
+Thm. 3.1.33]:
+                                                                    X∞    Z t Z t1       Z tn−1
+                        itHM    −itHM           itΘ− (HM ) −itHM         n
+    T τt (T ) = lim T e      Te       = lim e             e       =     i dt1 dt2 ...          dtn τtn(P )...τt1(P ), (39)
+                 M→∞                       M→∞                                 0       0         0
+                                                                      n=0
+
+where P = limM→∞ Θ− (HM )−HM = 2t(3) (a0−a†0 )(a1+a†1 ). With a similar strategy, it is possible to control expressions
+of the form,
+                                                                        m          m
+                               αm (T )τt (αm (T )) = lim lim eitα (TN )HM α (TN ) e−itHM ,                               (40)
+                                                      M→∞ N →∞
+
+corresponding to perturbations P (m) = limM→∞ limN →∞ αm (TN )HM αm (TN ) − HM , appearing in the evaluation of
+dynamical spin-spin correlation functions.
+                                                                                                                                                           10
+
+                                                  Error bounds: fermionic correlation functions
+
+  The explicit upper bound on the error δ in (19) appearing in the approximation of fermionic correlation functions (18)
+can be efficiently derived using the self-dual fields Ψ(ξ, η) = a(ξ − iη)+ a† (ξ +iη). It follows from the combinatorial
+formula for the evaluation of quasi-free states in terms of Pfaffians (31) that it is sufficient to derive the bound (19) for
+two-point correlations functions which can be evaluated in terms of the one-particle space inner product of h ⊕ h and the
+one-particle covariance operator Cβ determined by (14):
+                                                                               !
+                                                                    (1)    (2)
+                                           1             i(1 −2(Cβ +Cβ ))
+                         Cβ =                (1)     (2)                          = 2(eβh + 1)−1 ,                      (41)
+                                −i(1 −2(Cβ +Cβ ))                  1
+
+where h is the one-particle Hamiltonian (37). At criticality, i.e, t(1) = t(3) = t and β → ∞, the momentum-space kernel of
+the covariance reads,
+                                                             !                                             −iθ !
+
+                           ′             ′      1 −i |zzθθ |                 ′
+                                                                                        1         −i 2|1−e
+                                                                                                        sin( 12 θ)|
+                  C∞ (θ, θ ) = 2πδ(θ−θ )                       = 2πδ(θ−θ )                                          . (42)
+                                             i |zzθθ |    1                      i 2| 1−e
+                                                                                           iθ
+                                                                                                        1
+                                                                                      sin( 12 θ)|
+                                           |           {z    }
+                                                              =C∞ (θ)
+
+which becomes,
+                                                                                        
+                                                          ′                1 ′   sign(k)
+                                                 C(k, k ) = 2πδ(k−k )                     ,                                                              (43)
+                                                                        sign(k)     1
+                                                                      |        {z        }
+                                                                                          =C(k)
+
+in the scaling limit at criticality according to (16). Putting everything together, (18) reads as follows for two-point corre-
+lation functions of Ψ:
+                            |ω (m)(Ψt(0)(ξ1 , η1)Ψt(0)(ξ2 , η2))−ω(Ψt1(ξ1 , η1)Ψt2(ξ2 , η2))|                                                            (44)
+                                       1              2
+                                                       (0) (0)                                                  (∞)
+                                                    i(t2 −t1 )h
+                         =|hRm(ξ1 , η1),C∞ e                   Rm(ξ̄2 , η̄2)i−hR(∞)(ξ1 , η1),Cei(t2−t1 )h R(∞)(ξ̄2 , η̄2)i|,
+where R(∞) ξ = ξ ∗ s is the asymptotic one-particle isometry as defined below (17), and h(∞) is the massless one-particle
+free-fermion Hamiltonian with momentum-space kernel h(∞)(k) = 2kσ (1) . As explained in the main text, we expect the
+dynamical correlation functions of the m-times renormalized lattice model to approximated those of the scaling limit and
+the associated massless free-fermion dynamics only for effective lattice times of the order of the renormalization scale,
+       (0)
+i.e., ti = 2m ti . Using the Cauchy-Schwarz inequality for Sobolev-type norms (with parameters γ, γ1 , γ2 > 0), kC∞ k ≤ 2
+(by (41)) and the unitarity of the dynamics, we find:
+ |ω (m)(Ψt(0)(ξ1 ,η1)Ψt(0)(ξ2 ,η2))−ω(Ψt1(ξ1 ,η1)Ψt2(ξ2 ,η2))|                                                                                             (45)
+             1            2
+                                     (0) (0)                      (∞)
+                                                                      
+=|hR(∞)(ξ1 ,η1), S2−m C∞ ei(t2 −t1 )hS2m −Cei(t2−t1 )h R(∞)(ξ̄2 ,η̄2)i|
+        Z ∞                      †                                                                            !
+                                                                                                       ˆ
+            dk |ŝ(k)|2 ξ̂1|k C∞(2−m k)ei(t2 −t1 )h(2 k) −C(k)ei(t2−t1 )h                                 ξ̄2|k |
+                                                       (0) (0)     −m                         (∞  )(k)
+    1
+=| 2π
+         −∞                 η̂1|k                                                                         η̄ˆ2|k
+        Z ∞                      †                                                       !
+                            ξ̂
+                                                               (0) (0) −m            ˆ
+    1
+≤| 2π       dk |ŝ(k)|2 1|k C∞(2−m k)−C(k) ei(t2 −t1 )h(2 k) ξ̄2|k |
+         −∞                 η̂1|k                                                    η̄ˆ2|k
+             Z ∞                        †                                                            !
+                                                  (0) (0) −m                              ˆ
+     +| 2π1
+                  dk |ŝ(k)|  2   ξ̂ 1|k           i(t
+                                           C(k) e 2 1  −t    )h(2    k)    i(t
+                                                                        −e 2 1 −t )h(∞)(k)
+                                                                                               ξ̄ 2|k    |
+               −∞                 η̂1|k                                                        η̄ˆ2|k
+                                                                       !1                                                                          2!21
+        Z ∞
+                |ŝ(k)|2(1−γ)                            ˆ  2 2 Z ∞                                                                  
+   1
+≤ 2π        dk                             −m
+                                   C∞(2 k)−C(k) 1|k          ξ                              2     γ
+                                                                               dk (1+|k| ) 2 |ŝ(k)| e 2 1    2γ    i(t
+                                                                                                                       (0) (0)
+                                                                                                                          −t   )h(2−m
+                                                                                                                                       k)  ξ̂ 2|k
+         −∞ (1+|k| )
+                         2 γ2                                η̂1|k          −∞                                                             η̂2|k
+          Z ∞                                                   2!12 Z ∞                 2γ                                                      ˆ  2 2
+                                                                                                                                                             !1
+      1                   2 γ1            2(1−γ)          ξ̂                      |ŝ(k)|            (0) (0) −m
+                                                                                                       i(t   −t   )h(2     k)     i(t −t  )h(∞)(k)   ξ
+ + 2π         dk (1+|k| ) |ŝ(k)|                 C(k) 1|k                  dk                        e 2 1                   −e 2 1                   2|k
+            −∞                                            η̂1|k           −∞ (1+|k| )
+                                                                                           2 γ1                                                      η̂2|k
+                                                                                                                                               11
+                                                                !1                                              2!21
+        Z ∞
+               |ŝ(k)| 2(1−γ)                       ˆ  2 2 Z ∞                                     
+                                                                                                          ˆ
+   1
+≤ 2π       dk                  C∞(2−m k)−C(k) ξ1|k                      dk (1+|k|2 )γ2 |ŝ(k)|2γ ξ2|k
+         −∞ (1+|k| )
+                         2 γ2                          η̂1|k          −∞                                 η̂2|k
+                                                          1
+          Z ∞                                        2!2 Z ∞                2γ                                                    2!21
+      1                                                               |ŝ(k)|        (0) (0) −m
+              dk (1+|k|2 )γ1 |ŝ(k)|2(1−γ) ξ̂1|k                                                                               ξ̂2|k
+                                                                                                                      (∞)(k)
+ + 22π2                                                         dk                   ei(t2 −t1 )h(2 k) −ei(t2−t1 )h
+           −∞                                  η̂1|k          −∞    (1+|k|    2 )γ1                                           η̂ 2|k
+                                                                                      1
+                          Z ∞                                                  2!2
+   1    2γ ξ̂2                   |ŝ(k)|2(1−γ)          −m                ξ̂ 1|k
+= 2π ŝ                       dk                   C∞(2 k)−C(k)
+            η̂2 H γ2(R) −∞ (1+|k|2 )γ2                                     η̂1|k
+                               Z ∞              2γ                                                    2!12
+      1                                   |ŝ(k)|        (0) (0) −m
+ + 22π2 ŝ2(1−γ) ξ̂1                                                                               ξ̂2|k
+                                                                                          (∞)(k)
+                                     dk                  ei(t2 −t1 )h(2 k) −ei(t2−t1 )h
+                    η̂1 H γ1(R) −∞ (1+|k|2 )γ1                                                    η̂2|k
+with sj (x) = s(x − j) and en , n = 1, 2 the standard basis vectors of R2 , and where we used the fact the intermediate
+                 (∞) ˆ
+                    f )(k) = 2− 2 ŝ(2−m k)fˆ(k), is an isometry between the Hilbert spaces L2 ([−2m π, 2m π),(2m+1 π)−1 )
+                                m
+scaling map, (Rm
+and L2 (R,(2π)−1 ), and defined the scaling transformation (Sλ fˆ)(k) = fˆ(λk) in momentum space. Next, we evaluate the
+k-dependent norms inside the integrals in the last two lines of (45):
+                                                        2                      2
+                                                                                             2
+                                 −m
+                            C∞(2 k)−C(k)            ξ̂ 1|k      i(1−ei2
+                                                                          −m k
+                                                                               )
+                                                              = 2 sin( 1 2−m k) −1     ξ̂ 1|k
+                                                                                                 ,                   (46)
+                                                    η̂1|k              2              η̂1|k
+                                                         
+                                                    ξ̂2|k 2 ≤ |cos(2t t2m+1 | sin(2−(m+1) k)|)−cos(2t t|k|)|
+             (0) (0) −m                   (∞)(k)
+                                                               
+             ei(t2 −t1 )h(2 k) −ei(t2−t1 )h                                0                          0
+                                                    η̂2|k
+                                                                      +|sin(2t0 t2m+1 | sin(2−(m+1) k)|)−sin(2t0 t|k|)|
+                                                                                                          2         2
+                                                                         i(1−ei2
+                                                                                   −m k
+                                                                                        )            −m
+                                                                      +| 2 sin( 1 2−m k) −1|+|1−cos(2 k)|      ξ̂ 2|k
+                                                                                                                         ,
+                                                                                2                             η̂2|k
+where t0 = t2 −t1 . Finally, we observe that,
+                                                                                       ik
+                                                                                           )
+                                                                    sup |k|−1 | 2i(1−e
+                                                                                   sin( 1 k)
+                                                                                             −1| = 12 ,                                       (47)
+                                                                                       2
+                                                                    k∈R
+
+                                                                     sup |k|−2 |1−cos(k)| = 21 ,
+                                                                      k∈R
+                                        −4
+                                sup |k| |cos(2t0 t2    m
+                                                           2| sin( 2 k)|)−cos(2t0 t2m |k|)| = 22m 38 (t0 t)2 ,
+                                                                   1
+                                k∈R
+
+                                sup |k|−3 |sin(2t0 t2m 2| sin( 12 k)|)−sin(2t0 t2m |k|)| = 2m 34 t0 t,
+                                k∈R
+which, together with (45) & (46), combine to the final estimate:
+        |ω (m)(Ψt(0)(ξ1 ,η1)Ψt(0)(ξ2 ,η2))−ω(Ψt1(ξ1 ,η1)Ψt2(ξ2 ,η2))|                                                                         (48)
+                 1            2
+                                                                         
+               1    1
+         −m 2 2 2 2 +1           −1 i(1−e )
+                                           ik
+                                                     1−γ ξ1
+                                                           ˆ             γ ξ̂2
+       ≤2 2π          1  sup|k| | 2 sin( 1 k) −1| ŝ                  ŝ
+                    2 2 k∈R               2               η̂1 H 1(R)        η̂2 H 1(R)
+                                                                             
+                         −m           −2                1−γ ξ̂1
+                                                                                ˆ
+                                                                             γ ξ2
+                    +2 sup |k| |1−cos(k)| ŝ                              ŝ
+                            k∈R                              η̂1 H 2(R)        η̂2 H 2(R)
+                                                                                                                       
+                          −2m           −3                                                            ξ̂
+                                                                                                    1−γ                γ ξ2
+                                                                                                                           ˆ
+                       +2        sup |k| |sin(2t0 t2    m
+                                                            2| sin( 12 k)|)−sin(2t0 t2m |k|)|
+                                                                                            ŝ           1
+                                                                                                                    ŝ
+                                 k∈R                                                                  η̂ 1  3
+                                                                                                           H ( R)         η̂2  H 3(R)
+                                                                                                                                  !
+                           −3m           −4             m         1                 m           1−γ ξ̂1                 γ ξ2
+                                                                                                                            ˆ
+                       +2        sup |k| |cos(2t0 t2 2| sin( 2 k)|)−cos(2t0 t2 |k|)| ŝ                              ŝ
+                                 k∈R                                                                   η̂1 H 4(R)          η̂2 H 4(R)
+                                                                                              
+                 1     1
+                               1−γ ξ̂1
+                                                      ˆ
+                                                   γ ξ2
+                                                                                  ˆ
+                                                                             1−γ ξ1               γ ξ̂2
+       ≤2−m 22π2     2 2 +1
+                        1   ŝ                  ŝ                +2−m 1
+                                                                        2
+                                                                          ŝ                   ŝ
+                      22 2         η̂1 H 1(R)        η̂2 H 1(R)                  η̂1 H 2(R)          η̂2 H 2(R)
+                                                                                                                          !
+                           −m 4        1−γ ξ̂1              γ ξ̂2           −m 8      2   1−γ ξ̂1                  γ ξ2
+                                                                                                                        ˆ
+                       +2 3 t0 t ŝ                      ŝ              +2 3 (t0 t) ŝ                         ŝ
+                                            η̂1 H 3(R)        η̂2 H 3(R)                          η̂1 H 4(R)           η̂2 H 4(R)
+                                                                                                                         12
+                                                   
+                                                      ˆ
+      ≤2−m CT max             ŝ1−γ ξ̂1         ŝ γ ξ2
+                                                                 ,
+             γ1+γ2 ∈{1,2,3,4}       η̂1 H γ1(R)      η̂2 H γ2(R)
+for |t0 | ∈ [0, T ], a constant CT > 0 and some free parameter γ > 0. We note that the Sobolev-type norm are finite for
+sufficiently regular scaling functions s ∈ C r(R). Moreover, inspecting the penultimate line of (48) closely, we find that
+we can even choose the maximal continuum time to scale as T . 2m T0 for some T0 > 0, i.e., the approximation error
+                                                                                                            (0)
+δ = δ(m, T ) vanishes in the limit m → ∞ as long as 2−m T → 0. In particular, the effective lattice times ti only need to
+be asymptotically large compared to the continuum times ti , at the cost of an approximation error δ vanishing at least with
+the inverse asymptotics.
+

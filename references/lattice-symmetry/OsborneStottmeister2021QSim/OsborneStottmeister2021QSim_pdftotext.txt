@@ -1,0 +1,1041 @@
+                                                    Quantum Simulation of Conformal Field Theory
+                                                                       Tobias J. Osborne,1∗ and Alexander Stottmeister1
+arXiv:2109.14214v1 [quant-ph] 29 Sep 2021
+
+
+
+
+                                             1
+                                                 Institut für Theoretische Physik, Leibniz Universität Hannover, Appelstr. 2, 30167 Hannover, Germany
+                                                     ∗
+                                                         To whom correspondence should be addressed; E-mail: tobias.osborne@itp.uni-hannover.de
+
+
+                                                    Conformal field theory, describing systems with scaling symmetry, plays a cru-
+                                                    cial role throughout physics. We describe a quantum algorithm to simulate
+                                                    the dynamics of conformal field theories, including the action of local con-
+
+                                                    formal transformations. A full analysis of the approximation errors suggests
+                                                    near-term applicability of our algorithm: promising results for conformal field
+                                                    theories with central charge c = 12 are obtained already with 128 logical qubits.
+
+
+                                                  Understanding quantum field theory (QFT) is a central open problem in theoretical physics,
+                                            with unique challenges arising from the infinite dimensionality of the field Hilbert space to
+
+                                            the possibility of large quantum entanglement (1–3). With the imminent advent of scalable
+                                            fault-tolerant quantum computation the possibility of exploiting quantum simulation (4–7) to
+                                            understand strongly interacting many body systems has arisen, with a slew of recent realisations
+
+                                            (8–10). Building on these fundamental results, breakthrough efficient quantum algorithms for
+                                            the simulation of QFTs have been proposed, promising a new era in their understanding (11–
+                                            14).
+
+                                                  Quantum algorithms for QFT have targeted the simulation of scattering events via discre-
+                                            tised lattice approximations. Following Wilson (15–17), one interprets the results in effective
+                                            field theory by regulating the QFT onto a lattice model which supplies predictions appropriate
+
+                                                                                             1
+for the energy scale – the renormalization scale – set by the lattice spacing. The extraordinary
+insight of Wilson is that consistency under changes of scale gives the definition of an ultraviolet
+
+completion – a procedure known as the renormalization group. This powerful strategy has been
+employed throughout computational quantum field theory, with many dramatic results, espe-
+cially for massive QFTs (18, 19). However, effective field theory doesn’t provide us with all the
+
+answers. In particular, for theories with scaling symmetries mixing the infrared and ultraviolet
+it is necessary to understand the continuum limit.
+   Conformal field theory (CFT) (20, 21) epitomises the outstanding challenges facing the de-
+
+velopment of quantum simulation algorithms (14, 22). In particular CFTs are massless and, in
+1 + 1 dimensions, have an infinite-dimensional group of local conformal symmetries. Thus the
+simulation of their dynamics and continuous scaling symmetries via discretised approximations
+
+is particularly problematic as one needs to understand or construct the continuum limit to assess
+the accuracy of approximation. Fortunately, we are on the cusp of a satisfactory mathematical
+formulation of CFT, providing us with a unique opportunity to compare discrete approximations
+
+directly with rigourous continuum results (22–28). Further, there is a rich supply of physically
+relevant examples to prototype quantum simulation algorithms, with a vast range of applications
+from phase transitions to quantum gravity (29, 30).
+
+   We meet the above challenges (14, 22) and introduce a new aproach to the quantum simula-
+tion of the dynamics of CFTs. We show how to overcome, by appealing to the recently devel-
+oped operator-algebraic renormalization (OAR) (27, 31, 32), the twin difficulties presented by
+
+the comparison with the continuum limit and the implementation of local scaling transforma-
+tions within a lattice formulation. We introduce a variety of techniques to rigourously construct
+the continuum limit and provide a quantum algorithm to coherently simulate the action of local
+
+conformal transformations on the many body Hilbert space of CFT. Remarkably, we find that
+the resulting quantum algorithm can provide promising approximations on near-term quantum
+
+
+                                                2
+hardware with as few as N = 128 logical qubits (see Supplementary Material).
+       The additional symmetries provided by the conformal group delivers a powerful calcula-
+
+tional tool for the computation of physically relevant correlation functions. Indeed, two- and
+three-point correlation functions are all but completely determined (20, 21). However, the com-
+putation of higher correlation functions becomes rapidly expensive (33). By simulating the
+
+entire physically relevant Hilbert space at a given spatial scale we are not only able to effi-
+ciently calculate four-point and higher correlators, but also more complicated observables. The
+complexity of the quantum algorithms we present here scales as δ −1 with the accuracy δ re-
+
+quired1 .
+       The crucial device exploited in this paper is OAR, which is a mathematically rigourous for-
+mulation of Wilsonian renormalization in the Heisenberg picture of observables, where locality
+
+is manifest. The core innovation of OAR is that the quantum continuum limit is constructed as
+a sequence of discrete approximations, directly supplying us with error estimates. This pow-
+erful formalism is also extremely flexible, allowing for formulations, both in momentum space
+
+and – via approximations built using wavelets (34) – position space. Here we generalise OAR
+to implement discretised approximations for local conformal transformations via a remarkable
+formula due to Koo and Saleur (35).
+
+       The quantum algorithm presented here may be compared with efficient classical algorithms
+based on tensor networks. Very recent progress has led to dramatic progress in the classical sim-
+ulation of CFTs, in particular, for the computation of equal-time vacuum correlation functions,
+
+including both rigourous approximations and numerical procedures (36–43). However, a core
+obstruction in the classical setting remains the simulation of quantum dynamics and conformal
+symmetries: these processes easily create massive entanglement, obstructing their simulation
+
+via tensor networks which scale, in the worst case, exponentially with the number of lattice
+   1
+     Note: the algorithms also scale with the required localization of the observables and the order of the generator
+of local conformal transformations.
+
+                                                         3
+sites.
+    In this paper we exploit OAR to formulate a quantum simulation algorithm for conformal
+
+field theories in 1 + 1 dimensions to compute approximations to quantum field observables, lo-
+cal either in momentum or position space. Further, we are able to simulate correlation functions
+for observables which are unbounded in the continuum, allowing us to consider correlation
+
+functions for the Virasoro algebra. A key novelty of the approach described here is that unitary
+local conformal transformations may be directly simulated and errors estimated. We focus on
+a fermionic example with central charge c = 12 , however, we also explain how to extend our
+
+results to cover currents for Wess-Zumino-Witten models. Our approach admits natural gen-
+eralisations to a wider class of models with arbitrary central charge, including bosonic models
+and models based on anyonic systems.
+
+
+Representing conformal fields on a quantum computer. We exploit the Hamiltonian for-
+mulation of conformal field theory and work with units so that ~ = c = 1 (21). In order to
+simplify the exposition we illustrate our approach using the key example of relativistic Dirac
+
+fermions on the circle with circumference 2L. Depending on the boundary conditions – i.e.,
+either periodic or antiperiodic – one realises the Ramond (respectively, Neveu-Schwarz) sec-
+tor. The real chiral components of the massless theory give rise to CFTs with central charge
+
+c = 21 (21).
+    To simulate a CFT on a quantum computer we need to approximate the system with a finite
+number of qubits. This is achieved by discretising the system onto a finite spatial lattice ΛN =
+
+εN {−LN , −LN + 1, . . . , LN − 2, LN − 1} ⊂ εN Z, where εN LN = L. Exploiting the staggered
+lattice approximation we may discretise the theory with the following lattice hamiltonian:
+
+         (N )
+                          X  (1) †             †
+                                                                       †             †
+                                                                                            
+    H0          = ε−1
+                   N π
+                      L
+                             ψx+εN ψx(2) − ψx(1) ψx(2) + h.c. + λN ψx(1) ψx(1) − ψx(2) ψx(2) ,   (1)
+                          x∈ΛN
+
+where λN is the lattice mass coupling constant (the prefactor has been chosen for consistency
+
+                                                     4
+with the Koo-Saleur formula). Note that N refers to the spatial scale, i.e., the negative logarithm
+of the lattice spacing. The total number n of lattice sites at scale N is given by n = 2N +1 . The
+                                       (j)
+lattice fermion operators ψx , j = 1, 2, obey the standard canonical anticommutation relations:
+   (j)     (k) †
+{ψx , ψy           } = δ j,k δx,y , with all other anticommutators vanishing. This particular lattice model
+is exactly solvable via a Fourier transform followed by a Bogoliubov transformation2 .
+
+       The Hilbert space HN of states for the lattice is given by fermionic Fock space, with di-
+mension 22n . There are now many methods to represent such fermionic systems on a quantum
+computer, ranging from the original Jordan-Wigner transformation through to the sophisticated
+
+methods of Bravyi and Kitaev and Ball-Cirac-Verstraete (44–47). For simplicity of exposi-
+tion we represent fermionic Fock space on a quantum computer using 2n qubits, exploiting
+                                                                                                                  (1)
+a standard Jordan-Wigner transformation; we define for j ∈ ΛN +1 the operators aj ≡ ψj ,
+                     (2) †
+aj+εN +1 ≡ ψj                        x
+                             , aj ≡ σ−L  x
+                                        σ−L+ε N +1
+                                                          x
+                                                   · · · σj−ε      1
+                                                              N +1 2
+                                                                     (σjz + iσjy ). Here the fermions are defined
+with respect to the lattice ΛN +1 with half the original lattice spacing. In this way the Hamilto-
+nian may be simulated via the following quantum spin system (48)
+
+                         (N )
+                                             X                      y y
+                                                                                       
+                     H0         = ε−1 L
+                                   N 2π             σjz σj+ε
+                                                         z
+                                                            N +1
+                                                                 − σ  σ
+                                                                     j j+εN +1 + λ σ
+                                                                                  N j
+                                                                                     x
+                                                                                         + B.C.s.                 (2)
+                                          j∈ΛN +1
+
+                                                                                 y   y
+The term “B.C.s” refers to the nontrivial term − 21 ε−1        F   z   z
+                                                     N (±1±(−1) )(σ−L σL−εN +1 −σ−L σL−εN +1 )
+
+encoding the possible boundary conditions (with the first sign referring to spins and the second
+
+to fermions). It is noteworthy that anti-periodic fermions complemented by periodic spins lead
+to (1) a vanishing boundary term on states with even fermion parity, specifically the Fock vac-
+uum, and (2) a non-degenerate ground state in the massless case (Neveu-Schwarz sector). We
+
+note that there is considerable room for optimisation here, and one can expect that more sophis-
+ticated representations will deliver improved resource requirements (49).
+   2
+     Although the lattice model is exactly solvable, the existence of, and simulation of, the continuum limit is still
+extremely nontrivial, see e.g., (22) for an alternative approach.
+
+
+
+                                                             5
+Description of the quantum simulation algorithm.           After choosing a desired accuracy δ for
+the result of the simulation the algorithm consists of the following four steps, which we describe
+
+and analyse in the sequel.
+
+   1. Prepare the initial state of the lattice. There is a wide class of possibilities, including the
+
+      ground state, which can be directly achieved using an efficient quantum circuit.
+
+   2. Optionally apply field operators.
+
+   3. Evolve the system according to a discretised local conformal symmetry transformation,
+
+      via the Suzuki-Trotter decomposition.
+
+   4. Exploit phase estimation to measure local field operators, either in real or momentum
+      space.
+
+
+Complexity. The computational complexity, i.e., the asymptotic scaling of the number of
+quantum gates required to compute a correlation function, of the algorithm we present here
+
+depends on several parameters. The most important is the desired accuracy δ of the simulation,
+which measures the absolute difference between the computed discretised approximate results
+and the theoretical target value
+
+                               |hΩN |A
+                                     eBet |ΩN i − hΩ|ABt |Ωi| ≤ δ,
+
+
+where |Ωi is the CFT state (which need not be the vacuum), A and B are field observables,
+local in either real or momentum space, the subscript t denotes that the observable has been
+evolved in the Heisenberg picture according to the dynamics generated by a local conformal
+
+transformation, e.g., Bt ≡ eitLk Be−itLk , where Lk is a Virasoro generator, the tildes represent
+discretised approximations, and N = log2 (n) − 1 represents the number of lattice sites of the
+discretised approximation. By increasing the number n of lattice sites one can reduce the errors
+
+                                                 6
+according to 1/n2 : this provides the direct connection between the complexity of the simulation
+and the accuracy. There is an implied constant here which depends on the order k of the local
+
+conformal transformation desired. One can generalise these error bounds to cover multipoint
+correlation functions with m operators; a simple bound shows that the errors grow quadratically
+with m. An important feature of our approach is that A and B are not required to be bounded
+
+operators in the continuum limit: our results also apply to the case where, e.g., A and B are
+unbounded Virasoro generators.
+   It is important to note that there is no mass gap determining a length scale for CFTs. Since
+
+our simulation algorithm directly targets the continuum model the length scale for the problem
+is instead determined by the desired spatial or frequency localization of the field operators
+appearing in a correlation function. This is manifested in the algorithm as follows: Having
+
+chosen an accuracy δ for the desired correlation function we choose two scales, M < N which
+are large enough to ensure that the discretisation errors incurred are less than δ. The first scale M
+represents the length scale – the spatial or momentum localization – of the desired observables
+
+and N represents the ultimate ultraviolet lattice cutoff of the quantum simulation. Thus we
+require 2n = 2N +2 qubits to carry out a simulation of observables defined at a length scale M .
+
+
+Discretised representations and renormalization.         Operator-algebraic renormalization (27,
+31, 32, 50) is a sophisticated new implementation of Wilsonian renormalization in the Heisen-
+berg picture. We use OAR to build the continuum limit as a sequence of discretised approxima-
+
+tions which, in turn, supply us with the lattice models we simulate. The salient aspects of OAR
+                                                                            (N )
+may be summarised as follows. We consider a family, {AN , HN , H0 }N , of quantum lattice
+systems at (spatial) resolution ε with N = − log2 (ε). At each scale N , we have an algebra AN of
+                                                                    (N )
+observables acting on the Hilbert space HN of the lattice, with H0         the corresponding Hamilto-
+nian. The renormalization group then provides us with a means to compare the lattice systems at
+
+
+                                                 7
+                                                                                            (N )     (N )
+different scales, N1 < N2 , realized with a coarse-graining operation, ENN12(ρ0 2 ) = ρN21−N1 , be-
+tween states ρ(N ) at different scales. Here E is interpreted in the Schrödinger picture, however,
+
+one may equivalently describe the RG in the Heisenberg picture, where the coarse-graining
+                                                            N1
+map, now called the scaling map, acts dually on operators: αN2
+                                                               : AN1 → AN2 . We denote
+       (N )
+by ρ0         the initial state, which may be understood as a state for the finest lattice, with lattice
+                                                              (N )
+spacing ε = 2−N , considered in the sequence, and ρM is its M th renormalization. Demanding
+                                                                                     N1
+equality of the partition functions of the initial and renormalized states requires αN2
+                                                                                        to be unital
+and completely positive (ucp), i.e. it preserves probability and sends states to states. The renor-
+                                          N1                              N2    N1    N1
+malization group is then the collection {αN  }
+                                           2 N2 >N1
+                                                    , assumed to satisfy αN3
+                                                                             ◦ αN2
+                                                                                   = αN3
+                                                                                         , see
+                               (N )                              (N )        (N )
+Fig. 1. A scaling limit ρ∞ is a limit state limM →∞ ρM = ρ∞ on AN , which is stable under
+coarse-graining3 :
+
+                                               ENN12 (ρ(N 2)  (N1 )
+                                                       ∞ ) = ρ∞ .                                               (3)
+
+Note that finding a limit state usually requires that the coupling constants of the bare model be
+redefined at each scale according to the renormalization conditions. We are ultimately interested
+                                      (∞)             (N )
+in the double scaling limit ρ∞ ≡ limN →∞ ρ∞ , which realises the continuum limit (this exists
+as soon as the scaling limit exists because of (3), so this does not entail additional constraints
+                                                                     (N )
+on the construction). The scaling limit of the family H0                    of lattice Hamiltonians is naturally
+                              (∞)                                                                            (N )
+understood via a limit, τt          , in the Heisenberg picture of the discretised approximations τt                =
+       (N )         (N )                                                            (∞)            (∞)
+eitH0 (·)e−itH0 . Thus the triple {A, ρ, τt }, where A ≡ A∞ , ρ ≡ ρ∞ , and τt ≡ τt                       , is called
+                                        (N )
+a scaling limit of {AN , HN , H0 }N .
+
+       To exploit OAR we need to select a family of coarse-graining/scaling maps E which are
+compatible with the physics we expect in the continuum scaling limit; the success of OAR
+requires that one retains enough of the quantum coherence present in low-energy degrees of
+   3
+     Note that we have described everything in terms of trace-class density operators, however, the considerations
+here may be extended directly to states on C ∗ algebras without a density-operator representation. See (48) for
+further information.
+
+
+                                                        8
+                                                                 .                ..       ..
+                                                            ..                     .        .
+                                                   ω0
+                                                     (N +2)
+                                                           ,                . . . ω (N +2) AN +2
+                                                                                     ∞
+                                                      N +2                                     N +1
+                                                    EN +1                                     αN +2
+                                      ω0
+                                        (N +1)
+                                              , ω1
+                                                     (N +1)
+                                                        ,                   . . . ω (N +1) AN +1
+                                                                                     ∞
+                                         N +1      N +1                                        N
+                                       EN        EN                                           αN +1
+
+                           ω0
+                             (N )
+                                    , ω1
+                                        (N )
+                                                 , ω2
+                                                     (N )
+                                                                     ,      . . . ω (N ) AN
+                                                                                    ∞
+
+
+Figure 1: Operator algebraic analogue of Wilson’s triangle of renormalization (15, 27): Vertical
+lines represent renormalization steps, either by coarse graining states (E’s) or by refining fields
+(α’s). Horizontal lines represent sequences of renormalized states at a fixed scale.
+
+
+freedom. Two particularly powerful procedures are realised by real-space and momentum-space
+renormalization. To describe these RG families we note that the algebra AN of observables for
+
+the lattice at scale N = − log2 (ε) is given by the canonical anticommutation relations (CAR)
+                                                                                        (j)
+algebra generated by the lattice fermion operators AN ≡ hψx | x ∈ ΛN , j = 1, 2i. We then
+write the RG maps for our real-space scheme according to
+
+                                                             X               (j)
+                                         N      (j)
+                                        αN +1 (ψx ) =                    cl ψx−εN +1 l ,                         (4)
+                                                             l∈Z
+
+where {cl }l∈Z is the low-pass filter determined by a scaling function s associated with (com-
+pactly supported) orthogonal wavelets4 (34)
+
+                                                   √ X
+                                         s(x) =     2  cl s(2x − l).                                             (5)
+                                                        l∈Z
+
+An explicit example is furnished by the Daubechies D4 wavelet, for which the coefficients are
+                        √                   √                   √                       √
+given by c0 = 4√1 2 (1 + 3), c1 = 4√1 2 (3 + 3), c2 = 4√1 2 (3 − 3), and c3 = 4√1 2 (1 − 3).
+
+However, in order to simulate observables which, in the continuum limit, are unbounded, it can
+be necessary to choose wavelets with higher regularity than D4. Note that the renormalized
+   4
+    Only finitely many of the cl are nonzero, so that the sum appearing in (4) is well defined as long as N is larger
+than the number of nonzero terms.
+
+
+                                                            9
+                    (j)                                                              ε
+                 ψx
+
+
+                       N
+                      αN +1                   ENN +1                             ε
+                                                                                 2
+
+
+
+                   (j)     (j)     (j)          (j)       (j)
+                 ψex = c0 ψx + c1 ψx+ 1 ε + c2 ψx+ε + c3 ψx+ 3 ε
+                                         2                             2
+            cj
+
+
+                              j
+
+
+Figure 2: Operator algebraic renormalization in real space for the wavelet D4. Here ε labels
+                                            N         N +1
+the lattice spacing of the coarse lattice, αN +1 and EN    denote the RG maps in the Heisenberg
+(respectively, Schrödinger) picture, and cj are the low-pass filter coefficients defining the D4
+wavelet.
+
+
+                   (j)  N      (j)                                                        1
+fermion operator ψex ≡ αN +1 (ψx ) acts on the fine-grained lattice, with lattice spacing 2 ε.
+
+The resulting real-space OAR is illustrated in Fig. 2.
+   To describe the momentum-space RG maps we first introduce the Fourier transformed op-
+
+erators
+                                         (j)
+                                               X
+                                       ψbk ≡           e−ikx ψx(j) ,                          (6)
+                                               x∈ΛN
+
+according to which the RG acts via
+
+                                               1
+                                   M b(j)                        (j)
+                                  αN (ψk ) = 2 2 (N −M ) χM (k)ψbk ,                          (7)
+
+
+where χM (k) = 1 if k ∈ Lπ {−LM + 12 , . . . , LM + 12 } and 0 otherwise. That is, only operators
+  (j)
+ψbk associated to long wavelengths up to a momentum cutoff |k| ≤ πLLM are retained, with
+short wavelength degrees of freedom |k| > πLLM traced out. In both the case of real-space
+                                                       M
+and momentum-space OAR one can check that the RG maps αN satisfy the composition rules
+ N2    N1    N1
+αN3
+    ◦ αN2
+          = αN3
+                .
+
+                                                 10
+Discretised Virasoro generators.            With the basic kinematical and dynamical data in hand we
+turn now to the quantum simulation of conformal symmetries. These form the conformal group
+
+with the associated Virasoro algebra of generators spanned by Lk , k ∈ Lπ Z, satisfying
+
+                                                               c L 3
+                        [Lk , Ll ] = Lπ (k − l)Lk+l +           (( k) − ( Lπ k))δk+l,0 ,                 (8)
+                                                              12 π
+
+where c is the central charge. Several of the generators are directly related to more familiar
+
+observables, for example, the CFT Hamiltonian and total momentum are given by
+
+                             π            c                                    π
+                   H CFT =                                    and P CFT =
+                                                                                          
+                                L0 + L0 −                                          L0 − L0 .             (9)
+                             L            12                                     L
+
+To approximate Lk on a lattice at scale N we exploit an insightful ansatz due to Koo and
+Saleur (35); we begin by introducing the fourier modes of the lattice Hamiltonian density5 ,
+which is symmetric around x, to obtain the correct Virasoro algebra in the scaling limit:
+
+                                            (N )
+                                                             X
+                                      Hk           ≡ εN Lπ          eikx h(N
+                                                                          x ,
+                                                                             )
+                                                                                                        (10)
+                                                              x
+
+and then defining
+                                                                         
+                     (N ) 1        (N )            πεN          (N ) (N )    c
+                    Lk ≡          Hk +                1       [Hk , H0 ] + δk,0 ,                       (11)
+                             2                2L sin( 2 εN k)               24
+                                     (N )
+with an analogous formula for Lk . The ansatz (11) leads to realisations of CFTs with c = 0,
+c = 1/2, and c = 1 with the specific value of c being related to the choice of the representation.
+For c = 0, we use the defining representation of the CAR algebra corresponding to the ground
+
+state associated with a vanishing stress-energy tensor. Central charges c = 1 and c = 1/2 arise
+from the ground state of the massless free fermion Hamiltonian, the first from a representation
+of a complex chiral component, the second from a representation of a real (or self-dual) chiral
+
+component via the projection on positive (or negative) momenta (48).
+                                                             (N )
+                                                                            
+                                                                              (1) † (2)  (1) † (2) (2) † (1)
+   5
+     In the case of massless Dirac fermions (λN = 0): hx            = ε12    ψx+εN ψx − ψx ψx + ψx−εN ψx −
+                                                                        N
+ (2) †  (1)
+                 
+ψx ψx + h.c. .
+
+                                                         11
+                                                                                                   (N )
+       The crucial observation underlying our quantum simulation algorithm is that Lk                     so defined
+in (11) are sums of densities. This means that we may employ standard quantum algorithms
+for the simulation of the dynamics of local hamiltonians to simulate the exponentials of these
+
+generators6 ; since the behaviour of these methods are well understood we focus on the new
+challenges arising in approximating the continuum limit with a lattice model.
+
+
+Preparing the initial state.           The first step is to initialise the 2n qubits of the quantum com-
+puter into a discrete approximation of the desired state. We focus, for concreteness, on the ap-
+
+proximation |ΩN i of the ground state |Ωi of the scaling limit, and states in the conformal block
+found by applying Virasoro generators to |Ωi. (It is important to note that our algorithm is by no
+means limited to such states, and can be applied to any quantum state with a scaling continuum
+
+limit.) There are now several approaches to the efficient preparation of |ΩN i. A particularly par-
+simonious quantum circuit, which we employ here, is adapted from (51) (see Fig. 3): Note that
+the quantum spin Hamiltonian (2) may be diagonalized by a quantum circuit for a (fast) fourier
+                                                                                    (N )
+                                                                                           = UFT UB D0 UB† UFT
+                                                                                                            †
+                                                                                                          (N )
+transform UFT followed by a Bogoliubov transformation UB , so H0                                               ,
+             (N )
+where D0            is diagonal. In this way we may realise the ground state from a product state:
+
+                                                               O
+                                             |ΩN i = UFT UB             | ←i.                                      (12)
+                                                              k∈ΓN +1
+
+
+With the qubit registers in the discrete approximation of the ground state we now apply the
+
+desired generators A and B for the correlation function to state |ΩN i. For concreteness we
+                                                                                                             (j)
+focus on the momentum-space RG. In the case of correlation functions for operators ψbk , with
+|k| ≤ πLLM , local in momentum space we have that
+
+                           (j)                                                        †
+                                    x
+                         ψbk = UFT σ− π
+                                        (−LN +1 + 1 )
+                                                             x
+                                                      · · · σk−   1 z
+                                                                π( σ −
+                                                                  2 k
+                                                                       1
+                                                                       2
+                                                                         (−1)j iσky )UFT ,                         (13)
+                                         L          2           L
+
+   6
+       In order to ensure that the resulting dynamics are unitary we actually simulate hermitian linear combinations
+    (N )   (N )
+of Lk and Lk .
+
+
+                                                         12
+              (1)
+          ψ−2ε
+              (2)†        B            F         F                          F
+          ψ−2ε
+                          B            F         F                          F
+              ..
+               .
+                          B            F         F                          F
+              (1)
+             ψε
+              (2) †
+                          B            F         F                          F
+          ψε
+                          UB                                     UF
+
+Figure 3: Illustrating the ground-state preparation circuit for 4 sites. Depicted on the left are the
+original fermion operators which are identified with the corresponding sites in the spin model
+via the Jordan-Wigner mapping.
+
+
+The action of this nonunitary operator may be simulated, e.g., by introducing an ancilla qubit
+initialised in the state √12 (|0i+|1i), applying the unitary gate V = UFT σ−
+                                                                           x
+                                                                             π
+                                                                               (−L         1
+                                                                                                        x
+                                                                                                 · · · σk−     z
+                                                                                                           π (σk ⊗
+                                                                                L   N +1 + 2 )              L
+                             †
+|0ih0| − (−1) iσky ⊗ |1ih1|)UFT
+                      j
+                                to the momentum-space representation of the ground state
+                                                       x
+         N
+UFT UB    k∈ΓN +1 | ←i, and then measuring the σ            operator on the ancilla qubit, postselecting
+on the positive outcome. Repeating this procedure a constant number of times will ensure the
+
+correct state is produced with high probability (for a constant number of field operators). In this
+                                             Q (j )
+way we may easily prepare the initial state kl ψbkll |ΩN i. (The application of a field operator
+local in real space is more involved and requires consideration of the Wavelet basis employed
+
+in the OAR. See (48) for further details.) The resulting initial state is denoted |Φinit i.
+
+
+Simulating dynamics. Now that we have prepared the initial state we may apply local con-
+
+formal transformations. Formulating the Fourier-transformed fermion operators in terms of the
+single-component fermion, ψk = 21 (âk + âk+ ε π ), ψk = 21 eiεN +1 k (â†−k − â†−k+
+                                (1)                             (2)
+                                                                                                    π     ), these
+                                                     N +1                                         εN +1
+
+
+
+
+                                                  13
+are generated by hermitian linear combinations of the following Koo-Saleur operators
+
+              (N )
+                      i
+                   e− 4 εN k       X  âl0 †                           (N )
+                                                                                                  
+                                                                                                     âl
+                                                                                                          
+             Lk =                                       δk,l0 −l mod 2π `k (l0 , l)                         ,                (14)
+                        8π                     â†−l0                ε     N                        â†−l
+                                 l,l0 ∈ΓN +1
+                             i                                        i                                   i
+                                                                                                                         !
+      (N )              −e 4 εN k sin(εN (l + k2 )) −i(e 4 εN k sin(εN 2l ) + e− 4 εN k sin(εN l+k  ))
+     `k (l0 , l) = 21       i
+                              ε k        l 0 −k
+                                                    − i
+                                                        ε k        l 0
+                                                                              − i
+                                                                                  ε k
+                                                                                                2
+                                                                                              l+l 0
+                        i(e 4 N sin(εN 2 ) + e 4 N sin(εN 2 )) −e 4 N sin(εN 2 )
+
+These generators are (2k +1)-local in the momentum representation and may be simulated via a
+
+Suzuki-Trotter decomposition. (A state-of-the-art implementation will make use of the optimal
+simulation algorithms.) After application of the generator the quantum register is in the state
+
+                                                             (N )     (N )
+                                           |Φ0 i = e−is(Lk          +Lk        )
+                                                                                   |Φinit i.                                 (15)
+
+Note that the k = 0 case reduces to simulating the unitary Hamiltonian evolution.
+
+
+Measuring observables.             To measure a desired observable O,      b = ψb(j) , one may employ
+                                                                   b e.g., O
+                                                                                 k
+
+standard phase estimation (52, 53). This requires the addition of r ancilla qubits to represent
+
+the readout, where r is the required to be large enough to resolve all of the eigenvalues of O.
+                                                                                             b
+
+Repeating this procedure delivers an estimate for the expectation value
+
+                                                     b = hΦ0 |O|Φ
+                                                    hOi       b 0 i.                                                         (16)
+
+
+Error analysis.      The errors in the quantum simulation arise from several sources. The first,
+
+and easiest to control, is the quantum projection noise arising the estimation of hOi.
+                                                                                   b This may
+
+be reduced in the standard way via parallel repetition. The second salient source of error arises
+                                                                          (N )       (N )
+from the quantum simulation of the unitary e−is(Lk                               +Lk        )
+                                                                                                via, e.g., product formulas (54),
+and may be reduced by exploiting higher-order approximations. Exploiting state-of-the art es-
+
+timates, one requires quantum gates (nt)1+o(1) to reduce this error to below δ/2. The state
+preparation is considered exact (up to the gate compilation required to implement the single-
+
+
+                                                             14
+and two-qubit unitaries required). The fourth source of error arises from the discretization it-
+self. This is deeply nontrivial and requires an extensive and challenging analysis, discussed in
+
+the companion paper (48). The result of this analysis implies the existence, for a given desired
+accuracy δ and t ≤ T , of a constant size N (δ, T ) lattice achieving this accuracy. The depen-
+dence of N on δ and T is nontrivial, however, numerical experiments — see the Supplementary
+
+Material — indicate that, e.g., a D10 wavelet can achieve an accuracy of δ = 1/2 on a lattice of
+128 sites. (This is for the case where one computes dynamical correlation functions involving
+Virasoro generators.)
+
+
+Extensions. One may generalise the presented algorithm to approximate the lattice currents
+                                                                               u(D)1 , we
+of Wess-Zumino-Witten models. For example, to target the level-1 WZW model for b
+
+require D-component fermion fields, which we can simulate using D copies of the realisation
+exploited above. Details of this approach may be found in (48). The Ising CFT may be directly
+targeted using a modification of the approach here. The details of this will be presented in a
+
+follow up publication. More generally, to simulate an arbtirary rational CFT one must take
+recourse to models involving chains of anyons. To employ OAR we need an appropriate family
+of coarse-graining maps. Such a family is induced by the Jones-Wenzl projection, however, this
+
+is beyond the scope of this paper and will be presented elsewhere.
+
+
+Conclusions and future directions.     We have, in this paper, demonstrated that quantum com-
+puters may be exploited to simulate the local conformal dynamics of CFTs. The simulation
+algorithms are built exploiting operator-algebraic renormalization realising the continuum limit
+
+as a sequence of lattice models. Local conformal transformations are simulated via the Koo-
+Saleur generators. Generalizations to the Ising CFT and WZW models are directly possible.
+
+
+
+
+                                              15
+References
+
+ 1. M. R. Douglas, Proceedings of Symposia in Pure Mathematics (American Mathematical
+    Society, University of Pennsylvania, Philadelphia, PA, 2012), vol. 85, pp. 105–124.
+
+ 2. N. Seiberg, 2015 Breakthrough Prize in Fundamental Physics Symposium - YouTube,
+
+    https://www.youtube.com/watch?v=Hi3e0HVxlFo (2014).
+
+ 3. E. Witten, Rev. Modern Phys. 90, 045003 (2018).
+
+ 4. R. P. Feynman, Int. J. Theor. Phys. 21, 467 (1981).
+
+ 5. S. Lloyd, Science 273, 1073 (1996).
+
+ 6. D. S. Abrams, S. Lloyd, Phys. Rev. Lett. 79, 2586 (1997).
+
+ 7. C. Zalka, Proc. Roy. Soc. of London Ser. A 454, 313 (1998).
+
+ 8. A. Smith, M. S. Kim, F. Pollmann, J. Knolle, npj Quantum Information 5, 1 (2019).
+
+ 9. J. Zhang, et al., Nature 551, 601 (2017).
+
+10. H. Bernien, et al., Nature 551, 579 (2017).
+
+11. S. P. Jordan, K. S. M. Lee, J. Preskill, Science 336, 1130 (2012).
+
+12. A. Hamed Moosavian, S. Jordan, Phys. Rev. A 98, 012332 (2018).
+
+13. S. P. Jordan, K. S. M. Lee, J. Preskill, Quantum Algorithms for Fermionic Quantum Field
+
+    Theories (2014). ArXiv:1404.7115.
+
+14. J. Preskill, The 36th Annual International Symposium on Lattice Field Theory - LAT-
+    TICE2018 (2018). ArXiv:1811.10085.
+
+
+                                                16
+15. K. G. Wilson, Rev. Modern Phys. 47, 773 (1975).
+
+16. K. G. Wilson, Rev. Modern Phys. 55, 583 (1983).
+
+17. K. G. Wilson, J. B. Kogut, Phys. Rept. 12, 75 (1974).
+
+18. S. Dürr, et al., Science 322, 1224 (2008).
+
+19. M. Creutz, Quarks, Gluons and Lattices (Cambridge University Press, Cambridge, 1985).
+
+20. A. A. Belavin, A. M. Polyakov, A. B. Zamolodchikov, Nucl. Phys. B 241, 333 (1984).
+
+21. P. Francesco, P. Mathieu, D. Sénéchal, Conformal Field Theory (Springer-Verlag, 1997),
+    first edn.
+
+22. M. S. Zini, Z. Wang, Commun. Math. Phys. 363, 877 (2018). ArXiv:1706.08497.
+
+23. K. Fredenhagen, K.-H. Rehren, B. Schroer, Rev. Math. Phys. 04, 113 (1992).
+
+24. R. E. Borcherds, Proc. Nat. Acad. Sci. U.S.A. 83, 3068 (1986).
+
+25. J. Lepowsky, H. Li, Introduction to Vertex Operator Algebras and Their Representations,
+    Progress in Mathematics (Birkhäuser Basel, 2004).
+
+26. G. Segal, Topology, Geometry and Quantum Field Theory (Cambridge Univ. Press, Cam-
+
+    bridge, 2004), vol. 308 of London Math. Soc. Lecture Note Ser., pp. 421–577.
+
+27. A. Stottmeister, V. Morinelli, G. Morsella, Y. Tanimoto, Operator-algebraic renormalization
+    and wavelets (2020). ArXiv:2002.01442.
+
+28. C. Hongler, F. J. Viklund, K. Kytölä, Conformal Field Theory at the Lattice Level: Discrete
+    Complex Analysis and Virasoro Structure (2019). ArXiv:1307.4104.
+
+
+
+                                                  17
+29. J. Cardy, Scaling and Renormalization in Statistical Physics (Cambridge University Press,
+    Cambridge, 1996).
+
+30. J. Maldacena, Adv. Theor. Math. Phys. 2, 231 (1998).
+
+31. T. J. Osborne, Continuum Limits of Quantum Lattice Systems (2019). ArXiv:1901.06124.
+
+32. V. Morinelli, G. Morsella, A. Stottmeister, Y. Tanimoto, Scaling limits of lattice quantum
+
+    fields by wavelets (2020). ArXiv:2010.11121.
+
+33. N. Bao, J. Liu, Nucl. Phys. B 946, 114702 (2019). ArXiv:1811.05675.
+
+34. I. Daubechies, Ten Lectures on Wavelets (Society for Industrial and Applied Mathematics,
+    1992).
+
+35. W. M. Koo, H. Saleur, Nucl. Phys. B 426, 459 (1994).
+
+36. A. Milsted, G. Vidal, Phys. Rev. B 96, 245105 (2017).
+
+37. Y. Zou, A. Milsted, G. Vidal, Phys. Rev. Lett. 124, 040604 (2020).
+
+38. Y. Zou, G. Vidal, Phys. Rev. B 101, 045132 (2020).
+
+39. Y. Zou, A. Milsted, G. Vidal, Phys. Rev. Lett. 121, 230402 (2018).
+
+40. R. König, V. B. Scholz, Nucl. Phys. B 920, 32 (2017).
+
+41. R. König, V. B. Scholz, Phys. Rev. Lett. 117, 121601 (2016).
+
+42. J. Haegeman, et al., Phys. Rev. X 8, 011003 (2018).
+
+43. S. Singh, G. K. Brennen, Holographic Construction of Quantum Field Theory using
+    Wavelets (2016). ArXiv:1606.05068.
+
+
+                                              18
+44. P. Jordan, E. Wigner, Z. Phys. 47, 631 (1928).
+
+45. S. B. Bravyi, A. Y. Kitaev, Ann. Phys. 298, 210 (2002).
+
+46. R. C. Ball, Phys. Rev. Lett. 95, 176407 (2005).
+
+47. F. Verstraete, J. I. Cirac, J. Stat. Mech.-Theory E. 2005, P09012 (2005).
+
+48. T. J. Osborne, A. Stottmeister, Conformal field theory from lattice fermions (2021).
+    ArXiv:2107.13834.
+
+49. C. Cade, L. Mineh, A. Montanaro, S. Stanisic, Phys. Rev. B 102, 235122 (2020).
+
+50. A. Brothier, A. Stottmeister, Canonical quantization of 1+1-dimensional Yang-Mills the-
+
+    ory: An operator-algebraic approach (2019). ArXiv:1907.05549.
+
+51. F. Verstraete, J. I. Cirac, J. I. Latorre, Phys. Rev. A 79, 032316 (2009).
+
+52. M. A. Nielsen, I. L. Chuang, Quantum Computation and Quantum Information (Cambridge
+
+    University Press, Cambridge, 2000).
+
+53. A. M. Childs, et al., Phys. Rev. A 66, 032314 (2002).
+
+54. A. M. Childs, Y. Su, Phys. Rev. Lett. 123, 050503.
+
+
+Acknowledgments
+
+The authors would like to thank R. F. Werner for valuable discussion about inductive limits
+in quantum theory. AS would like to thank Y. Tanimoto for helpful discussions concerning
+
+the essential self-adjointness of smeared Virasoro generators. This work was supported, in
+part, by the DFG through SFB 1227 (DQ-mat), Quantum Valley Lower Saxony, and funded by
+
+
+
+                                                19
+the Deutsche Forschungsgemeinschaft (DFG, German Research Foundation) under Germanys
+Excellence Strategy EXC-2123 QuantumFrontiers 390837967.
+
+
+
+
+                                         20
+Supplementary material
+
+
+
+
+                         21
+     L2 -error                     k=0
+    100
+
+                                                                           M=5, K=8
+     10
+                                                                           M=5, K=10
+
+       1                                                                   M=4, K=8
+                                                                           M=4, K=10
+     0.1                                                                   M=3, K=8
+                                                                           M=3, K=10
+                                                                       N
+           5.0    5.5       6.0      6.5      7.0      7.5       8.0
+
+Figure 4: Upper bound to the L2 -norm error between the conformal Hamiltonian L0 and its
+                   (N )
+KS approximant L0 at c = 0 on one-particle states corresponding to the subspace of the CFT
+Hilbert space representing wavelet details (for Daubechies wavelets DK) up to the simulation
+scale M as a function of the UV cutoff scale N . For further details, see (48).
+
+
+
+
+                                            22
+     L2 -error                 M=3; k=0
+                                                                        δ= 1/2, K=4
+      10                                                                δ= 1/2, K=8
+                                                                        δ= 1/2, K=10
+       5
+                                                                        δ= 1, K=8
+                                                                        δ= 1, K=10
+       1
+    0.50                                                                δ= 3/2, K=8
+                                                                        δ= 3/2, K=10
+                                                                        δ= 2, K=8
+    0.10                                                                K=8 (true)
+    0.05                                                                δ= 2, K=10
+                                                                        K=10 (true)
+                                                                    N
+           4            5            6            7             8
+
+Figure 5: Various upper bounds to the L2 -norm error between the conformal Hamiltonian L0
+                            (N )
+and its KS approximant L0 at c = 0 on one-particle states corresponding to the subspace
+of the CFT Hilbert space representing wavelet details (for Daubechies wavelets DK) up to
+the simulation scale M as a function of the UV cutoff scale N . The parameter δ is related
+to a factorized upper bound containing an H δ -Sobolev norm of the Daubechies DK scaling
+function. For further details, see (48).
+
+
+
+
+                                           23
+       L2 -error                         k=0
+
+
+       10
+
+         1
+
+    0.100                                                                          M= 5
+
+    0.010                                                                          M= 4
+
+    0.001                                                                          M= 3
+                                                                               N
+             5          6           7            8            9           10
+
+Figure 6: Upper bound to the (diagonal) L2 -norm error between the conformal Hamiltonian L0
+                          (N )
+and its KS approximant L0 at c = 1/2, 1 on one-particle states corresponding to the subspace
+of the CFT Hilbert space representing momenta up to the simulation scale M as a function of
+the UV cutoff scale N . For further details, see (48).
+
+
+
+
+                                            24
+      L2 -error               M=3; k=0,±1,±2
+         1
+
+
+    0.100
+                                                                                k=2
+
+    0.010                                                                       k=1
+                                                                                k=0
+                                                                                k=-1
+    0.001
+                                                                                k=-2
+                                                                            N
+             5         6           7             8         9           10
+
+Figure 7: Upper bound to the (diagonal) L2 -norm error between the Virasoro generators Lk
+                                (N )
+and their KS approximants Lk on one-particle states corresponding to the subspace of the
+CFT Hilbert space representing momenta up to the simulation scale M as a function of the UV
+cutoff scale N . For further details, see (48).
+
+
+
+
+                                            25
+      HS-error                   M=3; k=±2,±3,±4
+
+    0.010
+
+
+    0.001
+
+
+      10-4
+                                                                                       k=±4
+      10-5                                                                             k=±3
+
+                                                                                       k=±2
+                                                                                   N
+             5           6            7             8            9            10
+
+Figure 8: Upper bound to the (off-diagonal) Hilbert-Schmidt (HS)-norm error between the
+                                                       (N )
+Virasoro generators Lk and their KS approximants Lk on one-particle states corresponding
+to the subspace of the CFT Hilbert space representing momenta up to the simulation scale M
+as a function of the UV cutoff scale N . Note, that this error vanishes for the generators of the
+Moebius group, k = 0, ±1. For further details, see (48).
+
+
+
+
+                                               26
+

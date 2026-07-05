@@ -558,3 +558,66 @@ single ~200-line source file it points to.
 - Summary: Known critical TFIM and gapless XXZ should move to Koo-Saleur/OAR-style diagnostics.
 - Summary: Future SDP work must relax or quotient the boost relation instead of requiring an exact local witness.
 - Keywords: scaling queue, TFIM, XXZ, Koo-Saleur, OAR, future SDP
+
+## `CA-62-CATEGORICAL-BU-PIPELINE-VISION`
+
+- Source: `report/sections/62_categorical_bu_pipeline_vision.tex`
+- Title: The Categorical Borchers-Uhlmann Pipeline: a Programme Refinement
+- Summary: Recasts the indefinite-particle construction as a proposed observable *-algebra-first pipeline rather than a Hilbert-space-first construction.
+- Summary: Orders category data, free local-word algebra, categorical relations, state selection, GNS quotient, and OAR/Koo-Saleur continuum limits.
+- Summary: Records the Jones no-go and exact-relation scan failure as load-bearing constraints on the programme.
+- Keywords: Borchers-Uhlmann, GNS, tensor algebra, anyon chains, Koo-Saleur, OAR, defects, functoriality
+
+## `CA-63-QUBIT-MOMENT-STATE-EXISTENCE`
+
+- Source: `report/sections/63_qubit_moment_state_existence.tex`
+- Title: All-Level Moment Feasibility Gives a Qubit Reference State
+- Summary: Proves that exact feasibility of the monotone full-window qubit moment hierarchy yields a genuine state on the quasi-local spin algebra.
+- Summary: Shows that the all-level relation constraints vanish as bounded operators in the GNS representation.
+- Summary: Separates this compactness result from uniqueness, ground-state, clustering, continuum-limit, and Virasoro claims.
+- Keywords: moment hierarchy, compactness, state space, GNS, qubit chain, residual quotient
+
+## `CA-64-QUBIT-RELAXED-SYMMETRY-GATES`
+
+- Source: `report/sections/64_qubit_relaxed_symmetry_gates.tex`
+- Title: Quantified Relaxations of the Qubit Symmetry Gates
+- Summary: Replaces exact first-moment gates by coefficient residual profiles and fixed-residual GNS-norm SDP objectives.
+- Summary: Keeps current collapse as a hard obstruction for the nonzero-speed first-moment route.
+- Summary: Records that witness optimization inside the moment SDP is not a plain SDP without an additional polynomial lift.
+- Keywords: relaxed gates, residual profile, GNS norm, SDP objective, TFIM, boost
+
+## `CA-65-ANYONIC-WORD-ALGEBRA`
+
+- Source: `report/sections/65_anyonic_word_algebra.tex`
+- Title: Anyonic Word Algebra from a Site Object
+- Summary: Defines the local anyonic observable tower as End_C(O^{tensor L}) for a chosen site object O, not for a bare category alone.
+- Summary: Separates the BU-style free word layer from the kinematic fusion quotient and the later dynamical GNS quotient.
+- Summary: Records the tube/double-triangle algebra as a deferred defect and symmetry layer, not as the observable algebra.
+- Keywords: anyonic word algebra, site object, AF algebra, fusion quotient, BU algebra, double triangle, tube algebra
+
+## `CA-66-ANYONIC-STATES-VARIABLE-N-FOCK`
+
+- Source: `report/sections/66_anyonic_states_variable_n_fock.tex`
+- Title: Anyonic States and Variable-N Fock Space
+- Summary: Builds the finite hard-core anyonic Fock space H_L as a direct sum of charge Hom spaces for the site object O=1 plus X.
+- Summary: Identifies a charge-diagonal finite-state/GNS target and records the residual minimal-projection freedom.
+- Summary: Shows how birth/death maps, Hollands' dense-chain corner, and Fibonacci dimension targets fit the adopted word-algebra tower.
+- Keywords: anyonic Fock space, variable particle number, hard-core anyons, charge sectors, GNS, Fibonacci, pair creation
+
+## `CA-67-REFINEMENT-REQUIREMENTS-OBSTRUCTIONS`
+
+- Source: `report/sections/67_refinement_requirements_obstructions.tex`
+- Title: Refinement-Map Requirements and Obstructions
+- Summary: Collects the sourced OAR conditions a refinement family must satisfy, and the soft relaxations available when exact intertwining fails.
+- Summary: Extracts the mechanism of the Jones and Kliesch-Koenig no-go results as a checklist of failure modes to avoid.
+- Summary: Locates precisely where fixed anyon number is baked into the braiding-RG refinement, motivating the variable-N family of CA-68.
+- Keywords: refinement maps, scaling maps, OAR, soft inductive limit, Jones no-go, Kliesch-Koenig, braiding RG, Koo-Saleur
+
+## `CA-68-VARIABLE-N-REFINEMENT-MAPS`
+
+- Source: `report/sections/68_variable_n_refinement_maps.tex`
+- Title: Refinement Maps for the Variable-N Anyonic Word Algebra
+- Summary: Defines vacuum-insertion refinement for the site object O=1 plus X and proves its exact locality, isometry, and charge preservation.
+- Summary: Separates the nonunital corner algebra map from strict OAR unital scaling maps, and proposes dressed refinements for Virasoro compatibility.
+- Summary: Records the Fibonacci H_2 to H_4 test target and the archived-project deficit/pair-creation precedent as re-derivation targets.
+- Keywords: refinement maps, variable-N anyons, vacuum insertion, OAR, Koo-Saleur, Virasoro, Fibonacci, dilute Temperley-Lieb
