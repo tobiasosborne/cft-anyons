@@ -1829,3 +1829,109 @@ end
     @test d4 < 323                                         # dim dTL_4 = M_8 = 323 ⇒ 1-dim kernel
     @test 323 - d4 == 1                                    # first Jones-Wenzl kernel at L=4
 end
+
+@testset "jones-wenzl kernel decision (CA-74)" begin
+    # Mutation-proof record (AGENTS.md Rule 6; each mutation applied to
+    # src/JonesWenzlKernel.jl ALONE, this testset re-run STANDALONE, RED
+    # confirmed, then reverted):
+    #   (i) Wenzl coefficient [3] -> [3] + 0.01: idempotence,
+    #       annihilation, and p4-zero checks FAIL. 99 pass, 14 fail.
+    #   (ii) beta = phi -> phi + 1e-3 inside recursion quantum integers only:
+    #        idempotence, annihilation, and p4-zero checks FAIL.
+    #        88 pass, 25 fail.
+    #   (iii) corner unit drops one occupancy factor: Pi_A, dense-corner braid,
+    #        and p4-zero checks FAIL. 105 pass, 8 fail.
+    C = CftAnyons
+    charges = (:one, :tau)
+    phi = C.golden_ratio()
+
+    # Corner unit Pi_A: product of all occupancy projectors.  The trace pins the
+    # dense Fibonacci path counts for four occupied tau sites: (2,3).
+    Pi4 = C.corner_unit(4)
+    for c in charges
+        @test isapprox(Pi4[c], Matrix(C.dense_corner_projector(4, c)); atol = 1e-12)
+        @test isapprox(Pi4[c] * Pi4[c], Pi4[c]; atol = 1e-12)
+        @test isapprox(Pi4[c], Pi4[c]'; atol = 1e-12)
+    end
+    @test isapprox(tr(Pi4[:one]), 2.0; atol = 1e-12)
+    @test isapprox(tr(Pi4[:tau]), 3.0; atol = 1e-12)
+
+    # Dense-corner TL generators E_j = Pi_A e_j Pi_A.  The braid relation is
+    # asserted only in this corner (CA-73 friction note).
+    Es4 = C.dense_corner_tl_generators(4)
+    for c in charges, j in 1:3
+        @test isapprox(Es4[j][c], Pi4[c] * Es4[j][c] * Pi4[c]; atol = 1e-12)
+        @test isapprox(Es4[j][c] * Es4[j][c], phi * Es4[j][c]; atol = 1e-10)
+        @test isapprox(Es4[j][c], Es4[j][c]'; atol = 1e-12)
+    end
+    for c in charges, j in 1:2
+        @test isapprox(Es4[j][c] * Es4[j + 1][c] * Es4[j][c], Es4[j][c]; atol = 1e-8)
+        @test isapprox(Es4[j + 1][c] * Es4[j][c] * Es4[j + 1][c], Es4[j + 1][c]; atol = 1e-8)
+    end
+    for c in charges
+        @test isapprox(Es4[1][c] * Es4[3][c], Es4[3][c] * Es4[1][c]; atol = 1e-12)
+    end
+
+    # Quantum integers at beta = phi.  [5] = 0 is the negligibility scalar.
+    qints = C.jw_quantum_integers(5)
+    @test isapprox(qints[1:5], [1.0, phi, phi^2 - 1, phi^3 - 2phi, 0.0]; atol = 1e-14)
+    @test abs(phi * qints[4] - qints[3]) <= 1e-14
+
+    # Defining JW properties: idempotent, self-adjoint, killed on both sides by
+    # E_j for j < k, and formal coefficient 1 on the corner-unit word.
+    for k in 2:4
+        p = C.jones_wenzl_projector(k, k)
+        Es = C.dense_corner_tl_generators(k)
+        Pi = C.corner_unit(k)
+        @test C.unit_word_coefficient(p) == 1.0
+        @test C.nonunit_words_contain_generator(p)
+        @test length(p.expansion) > 1
+        for c in charges
+            @test isapprox(Pi[c] * p.blocks[c], p.blocks[c]; atol = 1e-12)
+            @test isapprox(p.blocks[c] * Pi[c], p.blocks[c]; atol = 1e-12)
+            @test isapprox(p.blocks[c] * p.blocks[c], p.blocks[c]; atol = 1e-10)
+            @test isapprox(p.blocks[c], p.blocks[c]'; atol = 1e-12)
+        end
+        for j in 1:(k - 1), c in charges
+            @test norm(Es[j][c] * p.blocks[c]) <= 1e-10
+            @test norm(p.blocks[c] * Es[j][c]) <= 1e-10
+        end
+    end
+
+    # Decision computations: p2 and p3 survive, while p4 is zero under rho_4.
+    p2 = C.jones_wenzl_projector(2, 2)
+    p3 = C.jones_wenzl_projector(3, 3)
+    p4 = C.jones_wenzl_projector(4, 4)
+    @test C.block_opnorm(p2.blocks) > 0.1
+    @test C.block_opnorm(p3.blocks) > 0.1
+    @test isapprox(C.block_opnorm(p2.blocks), 1.0; atol = 1e-12)
+    @test isapprox(C.block_opnorm(p3.blocks), 1.0; atol = 1e-12)
+    @test C.block_opnorm(p4.blocks) <= 1e-12
+    @test C.block_frobenius_norm(p4.blocks) <= 1e-12
+
+    # CA-73 cross-checks reused, not forked.
+    @test C.dilute_image_dimension(4) == 322
+    @test C.parity_even_dimension(4) == 322
+
+    # Parity-refined multiplicities by pure path counting.  L=4 assignment:
+    # charge 1 is even/odd 9/4; charge tau is even/odd 9/12.
+    expected_counts = Dict(
+        2 => Dict(:one => (even = 2, odd = 0), :tau => (even = 1, odd = 2)),
+        3 => Dict(:one => (even = 4, odd = 1), :tau => (even = 3, odd = 5)),
+        4 => Dict(:one => (even = 9, odd = 4), :tau => (even = 9, odd = 12)),
+        5 => Dict(:one => (even = 21, odd = 13), :tau => (even = 25, odd = 30)),
+    )
+    for L in 2:5
+        @test C.parity_refined_multiplicities(L) == expected_counts[L]
+    end
+    @test [C.parity_even_dimension_from_counts(L) for L in 2:4] == [9, 51, 322]
+    @test [C.parity_even_dimension(L) for L in 2:4] == [9, 51, 322]
+    @test C.parity_even_dimension_from_counts(5) == 2135
+
+    # Rank-nullity conclusion: rank rho_4 = 322, dim dTL_4 = M_8 = 323
+    # (CA-69), rho(iota(p4)) = 0, and iota(p4) is nonzero before quotienting
+    # because the formal corner-unit diagram coefficient is 1.
+    @test 322 + 1 == 323
+    @test C.block_opnorm(p4.blocks) <= 1e-12
+    @test C.unit_word_coefficient(p4) == 1.0
+end

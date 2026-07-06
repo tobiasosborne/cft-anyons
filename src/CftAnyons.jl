@@ -183,6 +183,7 @@ include("RefinementPlacements.jl")
 include("GnsCornerCalculus.jl")
 include("FibonacciLocalOperators.jl")
 include("CategoricalResiduals.jl")
+include("JonesWenzlKernel.jl")
 
 """
     nearest_neighbor_boost_current_coefficients(positions) -> Vector

@@ -683,6 +683,14 @@ chain Hilbert space from a unitary fusion category); CONVENTIONS (a), (b), (c).
 **Sweep status:** CA-65/CA-66 use this convention.  No earlier shard uses a
 site object; the qubit block (m)--(q) is the `C = Hilb`, `Y = C²` degenerate
 case but keeps its own independent conventions.
+**Import caveat (SRC-TL-JONES, added 2026-07-06, CA-74):** Iohara–Lehrer–Zhang
+(`references/text/TemperleyLiebRootsJonesQuotient.txt`) write `TL_n(q)` with
+loop parameter `-(q+q^{-1})` and root order `ℓ = |q²|`.  Our diagram algebras
+use the positive loop `β = +φ = 2cos(π/5)` (`e_j² = φ e_j`, checked in CA-73),
+i.e. `q = e^{iπ/5}`, `ℓ = 5`; the loop sign is gauge (`κ_τ = +1` above) and
+does not affect dimensions, traces, radicals, or Jones-Wenzl existence.  Any
+import from that source must record this bridge (first use: CA-74, where the
+identification is pinned by the source's own `ℓ = 5` module dimensions).
 
 ## (s) Koo-Saleur scale ledger: g_L, two central constants, velocity status
 **Choice:** Every lattice Virasoro/Koo-Saleur (KS) statement at chain size `L`
