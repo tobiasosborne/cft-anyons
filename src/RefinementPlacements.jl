@@ -103,7 +103,7 @@ function placement_refinement_matrix(phi::Placement, charge::Symbol)
     V = zeros(Int, length(fine), length(coarse))
     rows = Int[]
     for (col, (S, xs)) in enumerate(coarse)
-        fine_S = [s for s in S]  # MUTATION (c): occupied set not relocated
+        fine_S = [phi.slots[s] for s in S]
         fine_xs = _placement_fine_path(phi, xs)
         _require_admissible_path(_fib_letters(fine_S, phi.l), fine_xs)
         row = get(index, (Tuple(fine_S), Tuple(fine_xs)), nothing)

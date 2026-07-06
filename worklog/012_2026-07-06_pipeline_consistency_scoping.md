@@ -35,9 +35,12 @@ reviews/2026-07-06_pipeline_consistency_scoping/PLAN.md.
 - src/RefinementPlacements.jl (+ CftAnyons.jl include) and testset
   "refinement placement category (CA-71)": validator, compose, fine-path
   duplication, CA-68 bridge (== vacuum_insertion_matrix at L=1..3),
-  exhaustive isometry sweep (all placements k<=3, l<=5), exhaustive
-  functoriality sweep + named dyadic chain, occupation covariance,
-  pinned Fibonacci dimensions.  2050 new assertions.
+  exhaustive isometry sweep (all 56 placements k<=3, l<=5), exhaustive
+  functoriality sweep (665 composable pairs) + named dyadic chain,
+  occupation covariance, pinned Fibonacci dimensions.  Sweeps are
+  aggregated into violation-collector assertions with pinned sweep
+  cardinalities (a per-iteration variant first ran green at 2050
+  assertions); 67 new assertions, suite 818 -> 885.
 
 ### Why these choices
 
@@ -48,18 +51,27 @@ reviews/2026-07-06_pipeline_consistency_scoping/PLAN.md.
 
 ### Frictions / dead ends
 
-- The Julia subagent completed the implementation but stalled waiting on its
-  own background test run; the orchestrator re-ran the full suite directly.
+- CONCURRENT-WRITE INCIDENT (root-caused, fixed in the follow-up commit):
+  the orchestrator verified the suite green and committed e2ea75b while the
+  Julia subagent was still mid-mutation-testing in the same tree.  The
+  commit snapshotted src/RefinementPlacements.jl WITH mutation (c) applied
+  (occupied set not relocated, line 106) — HEAD was RED for one commit even
+  though the pre-commit verification run had passed (it loaded the
+  pre-mutation source).  The subagent's completion report flagged it; the
+  next commit reverts the mutation and carries the finalized mutation-record
+  comments.  Lesson recorded: never commit while a subagent that edits
+  src/ is live; re-diff the tree at git-add time, not at test time.
 - CONVENTIONS.md edit collision between the orchestrator's own shell append
   and a later Edit call (re-read required; no content lost).
 
 ### Acceptance
 
 - make check-report-shards: 72 shards green.  make report: 163 pp, no
-  errors, CA-71 in TOC.  Pkg.test(): full suite green including the new
-  2050-assertion CA-71 testset; three mutations (compose off-by-one, vacuum
-  slot advancing the running charge, unmapped occupied set) each confirmed
-  RED and reverted (record at the head of the testset).
+  errors, CA-71 in TOC.  Pkg.test() on the corrected tree: 885 assertions
+  green (67 new); three mutations (compose off-by-one, vacuum slot
+  advancing the running charge, unmapped occupied set) each confirmed RED
+  with recorded failure profiles and reverted (record at the head of the
+  testset).
 
 ### Pointers
 

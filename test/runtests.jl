@@ -1198,20 +1198,20 @@ end
 @testset "refinement placement category (CA-71)" begin
     # Mutation-proof record (AGENTS.md Rule 6; imitates the "(e)(i)/(e)(ii)"
     # mutation notes in the vacuum-insertion testset above). Each mutation was
-    # applied to src/RefinementPlacements.jl, the testset re-run to confirm RED,
-    # then reverted:
+    # applied to src/RefinementPlacements.jl alone, this testset re-run, RED
+    # confirmed (profile below observed verbatim), then reverted:
     #   (a) compose off-by-one (composite slots `psi.slots[phi.slots] .- 1`):
-    #       CAUGHT by the (B) compose value assertions and by (E) exact
-    #       functoriality — V_ψ V_φ != V_{ψ∘φ}.
+    #       (B) compose value assertion FAILS (slots [2] != [3]); the remaining
+    #       (B) composites ERROR in the Placement validator (slot 0); the (E)
+    #       functoriality sweep aborts at that validator. 27 pass, 1 fail, 5 error.
     #   (b) `_placement_fine_path` advances the running charge at a vacuum slot
-    #       (wrong repeat after a τ letter): CAUGHT by (B') pinned path values,
-    #       (C) CA-68 bridge, and (D) isometry sweep — the corrupted fine path
-    #       is inadmissible, so the module's fail-loud `_require_admissible_path`
-    #       guard errors the enclosing @test (RED).
-    #   (c) occupied-set map uses `S` instead of `phi.slots[S]`: CAUGHT by (F)
-    #       occupation covariance (V n_i != n_{φ(i)} V, n_s V != 0 off image),
-    #       by (C) bridge, and by (D) — the letters/path mismatch trips the
-    #       admissibility guard for every charge-shifting placement.
+    #       (τ decays to 1 on an idle step): (B') pinned fine-path values FAIL;
+    #       (C) CA-68 bridge and (D) isometry sweep ERROR at the module's
+    #       fail-loud `_require_admissible_path` guard.
+    #   (c) occupied-set map uses `S` instead of `phi.slots[S]`: (C) bridge
+    #       ERRORS at the admissibility guard for L = 2, 3 (letters no longer
+    #       match the duplicated path; L = 1 survives since slot 2·1-1 = 1 is
+    #       fixed) and the (D) sweep aborts at the same guard. 21 pass, 5 error.
     C = CftAnyons
     # Signed Fibonacci F_0 = 0, F_1 = 1 (matches the vacuum-insertion testset).
     fib(n) = n <= 0 ? 0 : (n == 1 ? 1 : (let a = 0, b = 1
