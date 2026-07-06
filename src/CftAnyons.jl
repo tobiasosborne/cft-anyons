@@ -180,6 +180,7 @@ include("QubitRelaxedGates.jl")
 include("QubitRelaxedScan.jl")
 include("AnyonicWordAlgebra.jl")
 include("RefinementPlacements.jl")
+include("GnsCornerCalculus.jl")
 
 """
     nearest_neighbor_boost_current_coefficients(positions) -> Vector

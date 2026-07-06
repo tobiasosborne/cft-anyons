@@ -1385,3 +1385,250 @@ end
     # --- (I) placement fail-loud argument guards. ---
     @test_throws ErrorException C.placement_refinement_matrix(P(1, 2, [1]), :sigma)
 end
+
+@testset "gns descent and corner calculus (CA-72)" begin
+    # Mutation-proof record (AGENTS.md Rule 6; each mutation applied to
+    # src/GnsCornerCalculus.jl ALONE, this testset re-run, RED confirmed with the
+    # profile below observed verbatim, then reverted):
+    #   (a) descent_intertwiner scale `1 / sqrt(wP)` -> `1.0` (drop the
+    #       ω(P)^{-1/2} normalization): J is no longer a Gram isometry, so the (C)
+    #       "gns descent" and (D) "residual descent" collectors go nonempty and the
+    #       pinned (C) isometry/defect FAIL (intertwining survives — it is scale
+    #       independent). Observed: 36 pass, 4 fail, 0 error.
+    #   (b) unital_completion `(I - P)` -> `P`: Φ_χ(I)=2P≠I and the defect carries
+    #       the wrong idempotent, so every (E) check FAILS (unitality ×4, GNS-norm
+    #       ×2, defect+mixture collector, pinned scalar-defect ×2). 31 pass, 9 fail.
+    #   (c) _corner_projection `V * V'` -> `V' * V` (k×k I_{m_c(k)}, not the l×l
+    #       rank-m_c(k) projection): the (A) corner sweep hits an l-vs-k
+    #       DimensionMismatch outside a @test and aborts the testset. 0 pass, 1 error.
+    C = CftAnyons
+    P(k, l, s) = C.Placement(k, l, s)
+    charges = (:one, :tau)
+    mult(k) = C.fibonacci_word_multiplicity_recurrence(k)
+    # Deterministic non-symmetric integer block operator on A_k (fixed LCG-free
+    # trig hash, as in _deterministic_generic_density): reproducible, seed-indexed.
+    dint(seed, n) = [Int(round(6 * sin(seed * (2a + 3b + 1)) + 4 * cos(seed + 2a + 5b)))
+                     for a in 1:n, b in 1:n]
+    opint(seed, k) = (m = mult(k);
+        Dict(:one => dint(seed, m[1]), :tau => dint(seed + 100, m[2])))
+    # Deterministic faithful (positive-definite) Hermitian density: M M† + I, normalized.
+    function ddens(seed, n)
+        M = [complex(0.4 * sin(seed * (3a + 5b + 1)), 0.3 * cos(seed * (2a + 7b + 2)))
+             for a in 1:n, b in 1:n]
+        H = M * M' + I
+        return Matrix{ComplexF64}(H / tr(H))
+    end
+    # Normalized-trace state ω = Tr/dim_H on A_l: weights ∝ m_c(l), ρ_c = I/m_c(l).
+    function tracestate(l)
+        m = mult(l); dH = m[1] + m[2]
+        return C.BlockState(Dict(:one => m[1] / dH, :tau => m[2] / dH),
+            Dict(:one => Matrix{ComplexF64}(I, m[1], m[1]) / m[1],
+                 :tau => Matrix{ComplexF64}(I, m[2], m[2]) / m[2]))
+    end
+    # Deterministic faithful randomized state on A_l.
+    function randstate(seed, l)
+        m = mult(l)
+        a1 = abs(sin(seed * 1.7)) + 0.3; a2 = abs(cos(seed * 2.3)) + 0.2; s = a1 + a2
+        return C.BlockState(Dict(:one => a1 / s, :tau => a2 / s),
+            Dict(:one => ddens(seed + 1, m[1]), :tau => ddens(seed + 2, m[2])))
+    end
+    gnorm2(G, v) = real(v' * G * v)                     # squared Gram norm ‖v‖²_G
+    eye(n) = Matrix{ComplexF64}(I, n, n)
+    ident(k) = (m = mult(k); Dict(:one => eye(m[1]), :tau => eye(m[2])))
+    sweep = (P(1, 2, [1]), P(2, 4, [1, 3]), P(2, 5, [2, 4]), P(3, 5, [1, 3, 5]))
+
+    # --- (A) Corner algebra identities (EXACT integer matrices): θ(S†T)=θ(S)†θ(T),
+    #         θ(S)(I−P)=0=(I−P)θ(S), P²=P=P†. Full sweep via a violation collector. ---
+    violA = String[]
+    for phi in sweep, c in charges
+        S = opint(10, phi.k); T = opint(15, phi.k)
+        StT = Dict(cc => S[cc]' * T[cc] for cc in charges)          # (S†T)_c, integer
+        θS = C.corner_morphism(S, phi); θT = C.corner_morphism(T, phi)
+        θStT = C.corner_morphism(StT, phi); Pc = C.corner_projection(phi)[c]
+        Ic = Matrix{Int}(I, size(Pc, 1), size(Pc, 1))
+        θStT[c] == θS[c]' * θT[c] || push!(violA, "θ morphism $(phi.slots) $c")
+        all(iszero, θS[c] * (Ic - Pc)) || push!(violA, "θ(S)(I−P) $(phi.slots) $c")
+        all(iszero, (Ic - Pc) * θS[c]) || push!(violA, "(I−P)θ(S) $(phi.slots) $c")
+        (Pc * Pc == Pc && Pc == Pc') || push!(violA, "P projection $(phi.slots) $c")
+    end
+    @test violA == String[]                                          # whole EXACT sweep clean
+    # Explicit pinned spot at φ = (2,4,[1,3]), both charges.
+    let phi = P(2, 4, [1, 3]), S = opint(3, 2), T = opint(8, 2)
+        θS = C.corner_morphism(S, phi); θT = C.corner_morphism(T, phi)
+        StT = Dict(c => S[c]' * T[c] for c in charges)
+        θStT = C.corner_morphism(StT, phi); Pd = C.corner_projection(phi)
+        for c in charges
+            Ic = Matrix{Int}(I, size(Pd[c], 1), size(Pd[c], 1))
+            @test θStT[c] == θS[c]' * θT[c]                          # *-morphism
+            @test θS[c] * (Ic - Pd[c]) == zeros(Int, size(Pd[c]))    # kills the complement
+            @test Pd[c] * Pd[c] == Pd[c] && Pd[c] == Pd[c]'          # projection
+        end
+    end
+
+    # --- (B) Regression BY CONSTRUCTION (not a probe): the fine state concentrated
+    #         on the corner (ρ_c = V_c e_c V_c', e_c = diag(1,0,…) a rank-1 coarse
+    #         projection) has corner_weight = 1 exactly, and its pullback recovers
+    #         the coarse state (w_c, e_c) exactly (CA-68 corner-state style). ---
+    let phi = P(2, 4, [1, 3]), mk = mult(2)
+        ec = Dict(:one => Matrix{ComplexF64}([i == 1 && j == 1 ? 1.0 : 0.0
+                                              for i in 1:mk[1], j in 1:mk[1]]),
+                  :tau => Matrix{ComplexF64}([i == 1 && j == 1 ? 1.0 : 0.0
+                                              for i in 1:mk[2], j in 1:mk[2]]))
+        V = Dict(c => C.placement_refinement_matrix(phi, c) for c in charges)
+        fine = C.BlockState(Dict(:one => 0.5, :tau => 0.5),
+            Dict(c => Matrix{ComplexF64}(V[c] * ec[c] * V[c]') for c in charges))
+        @test C.corner_weight(fine, phi) == 1.0                     # corner carries all mass
+        pb = C.pullback_state(fine, phi)
+        @test pb.weights[:one] == 0.5 && pb.weights[:tau] == 0.5    # coarse weights recovered
+        @test pb.densities[:one] == ec[:one]                        # ρ'_c = V'_c ρ_c V_c = e_c
+        @test pb.densities[:tau] == ec[:tau]
+        @test 2 * (1 - sqrt(C.corner_weight(fine, phi))) == 0.0     # defect formula at cw=1
+        @test 1 - C.corner_weight(fine, phi) == 0.0                 # ω((1−P)²)=ω(1−P)=0
+    end
+
+    # --- (C) GNS descent for faithful fine states: J†G_l J = G_k (Gram isometry),
+    #         J π_k(S) = π_l(θ(S)) J (intertwining), and the vacuum-defect identity
+    #         ‖JΩ_k − Ω_l‖²_{G_l} = 2(1 − √corner_weight). Sweep 4 placements × 3
+    #         faithful states (trace + two randomized) via a collector. ---
+    violC = String[]
+    for phi in sweep, ω in (tracestate(phi.l), randstate(3, phi.l), randstate(7, phi.l))
+        Gl = C.gns_gram(ω, phi.l)
+        ωk = C.pullback_state(ω, phi); Gk = C.gns_gram(ωk, phi.k)
+        J = C.descent_intertwiner(ω, phi)
+        isapprox(J' * Gl * J, Gk; atol = 1e-10) ||
+            push!(violC, "isometry $(phi.slots)")
+        for sd in (1, 4)
+            S = opint(sd, phi.k)
+            isapprox(J * C.gns_left_action(S, phi.k),
+                     C.gns_left_action(C.corner_morphism(S, phi), phi.l) * J; atol = 1e-10) ||
+                push!(violC, "intertwine $(phi.slots) $sd")
+        end
+        Ωk = C.gns_cyclic_vector(phi.k); Ωl = C.gns_cyclic_vector(phi.l)
+        isapprox(gnorm2(Gl, J * Ωk - Ωl), 2 * (1 - sqrt(C.corner_weight(ω, phi))); atol = 1e-10) ||
+            push!(violC, "defect $(phi.slots)")
+    end
+    @test violC == String[]
+    # Pinned high-precision defect: the shard's heart at the dyadic φ = (2,4,[1,3])
+    # on the A_4 trace state, where corner_weight = 5/34 (see (F)).
+    let phi = P(2, 4, [1, 3]), ω = tracestate(4)
+        Gl = C.gns_gram(ω, phi.l); J = C.descent_intertwiner(ω, phi)
+        Ωk = C.gns_cyclic_vector(phi.k); Ωl = C.gns_cyclic_vector(phi.l)
+        @test isapprox(gnorm2(Gl, J * Ωk - Ωl), 2 * (1 - sqrt(5 / 34)); atol = 1e-12)
+        Gk = C.gns_gram(C.pullback_state(ω, phi), phi.k)
+        @test isapprox(J' * Gl * J, Gk; atol = 1e-12)               # exact Gram isometry
+        S = opint(2, phi.k)
+        @test isapprox(J * C.gns_left_action(S, phi.k),
+                       C.gns_left_action(C.corner_morphism(S, phi), phi.l) * J; atol = 1e-12)
+    end
+
+    # --- (D) Residual descent norm identity: ‖π_k(R')[T]_k‖ = ‖π_l(θ(R')) J [T]_k‖
+    #         (intertwining + isometry) for random R' ∈ A_k, faithful ω, several T. ---
+    violD = String[]
+    for phi in (P(2, 4, [1, 3]), P(2, 5, [2, 4]), P(3, 5, [1, 3, 5]))
+        ω = randstate(11, phi.l)
+        Gl = C.gns_gram(ω, phi.l); Gk = C.gns_gram(C.pullback_state(ω, phi), phi.k)
+        J = C.descent_intertwiner(ω, phi)
+        Rp = opint(22, phi.k)
+        πkR = C.gns_left_action(Rp, phi.k)
+        πlθR = C.gns_left_action(C.corner_morphism(Rp, phi), phi.l)
+        for td in (1, 2, 3)
+            vk = C.gns_coordinates(opint(td, phi.k), phi.k)
+            isapprox(gnorm2(Gk, πkR * vk), gnorm2(Gl, πlθR * J * vk); atol = 1e-8) ||
+                push!(violD, "residual $(phi.slots) $td")
+        end
+    end
+    @test violD == String[]
+    # Trivial pinned instance: θ(0) = 0 ⇒ π_k(0) = 0 (both sides of (D) vanish).
+    let phi = P(2, 4, [1, 3]), mk = mult(2),
+        Z = Dict(:one => zeros(ComplexF64, mk[1], mk[1]),
+                 :tau => zeros(ComplexF64, mk[2], mk[2]))
+        @test all(iszero, C.corner_morphism(Z, phi)[:tau])
+        @test all(iszero, C.gns_left_action(Z, phi.k))
+    end
+
+    # --- (E) Unital completion Φ_χ(T) = θ(T) + χ(T)(1−P): Φ_χ(I_k)=I_l; exact
+    #         defect Φ_χ(ST)−Φ_χ(S)Φ_χ(T) = (χ(ST)−χ(S)χ(T))(I−P); GNS-norm
+    #         ω_l(M†M)=|χ(ST)−χ(S)χ(T)|²ω_l(I−P); mixture ω_l∘Φ_χ = cw·ω_k+(1−cw)·χ. ---
+    let phi = P(2, 4, [1, 3])
+        Ik = ident(phi.k); Il = ident(phi.l); Pd = C.corner_projection(phi)
+        ml = mult(phi.l)
+        ImP = Dict(c => eye(ml[i]) - Pd[c] for (i, c) in enumerate(charges))
+        ω = randstate(9, phi.l); cw = C.corner_weight(ω, phi); ωk = C.pullback_state(ω, phi)
+        S = opint(2, phi.k); T = opint(7, phi.k); ST = Dict(c => S[c] * T[c] for c in charges)
+        violE = String[]
+        for χ in (tracestate(2), randstate(5, 2))
+            ΦI = C.unital_completion(Ik, χ, phi)
+            for c in charges
+                @test isapprox(ΦI[c], Il[c]; atol = 1e-10)          # unital: Φ_χ(I_k)=I_l
+            end
+            λ = C.state_expectation(χ, ST) -
+                C.state_expectation(χ, S) * C.state_expectation(χ, T)
+            ΦST = C.unital_completion(ST, χ, phi)
+            ΦS = C.unital_completion(S, χ, phi); ΦT = C.unital_completion(T, χ, phi)
+            M = Dict(c => ΦST[c] - ΦS[c] * ΦT[c] for c in charges)
+            for c in charges                                        # EXACT defect identity
+                isapprox(M[c], λ * ImP[c]; atol = 1e-10) ||
+                    push!(violE, "defect $c")
+            end
+            MdM = Dict(c => M[c]' * M[c] for c in charges)          # GNS-norm equality
+            @test isapprox(real(C.state_expectation(ω, MdM)),
+                           abs2(λ) * real(C.state_expectation(ω, ImP)); atol = 1e-9)
+            for td in (1, 3, 5)                                     # pullback mixture
+                Tt = opint(td, phi.k)
+                isapprox(C.state_expectation(ω, C.unital_completion(Tt, χ, phi)),
+                         cw * C.state_expectation(ωk, Tt) +
+                         (1 - cw) * C.state_expectation(χ, Tt); atol = 1e-9) ||
+                    push!(violE, "mixture $td")
+            end
+        end
+        @test violE == String[]
+        # Pinned scalar-defect identity at χ = coarse trace state, both charges.
+        let χ = tracestate(2)
+            λ = C.state_expectation(χ, ST) -
+                C.state_expectation(χ, S) * C.state_expectation(χ, T)
+            ΦST = C.unital_completion(ST, χ, phi)
+            ΦS = C.unital_completion(S, χ, phi); ΦT = C.unital_completion(T, χ, phi)
+            for c in charges
+                @test isapprox(ΦST[c] - ΦS[c] * ΦT[c], λ * ImP[c]; atol = 1e-10)
+            end
+        end
+    end
+
+    # --- (F) Pinned concrete corner weight. DERIVATION: for a proper state (weights
+    #         sum to 1, trace-1 densities — enforced by the BlockState validator) the
+    #         "trace state ω = Tr/dim_H" over A_4 = M_13 ⊕ M_21 is w_c = m_c(4)/dim_H,
+    #         ρ_c = I/m_c(4) with dim_H = m_1(4)+m_τ(4) = 13+21 = 34. For φ = (2,4,[1,3])
+    #         rank(P_c) = m_c(2) = (F_3, F_4) = (2, 3), so
+    #           corner_weight = Σ_c w_c tr(ρ_c P_c) = Σ_c (m_c(4)/34)(m_c(2)/m_c(4))
+    #                         = Σ_c m_c(2)/34 = (2+3)/34 = 5//34 = Tr_{H_4}(P)/dim H_4.
+    #         (The spec sketch 1/122 = 5/610 divides by dim A_4 = Σ m_c(4)² = 610, i.e.
+    #         Tr(P)/dim A — that ω has ω(I)=34/610≠1, is NOT a state, and is rejected
+    #         by the BlockState validator; the state-normalized value is 5//34.)
+    let phi = P(2, 4, [1, 3]), cw = C.corner_weight(tracestate(4), phi)
+        @test isapprox(cw, 5 // 34; atol = 1e-12)                   # exact rational, verified
+        @test isapprox(cw, (2 + 3) / (13 + 21); atol = 1e-12)      # Tr(P)/dim H_4
+        @test isapprox(cw * 34, 5.0; atol = 1e-10)
+    end
+
+    # --- (H) GNS correctness invariants (independent of the corner data): the GNS
+    #         space has dim A_k = Σ_c m_c(k)² = F_{4k-1}; Ω is normalized and cyclic;
+    #         π is a *-representation with ⟨Ω, π(T)Ω⟩_G = ω(T) = state_expectation. ---
+    @test [length(C.gns_cyclic_vector(k)) for k in 1:3] == [2, 13, 89]  # Σ m_c(k)² = F_{4k-1}
+    let ω = randstate(4, 3), T = opint(6, 3), S = opint(9, 3)
+        G = C.gns_gram(ω, 3); Ω = C.gns_cyclic_vector(3)
+        πT = C.gns_left_action(T, 3); πS = C.gns_left_action(S, 3)
+        ST = Dict(c => S[c] * T[c] for c in charges)
+        @test isapprox(πS * πT, C.gns_left_action(ST, 3); atol = 1e-12)  # π(ST)=π(S)π(T)
+        @test isapprox(πT * Ω, C.gns_coordinates(T, 3); atol = 1e-12)    # π(T)Ω = [T]
+        @test isapprox(Ω' * G * (πT * Ω), C.state_expectation(ω, T); atol = 1e-12)  # ⟨Ω,π(T)Ω⟩=ω(T)
+        @test isapprox(real(Ω' * G * Ω), 1.0; atol = 1e-12)             # ⟨Ω,Ω⟩=ω(I)=1
+    end
+
+    # --- (G) Fail-loud guards on the state / descent constructors. ---
+    @test_throws ErrorException C.BlockState(Dict(:one => 0.5, :tau => 0.4),
+        Dict(:one => eye(1), :tau => eye(1)))                       # weights ≠ 1
+    @test_throws ErrorException C.BlockState(Dict(:one => 0.5, :tau => 0.5),
+        Dict(:one => ComplexF64[2.0;;], :tau => eye(1)))           # trace ≠ 1
+    @test_throws ErrorException C.BlockState(Dict(:one => 0.5, :tau => 0.5),
+        Dict(:one => ComplexF64[0.5 2.0; 0.0 0.5], :tau => eye(1)))  # non-Hermitian
+end

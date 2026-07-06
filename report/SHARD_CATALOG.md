@@ -648,3 +648,12 @@ single ~200-line source file it points to.
 - Summary: Identifies the dyadic vacuum insertion as the seed of a Jones forest tensor functor, with Thompson-group symmetry and Hilbert/C*-algebra targets sourced from Brothier-Stottmeister.
 - Summary: Records the Ore dichotomy for coloured forest-skein categories and the divisibility/soft-system fallbacks that house mixed-radix and dressed refinements.
 - Keywords: refinement, placement, forest category, Thompson group, Jones functor, Ore property, vacuum insertion, k to l, composability
+
+## `CA-72-GNS-DESCENT-CORNER-CALCULUS`
+
+- Source: `report/sections/72_gns_descent_corner_calculus.tex`
+- Title: GNS Descent and the Corner Calculus of Placement Refinements
+- Summary: Proves that every placement refinement descends to an isometric intertwiner of GNS representations, with vacuum defect 2(1-sqrt(omega(P))).
+- Summary: Computes the unital CP completion's multiplicativity defect exactly as (chi(ST)-chi(S)chi(T))(1-P), tying soft C*-structure to omega(1-P) -> 0.
+- Summary: States the residual-descent criterion and the BU-level refinement square as the interface contracts consumed by the categorical residual set.
+- Keywords: GNS, corner, refinement, descent, unital completion, multiplicativity defect, soft C*-system, residual descent, vacuum defect

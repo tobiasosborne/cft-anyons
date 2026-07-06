@@ -1,5 +1,77 @@
 # Worklog chunk 012 - 2026-07-06
 
+## W1.2: GNS descent and corner calculus, CA-72 (2026-07-06)
+
+### Context
+
+Continuation of the consistency-layer plan on Tobias's go-ahead: W1.2 per
+reviews/2026-07-06_pipeline_consistency_scoping/PLAN.md.  Goal: settle the
+residual-free part of seam S1 (GNS descent of the corner refinement) and
+give the corner-vs-unital problem its exact finite calculus.
+
+### What changed
+
+- Shard CA-72-GNS-DESCENT-CORNER-CALCULUS (73 shards, 167 pp).  Main
+  results, all finite-L derivations: (72.3) every placement refinement
+  descends unconditionally to an isometric GNS intertwiner, vacuum defect
+  EXACTLY 2(1-sqrt(omega_l(P_phi))); (72.7) the unital CP completion
+  Phi_chi(T) = theta(T) + chi(T)(1-P) has multiplicativity defect
+  IDENTICALLY (chi(ST)-chi(S)chi(T))(1-P) — an equality, not the bound the
+  scoping designs proposed (cross terms vanish via theta(S)(1-P)=0) — so
+  soft-C*-structure (verified anchor: 2306.16063.md:568-575, Def 33 eq 29)
+  holds iff omega_l(1-P) -> 0; (72.4) residual-descent criterion + the
+  descent-compatibility contract for W1.3; (72.5) Gram-domination variant
+  for independent state families; (72.6) pullback through the completion is
+  the convex mixture omega(P) omega_k + (1-omega(P)) chi; BU-level square
+  recorded as a W1.5-blocked contract.
+- src/GnsCornerCalculus.jl (280 lines: block states, corner weights,
+  normalized pullbacks, explicit finite GNS data, descent intertwiner,
+  unital completion) + testset "gns descent and corner calculus (CA-72)":
+  40 assertions, suite 885 -> 925 green.  Exact rational pin: corner weight
+  5/34 for the carrier-trace state on A_4 under dyadic placement.
+
+### Why these choices / findings
+
+- The single scalar 1 - omega_l(P_phi) now provably governs BOTH the
+  vacuum-pointedness of the GNS descent and the exact softness modulus of
+  the unital completion — the corner-vs-unital problem is one number.
+- Chi is recorded as a non-canonical choice; no canonical completion is
+  proposed.  Translation invariance of pullbacks is explicitly NOT claimed
+  beyond the cell-shift subgroup of CONVENTIONS (t).
+
+### Frictions / dead ends
+
+- The orchestrator's Julia spec pinned a WRONG rational (1/122) from a
+  botched trace-state normalization (weights m_c^2/610 with an arithmetic
+  slip on top; and Tr/dim_A is not even a BlockState).  The implementing
+  subagent investigated instead of fudging, derived the correct carrier-
+  trace value 5/34, and verified it in code.  The shard text was corrected
+  to match before commit.  Lesson: pinned values in specs are hypotheses,
+  not oracles — the repo's "if they disagree investigate" instruction did
+  its job.
+- Concurrency lesson from the CA-71 incident applied: no git operation
+  until the subagent confirmed completion ("tree final, no mutations
+  applied"), mutation sites re-grepped, and the full suite re-run by the
+  orchestrator before add/commit.
+
+### Acceptance
+
+- make check-report-shards: 73 shards green.  make report: 167 pp, no
+  errors.  Pkg.test(): 925 assertions green (orchestrator re-run after
+  agent completion).  Mutations: dropped J-normalization (36/4/0 — defect
+  and isometry RED, intertwining survives as predicted, scale-independent),
+  P for 1-P in the completion (31/9/0 — unitality and defect RED),
+  V'V for VV' (loud DimensionMismatch abort) — each reverted; record at
+  the head of the testset.
+
+### Pointers
+
+- Shard CA-72; src/GnsCornerCalculus.jl; test/runtests.jl testset CA-72;
+  PLAN item W1.2 done.  Interfaces exported: residual descent-compatibility
+  contract (to W1.3), BU-level square (to W1.5), dressed-exact-corner
+  question (to W2.1).
+- Next per plan: W1.3 (CA-73 categorical residual set, open chain).
+
 ## Wave 0 + W1.1: conventions, kappa_tau closure, CA-71 (2026-07-06)
 
 ### Context

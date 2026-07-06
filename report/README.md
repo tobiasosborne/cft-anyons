@@ -89,6 +89,7 @@ before treating report edits as complete.
 | 69 | `CA-69-DILUTE-TL-WORD-ALGEBRA` | `report/sections/69_dilute_tl_word_algebra.tex` | The Dilute Temperley-Lieb Algebra and the Anyonic Word Algebra |
 | 70 | `CA-70-DILUTE-KOO-SALEUR-ANSATZ` | `report/sections/70_dilute_koo_saleur_ansatz.tex` | The Dilute Koo-Saleur Ansatz |
 | 71 | `CA-71-REFINEMENT-PLACEMENT-CATEGORY` | `report/sections/71_refinement_placement_category.tex` | The Refinement Placement Category and Exact Composition |
+| 72 | `CA-72-GNS-DESCENT-CORNER-CALCULUS` | `report/sections/72_gns_descent_corner_calculus.tex` | GNS Descent and the Corner Calculus of Placement Refinements |
 
 ## Adding a shard
 

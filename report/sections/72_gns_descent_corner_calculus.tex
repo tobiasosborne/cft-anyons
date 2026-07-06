@@ -1,0 +1,249 @@
+% SHARD-ID: CA-72-GNS-DESCENT-CORNER-CALCULUS
+% SHARD-TITLE: GNS Descent and the Corner Calculus of Placement Refinements
+% SHARD-SUMMARY: Proves that every placement refinement descends to an isometric intertwiner of GNS representations, with vacuum defect 2(1-sqrt(omega(P))).
+% SHARD-SUMMARY: Computes the unital CP completion's multiplicativity defect exactly as (chi(ST)-chi(S)chi(T))(1-P), tying soft C*-structure to omega(1-P) -> 0.
+% SHARD-SUMMARY: States the residual-descent criterion and the BU-level refinement square as the interface contracts consumed by the categorical residual set.
+% SHARD-KEYWORDS: GNS, corner, refinement, descent, unital completion, multiplicativity defect, soft C*-system, residual descent, vacuum defect
+
+\section{GNS Descent and the Corner Calculus of Placement Refinements}
+\label{sec:gns-descent-corner-calculus}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: local derivations with checked finite shadows, plus two
+recorded interface contracts.}  Every lemma below is an elementary
+finite-dimensional derivation, checked in Julia.  The two items that are
+\emph{not} theorems here --- the residual-compatibility contract and the
+BU-level square --- are stated as proposals with their consuming shards
+named.  This shard settles the residual-free part of seam S1 of the
+2026-07-06 consistency map; the residual part waits for the categorical
+residual set (W1.3).
+
+Dependencies: CA-63, CA-65, CA-66, CA-67, CA-68, CA-71; CONVENTIONS (r),
+(s), (t).  Executes item W1.2 of
+\texttt{reviews/2026-07-06\_pipeline\_consistency\_scoping/PLAN.md}.
+
+% Source: report/sections/68_variable_n_refinement_maps.tex:79--100 -- the
+%   corner *-isomorphism theta_L, non-unitality theta_L(1)=P_L, and exact
+%   corner state consistency omega_L = omega_2L o theta_L when omega_2L(P)=1.
+% Source: report/sections/71_refinement_placement_category.tex -- placements
+%   phi, bare refinements V_phi (isometries), exact composition.
+% Source: report/sections/63_qubit_moment_state_existence.tex:141--158 --
+%   GNS matrix elements omega(X*RY) and pi_omega(R)=0 on the dense local
+%   core (the (63.8)-(63.9) mechanism this shard's descent criterion reuses).
+% Source: literature/md/2306.16063/2306.16063.md:568--575 -- soft inductive
+%   systems of C*-algebras: CP contractions with the asymptotic homomorphism
+%   property (Def. 33, eq. (29)); unital soft systems require j(1)=1.
+% Source: literature/md/2010.11121/2010.11121.md:170 -- strict OAR directed
+%   systems use unital injective *-morphisms (the standard the corner map
+%   fails, motivating the completion below).
+% Source: src/GnsCornerCalculus.jl and test/runtests.jl testset
+%   "gns descent and corner calculus (CA-72)" -- the checked invariants.
+
+\subsection{Setting}
+
+Fix a placement \(\varphi:[k]\to[l]\) with bare refinement
+\(V_\varphi\), corner projection \(P_\varphi=V_\varphi V_\varphi^\dagger\),
+and corner morphism \(\theta_\varphi(T)=V_\varphi TV_\varphi^\dagger\)
+(CA-71).  States on \(\Alg_l=\bigoplus_cM_{m_c(l)}(\mathbb C)\) are block
+density pairs \(\omega_l=(w_c,\rho_c)\),
+\(\omega_l(T)=\sum_cw_c\operatorname{tr}(\rho_cT_c)\) (CA-66).  Throughout,
+\(\Omega_\omega\) denotes the GNS cyclic vector and \([T]_\omega\) the GNS
+class of \(T\).
+
+\subsection{The Corner Calculus}
+
+\textbf{Lemma 72.1 [derived].}  \(\theta_\varphi\) is an injective
+\(*\)-morphism onto the corner \(P_\varphi\Alg_lP_\varphi\), and
+\[
+  \theta_\varphi(S)^\dagger\theta_\varphi(T)=\theta_\varphi(S^\dagger T),
+  \qquad
+  \theta_\varphi(S)\,(1-P_\varphi)=0=(1-P_\varphi)\,\theta_\varphi(S).
+\]
+\emph{Proof.}  \(V^\dagger V=1\) gives
+\(VS^\dagger V^\dagger VTV^\dagger=VS^\dagger TV^\dagger\); and
+\(VSV^\dagger(1-VV^\dagger)=VS(V^\dagger-V^\dagger)=0\). \(\square\)
+
+\textbf{Lemma 72.2 [derived] (pullback functionals).}
+\(\omega_l\circ\theta_\varphi\) is a positive linear functional of total
+mass \(\omega_l(P_\varphi)\); it is a state iff \(\omega_l(P_\varphi)=1\)
+(the CA-68 exact corner case).  For \(\omega_l(P_\varphi)>0\) the
+\emph{normalized pullback}
+\[
+  \omega_k:=\frac{\omega_l\circ\theta_\varphi}{\omega_l(P_\varphi)}
+\]
+is a state on \(\Alg_k\).  \textbf{Boundary:} translation invariance of
+\(\omega_l\) does \emph{not} imply translation invariance of \(\omega_k\)
+in any sense finer than the cell-shift subgroup of CONVENTIONS (t); no
+invariance is claimed here.
+
+\subsection{The GNS Descent Lemma}
+
+\textbf{Theorem 72.3 [derived].}  Let \(\omega_l(P_\varphi)>0\) and let
+\(\omega_k\) be the normalized pullback.  Then
+\[
+  J\,[T]_{\omega_k}:=\omega_l(P_\varphi)^{-1/2}\,
+  [\theta_\varphi(T)]_{\omega_l}
+\]
+is a well-defined isometry \(\mathcal H_{\omega_k}\to\mathcal H_{\omega_l}\)
+satisfying, for all \(S,T\in\Alg_k\),
+\[
+  J\,\pi_{\omega_k}(S)=\pi_{\omega_l}(\theta_\varphi(S))\,J,
+  \qquad
+  \bigl\|J\Omega_{\omega_k}-\Omega_{\omega_l}\bigr\|^2
+  =2\Bigl(1-\sqrt{\omega_l(P_\varphi)}\Bigr).
+\]
+In particular \(J\Omega_{\omega_k}=\Omega_{\omega_l}\) iff
+\(\omega_l(P_\varphi)=1\).
+
+\emph{Proof.}  Isometry and well-definedness:
+\(\langle J[S],J[T]\rangle
+=\omega_l(P)^{-1}\omega_l(\theta(S)^\dagger\theta(T))
+=\omega_l(P)^{-1}\omega_l(\theta(S^\dagger T))=\omega_k(S^\dagger T)\)
+by Lemma 72.1, so \(\omega_k\)-null classes map to
+\(\omega_l\)-null classes.  Intertwining:
+\(J[ST]=\omega_l(P)^{-1/2}[\theta(S)\theta(T)]
+=\pi_{\omega_l}(\theta(S))J[T]\).  Vacuum defect:
+\(\langle J\Omega_k,\Omega_l\rangle
+=\omega_l(P)^{-1/2}\,\omega_l(P^\dagger 1)=\sqrt{\omega_l(P)}\), hence
+\(\|J\Omega_k-\Omega_l\|^2=1+1-2\sqrt{\omega_l(P)}\). \(\square\)
+
+\textbf{Reading.}  Every placement refinement descends to the GNS level
+\emph{unconditionally}: multiplicativity survives the corner because
+\(V^\dagger V=1\).  What is conditional is only whether the refinement is
+\emph{pointed} (vacuum-preserving), and that is measured by the single
+scalar \(1-\omega_l(P_\varphi)\) --- the same scalar that controls the
+completion defect below.  This closes the residual-free part of seam S1.
+
+\subsection{Residual Descent: the Contract for the Categorical Residual Set}
+
+\textbf{Lemma 72.4 [derived].}  In the setting of Theorem 72.3, for any
+\(R'\in\Alg_k\) and \(T\in\Alg_k\),
+\[
+  \bigl\|\pi_{\omega_k}(R')\,[T]_{\omega_k}\bigr\|
+  =\bigl\|\pi_{\omega_l}(\theta_\varphi(R'))\,J[T]_{\omega_k}\bigr\| .
+\]
+Hence \(\pi_{\omega_k}(R')=0\) iff \(\pi_{\omega_l}(\theta_\varphi(R'))\)
+vanishes on \(\operatorname{ran}J\); in particular
+\(\pi_{\omega_l}(\theta_\varphi(R'))=0\Rightarrow\pi_{\omega_k}(R')=0\):
+coarse relations are inherited from fine ones through \(\theta_\varphi\).
+
+\textbf{Contract [proposal, consumed by W1.3].}  A scale family of residual
+sets \(\{\mathcal R_k\}\) is \emph{descent-compatible} for
+\((\omega_l,\varphi)\) when
+\(\pi_{\omega_l}(\theta_\varphi(R'))\,J=0\) for every
+\(R'\in\mathcal R_k\) --- e.g.\ when \(\theta_\varphi(\mathcal R_k)\) lies
+in the \(\pi_{\omega_l}\)-null structure generated by \(\mathcal R_l\).
+Once W1.3 defines the categorical residual densities, this is the equation
+their scale coherence must satisfy; nothing about it is claimed here.
+
+\textbf{Lemma 72.5 [derived] (independent families).}  If instead
+\(\omega_k\) is \emph{given} (a projective family, not the pullback), then
+\(J[T]_{\omega_k}:=[\theta_\varphi(T)]_{\omega_l}\) is well-defined and
+bounded iff the Gram domination
+\(\omega_l(\theta(T)^\dagger\theta(T))\le C\,\omega_k(T^\dagger T)\) holds
+for some \(C\); the pullback case is \(C=\omega_l(P_\varphi)\) with
+equality.  This is the finite Gram condition to check when comparing two
+independently constructed state families.
+
+\subsection{The Unital CP Completion and Its Exact Defect}
+
+Strict OAR wants unital injective \(*\)-morphisms; \(\theta_\varphi\) is
+not unital.  For a state \(\chi\) on \(\Alg_k\) define the
+\emph{\(\chi\)-completion}
+\[
+  \Phi_\chi(T):=\theta_\varphi(T)+\chi(T)\,(1-P_\varphi).
+\]
+
+\textbf{Lemma 72.6 [derived].}  \(\Phi_\chi\) is unital and completely
+positive (sum of a \(*\)-morphism and the CP map
+\(T\mapsto\chi(T)(1-P_\varphi)\)), with state pullback the convex mixture
+\[
+  \omega_l\circ\Phi_\chi
+  =\omega_l(P_\varphi)\,\omega_k+\bigl(1-\omega_l(P_\varphi)\bigr)\,\chi .
+\]
+
+\textbf{Theorem 72.7 [derived] (exact multiplicativity defect).}  For all
+\(S,T\in\Alg_k\),
+\[
+  \Phi_\chi(ST)-\Phi_\chi(S)\Phi_\chi(T)
+  =\bigl(\chi(ST)-\chi(S)\chi(T)\bigr)\,(1-P_\varphi),
+\]
+and consequently
+\[
+  \bigl\|\Phi_\chi(ST)-\Phi_\chi(S)\Phi_\chi(T)\bigr\|_{\omega_l}
+  =\bigl|\chi(ST)-\chi(S)\chi(T)\bigr|\,
+   \sqrt{\omega_l(1-P_\varphi)} .
+\]
+\emph{Proof.}  Expand \(\Phi_\chi(S)\Phi_\chi(T)\); the cross terms vanish
+by Lemma 72.1, leaving
+\(\theta(ST)+\chi(S)\chi(T)(1-P)\); subtract from
+\(\Phi_\chi(ST)=\theta(ST)+\chi(ST)(1-P)\).  The seminorm follows from
+\((1-P)^\dagger(1-P)=1-P\). \(\square\)
+
+\textbf{Corollary 72.8 [derived reading].}  On the matrix-block algebras
+\(\Alg_k\) no state is multiplicative on all of \(\Alg_k\) (unless a block
+is one-dimensional and \(\chi\) is concentrated there), so the completion
+family \(\{\Phi_\chi\}\) satisfies the soft-C*-system asymptotic
+homomorphism property (the sourced eq.~(29) condition) \emph{along a scale
+sequence precisely when} \(\omega_l(1-P_{\varphi})\to0\) in the relevant
+GNS seminorms.  The corner scalar of Theorem 72.3 is thus also the exact
+modulus of softness of the unital completion: strict corner
+(\(\omega(P)=1\)) gives an exactly pointed descent, and
+\(\omega(P)\to1\) gives an asymptotically multiplicative unital CP system.
+Whether a physically relevant (critical) fine-state family can achieve
+\(\omega_l(P)\to1\) for dressed placements is exactly the W2.1
+dressed-exact-corner question; nothing is claimed here.
+
+\subsection{The BU-Level Square}
+
+\textbf{Proposal [contract, blocked on W1.5].}  On the free word layer
+\(\mathcal{BU}_0\) (CA-65), a placement acts on generators by slot
+relabelling, \(\widehat R_\varphi(v_{a,j}):=v_{a,\varphi(j)}\), extended
+freely.  The required compatibility square is
+\[
+  \pi_l\circ\widehat R_\varphi=\theta_\varphi\circ\pi_k
+  \quad\text{on local words},
+  \qquad
+  \widehat R_\varphi(J_{\mathrm{fus},k})\subseteq J_{\mathrm{fus},l},
+\]
+so that refinement is defined already at the presentation level and
+descends through the kinematic quotient.  Its verification needs the
+endpoint-closing rule (the CA-65 generator-to-block bridge, scheduled as
+W1.5); until then the square is an interface contract, not a result.
+
+\subsection{Julia Invariants}
+
+\texttt{src/GnsCornerCalculus.jl} implements block states, corner weights
+\(\omega_l(P_\varphi)\), normalized pullbacks, explicit finite GNS data
+(Gram matrices, left actions, cyclic vectors), the descent intertwiner
+\(J\), and the completion \(\Phi_\chi\).  The testset ``gns descent and
+corner calculus (CA-72)'' pins: the corner-calculus identities of Lemma
+72.1 exactly on integer matrices; the CA-68 corner regression
+(\(\omega_l(P_\varphi)=1\) and pullback recovery for fine states built on
+the corner --- a regression by construction, not a probe); isometry
+\(J^\dagger G_lJ=G_k\), the intertwining relation, and the vacuum-defect
+scalar \(2(1-\sqrt{\omega_l(P_\varphi)})\) for faithful fine states; the
+residual-descent norm identity of Lemma 72.4; the exact defect identity of
+Theorem 72.7 with its GNS-norm equality and the convex-mixture pullback of
+Lemma 72.6; and one exact rational pin, \(\omega_l(P_\varphi)=5/34\) for
+the carrier-trace state \(\operatorname{Tr}_{H_4}/\dim H_4\) under the
+dyadic placement (corner ranks \(2+3\) against
+\(\dim H_4=13+21=34\); the implementing agent caught and corrected the
+orchestrator's wrong draft pin here --- recorded in the worklog).  Each
+invariant is mutation-proved per Rule 6 (dropped \(J\)-normalization,
+\(P\) in place of \(1-P\) in the completion, \(V^\dagger V\) in place of
+\(VV^\dagger\)), with the record at the head of the testset.
+
+\subsection{Boundary}
+
+This shard proves nothing about dynamics, translation invariance,
+criticality, dressings, or continuum limits; it fixes the exact
+finite-\(L\) calculus through which any of those must pass.  The
+completion state \(\chi\) is a non-canonical choice, and no canonical
+choice is proposed.  The residual-descent contract and the BU-level square
+are named interfaces for W1.3 and W1.5.  Whether \(\omega_l(P)\to1\) is
+achievable on physical state families (and with which dressed placements)
+is the W2.1 question; the Kliesch--Koenig applicability audit remains
+W2.4.  Seam S1 is closed here only in its residual-free part, as the plan
+demands.
