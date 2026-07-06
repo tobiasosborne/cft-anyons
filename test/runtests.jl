@@ -1194,3 +1194,194 @@ end
     @test_throws ErrorException C.occupation_number_matrix(2, 3, :one)
     @test_throws ErrorException C.vacuum_insertion_matrix(2, :sigma)
 end
+
+@testset "refinement placement category (CA-71)" begin
+    # Mutation-proof record (AGENTS.md Rule 6; imitates the "(e)(i)/(e)(ii)"
+    # mutation notes in the vacuum-insertion testset above). Each mutation was
+    # applied to src/RefinementPlacements.jl, the testset re-run to confirm RED,
+    # then reverted:
+    #   (a) compose off-by-one (composite slots `psi.slots[phi.slots] .- 1`):
+    #       CAUGHT by the (B) compose value assertions and by (E) exact
+    #       functoriality — V_ψ V_φ != V_{ψ∘φ}.
+    #   (b) `_placement_fine_path` advances the running charge at a vacuum slot
+    #       (wrong repeat after a τ letter): CAUGHT by (B') pinned path values,
+    #       (C) CA-68 bridge, and (D) isometry sweep — the corrupted fine path
+    #       is inadmissible, so the module's fail-loud `_require_admissible_path`
+    #       guard errors the enclosing @test (RED).
+    #   (c) occupied-set map uses `S` instead of `phi.slots[S]`: CAUGHT by (F)
+    #       occupation covariance (V n_i != n_{φ(i)} V, n_s V != 0 off image),
+    #       by (C) bridge, and by (D) — the letters/path mismatch trips the
+    #       admissibility guard for every charge-shifting placement.
+    C = CftAnyons
+    # Signed Fibonacci F_0 = 0, F_1 = 1 (matches the vacuum-insertion testset).
+    fib(n) = n <= 0 ? 0 : (n == 1 ? 1 : (let a = 0, b = 1
+        for _ in 2:n
+            a, b = b, a + b
+        end
+        b
+    end))
+    P(k, l, s) = C.Placement(k, l, s)
+    # Cache refinement matrices so the exhaustive sweeps stay fast.
+    _cache = Dict{Tuple{Vector{Int},Int,Symbol},Matrix{Int}}()
+    mat(phi, ch) = get!(() -> C.placement_refinement_matrix(phi, ch),
+                        _cache, (phi.slots, phi.l, ch))
+    # All placements with codomain `l` and domain size ≤ kmax, via bitmasks.
+    placements(l, kmax) = [P(count_ones(m), l, [s for s in 1:l if (m >> (s - 1)) & 1 == 1])
+                           for m in 0:(2^l - 1) if count_ones(m) <= kmax]
+    # Violation collector for the exhaustive sweeps: each sweep pushes a short
+    # message per counterexample (capped at 8) and asserts the list empty, so a
+    # failure prints the offending placements instead of hundreds of red @tests.
+    push_violation!(list, msg) = (length(list) < 8 && push!(list, msg); list)
+
+    # --- (A) Placement validator: fail loud on every malformation mode. ---
+    @test P(2, 4, [1, 3]).k == 2 && P(2, 4, [1, 3]).l == 4         # well-formed
+    @test P(2, 4, [1, 3]).slots == [1, 3]
+    @test P(0, 4, Int[]).slots == Int[]                            # empty placement is legal
+    @test_throws ErrorException P(3, 5, [1, 2])                    # slot count != k
+    @test_throws ErrorException P(2, 5, [3, 1])                    # non-increasing
+    @test_throws ErrorException P(2, 5, [2, 2])                    # not strictly increasing
+    @test_throws ErrorException P(2, 3, [1, 4])                    # slot above l
+    @test_throws ErrorException P(2, 3, [0, 2])                    # slot below 1
+    @test_throws ErrorException P(-1, 3, Int[])                    # negative domain
+
+    # --- (B) Composition = relabelling, with a fail-loud arity guard. ---
+    @test C.compose(P(2, 4, [1, 3]), P(1, 2, [1])).slots == [1]    # ψ.slots[φ.slots]
+    @test C.compose(P(2, 4, [1, 3]), P(1, 2, [2])).slots == [3]
+    @test C.compose(P(2, 4, [1, 3]), P(2, 2, [1, 2])) == P(2, 4, [1, 3])  # φ = id
+    @test C.compose(P(4, 8, [1, 3, 5, 7]), P(2, 4, [1, 3])) == P(2, 8, [1, 5])
+    # associativity: (χ∘ψ)∘φ = χ∘(ψ∘φ).
+    let φ = P(1, 2, [2]), ψ = P(2, 4, [1, 3]), χ = P(4, 6, [1, 2, 4, 6])
+        @test C.compose(C.compose(χ, ψ), φ) == C.compose(χ, C.compose(ψ, φ))
+    end
+    @test_throws ErrorException C.compose(P(2, 4, [1, 3]), P(1, 3, [2]))  # ψ.k != φ.l
+
+    # --- (B') fine-path duplication constructor pinned + fail-loud. ---
+    @test C._placement_fine_path(P(2, 4, [1, 3]), [:tau, :one]) == [:tau, :tau, :one, :one]
+    @test C._placement_fine_path(P(2, 5, [2, 5]), [:tau, :one]) == [:one, :tau, :tau, :tau, :one]
+    @test C._placement_fine_path(P(0, 3, Int[]), Symbol[]) == [:one, :one, :one]
+    @test_throws ErrorException C._placement_fine_path(P(2, 4, [1, 3]), [:tau])  # wrong length
+
+    # --- (C) Bridge to CA-68: sitewise doubling == vacuum_insertion_matrix. ---
+    for L in 1:3, charge in (:one, :tau)
+        phi = P(L, 2L, [2j - 1 for j in 1:L])
+        @test mat(phi, charge) == C.vacuum_insertion_matrix(L, charge)
+    end
+
+    # --- (D) Isometry V'V = I: exhaustive sweep over ALL placements with
+    #         k ≤ 3, l ≤ 5, both charges (56 placements; count pinned). ---
+    for charge in (:one, :tau)
+        swept = 0
+        violations = String[]
+        for l in 0:5, phi in placements(l, 3)
+            swept += 1
+            V = mat(phi, charge)
+            m = size(V, 2)
+            V' * V == Matrix{Int}(I, m, m) ||                      # exact integer isometry
+                push_violation!(violations, "V'V != I at slots=$(phi.slots) l=$l")
+            all(==(1), sum(V; dims = 1)) ||                        # one 1 per column
+                push_violation!(violations, "non-0/1 column at slots=$(phi.slots) l=$l")
+        end
+        @test swept == 56                    # 1+2+4+8+15+26 placements: sweep is exhaustive
+        @test violations == String[]
+    end
+    # Pinned images at φ = (1 ↦ 2) into l = 2 (bases enumerated by hand):
+    # charge one: ([], [:one]) ↦ ([], [:one, :one]), the first fine basis vector;
+    # charge tau: ([1], [:tau]) ↦ ([2], [:one, :tau]), the second of three.
+    @test mat(P(1, 2, [2]), :one) == reshape([1, 0], 2, 1)
+    @test mat(P(1, 2, [2]), :tau) == reshape([0, 1, 0], 3, 1)
+
+    # --- (E) EXACT functoriality V_ψ V_φ == V_{ψ∘φ}: exhaustive composable
+    #         sweep k ≤ 2, l ≤ 4, m ≤ 6, both charges (665 pairs; count pinned). ---
+    composable = Tuple{C.Placement,C.Placement}[]
+    for lval in 0:4, phi in placements(lval, 2), mval in lval:6
+        for psi in placements(mval, lval)
+            psi.k == lval || continue          # ψ must have domain exactly [lval]
+            push!(composable, (psi, phi))
+        end
+    end
+    @test length(composable) == 665            # Σ over k ≤ 2, l ≤ 4, l ≤ m ≤ 6: exhaustive
+    for charge in (:one, :tau)
+        violations = String[]
+        for (psi, phi) in composable
+            mat(psi, charge) * mat(phi, charge) == mat(C.compose(psi, phi), charge) ||
+                push_violation!(violations,
+                    "V_ψV_φ != V_{ψ∘φ} at ψ=$(psi.slots)⊂1:$(psi.l), φ=$(phi.slots)⊂1:$(phi.l)")
+        end
+        @test violations == String[]
+    end
+    # Named dyadic chain: two per-cell doublings [2]→[4]→[8] compose to j ↦ 4j-3.
+    phi_2_4 = C.uniform_cell_placement(P(1, 2, [1]), 2)            # [2]->[4], slots (1,3)
+    psi_4_8 = C.uniform_cell_placement(P(1, 2, [1]), 4)            # [4]->[8], slots (1,3,5,7)
+    @test phi_2_4 == P(2, 4, [1, 3])
+    @test psi_4_8 == P(4, 8, [1, 3, 5, 7])
+    @test C.compose(psi_4_8, phi_2_4) == P(2, 8, [1, 5])           # direct j ↦ 4j-3
+    for charge in (:one, :tau)
+        @test mat(psi_4_8, charge) * mat(phi_2_4, charge) == mat(P(2, 8, [1, 5]), charge)
+    end
+
+    # --- (F) Occupation covariance V n_i^{(k)} == n_{φ(i)}^{(l)} V for all i,
+    #         and n_s^{(l)} V == 0 for s off the image: exhaustive sweep over
+    #         the same 56 placements (k ≤ 3, l ≤ 5), both charges. ---
+    for charge in (:one, :tau)
+        covariance_checks = 0
+        vanishing_checks = 0
+        violations = String[]
+        for l in 0:5, phi in placements(l, 3)
+            V = mat(phi, charge)
+            for i in 1:phi.k
+                covariance_checks += 1
+                ni = C.occupation_number_matrix(phi.k, i, charge)
+                nphi = C.occupation_number_matrix(l, phi.slots[i], charge)
+                V * ni == nphi * V ||
+                    push_violation!(violations,
+                        "covariance fails at slots=$(phi.slots) l=$l i=$i")
+            end
+            image = Set(phi.slots)
+            for s in 1:l
+                s in image && continue
+                vanishing_checks += 1
+                all(iszero, C.occupation_number_matrix(l, s, charge) * V) ||
+                    push_violation!(violations, "n_$s V != 0 at slots=$(phi.slots) l=$l")
+            end
+        end
+        @test covariance_checks == 100         # Σ_φ k over the 56 placements
+        @test vanishing_checks == 124          # Σ_φ (l - k) over the 56 placements
+        @test violations == String[]
+    end
+    # Direct spot check at φ = (1,2) ↦ (2,4) into l = 4, charge τ.
+    let V = mat(P(2, 4, [2, 4]), :tau)
+        @test V * C.occupation_number_matrix(2, 1, :tau) ==
+              C.occupation_number_matrix(4, 2, :tau) * V
+        @test V * C.occupation_number_matrix(2, 2, :tau) ==
+              C.occupation_number_matrix(4, 4, :tau) * V
+        @test all(iszero, C.occupation_number_matrix(4, 1, :tau) * V)
+        @test all(iszero, C.occupation_number_matrix(4, 3, :tau) * V)
+    end
+
+    # --- (G) Known dimension values pinned: sizes are (m_c(l), m_c(k)) with
+    #         (m_1, m_τ)(L) = (F_{2L-1}, F_{2L}). ---
+    @test size(mat(P(2, 4, [1, 3]), :one)) == (13, 2)             # (F_7, F_3)
+    @test size(mat(P(2, 4, [1, 3]), :tau)) == (21, 3)             # (F_8, F_4)
+    @test size(mat(P(3, 5, [1, 3, 5]), :one)) == (34, 5)          # (F_9, F_5)
+    @test size(mat(P(3, 5, [1, 3, 5]), :tau)) == (55, 8)          # (F_10, F_6)
+    for (k, l) in ((1, 3), (2, 5), (3, 4)), charge in (:one, :tau)
+        idx = charge === :one ? 1 : 2
+        phi = P(k, l, collect(1:k))
+        @test size(mat(phi, charge)) ==
+              (C.fibonacci_word_multiplicity_recurrence(l)[idx],
+               C.fibonacci_word_multiplicity_recurrence(k)[idx])
+    end
+    @test (fib(9), fib(5)) == (34, 5) && (fib(10), fib(6)) == (55, 8)  # anchor `fib`
+
+    # --- (H) Uniform-cell consistency. ---
+    @test C.uniform_cell_placement(P(1, 2, [1]), 1) == P(1, 2, [1])   # M = 1 is identity
+    @test C.uniform_cell_placement(P(2, 4, [1, 3]), 1) == P(2, 4, [1, 3])
+    @test C.uniform_cell_placement(P(1, 2, [1]), 2) == P(2, 4, [1, 3])
+    # CA-68 doubling at L=2 tiled twice == sitewise doubling at L=4.
+    @test C.uniform_cell_placement(P(2, 4, [1, 3]), 2) == P(4, 8, [1, 3, 5, 7])
+    @test C.uniform_cell_placement(P(2, 4, [1, 3]), 2) == P(4, 8, [2j - 1 for j in 1:4])
+    @test_throws ErrorException C.uniform_cell_placement(P(1, 2, [1]), 0)  # M ≥ 1
+
+    # --- (I) placement fail-loud argument guards. ---
+    @test_throws ErrorException C.placement_refinement_matrix(P(1, 2, [1]), :sigma)
+end

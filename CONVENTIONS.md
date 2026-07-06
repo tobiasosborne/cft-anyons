@@ -648,11 +648,24 @@ entry.  **Cup normalization:** pair creation uses the **raw** coevaluation
 the normalized partial isometry is `d_a^{-1/2} v` and any script must say which
 it uses.  **Frobenius–Schur flag:** for self-dual species the FS indicator
 `κ_X = ±1` must be recorded before cup/cap identifications are used; `τ` is
-self-dual (zig-zag relations hold for `v, v†`), but `κ_τ = +1` has **no local
-source yet** — flagged as a gap, do not rely on it.  The canonical spherical
-structure / positivity of quantum dimensions for unitary C is likewise used
-only through the sourced Fibonacci instance (`d_τ = φ > 0`); the general
-theorem has **no local source yet**.
+self-dual (zig-zag relations hold for `v, v†`), and `κ_τ = +1` is now
+**sourced** (2026-07-06, A1):
+`references/category-theory/RowellStongWang2009Classification/source/RSWfinal3.tex:2349`--`:2350`
+(only the semion and the (A_1,2) σ carry FS indicator −1) plus the explicit
+ribbon computation `ν_τ = R_1^{ττ}·θ_τ = e^{-4πi/5}·e^{4πi/5} = +1`
+(`:2311`--`:2314`, `:2379`--`:2409`); the ribbon-vs-zigzag convention caveat
+(RSW's ν is the ribbon FS indicator; the zig-zag reality sign λ = +1 per
+`references/text/PenneysUnitaryFusionCategories.md:1032`--`:1045`) is
+recorded in `references/category-theory/SOURCES.md`.  Consequence: the raw
+cup/cap for τ close with the **positive** scalar `d_τ = φ`; no sign enters
+the cup-cap = d_a bookkeeping.  The canonical spherical structure and
+positivity of quantum dimensions for unitary C are likewise now **sourced**:
+`references/text/PenneysUnitaryFusionCategories.md:1015`--`:1019` (unitary
+multitensor category: unique unitary dual functor whose canonical pivotal
+structure is spherical; positive quantum dimensions per `:1015`) and
+`references/text/EtingofNikshychOstrikFusionCategories.txt:1701`--`:1706`
+(unitary ⇒ pseudo-unitary bridge; Prop 8.23: unique spherical structure,
+positive dimensions = Frobenius-Perron).
 **Reasoning:** the site object, not the bare category, fixes vacancies, mobile
 species, and boundary type, so the compiler input is the pair `(C, Y)`.  The
 maybe-object is the categorical lift of the sourced "maybe quantum spin"
@@ -670,3 +683,81 @@ chain Hilbert space from a unitary fusion category); CONVENTIONS (a), (b), (c).
 **Sweep status:** CA-65/CA-66 use this convention.  No earlier shard uses a
 site object; the qubit block (m)--(q) is the `C = Hilb`, `Y = C²` degenerate
 case but keeps its own independent conventions.
+
+## (s) Koo-Saleur scale ledger: g_L, two central constants, velocity status
+**Choice:** Every lattice Virasoro/Koo-Saleur (KS) statement at chain size `L`
+carries an explicit scale ledger `(v_L, e_L, c_L, c*_L; g_L)`:
+
+- `g_L` names the scale-dependent Hamiltonian coupling data entering
+  normal-ordered KS modes (as in CA-68's intertwining target).  Its status is
+  **symbol only**: no flow equation `g_{2L} = f(g_L)` is defined anywhere in
+  this repo, and no shard may use one without first recording it here.  Until
+  then, `g_L` is bookkeeping for "the couplings at scale L", nothing more.
+- **Two central constants.**  Lattice closure equations are written with
+  separate linear and cubic central coefficients,
+  `[l_m, l_n] = (m-n) l_{m+n} + (delta_{m+n,0}/12)(m^3 c*_L - m c_L) + r_{mn}`,
+  following the sourced modified central term for dense Temperley-Lieb KS
+  modes.  Setting `c*_L = c_L` (genuine Virasoro) is always a theorem target
+  or a measured outcome, never an assumption.  Estimators for `c_L(m)` and
+  `c*_L(m)` are extracted from `omega([l_m, l_{-m}] - 2m l_0)` at two or more
+  values of `m` (a linear system in `(c_L, c*_L)`), relative to a declared
+  state `omega` and mode window `|m| <= K_L`.
+- **Velocity status (resolves the T5 name clash of the 2026-07-06 scoping).**
+  `v_L` denotes a positive model-input sound velocity in KS normalizations
+  (CA-70 usage).  The CA-64 relaxed-profile variable `lambda = v^2` is an
+  **unconstrained linear multiplier** in a least-squares/SDP problem, not a
+  squared physical speed; the recorded TFIM optimizer `lambda = -2` defines
+  no velocity.  Any shard identifying `lambda` with `v_L^2` must record the
+  identification and restrict to `lambda >= 0` explicitly.
+
+**Reasoning:** The only written refinement-symmetry square (CA-68) references
+`g_L` without defining it, and the sourced dense-TL evidence says the
+commutator of limits differs from the limit of commutators by a modified
+central term; a consistency layer that hard-codes one central constant or an
+undefined coupling flow would silently assume the two hardest open points.
+**Source:**
+`references/lattice-symmetry/GransSamuelssonEtAl2020/source/Linnea11.5.tex:3193`--`:3196`
+(modified Virasoro commutator `(m^3 c* - m c)/12`, stated as a conjecture
+combining three numbered conjectures; "parasitic couplings");
+`report/sections/70_dilute_koo_saleur_ansatz.tex` (positive `v`, `e_infty`,
+`c` in the dilute KS ansatz); `report/sections/64_qubit_relaxed_symmetry_gates.tex`
+and `worklog/011_2026-07-05_qubit_relaxed_gates.md` (the `lambda = v^2 = -2`
+optimizer record); reviews/2026-07-06_pipeline_consistency_scoping/PLAN.md
+(C1).
+**Sweep status:** CA-64, CA-68, CA-70 predate this entry and remain
+consistent with it (CA-68's `g_L` now reads as this entry's open symbol;
+CA-70's `v` is `v_L`).  New shards (CA-71 onward) must cite this entry for
+any KS normalization, central term, or coupling bookkeeping.
+
+## (t) Refinement placements and cross-scale position bookkeeping
+**Choice:** A `k -> l` refinement placement is an order-preserving injection
+`phi: {1,...,k} -> {1,...,l}`; the bare refinement `V_phi` puts coarse site
+`i` at fine slot `phi(i)` and the vacuum summand `iota_1(1)` at every slot
+outside the image (CA-71).  Whole-chain refinements apply one placement per
+cell.  Position bookkeeping across scales:
+
+- Fourier modes use index phases at their own scale (`e^{2 pi i n j / L}`),
+  and first-moment (position-weighted) generators use integer site indices at
+  their own scale, per the existing (l)/(n) practice.
+- Cross-scale comparison of position-weighted objects is made **only through
+  whole-cell shifts** (the cell-shift subgroup, which `V_phi` intertwines
+  exactly on its open-chain domain); fractional single-site identifications
+  `T^{l/k}` are never used.
+- Any intra-cell position/centering assignment is part of a refinement
+  family's definition and must be recorded with that family.  The CA-68
+  dyadic family is the placement `phi(j) = 2j - 1` (content on odd fine
+  sites); its intra-cell offset is a recorded choice, not a canonical fact.
+
+**Reasoning:** Fine-site indices drift under `j -> 2j-1` (a coarse site's
+index-derived position moves by a quarter cell), and first moments are
+sensitive to summation-by-parts boundary terms (convention (l)); declaring
+the cell-shift subgroup as the only exact cross-scale translation structure
+keeps every position-weighted comparison finite and well-defined without
+assuming a continuum.
+**Source:** `report/sections/68_variable_n_refinement_maps.tex:54`--`:58`
+(the dyadic placement); CA-71 local derivations (placement category, exact
+functoriality, cell-shift intertwining); CONVENTIONS (l), (n);
+reviews/2026-07-06_pipeline_consistency_scoping/PLAN.md (C1).
+**Sweep status:** CA-71 uses this convention.  CA-68 predates it and is
+consistent (its placement and offset are recorded above).  Periodic chains
+remain excluded pending the (r) periodic entry.

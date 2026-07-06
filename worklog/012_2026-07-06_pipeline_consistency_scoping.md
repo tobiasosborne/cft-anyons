@@ -1,5 +1,73 @@
 # Worklog chunk 012 - 2026-07-06
 
+## Wave 0 + W1.1: conventions, kappa_tau closure, CA-71 (2026-07-06)
+
+### Context
+
+Tobias green-lit the scoping plan (entry below).  This block executes Wave 0
+(A1 source acquisition, C1 conventions batch) and W1.1 (shard CA-71, the
+refinement placement category), per
+reviews/2026-07-06_pipeline_consistency_scoping/PLAN.md.
+
+### What changed
+
+- CONVENTIONS (s): KS scale ledger — g_L registered as symbol-only (flow is
+  OPEN), two-constant closure (c_L, c*_L) with the verified GSJS anchor
+  (Linnea11.5.tex:3193-3196), and the lambda-vs-v_L disambiguation resolving
+  tension T5 at the convention level.
+- CONVENTIONS (t): refinement placements; cross-scale positions go through
+  whole-cell shifts only; the CA-68 dyadic offset recorded as a choice.
+- CONVENTIONS (r): BOTH source gaps closed (A1).  kappa_tau = +1 sourced via
+  the newly registered Rowell-Stong-Wang 0712.1377
+  (references/category-theory/, new topic dir): direct statement at
+  RSWfinal3.tex:2349-2350 plus the ribbon computation nu_tau =
+  R^{tautau}_1 theta_tau = +1; ribbon-vs-zigzag caveat recorded in the new
+  SOURCES.md.  Canonical spherical + positive dims were already local
+  (Penneys :1015-1019, ENO :1701-1706).  Cup/birth items are now
+  unconditional; the raw cup-cap = d_a bookkeeping carries no sign.
+- Shard CA-71-REFINEMENT-PLACEMENT-CATEGORY (72 shards, 163 pp): placements
+  as order-preserving injections, V_phi isometry + charge preservation,
+  EXACT composition theorem V_psi V_phi = V_{psi.phi} (unit-label F-moves
+  trivial per (b)), corner maps closed under composition (seam S2 closed at
+  finite level; dyadic 1->2->4 = j->4j-3), cellwise refinement + cell-shift
+  lemma, the forest-functor reading (vacuum caret = Jones seed R, verified
+  Brothier-Stottmeister anchors), Ore dichotomy + fallback homes.
+- src/RefinementPlacements.jl (+ CftAnyons.jl include) and testset
+  "refinement placement category (CA-71)": validator, compose, fine-path
+  duplication, CA-68 bridge (== vacuum_insertion_matrix at L=1..3),
+  exhaustive isometry sweep (all placements k<=3, l<=5), exhaustive
+  functoriality sweep + named dyadic chain, occupation covariance,
+  pinned Fibonacci dimensions.  2050 new assertions.
+
+### Why these choices
+
+- Wave-1 open-chain commitment and the (s)/(t) entries implement the hostile
+  review's B1/B2 fixes; the placement category instantiates the
+  scoping's forest-functor finding at the smallest honest scope (bare maps
+  only, no dressing, no state, no continuum claim).
+
+### Frictions / dead ends
+
+- The Julia subagent completed the implementation but stalled waiting on its
+  own background test run; the orchestrator re-ran the full suite directly.
+- CONVENTIONS.md edit collision between the orchestrator's own shell append
+  and a later Edit call (re-read required; no content lost).
+
+### Acceptance
+
+- make check-report-shards: 72 shards green.  make report: 163 pp, no
+  errors, CA-71 in TOC.  Pkg.test(): full suite green including the new
+  2050-assertion CA-71 testset; three mutations (compose off-by-one, vacuum
+  slot advancing the running charge, unmapped occupied set) each confirmed
+  RED and reverted (record at the head of the testset).
+
+### Pointers
+
+- Shard CA-71; CONVENTIONS (r)(s)(t); src/RefinementPlacements.jl;
+  references/category-theory/ (new); PLAN.md items A1, C1, W1.1 done.
+- Next per plan: W1.2 (CA-72 GNS descent + corner calculus), then W1.3
+  (categorical residual set).
+
 ## Pipeline consistency-layer scoping (no new shards) - 2026-07-06
 
 ### Context

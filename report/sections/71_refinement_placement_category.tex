@@ -1,0 +1,232 @@
+% SHARD-ID: CA-71-REFINEMENT-PLACEMENT-CATEGORY
+% SHARD-TITLE: The Refinement Placement Category and Exact Composition
+% SHARD-SUMMARY: Defines general k-to-l vacuum-placement refinements as order-preserving injections and proves isometry, charge preservation, and exact composition.
+% SHARD-SUMMARY: Identifies the dyadic vacuum insertion as the seed of a Jones forest tensor functor, with Thompson-group symmetry and Hilbert/C*-algebra targets sourced from Brothier-Stottmeister.
+% SHARD-SUMMARY: Records the Ore dichotomy for coloured forest-skein categories and the divisibility/soft-system fallbacks that house mixed-radix and dressed refinements.
+% SHARD-KEYWORDS: refinement, placement, forest category, Thompson group, Jones functor, Ore property, vacuum insertion, k to l, composability
+
+\section{The Refinement Placement Category and Exact Composition}
+\label{sec:refinement-placement-category}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: local derivations plus sourced structure theory.}  The
+placement definitions, isometry, charge preservation, and the exact
+composition theorem are finite-level derivations checked in Julia.  The
+forest-functor identification and the Ore dichotomy are sourced.  No dressing,
+no state selection, no dynamics, and no continuum statement appears here.
+
+Dependencies: CA-65, CA-66, CA-67, CA-68; CONVENTIONS (a), (b), (c), (r),
+(s), (t).  This shard executes item W1.1 of
+\texttt{reviews/2026-07-06\_pipeline\_consistency\_scoping/PLAN.md}.
+
+% Source: report/sections/68_variable_n_refinement_maps.tex:51--61 -- the
+%   dyadic vacuum-insertion refinement V_L (content at 2j-1, vacuum at 2j).
+% Source: report/sections/65_anyonic_word_algebra.tex:60--76 -- site-object
+%   tower A_L = End_C(O^{tensor L}) and charge blocks.
+% Source: references/refinement/BrothierStottmeister2019Gauge/source/main.tex:499--511
+%   -- covariant functor Phi: F -> D; inductive limit X_Phi over the directed
+%   set of trees; connecting maps iota_t^{ft}; Jones action of Thompson's F.
+% Source: references/refinement/BrothierStottmeister2019Gauge/source/main.tex:522--529
+%   -- tensor functors are characterized by the single seed
+%   R = Phi(Y) in Hom(Phi(1), Phi(1) tensor Phi(1)); conversely any (A, R)
+%   defines a tensor functor; Phi(f_{j,n}) = id^{j-1} tensor R tensor id^{n-j}.
+% Source: references/refinement/BrothierStottmeister2019Gauge/source/main.tex:531--541
+%   -- extension of the Jones action from F to Thompson's V for tensor
+%   functors; Hilb (isometries) and Calg (injective *-morphisms) targets.
+% Source: references/refinement/Brothier2022ForestSkeinI/source/FC-arxiv2.tex:196--205
+%   -- calculus of fractions: left-cancellative + Ore's property (t,s with the
+%   same target admit f,g with tf = sg) is what produces fraction groups.
+% Source: references/refinement/Brothier2022ForestSkeinI/source/FC-arxiv2.tex:245--250
+%   -- the free forest-skein category over a colour set S is always
+%   left-cancellative; one colour recovers Thompson's F; with more than two
+%   colours Ore's property always fails; skein relations restore Ore.
+% Source: literature/md/2306.16063/2306.16063.md:185 -- soft inductive systems
+%   over an arbitrary directed set: linear contractions with asymptotic
+%   transitivity replacing exact transitivity.
+% Source: literature/md/2306.16063/2306.16063.md:47--49 -- inductive limits
+%   over matrix building blocks (AF algebras, hyperfinite factors, [Bla06]);
+%   generalized inductive limits [BK97].
+% Source: src/RefinementPlacements.jl and test/runtests.jl testset
+%   "refinement placement category (CA-71)" -- the checked invariants below.
+
+\subsection{Placement Injections and Bare Refinements}
+
+\textbf{Definition [choice].}  For \(k\le l\), a \emph{placement} is an
+order-preserving injection
+\[
+  \varphi:\{1,\dots,k\}\hookrightarrow\{1,\dots,l\},
+\]
+recorded as its strictly increasing slot list
+\((\varphi(1),\dots,\varphi(k))\).  Placements compose as functions; the
+identity placement is \(k=l\), \(\varphi=\mathrm{id}\).  We write
+\(\mathrm{Pl}\) for the category with objects \(\mathbb Z_{>0}\) and
+morphisms the placements.
+
+\textbf{Definition [choice].}  Fix the site object \(O=\one\oplus X\) of
+CONVENTIONS (r) and let \(\iota_{\one}:\one\to O\) be the empty-site summand
+inclusion.  The \emph{bare refinement} attached to a placement
+\(\varphi:[k]\to[l]\) is
+\[
+  V_\varphi:O^{\otimes k}\longrightarrow O^{\otimes l},
+  \qquad
+  \text{coarse site } i\mapsto\text{fine slot }\varphi(i),
+  \quad
+  \text{slots } s\notin\operatorname{im}\varphi\mapsto\iota_{\one}(\one),
+\]
+with the left-associated bracketing of CONVENTIONS (c)/(r).  CA-68's dyadic
+vacuum insertion is the placement \(\varphi_{\mathrm{dyad}}(j)=2j-1\).
+
+\textbf{Lemma [derived].}  \(V_\varphi\) is an isometry,
+\(V_\varphi^\dagger V_\varphi=\mathrm{id}_{O^{\otimes k}}\): every inserted
+factor contributes \(\iota_{\one}^\dagger\iota_{\one}=\mathrm{id}_{\one}\),
+and tensor products of isometries are isometries (the CA-68 argument,
+verbatim, for an arbitrary slot pattern).
+
+\textbf{Lemma [derived].}  On charge sectors, \(w\mapsto V_\varphi\circ w\)
+maps \(\Hom(X_c,O^{\otimes k})\) isometrically into
+\(\Hom(X_c,O^{\otimes l})\) for every charge \(c\); the total charge is
+preserved because composing with \(V_\varphi\) does not touch the source
+object \(X_c\).
+
+\textbf{Observation [derived].}  In the occupied-set/fusion-path basis of
+CONVENTIONS (r) and \texttt{src/AnyonicWordAlgebra.jl}, \(V_\varphi\) acts by
+relabelling: the occupied set \(S\) maps to \(\varphi(S)\), and the
+cumulative-charge path repeats the running charge at every vacuum slot.
+This is exact, with no F-move corrections, because every associator moved
+past an inserted factor carries the unit label, and unit-label F-symbols are
+identities in the unitary gauge (CONVENTIONS (b)).  Consequently the matrix
+of \(V_\varphi\) on each charge block is a zero-one matrix whose columns are
+distinct standard basis vectors.
+
+\subsection{Exact Composition}
+
+\textbf{Theorem [derived].}  For composable placements
+\(\varphi:[k]\to[l]\) and \(\psi:[l]\to[m]\),
+\[
+  V_\psi\circ V_\varphi=V_{\psi\circ\varphi}.
+\]
+\emph{Proof sketch.}  Both sides place coarse site \(i\) at fine slot
+\(\psi(\varphi(i))\) and the vacuum summand everywhere else: a slot of
+\([m]\) is outside \(\operatorname{im}(\psi\circ\varphi)\) iff it is outside
+\(\operatorname{im}\psi\) or is the \(\psi\)-image of a slot outside
+\(\operatorname{im}\varphi\), and in either case it carries
+\(\iota_{\one}(\one)\).  All bracketing moves involve unit labels only, so
+the two zero-one matrices agree column by column.  \(\square\)
+
+\textbf{Corollary [derived].}  The map \(\varphi\mapsto V_\varphi\) is a
+functor \(\mathrm{Pl}\to\mathrm{Hilb}\) (isometries), and
+\(\theta_\varphi(T)=V_\varphi TV_\varphi^\dagger\) satisfies
+\(\theta_\psi\circ\theta_\varphi=\theta_{\psi\circ\varphi}\) exactly: each
+\(\theta_\varphi\) is a \(*\)-isomorphism of \(\Alg_k\) onto the corner
+\(P_\varphi\Alg_lP_\varphi\), \(P_\varphi=V_\varphi V_\varphi^\dagger\)
+(the CA-68 corner statement, now closed under composition).
+
+\textbf{Corollary [derived].}  The dyadic tower composes on the nose:
+\(V_{\varphi_{\mathrm{dyad}}}^{(2L\to4L)}\circ
+  V_{\varphi_{\mathrm{dyad}}}^{(L\to2L)}
+ =V_{\varphi}^{(L\to4L)}\) with \(\varphi(j)=4j-3\).  This settles the
+semigroup question left open in the 2026-07-06 consistency map (seam S2 at
+finite level): the reindexing is the composite placement itself.
+
+\subsection{Cellwise Refinement and Cell-Shift Compatibility}
+
+\textbf{Definition [choice].}  For a chain of \(M\) cells of \(k\) sites, the
+uniform cellwise refinement applies one fixed cell placement
+\(\varphi:[k]\to[l]\) in every cell; the result is the whole-chain placement
+\(\Phi_M(\varphi):[Mk]\to[Ml]\), cell \(m\) occupying fine slots
+\((m-1)l+1,\dots,ml\).
+
+\textbf{Lemma [derived].}  On its open-chain domain, \(V_{\Phi_M(\varphi)}\)
+intertwines whole-cell shifts: shifting the coarse chain by one cell
+(\(k\) sites) corresponds to shifting the fine chain by one cell (\(l\)
+sites).  No exact fine counterpart of a \emph{single-site} coarse shift
+exists when \(l/k\notin\mathbb Z\), and none is used: cross-scale
+position-weighted comparisons go through the cell-shift subgroup only
+(CONVENTIONS (t)).
+
+\subsection{The Forest-Functor Reading}
+
+\textbf{Sourced identification.}  The registered Brothier--Stottmeister
+construction assigns to any covariant functor \(\Phi\) from the category of
+binary forests to a concrete category the inductive limit
+\(X_\Phi=\varinjlim_{t}X_t\) over the directed set of trees, together with
+the \emph{Jones action} of Thompson's group \(F\) on \(X_\Phi\); a
+\emph{tensor} functor is characterized by the single seed
+\(R=\Phi(Y)\in\Hom(\Phi(1),\Phi(1)\otimes\Phi(1))\), any pair \((A,R)\)
+conversely defines one, and for tensor functors the \(F\)-action always
+extends to Thompson's \(V\); the targets of record are Hilbert spaces with
+isometries and C*-algebras with injective \(*\)-morphisms.
+
+\textbf{Observation [derived].}  The vacuum caret
+\[
+  R=\mathrm{id}_O\otimes\iota_{\one}:O\longrightarrow O\otimes O
+\]
+is such a seed, and the forest generator \(f_{j,n}\) maps to
+\(\mathrm{id}^{\otimes j-1}\otimes R\otimes\mathrm{id}^{\otimes n-j}\) =
+"insert one vacuum slot after site \(j\)".  Since every placement is a
+composite of single vacuum insertions, the placement functor of this shard
+is exactly the tensor functor generated by the vacuum caret; distinct
+forests mapping to the same placement record insertion histories, so
+\(\mathrm{Pl}\) is the image of the forest category under this functor.
+CA-68's refinement tower therefore carries, for free and at the level of
+sourced theorems, an inductive-limit space and a Thompson-\(F\) (indeed
+\(V\)) action.  \textbf{Boundary [open]:} whether that action is continuous
+or physically relevant is precisely the no-go territory of CA-67
+(NG1--NG5, Kliesch--Koenig); nothing here claims continuity, and the
+Kliesch--Koenig applicability question for this charge-graded carrier is
+deliberately deferred to the W2.4 audit.
+
+\subsection{The Ore Dichotomy and Fallback Homes}
+
+\textbf{Sourced dichotomy.}  Fraction groups exist for a category of
+refinement diagrams iff it is left-cancellative and satisfies Ore's property
+(morphisms with a common target admit a common extension).  The registered
+forest-skein source proves: the free forest-skein category over a colour set
+\(S\) is always left-cancellative; one colour recovers Thompson's \(F\);
+with more than two colours Ore's property \emph{always fails}, and skein
+relations are the mechanism that can restore it.
+
+\textbf{Consequence [derived reading].}  Homogeneous refinement schedules
+(one caret type, e.g.\ pure vacuum insertion) retain a Thompson-like
+fraction-group symmetry.  Mixed-radix or multi-caret schedules --- the kind
+that Wave 2's content-creating dressings and filling-targeted \(k\to l\)
+schedules will need --- generically lose the group and retain only the
+refinement \emph{groupoid}.  The two sourced fallback homes are:
+divisibility-directed inductive systems over scales ordered by divisibility
+(the AF/hyperfinite pattern over matrix building blocks), and soft inductive
+systems over an arbitrary directed set, where exact transitivity is relaxed
+to asymptotic transitivity --- the recorded destination for dressed families
+\(W=UV\) (CA-67, CA-68).
+
+\subsection{Julia Invariants}
+
+\texttt{src/RefinementPlacements.jl} implements placements (validated
+strictly increasing slot lists), composition, the charge-block matrices of
+\(V_\varphi\) in the CA-66 basis, and uniform cellwise placements.  The
+testset ``refinement placement category (CA-71)'' pins: the bridge
+\(V_{\varphi_{\mathrm{dyad}}}=\)~\texttt{vacuum\_insertion\_matrix} at
+\(L=1,2,3\); isometry on both charge blocks for all placements with
+\(k\le3\), \(l\le5\); exact functoriality
+\(V_\psi V_\varphi=V_{\psi\circ\varphi}\) over an exhaustive composable
+sweep and the dyadic \(2\to4\to8\) chain against the direct
+\(j\mapsto4j-3\) placement; occupation covariance
+\(V_\varphi n_i=n_{\varphi(i)}V_\varphi\) and
+\(n_sV_\varphi=0\) for \(s\notin\operatorname{im}\varphi\); and the
+Fibonacci multiplicity table \((m_{\one},m_\tau)(L)=(F_{2L-1},F_{2L})\) at
+the sizes used.  Each invariant is mutation-proved per Rule 6 (composition
+off-by-one, wrong path repetition, unmapped occupied set), with the
+mutation-to-failing-test record kept at the head of the testset.
+
+\subsection{Boundary}
+
+This shard defines no dressing \(U\), selects no state, and makes no
+dynamical or continuum claim; the asymptotic cocycle condition for dressed
+families and the filling-flow constructions are Wave-2 targets (W2.1).  The
+cell-shift lemma is an open-chain statement; periodic chains await the
+CONVENTIONS (r) periodic entry.  The Thompson action inherited from the
+forest functor is an algebraic fact about the finite tower and its inductive
+limit; its continuity is not claimed and is exactly what the Jones and
+Kliesch--Koenig no-gos constrain (CA-67).  Nothing here defines Koo--Saleur
+modes; the categorical residual set and the scale ledger of CONVENTIONS (s)
+are consumed by the following shards (W1.2, W1.3).

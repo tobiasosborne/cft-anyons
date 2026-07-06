@@ -639,3 +639,12 @@ single ~200-line source file it points to.
 - Summary: Registers the two sourced critical anchors: the dilute O(n)/Izergin-Korepin chains with exact branch central charges, and the local anyonic t-J models.
 - Summary: States the proof obligations, including the central-term/limit gap inherited from the dense case and the periodic dilute algebra setting.
 - Keywords: Koo-Saleur, dilute Temperley-Lieb, Izergin-Korepin, dilute O(n), anyonic t-J, lattice Virasoro, periodic dilute algebra
+
+## `CA-71-REFINEMENT-PLACEMENT-CATEGORY`
+
+- Source: `report/sections/71_refinement_placement_category.tex`
+- Title: The Refinement Placement Category and Exact Composition
+- Summary: Defines general k-to-l vacuum-placement refinements as order-preserving injections and proves isometry, charge preservation, and exact composition.
+- Summary: Identifies the dyadic vacuum insertion as the seed of a Jones forest tensor functor, with Thompson-group symmetry and Hilbert/C*-algebra targets sourced from Brothier-Stottmeister.
+- Summary: Records the Ore dichotomy for coloured forest-skein categories and the divisibility/soft-system fallbacks that house mixed-radix and dressed refinements.
+- Keywords: refinement, placement, forest category, Thompson group, Jones functor, Ore property, vacuum insertion, k to l, composability
