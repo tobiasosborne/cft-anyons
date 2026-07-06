@@ -657,3 +657,12 @@ single ~200-line source file it points to.
 - Summary: Computes the unital CP completion's multiplicativity defect exactly as (chi(ST)-chi(S)chi(T))(1-P), tying soft C*-structure to omega(1-P) -> 0.
 - Summary: States the residual-descent criterion and the BU-level refinement square as the interface contracts consumed by the categorical residual set.
 - Keywords: GNS, corner, refinement, descent, unital completion, multiplicativity defect, soft C*-system, residual descent, vacuum defect
+
+## `CA-73-CATEGORICAL-RESIDUAL-SET`
+
+- Source: `report/sections/73_categorical_residual_set.tex`
+- Title: The Categorical Residual Set on the Anyonic Word Tower
+- Summary: Ports the qubit coboundary and Witt/Virasoro residual calculus to A_L = End_C(O^{tensor L}), with Tier-1 dilute densities and open-window mode identities.
+- Summary: Proves exact transport of the residual calculus through corner refinements and defines the stretched-augmented coherent residual family satisfying the CA-72 descent contract.
+- Summary: Writes every lattice Virasoro closure with the two-constant (c, c*) central term of CONVENTIONS (s); periodic modes stay gated behind decision D1.
+- Keywords: residual set, coboundary, Ward identity, Koo-Saleur, dilute Temperley-Lieb, transport, stretched density, two central constants, open chain

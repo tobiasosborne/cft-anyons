@@ -181,6 +181,8 @@ include("QubitRelaxedScan.jl")
 include("AnyonicWordAlgebra.jl")
 include("RefinementPlacements.jl")
 include("GnsCornerCalculus.jl")
+include("FibonacciLocalOperators.jl")
+include("CategoricalResiduals.jl")
 
 """
     nearest_neighbor_boost_current_coefficients(positions) -> Vector

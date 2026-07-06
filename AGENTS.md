@@ -291,6 +291,15 @@ julia --project=. -e 'using Pkg; Pkg.test()'   # Julia invariant checks
 # wolframscript -file scripts/wolfram/<name>.wls   # optional symbolic cross-checks
 ```
 
+> **Platform note (2026-07-06, Tobias):** full `Pkg.test()` runs are
+> **suspended for the foreseeable future** — the primary platform is a
+> laptop, and the pre-existing Mosek SDP testsets make the full suite cost
+> ~10 minutes.  Verify new Julia code by running its **own testset
+> standalone** (plus a `using CftAnyons` load check).  The report guard and
+> `latexmk` remain mandatory (cheap).  New numerical work carries an
+> explicit compute budget: Fibonacci-chain exact computations cap at L=4
+> unless Tobias signs off.
+
 The root `report.pdf` is the main distributable artifact: rebuild it after
 report-source changes and commit it alongside the sources. Keep LaTeX temp files
 git-ignored.

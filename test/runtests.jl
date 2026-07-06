@@ -1632,3 +1632,200 @@ end
     @test_throws ErrorException C.BlockState(Dict(:one => 0.5, :tau => 0.5),
         Dict(:one => ComplexF64[0.5 2.0; 0.0 0.5], :tau => eye(1)))  # non-Hermitian
 end
+
+@testset "categorical residual set (CA-73)" begin
+    # Mutation-proof record (AGENTS.md Rule 6; each mutation applied to the named
+    # src file ALONE, this testset re-run STANDALONE, RED confirmed with the
+    # profile below observed verbatim, then reverted):
+    #   (a) fibonacci_f_matrix [2,2] sign −φ⁻¹ → +φ⁻¹ (FibonacciLocalOperators.jl):
+    #       the F involution/det pins, the (C) dense-corner braid, and the (H) L=4
+    #       dilute-dimension pin FAIL. 238 pass, 24 fail.
+    #   (b) hop_blocks amplitude 1 → 2 (FibonacciLocalOperators.jl): the (C) hop²
+    #       idempotent pin and the (H) dilute dimension FAIL. 242 pass, 20 fail.
+    #   (c) pair_creation_blocks raw-cup weight √φ → 1 (FibonacciLocalOperators.jl):
+    #       the (C) dilute relation u_i = b_i^t b_i FAILS. 243 pass, 19 fail.
+    #   (d) coboundary_bond sign − → + (CategoricalResiduals.jl): the (F)
+    #       coboundary-distance pins (pinv + independent QR, pure hopping) FAIL.
+    #       260 pass, 2 fail.
+    C = CftAnyons
+    charges = (:one, :tau)
+    φ = C.golden_ratio()
+    emb(op, j, L, c) = C.local_two_site_matrix(op, j, L, c)
+    hop = C.hop_blocks(); pair = C.pair_blocks(); ee = C.dense_e_blocks()
+    nl = C.occupancy_blocks(:left); nr = C.occupancy_blocks(:right)
+    bcre = C.pair_creation_blocks(); bann = C.pair_annihilation_blocks()
+
+    # --- F-matrix anchor: Trebst eq. 2.4, unitary gauge (CONVENTIONS (b)). ---
+    F = C.fibonacci_f_matrix()
+    @test isapprox(F, [1/φ 1/sqrt(φ); 1/sqrt(φ) -1/φ]; atol = 1e-14)  # exact entries
+    @test isapprox(F, F'; atol = 1e-14)                    # Hermitian (unitary gauge)
+    @test isapprox(F * F, Matrix{Float64}(I, 2, 2); atol = 1e-14)  # involution F=F⁻¹
+    @test isapprox(det(F), -1.0; atol = 1e-12)             # eigenvalues ±1
+
+    # --- (B) occupancy cross-check vs independent occupation_number_matrix. ---
+    for L in 2:5, c in charges
+        for j in 1:(L - 1)
+            @test isapprox(emb(nl, j, L, c),
+                Matrix(C.occupation_number_matrix(L, j, c)); atol = 1e-12)
+        end
+        @test isapprox(emb(nr, L - 1, L, c),
+            Matrix(C.occupation_number_matrix(L, L, c)); atol = 1e-12)
+    end
+
+    # --- (A) Disjoint commutation [op_j, op'_k] = 0 for |j-k| >= 2. ---
+    violA = String[]
+    for L in (4, 5), c in charges
+        ops = ("hop" => hop, "pair" => pair, "e" => ee, "nl" => nl)
+        for (na, oa) in ops, (nb, ob) in ops, j in 1:(L - 1), k in 1:(L - 1)
+            abs(j - k) >= 2 || continue
+            A = emb(oa, j, L, c); B = emb(ob, k, L, c)
+            isapprox(A * B, B * A; atol = 1e-10) ||
+                push!(violA, "[$na$j,$nb$k] L=$L $c")
+        end
+    end
+    @test violA == String[]
+
+    # --- (C) Algebra relations with anchors. ---
+    for L in 2:5, c in charges
+        for j in 1:(L - 1)
+            E = emb(ee, j, L, c)
+            @test isapprox(E * E, φ * E; atol = 1e-10)         # e² = φe (raw cup, CONV (r))
+            @test isapprox(E, E'; atol = 1e-12)                # e_j hermitian
+            H = emb(hop, j, L, c)
+            @test isapprox(H, H'; atol = 1e-12)                # hop_j hermitian
+            @test isapprox(emb(pair, j, L, c), emb(pair, j, L, c)'; atol = 1e-12)
+            # dilute u_i = b_i^t b_i  (source Dtl_pgl_ell.06.tex:773)
+            @test isapprox(E, emb(bcre, j, L, c) * emb(bann, j, L, c); atol = 1e-10)
+            H2 = H * H                                          # hop² idempotent ⇒ amplitude 1
+            @test isapprox(H2 * H2, H2; atol = 1e-10)
+        end
+    end
+    # Dense TL braid e_j e_{j±1} e_j = e_j on the fully-occupied corner
+    # (CA-69 dense corner π_A dTL π_A ≅ TL_{|A|}, Dtl_pgl_ell.06.tex:891-895;
+    #  u_1 u_2 u_1 = u_1 stated at :2014).
+    for L in 3:5, c in charges
+        Pd = C.dense_corner_projector(L, c)
+        keep = [i for i in 1:size(Pd, 1) if Pd[i, i] == 1]
+        es = [emb(ee, j, L, c)[keep, keep] for j in 1:(L - 1)]
+        for j in 1:(L - 2)
+            @test isapprox(es[j] * es[j + 1] * es[j], es[j]; atol = 1e-8)
+            @test isapprox(es[j + 1] * es[j] * es[j + 1], es[j + 1]; atol = 1e-8)
+        end
+    end
+    # Dilute e_i + x_i = id: occupied/vacancy projectors complementary and
+    # orthogonal (source Dtl_pgl_ell.06.tex:773).
+    for L in 2:4, c in charges, j in 1:(L - 1)
+        ei = emb(nl, j, L, c); Ic = Matrix{Float64}(I, size(ei)...); xi = Ic - ei
+        @test isapprox(ei + xi, Ic; atol = 1e-12)          # e_i + x_i = id
+        @test isapprox(ei * ei, ei; atol = 1e-12)          # occupied projector
+        @test isapprox(ei * xi, zero(ei); atol = 1e-12)    # orthogonal e_i x_i = 0
+    end
+
+    # --- (D) Parity: every Tier-1 generator commutes with (-1)^N (CA-69 parity
+    #         ideal, source Dtl_pgl_ell.06.tex:775-776). ---
+    violD = String[]
+    for L in 2:5, c in charges
+        Par = Matrix(C.occupation_parity_matrix(L, c))
+        for (na, op) in ("hop" => hop, "pair" => pair, "e" => ee, "nl" => nl, "bcre" => bcre)
+            for j in 1:(L - 1)
+                M = emb(op, j, L, c)
+                isapprox(M * Par, Par * M; atol = 1e-10) || push!(violD, "$na$j L=$L $c")
+            end
+        end
+    end
+    @test violD == String[]
+    for L in 2:4, c in charges                              # (-1)^N == ∏_j (I - 2 n_j)
+        Par = Matrix(C.occupation_parity_matrix(L, c))
+        P2 = Matrix{Float64}(I, size(Par)...)
+        for j in 1:L
+            P2 = P2 * (Matrix{Float64}(I, size(Par)...) - 2 * Matrix(C.occupation_number_matrix(L, j, c)))
+        end
+        @test isapprox(Par, P2; atol = 1e-12)
+    end
+
+    # --- (E) Residual densities: self-adjoint, chain Hamiltonian = Σ bonds. ---
+    hmix = Dict(:one => ee[:one] + 0.3 * pair[:one] + 0.2 * nl[:one],
+                :tau => 0.5 * hop[:tau] + 0.2 * nl[:tau])
+    for c in charges
+        H = C.chain_hamiltonian(hmix, 6, c)
+        @test isapprox(H, H'; atol = 1e-12)
+        @test isapprox(H, sum(emb(hmix, j, 6, c) for j in 1:5); atol = 1e-12)
+        p = C.momentum_density(hmix, 2, 6, c); @test isapprox(p, p'; atol = 1e-12)
+        A = C.conservation_density(hmix, 2, 6, c); @test isapprox(A, A'; atol = 1e-12)
+        B = C.boost_density(hmix, 2, 6, c); @test isapprox(B, B'; atol = 1e-12)
+    end
+    @test_throws ErrorException C.momentum_density(hmix, 5, 6, :tau)   # bond j+1 missing
+    @test_throws ErrorException C.boost_density(hmix, 4, 6, :tau)      # bond j+2 missing
+
+    # --- (F) Coboundary distance. Pure hopping conserves momentum: its
+    #         conservation residual A_j is a coboundary (distance ≈ 0), verified
+    #         by TWO independent paths (pinv in the function; QR here). ---
+    A2hop = C.conservation_density(hop, 2, 6, :tau)
+    d_pinv = C.coboundary_distance(A2hop, 2, 6, :tau)
+    function _cob_qr(R, L, c; window = 2:(L - 3))
+        cols = Vector{ComplexF64}[]
+        for u in C._two_site_operator_basis(), j in window
+            push!(cols, ComplexF64.(vec(C.coboundary_bond(u, j, L, c))))
+        end
+        W = reduce(hcat, cols); Q = Matrix(qr(W).Q)[:, 1:rank(W; atol = 1e-9)]
+        r = ComplexF64.(vec(R)); return norm(r - Q * (Q' * r))
+    end
+    @test d_pinv < 1e-9                                     # pinv path: A_j is a coboundary
+    @test _cob_qr(A2hop, 6, :tau) < 1e-9                    # independent QR path agrees
+    # A generic density does NOT conserve momentum: its conservation residual is
+    # far from a coboundary (qualitative; the exact value is ill-conditioned —
+    # the CA-64 singular-KKT phenomenon — so it is not pinned to 12 digits here).
+    Amix = C.conservation_density(hmix, 2, 6, :tau)
+    @test C.coboundary_distance(Amix, 2, 6, :tau) > 1.0
+    @test_throws ErrorException C.coboundary_distance(Amix, 3, 6, :tau)  # only support-2
+
+    # --- (G) Open-window mode identity (report Lemma :100-110): the bulk
+    #         telescopes and only the top-edge current p_b survives. Pinned
+    #         nontrivial number: the edge-current Frobenius norm. ---
+    defect, edge = C.mode_identity_edge_defect(hmix, 1, 2, 6, :tau, 2:4)
+    @test isapprox(defect, edge; atol = 1e-10)             # STRONG locality: Δ == edge term
+    @test norm(edge) > 1.0                                 # edge term is nontrivial
+    @test isapprox(norm(edge), 8.844380606115058; atol = 1e-9)  # pinned (well-conditioned)
+    d2, e2 = C.mode_identity_edge_defect(hmix, 2, 3, 6, :one, 1:3)
+    @test isapprox(d2, e2; atol = 1e-10)                   # off-window m,n telescope too
+
+    # --- Transport through the CA-72 corner morphism (Lemma 73.1). ---
+    phi = C.dyadic_placement(3)                            # dyadic φ(j)=2j-1, [3]->[6]
+    θp, built = C.transported_momentum(hmix, 1, 3, phi)
+    for c in charges
+        @test isapprox(θp[c], built[c]; atol = 1e-10)      # θ(p_j) = i[θh_j, θh_{j+1}]
+    end
+    # θ(i[H_k, T]) == i[θ(H_k), θ(T)] (θ a *-morphism transports the calculus).
+    Hk = Dict(c => ComplexF64.(C.chain_hamiltonian(hmix, 3, c)) for c in charges)
+    T = Dict(c => ComplexF64.(emb(nl, 1, 3, c)) for c in charges)
+    comm = Dict(c => im * (Hk[c] * T[c] - T[c] * Hk[c]) for c in charges)
+    θcomm = C.corner_morphism(comm, phi)
+    θH = C.corner_morphism(Hk, phi); θT = C.corner_morphism(T, phi)
+    for c in charges
+        @test isapprox(θcomm[c], im * (θH[c] * θT[c] - θT[c] * θH[c]); atol = 1e-10)
+    end
+    # Stretched support: θ(h_1) lives on fine sites {1,2,3}; the inserted site 2
+    # is vacuum (n_2 θ(h_1) = 0, CA-71 n_even V = 0) and it commutes with far n_k.
+    θh1 = C.corner_morphism(C._hbond_block(hmix, 1, 3), phi)
+    for c in charges
+        n2 = Matrix(C.occupation_number_matrix(6, 2, c))
+        @test isapprox(n2 * θh1[c], zero(θh1[c]); atol = 1e-12)   # middle-site vacuum pin
+        @test isapprox(θh1[c] * n2, zero(θh1[c]); atol = 1e-12)
+        for k in (4, 5, 6)
+            nk = Matrix(C.occupation_number_matrix(6, k, c))
+            @test isapprox(nk * θh1[c], θh1[c] * nk; atol = 1e-10)  # supported off site k
+        end
+    end
+
+    # --- (H) THE DECISIVE BLOCK: dilute image vs parity-even vs M_{2L}. ---
+    @test C.dilute_image_dimension(2) == 9                  # CA-69, report 69:96
+    @test C.dilute_image_dimension(3) == 51
+    @test C.parity_even_dimension(2) == 9
+    @test C.parity_even_dimension(3) == 51
+    d4 = C.dilute_image_dimension(4)
+    pe4 = C.parity_even_dimension(4)
+    @test d4 == 322                                        # computed W1.4 datum
+    @test pe4 == 322                                       # image == parity-even subalgebra
+    @test d4 < 323                                         # dim dTL_4 = M_8 = 323 ⇒ 1-dim kernel
+    @test 323 - d4 == 1                                    # first Jones-Wenzl kernel at L=4
+end

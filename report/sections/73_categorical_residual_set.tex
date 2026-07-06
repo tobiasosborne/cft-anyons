@@ -1,0 +1,243 @@
+% SHARD-ID: CA-73-CATEGORICAL-RESIDUAL-SET
+% SHARD-TITLE: The Categorical Residual Set on the Anyonic Word Tower
+% SHARD-SUMMARY: Ports the qubit coboundary and Witt/Virasoro residual calculus to A_L = End_C(O^{tensor L}), with Tier-1 dilute densities and open-window mode identities.
+% SHARD-SUMMARY: Proves exact transport of the residual calculus through corner refinements and defines the stretched-augmented coherent residual family satisfying the CA-72 descent contract.
+% SHARD-SUMMARY: Writes every lattice Virasoro closure with the two-constant (c, c*) central term of CONVENTIONS (s); periodic modes stay gated behind decision D1.
+% SHARD-KEYWORDS: residual set, coboundary, Ward identity, Koo-Saleur, dilute Temperley-Lieb, transport, stretched density, two central constants, open chain
+
+\section{The Categorical Residual Set on the Anyonic Word Tower}
+\label{sec:categorical-residual-set}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: derived port plus one new lemma and one definition.}  The
+residual calculus below is the CA-38/CA-39/CA-42 qubit framework transported
+to the anyonic word tower; the transport lemma and the coherent residual
+family are new local derivations.  The densities are the CA-70 Tier-1
+proposal.  Everything is stated on the \emph{open} chain per the Wave-1
+commitment of the 2026-07-06 plan; periodic mode calculus is gated behind
+decision D1.  Nothing here claims that residual annihilation implies
+symmetry (CA-44/CA-64 semantics are preserved verbatim).
+
+Dependencies: CA-38, CA-39, CA-42, CA-43, CA-63, CA-64, CA-69, CA-70,
+CA-71, CA-72; CONVENTIONS (n), (r), (s), (t).  Executes item W1.3 of
+\texttt{reviews/2026-07-06\_pipeline\_consistency\_scoping/PLAN.md}.
+
+% Source: report/sections/38_qubit_local_algebra_equation_framework.tex:75--102
+%   -- coboundary quotient: R = u - tau(u), residual passes iff R - Du = 0,
+%   scalar part of u is gauge.
+% Source: report/sections/39_qubit_1d_poincare_necessary_equations.tex and
+%   CONVENTIONS.md:494--536 (n) -- p_j = i[h_j, h_{j+1}], conservation
+%   A_j = i[h_j + h_{j+1}, p_j] = Du, boost B_j = i[p_j, h_{j+1}] +
+%   2 i[p_j, h_{j+2}], residual B - u - lambda hbar = Dw.
+% Source: report/sections/42_qubit_witt_virasoro_necessary_equations.tex:32--72
+%   -- exact density-mode algebra (42.1)-(42.3): [H_m, H_n] =
+%   -i(z_n - z_m) J_{m+n}; D- and F-density expansions; (42.4)-(42.6) chiral
+%   residuals.
+% Source: report/sections/70_dilute_koo_saleur_ansatz.tex:71--97 -- Tier-1
+%   dilute density (occupancy projectors, u_j = b^t b, hopping a + a^t, pair
+%   b + b^t) and the dilute KS mode transcription.
+% Source: report/sections/69_dilute_tl_word_algebra.tex -- evaluation map
+%   rho_L, parity preservation of dilute diagrams, dimension ledger
+%   M_{2L} = 2, 9, 51, 323 vs F_{4L-1} = 2, 13, 89, 610.
+% Source: report/sections/72_gns_descent_corner_calculus.tex -- Lemma 72.1
+%   (corner *-morphism), Lemma 72.4 (residual descent criterion), and the
+%   descent-compatibility contract this shard instantiates.
+% Source: CONVENTIONS.md (s) -- two-constant closure and the lambda-vs-v_L
+%   disambiguation; (t) -- cell-shift-only cross-scale positions.
+% Source: src/FibonacciLocalOperators.jl, src/CategoricalResiduals.jl, and
+%   test/runtests.jl testset "categorical residual set (CA-73)" -- checked
+%   shadows named in the Julia section.
+
+\subsection{Setting}
+
+Fix \((\Cc,O)\) with \(O=\one\oplus X\) per CONVENTIONS (r), the open-chain
+tower \(\Alg_L=\operatorname{End}_{\Cc}(O^{\otimes L})\), and a self-adjoint
+two-site density \(h\in\Alg_2\) placed at bonds by the shift,
+\(h_j\in\Alg_L\) for \(1\le j\le L-1\), so that \([h_j,h_k]=0\) for
+\(|j-k|\ge2\) (disjoint supports).  The Tier-1 dilute density of CA-70 is
+the default instance: a real combination of occupancy projectors, the dense
+exchange \(u_j=b_j^tb_j\), hopping \(a_j+a_j^t\), and pair terms
+\(b_j+b_j^t\), all parity-even by CA-69.  The qubit block is the
+\(\Cc=\mathrm{Hilb}\), \(O=\mathbb C^2\) degenerate case, which is what
+makes the port below a specialization-in-reverse rather than an analogy.
+
+\subsection{The Ported Local Residual Calculus}
+
+\textbf{Definition [port].}  For a local density \(u\) supported on \(m\)
+sites at position \(j\), the coboundary is \((Du)_j=u_j-u_{j+1}\).  The
+local residual densities are, verbatim from CONVENTIONS (n) but now as
+elements of \(\Alg_L\):
+\[
+  p_j=i[h_j,h_{j+1}],\qquad
+  A_j=i[h_j+h_{j+1},\,p_j],\qquad
+  B_j=i[p_j,h_{j+1}]+2i[p_j,h_{j+2}],
+\]
+with the conservation and boost residual equations
+\[
+  R^{\mathrm{cons}}_j(h;u)=A_j-(Du)_j,
+  \qquad
+  R^{\mathrm{boost}}_j(h;u,w,\lambda,e)
+  =B_j-u_j-\lambda\,\bar h_j-(Dw)_j,
+  \qquad \bar h=h-e\,\mathbf 1,
+\]
+where \(\lambda\) is the unconstrained multiplier of CONVENTIONS (s) (not a
+squared velocity) and the scalar parts of \(u,w\) are gauge, exactly as in
+CA-38.  \textbf{Derived [port]:} nothing in the CA-38/CA-39 derivations
+uses the Pauli basis --- only bilinearity, locality, and the shift --- so
+every identity holds in \(\Alg_L\); the Pauli \emph{coefficient} equations
+of CA-38 are recovered by expanding in the matrix-unit or diagram basis of
+the charge blocks \(\bigoplus_cM_{m_c(L)}(\mathbb C)\).
+
+\subsection{Open-Window Mode Calculus}
+
+\textbf{Definition [choice].}  Fix the phase base \(z_n=e^{2\pi in/L}\) on
+the length-\(L\) open chain (CONVENTIONS (t): index phases at own scale).
+For a window \(W=[j_0,j_1]\subset[1,L-1]\) define
+\(H_n^{(W)}=\sum_{j\in W}z_n^jh_j\) and
+\(J_n^{(W)}=\sum_{j\in W}z_n^jp_j\).
+
+\textbf{Lemma [derived].}  The exact periodic identity (42.1) ports to the
+open window with an edge remainder:
+\[
+  [H_m^{(W)},H_n^{(W)}]=-i(z_n-z_m)\,J_{m+n}^{(W)}
+  +\,\partial_{mn}^{(W)},
+\]
+where \(\partial_{mn}^{(W)}\) is supported in the two edge cells of \(W\)
+(the telescoping of CA-42's derivation fails only where the window ends).
+The same holds for the ported (42.2)--(42.3) with their \(D\)- and
+\(F\)-density expansions.  The Julia suite asserts the support statement
+directly; it is the strong form of ``bulk identity modulo boundary''.
+Periodic modes --- the setting of CA-70's \(L_n^{(N)}\) and of the
+registered periodic dilute algebra --- are deliberately \emph{not} defined
+here (decision D1; CA-70 obligation 3).
+
+\subsection{Witt/Virasoro Residuals with Two Central Constants}
+
+\textbf{Definition [port + CONVENTIONS (s)].}  For a state \(\omega\) let
+\({:}X{:}_\omega=X-\omega(X)\mathbf 1\) termwise on densities.  The chiral
+ansatz on a window is
+\[
+  \ell_n=A_n{:}H_n^{(W)}{:}_\omega+B_n{:}J_n^{(W)}{:}_\omega
+  +\mu\,\delta_{n0}\mathbf 1,
+  \qquad
+  \bar\ell_n=A_n{:}H_n^{(W)}{:}_\omega-B_n{:}J_n^{(W)}{:}_\omega
+  +\mu\,\delta_{n0}\mathbf 1,
+\]
+and the closure residuals carry the \emph{two-constant} central term of
+CONVENTIONS (s):
+\[
+  r^{++}_{mn}=[\ell_m,\ell_n]-(m-n)\ell_{m+n}
+  -\tfrac{\delta_{m+n,0}}{12}\bigl(m^3c^*_L-m\,c_L\bigr)\mathbf 1,
+\]
+with \(r^{--}_{mn}\), \(r^{+-}_{mn}=[\ell_m,\bar\ell_n]\) analogous.
+Setting \(c^*_L=c_L\) is a measured outcome or theorem target, never an
+input.  The estimator pair \((c_L(m),c^*_L(m))\) is defined by solving
+\(\omega([\ell_m,\ell_{-m}]-2m\ell_0)=\tfrac1{12}(m^3c^*_L-mc_L)\) at two
+mode values, relative to a declared \((\omega,W)\).
+
+\subsection{The Categorical Residual Set}
+
+\textbf{Definition.}  The scale-\(L\) residual family of the pair
+\((h,\text{window data})\) is
+\[
+  \mathcal R_L(h)=
+  \bigl\{R^{\mathrm{cons}}_j,\ R^{\mathrm{boost}}_j\bigr\}_{j}
+  \cup
+  \bigl\{r^{\sigma\sigma'}_{mn}\bigr\}_{|m|,|n|\le K},
+\]
+as elements of \(\Alg_L\).  This is the object whose absence was seam S3 of
+the 2026-07-06 consistency map: the moment/GNS constraints
+\(\omega(X^\dagger RY)=0\) of CA-43/CA-63, and the relaxed profiles and
+\(\nu\)-objectives of CA-64, are now well-posed on the categorical tower by
+substitution.  \textbf{Boundary:} CA-63's existence theorem is proved for
+the qubit UHF algebra; its transport to the AF tower is W1.6's categorical
+corollary, not a claim of this shard.
+
+\subsection{Exact Transport and the Stretched Dichotomy}
+
+\textbf{Lemma 73.1 [derived] (exact transport).}  Let
+\(\theta_\varphi\) be the corner morphism of a placement (CA-71, CA-72).
+Since \(\theta_\varphi\) is a \(*\)-morphism (Lemma 72.1), for every
+noncommutative \(*\)-polynomial \(F\),
+\[
+  \theta_\varphi\bigl(F(h_{j_1},\dots,h_{j_r})\bigr)
+  =F\bigl(\theta_\varphi(h_{j_1}),\dots,\theta_\varphi(h_{j_r})\bigr).
+\]
+Hence the \emph{entire} residual calculus transports exactly: the
+\(\theta_\varphi\)-image of every element of \(\mathcal R_k(h)\) is the
+same residual built from the \emph{stretched densities}
+\(\theta_\varphi(h_j)\), which for the dyadic placement are supported on
+fine sites \(\{2j-1,2j,2j+1\}\) with the inserted site pinned to vacuum
+(the CA-68 stretched-covariance phenomenon at the density level).
+
+\textbf{Observation [derived] (the dichotomy).}  The stretched density is
+\emph{not} the fine density: \(\theta_\varphi(h_j)\ne h^{(l)}_{j'}\) for
+any placement of the same \(h\) at fine scale.  Consequently the CA-72
+descent-compatibility contract \emph{fails} for the naive pairing
+\((\mathcal R_k(h),\mathcal R_l(h))\): annihilating the fine residuals does
+not annihilate the \(\theta\)-transported coarse ones.  This is the precise
+residual-level content of ``bare vacuum insertion is naive''.
+
+\textbf{Definition + Proposition 73.2 [derived] (coherent family).}  The
+\emph{stretched-augmented} residual family assigns to the fine scale
+\[
+  \mathcal R^{\mathrm{coh}}_l
+  :=\mathcal R_l(h)\ \cup\
+  \bigcup_{\varphi}\theta_\varphi\bigl(\mathcal R_k(h)\bigr)
+\]
+over the placements \(\varphi\) of the chosen refinement schedule.  If a
+state \(\omega_l\) annihilates \(\mathcal R^{\mathrm{coh}}_l\) in the
+CA-63 sense (\(\pi_{\omega_l}(R)=0\) for all
+\(R\in\mathcal R^{\mathrm{coh}}_l\)), then the normalized pullback
+\(\omega_k\) annihilates \(\mathcal R_k(h)\), by Lemma 72.4 applied to
+\(\pi_{\omega_l}(\theta_\varphi(R'))=0\).  Descent-compatibility thus holds
+\emph{by construction} for the coherent family.  \textbf{Price [recorded]:}
+the fine moment problem gains the stretched constraints --- a strictly
+stronger feasibility demand on \(\omega_l\).  \textbf{Alternative
+[recorded, W2.1]:} a dressing \(U\) may instead be chosen so that
+\(\mathrm{Ad}_U\circ\theta_\varphi\) carries stretched residuals
+asymptotically into the null structure of \(\mathcal R_l(h)\); quantifying
+that is precisely the dressed-refinement task, now stated as an equation
+rather than a slogan.
+
+\subsection{Julia Invariants}
+
+\texttt{src/FibonacciLocalOperators.jl} implements the two-site
+local-operator embedding on the CA-66 path basis (the single nontrivial
+Fibonacci \(F\)-matrix anchored to the registered Trebst source, unit-label
+moves trivial per CONVENTIONS (b)) and the Tier-1 generators (occupancies,
+hop, raw-cup pair terms with \(u^2=\varphi u\), dense \(e_j\)).
+\texttt{src/CategoricalResiduals.jl} implements the ported residual
+densities, coboundary distances (pinv/nullspace per the CA-64 lesson), the
+open-window mode identity with its edge-support assertion, and the
+transport tests of Lemma 73.1 against the CA-71/CA-72 machinery.  The
+testset ``categorical residual set (CA-73)'' pins: disjoint-support
+commutation; the occupancy cross-check against the independent
+\texttt{occupation\_number\_matrix}; \(e_j^2=\varphi e_j\) on the full
+space and the braid relation \(e_je_{j\pm1}e_j=e_j\) \emph{on the dense
+corner only} (on the full dilute space \(e_1e_2e_1=0\), because
+\(u_j=b_j^tb_j\) annihilates states with an empty neighbour --- the checked
+computational shadow of CA-69's corner statement
+\(\pi_A\,\mathrm{dTL}\,\pi_A\cong\mathrm{TL}\)); source-anchored dilute
+relations; parity commutation of every Tier-1 generator (the shadow of
+CA-69's parity finding); the edge-support lemma in its sharp form (the bulk
+telescopes and exactly one top-edge current survives); a checked physics
+value --- the pure-hopping density's conservation residual is a coboundary
+to \(10^{-14}\) (hopping conserves momentum) --- and the dilute-image
+dimension data at \(L=2,3\) (pinned to CA-69's \(9,51\)) together with the
+computed \(L=4\) values, independently re-run by the orchestrator ---
+recorded here as \emph{data for CA-74}, whose interpretation belongs to
+that shard, not this one.
+
+\subsection{Boundary}
+
+Tier-2 (parity-odd, fusion-vertex) densities are not defined here; they are
+the S4/W3.1 item.  Periodic modes and the periodic evaluation map remain
+gated behind D1 (CA-70 obligation 3; interchiral caveat recorded in the
+plan).  No estimation protocol for \((e_\infty,v_L,c_L,c^*_L)\) is fixed
+here (W2.2).  Residual annihilation, exact or relaxed, is never symmetry
+evidence (CA-44, CA-64).  The transport lemma is exact but says nothing
+about convergence; the coherent family makes descent hold by fiat at the
+cost of stronger constraints, and whether any physical state family
+satisfies them is precisely the open state-existence frontier (W1.6, W2.1).

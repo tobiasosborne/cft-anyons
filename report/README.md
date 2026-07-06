@@ -90,6 +90,7 @@ before treating report edits as complete.
 | 70 | `CA-70-DILUTE-KOO-SALEUR-ANSATZ` | `report/sections/70_dilute_koo_saleur_ansatz.tex` | The Dilute Koo-Saleur Ansatz |
 | 71 | `CA-71-REFINEMENT-PLACEMENT-CATEGORY` | `report/sections/71_refinement_placement_category.tex` | The Refinement Placement Category and Exact Composition |
 | 72 | `CA-72-GNS-DESCENT-CORNER-CALCULUS` | `report/sections/72_gns_descent_corner_calculus.tex` | GNS Descent and the Corner Calculus of Placement Refinements |
+| 73 | `CA-73-CATEGORICAL-RESIDUAL-SET` | `report/sections/73_categorical_residual_set.tex` | The Categorical Residual Set on the Anyonic Word Tower |
 
 ## Adding a shard
 
