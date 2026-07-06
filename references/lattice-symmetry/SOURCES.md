@@ -1662,3 +1662,328 @@ extraction or source file.
   quantum chains (the explicit Hamiltonians) that `ZhouBatchelor1997` and
   `ZhouPearceGrimm1995` build on and cite as `WNS:92`/`WBN:92`; they must be
   acquired via journal or TIB access rather than arXiv.
+
+### SRC-HONGLER-KYTOLA-VIKLUND-2022 -- CFT at the lattice level (dGFF c=1 AND Ising c=1/2)
+
+- **Authors:** Clement Hongler, Kalle Kytola, Fredrik Johansson Viklund
+- **Title:** Conformal Field Theory at the Lattice Level: Discrete Complex
+  Analysis and Virasoro Structure
+- **Journal:** Commun. Math. Phys. (2022); **DOI** `10.1007/s00220-022-04475-x`
+- **arXiv:** `1307.4104` (unversioned/latest posted version -- the expanded,
+  published paper; note the arXiv `v1`, "Lattice Representations of the
+  Virasoro Algebra I: Discrete Gaussian Free Field", is registered separately
+  above as `SRC-HONGLER-JOHANSSON-KYTOLA-2013`. This entry is the LATER,
+  MERGED version that adds the Ising `c=1/2` construction alongside the dGFF
+  `c=1` one.)
+- **Local arXiv source package:**
+  `references/lattice-symmetry/HonglerKytolaViklund2022/HonglerKytolaViklund2022_arxiv_eprint.tar.gz`
+  (SHA256 `c2f3b94b12149defd00eba7d0774b5b1b551307810fbca4973c9eac28a1d5831`)
+- **Local arXiv PDF:**
+  `references/lattice-symmetry/HonglerKytolaViklund2022/HonglerKytolaViklund2022_arxiv.pdf`
+  (55 PDF pages; 2051757 bytes; SHA256
+  `f1a4a1b0796dec9459f0d5e2fc07f3d9e698946c5c7a01eca17868ad6ff27b6f`)
+- **Extracted source TeX:**
+  `references/lattice-symmetry/HonglerKytolaViklund2022/source/lattice-virasoro-updates-final.tex`
+  (5841 lines; SHA256
+  `3524807e85b0a1f4aa6052973799f6ca2c8875d40c6211205913c1558769319f`),
+  plus `.../source/macros.tex` (259 lines; SHA256
+  `1d9e98ee06458fea88c1c02c5b526430f455f4687a40b17fefe10dc061c7acc2`). The
+  e-print also contains ~30 figure files; only the two `.tex` files are needed
+  for line anchors.
+- **PDF text extraction:**
+  `references/lattice-symmetry/HonglerKytolaViklund2022/HonglerKytolaViklund2022_pdftotext.txt`
+  (3047 lines; SHA256
+  `4b1c00b8412f1c25c7fb7bbf768ec5318f52efc556d7220ede1329ea5b08b0a2`)
+- **Retrieval:** fetched from arXiv on 2026-07-06 (unversioned e-print/PDF
+  endpoints resolve to the latest posted version). Legal source URLs:
+  `https://arxiv.org/abs/1307.4104`, `https://arxiv.org/e-print/1307.4104`,
+  `https://arxiv.org/pdf/1307.4104`.
+- **Verified anchor ranges:**
+  - `source/lattice-virasoro-updates-final.tex:136`--`:143` and `:329`--`:331`
+    -- abstract/scope: positive answer to whether Virasoro representations of
+    CFT can be found within lattice statistical models, for BOTH the discrete
+    Gaussian free field and the **Ising model**, by connecting discrete
+    complex analysis to Virasoro symmetry.
+  - `source/lattice-virasoro-updates-final.tex:593`--`:606` -- **informal main
+    theorem**: the Sugawara constructions of the Virasoro modes of the dGFF and
+    of the critical Ising model "can be naturally and exactly realized at the
+    lattice level" via discrete complex Laurent modes of the lattice current
+    (dGFF) resp. lattice fermion (Ising); precise forms are Theorem `thm:gff`
+    and Theorem `thm:ising`.
+  - `source/lattice-virasoro-updates-final.tex:2900`--`:2901`
+    (`\begin{thm}\label{thm:gff}`) -- formal dGFF theorem: the operators
+    `L_n^G` form the lattice `c=1` Virasoro representation.
+  - `source/lattice-virasoro-updates-final.tex:4062`--`:4063`
+    (`\begin{thm}\label{thm:ising}`) -- **formal Ising theorem**: setting
+    `L_n^{Ising} := ...` (Sugawara/quadratic in lattice fermion modes) gives a
+    lattice representation of the Virasoro algebra of the critical Ising model
+    (`c=1/2`).
+  - `source/lattice-virasoro-updates-final.tex:2339`
+    (`\label{prop:discrete-holomorphicity-fermion-correlations}`) -- discrete
+    holomorphicity of the lattice fermion correlations, the key input.
+- **Why acquired:** directly answers the "discrete Ward <=> Virasoro for a
+  lattice MODEL" sub-question -- the sharpest lattice-level Virasoro
+  construction available, covering BOTH the free-field `c=1` (dGFF) and the
+  interacting `c=1/2` (critical Ising) cases via discrete complex analysis and
+  a lattice Sugawara construction, at the level of finite-lattice objects (not
+  merely their scaling limits).
+
+### SRC-CHELKAK-GLAZMAN-SMIRNOV-2016 -- discrete stress-energy tensor, Ising c=1/2 convergence
+
+- **Authors:** Dmitry Chelkak, Alexander Glazman, Stanislav Smirnov
+- **Title:** Discrete stress-energy tensor in the loop O(n) model
+- **Venue/status:** arXiv preprint (math-ph), no journal reference posted; DOI
+  is the arXiv DOI `10.48550/arXiv.1604.06339` only.
+- **arXiv:** `1604.06339` (v1 2016-04-21; v2 2016-08-31; v3 2017-08-21;
+  **v4 2025-01-04** -- the fetched unversioned endpoint resolves to v4)
+- **Local arXiv source package:**
+  `references/lattice-symmetry/ChelkakGlazmanSmirnov2016/ChelkakGlazmanSmirnov2016_arxiv_eprint.tar.gz`
+  (SHA256 `3bcaac97c770c8d330c0633038b0fa2c0aad3c1af9e30c4fdeda1ba17bc4fb6d`)
+- **Local arXiv PDF:**
+  `references/lattice-symmetry/ChelkakGlazmanSmirnov2016/ChelkakGlazmanSmirnov2016_arxiv.pdf`
+  (50 PDF pages; 1221789 bytes; SHA256
+  `1f68cd11804eaf561c4180a46f7cfcee91ec987b4290db2ebe6e535ba219d07c`)
+- **Extracted source TeX:**
+  `references/lattice-symmetry/ChelkakGlazmanSmirnov2016/source/StressTensor.tex`
+  (2875 lines; SHA256
+  `99c66affd0476ac0e0ade0bf9356a18dff4cfc07a74a4c49dea005536b08b27c`)
+- **PDF text extraction:**
+  `references/lattice-symmetry/ChelkakGlazmanSmirnov2016/ChelkakGlazmanSmirnov2016_pdftotext.txt`
+  (3312 lines; SHA256
+  `857f8891f21681bbcf1561346799b814d16e84eed4c2045d5a1bb2c9ba72109c`)
+- **Retrieval:** fetched from arXiv on 2026-07-06. Legal source URLs:
+  `https://arxiv.org/abs/1604.06339`, `https://arxiv.org/e-print/1604.06339`,
+  `https://arxiv.org/pdf/1604.06339`.
+- **Verified anchor ranges:**
+  - `source/StressTensor.tex:524`--`:532` -- abstract: geometric construction
+    of a discrete stress-energy tensor on the honeycomb lattice via local
+    non-planar lattice deformations; for `n in [0,2]` it satisfies part of the
+    Cauchy-Riemann equations and is **conjectured** discrete-holomorphic and
+    convergent to the continuum stress-energy tensor; **proven for `n=1`
+    (Ising)**, where correlations of the discrete stress-energy tensor with
+    primary fields converge to their continuous counterparts satisfying the
+    OPEs of the `c=1/2` CFT.
+  - `source/StressTensor.tex:876` (`\begin{theorem}\label{thm:Ising1}`),
+    `:909` (`\label{thm:Ising2}`), `:927` (`\label{thm:Ising3}`) -- the three
+    **Ising convergence theorems** (one-point, boundary/two-point, and
+    two-point stress-tensor correlations), whose proofs (`Section
+    sec:Ising-convergence`) reduce to `C^1`-convergence of discrete fermionic
+    observables (s-holomorphicity, `:1458`).
+  - `source/StressTensor.tex:1774`, `:2040` -- the `c=1/2` continuum CFT
+    correlators with primary dimensions `1/16` (`sigma`) and `1/2`
+    (`epsilon`), defined via Riemann-type boundary value problems rather than
+    CFT axioms; Schwarzian covariance (`prop:Schwarzian-covariance`) and OPE
+    coefficients (`prop:OPE`) appear as corollaries.
+- **Why acquired:** the sharpest available "discrete holomorphicity ==>
+  Ward/Virasoro" result for an interacting lattice model -- a discrete
+  stress-energy tensor (Ikhlef-style lattice deformation observable) whose
+  correlations are PROVED (for Ising, `n=1`) to converge to the `c=1/2` CFT
+  stress-tensor correlations with the correct OPEs; simultaneously anchors the
+  Smirnov / Chelkak-Smirnov discrete-complex-analysis line named in the brief.
+
+### SRC-MILSTED-VIDAL-2017 -- Koo-Saleur conformal-data extraction, nonintegrable chains
+
+- **Authors:** Ashley Milsted, Guifre Vidal
+- **Title:** Extraction of conformal data in critical quantum spin chains using
+  the Koo-Saleur formula
+- **Journal:** Phys. Rev. B **96**, 245105 (2017); **DOI**
+  `10.1103/PhysRevB.96.245105`
+- **arXiv:** `1706.01436`
+- **Local arXiv source package:**
+  `references/lattice-symmetry/MilstedVidal2017/MilstedVidal2017_arxiv_eprint.tar.gz`
+  (SHA256 `6f6ea5e764640b7fd48911fb21f06ec7927cdbbaf8eed06740455c9be9805f61`)
+- **Local arXiv PDF:**
+  `references/lattice-symmetry/MilstedVidal2017/MilstedVidal2017_arxiv.pdf`
+  (14 PDF pages; 1238383 bytes; SHA256
+  `2ec9183787bc2c319bf981e5c2c6ba49a4d9201b7f8248beba055043e8d4885a`)
+- **Extracted source TeX:**
+  `references/lattice-symmetry/MilstedVidal2017/source/extraction_koo_saleur.tex`
+  (1334 lines; SHA256
+  `095cbc189dbad661253bd678c3c2aa86e388a550fbc0fc62670bd768642452ae`)
+- **PDF text extraction:**
+  `references/lattice-symmetry/MilstedVidal2017/MilstedVidal2017_pdftotext.txt`
+  (1263 lines; SHA256
+  `67a6cbc9f38293572ab2142c98cfdab172c892ff1953c74d7e7abcdf405127ac`)
+- **Retrieval:** fetched from arXiv on 2026-07-06. Legal source URLs:
+  `https://arxiv.org/abs/1706.01436`, `https://arxiv.org/e-print/1706.01436`,
+  `https://arxiv.org/pdf/1706.01436`.
+- **Verified anchor ranges:**
+  - `source/extraction_koo_saleur.tex:64` -- abstract: automated procedures
+    using ONLY the lattice Hamiltonian `H = sum_j h_j` as input, applying the
+    Fourier modes `H_n` of the Hamiltonian density (the Koo-Saleur lattice
+    Virasoro generators, Koo-Saleur Nucl. Phys. B 426, 459 (1994)) to identify
+    primary/quasiprimary states and assign conformal towers; demonstrated in a
+    **nonintegrable** spin chain.
+  - `source/extraction_koo_saleur.tex:93`--`:98` -- Cardy/Blote/Nightingale/
+    Affleck finite-size spectrum matches the CFT spectrum up to subleading
+    non-universal `O(N^{-x})` corrections (`x>1` model-specific; logarithmic
+    corrections for marginal operators).
+  - `source/extraction_koo_saleur.tex:109` -- history/context: Koo-Saleur is
+    singled out as the proposal giving lattice analogues of ALL Virasoro
+    generators, previously applied mostly to integrable / logarithmic
+    (`c=0`) CFTs (cites `read_associative-algebraic_2007`,
+    `gainutdinov_lattice_2013`, etc.).
+  - `source/extraction_koo_saleur.tex:194` -- lattice momentum density
+    `p_j = i[h_j, h_{j-1}]`, chiral/antichiral `T_j = (h_j +/- p_j)/2`, and
+    the note that the `L_n`, `\bar L_n` carry ADDITIONAL finite-size
+    corrections vs. the bare `H_n` (traced to finite-size energy corrections),
+    so numerically the `H_n` modes are preferred.
+  - `source/extraction_koo_saleur.tex:115` -- the nonintegrable test case: the
+    self-dual ANNNI model (a nonintegrable perturbation of Ising).
+- **Why acquired:** the state-of-the-art NUMERICAL status of Koo-Saleur
+  generators named in the brief -- the first systematic demonstration that the
+  KS `H_n` modes extract conformal data (central charge, scaling dimensions,
+  conformal spins, primary/quasiprimary/descendant classification) in a
+  NONINTEGRABLE critical chain; the concrete finite-size protocol and its
+  `O(N^{-x})` error structure.
+
+### SRC-READ-SALEUR-2007 -- enlarged symmetry algebras = Temperley-Lieb commutant (lattice<->module dictionary origin)
+
+- **Authors:** N. Read, H. Saleur
+- **Title:** Enlarged symmetry algebras of spin chains, loop models, and
+  S-matrices
+- **Journal:** Nucl. Phys. B **777** (2007) 263--315; **DOI**
+  `10.1016/j.nuclphysb.2007.03.007`
+- **arXiv:** `cond-mat/0701259` (v1, submitted 2007-01-11)
+- **Local arXiv source package:**
+  `references/lattice-symmetry/ReadSaleur2007/ReadSaleur2007_arxiv_eprint.tar.gz`
+  (single gzip-compressed `.tex`, internal name `ensymsh.tex`, kept under the
+  `.tar.gz` filename convention; SHA256
+  `1b5b82be4f709f25f25b51716dbe4c0ce22f6405149ab939f222422855341308`)
+- **Local arXiv PDF:**
+  `references/lattice-symmetry/ReadSaleur2007/ReadSaleur2007_arxiv.pdf`
+  (35 PDF pages; 596818 bytes; SHA256
+  `98b3842e2fe4ac475f8adc51eeecfe05b9a35bde2def76c802082a203d48d469`)
+- **Extracted source TeX:**
+  `references/lattice-symmetry/ReadSaleur2007/source/ensymsh.tex`
+  (4174 lines; SHA256
+  `eb61b0f0e3b00c7575776be41c7fe581ceab8c2e4ad84cbda265be57da520455`)
+- **PDF text extraction:**
+  `references/lattice-symmetry/ReadSaleur2007/ReadSaleur2007_pdftotext.txt`
+  (2619 lines; SHA256
+  `dc039eeac10e8a7b14ed153854672193099daae0c3b0e0a2b4cda8505606f84e`)
+- **Retrieval:** fetched from arXiv on 2026-07-06. Legal source URLs:
+  `https://arxiv.org/abs/cond-mat/0701259`,
+  `https://arxiv.org/e-print/cond-mat/0701259`,
+  `https://arxiv.org/pdf/cond-mat/0701259`.
+- **Verified anchor ranges:**
+  - `source/ensymsh.tex:28`--`:55` -- title/abstract: `U(m)`-symmetric
+    nearest-neighbour spin chains possess a much larger symmetry algebra
+    `A_m(2L)` than `U(m)`, causing energy eigenstates to fall into sectors with
+    rapidly-growing degeneracies; supersymmetric `gl(m+n|n)` analogue; the
+    symmetries carry over to the associated loop models (loops cannot cross).
+  - `source/ensymsh.tex:679`--`:693` -- the double-commutant setup: `A_m(2L)`
+    is defined as the **commutant (centralizer)** of the Temperley-Lieb
+    algebra `TL_{2L}(q)` in the spin-chain representation `V`, and the double
+    commutant of `TL` is recovered.
+  - `source/ensymsh.tex:822`--`:870` -- **explicit construction of the
+    commutant** using **(Jones-Wenzl) projections** `P^bullet`, `P_bullet`
+    (`:849`), yielding the statement (`:870`) that this operator algebra "is
+    the commutant algebra `A_m(2L)` of `TL_{2L}(q)` in `V`", block-decomposed
+    over the `j`th irreducible representations of the commutant.
+  - `source/ensymsh.tex:948`--`:973` -- the parity/`n`-even-vs-odd structure of
+    which sectors admit the enlarged symmetry, and the linear basis for the
+    commutant algebra `B_m`.
+- **Why acquired:** the ORIGIN of the lattice-algebra-representation <->
+  Virasoro-module dictionary named in the brief (the "Read-Saleur line"). It
+  identifies the enlarged lattice symmetry as the Temperley-Lieb COMMUTANT
+  built from Jones-Wenzl projections, and matches its sectors to the module
+  structure that becomes the (degenerate) Virasoro-module content in the
+  continuum limit -- the direct ancestor of `GainutdinovReadSaleur2013`'s
+  interchiral-algebra dictionary.
+
+### SRC-LI-LIN-MCGREEVY-SHI-KIM-2024 -- chiral Virasoro generators from a single wavefunction (entanglement bootstrap)
+
+- **Authors:** Isaac H. Kim, Xiang Li, Ting-Chun Lin, John McGreevy, Bowen Shi
+  (arXiv author order; the local directory slug `LiLinMcGreevyShiKim2024` was
+  fixed at creation and is retained per the append-only convention)
+- **Title:** Chiral Virasoro algebra from a single wavefunction
+- **Journal:** Ann. Phys. **471** (2024) 169849; **DOI**
+  `10.1016/j.aop.2024.169849`
+- **arXiv:** `2403.18410`
+- **Local arXiv source package:**
+  `references/lattice-symmetry/LiLinMcGreevyShiKim2024/LiLinMcGreevyShiKim2024_arxiv_eprint.tar.gz`
+  (SHA256 `79b23feb32615bf3b7f42c05d4ec4adfe066255908aff830db08d13738480336`)
+- **Local arXiv PDF:**
+  `references/lattice-symmetry/LiLinMcGreevyShiKim2024/LiLinMcGreevyShiKim2024_arxiv.pdf`
+  (82 PDF pages; 6020188 bytes; SHA256
+  `b0f91dad231fb0c5e52eb5c92c4b2a00f08381164ef894c913d159121b4517cf`)
+- **Extracted source TeX:**
+  `references/lattice-symmetry/LiLinMcGreevyShiKim2024/source/revised-emergence-of-virasoro.tex`
+  (2442 lines; SHA256
+  `76329accf3782cd0524b8123f0725336e7a6fe21b725f7a9bc8d6be08570e788`),
+  plus compile-dependency macro files `.../source/jm-tex-macros-public.tex`
+  (SHA256 `f4c25aa9bb5c782c540ec49f57a69b519a9c3a45ef890044b6e2a0be17202c20`)
+  and `.../source/no-revtex.tex` (SHA256
+  `e04d531384a2507094afadbb067b060958db06337c5705968880414938b1fe09`). The
+  top-level `main.tex` is a 14-line wrapper only; the content is in
+  `revised-emergence-of-virasoro.tex`.
+- **PDF text extraction:**
+  `references/lattice-symmetry/LiLinMcGreevyShiKim2024/LiLinMcGreevyShiKim2024_pdftotext.txt`
+  (4130 lines; SHA256
+  `13bc3235f3136e6760440b41dc996ca00ec634102f3aa6696ebf5782c22c1361`)
+- **Retrieval:** fetched from arXiv on 2026-07-06. Legal source URLs:
+  `https://arxiv.org/abs/2403.18410`, `https://arxiv.org/e-print/2403.18410`,
+  `https://arxiv.org/pdf/2403.18410`.
+- **Verified anchor ranges:**
+  - `source/revised-emergence-of-virasoro.tex:217` -- abstract: a method to
+    systematically extract the generators of a SINGLE (chiral) Virasoro algebra
+    from a single 2+1D ground-state wavefunction, using entanglement bootstrap
+    plus one CFT input; commutation relations verified numerically.
+  - `source/revised-emergence-of-virasoro.tex:277`--`:291` -- the recipe: the
+    Virasoro generators are specific linear combinations of modular
+    (entanglement) Hamiltonians of a purely chiral state near the edge, a
+    special class of "good modular flows"; a hypothesis
+    (`assump:chiral-CFT`) relates good-modular-flow generators to CFT
+    quantities (proof out of scope, with locally-checkable consequences and a
+    dimensional-reduction special-case argument).
+  - `source/revised-emergence-of-virasoro.tex:291` -- numerical verification of
+    the Virasoro commutation relations on `p+ip` superconductor and chiral
+    semion lattice ground states.
+  - `source/revised-emergence-of-virasoro.tex:293` -- explicit comparison to
+    the Koo-Saleur line: cites `Koo:1993wz` (Koo-Saleur), `Osborne:2021ppp`
+    (Osborne-Stottmeister), and the recent tensor-network / Hamiltonian-density
+    constructions `Hu:2020suv`, `Wang:2022qxf`, `Zeng:2022swq`; contrasts them
+    (Fourier transform of a time-evolution operator / Hamiltonian density,
+    two Virasoro copies in 1+1D) with the present single-state, single-chiral-
+    copy modular-flow construction.
+- **Why acquired:** the newest (2024) recipe "from a symmetry action to
+  concrete generators" that departs from the Koo-Saleur Fourier-of-density
+  pattern -- extracting chiral Virasoro generators directly from one ground-
+  state wavefunction via modular Hamiltonians and entanglement bootstrap; it
+  also indexes the 2020-2022 tensor-network/Hamiltonian-density Virasoro
+  constructions (Hu; Wang; Zeng) for the "anything newer up to 2026" scan.
+
+## Notes (2026-07-06 addendum, discrete-symmetry frontier batch)
+
+- The five entries directly above (`HonglerKytolaViklund2022`,
+  `ChelkakGlazmanSmirnov2016`, `MilstedVidal2017`, `ReadSaleur2007`,
+  `LiLinMcGreevyShiKim2024`) were acquired on 2026-07-06 for the discrete-
+  symmetry / Koo-Saleur / discrete-Ward literature question (pipeline frontier
+  stage 3): the lattice-level Virasoro construction for the Ising `c=1/2` model
+  (`HonglerKytolaViklund2022`, extending the already-registered dGFF `c=1`
+  `HonglerJohanssonKytola2013`); the discrete stress-energy tensor with a
+  PROVED Ising `c=1/2` convergence result (`ChelkakGlazmanSmirnov2016`,
+  Smirnov/Chelkak-Smirnov + Ikhlef discrete-holomorphicity line); the Koo-Saleur
+  numerical-extraction state of the art in nonintegrable chains
+  (`MilstedVidal2017`); the origin of the Temperley-Lieb-commutant / Jones-Wenzl
+  <-> module dictionary (`ReadSaleur2007`, the Read-Saleur line ancestral to
+  `GainutdinovReadSaleur2013`); and the newest wavefunction/modular-flow
+  generator-extraction recipe (`LiLinMcGreevyShiKim2024`).
+- **Metadata note:** `LiLinMcGreevyShiKim2024`'s arXiv author order actually
+  begins with Isaac H. Kim; the directory slug (fixed at creation) lists
+  Li/Lin/McGreevy/Shi/Kim. The slug is retained per the append-only convention.
+- **Not fetched (flagged, external-unfetched):**
+  (1) Read-Saleur companion `hep-th/0701117`, "Associative-algebraic approach
+  to logarithmic conformal field theories" (Nucl. Phys. B 777 (2007) 316) --
+  the direct partner of `cond-mat/0701259` on the module side of the
+  dictionary; not fetched to keep the batch to the load-bearing minimum, but
+  it is the natural next acquisition if the kernel dictionary is pursued.
+  (2) Grans-Samuelsson-Liu-He-Jacobsen-Saleur, "The action of the Virasoro
+  algebra in the 2D Potts and loop models at generic Q" (`2010.10920`, JHEP
+  10 (2020) 109) -- the companion (loop-model) paper to the already-registered
+  `GransSamuelssonEtAl2020` (`2010.12819`).
+  (3) The 2020-2022 tensor-network Virasoro constructions indexed by
+  `LiLinMcGreevyShiKim2024`: Hu et al `Hu:2020suv`, Wang et al `2205.04500`
+  (`Wang:2022qxf`), Zeng et al (`Zeng:2022swq`) -- alternative discrete-
+  generator recipes not central to the Koo-Saleur/discrete-Ward question.

@@ -1,0 +1,731 @@
+                                                                                   Entanglement renormalization and wavelets
+
+                                                                                             Glen Evenbly1 and Steven R. White1
+                                                                 1
+                                                                     Department of Physics and Astronomy, University of California, Irvine, CA 92697-4575 USA
+                                                                                                    (Dated: February 17, 2016)
+                                                                  We establish a precise connection between discrete wavelet transforms (WTs) and entanglement
+                                                                renormalization (ER), a real-space renormalization group transformation for quantum systems on
+                                                                the lattice, in the context of free particle systems. Specifically, we employ Daubechies wavelets to
+                                                                build approximations to the ground state of the critical Ising model, then demonstrate that these
+                                                                states correspond to instances of the multi-scale entanglement renormalization ansatz (MERA),
+arXiv:1602.01166v2 [cond-mat.str-el] 16 Feb 2016
+
+
+
+
+                                                                producing the first known analytic MERA for critical systems.
+
+                                                                PACS numbers: 05.30.-d, 02.70.-c, 03.67.Mn, 75.10.Jm
+
+
+                                                      In recent years tensor networks [1] have emerged as an           always resulted from a complicated variational optimiza-
+                                                   exciting approach to both quantum mechanics and statis-             tion. For the lowest order case, the isometries w and
+                                                   tical mechanics that combine ideas of many-body physics             disentanglers u that constitute a scale-invariant MERA
+                                                   with quantum information, while closely connecting sim-             can be written in a remarkably compact form,
+                                                   ulation and analytic theory. An intriguing development                   √   √       √ √             √             √
+                                                   within tensor networks is the multi-scale entanglement              w=    3+ 2
+                                                                                                                              4   II + 3− 4
+                                                                                                                                            2
+                                                                                                                                              ZZ + i(1+4 2) XY + i(1−4 2) Y X
+                                                   renormalization ansatz (MERA) [2, 3], designed to im-                   √          √
+                                                                                                                        u = 3+2
+                                                                                                                             4 II +
+                                                                                                                                        3−2      i        i
+                                                                                                                                        4 ZZ + 4 XY + 4 Y X,               (1)
+                                                   plement real-space renormalization group (RG) [4] ideas
+                                                   in a powerful numerical algorithm which accurately cap-             where X, Y , Z are Pauli matrices, and where ZZ is short
+                                                   tures scale invariance and critical point behavior.                 for Z ⊗ Z etc. This MERA, which is derived using two
+                                                      For a D-dimensional physical system, the MERA is                 copies of the Daubechies D4 wavelet, can be shown to ap-
+                                                   constructed as a (D + 1)-dimensional tensor network,                proximate the ground state of the quantum critical Ising
+                                                   where layers in the extra dimension encode ground state             model, including the critical data of the Ising CFT. We
+                                                   correlations at different length scales. Within a numer-            also present a general prescription for obtaining higher
+                                                   ical setting, MERA have been demonstrated [5–12] to                 order MERA and give another specific example. These
+                                                   accurately capture the critical long range behavior of lat-         analytic constructions provide an important new tool for
+                                                   tice versions of conformal field theories (CFTs) [13, 14],          making further progress in MERA applications, and are
+                                                   which are used to describe critical points. MERA also               likely just the first example of important results from the
+                                                   provides a framework to investigate the AdS/CFT cor-                wavelet-MERA connection.
+                                                   respondence, with the extra dimension of the MERA as-                  Free Fermions.— We consider the tight-binding Hamil-
+                                                   sociated with a physical space-time dimension, making               tonian on an infinite 1D lattice of spinless fermions at
+                                                   tensor networks an important topic in quantum gravity               half-filling,
+                                                   and string theory [15, 16].
+                                                      Wavelets and wavelet transforms (WTs) [17–21], one
+                                                                                                                                              X  †                      
+                                                                                                                                     Hff = −       âr+1 âr + â†r âr+1 ,    (2)
+                                                   of the most significant developments in signal and image                                    r
+                                                   processing in several decades, are also closely tied to RG:
+                                                                                                                       with â and â† the annihilation and creation operators. In
+                                                   ideas from RG influenced the development of wavelets,
+                                                                                                                       terms of the Fourier mode creation operators b̂†k , where
+                                                   and wavelets have proved to be a useful tool in RG ap-
+                                                                                                                       k is the momentum, the ground state of H is given by
+                                                   plications [22]. In fact, it is natural to think of com-
+                                                                                                                       occupying the negative energy modes,
+                                                   pact, orthogonal WTs, such as the well-known families
+                                                   of WTs introduced by Daubechies[17, 20], as being real-                                            Y †
+                                                                                                                                           |ψGS i =        b̂k |0i             (3)
+                                                   space RG transformations, but in the space of ordinary
+                                                                                                                                                   |k|<π/2
+                                                   1D functions rather than in terms of Hamiltonians or La-
+                                                   grangians. Given the close connections to real-space RG             while leaving positive energy modes unoccupied.
+                                                   of both MERA and wavelets, it is natural to ask if these               Wavelets.— We would like to use wavelets to find an-
+                                                   two methods are connected more deeply to each other.                other set of modes {ĉLow  }, more localized than plane
+                                                                                                                                               z
+                                                      Here we show that this is, indeed, the case, and report          waves, but composed almost entirely of linear combina-
+                                                   on a precise relation between WTs and the MERA; that                tions of negative energy states, so that the ground state
+                                                   a wavelet analysis of a free particle system can be exactly         is approximated by filling these modes,
+                                                   mapped to a MERA. An important development results
+                                                   from this connection: we find the first analytic MERA
+                                                                                                                                                  Y         †
+                                                                                                                                         |ψGS i ≈     ĉLow
+                                                                                                                                                        z      |0i           (4)
+                                                   for critical systems, whereas previous constructions have                                       z
+                                                                                                                                2
+
+                                                                    wavelets have two vanishing moments about k = 0,
+                                                                                                        ∂Qz
+                                                                                  Qz (0) = 0,                   = 0,           (5)
+                                                                                                         ∂k k=0
+                                                                    for all scales z, see also Fig. 1(a).
+                                                                      We now construct modified wavelets which have the
+                                                                    vanishing moments at the Fermi points, k ± π/2, rather
+                                                                    than k = 0. We first we multiply the wavelets by a phase
+                                                                    ω(r) = exp(iπr) and then dilate by a factor of two, but
+                                                                    with the in-between sites set to zero(!):
+                                                                                                 r+1
+                                                                                        (           
+                                                                                                       qz r+1
+                                                                                                              
+                                                                               odd
+                                                                             q̃z (r) =    (−1)    2
+                                                                                                           2    , r odd  (6)
+                                                                                          0,                      r even
+FIG. 1. (a) Plots of D4 Daubechies wavelets qz (r) and scaling      Similarly we construct wavelets q̃zeven that only have sup-
+functions sz (r) for scales z = 1, 2, together with their Fourier
+spectra Qz (k) and Sz (k). (b) The quantum circuit, built from
+                                                                    port on the even sublattice. This transformation into
+gates v(θ) of Eq. 10 with angles θ1 = π/12 and θ2 = −π/6,           odd and even sublattice parts seems more natural if one
+implements the linear map of fermionic modes, see Eq. 12,           considers the real linear combinations of the Fermi points
+corresponding to the D4 wavelet transform.                          sin(rπ/2) and cos(rπ/2), which are zero on even and odd
+                                                                    sublattices, respectively. The key result is that the fre-
+                                                                    quency space representation of these wavelets Q̃odd  z (k)
+                                                                    now have vanishing moments at k = ±π/2,
+                                                                                      π                ∂ Q̃odd
+                                                                                                             z
+                                                                               Q̃odd
+                                                                                 z    ±   = 0,                          = 0,   (7)
+Correspondingly, there will also exist a set of modes                                   2                   ∂k      π
+                                                                                                                   ±2
+{ĉHigh
+   z    } composed of linear combinations of positive en-
+ergy states, which are unoccupied in the ground state.              and similarly for Q̃even
+                                                                                        z    .
+The accuracy of the separation into low and high en-                   The modified wavelet functions are localized, in Fourier
+ergy states must be increasingly sharp as one looks more            space, increasingly close to the Fermi points at larger
+closely near the Fermi surface, which suggests we re-               scale z; however, they are still not sufficient to approx-
+quire a WT that targets the Fermi points, ±π/2. On                  imate the ground state |ψGS i as they contain a mixture
+the other hand, standard WTs, such as Daubechies                    of negative and positive energy components. To separate
+wavelets [17, 18], are designed to approximately divide             the energy components, we form coherent low lz (r) and
+the Fourier components into low (scaling function) and              high hz (r) wavelet pairs by taking symmetric and anti-
+high (wavelet) parts at each scale, see Fig. 1(a), such             symmetric combinations respectively of q̃zodd and q̃zeven ,
+that they resolve degrees of freedom close to momentum
+                                                                                  lz (r) = q̃zodd (r) + q̃zeven (r0 − r)
+k = 0. Thus a direct application of known WTs is not suf-
+ficient to approximate the ground state |ψGS i. However,                         hz (r) = q̃zodd (r) − q̃zeven (r0 − r).       (8)
+we will show that it is possible to combine two slightly            The constant r0 , which determines the spatial alignment
+modified Daubechies WTs to give an excellent separation             of the odd and even wavelets, should be chosen in order to
+of negative and positive energies, targeting k = ±π/2.              form wavelets with the best separation of energies; here
+                                                                    this choice is such that the support of an even wavelet
+   Let us consider the Daubechies D4 wavelets. We de-               starts three sites before that of an odd wavelet it is paired
+note by qz (r) the wavelet function at scale z, and Qz (k)          with (see Ref.[23] Section A for details).
+its (discrete) Fourier transform. At the smallest z = 1                The symmetric and anti-symmetric wavelet pairs lz (r)
+scale, the D4 wavelet has support on 4 sites, where it              and hz (r), together with their frequency spectra, are
+has values q1 ≈ [−0.483, 0.837, −0.224, −0.129], while              plotted in Fig. 2(a) for scales z = 1, 2. It can be seen
+wavelets at larger scales qz , which are supported on in-           that they separate negative and positive energies nicely,
+tervals of r = 2z+1 + 2z − 2 sites, can be easily obtained          with lz (r), to very good approximation, only containing
+from q1 using the cascade algorithm [21]. At level z the            frequencies |k| < π/2 (and vice-versa for hz (r)). Thus,
+basis includes all translations of qz by d = n2z sites (for         if we use the wavelets lz (r) and hz (r) to define a linear
+integer n). The set of all wavelets–every level z, with             mapping of fermionic modes,
+all appropriate translations, form a complete, orthonor-                                         X
+mal basis of functions. The Daubechies wavelets are de-                                  ĉLow
+                                                                                           z   =     âr lz (r),
+                                                                                                    r
+signed as high-pass filters, such that they are orthogonal                                         X
+to smooth functions (or, equivalently, functions that only                              ĉHigh
+                                                                                          z    =        âr hz (r),            (9)
+possess low frequency components). Specifically, the D4                                             r
+                                                                                                                                  3
+
+                                                                   Any unitary linear map on M fermionic modes can be
+                                                                   decomposed as a product of such two-site maps, hence
+                                                                   can also be expressed as a quantum circuit built from
+                                                                   the unitary gates v(θ) of Eq. 10. It follows that an or-
+                                                                   thogonal wavelet transform, which implements a unitary
+                                                                   map of fermionic modes [28],
+                                                                                                 X
+                                                                                         ĉz =           âr qz (r),           (12)
+                                                                                                     r
+
+                                                                   where qz (r) are the wavelet coefficients at scale z, can
+                                                                   also be expressed as a unitary circuit built from gates
+                                                                   v(θ). Fig. 1(b) shows the circuit diagram for the D4
+                                                                   wavelets, which is built from two distinct unitary gates:
+                                                                   {v(π/12), v(−π/6)}. The structure of this circuit follows
+                                                                   from the fast wavelet transform algorithm [29], which im-
+                                                                   plements the WT on 2M sites through M recursive appli-
+                                                                   cations of a filter bank, and thus allows the circuit to be
+                                                                   organized into M layers. The filter bank corresponding
+                                                                   to a WT of 2N coefficients can be further decomposed
+                                                                   into a depth N circuit of gates {v(θ1 ), v(θ2 ), . . . , v(θN )},
+                                                                   where the angles θi are fixed from the WT under con-
+FIG. 2. (a) Plots of low frequency lz (r) and high frequency
+hz (r) wavelets from Eq. 8, together with their Fourier spectra    sideration, see Refs.[26, 27] for additional details. Notice
+Lz (k) and Hz (k), for scales z = 1, 2. (b) Quantum circuit that   that the circuit of Fig. 1(b) corresponding to the D4
+approximates the free fermion ground state by setting modes        wavelet is precisely a scale-invariant MERA. In a higher
+corresponding to low frequency lz wavelets in the occupied         order WT, such as the D2N Daubechies wavelets with
+|1i state and high frequency hz wavelets in the unoccupied         N > 2, the circuit would have N levels of unitary gates
+|0i state. The circuit is built from gates v(θ) as defined in      v(θi ) in each layer and thus no longer correspond to a
+Eq. 10 with angles θ as indicated, and v0 represents a phase
+                                                                   standard MERA; however under appropriate grouping of
+gate with angle π.
+                                                                   gates, see Ref.[23] Section B, one could reinterpret this
+                                                                   as a MERA of larger bond dimension.
+                                                                      Two copies of the circuit representation of the D4
+then the ground state |ψGS i of the free fermion model Hff         wavelets can then be combined to construct the modified
+can be approximated by occupying the negative energy               wavelet transform of Eqs. 8 and 9 that approximates the
+modes ĉLow
+         z    as per Eq. 4.                                        free fermion ground state, as depicted in Fig. 2(b). Here
+  Quantum circuit.— Through Eqs. 6, 8 and 9 we have                one copy of the circuit for the D4 WT is implemented on
+identified a discrete wavelet transform of fermionic modes         the odd sublattice, and is overlaid with a second circuit
+that can be used to approximate the free fermion ground            (spatially mirrored with respect to the first) on the even
+state. We now describe how this transform of fermionic             sublattice. Note that the spatial mirroring is equivalent
+modes can be realized as a quantum circuit, employing a            to negating the sign of the unitary angles, such that the
+formalism similar to that of Refs.[24–26], and argue that          second circuit is comprised of gates {v(−π/12), v(π/6)}.
+this circuit corresponds precisely to a MERA.                      These two circuits are then coupled by v(−π/4) gates,
+  We restrict to a circuit built from two-site unitary gates       which generate the symmetric/antisymmetric wavelets
+v that preserve particle number,                                   described in Eq. 8.
+                                                                    The combined circuit depicted in Fig. 2(b) consists
+                          1    0        0      0
+                         0 cos (θ) − sin (θ) 0                   of an identical sequence of scale-invariant layers, labeled
+           vr,r+1 (θ) = 
+                         0 sin (θ) cos (θ) 0 
+                                                       (10)       {U1 , U2 , . . .}, but also includes an initial ‘transitional’
+                                                                   layer V at the bottom. The transitional layer serves
+                          0    0        0      1
+                                                                   two purposes, (i) firstly it includes local unitary oper-
+written in the number basis {|00i , |01i , |10i , |11i} for        ators v0 = â† â − ââ† that implement the phase change
+some angle θ ∈ [−π, π]. It is known that unitary gates             described in Eq. 6, and (ii) secondly, it includes an ex-
+v(θ) map fermionic modes linearly, such that, under ac-            tra set of swap gates required to give the proper wavelet
+tion of v(θ), a pair of fermionic modes âr and âr+1 is           alignment r0 in Eq. 8. Under appropriate grouping of
+mapped to a new set of modes dˆr and dˆr+1 ,                       tensors, the circuit of Fig. 2(b) can be mapped to a bi-
+                                                                   nary MERA of bond dimension χ = 4. This MERA can
+          dˆr
+                                         
+                    cos (θ) sin (θ)       âr                      then be split into two copies of the χ = 2 MERA from
+               ≡                                .      (11)
+        dˆr+1      − sin (θ) cos (θ)    âr+1                      Eq. 1 for the ground state of the quantum critical Ising
+                                                                                                                           4
+
+                 Exact          MERA           MERA             creasingly coarse-grained Hamiltonians,
+                                 χ=2            χ=8
+                                                                             [0]      [1]     [2]      [3]
+    Energy    -1.27323. . .     -1.24212       -1.26774                    HIs. → HIs. → HIs. → HIs. → . . . ,          (13)
+                              (2.4% err.)    (0.4% err.)               [z]
+                                                                where HIs. is the effective Hamiltonian after z steps; see
+      c            0.5          0.4957          0.5041          Ref.[23] Section D for details. Here we find that the
+     ∆I             0              0               0            wavelet-derived MERA generates a flow to a gapless fixed
+                                                                          ∗
+     ∆σ          0.125          0.1402          0.1233          point HIs.  that approximates the thermodynamic limit of
+     ∆ǫ             1              1               1            the critical Ising model. This is the first known example
+     ∆µ          0.125          0.1445          0.1291          (analytic or numeric) of a critical Hamiltonian that is
+     ∆ψ            0.5            0.5             0.5           coarse-grained to a truly gapless fixed point using ER. In
+     ∆ψ̄           0.5            0.5             0.5           previous (variational) implementations of ER, the gap-
+     ∆H             2              2               2            less fixed point is approximated for a finite number of
+    Cǫ,σ,σ         0.5          0.4584          0.4957
+                                                                RG steps (which can be increased by using larger χ), be-
+                                                                fore ultimately flowing to a gapped fixed point [32]. This
+    Cǫ,µ,µ        -0.5          -0.4201        -0.5060
+                 e−iπ/4       1.1422e−iπ/4
+                                             1.0014e−iπ/4       was understood to be an inescapable consequence of fi-
+    Cψ,µ,σ         √               √              √
+                     2               2              2           nite bond dimension χ; that truncation errors introduce
+                  eiπ/4        1.1422eiπ/4
+                                              1.0014eiπ/4
+    Cψ̄,µ,σ        √
+                     2
+                                   √
+                                     2
+                                                  √
+                                                    2           relevant perturbations that shift the RG flow off criti-
+    Cǫ,ψ,ψ̄         i           1.234i         1.0243i          cality. Here we have demonstrated that the (previously
+    Cǫ,ψ̄,ψ        -i           -1.234i       -1.0243i          observed) inability of ER to fully reproduce a critical RG
+                                                                fixed point stems from a limitation of the optimization
+TABLE I. Energy density, central charge c, scaling dimensions   strategies used, as opposed to an inherent limitation of
+∆i of primary fields (and also of the Hamiltonian ∆H ), OPE
+                                                                the finite-χ MERA. This result may hint towards better
+coefficients Cijk , of the χ = 2, 8 MERA constructed using
+wavelets.                                                       strategies for numerical optimization of MERA in gen-
+                                                                eral.
+                                                                   The wavelet methodology could be extended to allow
+               P                                                analytic construction of MERA (and potentially branch-
+model, HIs. = r (−Xr Xr+1 − Zr ), using known decou-            ing MERA [33]) for free fermions in higher dimensions,
+pling [30] and Jordan-Wigner [31] transformations, see          and could also be extended to free bosonic MERA [34]
+Ref.[23] Section C for details.                                 which may connect with previous use of wavelets to study
+   Results and discussion.— We now analyze the accu-            bosonic field theories [35]. We expect that the wavelet-
+racy of the χ = 2 MERA from Eq. 1, constructed us-              MERA relation will lead to other useful results, poten-
+ing D4 wavelets, and a χ = 8 MERA, constructed using            tially allowing a better characterization of errors and im-
+higher order wavelets (see Ref.[23], Section B), as ap-         proved implementations of MERA, and to be useful in
+proximate ground states of the quantum critical Ising           the ongoing efforts to understand MERA in the context
+model. Note that, as with the χ = 2 MERA, the pa-               of AdS/CFT. Going the other way, this relation could
+rameters defining the χ = 8 MERA are exactly speci-             also lead to useful advances in the design of wavelet trans-
+fied from a closed-form solution. The ground energy and         forms and in wavelet applications [27].
+critical data [13, 14] (including central charge c, scaling        The authors acknowledge support by the Simons Foun-
+dimensions ∆i and operator product expansion (OPE)              dation (Many Electron Collaboration). SRW acknowl-
+coefficients Cijk ) are computed using standard MERA            edges funding from the NSF under grant DMR-1505406.
+techniques [5–7], and the results displayed in Table I.
+   The wavelet-derived results reproduce the critical data
+of the Ising CFT, with the χ = 8 MERA providing signif-
+icantly better accuracy. However, we find it remarkable          [1] J. I. Cirac and F. Verstraete, J. Phys. A: Math. Theor.
+that the χ = 2 MERA of Eq. 1 does reasonably en-                     42, 504004 (2009).
+code the CFT, despite the simplicity of the tensors it           [2] G. Vidal, Phys. Rev. Lett. 99, 220405 (2007).
+is constructed from. A novel feature of these MERA is            [3] G. Vidal, Phys. Rev. Lett. 101, 110501 (2008).
+                                                                 [4] For a review of the renormalization group see: M.E.
+that some of the scaling dimensions are reproduced ex-               Fisher: Renormalization group theory: its basis and for-
+actly (specifically those corresponding to primary fields            mulation in statistical physics. Rev. Mod. Phys. 70, 653
+{I, ε, ψ, ψ̄}, as well as for several of their descendants),         (1998).
+which has never been achieved with variationally opti-           [5] R.N.C. Pfeifer, G. Evenbly, and G. Vidal, Phys. Rev. A,
+mized MERA.                                                          79, 040301(R) (2009).
+                                                                 [6] G. Evenbly, P. Corboz, and G. Vidal, Phys. Rev. B 82,
+  As usual, each layer of the MERA can be understood                 132411 (2010).
+as implementing a step of entanglement renormalization           [7] G. Evenbly and G. Vidal: Quantum criticality with
+(ER), which can be used to generate a sequence of in-                the multi-scale entanglement renormalization ansatz.
+                                                                                                                              5
+
+     Strongly Correlated Systems: Numerical Methods, edited            (2014).
+     by A. Avella and F. Mancini (Springer Series in Solid-       [31] J. I. Latorre, E. Rico, and G. Vidal, Quant. Inf. Comput.
+     State Sciences, Vol. 176 2013).                                   4 (2004), 48–92.
+ [8] G. Evenbly and G. Vidal, Phys. Rev. B, 79, 144108            [32] The accuracy with which MERA approximats a scale-
+     (2009).                                                           invariant RG flow is studied (in the related context of
+ [9] G. Evenbly and G. Vidal, Phys. Rev. Lett. 102, 180406             tensor network renormalization) in Section A of the sup-
+     (2009).                                                           plementary material of: G. Evenbly and G. Vidal, Phys.
+[10] Y.-L. Lo, Y.-D. Hsieh, C.-Y. Hou, P. Chen, and Y.-J.              Rev. Lett. 115, 180405 (2015).
+     Kao, Phys. Rev. B 90, 235124 (2014).                         [33] G. Evenbly and G. Vidal, Phys. Rev. Lett. 112, 240502
+[11] G. Evenbly and G. Vidal, J Stat Phys (2014) 157:931-              (2014).
+     978.                                                         [34] G. Evenbly and G. Vidal, New J. Phys., 12, 025007
+[12] J. C. Bridgeman, A. O’Brien, S. D. Bartlett, A. C. Do-            (2010).
+     herty, Phys. Rev. B 91, 165129 (2015).                       [35] G. K. Brennen, P. Rohde, B. C. Sanders, S. Singh Phys.
+[13] P. Di Francesco, P. Mathieu, and D. Senechal, Conformal           Rev. A 92, 032315 (2015).
+     Field Theory (Springer, 1997).
+[14] M. Henkel, Conformal Invariance and Critical Phenom-
+     ena (Springer, 1999).
+[15] B. Swingle, Phys. Rev. D 86, 065007 (2012). H. Mat-
+     sueda, M. Ishihara and Y. Hashizume, Phys. Rev. D 87,
+     066002 (2013). T. Hartman and J. Maldacena, JHEP
+     05(2013) 014. A. Mollabashi, M. Nozaki, S. Ryu, T.
+     Takayanagi, JHEP 03(2014) 098.
+[16] G. Evenbly, G. Vidal, J Stat Phys (2011) 145:891-
+     918. B. Swingle, arXiv:1209.3304 (2012). X.-L. Qi,
+     arXiv:1309.6282 (2013).
+[17] I. Daubechies, Orthonormal bases of compactly sup-
+     ported wavelets, Comm. Pure Appl. Math. 41 (1988) 909-
+     996.
+[18] I. Daubechies, Ten Lectures on Wavelets, in: CBMS
+     Conf. Series in Appl. Math., Vol. 61, SIAM, Philadel-
+     phia, 1992.
+[19] A. Cohen, I. Daubechies, J. C. Feauveau, Biorthogo-
+     nal bases of compactly supported wavelets, Comm. Pure
+     Appl. Math., 1992, 45, 485-500.
+[20] I. Daubechies, Orthonormal bases of compactly sup-
+     ported wavelets II Variations on a theme, SIAM J. Math.
+     Anal., 1993, 24, 499-519.
+[21] C.S. Burrus, R.A. Gopinath, H. Guo, Introduction to
+     Wavelets and Wavelet Transforms: A Primer, Prentice-
+     Hall, 1988, ISBN 0-13-489600-9.
+[22] For an overview of the early connections between
+     wavelets and RG, see Battle, G., “Wavelets: A renormal-
+     ization group point of view”, in Wavelets and Their Ap-
+     plications, M. B. Ruskai, ed. (Bartlett and Jones, 1992);
+     and Battle, G., Wavelets and Renormalization, World
+     Scientific, (1999).
+[23] See Supplemental Material for further details on (A)
+     achieving wavelets that separate positive and negative
+     energies, (B) construction of higher order wavelet solu-
+     tions, (C) mapping solutions to the quantum critical Ising
+     model, and (D) the RG flow of the Hamiltonian.
+[24] G. Evenbly and G. Vidal, Phys. Rev. B, 81, 235102
+     (2010).
+[25] A. J. Ferris, Phys. Rev. Lett. 113, 010401 (2014).
+[26] M. T. Fishman, S. R. White, Phys. Rev. B 92, 075132
+     (2015).
+[27] G. Evenbly, T. Baker, S. R. White, Representation and
+     design of wavelets using unitary circuits, in preparation.
+[28] We are assuming the orthogonal wavelets are normalized
+     to unity (under scalar product with themselves) such that
+     they form a unitary change of basis.
+[29] G. Beylkin, R. Coifman, V. Rokhlin, Comm. Pure Appl.
+     Math., 44 (1991) pp. 141-183.
+[30] G. Evenbly and G. Vidal, Phys. Rev. Lett. 112, 220502
+                                                                                                                             6
+
+   Supplemental Material: Entanglement renormalization and wavelets
+
+   Section A: Forming coherent low/high energy
+wavelets.— In this section we discuss in more detail a
+key step in the wavelet construction for the ground state
+of free fermions: the formation low/high energy wavelets
+by taking symmetric/antisymmetric pairs of Daubechies
+wavelets.
+   Given modified D4 Daubechies wavelets supported on
+the odd q̃zodd and even q̃zeven sublattices, see Eq. 6, we
+form symmetric lz and anti-symmetric hz wavelets as,
+
+             lz (r) = q̃zodd (r) + q̃zeven (r0 − r)
+            hz (r) = q̃zodd (r) − q̃zeven (r0 − r),   (A.1)
+
+see also Eq. 8. Here r0 is a discrete parameter that
+adjusts the spatial alignment of the paired wavelets. In
+practice r0 should be chosen such that symmetric lz and
+anti-symmetric hz wavelets have the best separation of
+energy, i.e. such that lz only has low frequency compo-
+nents and hz only has high frequency components. In
+Fig. A.1 the wavelets lz and hz at scale z = 0 (together
+with their corresponding Fourier spectra Lz and Hz ) are      FIG. A.1. (a) Depiction of q̃1odd (blue) and q̃1even (red), to-
+shown for three different alignments r0 . In all cases the    gether with symmetric l1 and anti-symmetric h1 combinations
+Fourier spectra Lz and Hz vanish at k = ±π/2, in ac-          for the alignment r0 depicted, see also Eq. A.1. (b) Fourier
+cordance with Eq. 7. However, it is only for the proper       spectra Lz and Hz of the wavelets lz and hz from (a). The
+                                                              wavelets do not form a coherent low/high energy pair (i.e. Lz
+alignment, see Fig. A.1(c,d), that the wavelets lz and hz
+                                                              still has significant component for |k| > π/2, and vice-versa
+form a coherent low/high energy pair to good approxi-         for Hz ). (c-d) The wavelets at a slightly different alignment
+mation.                                                       now produce (to good approximation) a coherent low/high en-
+   More generally, the best alignment r0 depends on par-      ergy pair. This is the alignment used in the derivation of the
+ticular the wavelets qz in use. In the circuit represen-      ground state wavelet approximation considered in the main
+tation of the wavelet transform, see Fig. 2(b), different     text. (e-f) At a different alignment still, the wavelets again
+alignments can be achieved through the addition of swap       fail to form a coherent low/high energy pair.
+gates in the transitional layer V of the circuit.
+   Section      B:      Higher        order       wavelet
+approximations.— Here we describe a systematic
+approach for constructing MERA that better approxi-           D2N Daubechies wavelets can be built with N levels uni-
+mate the ground state of free spinless fermions (and the      tary gates {v(θ1 ), v(θ2 ), v(θ3 ), . . . , v(θN )} in each layer
+quantum critical Ising model), based on higher order          (see Ref.[27] for details). The circuit with more levels of
+wavelets. By design, the D4 Daubechies wavelets have          unitary gates in each layer could subsequently be mapped
+two vanishing moments,                                        to a MERA of larger bond dimension χ, as discussed later
+                                                              in this section.
+                                 ∂Qz                             In practice we find it desirable to construct custom
+             Qz (0) = 0,                 = 0,         (B.1)
+                                  ∂k k=0                      higher-order wavelets, rather than using standard D2N
+                                                              Daubechies wavelets, as custom wavelets can be designed
+while, more generally, higher order D2N Daubechies            to allow for better low/high energy separation when later
+wavelets have N vanishing moments. The D4 wavelet             forming symmetric and anti-symmetric wavelet pairs.
+solution of the free fermion model, considered in the         We now discuss the derivation a custom wavelet filter
+main text, can be easily extended to higher order D2N         qz (r) of length L = 8, which corresponds to a circuit with
+wavelets by employing the same method of coupling two         four levels of unitary gates {v(θ1 ), v(θ2 ), v(θ3 ), v(θ4 )} in
+copies of the modified wavelet transform, as described        each layer, see Fig. B.1(a). We find in necessary to fix
+in Eq. 8). In terms of the circuit representation of the      θ4 = −π/2, such that gate v(θ4 ) becomes a swap gate, in
+WT, just as the unitary circuit that implements the D4        order to later generate wavelets with a good separation
+wavelets had two levels of unitary gates {v(θ1 ), v(θ2 )}     of energies. The remaining three angles {θ1 , θ2 , θ3 } are
+in each layer, see Fig. 1(b), a unitary circuit for the       chosen such that the wavelets they generate have a third
+                                                                                                                                  7
+
+vanishing moment,
+
+                       ∂ 2 Qz
+                                 = 0.                    (B.2)
+                        ∂k 2 k=0
+
+in addition to the two vanishing moments of Eq. B.1.
+The set of three equations (Eqs. B.1 and B.2) in three
+variables {θ1 , θ2 , θ3 } can be solved algebraically, with the
+exact solution given,
+                       √        √           √ q √              
+            56 + 14 106 − 7 23 + 2 106                4 106 − 39
+tan (θ1 ) =
+                                        105                       FIG. B.1. (a) One layer of the circuit, which now has four
+                 √         √    q √                             levels of unitary gates, that can encode a higher order wavelet
+             17 7 + 2 742             4 106 − 39                  transformation. The full circuit, formed by stacking identi-
+tan (θ2 ) =                                                       cal copies of this layer, forms a more accurate representation
+                               105
+              q        √                                         of the free fermion ground state. (b) Plot of the wavelets,
+            − 7 4 106 − 39                                        together with reflections they are later paired with to form
+tan (θ3 ) =                         ,                     (B.3)   symmetric/anti-symmetric combinations (dashed), for the 2,
+                        35
+                                                                  4 and 5 angle (or levels of unitary gates in each layer) wavelet
+which yields approximate values,                                  approximations to the free fermion ground state. The 2 angle
+                                                              wavelets are the D4 wavelets, while the higher order wavelets
+          θ1        0.276143653403021                             look like smoothed D4 wavelets.
+        θ2   0.950326554644286 
+                                   
+            ≈                      .                 (B.4)
+        θ3   −0.111215262156182 
+          θ4              −π/2
+
+It is not obvious that the new circuit with four levels of
+unitary gates in each layer can be related to a standard
+binary MERA (which only has two levels of unitary gates
+in each level). However, in Fig. B.2 we demonstrate that
+under appropriate grouping of tensors, the circuit with
+four levels of unitary gates and bond dimension χ can be
+precisely mapped to a standard binary MERA with larger
+bond dimension χ3 . [Following the same approach a cir-
+cuit with N levels of unitary gates in each layer can be
+mapped to a standard binary MERA of bond dimension
+χ(N −1) ]. The circuit of Fig. B.1(a) for the free fermion
+ground state can be mapped to a MERA of bond dimen-
+sion χ = 64, or, following the decoupling transformation
+discussed in Section C of the supplementary material,
+can be mapped to a χ = 8 MERA for the critical Ising
+model. Table I of the main text the compares the accu-
+racy of this χ = 8 MERA for the Ising model, built from
+higher order wavelets, to the χ = 2 MERA, built from
+the D4 wavelets. It is seen that the χ = 8 MERA offers
+significantly improved results in all measured quantities
+(including both ground energy as well as in the repro-            FIG. B.2. (a) A MERA with isometries w and three levels of
+duction of critical data for the Ising CFT).                      disentanglers {u1 , u2 , u3 } in each layer. (b) Groups of tensors
+                                                                  can be contracted together to form isometries wB and disen-
+   In principle one could achieve an arbitrarily precise ap-      tanglers uB of larger bond dimension χ3 , compared to bond
+proximation to the free fermion ground state by allowing          dimension χ of the original tensors. (c) Under the grouping
+more levels of unitary gates {v(θ1 ), v(θ2 ), v(θ3 ), . . .} in   from (b) the MERA with three levels of disentanglers is re-
+each layer of the circuit, and then solving for the angles        duced to a standard binary MERA of larger bond dimension.
+{θ1 , θ2 , θ3 , . . .} in order to maximize the vanishing mo-
+ments of the wavelets (in addition to requiring that the
+wavelets can offer a good separation of energies). In prac-
+tice, however, we have not pursued this direction much            unitary gates there are no closed form solutions to the
+for two main reasons. (i) Firstly, beyond four levels of          equations for vanishing moments, such that one must re-
+                                                                                                                                 8
+
+                                                                   ground state of free spinless fermions,
+                                                                                        X  †                       
+                                                                              Hff = −         âr+1 âr + â†r âr+1 ,        (C.1)
+                                                                                                 r
+
+                                                                   and can be mapped to a binary MERA of bond dimen-
+                                                                   sion χ = 4 under an appropriate grouping of tensors,
+                                                                   see Fig. C.1(a-b). In this section we discuss how the
+                                                                   free (spinless) fermion Hamiltonian Hff can be decoupled
+                                                                   into two copies of free Majorana fermions, each of which
+                                                                   can then be mapped to the quantum critical Ising model
+                                                                   HIs. , see Refs.[30, 31] for additional details. Furthermore,
+                                                                   we also describe how to implement equivalent transfor-
+                                                                   mations on the ground state MERA of Hff in order to
+                                                                   decouple into two copies of the ground state MERA for
+                                                                   the critical Ising model HIs. .
+                                                                      For every spinless fermion âr we define a pair of Ma-
+                                                                                         ⌣            ⌣
+                                                                   jorana operators d 2r−1 and d 2r ,
+                                                                                                 ⌣            ⌣
+
+FIG. C.1. (a) Groups of unitary gates from the circuit in Fig.                                   d 2r−1 + i d 2r
+                                                                                         âr =                   ,            (C.2)
+2(b) can be combined to form isometries wF and disentan-                                               2
+glers uF of bond dimension χ = 4 (represented by a double
+index). (b) The isometries wF and disentanglers uF form a          and then express Hamiltonian Hff in these Majorana op-
+χ = 4 binary MERA for the ground state of the free fermion         erators,
+system in Eq. C.1. (c) A unitary transformation y is made
+                                                                               X ⌣        ⌣         ⌣    ⌣
+                                                                                                                
+on wF from (a), where y is specified as a linear mapping Y of            Hff =     i d 2r−1 d 2r+2 − d 2r d 2r+1 .  (C.3)
+Majorana modes in Eqs. C.4 and C.5, to decouple into a pair                          r
+of tensors w and w̃. (d) A unitary transformation y is made
+on uF from (a) to decouple into a pair of tensors u and ũ. (e)    The Majorana representation of Hff can then be decou-
+Tensors w and u form a χ = 2 scale-invariant binary MERA           pled by unitarily transforming blocks of four Majorana
+for the quantum critical Ising model.                              modes,
+                                                                                 ⌣                   X            ⌣
+                                                                                 d′ 2r−1+k =                 Ykp d 2r−1+p ,   (C.4)
+                                                                                                 p=1,2,3,4
+sort to numerical optimization to find the appropriate an-
+gles {θ1 , θ2 , θ3 , . . .}. (ii) Secondly, the solutions beyond   where matrix Y is defined,
+four levels of unitary gates correspond to MERA of large
+bond dimension, which are not computationally feasible
+                                                                                                   
+                                                                                            0 1 0 0
+to contract. This being said, we have experimented in op-                                 0 0 1 0
+                                                                                                   
+timizing a five angle solution, corresponding to a χ = 16                            Y =           .                        (C.5)
+                                                                                          1 0 0 0
+MERA for the quantum critical Ising model,
+                                                                                            0 0 0 1
+                                   
+          θ1        0.133662134988773                              The transformed Hamiltonian Hff′ , written in terms of
+         θ   −1.311424155804674                                                      ⌣
+         2 
+                                                                   Majorana modes d′ 2r , has been decoupled into two copies
+                                      
+         θ3  =  −0.099557657512352  ,                 (B.5)
+                                   
+                                                               of free Majorana fermions, H̃ff = HA + HB , with
+         θ4   0.717592959416643 
+            θ5          0.157462489552395                                       X ⌣ ⌣                ⌣       ⌣
+                                                                                                                   
+                                                                          HA =      i d′ 2r d′ 2r+3 − d′ 2r−1 d′ 2r ,  (C.6)
+                                                                                 r odd
+where the angles were chosen to produce wavelets with
+good separation of energies in addition to possessing two          supported on the r odd sublattice, and HB defined identi-
+vanishing moments. The MERA built from these gates                 cally but supported on the r even sublattice (see Ref.[30]
+reproduced a ground energy (per site) of E = −1.272968             for additional details). Each of the Hamiltonians HA and
+for the critical Ising model, which equates to a relative          HB can then be mapped to a copy of the quantum critical
+error of 0.02%.                                                    Ising model HIs. via the Jordan-Wigner transformation
+  Section C: Mapping from free spinless fermions                   [31].
+to the quantum Ising model.— The circuit of Fig.                      The decoupling transformation can similarly be im-
+2(b) from the main text gives an approximation to the              plemented on the quantum circuit, see Fig. 2(b), that
+                                                                                                                              9
+
+approximated the ground state of Hff . The collection            The linear maps WM (θ) and UM (θ) for Majorana modes
+of gates considered in Fig. C.1(c), which could be con-          can be re-written, via the Jordan-Wigner transform, as
+tracted to form an isometry wF of the free fermion               unitaries w(θ) and u(θ) acting on two spin-1/2 sites (since
+MERA as depicted in Fig. C.1(a), can be represented              four Majorana modes equals two spins). This yields,
+as a linear map on four spinless fermion modes â,                                                             
+                       X                                                       c(θ−π/4)   0      0     s(θ−π/4)
+               â′r =       [WF (θ)]rp âp ,       (C.7)                    
+                                                                                  0     c(π/4) −s(π/4)     0
+                                                                                                                
+                                                                     w(θ) =                                    ,
+                                                                                                               
+                       p=1,2,3,4
+                                                                                 0     s(π/4) c(π/4)      0    
+where matrix WF (θ) is defined,                                               −s(θ−π/4)   0      0     c(θ−π/4)
+                 √                                                                                            (C.13)
+                      2cθ sθ −sθ    0
+                                  √
+              1  0        cθ cθ  2sθ 
+                                        
+    WF (θ) = √  √                      ,               (C.8)
+                                                                                                     
+                                                                                            cθ 0 0 sθ
+               2  2sθ −cθ cθ       0 
+                                  √                                                       0 1 0 0 
+                                                                                                     
+                      0 −sθ −sθ     2cθ                                           u(θ) =             ,                (C.14)
+                                                                                          0 0 1 0 
+with cθ and sθ short for cos(θ) and sin(θ) respec-                                         −sθ 0 0 cθ
+tively. Similarly, the collection of gates considered in Fig.
+C.1(d), which can be contracted to form a disentangler           when written in the basis of Pauli Z eigenstates,
+uF of the free fermion MERA as shown in Fig. C.1(a), is          {|↑↑i , |↓↑i , |↑↓i , |↓↓i}. These tensors can alternatively
+also a linear map on four fermionic modes â, here defined       be expressed as sums of tensor products of Pauli matri-
+by the matrix,                                                   ces,
+                                                                             √                       √
+                                                                                 2c(θ−π/4) + 1        2c(θ−π/4) − 1
+                                            
+                           cθ 0 −sθ 0                               w(θ) =             √        II +        √       ZZ+
+                         0 cθ
+                        
+                                      0 sθ 
+                                                                                    2 2                   2 2
+              UF (θ) =                      .        (C.9)                        √                        √
+                         sθ 0        cθ 0                                    1 − 2s(θ−π/4)            1 + 2s(θ−π/4)
+                                                                             i          √        XY − i        √       YX
+                           0 −sθ 0 cθ                                                 2 2                     2 2
+                                                                             cθ + 1         cθ − 1       isθ      isθ
+Each of these linear maps, defined by WF (θ) and UF (θ),             u(θ) =            II +        ZZ −      XY −     Y X,
+                                                                                 2             2          2         2
+can be decoupled into a pairs of separate maps by first (i)                                                             (C.15)
+re-writing the maps in terms of Majorana modes, then
+(ii) applying the decoupling transformation Y , described        where ZZ is short for Z ⊗ Z etc. The χ = 2 MERA
+by Eqs. C.4 and C.5, as depicted in Fig. C.1(c,d). The           of Eq. 1 in the main text corresponds to setting isome-
+result is that WF (θ), which was a map for four spinless         tries w(θ1 ) and disentanglers u(θ2 ) with angles [θ1 , θ2 ] =
+fermion modes (or eight Majorana modes), is decoupled            [π/12, −π/6] associated to the D4 Daubechies wavelets.
+into a pair of maps WM (θ) each acting on four Majorana          Similarly, the χ = 8 MERA considered in Table I of
+modes,                                                           the main text, corresponds to constructing unitary gates
+                                                                 {w(θ1 ), u(θ2 ), u(θ3 ), u(θ4 )}, with angles θ as specified in
+      ⌣                                    ⌣
+                                                                 Eq. B.4, and then grouping sets of tensors to form a
+                      X
+      d′ 2r−1+k =               [WM (θ)]rp d 2r−1+p ,   (C.10)
+                    p=1,2,3,4
+                                                                 MERA of bond dimension χ = 8 as described in Fig.
+                                                                 B.2.
+where matrix WM (θ) is defined,                                     The tensors derived in Eq. C.15 represent the scale-
+                                                               invariant part of a MERA that approximates the ground
+                   cθ 0 −sθ 0                                    state of the quantum critical Ising model. However, one
+                  0 sθ 0 −cθ 
+                                                               also needs to consider the transitional layer, i.e V of
+       WM (θ) =                   .                   (C.11)   Fig. 2(b), in order to build the full ground-state MERA.
+                  sθ 0 cθ      0 
+                                                                 When transformed into spin degrees of freedom the tran-
+                    0 cθ 0      sθ
+                                                                 sition layer V becomes a product of commuting gates
+Likewise, UF (θ) is decoupled into a pair of maps UM (θ),        vr,r+1 ,
+each acting on four Majorana modes,                                                           Y
+                                                                                        V =       vr,r+1 ,              (C.16)
+                                      
+                      cθ 0 −sθ 0                                                              r
+
+                     0 cθ      0 sθ 
+                                      
+         UM (θ) =                     .          (C.12)        which are defined,
+                     sθ 0      cθ 0 
+                       0 −sθ 0 cθ                                        vr,r+1 = √12 (−Ir Ir+1 + iXr Xr+1 ) .          (C.17)
+                                                                                                                              10
+
+                                                                that
+                                                                                            [0]
+                                                                                      hψ|H̃Is. |ψi = 0,                 (D.2)
+                                                                with |ψi the scale-invariant part of the MERA (i.e. the
+                                                                scale-invariant MERA defined by the isometries w and
+                                                                disentanglers u of Eq. 1 without any transitional layers).
+                                                                Each layer of the scale-invariant MERA can be regarded
+                                                                as a step of coarse-graining with entanglement renormal-
+                                                                ization, which can be applied to generate a sequence of
+                                                                coarser Hamiltonians,
+                                                                              [0]     [1]         [2]     [3]
+                                                                           H̃Is. → H̃Is. → H̃Is. → H̃Is. → . . . .      (D.3)
+                                                                                                                        [z]
+                                                                Here the Hamiltonian at scale z is of the form H̃Is. =
+                                                                P [z]                                          [z]
+                                                                  r h(r,r+1,r+2) , where the local couplings h     are defined
+                                                                recursively,
+                                                                                                  
+FIG. D.1. (a) Distance of the Hamiltonian coupling h[z] at                           h[z+1] = 4S̄ h[z] ,                 (D.4)
+scale z from the fixed point coupling h∗ , see Eq. D.6. (b)
+The excitation spectrum (above the ground state) of the fixed   with S̄ the average scaling superoperator associated to
+point Hamiltonian HIs.
+                     ∗
+                       , which is seen to closely approximate   the scale-invariant MERA [7]. Note that the factor of
+the excitation spectrum of the quantum critical Ising model
+in the thermodynamic limit.
+                                                                4 in Eq. D.4 allows the couplings h[z] to have a consis-
+                                                                tent norm over different scales by offsetting the scaling
+                                                                dimension, ∆ = 2, ofPthe Hamiltonian. The fixed point
+                                                                                ∗
+                                                                Hamiltonian H̃Is. = r h∗(r,r+1,r+2) is defined in terms of
+Together, the transition layer of tensors V in addition         coupling
+the scale-invariant MERA built from gates w(θ) and u(θ)                                        
+constitute the approximation to the ground state of the                             h∗ ≡ lim h[z] ,                  (D.5)
+                                                                                            z→∞
+Ising model,
+                      X                                         which can be evaluated directly by decomposing h[0] in
+               HIs. =   (−Zr − Xr Xr+1 ).        (C.18)         the basis of eigenoperators of S̄ and then discarding com-
+                        r                                       ponents corresponding to sub-leading eigenvalues. Here
+                                                                it is found that h[0] has strictly zero component for all
+Alternatively, we can transform the Ising model, H̃Is. ≡        scaling operators of smaller scaling dimension than that
+V † HIs. V , where the transformed Hamiltonian H̃Is. is         of the Hamiltonian (i.e. that it contains no RG relevant
+given as,                                                       terms that would shift the flow from criticality).
+                X                                                  Let us define the distance D from the fixed point as,
+        H̃Is. =   (Xr Zr+1 Xr+2 − Xr Xr+1 ),     (C.19)
+               r                                                               D(z) ≡ h[z] − h[∗] / h[∗] .              (D.6)
+
+such that the ground state of H̃Is. can be approximated         Fig. D.1(a), which displays D as a function of RG step,
+as a fully scale-invariant MERA (i.e. with no transitional      shows that the Hamiltonian flows smoothly to the fixed
+                                                                                       ∗
+layers).                                                        point Hamiltonian H̃Is.    under coarse-graining. The exci-
+                                                                                     ∗
+   Section D: RG flow of the Hamiltonian.— In this              tation spectra of H̃Is. , when diagonalized on a lattice of
+section we discuss in more detail the RG flow of the crit-      10 sites and scaled such that the smallest excitation has
+ical Ising Hamiltonian generated from the wavelet based         value 1/8, is plotted in Fig. D.1(b). Here it is seen that
+                                                                   ∗
+MERA. For simplicity we focus on the χ = 2 MERA of              H̃Is. possesses, to good approximation, the correct exci-
+Eq. 1, although similar results also follow for the χ = 8       tation spectrum of the quantum critical Ising model in
+MERA discussed                                                  the thermodynamic limit [13, 14]. These results demon-
+          [0]  P in[0]Section B.
+   Let H̃Is. = r h(r,r+1,r+2) be the critical Ising Hamil-      strate that, under coarse-graining with the wavelet based
+tonian after transformation by the transitional layer of        MERA, the Hamiltonian of the quantum critical Ising
+the MERA, with three body coupling defined,                     model flows to a gapless fixed point that captures the
+                                                                correct low energy behavior of the Ising model. That
+      [0]
+                    X
+    h(r,r+1,r+2) ≡      (Xr Zr+1 Xr+2 − Xr Xr+1 ), (D.1)        the wavelet based MERA generates a flow to a gapless
+                    r                                           fixed point follows from the restriction that the wavelets
+                                                       [0]
+                                                                precisely vanish at the Fermi points, see Eq. 7, which
+see also Eq. C.19 in section C. We normalize H̃Is. by           prevents the introduction of RG relevant terms into the
+adding an appropriate contribution of the identity such         effective Hamiltonians.
+

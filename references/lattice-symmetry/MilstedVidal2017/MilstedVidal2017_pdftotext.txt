@@ -1,0 +1,1264 @@
+                                                                       Extraction of conformal data in critical quantum spin chains
+                                                                                       using the Koo-Saleur formula
+                                                                                             Ashley Milsted∗ and Guifré Vidal
+                                                                          Perimeter Institute for Theoretical Physics, Waterloo ON, N2L 2Y5, Canada
+                                                                                                   (Dated: December 5, 2017)
+                                                                  We study the emergence of two-dimensional conformal symmetry in critical quantum spin chains
+                                                               on the finite circle. Our goal is to characterize the conformal field theory (CFT) describing the
+                                                               universality class of the corresponding quantum phase transition. As a means to this end, wePpropose
+                                                               and demonstrate automated procedures which, using only the lattice Hamiltonian H = j hj as
+                                                               an input, systematically identify the low-energy eigenstates corresponding to Virasoro primary and
+                                                               quasiprimary operators, and assign the remaining low-energy eigenstates to conformal towers. The
+                                                               energies and momenta of the primary operator states are needed to determine the primary operator
+arXiv:1706.01436v4 [cond-mat.str-el] 4 Dec 2017
+
+
+
+
+                                                               scaling dimensions and conformal spins – an essential part of the conformal data that specifies the
+                                                               CFT. Our techniques use the action, on the low-energy eigenstates of H, of the Fourier modes Hn
+                                                               of the Hamiltonian density hj . The Hn were introduced as lattice representations of the Virasoro
+                                                               generators by Koo and Saleur [Nucl. Phys. B 426, 459 (1994)]. In this paper we demonstrate that
+                                                               these operators can be used to extract conformal data in a nonintegrable quantum spin chain.
+
+
+                                                                   I.    INTRODUCTION                              where L is the length of the circle and c is the central
+                                                                                                                   charge of the CFT, which determines the Casimir en-
+                                                     Conformal field theory (CFT) [1–4] is ubiquitous in           ergy. The scaling dimensions, conformal spins and op-
+                                                  modern theoretical physics. It describes fixed points of         erator product expansion (OPE) coefficients (three-point
+                                                  the renormalization group flow [5], making it central to         correlators) of the primary operators, together with the
+                                                  our understanding of quantum field theory [6]. It is also        central charge, fully characterize the CFT [1] and are
+                                                  a core component both of string theory [7] and of the            referred to as conformal data.
+                                                  AdS/CFT correspondence of quantum gravity [8]. In
+                                                  condensed matter, as well as in statistical mechanics,
+                                                  continuous phase transitions can often be understood in                     A.   Extraction of conformal data
+                                                  terms of an underlying CFT that describes their univer-
+                                                  sal, long-distance/low-energy physics [1, 3–5]. Based on a          The extraction of conformal data from lattice models
+                                                  previous proposal by Koo and Saleur [9], in this paper we        has a long history. Following the landmark 1984 pub-
+                                                  develop tools to investigate the emergence of conformal          lication by Belavin, Polyakov and Zamolodchikov of [1],
+                                                  symmetry in generic quantum spin chains at criticality.          which revealed the intricate structure of 2D CFT, Cardy,
+                                                     In order to present our results, we first need to re-         Blöte, Nightingale and Affleck [10–14] discovered that,
+                                                  call two well-known facts about CFTs in two spacetime            at low energies and after suitably normalizing the lattice
+                                                  dimensions [1–4]. (i) On the plane, parameterized by             Hamiltonian H, the energies and momenta of a critical
+                                                  a complex coordinate z = x + iy, a CFT contains in-              quantum spin chain made of N spins must read
+                                                  finitely many scaling operators ϕα (z). These are fields                     2π       c                             2π
+                                                  that transform covariantly under a rescaling of the plane             Eα =      (∆α − ) + O(N −x ),          Pα =      Sα . (3)
+                                                                                                                               N       12                             N
+                                                  by a factor λ > 0 or a rotation by an angle θ ∈ [0, 2π):
+                                                                                                                   This matches the CFT spectrum (2) up to subleading,
+                                                   z → λz (rescaling)       ⇔    ϕα (0) → λ−∆α ϕα (0),             non-universal corrections O(N −x ), where x > 1 is also
+                                                                                                           (1)
+                                                   z → eiθ z (rotation) ⇔        ϕα (0) → e−iθSα ϕα (0),           model-specific [15]. One can therefore estimate the scal-
+                                                                                                                   ing dimensions ∆α and conformal spins Sα of the CFT
+                                                  where ∆α and Sα are the scaling dimension and confor-
+                                                                                                                   from the energies Eα and momenta Pα computed on the
+                                                  mal spin of ϕα (z). Scaling operators are organized into
+                                                                                                                   lattice, see e.g. Fig. 5. This result has proved extremely
+                                                  conformal towers, each consisting of a Virasoro primary
+                                                                                                                   useful in understanding critical lattice systems e.g. [16–
+                                                  operator and its descendants (see, e.g., Fig. 1). (ii) The
+                                                                                                                   33].
+                                                  operator-state correspondence establishes that for each
+                                                                                                                      One can think of (3) as demonstrating a low-energy
+                                                  scaling operator ϕα there is an eigenstate |ϕα i of the
+                                                                                                                   correspondence between the critical lattice Hamiltonian
+                                                  CFT Hamiltonian H CFT on the circle, with energy and
+                                                                                                                   H and the CFT Hamiltonian H CFT
+                                                  momentum given by
+                                                                 2π                          2π
+                                                                                                                                    N                    Z L
+                                                                             c 
+                                                         EαCFT =      ∆α −           PαCFT =              (2)                H=                        =     dx hCFT (x),
+                                                                                                                                   X
+                                                                                 ,               Sα ,                                  hj ∼ H      CFT
+
+                                                                 L          12                 L                                                           0
+                                                                                                                                   j=1
+
+                                                                                                                   where hj and hCFT (x) denote the lattice and continuum
+                                                  ∗ amilsted@pitp.ca
+                                                                                                                   Hamiltonian densities. It is then natural to ask whether
+                                                                                                                                     2
+
+this global correspondence extends to the local densities      to obtain these eigenstates. Indeed, we can also apply
+                                                               operators Hn to energy eigenstates obtained with more
+                     hj   ∼ hCFT (x).                          sophisticated techniques, such as periodic matrix product
+                                                               states [50], and in this way analyze larger systems, which
+An example of this local correspondence was already
+                                                               carry smaller finite-size errors.
+found in 1971 by Kadanoff and Ceva [34], who showed
+that a lattice analogue of the energy-momentum tensor             Note: Throughout the paper we differentiate between
+exists in the Ising model. Later, Koo and Saleur [9]           lattice objects, such as H, P , and Hn , and their CFT
+demonstrated the principle more generally by showing           counterparts H CFT , P CFT , and HnCFT , by means of the su-
+that, in some integrable models, theP    Fourier modes Hn      perscript CFT . On the other hand, states denoted as |ϕi,
+of hj , defined so that hj = (2π/N 2 ) n e−ijn N Hn , be-
+                                                 2π            |ϕα i, etc. belong either to the lattice or the CFT, as can
+have as lattice representations of certain linear combina-     be determined from the context.
+tions of the Virasoro generators of conformal symmetry:
+           n +L−n −δn,0 c/12. Other work had previously
+HnCFT ≡ LCFT     CFT
+
+
+established the existence of lattice representations (or de-    II.    LOW-ENERGY CORRESPONDENCE FOR
+formations) of (parts of) the Virasoro algebra in certain                 HAMILTONIAN DENSITIES
+integrable systems [35–42], but the proposal of [9] is of
+particular importance because it provides a prescription              A.   Critical quantum spin chains and CFTs
+for constructing lattice analogues of all the Virasoro gen-
+erators. This provides access to a wealth of information         We consider a periodic 1D lattice made of N sites with
+about the CFT, including the central charge. Indeed,           a translation invariant quantum Hamiltonian
+a number of authors have used the so-called Koo-Saleur
+formula to extract conformal data in various models, es-                                              N
+pecially logarithmic CFTs, which are nontrivial nonuni-                                     H=
+                                                                                                      X
+                                                                                                            hj ,
+tary CFTs with c = 0, see e.g. [43–48]. However, as                                                   j=1
+yet the Koo-Saleur formula has not enjoyed the same
+widespread use as (3), having been applied only to inte-       that decomposes as a sum of local Hamiltonian terms,
+grable systems.                                                where the term hj is located about site j and will be
+                                                               referred to as the Hamiltonian density on that site. A
+                                                               canonical example is the transverse field Ising model
+                     B.   Our results
+                                                                                                N
+                                                                            H Ising (λ) ≡ −        σj σj+1 + λσjZ ,                 (4)
+                                                                                                X  X X          
+   In this paper we propose and test methods which apply
+the Hamiltonian-density Fourier modes Hn [9] to system-
+                                                                                                j=1
+
+atically identify low-energy eigenstates of a critical spin    which is critical at λ = 1. We assume that, at criticality,
+chain Hamiltonian H (with local interactions) with CFT         there is a corresponding quantum CFT Hamiltonian
+scaling operators. In particular, we present automated
+procedures for finding the eigenstates corresponding to                                         Z L
+primary and quasiprimary operators, as well as for as-                            H   CFT
+                                                                                            =          dx hCFT (x),
+signing all remaining low-energy eigenstates to their re-                                        0
+spective (Virasoro or global) conformal towers. A key
+                                                               where x ∈ (0, L] parameterizes a circle of radius L/2π
+feature of these methods is that they provide a general
+                                                               and the Hamiltonian-density field operator hCFT (x) can
+means for determining which scaling dimensions and con-
+                                                               be written [1–4] in terms of the chiral and anti-chiral
+formal spins derived from (3) belong to primary fields in
+                                                               components T CFT (x) and T CFT (x) of the traceless energy-
+the CFT, thus delivering a crucial piece of the confor-
+                                                               momentum tensor of the CFT on the circle,
+mal data. They also deliver an improved way of identi-
+fying the energy-momentum-tensor state, often used to                                      1
+determine the correct normalization for H. Furthermore,                     hCFT (x) ≡       T CFT (x) + T CFT (x) .
+                                                                                                                  
+                                                                                          2π
+our construction sets the stage for a systematic determi-
+nation of the OPE coefficients for generic critical spin       Similarly, to the lattice momentum operator P (defined
+chains, which involves additionally determining scaling        such that eiP N is a translation by one lattice site) we
+                                                                              2π
+
+operators on the lattice and will be discussed in [49].        associate the CFT momentum operator
+   Finally, we establish that our methods, and hence the
+Koo-Saleur formula, are applicable away from integra-                                           Z L
+bility by demonstrating them in the self-dual ANNNI                                P CFT =             dx pCFT (x),
+model: a nonintegrable perturbation of the Ising model.                                          0
+
+   We stress that, although for this paper we used exact                                                             
+                                                               where pCFT (x) ≡         T CFT (x) − T              (x) /(2π) is the mo-
+                                                                                                            CFT
+diagonalization to obtain the low-energy eigenstates of
+H, our core proposal is independent of the method used         mentum density.
+                                                                                                                                           3
+
+              B.    Fourier mode expansions                                         The central assumption of is that, at low energies and
+                                                                                 up to finite-size corrections, each Hn should act on the
+  The Fourier modes LCFT  and LCFT  of the chiral and                            simultaneous eigenstates |ϕα i of H and P on the lattice
+                                                                                 as its CFT counterpart HnCFT does on the simultaneous
+                       n        n
+anti-chiral energy-momentum tensor operators [1–4]
+                                                                                 eigenstates of H CFT and P CFT in the continuum. Strong
+                L
+                       Z L
+                                                                c                evidence for this was provided in [9] and subsequent work
+                              dx e+inx L T CFT (x) +
+                                           2π
+            ≡                                                                    (for integrable systems), but we will need more details for
+      CFT
+     Ln                                                           δn,0 ,
+              (2π)2                                            24
+                         0
+                       Z L                                                 (5)   our purposes. We therefore begin in Sect. III by explain-
+      CFT
+     Ln     ≡
+                L
+                              dx e  −inx 2π
+                                         L      T
+                                                    CFT         c
+                                                          (x) + δn,0 ,           ing how the Fourier modes HnCFT act in the continuum.
+              (2π)2      0                                     24                This is best understood in terms of the Fourier modes
+                                                                                 LCFT  and LCFTn , which act simply as ladder operators on
+where n ∈ Z, furnish chiral and anti-chiral instances of
+                                                                                   n
+                                                                                 the eigenbasis |ϕα i.
+the Virasoro algebra [1, 51]                                                        At this point, a natural question to ask is whether it
+                                                 c                               would be more convenient to construct, and directly work
+   [LCFT
+     n , Lm ] = (n − m)Ln+m +
+          CFT           CFT
+                                                   n(n2 − 1)δn+m,0               with, lattice versions Ln and Ln of the Virasoro genera-
+                                                12
+                                                                                 tors LCFT
+                                                                                        n and Ln , as was done in [9], instead of using the
+                                                                                                   CFT
+
+   [LCFT
+     n , Lm ] = 0                                                          (6)
+            CFT
+                                                                                 lattice Fourier modes Hn . After all, most CFT practi-
+     CFT    CFT               c
+   [Ln , Lm ] = (n − m)Ln+m + n(n2 − 1)δn+m,0
+                                    CFT
+                                                                                 tioners are already familiar with the Virasoro generators
+                             12                                                    n and Ln , which explicitly discriminate between chi-
+                                                                                 LCFT         CFT
+
+
+                                                                                 ral and anti-chiral CFT modes, and not so much with the
+and are the canonical choice of generators of conformal
+                                                                                 Fourier modes HnCFT . As explained in App. A, doing so
+symmetry on the CFT Hilbert space.
+                                                                                 is possible in principle but far from optimal in practice.
+   Importantly for our purposes, the Fourier modes HnCFT
+                                                                                 Next we briefly summarize why.
+of the Hamiltonian density operator hCFT (x) correspond
+                                                                                    Given the lattice Hamiltonian density hj as the only
+to certain linear combinations of the above Virasoro gen-
+                                                                                 input, it is indeed possible to use energy conservation to
+erators,
+                                                                                 obtain a lattice momentum density pj ≡ i [hj , hj−1 ], and
+                              Z L                                                thus produce chiral and anti-chiral energy-momentum
+                         L
+                                    dx e+inx L hCFT (x)                    (7)   operators Tj = 21 (hj + pj ) and T j = 21 (hj − pj ), whose
+                                                    2π
+             HnCFT ≡
+                         2π    0                                                 Fourier mode expansion leads to lattice Virasoro gener-
+                                                 c
+                    = LCFT
+                       n + L−n −
+                                     CFT
+                                                   δn,0 .                        ators Ln and Ln that act as LCFT  n and Ln at low ener-
+                                                                                                                             CFT
+
+                                                12                               gies and up to finite size corrections. However, by con-
+where we note that, for n = 0                                                    struction there are additional finite-size corrections in Ln
+                                                                                 and Ln , compared to Hn , which can be traced back to
+                                             c   L CFT                           finite-size corrections to the eigenstate energies of H (see
+            H0CFT = LCFT
+                     0 + L0 −
+                          CFT
+                                               =    H .                          App. A). Therefore, from a numerical perspective, it is
+                                            12   2π
+                                                                                 preferable to work with the lattice Fourier modes Hn , as
+   In direct analogy, following the proposal of Koo and                          we do in this paper.
+Saluer [9], we introduce the Fourier modes Hn of the
+lattice Hamiltonian density hj
+                                                                                        III.   CONFORMAL TOWERS IN THE
+                    N                                                                              CONTINUUM
+                  N X                                         N
+                                                     H0 =                  (8)
+                                    2π
+          Hn ≡               e+ijn N hj ,                        H,
+                  2π j=1                                      2π
+                                                                                   A.   The Virasoro generators as ladder operators
+in terms of which the lattice Hamiltonian density hj at
+site j reads                                                                       Recall that in a 2D CFT, the combinations LCFT0 ± L0
+                                                                                                                                       CFT
+
+
+                                                                                 generate the dilations and rotations in (1) [1–4]. There-
+                                +N/2                                             fore, by the operator-state correspondence [1, 52], these
+                      2π                                                         operators act on the state |ϕα i as
+                  hj = 2
+                                                     2π
+                                   X
+                                           e−ijn N Hn .
+                      N
+                                                                                                 0 + L0        |ϕα i = ∆α |ϕα i,
+                               n=−N/2
+                                                                                                             
+                                                                                                LCFT     CFT
+
+
+
+                                                                                                L0 − L0 |ϕα i = Sα |ϕα i,
+                                                                                                 CFT     CFT
+                                                                                                             
+
+                    C.       General strategy
+                                                                                 which, given that H CFT and P CFT can be written in terms
+                                                                                 of LCFT
+                                                                                     0 ± L0
+                                                                                            CFT
+                                                                                                as
+   Our goal is to use the Fourier modes Hn of the lattice
+Hamiltonian density hj to systematically extract confor-                                              2π  CFT               c 
+                                                                                              H CFT =      L0 + L0 −
+                                                                                                                    CFT
+
+mal data from the low-energy subspace of the critical                                                 L                     12          (9)
+lattice Hamiltonian H. This will be discussed in Sect. IV                                             2π  CFT          
+                                                                                                    =
+                                                                                                                    CFT
+                                                                                              P CFT
+                                                                                                           L0 − L0        ,
+and then numerically demonstrated in Sect. V.                                                         L
+                                                                                                                                          4
+
+    4                                                                            (corresponding to a primary operator). Primary states
+                                                                                 are therefore those states annihilated by all ladder oper-
+    3
+                                                                                 ators that reduce the energy [1–4]: LCFT
+                                                                                                                      n |ϕi = Ln |ϕi = 0
+                                                                                                                                 CFT
+
+
+                                                                                 for all n > 0. By (6), L−1 , L−2 generate the subalgebra
+                                                                                                          CFT  CFT
+
+
+                                                                                   n for n < 0 (and similar for Ln ) so that this condition
+                                                                                 LCFT                             CFT
+∆
+
+
+
+
+    2
+                        T                                         T              is equivalent to:
+    1                                         ε
+                                                                                  |ϕi primary ⇔ LCFT
+                                                                                                 n |ϕi = Ln |ϕi = 0, n = 1, 2. (11)
+                                                                                                          CFT
+
+
+
+                                      σ
+    0                                         I
+                                                                                 By acting with products of powers of LCFT n , Ln
+                                                                                                                                   CFT
+                                                                                                                                       with
+        −4         −3    −2    −1         0             1     2       3   4
+                                                                                 n < 0 on a primary |ϕi, all descendant states in its tower
+                                          S
+                                                                                 can be reached. From (10), descendants |ϕ0 i of a primary
+Figure 1.    Exact spectrum of the Ising CFT Hamiltonian                         |ϕi must have scaling dimension ∆ϕ0 and conformal spin
+in terms of ∆ and s, color-coded by conformal tower, show-                       Sϕ0 given by
+ing the location of the primary states |Ii, |σi and |εi, and
+the energy-momentum states |T i and |T i. Note: We shift                           ∆ϕ0 = ∆ϕ + n,      Sϕ0 = Sϕ ± m,     for n ≥ m,     (12)
+points horizontally from their allowed values (S is quantized)
+to avoid overlaps and better show degeneracies in this and                       where n ∈ N and m ∈ Z. Furthermore, it follows from
+subsequent figures.                                                              (11) that all descendants can be reached from the pri-
+                                                                                                    −n , L−n with n = 1, 2.
+                                                                                 mary using only LCFT     CFT
+
+
+                                                                                   Let us pause here and briefly consider a simple example
+    4
+              L−1               L+1                L+1                           to which we will return later: The Ising CFT only has
+                                                                                 three primary operators [53]:
+    3
+                        L−1
+             L−2                                  L+2
+                                                                                              primary operator     ∆    S state
+∆
+
+
+
+
+    2
+                        T                                         T
+                                                                                                 identity I        0 0      |Ii
+    1
+                              L−2                       L+2                                      spin σ(x)        1/8 0     |σi
+                                                                                            energy density ε(x)    1 0      |εi
+    0                                         I
+        −4         −3    −2    −1         0             1     2       3   4      Therefore it has just three conformal towers. From this
+                                          S
+                                                                                 data we can infer information about the spectrum of
+                                                                                 H CFT , P CFT using (2) and (12). For example, all eigen-
+Figure 2.      Illustration of the action of the ladder opera-
+tors (Virasoro generators) on the energy eigenstates of the                      states have either ∆α ∈ N (descendants of |Ii and |εi)
+Ising CFT Hamiltonian belonging to the I conformal tower.                        or ∆α ∈ N + 81 (descendants of |σi). The low-energy
+Two possible paths from (∆ = 4, S = 0) to (∆ = 4, S = −4)                        spectrum of the Ising CFT is shown in Fig. 1. In Fig. 2
+are shown, as is the annihilation of the quasiprimary state                      we illustrate how the ladder operators can be used to
+|∆ = 4, S = 0i by L+1 and L+1 .                                                  connect states within a particular conformal tower.
+
+
+automatically implies (2) or, equivalently,                                      B.    Identity, energy-momentum, and central charge
+                        L CFT  c                              L CFT
+             ∆α =         E + ,                    Sα =         P .                 Returning to a generic 2D CFT, a particularly impor-
+                        2π α  12                              2π α
+                                                                                 tant primary state that is always present is the “identity
+  Let us temporarily denote |ϕα i as |∆α , Sα i. From (9)                        state” |Ii. In a unitary CFT, which is the main focus of
+and the Virasoro algebra (6) it can be seen that the Vi-                         this work, the state |Ii corresponds to the ground state
+rasoro generators are ladder operators of H CFT and P CFT .                      of the Hamiltonian H CFT . This state is unique in hav-
+They indeed act on an eigenstate |∆α , Sα i as                                   ing a vanishing scaling dimension ∆I = 0 and in being
+                                                                                 annihilated by all LCFT
+                                                                                                       n , Ln
+                                                                                                             CFT
+                                                                                                                 with n = 0, ±1, which are
+                n |∆α , Sα i ∝ |∆α − n, Sα − ni,
+               LCFT                                                              the generators of global conformal transformations (those
+                                                                          (10)
+                n |∆α , Sα i ∝ |∆α − n, Sα + ni,
+               LCFT                                                              that are well-defined throughout the 2D plane) [1–4].
+                                                                                    Another relevant notion is that of a quasiprimary
+raising ∆ for n < 0 and lowering it for n > 0. Note also                         state [1–4], defined as a state that is annihilated by both
+that LCFT
+        n and Ln change S in opposite directions. This                                and LCFT
+                                                                                             1 :
+                  CFT
+                                                                                 LCFT
+is illustrated in Fig. 2.
+                                                                                   1
+
+   The Virasoro operators LCFT n , Ln
+                                      CFT
+                                          generate multiple                           |ϕi quasiprimary ⇔ LCFT
+                                                                                                          1 |ϕi = L1 |ϕi = 0.
+                                                                                                                   CFT
+                                                                                                                                       (13)
+(generally an infinite number, but not always [53]) dis-
+tinct towers of eigenstates of H CFT and P CFT called confor-                    This includes all primary states, but also certain descen-
+mal towers. Each tower has, at its base, a primary state                         dant states. Two important quasiprimary states that are
+                                                                                                                               5
+
+present in any CFT are those corresponding to the CFT        IV.    EXTRACTING CONFORMAL DATA FROM
+energy-momentum operators T CFT (x) and T CFT (x). They                     THE LATTICE
+are descended from the ground state |Ii as
+        r
+           c
+                                r
+                                  c                             In this section we discuss how to extract conformal
+             |T i = L−2 |Ii and
+                     CFT
+                                    |T i = LCFT
+                                            −2 |Ii, (14)     data by computing matrix elements of the operators Hn
+          2                       2                          of (8) between low-energy states |ϕα i. Here, each state
+where c is the central charge, and thus have scaling di-     |ϕα i is a simultaneous eigenstate of the (normalized) crit-
+mensions ∆T = ∆T = 2 and conformal spins ST = 2,             ical lattice Hamiltonian H and of the lattice momentum
+ST = −2. For the Ising CFT, states |Ii, |T i, and |T i       operator P or, more precisely, of the lattice translation
+                                                             operator ei N P that implements a translation by one lat-
+                                                                          2π
+can be seen in Figs. 1 and 2.
+                                                             tice site,
+
+                                                                   H|ϕn i = Eα |ϕα i,        ei N P |ϕα i = ei N Sα |ϕα i.
+                                                                                               2π             2π
+        C.   Characterization in terms of Hn
+
+   Finally, we have to translate the above statements for      We assume that, on these low-energy states, Hn acts
+the Virasoro generators LCFTn , Ln
+                                  CFT
+                                      into statements for    analogously to HnCFT of (7), up to finite-size corrections
+the Fourier modes Hn of the Hamiltonian density de-
+                      CFT                                    that decrease with the size N of the lattice.
+fined in (7). Recalling that the Fourier modes Hn for
+n 6= 0 are linear combinations of the Virasoro gener-
+                 n + L−n , we can infer their behavior
+ators, HnCFT = LCFT     CFT
+                                                                   A.   Normalization of H and central charge c
+from (10):
+         HnCFT |∆α , Sα i = a |∆α − n, Sα − ni +                 So far we have assumed that the critical lattice Hamil-
+                                                     (15)    tonian H was already normalized so that its spectrum is
+                            b |∆α + n, Sα − ni,              given by (3) (or, equivalently, so that the speed of light
+where a and b are determined by conformal symmetry           equals 1 in the large-N limit). However, in general the
+and may equal zero [1–4]. The following simple observa-      input data may be an unnormalized critical Hamiltonian
+tion will also prove very useful. Given an energy eigen-     H̃ or, equivalently, an unnormalized Hamiltonian density
+state |ϕi with energy Eϕ , let Γϕ be a projector onto all    h̃j , which relate to the normalized H and hj through
+the eigenstates with energy smaller than Eϕ ,
+                                                                         H = aH̃ + N b,             hj = ah̃j + b,           (20)
+                 Γϕ ≡
+                         X
+                                |ϕα ihϕα |.
+                      ϕα :Eα <Eϕ                             where a and b are two model-dependent constants. The
+                                                             constant b can be computed by requiring that the exten-
+Then we have that the product Γϕ Hn acts on |ϕi as
+                                       CFT
+                                                             sive part of the ground state energy vanish in the limit of
+                    n or L−n according to
+would either just LCFT    CFT
+                                                             large N (via a large-N extrapolation), but in the follow-
+                                                             ing we will be able to simply ignore it, mostly because b
+                            n |ϕi if n < 0,
+                         (
+                          LCFT
+          Γϕ Hn |ϕi =
+                CFT
+                                              (16)           does not affect operators Hn for n 6= 0.
+                            −n |ϕi if n > 0.
+                          LCFT                                  For a given system size N , the constant a can be deter-
+   It follows that we can recast the characterization (11)   mined using states that are present in, and relations that
+of a primary state as                                        are valid for, any CFT (see Sect. III). First we identify
+                                                             the states |Ii and |T i as eigenstates of H̃
+   |ϕi primary ⇔ Γϕ HnCFT |ϕi = 0, n = ±1, ±2,       (17)
+                                                                          H̃|Ii = ẼI |Ii,     H̃|T i = ẼT |T i,
+  Similarly, the characterization (13) of a quasiprimary
+state reads                                                  such that |Ii is the unique ground state of H̃ and |T i
+  |ϕi quasiprimary ⇔ Γϕ HnCFT |ϕi = 0, n = ±1. (18)          is the eigenstate with momentum PT = 2 × 2π     N that has
+                                                             maximal overlap with H̃−2 |Ii (where H̃−2 is defined as
+More generally, by using either Eq. (16) or a similar ex-    H−2 in (8) after replacing hj with h̃j ). This last identi-
+pression with a complementary projector I − Γϕ , we can      fication is motivated by the CFT relation (19). Then,
+use the Fourier modes Hn of the Hamiltonian density          recalling that the scaling dimension of T is ∆T = 2,
+h(x) to reproduce the action of the Virasoro generators      and therefore ETCFT − EICFT = ∆T × 2π   N = 2 × N , we set
+                                                                                                              2π
+  n and Ln . Finally, an expression such as (14) trans-
+LCFT        CFT
+                                                             a = 4πN /(ẼT − ẼI ), since this guarantees that the (nor-
+lates directly into
+                                                             malized) lattice energies also fulfill ET − EI = 2 × 2π
+                                                                                                                   N .
+                                                                With this normalization of H the energies and mo-
+        r                       r
+          c                       c
+            |T i = H−2
+                    CFT
+                        |Ii and     |T i = H2CFT |Ii, (19)
+          2                       2                          menta on the lattice read
+without the need of projectors, given that there are no                        N                             N
+states with energy below that of |Ii.                                   ∆α ≈      (Eα − EI ) ,        Sα =      Pα ,
+                                                                               2π                            2π
+                                                                                                                          6
+
+as we wanted. We can now estimate the scaling dimen-                Having identified primary candidate states, we can
+sions and conformal spins. Note: In the remainder (par-          build their conformal towers by applying sequences of Hn
+ticularly Sect. V), we slightly abuse notation, writing H        to them. By matching such sequences with sequences of
+and Hn for both the unnormalized and normalized oper-              n , Ln , taking finite-size corrections into account, we
+                                                                 LCFT   CFT
+
+
+ators. All results presented are obtained using the prop-        can then identify each nonprimary lattice eigenstate with
+erly normalized versions.                                        a particular descendant state of the CFT.
+   Once we have normalized hj , we can build the nor-               However, if we only want to know which conformal
+malized Fourier modes Hn using (8). Through the rela-            tower each nonprimary state belongs to, it suffices to
+tion (19), the central charge c of the emergent CFT can          examine the matrix elements of a single operator – one
+then be estimated by the simple expectation value [9]            that connects each primary state with all its descendants.
+                                                                 We saw in Sect. III that sequences of the ladder opera-
+                    c ≈ 2hI|H2† H2 |Ii.                   (21)   tors LCFT
+                                                                        −1 , L−2 , L−1 , and L−2 acting on the primary are
+                                                                              CFT   CFT       CFT
+
+
+                                                                 enough to reach any descendant in the CFT. On the lat-
+Alternatively, in order to eliminate finite-size corrections     tice we can therefore use the matrix elements
+of H2 that connect |Ii to states other than |T i, we can
+use                                                                                                     
+                                                                            τϕϕ0 ≡ |hϕ0 |ei(H1 +H2 +H−1 +H−2 ) |ϕi|,   (25)
+                    c ≈ 2|hT |H2 |Ii| ,
+                                     2
+                                                          (22)
+                                                                 where Hn is the projection of Hn onto the numerically
+which often produces more accurate results. In either            obtained low-energy subspace and the exponential gen-
+case, an extrapolation to large N increases the accuracy         erates all sequences of H±1,±2 (note that Hn† = H−n ).
+of the lattice estimate of the central charge c.                 We then assign a nonprimary state |ϕ0 i to the tower of
+   The above procedures to normalize H and estimate c            the primary candidate |ϕi that maximizes τϕϕ0 . Note that
+differ from previous proposals in that here we use H2 .          this procedure is suboptimal in the sense that finite-size
+The usual procedure to normalize H is to identify |T i           corrections accumulate when we take products of Hn .
+as the lowest-energy state with Pα = 2 × 2π                      More sophisticated schemes avoiding this issue are possi-
+                                               N [4]. How-
+ever, this fails if finite-size corrections shift the energy     ble [50], but this simpler scheme is already sufficient for
+of another state with Pα = 2 × 2π                                our purpose of illustrating the usefulness of Hn .
+                                    N below that of |T i, as
+happens e.g. in the ANNNI model discussed in Sect. V C.             Armed with an identification of each eigenstate of H
+Finally, an important advantage of estimating c using H2 ,       at fixed N , we may examine data from a range of sizes
+compared to an extrapolation using the ground state en-          to determine if the assignment is robust. To check that
+ergy alone [4], is that the latter also requires an extrapo-     the identification of primary states is robust we note
+lation of the nonzero extensive contribution to the ground       that, using (24), we can verify statements such as “With
+state energy, represented by b in (20), which must be sub-       max = 10−6 there is a primary candidate at ∆ ≈ 3 and
+tracted before attempting to extrapolate c.                      S = 3 for all tested system sizes N ≥ 6”. Since finite-
+                                                                 size corrections typically obey power-law or logarithmic
+                                                                 scaling in the system size [12, 13], we rely on them vary-
+      B.   Primary states and conformal towers                   ing smoothly with N and assume that primary candidate
+                                                                 states |ϕiN at different N , but with similar energy and
+   We now propose a criterion to identify candidates for         the same momentum, represent the same primary opera-
+primary states. In the CFT, primary states obey (17).            tor in the CFT. For such sequences of primary candidate
+In words, they are the states that cannot be descended to        states we should find that both ϕ (N ) and ϕ (N ) go
+                                                                                                     (1)          (2)
+
+lower energies by HnCFT or H CFT
+                              n . On the lattice at finite
+                                                                 to zero in the limit of large N .
+N we have corrections to the energies (3) and to the Hn ,
+both of which must be allowed for in defining a criterion
+to identify candidates for a primary state. That is, on            C.   Quasiprimaries and global conformal towers
+the lattice we need an approximate version of (17).
+   To this end, we define (n) to be the norm of the ma-            The identification of primary states on the lattice, as
+trix elements of 21 (H+n + H−n ) that connect an energy          discussed above, is a central application of the correspon-
+eigenstate |ϕi with states of lower energy:                      dence between the CFT Fourier modes HnCFT and their
+                                                                 lattice analogues Hn [9], because of its direct impact on
+                   Hn + H−n
+        ϕ ≡ Γϕ
+       (n)                 |ϕi ,         for n = 1, 2.   (23)   our ability to compute the conformal data of the under-
+                       2                                         lying CFT, which requires such an identification. How-
+We then define a primary candidate as a state with small         ever, a more refined characterization within each confor-
+(1) and (2) :                                                  mal tower is also possible on the lattice, as we discuss
+                                                                 next.
+  |ϕi primary candidate ⇔ (1)                                      A conformal tower (or Virasoro tower) decomposes into
+                           ϕ + ϕ   ≤ max , (24)
+                                (2)
+                                                                 infinitely many global conformal towers, each consisting
+which is analogous to (17) for max = 0.                         of a quasiprimary operator and its global descendants.
+                                                                                                                                                                        7
+
+                                                                                        0.56
+    4                                                                                                                              0.90
+                                                                                                      Ising c(N )                               Potts c(N )
+                                                                                        0.55          fit: c = 0.4995                           fit: c = 0.7985
+                                                                                                                                   0.88
+    3                                                                                   0.54
+                                                                                                                                   0.86
+
+
+
+
+                                                                                c(N )
+                                                                                        0.53
+                               H−2
+    2                                                                                                                              0.84
+∆
+
+
+
+
+                                                 H+1
+                                                                                        0.52
+
+                                                                                        0.51                                       0.82
+    1
+                                                           H−2                          0.50                                       0.80
+    0                                                                                      0.000   0.005   0.010   0.015   0.020     0.000   0.005   0.010   0.015   0.020
+                                                                                                           1/N 2                                     1/N 2
+        −4    −3          −2         −1     0          1         2   3   4
+                                            S
+                                                                                 Figure 4. Central charge from (21), with linear extrapola-
+Figure 3. Spectrum of the Ising model at system size N = 14                      tion to large N using all visible data. System sizes shown are
+with energies and momenta in terms of ∆ and S, showing the                       N = 8 . . . 18 for the Ising model and N = 8 . . . 14 for the three-
+action of H+1
+            Ising
+                  and H−2Ising
+                               on selected energy eigenstates. The               state Potts model. We do not provide an error for the extrap-
+empty circles identify the states |ϕα i to which the operator is                 olated c since there are systematic finite-size corrections on
+applied and the filled circles indicate the sizes of the matrix                  each point. The scaling exponent 2 is consistent with known
+elements hϕβ |HnIsing |ϕα i with the remaining eigenstates |ϕβ i,                finite-size corrections present in both models [12, 18, 54].
+on a logarithmic scale. Very small matrix elements < 10−12
+are not plotted.
+                                                                                 are centered between two sites. We propose in general
+                                                                                 that terms with support on sites j and j + r, and op-
+To identify quasiprimary states on the lattice, we resort                        tionally the sites in between, be given phases consistent
+to an approximate version of (18) in terms of the error                          with the midpoint x = j + r/2. For the Ising model,
+ϕ defined in (23), namely
+ (1)                                                                             this ensures that HnIsing remains consistent with Kramers-
+                                                                                 Wannier duality, which exchanges the σjX σj+1      X
+                                                                                                                                        and σjZ
+                                                                                 terms.
+    |ϕi quasiprimary candidate ⇔ (1) ≤ max , (26)
+                                  ϕ                                                 For a given finite system size N , we simultaneously
+which indeed is analogous to (18) for max = 0. Then,                            diagonalize the Hamiltonian and the translation opera-
+once a quasiprimary state |ϕi has been identified, its                           tor, with periodic boundary conditions, using the Arnoldi
+global conformal tower (generated in the CFT by act-                             algorithm – a Krylov-subspace method for finding eigen-
+ing on |ϕi with powers of LCFT                                                   value/eigenvector pairs of nonhermitian matrices [55] – to
+                             −1 and L−1 or, equivalently,
+                                     CFT
+
+
+powers of H1CFT and H−1
+                      CFT
+                          ) can be produced by studying                          find a set of low-energy eigenstates |ϕα i, with energies Eα
+the matrix elements                                                              and momenta Pα . In this case, we compute the 41 lowest-
+                                                                                 energy eigenvalues and corresponding eigenvectors. With
+                     κϕ       0 i(H1 +H−1 )       
+                                                                         (27)    these we compute the matrix-elements hϕβ |HnIsing |ϕα i in
+                      ϕ0 ≡ |hϕ |e           |ϕi|,
+                                                                                 the low-energy eigenbasis of H, which we normalize ac-
+where H1 , H−1
+              
+                are defined above and similar considera-                         cording to the discussion in Sect. IV A.
+tions to (25) apply.                                                                For our first test of the behavior of HnIsing , we examine
+                                                                                 a selection of matrix elements for n = ±1, 2, 3. We find
+                                                                                 that the action of these HnIsing within the computed ba-
+                               V.         RESULTS                                sis of 41 low-energy states is indeed consistent with that
+                                                                                 of their CFT counterparts (7), described in Sect. III, as
+                       A.        The Ising model                                 expected from [9]. In particular, despite noticeable finite-
+                                                                                 size corrections to the energies, states HnIsing |ϕα i have
+  As a first test of the methods introduced in Sect. IV, we                      nonzero overlap only with energy eigenstates of scaling
+examine the behavior of the Hamiltonian density modes                            dimension ∆α ± n + O() (where   1 represents finite-
+Hn for the integrable transverse field Ising model of (4),                       size corrections to the energies) and spin Sα − n, as ex-
+for which some conformal data was extracted in [9]. The                          pected from the CFT result of (15). Overlaps with states
+                                                                                 of incompatible scaling dimension are zero to numerical
+Hamiltonian is invariant under a global spin flip j=1 σjZ ,
+                                                  QN
+                                                                                 precision (within the 41 low-energy states under consid-
+and is critical at its self-dual point λ = 1 [4].                                eration). We plot a few examples in Fig. 3.
+  We construct Hn for the critical Ising model as
+                                                                                    Applying (24) to determine the primary candidate
+                      N                                                          states, we find that, even at N = 14, we can correctly
+                  N X  ijn 2π Z                                                 identify all three primary states using a tolerance close
+                                                        
+                         e N σj + ei(j+ 2 )n N σjX σj+1
+                                        1    2π
+                                                    X
+    HnIsing ≡ −                                           ,(28)
+                  2π j=1                                                         to machine precision, max = 10−14 . Although it is triv-
+                                                                                 ial that the primary states in the Ising model cannot
+where we have chosen different phases for the onsite terms                       be lowered in energy (there are no states at compati-
+σ Z and the bond terms σ X σ X to reflect that the bonds                         ble momenta that they could be lowered to), it is non-
+                                                                                                                            8
+
+    4                                                           the results of [9].
+                                                                   Fig. 5 shows the identification of eigenstates with pri-
+    3                                                           mary operators and their descendants at system size
+                                                                N = 14. Comparing with the Ising CFT spectrum of
+    2
+                                                                Fig. 1 we observe that, even in cases of very significant
+∆
+
+
+
+
+                  T                                 T           finite-size corrections to the energies, preventing an iden-
+                                                                tification of the tower using the spectrum alone, we are
+    1                                   ε
+                                                                able to use HnIsing to make an unambiguous identification.
+                                σ                                  The identification of global conformal towers using κϕ ϕ0
+    0                                   I
+                                                                of (27) was equally successful, as demonstrated in Fig. 6.
+        −4   −3       −2   −1       0       1   2       3   4
+                                    S
+
+Figure 5.     Ising model spectrum at system size N = 14,                      B.    Three-state Potts model
+with energies and momenta in terms of ∆ and S. States are
+colored according to their numerically identified conformal        We now test our algorithms with the three-state Potts
+towers. Primary candidate states, identified using (24) with    model, which has a more complicated emergent CFT
+max = 10−14 , are marked with diamonds.
+                                                                hosting more primary operators than the Ising CFT,
+                                                                including ones with significantly larger scaling dimen-
+    4                                                           sions. These are much harder to characterize numerically,
+                                                                partly because finite-size corrections to the Hn operators
+    3                                                           mix conformal towers, as detailed below.
+                                                                   The three-state Potts model [56] may be thought of as
+    2
+                                                                a generalization of the Ising model in which spins have
+∆
+
+
+
+
+                  T                                 T           not two positions (up and down), but three. Unlike the
+                                                                Ising model it is not equivalent to a theory of free par-
+    1
+                                                                ticles. It is, however, integrable at criticality [57]. The
+                                                                Hamiltonian
+    0
+                                    0       1   2       3   4
+                                                                                           1 Xh
+        −4   −3       −2   −1                                                                 N               i
+                                    S                                    H Potts (λ) ≡ −             †
+                                                                                                 Uj Uj+1 + λVj + h.c.
+                                                                                           2 j=1
+Figure 6. Ising model spectrum at system size N = 14 show-
+ing two quasiprimary states |T i and |T i (empty diamonds)      has a critical point at λ = 1, determined by self-duality,
+determined from (26). The colored dots are states connected     and may be represented in terms of matrices
+to each quasiprimary according to (27). Most of these cor-
+respond to global descendants of the CFT operators T and                 
+                                                                            1 0 0
+                                                                                              
+                                                                                                0 0 1
+                                                                                                      
+T . However, there is a linear combination of the two blue
+                                                                    U = 0 ω 0  , V = 1 0 0 , ω = ei 3 ,
+                                                                                                                   2π
+
+(red) states with S = 4 (S = −4) that fulfills (26) and thus
+corresponds to a quasiprimary CFT operator. See App. B.                     0 0 ω  ∗
+                                                                                                0 1 0
+
+                                                                which obey the exchange relations
+trivial, if unsurprising, that no descendant states (again,                                 U V = ωV U.
+within the 41 low-energy states under consideration) are
+misidentified as primary. That said, later we will see that     The Hamiltonian is manifestly invariant under the global
+the Potts model provides a much better proving ground           shift j=1 Vj , which implies that eigenstates fall into one
+                                                                     QN
+for the identification of primary states.                       of three Z3 charge sectors. At criticality its low-energy
+   We further observe that τϕϕ0 of (25) delivers a com-         physics is described by the three-state Potts CFT, which
+pletely unambiguous tower assignment to the remaining           has c = 4/5 and twelve primary operators, including
+states, consistent with the observed perfect ladder be-         some with nonzero spin and four with scaling dimension
+havior of HnIsing . In other words, there are no significant    ∆ > 2 [12, 17], making their identification nontrivial.
+finite-size corrections that mix conformal towers. Indeed,      The eight primary operators of the Z3 zero-charge sector
+in this case such corrections are disallowed by the sym-        are:
+metries of HnIsing (this is not the case for the Potts model
+– see below).                                                              I     ε    ΦεX      ΦXε     X     W    W     Y
+   Corrections are present, however, which affect the size
+of the nonzero matrix elements of HnIsing , as evidenced by          ∆     0   4/5     9/5      9/5   14/5    3    3    6
+the central charge estimates obtained from (21) shown in             S     0    0      −1       +1      0    −3   +3    0
+Fig. 4. Nevertheless, we obtain excellent agreement with
+c = 21 after extrapolation to large N , in concordance with     Here, we have largely followed the notation of [58].
+                                                                                                                                                  9
+
+                    CFT                                 lattice                             0.30
+    6                    Y
+                                                                                            0.25
+    5
+                                                                                            0.20
+
+
+
+
+                                                                              ǫ(1) + ǫ(2)
+    4
+                                                                                            0.15
+    3
+∆
+
+
+
+
+        W
+                         X
+                                       W                                                    0.10
+    2                                                                                                                                       Y
+              ΦεX            ΦXε                                                            0.05
+    1                                                                                                                                       X
+                         ε
+                                                                                            0.00
+    0                    I                                                                     0.00   0.05   0.10             0.15   0.20       0.25
+        −3 −2 −1     0        1    2   3     −3 −2 −1     0       1   2   3                                         1/N 4/5
+                     S                                    S
+                                                                               Figure 8.     Scaling with system size N of matrix elements
+Figure 7.    Three-state Potts CFT spectrum with labeling                      of H1Potts and H2Potts that lower the energy of the X and Y
+of the primaries (left) and lattice spectrum at system size                    primary candidate states, quantified using (23). The dashed
+N = 14 (right). We restrict to the zero Z3 charge sector. Lat-                 line marks the threshold max = 0.2 used to distinguish pri-
+tice primaries and descendants are identified as in Fig. 5 using               maries from descendants in Fig. 7. Using linear regression
+a tolerance max = 0.2 for primaries. For ∆ > 3 we restrict to                 on the four leftmost points, we see these matrix elements ap-
+spins |S| ≤ 3, allowing numerical identification of primaries                  pear to vanish in the large-N limit, consistent with these be-
+with |S| ≤ 1. We see that even high-∆ and chiral (S 6= 0)                      ing primary states. For comparison, we show the scaling for
+primaries are identified successfully in the lattice data, and                 two descendant states in gray. The scaling exponent 4/5 is
+that towers are mostly consistent with the CFT, despite the                    consistent with the leading finite-size correction in the Potts
+simplicity of the algorithm used for tower identification (see                 model [54, 59].
+Sect. IV). See main text for a discussion of errors.
+
+                                                                                  Finite-size corrections to HnPotts at N = 14 also af-
+    We first define the Hamiltonian density modes                              fect identification of conformal towers using (25). Com-
+                                                                               paring with the CFT spectrum in Fig. 7 we find that,
+                     N
+                  N X h ijn 2π                                                 although most assignments are plausible, some of the
+    HnPotts ≡ −          e N (Vj + h.c.)+                                      higher-energy states are clearly misidentified. For exam-
+                  2π j=1                                                       ple, the erroneous matrix elements of H2Potts affecting the
+                                                                    i          Y primary lead to the misidentification of ε descendants
+                                       ei(j+ 2 )n N (Uj Uj+1 + h.c.) ,
+                                             1    2π     †
+                                                                               as belonging to the Y tower. Furthermore, we find that
+                                                                               elements of the identity tower are sometimes misidenti-
+using them with the algorithms of Sect. IV to determine                        fied as X descendants. Although the former could easily
+primary candidates and tower assignments.                                      be eliminated if, when assigning towers to descendants,
+   At system size N = 14 we are able to use (24) to iden-                      we only considered primaries with lower energies than
+tify all eight primary states of the charge-zero sector,                       the descendant, the latter could not. For more precision,
+as shown in Fig. 7, albeit at a relatively high tolerance                      tower assignment should be based on a finite-size scaling
+max = 0.2. This is needed because, although we find (1)                      analysis similar to that of Fig. 8.
+to be negligible for all primary candidate states (mark-                          The tower-mixing errors we observe here are consistent
+ing them unambiguously as quasiprimary states), (2) is                        with the known finite-size corrections to the eigenstate
+significant for the X and Y primary candidates due to                          energies (3) of the Potts model. These can be under-
+matrix elements of H2Potts connecting those states to lower-                   stood as coming from perturbations of the uncorrected
+energy states. To justify setting max = 0.2 to suppress                       CFT Hamiltonian density hCFT (x) by irrelevant operators
+these matrix elements, we must examine their scaling                           (those with ∆ > 2) [12]. Of course, such perturbations
+with N . In Fig. 8 we show that X (N ) and Y (N )                            must also affect the Hamiltonian density Fourier modes
+                                       (2)           (2)
+
+both appear to go to zero in the large N limit, confirm-                       Hn and we can understand the nature of these correc-
+ing the assignment of these lattice states to the X and                        tions in terms of the operator algebra [1–4] of the CFT.
+Y primary operators. The scaling exponent 4/5 used in                          In this case, perturbation of hCFT (x) by the primary field
+Fig. 8 is that of the known leading finite-size correction                     operator X(x) [54, 59] explains the mixing of the X and
+of the Potts model [54, 59].                                                   Y towers with the I and ε towers, respectively, in terms
+   We note that identification of primaries is generally not                   of the fusion rules X × X = I + X and X × Y =  of the
+possible using only the spectral data since there may be                       Potts CFT operator algebra [60]. As an aside for the in-
+lower-energy states which, from their energies and mo-                         terested reader, we also remark that the observed mixing
+menta at finite size alone, cannot be excluded from be-                        connects different representations of the W3 algebra [61],
+ing in the same tower as the primary state. That we                            a symmetry of the three-state Potts CFT which includes
+can confidently identify all primaries in the Potts model,                     the Virasoro algebra.
+including at large ∆, thus demonstrates a key benefit of                          Finally, as for the Ising model, we obtain an accurate
+using Hn to extract conformal data.                                            estimate of the central charge as shown in Fig. 4.
+                                                                                                                                                               10
+
+    4                                                                                         correct                                     erroneous
+                                                                                1.0                                         0.15
+
+    3                                                                           0.8
+                                                                                                                            0.10                          H1 |Ii
+                                                                                0.6
+
+
+
+
+                                                                      overlap
+    2                                                                                                                                                     H1 |σi
+∆
+
+
+
+
+                             T                            T
+                                                                                0.4                                                                       H1 |εi
+                                                                                                                            0.05
+    1                                         ε                                                              H1 |σi
+                                                                                0.2
+                                                                                                             H1 |εi
+                                                                                0.0                                         0.00
+    0
+                                      σ       I                                   0.000   0.002      0.004     0.006           0.000   0.002      0.004     0.006
+        −4   −3         −2       −1       0       1   2       3   4                               1/N 2                                        1/N 2
+                                          S
+                                                                       Figure 11.      Scaling with system size N of the overlaps of
+Figure 9.    ANNNI model spectrum at γ = 0.5 (noninte-                 H1ANNNI |Ii, H1ANNNI |σi and H1ANNNI |εi with correct (left) and er-
+grable) and system size N = 14, with numerical identification          roneous (right) descendant states (from the same conformal
+of primary states and assignment of remaining states to con-           tower as the primary). Data for N = 13 . . . 22 is plotted. Lin-
+formal towers. Note that finite-size corrections to the energy         ear regression is performed on the leftmost three points. No
+are severe compared to Fig. 5, being sufficient to shift descen-       “correct” overlap is plotted for H1ANNNI |Ii since H1CFT |Ii = 0.
+dant states of σ below the energy-momentum states |T i and             We conclude that the erroneous overlaps are finite-size cor-
+|T i.                                                                  rections that go to zero asymptotically as 1/N 2 .
+
+    4
+                                                                       which with this parameterization is self-dual for all
+    3
+                                                                       γ. Under a Jordan-Wigner transformation it becomes
+                                                                       a translation-invariant chain of interacting Majorana
+                                                                       fermion modes and in this context its phase diagram
+    2
+                                                                       has recently been numerically examined [63, 64]. It was
+∆
+
+
+
+
+                    T                                     T
+                                                                       found to have two distinct gapless regimes within the
+    1                                                                  (approximate) parameter range −5 < γ < 250, with an
+                                                                       emergent Ising CFT for −0.3 < γ < 250. We choose
+    0                                                                  γ = 0.5, which is far from the critical Ising integrable
+        −4   −3         −2       −1       0       1   2       3   4    point, but in a regime where the universality class is
+                                          S                            well understood, making the results easier to analyze.
+                                                                       We first compute the 71 lowest-energy eigenvectors of
+Figure 10.    ANNNI model spectrum at γ = 0.5 (noninte-                H ANNNI (γ = 0.5), before evaluating the matrix elements
+grable) and system size N = 14 showing two quasiprimary                in the low-energy eigenbasis of the Hamiltonian density
+states |T i and |T i (colored empty diamonds) determined               Fourier modes, which we construct as
+from (26). The colored dots are states connected to each
+quasiprimary according to (27). Most of these correspond to                                           N
+global descendants of the CFT operators T and T . However,                      HnANNNI ≡ −
+                                                                                                  N X h ijn 2π Z
+                                                                                                         e N σj + γσj−1
+                                                                                                                    X    X
+                                                                                                                        σj+1
+                                                                                                                             
+as for the Ising model, there is a linear combination of the                                      2π j=1
+two blue (red) states with S = 4 (S = −4) that fulfills (26)
+and thus corresponds to a quasiprimary CFT operator. See
+                                                                                                                                                          i
+                                                                                                       +ei(j+ 2 )n N σjX σj+1 + γσjZ σj+1
+                                                                                                                 1     2π
+                                                                                                                          X           Z
+                                                                                                                                                               ,
+App. B.
+                                                                       in the same way as we did for the Ising model in (28).
+                                                                          Although the model is not integrable, we obtain similar
+             C.   The self-dual ANNNI model                            results to those of Sec. V A. In particular we find that (24)
+                                                                       and (25) deliver completely unambiguous identifications
+   We are now ready to test the Koo-Saleur formula, as                 of primary states and conformal towers, which we plot
+well as our conformal data extraction procedures using                 in Fig. 9. This is despite strong finite-size corrections
+the Hamiltonian density Fourier modes Hn , for a non-                  to the energy eigenvalues compared to the Ising case of
+integrable system. We consider the Axial Next-Nearest-                 Fig. 5. We are also able to identify quasiprimary states
+Neighbor Ising (ANNNI) model [62–64], an extension of                  and global descendants using (26) and (27), as we show
+the Ising model (4) by a next-nearest-neighbor interac-                in Fig. 10.
+tion term and its counterpart under duality, resulting in                 However, corrections show up in the matrix elements
+the Hamiltonian                                                        of H1ANNNI and H2ANNNI that were not present in H1Ising and
+                                                                       H2Ising , for example we observe that H1ANNNI |Ii has overlap
+              N
+                                                                       with a state corresponding to a descendant of the I op-
+H ANNNI = −      σj σj+1 + σjZ + γσjX σj+2 + γσjZ σj+1
+              X  X X                  X           Z
+                                                       
+                                                         ,             erator with ∆ = 5, despite the CFT result H1CFT |Ii = 0.
+              j=1                                                      Similarly, H1ANNNI |σi has overlap with a state correspond-
+                                                                       ing to a descendant of σ with ∆ = 3 81 , despite only one
+                                                                                                                                                                  11
+
+                         0.26                                                                          0.650
+                                      spectral only
+                         0.25         fit of spectral only                                             0.625
+                                      using H2
+                         0.24                                                                          0.600
+  normalization factor
+
+
+
+
+                         0.23                                                                          0.575
+
+
+
+
+                                                                                               c(N )
+                                                                                                       0.550
+                         0.22                                                                                                                  from EI
+                                                                                                       0.525                                   fit 1: c = 0.467
+                         0.21
+                                                                                                                                               fit 2: c = 0.505
+                                                                                                       0.500                                   from H2
+                         0.20
+                                                                                                                                               fit 3: c = 0.498
+                                                                                                       0.475
+                         0.19
+                            0.0000 0.0025 0.0050 0.0075 0.0100 0.0125 0.0150 0.0175 0.0200                0.000   0.005   0.010    0.015   0.020     0.025
+                                                         1/N 2                                                                    1/N 2
+
+
+Figure 12. ANNNI model lattice normalization factors from                                    Figure 13. The central charge for the ANNNI model, com-
+the spectrum only (assuming |T i is the lowest-energy state                                  paring estimates using H2 according to (22) with estimates
+with S = 2) versus using H2 to identify |T i. These differ for                               obtained from the ground-state energy EI using (3) (after
+N < 16 due to finite-size corrections which shift the energy of                              subtracting the extrapolated extensive contribution) [4]. The
+another state with S = 2 below that of |T i. See Fig. 9. We fit                              sudden change in slope of the EI data points is due to er-
+the spectral data for N = 8 . . . 15 to illustrate the large error                           roneous normalization for N < 16: See Fig. 12. Extrapo-
+made when |T i is incorrectly identified.                                                    lation is performed using linear regression. We fit the EI
+                                                                                             data for N = 8 . . . 15 in fit 1 to illustrate the effects of incor-
+                                                                                             rect normalization. For comparison, in fits 2 and 3, we use
+state with ∆ = 1 81 occurring as an overlap of H1CFT |σi                                     N = 17 . . . 22. The CFT value is c = 12 . The x-axis is chosen
+in the CFT, and H1ANNNI |εi has overlap with a state cor-                                    to be N −(4−2) to match the leading finite-size correction to
+responding to an ε-descendant with ∆ = 4, in addition                                        the energy, which is due to an operator with ∆ = 4, as in the
+to the expected ∆ = 2. In order to justify calling these                                     Ising model.
+overlaps finite-size corrections, we must of course demon-
+strate that they disappear as N → ∞. Using the exam-
+ples from the σ and ε conformal towers mentioned above,                                      normalization factors obtained is significant for affected
+we show in Fig. 11 that this is indeed the case. We note                                     system sizes.
+that, as with the Ising model, there is no mixing of dif-                                       Finally, in Fig. 13 we demonstrate that the central
+ferent conformal towers (again due to the symmetries of                                      charge estimated using (22) remains accurate away from
+HnANNNI ), explaining why we are still able to make tower                                    integrability. Furthermore, we compare the estimate to
+assignments unambiguously.                                                                   that obtained from the scaling of the ground state energy
+   Unlike in the Potts model, the observed corrections to                                    EI [4], finding the estimates to be comparable as long as
+HnANNNI can only come from perturbation of hCFT (x) by                                       the Hamiltonian is properly normalized, which requires
+irrelevant operators from the identity conformal tower,                                      the use of H2ANNNI at small system sizes.
+since operators from any other conformal tower would
+lead to tower mixing. Furthermore, there must be a per-
+turbation that is not present in the Ising model, which                                                             VI.   DISCUSSION
+did not exhibit the corrections we see here. One allowed
+identity-tower perturbation of hCFT (x) is the field opera-                                     In this paper we have proposed and demonstrated au-
+tor T T (x), corresponding to the state LCFT−2 L−2 |Ii, which
+                                                 CFT
+                                                                                             tomated procedures for extracting conformal data from
+is suppressed in the Ising model [54], but is allowed in                                     generic local quantum spin chains using the Hamilto-
+general. It seems a likely candidate to cause the observed                                   nian density Fourier modes Hn , first introduced as lat-
+correction to H1ANNNI |Ii since adding it to hCFT (x) in (7) for                             tice representations of conformal generators by Koo and
+n = 1 would result in the usual H1CFT plus a Fourier mode                                    Saleur [9]. In particular, we explained how to use the Hn
+of T T (x) which, applied to |Ii, would produce global de-                                   to systematically identify the lattice energy eigenstates
+scendant states of the (quasiprimary) state LCFT    −2 L−2 |Ii,
+                                                         CFT
+                                                                                             corresponding to Virasoro primary and quasiprimary op-
+including one at level ∆ = 5. Indeed, in [50] we confirm                                     erators of the CFT, as well as how to assign the re-
+that this perturbation is present in the ANNNI model.                                        maining eigenstates to conformal towers. Furthermore,
+   Regarding finite-size corrections to the energies, we                                     our demonstration included a nonintegrable model (the
+note that they are severe enough so that, at N = 14,                                         ANNNI model), confirming that the so-called Koo-Saleur
+the states |T i and |T i are not the lowest-energy states                                    formula continues to behave as expected away from inte-
+with |S| = 2, as is often assumed when normalizing the                                       grability.
+Hamiltonian density (see Sect. IV A). Where this occurs,                                        To extract accurate conformal data, one must examine
+identifying |T i using H2ANNNI is clearly advantageous. In-                                  systems of sufficient size, such that non-universal finite-
+deed, we observe in Fig. 12 that the difference in the                                       size corrections (e.g. due to irrelevant perturbations) are
+                                                                                                                            12
+
+manageable. This is often impossible using exact diago-            generators in the low-energy subspace of quantum spin
+nalization techniques, which we applied to obtain spec-            chains has found applications beyond the extraction of
+tra and low-energy eigenstates for the present work, since         conformal data. For example, these techniques are used
+the computational cost scales exponentially in the system          in [50] to study the RG flow between two CFTs, and
+size. Fortunately, our proposals for extracting conformal          in [66] to attach a geometric meaning to tensor networks
+data using the Hamiltonian density Fourier modes Hn                that discretize a path integral.
+are independent of the method used to diagonalize H
+and can also be implemented using more sophisticated
+tools, such as periodic matrix product states, allowing                           ACKNOWLEDGMENTS
+the analysis of critical quantum spin chains with hun-
+dreds of spins [50].                                                  We are grateful to John Cardy, Qi Hu, Vaughan Jones,
+   This work contributes toward the overarching goal of,           Tobias J. Osborne, Frank Verstraete, Yuan Wan and Yi-
+given a generic critical quantum spin chain Hamiltonian            jian Zou for helpful and stimulating discussions. We also
+H, determining the conformal data that specifies the               thank Jerôme Dubail, Hosho Katsura, Hubert Michel
+emergent CFT. Indeed, the identification of the Virasoro           Saleur, and Romain Vasseur for kindly pointing out
+primary states within the low-energy spectrum is an es-            Ref. [9], of which we were not aware while preparing
+sential part of this task, one that cannot be accomplished         the first version of this paper. Finally, we thank the
+in general using only the spectral information in (3), but         referees who reviewed this paper for providing useful
+which is made possible by using the lattice operators Hn .         comments that led to improvements in our presentation.
+In order to complete this long-standing research program,          The authors acknowledge financial support from the Si-
+a systematic way of determining the OPE coefficients re-           mons Foundation (Many Electron Collaboration). This
+lating the primary operators to each other is still missing        research was supported in part by Calcul Québec and
+(although progress can be made in particular cases – see           Compute Canada, as well as by Perimeter Institute for
+for example [43, 47, 65]). As it turns out, however, the           Theoretical Physics. Research at Perimeter Institute is
+methods discussed in this paper can be combined with               supported by the Government of Canada through the
+other techniques in order to also estimate the OPE coef-           Department of Innovation, Science and Economic Devel-
+ficients on the lattice [49].                                      opment Canada and by the Province of Ontario through
+   Finally, we remark that the action of lattice Virasoro          the Ministry of Research, Innovation and Science.
+
+
+
+
+ [1] A. A. Belavin, A. M. Polyakov, and A. B. Zamolod-             [18] M. Henkel, J. Phys. A: Math. Gen. 20, 995 (1987).
+     chikov, Nucl. Phys. B 241, 333 (1984).                        [19] F. C. Alcaraz, M. N. Barber, and M. T. Batchelor, Phys.
+ [2] P. Ginsparg, lecture notes (1988), arXiv:hep-th/9108028.           Rev. Lett. 58, 771 (1987).
+ [3] P. Di Francesco, P. Mathieu, and D. Senechal, Conformal       [20] M. Baake, G. von Gehlen, and V. Rittenberg, J. Phys.
+     Field Theory (Springer, New York, 2012).                           A: Math. Gen. 20, L479 (1987).
+ [4] M. Henkel, Conformal Invariance and Critical Phenom-          [21] D. B. Balbao and J. R. D. de Felicio, J. Phys. A: Math.
+     ena (Springer, New York, 1999).                                    Gen. 20, L207 (1987).
+ [5] J. Cardy, Scaling and Renormalization in Statistical          [22] C. R. Allton and C. J. Hamer, J. Phys. A: Math. Gen.
+     Physics, 1st ed. (Cambridge University Press, 1996).               21, 2417 (1988).
+ [6] K. G. Wilson and J. Kogut, Phys. Rep. 12, 75 (1974).          [23] I. Affleck, D. Gepner, H. J. Schulz, and T. Ziman, J.
+ [7] D. Tong, lecture notes (2009), arXiv:0908.0333.                    Phys. A: Math. Gen. 22, 511 (1989).
+ [8] J. Maldacena, Int. J. Theor. Phys. 38, 1113 (1999),           [24] F. C. Alcaraz, U. Grimm, and V. Rittenberg, Nucl. Phys.
+     arXiv:hep-th/9711200.                                              B 316, 735 (1989).
+ [9] W. M. Koo and H. Saleur, Nucl. Phys. B 426, 459 (1994),       [25] H. Frahm and V. E. Korepin, Phys. Rev. B 42, 10553
+     arXiv:hep-th/9312156.                                              (1990).
+[10] J. L. Cardy, J. Phys. A: Math. Gen. 17, L385 (1984).          [26] J. Voit, Rep. Prog. Phys. 58, 977 (1995).
+[11] H. W. J. Blöte, J. L. Cardy, and M. P. Nightingale, Phys.     [27] C. D. E. Boschi, E. Ercolessi, F. Ortolani,        and
+     Rev. Lett. 56, 742 (1986).                                         M. Roncaglia, Eur. Phys. J. B 35, 465 (2003).
+[12] J. L. Cardy, Nucl. Phys. B 270, 186 (1986).                   [28] A. Feiguin, S. Trebst, A. W. W. Ludwig, M. Troyer,
+[13] J. L. Cardy, J. Phys. A: Math. Gen. 19, L1093 (1986).              A. Kitaev, Z. Wang, and M. H. Freedman, Phys. Rev.
+[14] I. Affleck, Phys. Rev. Lett. 56, 746 (1986).                       Lett. 98, 160409 (2007), arXiv:cond-mat/0612341.
+[15] In models with marginal operators, there may also be log-     [29] M. Fuehringer, S. Rachel, R. Thomale, M. Greiter, and
+     arithmic finite-size corrections [13]. We have successfully        P. Schmitteckert, Ann. Phys. (Berlin) 17, 922 (2008),
+     tested the proposals of this paper also on such models,            arXiv:0806.2563.
+     including the four-state Potts quantum spin chain.            [30] J. C. Xavier, Phys. Rev. B 81, 224404 (2010),
+[16] G. von Gehlen, V. Rittenberg, and H. Ruegg, J. Phys.               arXiv:1002.0531.
+     A: Math. Gen. 19, 107 (1986).                                 [31] A. Gendiar, M. Daniska, Y. Lee, and T. Nishino, Phys.
+[17] G. von Gehlen and V. Rittenberg, J. Phys. A: Math. Gen.            Rev. A 83, 052118 (2011), arXiv:1012.1472.
+     19, L625 (1986).                                              [32] H. Katsura, J. Phys. A: Math. Theor. 45, 115003 (2012),
+                                                                                                                            13
+
+     arXiv:1110.2459.                                                   Appendix A: Lattice momentum density
+[33] X. Wen, S. Ryu, and A. W. W. Ludwig, Phys. Rev. B
+     93, 235119 (2016), arXiv:1604.01085.
+                                                                   The Virasoro algebra (6) fulfilled by the operators (5)
+[34] L. P. Kadanoff and H. Ceva, Phys. Rev. B 3, 3918 (1971).
+[35] H. Itoyama and H. B. Thacker, Phys. Rev. Lett. 58, 1395
+                                                                 together with (7), implies
+     (1987).                                                            [HnCFT , Hm   ] = (n − m)(LCFT
+                                                                                                   n+m − L−(n+m) )
+                                                                                  CFT                            CFT
+
+[36] A. Y. Volkov, Theor. Math. Phys. 74, 96 (1988).
+[37] L. D. Faddeev and L. A. Takhtajan, in Field Theory,         so that we may construct lattice analogues of LCFT
+                                                                                                                n   and
+     Quantum Gravity and Strings, Lecture Notes in Physics       Lm as [9]
+                                                                   CFT
+
+     (Springer, Berlin, Heidelberg, 1988) pp. 166–179.
+[38] O. Babelon, Phys. Lett. B 238, 234 (1990).                                      1          1
+                                                                                 Ln ≡  (H+n + [H+n , H0 ])
+[39] H. Johannesson, J. Math. Phys. 33, 1 (1992).                                    2          n
+[40] A. Y. Volkov, Phys. Lett. A 167, 345 (1992).                                    1          1
+[41] A. A. Belov and K. D. Chaltikian, Mod. Phys. Lett. A                      Ln ≡ (H−n + [H−n , H0 ]).
+                                                                                     2          n
+     08, 1233 (1993).
+[42] J. Kellendonk and A. Recknagel, Phys. Lett. B 298, 329      This is equivalent to defining a momentum density
+     (1993), arXiv:hep-th/9210007.                                                       pj ≡ i[hj , hj−1 ]
+[43] N. Read and H. Saleur, Nucl. Phys. B 777, 316 (2007),
+     arXiv:hep-th/0701117.                                       which satisfies the lattice energy-momentum conserva-
+[44] J. Dubail, J. L. Jacobsen, and H. Saleur, Nucl. Phys. B     tion law
+     834, 399 (2010), arXiv:1001.1151.
+[45] R. Vasseur, A. M. Gainutdinov, J. L. Jacobsen,                               ∂t hj = i[H, hj ] = pj+1 − pj ,
+     and H. Saleur, Phys. Rev. Lett. 108, 161602 (2012),
+     arXiv:1110.1327.                                            and constructing Ln and Lm as
+[46] A. M. Gainutdinov, J. L. Jacobsen, N. Read, H. Saleur,                   N                                  N
+     and R. Vasseur, J. Phys. A: Math. Theor. 46, 494012
+                                                                          N X +ijn 2π                         N X −ijn 2π
+                                                                   Ln ≡          e N T ,            Ln ≡             e N T ,
+                                                                          2π j=1                              2π j=1
+                                                                                      j                                   j
+     (2013), arXiv:1303.2082.
+[47] A. M. Gainutdinov and R. Vasseur, Nucl. Phys. B 868,
+     223 (2013), arXiv:1203.6289.                                with
+[48] R. Bondesan, J. Dubail, A. Faribault, and Y. Ikhlef,                         1                      1
+     J. Phys. A: Math. Theor. 48, 065205 (2015),                          Tj ≡      (hj + pj ),   T j ≡ (hj − pj ),
+                                                                                  2                      2
+     arXiv:1409.8590.
+[49] Y. Zou, A. Milsted, and G. Vidal, Upcoming (2017).          in analogy with the CFT definition of the Virasoro gen-
+[50] Y. Zou, A. Milsted,          and G. Vidal,        (2017),   erators (5).
+     arXiv:1710.05397.                                              We find in practice that Ln and Lm defined for the
+[51] M. A. Virasoro, Phys. Rev. D 1, 2933 (1970).                Ising model have more severe finite-size corrections than
+[52] S. Fubini, A. J. Hanson, and R. Jackiw, Phys. Rev. D        HnIsing (see Sect. V A). In particular, they connect states
+     7, 1732 (1973).                                             with the wrong descendants, although they still do not
+[53] D. Friedan, Z. Qiu, and S. Shenker, Phys. Rev. Lett. 52,    mix conformal towers.
+     1575 (1984).                                                   There is an obvious reason for these additional cor-
+[54] P. Reinicke, J. Phys. A: Math. Gen. 20, 5325 (1987).
+                                                                 rections, which come from finite-size corrections to the
+[55] W. E. Arnoldi, Q. Appl. Math. 9, 17 (1951).
+[56] F. Y. Wu, Rev. Mod. Phys. 54, 235 (1982).                   energy. Consider the action of Ln on an energy eigen-
+[57] V. A. Fateev and A. B. Zamolodchikov, Phys. Lett. A         state |∆i of a lattice Hamiltonian H. We first assume
+     92, 37 (1982).                                              that Hn |∆i = a|∆− ni + b|∆+ ni such that
+[58] R. S. K. Mong, D. J. Clarke, J. Alicea, N. H. Lindner,
+                                                                                 H0 |∆i = (∆ + )|∆i,
+     and P. Fendley, J. Phys. A: Math. Theor. 47, 452001
+     (2014), arXiv:1406.0846.                                                H0 |∆− ni = (∆ − n + 0 )|∆− ni,
+[59] G. von Gehlen, V. Rittenberg, and T. Vescan, J. Phys.                   H0 |∆+ ni = (∆ + n + 00 )|∆+ ni,
+     A: Math. Gen. 20, 2577 (1987).
+[60] V. S. Dotsenko, Nucl. Phys. B 235, 54 (1984).               where , 0 , 00 represent finite-size corrections to the en-
+[61] V. A. Fateev and A. B. Zamolodchikov, Nuclear Physics       ergy, which will generally be different for each energy
+     B 280, 644 (1987).                                          eigenstate. This scenario is consistent with a|∆ − ni and
+[62] W. Selke, Phys. Rep. 170, 213 (1988).                       b|∆ + ni being the lattice counterparts of the CFT states
+[63] A. Milsted, L. Seabra, I. C. Fulga, C. W. J. Beenakker,
+                                                                              and L−n |∆iCFT , respectively. We then find
+                                                                                     CFT
+                                                                   n |∆i
+                                                                 LCFT    CFT
+     and E. Cobanera, Phys. Rev. B 92, 085139 (2015),
+     arXiv:1504.07258.                                                                    ∆+
+                                                                                                
+[64] A. Rahmani, X. Zhu, M. Franz, and I. Affleck, Phys.               2Ln |αi = 1 +               (a|∆− ni + b|∆+ ni)
+                                                                                            n
+     Rev. B 92, 235123 (2015), arXiv:1505.03966.
+[65] N. Read and H. Saleur, Nucl. Phys. B 777, 263 (2007),                               ∆ + 0
+                                                                                                   
+                                                                                    −            − 1 a|∆− ni
+     arXiv:cond-mat/0701259.                                                               n
+[66] A. Milsted and G. Vidal, Upcoming (2017).
+                                                                                         ∆ + 00
+                                                                                                    
+                                                                                    −            + 1 b|∆+ ni,
+                                                                                           n
+                                                                                                                      14
+
+where in case  = 0 = 00 almost all terms cancel and we     that the lattice state |ϕQ i corresponds to the quasipri-
+are left with                                                 mary in the CFT. First, we note that, from (6) and (13),
+                                                              the CFT quasiprimary may be built as
+                   Ln |∆i = a|∆− ni,
+                                                                                            4∆T + 2 CFT
+                                                                                                        
+                                                                      |ϕQ i ∝ (H−1 ) −
+                                                                        CFT         CFT 2
+                                                                                                    H−2 |T i,
+as expected. As noted above, however, generally  6=                                            3
+0 6= 00 and the cancellation is prevented, leading to an    which can be seen to be annihilated by LCFT1 . We may
+erroneous matrix element of Ln connecting |∆i and |∆+         construct an analogous state on the lattice as
+ni.
+                                                                                          4∆T + 2
+                                                                                                       
+                                                                       |ϕ̃Q i ∝ (H−1 )2 −          H−2 |T i.
+                                                                                             3
+Appendix B: Degeneracies and quasiprimary states
+                                                              Doing so we find that, to high precision,
+
+   In Figs. 6 and 10 we plot the spectra of the Ising and                     ΓϕQ (H1 + H−1 )|ϕ̃Q i ≈ 0,
+ANNNI models, respectively, at size N = 14, showing
+global conformal towers of the quasiprimary states |T i       and that furthermore |ϕ̃Q i is approximately equal to |ϕQ i
+and |T i. We find in both cases that a linear combina-        of (B1), with appropriate normalization. This confirms
+tion |ϕQ i ≡ a|ϕ1 i + b|ϕ2 i of lattice energy eigenstates    that the criterion (26) for quasiprimary states on the lat-
+|ϕ1 i, |ϕ2 i belonging to the (Virasoro) conformal tower of   tice correctly distinguishes linear combinations of lattice
+I at level ∆ ≈ 4, S = 4, fulfills the quasiprimary condi-     eigenstates that correspond to CFT quasiprimary opera-
+tion (26) to numerical precision:                             tors.
+                                                                 We remark here on the observation that degenerate
+                                                              quasiprimary and global secondary states are mixed by
+                ΓϕQ (H1 + H−1 )|ϕQ i ≈ 0,             (B1)
+                                                              finite-size corrections to the energy (even when Virasoro
+                                                              conformal towers are not mixed) so that the quasiprimary
+where ΓϕQ projects onto states with energy lower than         lattice state is formed by a linear combination of energy
+the energy expectation value of |ϕQ i. The situation is       eigenstates with different energies (which become degen-
+analogous for the |T i descendants.                           erate in the limit N → ∞). In the presence of finite-size
+  In the CFT, where the states of the I conformal tower       effects that mix Virasoro conformal towers, it could also
+at ∆ = 4, S = 4 are degenerate in energy and momen-           happen that primary states are mixed with Virasoro de-
+tum (see Fig. 1), there is also a quasiprimary state in the   scendant states, although we did not observe this in the
+corresponding degenerate subspace. We wish to confirm         models tested in this work.
+

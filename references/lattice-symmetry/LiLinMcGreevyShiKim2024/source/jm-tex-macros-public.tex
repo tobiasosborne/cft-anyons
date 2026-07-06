@@ -1,0 +1,911 @@
+
+%\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{amsmath,bm}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{amsfonts}         
+\usepackage{fancybox}   
+
+%\usepackage[numbers]{natbib}
+
+
+
+\usepackage[usenames,dvipsnames]{xcolor}%http://en.wikibooks.org/wiki/LaTeX/Colors
+
+\definecolor{Mathematica1}{rgb}{0.368417, 0.506779, 0.709798}
+\definecolor{Mathematica2}{rgb}{0.880722, 0.611041, 0.142051}
+\definecolor{Mathematica3}{rgb}{0.560181, 0.691569, 0.194885}
+
+
+
+%%from  Rudro Rana Biswas
+\usepackage[pagebackref,  % this puts links to the page numbers where refs appear
+%pdftex, 
+bookmarks={false}, pdfauthor={
+}, 
+pdftitle={Yay, physics!}]{hyperref}
+\hypersetup{colorlinks=true, 
+%linkcolor=BrickRed, 
+linkcolor=Mathematica1,
+%citecolor=Violet, 
+citecolor=Mathematica3,
+filecolor=OliveGreen, 
+%urlcolor=RoyalBlue, 
+urlcolor=Mathematica2,
+filebordercolor={.8 .8 1}, 
+urlbordercolor={.8 .8 0}}%http://en.wikibooks.org/wiki/LaTeX/Hyperlinks
+%\usepackage[all]{hypcap}
+\usepackage{soul}%strike through text \st{} .  not in math mode.
+\setstcolor{Red}
+%\usepackage{wrapfig}
+%\usepackage{hyperref}
+
+
+%\usepackage{wrapfig}
+%\usepackage{hyperref}
+
+%%%%% some colors
+
+
+\definecolor{darkgreen}{rgb}{0,0.4,0}
+\definecolor{darkred}{rgb}{0.4,0,0}
+\definecolor{darkblue}{rgb}{0,0,0.4}
+\definecolor{lightblue}{rgb}{.6,.6,0.9}
+\newcommand{\ttref}[1]{\textcolor{darkgreen}{\tiny{#1}}}
+\newcommand{\greencom}[1]{\textcolor{darkgreen}{\footnotesize{#1}}}
+\newcommand{\redcom}[1]{\textcolor{darkred}{\footnotesize{#1}}}
+\newcommand{\bluecom}[1]{\textcolor{darkblue}{\footnotesize{#1}}}
+\newcommand{\tttref}[2]{\textcolor{darkgreen}{
+{#1, }\texttt{hep-th/{#2}}}}
+\newcommand{\qcenter}[1]{\begin{center}{#1}\end{center}}
+\def\bl{\textcolor{darkblue}}
+\def\bluet{\textcolor{darkblue}}
+\def\greent{\textcolor{darkgreen}}
+\def\redt{\textcolor{darkred}}
+
+
+\newcommand{\blackcom}[1]{{\footnotesize{#1}}}
+
+
+\newcommand{\cobl}{\color{darkblue}}
+
+\newcommand{\cor}{\color{red}}
+\newcommand{\cog}{\color{darkgreen}}
+\newcommand{\cob}{\color{black}}
+
+\definecolor{uglybrown}{rgb}{0.8,  0.7,  0.5}
+
+\definecolor{palatinatepurple}{rgb}{0.41, 0.16, 0.38}
+\definecolor{celebrationcolor}{rgb}{0.75,  0.0,  0.9}
+
+
+
+
+
+\definecolor{shadecolor}{rgb}{0.90,0.90,0.90}
+\definecolor{DVcolor}{rgb}{0.95,  0.5,  0.2}
+\definecolor{lightbluemuons}{rgb}{0.0,.65,1.0}
+
+\definecolor{chartreuse}{rgb}{0.70, 1.00, 0.00}
+\newcommand{\cogr}{\color{chartreuse}}
+\newcommand{\colbl}{\color{lightbluemuons}}
+
+
+%%%%%%%%%%%%%%  TIKZ
+
+
+\usepackage{tikz}
+\usetikzlibrary{shapes}
+\usetikzlibrary{trees}
+%\usetikzlibrary{snakes}
+\usetikzlibrary{matrix,arrows} 				% For commutative diagram
+											% http://www.felixl.de/commu.pdf
+\usetikzlibrary{positioning}				% For "above of=" commands
+\usetikzlibrary{calc,through}				% For coordinates
+\usetikzlibrary{decorations.pathreplacing}  % For curly braces
+\usepackage[tikz]{bclogo} 					% For cute logo boxes
+\usepackage{pgffor}							% For repeating patterns
+
+%\usetikzlibrary{decorations.pathmorphing}	% For Feynman Diagrams
+\usetikzlibrary{decorations.markings}
+\usetikzlibrary{intersections}				% For interesections
+
+\usetikzlibrary{arrows,decorations.pathmorphing,backgrounds,positioning,fit,petri,automata,shadows,calendar,mindmap, graphs}
+\usetikzlibrary{arrows.meta,bending}
+
+
+% from flip tanedo.
+% Based on:
+% http://www.texample.net/tikz/examples/feynman-diagram/
+
+\tikzset{
+	% >=stealth', %% more traditional arrows, I don't like them
+    vector/.style={decorate, decoration={snake}, draw},
+    fermion/.style={postaction={decorate},
+        decoration={markings,mark=at position .55 with {\arrow{>}}}},
+    fermionbar/.style={draw, postaction={decorate},
+        decoration={markings,mark=at position .55 with {\arrow{<}}}},
+    fermionnoarrow/.style={},
+    gluon/.style={decorate,
+        decoration={coil,amplitude=4pt, segment length=5pt}},
+    scalar/.style={dashed, postaction={decorate},
+        decoration={markings,mark=at position .55 with {\arrow{>}}}},
+    scalarbar/.style={dashed, postaction={decorate},
+        decoration={markings,mark=at position .55 with {\arrow{<}}}},
+    scalarnoarrow/.style={dashed,draw},
+%
+%%% 	Special vectors (when you need to fine-tune wiggles)
+%	provector/.style={decorate, decoration={snake,amplitude=2.5pt}, draw},
+%	antivector/.style={decorate, decoration={snake,amplitude=-2.5pt}, draw},
+%	    electron/.style={draw=black, postaction={decorate},
+%        decoration={markings,mark=at position .55 with {\arrow[draw=black]{>}}}},
+%	bigvector/.style={decorate, decoration={snake,amplitude=4pt}, draw},
+	vectorscalar/.style={loosely dotted,draw=black, postaction={decorate}},
+}
+
+\def\centerarc[#1](#2)(#3:#4:#5)% Syntax: [draw options] (center) (initial angle:final angle:radius)
+    { \draw[#1] ($(#2)+({#5*cos(#3)},{#5*sin(#3)})$) arc (#3:#4:#5); }
+
+
+
+
+
+%%%%%%%%%%%%%%%
+
+
+\usepackage{enumitem}
+
+\usepackage{slashed}
+
+\usepackage[font=small,labelfont=bf]{caption}
+\DeclareCaptionFont{tiny}{\tiny}
+%\captionsetup{font=tiny}
+\captionsetup{font=footnotesize}
+
+%\usepackage{yfonts} 
+\usepackage{epstopdf}
+\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basenam	e #1 .tif`.png}
+
+%\usepackage[bookmarks=true,colorlinks,linkcolor=red,urlcolor=blue,citecolor=blue]{hyperref}
+%\usepackage[usenames]{color}
+
+%\usepackage[usenames]{color}
+
+
+\usepackage{wasysym}
+
+
+% these were deprecated by the centos tex installation, but this is no longer a problem:
+\usepackage[yyyymmdd,hhmmss]{datetime}   
+\usepackage{framed}  % needed for \begin{shaded}
+ \usepackage{mdframed}
+ \usepackage{wrapfig}
+ \usepackage{yfonts}  
+%\input epsf
+
+
+
+
+\def\figblock#1#2#3#4{
+\vskip.04in
+\hskip-.24in
+\parbox{#1\textwidth}{#3
+}
+\parfig{#2}{#4}
+}
+
+
+\def\ketbra#1#2{ | #1 \rangle\hskip-2pt\langle #2|}
+
+
+\def\TT{{\bf T}}
+
+
+\def\bn{{\bf n}}
+\def\nn{{\bf n}}
+\def\bb{{\bf b}}
+
+\newcommand{\arxivlink}[1]{\htmladdnormallink{#1}{http://arxiv.org/abs/#1}}
+
+
+
+
+%%%%%%%%%%%  new as of 2017-02-15
+
+
+
+
+
+\def\futureNote#1{
+{\footnotesize
+\color{DVcolor}[#1]
+}}
+
+
+
+\def\sfE{\mathsf{E}}
+
+
+\newmdenv[%
+%    backgroundcolor=red!8,
+        backgroundcolor=lightgray,
+    linecolor=black,
+%    outerlinewidth=1pt,
+    outerlinewidth=2pt,
+%    roundcorner=5mm,
+%    skipabove=\baselineskip,
+%    skipbelow=\baselineskip,
+%  bottomline=false,
+%    leftline=false,rightline=false,
+%    frametitle=\mbox{},
+]{boxedandshaded}
+
+\def\End{\text{End}}
+\def\Hom{\text{Hom}}
+
+
+\def\thump{\hfill$\blacksquare$}
+
+
+
+
+%%%%%%%%%%% new as of 2016-03-16
+
+\def\parsnip{-.22in}
+
+\def\parfig#1#2{
+\parbox{#1\textwidth}
+{\includegraphics[width=#1\textwidth]{#2}}
+}
+
+
+%%%%%%%%%%%  new as of 2015-07-08
+
+
+\def\angstrom{\buildrel{\circ} \over {\mathrm{A}}}
+
+\def\mathmap#1#2#3#4{
+#1 & \to &  #2 \cr 
+#3 & \mapsto & #4 
+}
+
+
+
+% from diptarka
+\def\WIDERULE{\noindent\makebox[\linewidth]{\rule{\paperwidth}{0.4pt}}}
+
+
+
+%%%%%%%%%%%%
+
+\def\partials#1#2#3{\( {\partial {#1} \over \partial {#2}} \)_{#3} }
+%\def\subsubsubsection#1{{\bf\large #1}}
+\def\subsubsubsection#1{{\bf #1}}
+\def\eqbm{equilibrium}
+
+\def\breakS{\vfill\eject}
+% for posted version, you can remove pagebreaks by 
+% \def\breakS{}
+
+
+
+%%%%%%% making revtex unnecessary:
+%
+%\textheight 22cm\textwidth 15.5cm
+%\oddsidemargin 14pt\evensidemargin 0pt\topmargin -40pt
+%\topmargin-20pt
+%\def\baselinestretch{1.1}
+%\addtolength{\parskip}{1ex}
+%\jot=.5ex
+%
+%\setlength\arraycolsep{2pt}
+%
+%
+%\newcommand{\preprint}[1]{\begin{table}[t]  %%
+%             \begin{flushright}               %%
+%             {#1}                             %%
+%             \end{flushright}                 %%
+%             \end{table}}                     %%
+%\renewcommand{\title}[1]{\vbox{\center\LARGE{#1}}\vspace{5mm}}
+%\renewcommand{\author}[1]{\vbox{\center#1}\vspace{5mm}}
+%\newcommand{\address}[1]{\vbox{\center\em#1}}
+%\newcommand{\email}[1]{\vbox{\center\tt#1}\vspace{5mm}}
+%
+%\renewcommand{\date}[1]{\vbox{\center#1}}
+%
+%\newcommand{\pra}{Phys.~Rev.~A}
+%\newcommand{\prb}{Phys.~Rev.~B}
+%\newcommand{\prc}{Phys.~Rev.~C}
+%\newcommand{\prd}{Phys.~Rev.~D}
+%\newcommand{\pre}{Phys.~Rev.~E}
+%\newcommand{\prl}{Phys.~Rev.~Lett.}
+
+%%%%%%%% things above here need to be adjusted in the template.
+
+%%%%%%%%%%%% EQUATION NUMBERING  (must renew in appendix)
+\numberwithin{equation}{section}
+
+\renewcommand{\theequation}{\arabic{section}.\arabic{equation}}
+
+
+
+
+% the Arovas phantom dagger
+\def\nd{{ \vphantom{\dagger}}}
+
+
+
+
+\newcommand{\vev}[1]{\langle #1 \rangle}
+\def\mapright#1{\!\!\!\smash{
+\mathop{\longrightarrow}\limits^{#1}}\!\!\!}
+\newcommand{\bigoint}{\displaystyle \oint}
+%\newcommand{\ltimes}{\times \hspace{-6pt}
+%\raisebox{.2ex}{\mbox{$\scriptscriptstyle |$}} \;}
+\newlength{\extraspace}
+\setlength{\extraspace}{2mm}
+\newlength{\extraspaces}
+\setlength{\extraspaces}{2.5mm}
+\newcounter{dummy}
+\addtolength{\abovedisplayskip}{\extraspaces}
+\addtolength{\belowdisplayskip}{\extraspaces}
+\addtolength{\abovedisplayshortskip}{\extraspace}
+\addtolength{\belowdisplayshortskip}{\extraspace}
+%\newcommand{\ee}{\end{equation}}
+%\newcommand{\figuurnum}{\arabic{fignum}}
+\newcommand{\figuur}[3]{
+%\addtocounter{fignum}{1}
+%\addcontentsline{lof}{figure}{\protect
+%\numberline{\arabic{section}.\arabic{fignum}}{#3}}
+\hspace{-3mm}{\it }\ %\figuurnum.
+\begin{figure}[t]\begin{center}
+\leavevmode\hbox{\epsfxsize=#2 \epsffile{#1.eps}}\\[3mm]
+\medskip
+\parbox{15cm}{%\small \bf Fig.\ %\figuurnum: 
+#3}
+\end{center} \end{figure}\hspace{-3.5mm}}
+\newcommand{\figuurb}[3]{
+%\addtocounter{fignum}{1}
+%\addcontentsline{lof}{figure}{\protect
+%\numberline{\arabic{section}.\arabic{fignum}}{#3}}
+\hspace{-3mm}{\it }\ %\figuurnum.
+\begin{figure}[ht]\begin{center}
+\leavevmode\hbox{\epsfxsize=#2 \epsffile{#1.eps}}\\[3mm]
+\parbox{11cm}{%\small \bf Fig.\ %\figuurnum: 
+#3}
+\end{center} \end{figure}\hspace{-3.5mm}}
+\newcommand{\fig}{{\it}}% fig.}\ }
+
+
+
+
+%\usepackage{textcomp}
+%\usepackage{fontenc}
+%\usepackage{bm}
+%\usepackage{amsmath}
+%\usepackage{yfonts}  % this is the one SS use
+%\usepackage{mathbbol}
+%\usepackage{arev}
+%\usepackage{mbboard}
+%\usepackage{devnagri}
+%\usepackage{fc}
+
+
+%\textwidth = 6.5 in
+%\textheight = 9 in
+%\oddsidemargin = 0.0 in
+%\evensidemargin = 0.0 in
+%\topmargin = 0.0 in
+%\headheight = 0.0 in
+%\headsep = 0.0 in
+%\parskip = 0.2in
+%\parindent = 0.1in
+
+
+\def\be{\begin{equation}}
+\def\ee{\end{equation}}
+
+
+
+\newcommand{\bea}{\begin{eqnarray}}
+\newcommand{\eea}{\end{eqnarray}}
+
+
+
+
+
+
+
+
+
+%\newtheorem{theorem}{Theorem}
+%\newtheorem{corollary}[theorem]{Corollary}
+%\newtheorem{definition}{Definition}
+
+\def\dbar{{\mathchar'26\mkern-12mu \dd}} 
+\def\bdelta{ \slashed{\delta}}
+\def\CU{{\cal U}}
+%
+%%MATH MACROS
+%Greek letters and their bars
+\def\ep{\epsilon}
+\def\bep{\bar\epsilon}
+\def\blam{\bar\lambda}
+\def\bsig{\bar\sigma}
+\def\bpsi{\bar\psi}
+\def\bphi{\bar\phi}
+\def\bp{\bar\partial}
+\def\bthet{\overline \theta}
+\def\Dbar{\overline D}
+\def\bgam{\bar\gamma}
+\def\p{\partial}
+\def\tilp{\tilde\partial}
+\def\eps{\epsilon}
+\def\half{{1\over 2}}
+\def\Tr{{{\rm Tr}}}
+\def\tr{{\rm tr}}
+\def\Re{{\rm Re\hskip0.1em}}
+\def\Im{{\rm Im\hskip0.1em}}
+\def\even{{\rm even}}
+\def\odd{{\rm odd}}
+\def\lcm{{\rm lcm}}
+\def\diag{{\rm diag}}
+\def\bra#1{\left\langle#1\right|}
+\def\ket#1{\left|#1\right\rangle}
+\def\bbra#1{{\langle\langle}#1|}
+\def\kket#1{|#1\rangle\rangle}
+\def\vev#1{\left\langle{#1}\right\rangle}
+\def\Dslash{\rlap{\hskip0.2em/}D}
+\def\dslash{\rlap{{\hskip0.08em/}}\partial}
+
+\def\CA{{\cal A}}
+\def\CB{{\cal B}}
+\def\CC{{\cal C}}
+\def\CD{{\cal D}}
+\def\CE{{\cal E}}
+\def\CF{{\cal F}}
+\def\CG{{\cal G}}
+\def\CH{{\cal H}}
+\def\CI{{\cal I}}
+\def\CJ{{\cal J}}
+\def\CK{{\cal K}}
+\def\CL{{\cal L}}
+\def\CM{{\cal M}}
+\def\CN{{\cal N}}
+\def\CO{{\cal O}}%AEL
+\def\CP{{\cal P}}
+\def\CQ{{\cal Q}}
+\def\CR{{\cal R}}
+\def\CS{{\cal S}}
+\def\CT{{\cal T}}
+\def\CU{{\cal U}}
+\def\CV{{\cal V}}
+\def\CW{{\cal W}}
+\def\CX{{\cal X}}%AEL
+\def\CY{{\cal Y}}
+\def\CZ{{\cal Z}}
+
+%\def\ad#1#2{{\delta\over\delta\sigma^{#1}(#2)}}
+\def\ppt{{\partial\over\partial t}}
+\def\comment#1{[#1]}
+\def\nl{\hfill\break}
+\def\a{\alpha}
+\def\ta{\tilde\alpha}
+\def\ap{\alpha'}
+\def\sqap{\sqrt{\alpha'}}
+\def\bA{\bar A}
+\def\floor#1{{#1}}
+\def\sgn{{\rm sgn\ }}
+\def\I{{\rm I}}
+\def\IA{{\rm IA}}
+\def\II{\relax{I\kern-.10em I}}
+\def\IIa{{\II}a}
+\def\IIb{{\II}b}
+\def\TeV{{\rm TeV}}
+\def\hk{hyperk\"ahler\  }
+\def\Hk{Hyperk\"ahler\  }
+\def\cascade{{\cal A}}
+%
+%{\buildrel b \to i \over \longrightarrow}
+\def\imp{$\Rightarrow$}
+%\def\IZ{\relax\ifmmode\mathchoice
+%{\hbox{\cmss Z\kern-.4em Z}}{\hbox{\cmss Z\kern-.4em Z}}
+%{\lower.9pt\hbox{\cmsss Z\kern-.4em Z}}
+%{\lower1.2pt\hbox{\cmsss Z\kern-.4em Z}}
+%\else{\cmss Z\kern-.4emZ}\fi}
+%\def\IZ{\relax{\rm Z\kern-.34em Z}}
+\def\IZ{\mathbb{Z}}
+\def\IB{\relax{\rm I\kern-.18em B}}
+%\def\IC{{\relax\hbox{$\inbar\kern-.3em{\rm C}$}}}
+\def\IC{\mathbb{C}}
+\def\ID{\relax{\rm I\kern-.18em D}}
+\def\IE{\relax{\rm I\kern-.18em E}}
+\def\IF{\relax{\rm I\kern-.18em F}}
+\def\IG{\relax\hbox{$\inbar\kern-.3em{\rm G}$}}
+\def\IGa{\relax\hbox{${\rm I}\kern-.18em\Gamma$}}
+\def\IH{\relax{\rm I\kern-.18em H}}
+\def\II{\relax{\rm I\kern-.18em I}}
+\def\IK{\relax{\rm I\kern-.18em K}}
+%\def\IP{\relax{\rm I\kern-.18em P}}
+\def\IP{\mathbb{P}}
+%\def\IX{\relax{\rm X\kern-.01em X}}
+%this doesn't work
+\def\IX{{\bf X}}
+%
+\def\barom{\overline{\Omega}}
+\def\barA{\bar{A}}
+\def\jb{{\bar \jmath}}
+\def\Hom{{\rm Hom}}
+\def\inbar{\,\vrule height1.5ex width.4pt depth0pt}
+\def\mod{{\rm\; mod\;}}
+\def\ndt{\noindent}
+\def\p{\partial}
+\def\pab{\pb_{\bar A} }
+\def\pb{{\bar \p}}
+\def\pgp{\pb g g^{-1}}
+\font\cmss=cmss10 \font\msss=cmss10 at 7pt
+%\def\IR{\relax{\rm I\kern-.18em R}}
+\def\IR{\mathbb{R}}
+\def\pbar{\bar{\p}}
+\def\qmvw{\CM_{\vec \zeta}(\vec v, \vec w) }
+%i made these.
+\def\sdtimes{\mathbin{\hbox{\hskip2pt\vrule
+height 4.1pt depth -.3pt width .30pt\hskip-2pt$\times$}}}
+%\def\simgt{\hskip0.05in\relax{ > 
+%{\lower5.0pt\hbox{\kern-1.05em $\sim$}} } \hskip0.05in}
+%\def\simlt{\hskip0.05in\relax{ <
+%{\lower5.0pt\hbox{\kern-1.05em $\sim$}} } \hskip0.05in}
+%\def\simlt{\hskip0.05in\relax{ 
+%\raise3.0pt\hbox{ $<$
+%{\lower5.0pt\hbox{\kern-1.05em $\sim$}} } \hskip0.05in}
+\def\simgt{\hskip0.05in\relax{ 
+\raise3.0pt\hbox{ $>$
+{\lower5.0pt\hbox{\kern-1.05em $\sim$}} }} \hskip0.05in}
+\def\ker{{\rm ker\ }}
+\def\cok{{\rm cok\ }}
+\def\im{{\rm im\ }}
+\def\ind{{\rm ind\ }}
+\def\ub{{\bar{u}}}
+\def\vol{{\rm vol}}
+\def\Vol{{\rm Vol}}
+\def\wb{{\bar{w}}}
+\def\zb {{\bar{z}}}
+\def\one {{\bf 1}}
+\def\dpr{^{\prime\dagger}}
+%
+\def\BR{\IR}
+\def\BZ{Z} % for now
+\def\BP{\IP}
+\def\BR{\IR}
+\def\BC{\IC}
+\def\BM{\QM}
+\def\BH{\QH}
+\def\BX{\QX}
+%
+\def\ls{l_s}
+\def\ms{m_s}
+\def\gs{g_s}
+\def\lp10{\ell_p^{10}}
+\def\lp11{\ell_p^{11}}
+\def\R11{R_{11}}
+\def\mb{{m_{\rm brane}}}
+\def\vb{{v_{\rm brane}}}
+%
+\def\brs{Q_{{\rm B}}}
+\def\brsb{\bar{Q}_{{\rm B}}}
+\def\dels{\delta_{{\rm S}}}
+\def\delb{\delta_{{\rm B}}}
+\def\zb{\bar{z}}
+\def\frac#1#2{{#1 \over #2}}
+\def\epb{\bar{\epsilon}}
+\def\tts{{\rm tt}{}^\ast}
+\def\ch{{\rm ch}}
+\def\td{{\rm Td}}
+\def\ahat{\hat{A}}
+\def\cft#1{{\rm CFT_{#1}}}
+\def\dS{\partial \Sigma}
+%\def\ni{\noindent}
+\def\imt{{\rm Im} \tau}
+\def\mfl{ (-1)^{F_L}}
+\def\mfr{ (-1)^{F_R}}
+
+\def\up{\uparrow}
+\def\down{\downarrow}
+
+\def\norm#1{\vrule\hskip-1.2pt \vrule \hskip1.2pt #1  \hskip1.2pt \vrule\hskip-1.2pt \vrule}
+\def\norm#1{|\hskip-1.5pt | \hskip1.5pt #1  \hskip1.5pt |\hskip-1.5pt |}
+%$ \norm{A}$
+
+%identity operator from doyon-fonseca
+\def\Ione{\hbox{$1\hskip -1.2pt\vrule depth 0pt height 1.53ex width 0.7pt
+                  \vrule depth 0pt height 0.3pt width 0.12em$}}
+
+
+\def\norm#1{\vrule\hskip-1.2pt \vrule \hskip1.2pt #1  \hskip1.2pt \vrule\hskip-1.2pt \vrule}
+\def\norm#1{|\hskip-1.5pt | \hskip1.5pt #1  \hskip1.5pt |\hskip-1.5pt |}
+%$ \norm{A}$
+
+
+\def\thetafunction#1#2#3#4{
+\vartheta\left[\matrix{ #1 \cr #2} \right] (#3 |#4)}
+
+
+
+%% from the topological vertex paper
+
+
+%%                              TABLEAUX.TEX
+%%      This  macro file is for producing a ``Young Tableau'' which is
+%%      an array of little squares sometimes used in mathematical physics.
+%%      For instance, the command $\tableau{6 3 2}$ will produce a tableau
+%%      with 6 squares in the top row, 3 in the next, and 2 in the last.
+%%                                  OOOOOO
+%%      This tableau will look like OOO    but made of squares instead of O's.
+%%                                  OO
+%%      Any number of rows may be present, each having a nonzero number of
+%%      squares.
+%%
+%%      A tableau is math mode material, so use $ or $$ to enclose it.
+%%
+%%      The size and line-thickness of the little boxes are controlled by the
+%%      dimension parameters --
+%%              \tableauside=1.0ex              %(size)
+%%              \tableaurule=0.4pt              %(line-thickness)
+%%      Change them if you want.
+%%
+%%                                                      -- Doug Eardley 9/19/8%%
+%%
+\newdimen\tableauside\tableauside=1.0ex
+\newdimen\tableaurule\tableaurule=0.4pt
+\newdimen\tableaustep
+\def\phantomhrule#1{\hbox{\vbox to0pt{\hrule height\tableaurule width#1\vss}}}
+\def\phantomvrule#1{\vbox{\hbox to0pt{\vrule width\tableaurule height#1\hss}}}
+\def\sqr{\vbox{%
+  \phantomhrule\tableaustep
+  \hbox{\phantomvrule\tableaustep\kern\tableaustep\phantomvrule\tableaustep}%
+  \hbox{\vbox{\phantomhrule\tableauside}\kern-\tableaurule}}}
+\def\squares#1{\hbox{\count0=#1\noindent\loop\sqr
+  \advance\count0 by-1 \ifnum\count0>0\repeat}}
+\def\tableau#1{\vcenter{\offinterlineskip
+  \tableaustep=\tableauside\advance\tableaustep by-\tableaurule
+  \kern\normallineskip\hbox
+    {\kern\normallineskip\vbox
+      {\gettableau#1 0 }%
+     \kern\normallineskip\kern\tableaurule}%
+  \kern\normallineskip\kern\tableaurule}}
+\def\gettableau#1 {\ifnum#1=0\let\next=\null\else
+  \squares{#1}\let\next=\gettableau\fi\next}
+
+\tableauside=1.0ex
+\tableaurule=0.4pt
+
+
+%% from shiraz
+
+
+%\font\smallrm=cmr8
+% \def\app#1#2{\global\meqno=1\global\subsecno=0\xdef\secsym{\hbox{#1.}}
+% \bigbreak\bigskip\noindent{\bf Appendix.}\message{(#1. #2)}
+% \writetoca{Appendix {#1.} {#2}}\par\nobreak\medskip\nobreak}
+% %
+% %       \eqn\label{a+b=c}       gives displayed equation, numbered
+% %                               consecutively within sections.
+%%     \eqnn and \eqna define labels in advance (of eqalign?)
+% %
+% \def\eqnn#1{\xdef #1{(\secsym\the\meqno)}\writedef{#1\leftbracket#1}%
+% \global\advance\meqno by1\wrlabeL#1}
+% \def\eqna#1{\xdef #1##1{\hbox{$(\secsym\the\meqno##1)$}}
+% \writedef{#1\numbersign1\leftbracket#1{\numbersign1}}%
+% \global\advance\meqno by1\wrlabeL{#1$\{\}$}}
+% \def\eqn#1#2{\xdef #1{(\secsym\the\meqno)}\writedef{#1\leftbracket#1}%
+% \global\advance\meqno by1$$#2\eqno#1\eqlabeL#1$$}
+%
+%\def\IZ{\relax\ifmmode\mathchoice
+% {\hbox{\cmss Z\kern-.4em Z}}{\hbox{\cmss Z\kern-.4em Z}}
+% {\lower.9pt\hbox{\cmsss Z\kern-.4em Z}}
+% {\lower1.2pt\hbox{\cmsss Z\kern-.4em Z}}\else{\cmss Z\kern-.4em Z}\fi}
+
+
+
+%\global\newcount\itemno \global\itemno=0
+%\def\itemized{\global\itemno=0\bigbreak\bigskip\noindent}
+%\def\itemaut#1{\global\advance\itemno by1\noindent\item{\the\itemno.}#1}
+
+%\itemized
+%\itemaut{First this.}
+%\itemaut{Then that.}
+
+
+\def\bs{\backslash}
+\def\bfe{{\bf e}}
+
+\def\del{\partial}
+
+\def\({\left(}
+\def\){\right)}
+
+\def\sidebarb{\color{darkblue}
+\vskip.2in
+\hrule 
+}
+
+\def\sidebare{
+\vskip.2in
+\hrule 
+\cob
+}
+
+
+\def\ppi{\boldsymbol{\pi}}
+\def\pphi{\boldsymbol{\phi}}
+%\def\pphi{\phi}
+\def\grad{\vec \nabla}
+\def\vB{\vec B}
+\def\vE{\vec E}
+\def\vA{\vec A}
+\def\vAA{ \vec{\bf A}}
+\def\vEE{{{\vec {\bf E}}}}
+\def\vBB{{\vec {\bf B}}}
+
+\def\cc{{\bf c}}
+
+\def\ii{{\bf i}}
+
+
+\def\CK{{\cal K}}
+\def\xx{{\bf x}}
+\def\yy{{\bf y}}
+
+\def\dd{\text{d}}
+
+\def\pp{{\bf p}}
+\def\aa{{\bf a}}
+\def\qq{{\bf q}}
+
+\def\AA{{\bf A}}
+\def\BB{{\bf B}}
+\def\EE{{\bf E}}
+\def\HH{{\bf H}}
+\def\KK{{\bf K}}
+\def\JJ{{\bf J}}
+\def\MM{{\bf M}}
+\def\NN{{\bf N}}
+\def\PP{{\bf P}}
+\def\QQ{{\bf Q}}
+\def\RR{{\bf R}}
+\def\SS{{\bf S}}
+\def\uu{{\bf u}}
+\def\ww{{\bf w}}
+
+
+\def\UU{{\bf U}}
+\def\VV{{\bf V}}
+\def\WW{{\bf W}}
+\def\rrho{{\boldsymbol\rho}}
+\def\ssigma{{\boldsymbol\sigma}}
+\def\ttau{{\boldsymbol\tau}}
+\def\SSigma{{\boldsymbol\Sigma}}
+\def\Prob{\text{{\bf Prob}}}
+
+ \def\XX{{\bf X}}
+ \def\ZZ{{\bf Z}}
+\def\YY{{\bf Y}}
+\def\cnot{\CC_\text{not}}
+
+\def\DDD{\boldsymbol{\Delta}}
+
+%Approximately less than operators:
+\def\lsim{\mathrel{\mathstrut\smash{\ooalign{\raise2.5pt\hbox{$<$}\cr\lower2.5pt\hbox{$\sim$}}}}}
+\def\gsim{\mathrel{\mathstrut\smash{\ooalign{\raise2.5pt\hbox{$>$}\cr\lower2.5pt\hbox{$\sim$}}}}}
+
+\def\MSbar{\overline{\text{MS}}}
+
+
+%A leftright arrow which acts like \vec:
+\def\overleftrightarrow#1{\vbox{\ialign{##\crcr
+     $\leftrightarrow$\crcr\noalign{\kern-0pt\nointerlineskip}
+     $\hfil\displaystyle{#1}\hfil$\crcr}}}
+     
+     \def\overleftarrow#1{\vbox{\ialign{##\crcr
+     $\leftarrow$\crcr\noalign{\kern-0pt\nointerlineskip}
+     $\hfil\displaystyle{#1}\hfil$\crcr}}}
+
+
+%%ENGLISH MACROS
+\def\eg{{\it e.g.}}
+\def\ie{{\it i.e.}}
+\def\cf{{\it c.f.}}
+\def\etal{{\it et. al.}}
+\hyphenation{Di-men-sion-al}
+
+%%% additions new to 239a
+
+
+\def\hh{{\bf h}}
+
+\def\gSO{\textsf{SO}}
+\def\gG{\textsf{G}}
+
+\def\gO{\textsf{O}}
+\def\gSU{\textsf{SU}}
+\def\gU{\textsf{U}}
+\def\gS{\textsf{S}}
+
+
+\def\gs{\text{gs}}
+
+
+%%% further innovations
+
+\def\eqnfig#1#2{\parbox{#1}{
+\includegraphics[height=#1]{#2}
+}}
+
+
+
+\newif{\ifeq}           % defines a new condition @eq tested by the conditional \ifeq
+\eqtrue                 % if uncommented, declares @eq to be true
+%\eqfalse               % if uncommented, declares @eq to be false
+                                %
+                                % to use this, wrap text with the conditional, eg:
+                                %
+                                % \ifeq
+                                % SHOW THIS IFF \eqtrue HAS BEEN DECLARED
+                                % \fi
+
+\newcounter{lecturecounter}
+% \addtocounter{lecturecounter}{19}
+
+
+%\newcounter{lecturecounter}
+%%[counter]
+\newcommand{\Lec}{
+\stepcounter{lecturecounter}
+{\color{blue}
+\hfill[End of Lecture \arabic{lecturecounter}]
+\cob}
+% \addtocounter{lecturecounter}{1}
+}
+
+
+%\newcounter{bar}
+%\newcommand{\Lec}{%
+%        \stepcounter{bar}%
+%        \thebar}
+
+
+%% SKIP TO HERE
+
+%\renewcommand{\thesubsection}{(\alph{subsection})}
+%\renewcommand{\thesubsection}{(\roman{subsection})}
+%\newpage
+%\setcounter{page}{1}
+%\def\chapternumber{1}
+%\renewcommand{\thesection}{\chapternumber}
+%\renewcommand{\thepage}{\chapternumber-\arabic{page}}
+
+%\title{Lecture Notes}
+%% Lecture Notes}
+%%Chapter \chapternumber: }
+%\author{Lecturer: McGreevy
+%%\footnote
+%%{}
+%}
+%\date{{\tiny Last updated: \today, \currenttime}
+%}
+%\begin{document}
+%\maketitle
+%
+%%\vfill
+%
+%\renewcommand{\contentsname}{}
+%%\vskip-.5in
+%%\breakS
+%
+%\tableofcontents
+%
+%\breakS
+%
+%\section{}
+%\end{document}

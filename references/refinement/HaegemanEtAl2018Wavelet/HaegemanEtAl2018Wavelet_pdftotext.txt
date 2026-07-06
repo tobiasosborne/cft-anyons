@@ -1,0 +1,1100 @@
+                                                      Rigorous free fermion entanglement renormalization from wavelet theory
+
+                                                                               Jutho Haegeman,1, ∗ Brian Swingle,2, 3, 4, ∗ Michael Walter,5, ∗
+                                                                              Jordan Cotler,5, † Glen Evenbly,6, ‡ and Volkher B. Scholz1, 7, ∗
+                                                           1
+                                                               Department of Physics and Astronomy, Ghent University, Krijgslaan 281, S9, 9000 Gent, Belgium
+                                                                   2
+                                                                     Department of Physics, Massachusetts Institute of Technology, Cambridge, MA 02139, USA
+                                                                               3
+                                                                                 Department of Physics, Harvard University, Cambridge, MA 02138, USA
+                                                                            4
+                                                                              Department of Physics, University of Maryland, College Park, MD 20742, USA
+                                                                     5
+                                                                       Stanford Institute for Theoretical Physics, Stanford University, Stanford, CA 94305, USA
+                                                                       6
+                                                                         Département de physique, Université de Sherbrooke, Sherbrooke, QC J1K 2X9, Canada
+                                                               7
+                                                                 Institute for Theoretical Physics, ETH Zürich, Wolfgang-Pauli-Str. 27, 8093 Zürich, Switzerland
+                                                                   We construct entanglement renormalization schemes which provably approximate the ground states
+                                                                of non-interacting fermion nearest-neighbor hopping Hamiltonians on the one-dimensional discrete
+                                                                line and the two-dimensional square lattice. These schemes give hierarchical quantum circuits which
+arXiv:1707.06243v1 [quant-ph] 19 Jul 2017
+
+
+
+
+                                                                build up the states from unentangled degrees of freedom. The circuits are based on pairs of discrete
+                                                                wavelet transforms which are approximately related by a “half-shift”: translation by half a unit cell.
+                                                                The presence of the Fermi surface in the two-dimensional model requires a special kind of circuit
+                                                                architecture to properly capture the entanglement in the ground state. We show how the error in
+                                                                the approximation can be controlled without ever performing a variational optimization.
+
+
+                                                                    I.   INTRODUCTION                                only the beginning. We can more fully characterize the
+                                                                                                                     pattern of entanglement in a quantum state by giving a
+                                               Characterizing quantum phases of matter and comput-                   recipe for physically constructing it from unentangled de-
+                                            ing their low-temperature physical properties is one of the              grees of freedom. Such a recipe is called a quantum circuit
+                                            central challenges of quantum many-body physics. Part                    and constitutes a sequence of local unitary transforma-
+                                            of the challenge is that many phases and phase transitions               tions which produce the desired state from an unentangled
+                                            are best characterized in terms of their pattern of entan-               state. While symmetry breaking states, e.g. a ferromagnet
+                                            glement, as opposed to, say, their pattern of symmetry                   with all spins aligned, can be caricatured by an unentan-
+                                            breaking [1]. As an extreme case, topological phases of                  gled state (or more realistically by a state in which only
+                                            matter (see [2] for a review) are solely characterized by                nearby degrees of freedom are entangled), it is known that
+                                            entanglement, and since a topological state is gapped, it                topological states must have a high degree of non-local
+                                            is insensitive to any local perturbation [3, 4] and so need              entanglement as measured by the minimal number of cir-
+                                            not break any symmetry. By contrast, metallic states                     cuit layers needed to prepare them from an unentangled
+                                            with Fermi surfaces have many low energy excitations,                    state [11]. The anomalously high entanglement in metallic
+                                            but they can also be usefully characterized in terms of                  states similarly implies that any circuit which prepares
+                                            their anomalously high entanglement. In this work we                     a metallic state starting from an unentangled state must
+                                            are concerned with such metallic states.                                 have many layers.
+                                               A useful idealization is to focus on ground state physics,               In terms of calculations, quantum circuits often yield
+                                            where the entanglement entropy of spatial subsystems                     efficient classical algorithms for computing physical prop-
+                                            provides powerful non-local diagnostics of phases. For                   erties such as correlation functions. Moreover, they give
+                                            example, most known ground states obey an “area law”:                    rise to a local description of the multipartite entangle-
+                                            the entanglement entropy of a subsystem scales as the                    ment structure in terms of multilinear maps. As such they
+                                            boundary size of the subsystem [5]. Topological states                   form an important subclass of tensor network states, a
+                                            have a subleading (in subsystem size) shape-independent                  very successful variational class of quantum states which
+                                            “topological entanglement entropy” term which partially                  has been shown to be applicable in situations when other
+                                            characterizes the state [6, 7]. Another diagnostic is the                methods fail, e.g., due to a fermion sign problem in Monte
+                                            scaling of entropy with subsystem size itself: metals loga-              Carlo methods (for a review see [12, 13]).
+                                            rithmically violate the area law when they have a Fermi                     In terms of experiments, quantum circuits provide a
+                                            surface [8–10].                                                          precise operational procedure, implementable on a suffi-
+                                               Yet, discussions based on entanglement entropy are                    ciently versatile quantum simulator or quantum computer,
+                                                                                                                     to prepare interesting states. For example, while it might
+                                                                                                                     be difficult to directly cool a system to its ground state,
+                                            ∗ JH, BS, MW, VBS are primarily responsible for the content of
+                                                                                                                     a quantum circuit provides an alternative way to directly
+                                                                                                                     engineer the ground state.
+                                              this work.
+                                             † JC collaborated on related approaches and assisted in preparing          In this work we provide quantum circuits that, when
+                                              the manuscript.                                                        acting on a suitable unentangled state, prepare approx-
+                                             ‡ GE has independent unpublished data arriving at a similar 2D
+                                                                                                                     imations to the metallic ground states of certain one-
+                                              network structure and assisted in preparing the manuscript.            and two-dimensional non-interacting fermion Hamilto-
+                                                                                                                           2
+
+nians. This is a non-trivial task in part because these          which create and destroy a fermion in the single-particle
+states of matter are highly entangled and violate the area       state φα .
+law. We work primarily in the thermodynamic limit of                 The Hamiltonians we study will all consist of fermion
+an infinite lattice, but our constructions can also be ap-                                             † (1)              (1)
+                                                                                                P
+                                                                 bilinears of the form H =        α,β aα hα,β aβ where hα,β
+plied to finite-size systems. The circuits themselves are        can be regarded as a single-particle Hamiltonian acting
+composed of layers having a hierarchical renormalization         on the mode space. The eigenstates of such a “quad-
+group structure, in which the size of the system is dou-         ratic” Hamiltonian are many-body quantum states of
+bled (or halved) after each layer. In one dimension, the         fermions that obey Wick’s theorem. This in turn implies
+scheme is a version of the multiscale entanglement renor-        that these states are uniquely specified by the two point
+malization ansatz (MERA) [14], while in two dimensions           correlation function Gα,β = ha†α aβ i. In particular, the
+it yields an interesting branching network structure [15].       ground state of H is obtained from the state with no
+Such renormalization group inspired quantum circuits                                                         (1)
+                                                                 fermions by diagonalizing the matrix hα,β and placing
+have been useful in describing a variety of gapless states       one fermion in each mode with negative single-particle
+in one dimension [16–19], and inroads have been made             energy. It is therefore possible to carry out much of
+in two-dimensional systems [20–24]. They have also been          the analysis of the ground state at the level of single-
+instrumental for recent progress in our understanding            particle states. In particular, the circuit approximation
+of the holographic duality [25–28]. As in the pioneering         of the ground state is constructed from single-particle
+work [29], our construction is based on discrete wavelet         unitaries u = eiz . The corresponding
+transforms, although we take a somewhat different ap-                                              P “quadratic” many-
+                                                                 body unitary U = eiZ with Z = α,β a†α zα,β aβ then acts
+proach here.
+                                                                 as U † aα U = β uα,β aβ . Any state obeying Wick’s theo-
+                                                                               P
+   The key features of our work are the following. Our
+                                                                 rem can always be prepared from an unentangled state
+circuits are hand-crafted—no variational optimization is
+                                                                 (consisting of fermions localized to sites) by acting with
+used—and come with provable error bounds. The essen-
+                                                                 such a “quadratic” unitary.
+tial physics is a certain “half-shift” condition discussed
+                                                                     The models we study are translation invariant, so we
+in detail below [30]. Our two-dimensional circuit pro-
+                                                                 immediately know how to diagonalize the single particle
+vides a representation of a state with a Fermi surface,
+                                                                 Hamiltonian h(1) using the Fourier transform (up to a
+albeit on a special lattice and at a special filling where
+                                                                 small eigenvalue problem in case of having several modes
+the Fermi surface has no curvature. The error scaling
+                                                                 per site). However, the Fourier transform is not a local
+with circuit size is consistent with the hypothesis that an
+                                                                 unitary transformation (it mixes modes arbitrarily far
+exact renormalization group circuit can be implemented
+                                                                 away), so it fails to fully capture the special physics of
+using a quasi-local circuit with rapidly decaying tails [31].
+                                                                 the ground state and its real-space entanglement renor-
+Together, our results address a long standing challenge:
+                                                                 malization structure. For example, the Fourier transform
+to rigorously construct tensor networks for gapless states
+                                                                 typically takes an unentangled state to a state with vol-
+of matter with Fermi surfaces.
+                                                                 ume law entanglement. Importantly, however, the ground
+   This paper is organized as follows. We first first briefly
+                                                                 state is invariant under basis transformations within the
+set the stage for our work and review the basics of non-
+                                                                 filled and empty spaces (negative and positive energy
+interacting fermions systems and some wavelet terminol-
+                                                                 eigenspaces, respectively), where the former is also known
+ogy (Section II). Then we discuss the one-dimensional
+                                                                 as the Fermi sea. We can therefore prepare the same state
+model and construct MERA quantum circuits that approx-
+                                                                 by filling modes which are suitable linear combinations of
+imate its ground state (Section III). Next, we generalize to
+                                                                 negative energy eigenstates, chosen to be approximately
+the two-dimensional model which has a square Fermi sur-
+                                                                 local in real space. Vice versa, we can approximate the
+face (Section IV). We then explain how to obtain a priori
+                                                                 ground state by filling strictly local modes that are ap-
+error bounds for our constructions (Section V), and we il-
+                                                                 proximately supported within the Fermi sea.
+lustrate the effectiveness of our results through numerical
+                                                                     Wavelets [32] provide a suitable basis to construct
+experiments (Section VI). We conclude in Section VII.
+                                                                 such local modes. As first discussed in [29], the hier-
+                                                                 archical structure of a wavelet transform provides the
+                                                                 single-particle version of an entanglement renormaliza-
+                       II.   SETUP                               tion quantum circuit. In one dimension, wavelet trans-
+                                                                 forms can be specified by a scaling filter hs and a
+  Throughout this paper we work in the context of non-           wavelet filter hw . An input signal ψ ∈ `2 (Z) (the
+interacting fermion systems. At the single-particle level,       space of square summable sequences) is then decom-
+the systems can be described by a Hilbert space spanned          posed by convolution    and downsampling into a scaling
+                                                                                = m h∗s [m − 2n]ψ[m] and a wavelet out-
+                                                                                   P
+by a basis of single-particle states or modes φα . This data     output ψs [n]P
+depends on the physical setup, but in the cases below,           put ψw [n] = m h∗w [m−2n]ψ[m]. Intuitively, the wavelet
+φα can be taken to be a single-particle state in which the       filter should project onto details of a certain scale, while
+particle is localized at site α in some lattice Zd . The many-   the scaling filter should project on all features up to this
+body description is achieved by second quantization, i.e.,       scale. The (discrete) wavelet transform is obtained by
+passing to creation, a†α , and annihilation, aα , operators      iterating this scheme: the scaling output is taken as the
+                                                                                                                                         3
+
+input signal for the next iteration. It decomposes the                                |1〉|0〉                     |1〉|0〉
+Hilbert space into orthogonal subspaces, each describing
+details at a certain scale. Its inverse reassembles the input                         −//4                       −//4
+
+signal from the wavelet outputs at all scales.
+   If we design the wavelet transform such that it separates                                                                       234
+negative-energy from positive-energy modes, we obtain a
+renormalization scheme from the “quadratic” unitary URG
+corresponding to one step of the wavelet transform. If                       |1〉|0〉            |1〉|0〉   |1〉|0〉            |1〉|0〉
+the filters have finite length then URG is a finite-depth
+quantum circuit [33], meaning it is composed of a finite                     −//4              −//4     −//4              −//4
+number of layers of two-site unitaries. The unitary URG
+constitutes one renormalization step: Given the ground                                                                             234
+state |ψi of the Hamiltonian,
+                                          
+                   |ψi ≈ URG |ψi ⊗ |χi ,
+
+where on the right-hand side, |ψi is the ground state
+on the renormalized lattice and |χi is some unentangled                 (=
+                                                                     FIG.  1. 1,
+                                                                               MERA* = quantum
+                                                                                        1          circuit preparing an approximate
+state. Crucially, the disentangled sites are interleaved             ground state of the one-dimensional hopping Hamiltonian (1),
+                                                                     using the $%notation of %[29]. To start, we apply phase gates
+with the renormalized lattice and each unitary layer is a               !" =        , !& swap
+                                                                                         = sublattices in order to let the following
+local transformation. By composing many layers of URG ,              (yellow    "& and
+                                                                             circles)        '
+                                                                     gates act either on the even or the odd sublattice. The bulk of
+we thus obtain a quantum circuit that approximately
+                                                                     the MERA corresponds to two independent wavelet transforms,
+prepares the ground state. The layout of the circuit is              one for hs (even sublattice) and one for gs (odd sublattice).
+illustrated in Fig. 1. The bottom of the figure corresponds          Each step of the two wavelet transforms gives rise to a layer
+to the state |ψi, each layer of red and green blocks consti-         (red boxes) of two parallel quantum circuits of depth K + L,
+tutes the quantum circuit implementing URG , the product             consisting of 2 × 2 unitary gates (solid/hatched blue boxes).
+states |1i |0i on half of the sites make up |χi, and the             At the end of each layer, we apply second quantized Hadamard
+lines which go up into the next layer correspond to |ψi on           unitaries (green boxes) that couple both sublattices and we
+the other half of the sites, which can be identified with            occupy the negative energy modes. The figure illustrates the
+the renormalized lattice. To realize this approach, we               case K = L = 1 and L = 2 layers. As we increase K, L, and
+still need to design finite-length filters hs , hw such that         the number of layers L, we systematically obtain better and
+                                                                     better approximations to the ground state (see Section V).
+the wavelet transform separates negative from positive
+energy modes. We will now discuss in detail how this can
+be done systematically and to arbitrarily high fidelity for
+                                                                     eigenmodes of the single-particle Hamiltonian h(1) (k), i.e.,
+two fundamental model systems.
+                                                                     the k-dependent 2 × 2 matrix in Eq. (2), are
+                                                                                                             
+                                                                                                 1      1
+    III.   FERMIONS ON THE DISCRETE LINE                                              φ± (k) = √          i k   ,
+                                                                                                  2 ±i e 2
+  We first consider the fermion nearest-neighbor hopping             with energies ±2 sin(k/2) and velocities ± cos(k/2), cor-
+Hamiltonian on the one-dimensional infinite discrete line,           responding to left (−) and right (+) movers [35]. Thus,
+                                                                     the many-body ground state is obtained by filling the
+                          a†n an+1 + a†n+1 an .
+                      X
+              H=−                                     (1)            negative energy eigenmodes φ− sign(k) (k), corresponding
+                        n∈Z                                          to the Fermi sea [−π/2, π/2] in the original lattice.
+                                                                       To design a quantum circuit for the ground state, it is
+After blocking neighboring sites using the modes b1,n =
+                                                                     convenient to diagonalize the single-particle Hamiltonian
+(−1)n a2n and b2,n = (−1)n a2n+1 , corresponding to the
+                                                                     into negative and positive energy eigenmodes  by using
+even and odd sublattices, respectively, we can write
+                                                                     the unitary u(k) = d(k) h2 , where h2 = √12 11 −11 is the
+        X †
+ H=−        b1,n b2,n − b†2,n b1,n+1 + b†2,n b1,n − b†1,n+1 b2,n .   Hadamard gate and d is of the form
+           n                                                                                                 
+                                                                                            1         0
+                                                                                   d(k) ∝                       ,          (3)
+In terms of momentum modes bj (k) = n bj,n e−ink , the                                      0 −i sign(k)eik/2
+                                     P
+Hamiltonian is
+                                                                     where, importantly, we are free to choose a k-dependent
+       Z π            †
+                               e−ik − 1 b1 (k)                       phase. Note that the matrix d(k) is discontinuous
+                                            
+            dk b1 (k)     0
+   H=                                            . (2)               around k = 0 because of the sign function, but not
+         −π 2π
+                b2 (k) eik − 1    0      b2 (k)
+                                                                     around k = ±π, where the discontinuity in the sign is
+This is the discretized one-dimensional Dirac Hamiltonian            cancelled by the discontinuity in the half-shift phase fac-
+using the staggered Kogut-Susskind prescription [34]. The            tor (and the result is even smooth). The many-fermion
+                                                                                                                                         4
+
+ground state corresponding to the diagonalized single-                               /2                                            1.0
+particle Hamiltonian                                                                                                          =1
+                                                                                   3 /8                                       =2
+                       
+                        −2 sin (|k|/2)       0
+                                                                                                                             = 3 0.8
+  u(k)† h(1) (k)u(k) =                                 . (4)                         /4                                      exact
+                              0        2 sin (|k|/2)
+
+
+
+
+                                                                phase difference
+                                                                                     /8                                            0.6
+
+
+
+
+                                                                                                                                     norm2/2
+is disentangled and can be prepared in a completely local                             0
+fashion by filling the even sublattice, corresponding to the
+first component, while leaving the odd sublattice empty.                             /8                                            0.4
+   We will now show that the “quadratic” unitary corre-                              /4
+sponding to u(k) can be well-approximated by a finite-                                                                             0.2
+depth quantum circuit. The Hadamard h2 is not k-                                   3 /8
+dependent and thus its second quantization simply cor-                               /2                                            0.0
+responds to a local unitary between neighboring sites of                                  3 /4   /2   /4   0     /4   /2   3 /4
+                                                                                                      momentum (k)
+the original non-blocked lattice. Hence it suffices to fo-
+cus on the unitary d(k), which is block-diagonal between
+the even and odd sublattice. In view of the quantum             FIG. 2. Fourier spectrum of the outputs of the inverse wavelet
+circuit/wavelet correspondence discussed in Section II, we      transform for levels ` = 1, 2, 3. Both filters have equal mag-
+thus need to design a pair of wavelet transforms, acting on     nitude in momentum space (shaded regions). The relative
+the even and odd sublattice and specified by filters hs , hw    phase difference of their Fourier transforms (solid lines) ap-
+and gs , gw , respectively, whose Fourier transforms are        proximates the exact phase difference of the two components
+related by                                                      of Eq. (3) or, equivalently, of the negative energy eigenstates
+                                                                of the single-particle Hamiltonian (black dotted line).
+                                       k
+               gw (k) ≈ −i sign(k)ei 2 hw (k).           (5)
+One can verify that Eq. (5) is fulfilled if the corresponding      We thus obtain entanglement renormalization quan-
+scaling filters satisfy [36]                                    tum circuits by combing the circuits for the “quadratic”
+                                 k                              unitaries corresponding to the wavelet transforms, con-
+                     hs (k) ≈ ei 2 gs (k).               (6)
+                                                                structed using the procedure described in Section II, with
+The phase difference eik/2 in Fourier space implies that        the Hadamard unitaries and the disentangled ground
+the two scaling filters are related by a half-shift or half-    state of the diagonal Hamiltonian (4). These circuits,
+delay in real space. Its appearance is not surprising,          illustrated in Fig. 1, are composed of self-similar layers,
+given the translation invariance of the original (unblocked)    each of which is a quantum circuit of finite depth K + L
+lattice [37]. It is easily seen that the outputs of the         that consists of nearest-neighbor 2 × 2-unitary matrices.
+inverse wavelet transforms are then at all levels related       This corresponds to a bond dimension χ = 2K+L if the
+approximately as in Eq. (3), as illustrated in Fig. 2, and      circuit is represented in the standard form of a binary
+so can be used to implement d(k) [38]. In other words, the      MERA, written in terms of single layers of disentanglers
+same filters can be used throughout and a scale invariant       and isometries [14, 39]. These quantum circuits allow
+circuit will be obtained.                                       us to rigorously approximate correlation functions of the
+   Due to the discontinuity of the half-shift at k = ±π,        ground state of the Hamiltonian (1) as discussed in Sec-
+a pair of local filters cannot satisfy (6) exactly. Fortu-      tion V and illustrated numerically in Section VI.
+nately, approximate solutions were studied in great detail         From the perspective of the renormalization group, it
+in the context of filter design in the signal processing        is natural to consider the coarse-grained or renormal-
+literature [30, 37]. Selesnick devised a general algorithm      ized Hamiltonian. Recall that the original single-particle
+to construct filter pairs, indexed by two integers K, L and     Hamiltonian is of the form h(1) (k) = e(k)(cos(k/2)σy −
+having length 2(K + L), whose Fourier transforms have           sin(k/2)σx ), where e(k) = 2 sin(k/2). Because of the
+exactly equal magnitude and differ by a phase eiδ(k) [30].      downsampling, both the wavelet and scaling outputs cou-
+The parameter K determines the usual moment condi-              ple h(1) (k) and h(1) (k + π) (i.e., a single layer of a binary
+tion used in the wavelet literature, which controls the         MERA is invariant under shifts over two sites). The
+smoothness of the wavelets and the localization proper-         Hamiltonian can be naturally divided into three terms—
+ties of the filters in momentum space. The difference           corresponding to the scaling modes, the wavelet modes,
+between eiδ(k) and the ideal half-shift is controlled by        and the mutual “interaction” between scaling and wavelet
+the parameter L and goes down quickly in the region             modes, respectively, each of which are a free fermion
+around k = 0. While eiδ(k) is continuous at k = ±π and          Hamiltonian. The wavelet Hamiltonian takes the ex-
+therefore necessarily deviates from the half-shift in this      act single-particle form −` (k) σz (after the additional
+region, the support of the scaling filter is, in this same      local Hadamard transforms). Here, ` denotes the level
+region, suppressed with increased K. This allows us to          of the wavelet transform, viz. the layer of the MERA,
+control the error of the approximation (6) by increasing        and ` (k) > 0, so that its ground state is a product state in
+the parameters K and L (see right panel of Fig. 3).             real space, obtained by filling the first mode on every site,
+                                                                                                                                            5
+
+in agreement with Eq. (4). If Eq. (6) is satisfied exactly,                                                                        1
+then the scaling Hamiltonian or renormalized Hamilto-                       1.0
+nian has the structure e` (k)(cos(k/2)σy − sin(k/2)σx ),                                                                           10 2
+where only the eigenvalues ±e` (k) change with the level `,                 0.8
+but not the eigenvectors; in general this is still true ap-                                                                        10 4
+proximately. This is the proclaimed scale invariance, and                   0.6
+
+
+
+
+                                                                energy /2
+
+
+
+
+                                                                                                                                          norm2
+it provides an alternative way to see that the same pairs                                                                          10 6
+of scaling and wavelet filters should be used in every layer.               0.4            =1
+The coarse-grained dispersion relation e` (k) does eventu-                                 =2                                      10 8
+ally reach a fixed point (up to a scaling 2` that accounts                                 =3
+                                                                            0.2            =4
+for the rescaled lattice spacing), as illustrated in the left                              =5                                      10 10
+panel of Fig. 3. Note that there is also a residual wavelet-                0.0           e(k)
+scaling interaction term, originating from the overlap                                                                             10 12
+                                                                                  0       /4     /2   3 /4   0   /4   /2   3 /4
+between the momentum space support of the wavelet and                                     momentum (k)           momentum (k)
+scaling filters, so that the Hamiltonian is not exactly block
+diagonal. In particular, the dispersion relation e`+1 (k)
+is not simply e` (k/2) (the lower half of the dispersion        FIG. 3. Left panel: Plots of the eigenvalues 2` e` (k) of the
+relation of the preceding level), and lim`→∞ 2` e` (k) does     scaling Hamiltonian (solid lines) and the eigenvalues 2` ` (k) of
+                                                                the wavelet Hamiltonian (dashed lines) for levels ` = 1, . . . , 5.
+not simply converge to |k| for all k due to deviations          We observe convergence to a fixed-point Hamiltonian. The
+around k = ±π (see also the left panel in Fig. 3). An           original dispersion e(k) is shown by the solid black line. The
+exact block diagonalization would require filters with non-     residual off-diagonal interaction between scaling and wavelet
+overlapping support, which are therefore nonlocal in real       modes explains why the eigenvalues e1 (k), 1 (k) deviate slightly
+space. While this behavior is more closely approximated         from e(k/2), e(k/2 + π) (dotted blue lines).
+with increasing K, the magnitude of the interaction term        Right panel: The single-particle modes obtained from level
+decays at most polynomially in K. However, full block           ` = 1 of the wavelet transform, translated back to the original
+diagonalization of H is too strong of a requirement and         lattice before blocking, should have momentum space support
+would allow the creation of arbitrary eigenstates by re-        inside (blue) or outside (red) the Fermi sea [−π/2, +π/2].
+placing the product states with a plane-wave state within       While the wavelets exactly vanish at the Fermi points, small
+                                                                errors originate from the side lobes on the opposite side of the
+a single layer. For the ground state itself, convergence of
+                                                                Fermi points. The solid lines are K = L = 4. For fixed L = 4
+correlation functions is still exponential in K and L, as       and K = 6, 8, 10, the support is pushed away from the Fermi
+discussed in Section V.                                         surface but the magnitude of the side lobes does not decrease
+                                                                much (dotted lines). For fixed K = 4 and L = 6, 8, 10, the
+                                                                side lobes appear to decrease exponentially fast (dashed lines).
+IV.    SQUARE LATTICE AND FERMI SURFACE
+
+  We now extend our construction to fermions hopping            effectively decouples the x and y direction, as the corre-
+on the two-dimensional infinite square lattice:                 sponding one-particle Hamiltonian is now of the form
+
+                                                                                                               (1 − e−ikx )(1 − e−iky )
+                                                                                                                                      
+                                                                                                 0
+             X
+      H=−           a†m,n am+1,n + a†m,n am,n+1 + h.c.   (7)    h(1) = −                                                                 .
+            m,n∈Z
+                                                                                      (1 − e+ikx )(1 − e+iky )            0
+
+We again start by focusing on the single-particle domain,       Its eigenvalues are products of the eigenvalues in the
+and then later transform everything into second-quantized       one-dimensional case, ±4 sin(kx /2) sin(ky /2), with eigen-
+form. The two-dimensional problem we study is special be-       modes
+cause of the Fermi surface structure: the two-dimensional
+                                                                                                     1
+                                                                                                          
+fermion Greens function ha†x,y a0,0 i factorizes into two                                     1
+                                                                             φ± (kx , ky ) = √      kx +ky   .
+one-dimensional Greens functions, one which depends                                            2 ±ei 2
+x + y and one which depends on x − y. Thus, as in
+the one-dimensional case, we decompose the lattice into         As in the one-dimensional case, the eigenmodes exhibit a
+an even and odd sublattice, now defined by demanding            phase difference between the two sub-lattices correspond-
+that the sum of both coordinates is even or odd, respec-        ing to a half-shift in real space, but now the half-shift is in
+tively; and we likewise shift the Brillouin zone by mo-         both lattice directions. The positive and negative energy
+mentum (π, π), resulting in new mode operators b1,x,y =         eigenmodes are given by φ± sign(kx ) sign(ky ) (kx , ky ), respec-
+(−1)x+y ax+y,x−y and b2,x,y = (−1)x+y ax+y+1,x−y , with         tively, and are thus discontinuous around both kx = 0
+corresponding momentum modes bi (kx , ky ), i = 1, 2. Note      and ky = 0, as illustrated in the left panel of Fig. 4.
+that these momenta are now defined with respect to the             It is now clear that we can diagonalize the single-particle
+even/odd sub-lattice and hence are rotated by 45 degrees        Hamiltonian with the unitary u(k) = d(kx )d(ky ) h2 ,
+with respect to the original lattice. This transformation       where d is the block-diagonal unitary (3) and h2 the
+                                                                                                                                      6
+
+
+
+
+FIG. 4. Left panel: The relative phase difference between the
+Fourier transforms of hww , gww (smooth surface) approximates
+the exact phase difference of the two components of Eq. (8) or,
+equivalently, of the negative energy eigenstates of the single-
+particle Hamiltonian (wireframe mesh). The colored shading
+of the coordinate plane indicates the momentum space support
+of hww and gww . It is concentrated around kx = ky = ±π and              FIG. 5. Branching MERA quantum circuit preparing an ap-
+vanishes for kx = 0 or ky = 0.                                           proximate ground state of the two-dimensional hopping Ha-
+Right panel: The positive energy branch of the original Hamil-           miltonian (7). The bottom layer consists of applying one-di-
+tonian (wireframe mesh) and of the renormalized Hamiltonian              mensional wavelet transforms in both the x and y direction of
+(smooth surface) after 6 layers, where it has approximately              the 45 degree rotated lattice. This gives rise to four outputs,
+reached its fixed point. The eigenmodes of both Hamiltoni-               as illustrated in detail in Fig. 6. The wavelet-wavelet output
+ans are exactly characterized by the relative phase difference           corresponds to approximate eigenstates, and hence can be
+displayed in the left panel.                                             projected out after a subsequent Hadamard transform that
+                                                                         couples the even and the odd sublattice, indicated by yellow
+                                                                         triangles. The mixed wavelet-scaling outputs are disentangled
+Hadamard gate defined previously. We can implement                       in one direction and therefore have to be processed further
+                                                                       by one-dimensional transformations in the scaling directions,
+                  1                0                                     giving rise to two branches that take the form of binary trees
+  d(kx )d(ky ) ∝                                         (8)             as in Fig. 1. The scaling-scaling output contains no disentan-
+                  0 − sign(kx ) sign(ky )ei(kx +ky )/2
+                                                                         gled degrees of freedom and is thus connected to a copy of the
+using the tensor products of two one-dimensional wavelet                 circuit on the renormalized lattice.
+transforms as before—one acting in the x-direction and
+the other in the y-direction. More specifically, let us de-
+note by W ψ = ψs ⊕ψw a single step of the one-dimensional
+wavelet transform with filters hw , hs . Then                            for logarithmic corrections to the area law [15, 41, 42]
+                                                                         and which was explicitly built with Fermi surfaces in
+          (W ⊗ W )ψ = ψss ⊕ ψsw ⊕ ψws ⊕ ψww ,                      (9)   mind. Unlike in the original proposal, our network has
+                                                                         three branches instead of two. Indeed, after each layer
+which we identify as a single step of the two-dimensional                we are left with four branches, of which only one can
+separable wavelet transform. In particular, the wavelet-                 be projected into a product state while the remaining
+wavelet component ψww corresponds to the filter                          three have to be analyzed further. However, only one
+hww (kx , ky ) = hw (kx )hw (ky ), and similarly if we use the           of the three branches keeps on branching in the higher
+one-dimensional filters gs , gw instead. Thus, Eq. (5) im-               levels. The other two are further disentangled by ordinary
+plies that                                                               one-dimensional MERAs as in Fig. 1. This ensures that
+                                             kx +ky
+                                                                         the ground state produced by our network satisfies an
+  hww (kx , ky ) ≈ − sign(kx ) sign(ky )ei      2     gww (kx , ky ),    appropriate area law of the form S(R) ≃ R log2 R for the
+                                                                         entropy of the reduced density matrix of an R × R box.
+which is precisely the desired phase relation between the                Indeed, let us first recall the estimation of the entangle-
+two components of d(kx )d(ky ) (see left panel in Fig. 4). To            ment entropy in a one-dimensional MERA. Each layer is
+obtain the tensor product of the two wavelet transforms,                 a finite-depth quantum circuit that increases the entangle-
+we now iteratively apply W ⊗ W to the scaling-scaling                    ment entropy of a region by at most a constant amount c1 ,
+component ψss , as well as W ⊗ I to ψsw and I ⊗ W                        so we obtain S1D (R) ≤ c1 + S1D (R/2) ≤ . . . ≤ c1 log2 R.
+to ψws [40]. The resulting transform is thus labeled by                  For a regular two-dimensional MERA, every layer can
+two levels, `x and `y , corresponding to the number of                   increase the entanglement entropy of an R×R box by c2 R,
+renormalization steps in each direction.                                 leading to S2D (R) ≤ c2 R+S2D (R/2) ≤ . . . ≤ 2c2 R. Thus,
+   After second quantization and converting these trans-                 the entanglement entropy in a regular two-dimensional
+formations into a quantum circuit, we obtain an entan-                   MERA obeys a strict area law. In contrast, our branching
+glement renormalization quantum circuit of the form                      MERA adds in every layer the entanglement contribution
+sketched in Figs. 5 and 6. This is a particular example of               of a collection of one-dimensional MERAs in the horizon-
+a branching MERA, which generalizes the MERA to allow                    tal and vertical direction. The resulting entanglement
+                                                                                                                                                                              7
+
+entropy is bounded by                                                   (a)                                       (b)
+
+       S(R) ≤ c2 R + 2(R/2)S1D (R/2) + S(R/2)
+            ≤ c2 R + c1 R log2 (R/2) + S(R/2) ≤ . . .
+            . 2c1 R log2 R + (2c2 − 4c1 )R.
+
+While only an upper bound, this estimate illustrates how
+a logarithmic violation of the area law can be obtained
+due to the one-dimensional MERAs in each layer.
+   From the perspective of the renormalization group,                   (d)                                       (c)
+the scaling-scaling branch gives rise to a renormalized
+Hamiltonian whose eigenmode structure is exactly the
+same as that of the original Hamiltonian, so that it can
+indeed be further processed in a self-similar fashion. The
+eigenvalues of the renormalized Hamiltonian converge to
+a fixed point upon successive coarse-graining (see right
+panel of Fig. 4). The other two branches, resulting from
+a scaling filter in one direction and a wavelet filter in the
+other direction, give rise to coarse grained Hamiltonians               (e)                                       (f)
+                                                                                                         C              C   C       C       C
+depicted in Fig. 7. The structure of their eigenmodes is                  A     D   E   C   A   D    E
+                                                                                            B            D              C   C       C       C
+purely one-dimensional. Indeed, for both outputs, one                     B     C   E   D       C    E
+                                                                                                         D              C   C       C       C        D       D       D   D
+direction is already of wavelet type, so we only have to                  E     C   A   D   E   C    A
+                                                                                                                        C   C       C       C        D       D       D   D
+apply the one-dimensional MERA in the other direction                     E     D   B   C   E   D    B   C
+to obtain wavelet outputs at each scale.                                  A     D   E   C   A   D    E   C                                           D       D       D   D
+                                                                                                                        E   E       E       E
+                                                                          B     C   E   D   B   C    E   D                                           D       D       D   D
+                                                                                                                        E   E       E       E
+                                                                          E     C   A   D   E   C    A   D
+                                                                                                                        E   E       E       E
+        V.    RIGOROUS ERROR ESTIMATES                                    E     D   B   C   E   D    B   C
+                                                                                                                        E   E       E       E
+
+                                                                          (g)               !& = %                (h)                               !& = %
+   In Sections III and IV we constructed entanglement
+                                                                                                                                B               E                B
+renormalization quantum circuits to approximately pre-
+                                                                                                                                        C                D
+pare the ground state of free fermion Hamiltonians in                                                              !" = −%                                           !" = %
+                                                                        !" = −%                          !" = %
+one and two dimensions, and we gave a heuristic account                                                                         E               A            E
+
+of the improved quality of our approximations with in-                                                                                  D                C
+creased circuit parameters K and L. We will now discuss                                                                                         E            B
+                                                                                                                                B
+how this intuition can be turned into rigorous a priori                                     !& = −%                                                 !& = −%
+error estimates. For simplicity, we will only formulate our
+result in the one-dimensional case, but its statement and             FIG. 6. One layer of the branching MERA for two-dimensional
+proof are completely analogous for two dimensions.                    free fermions. (a) The 2D lattice of fermionic modes. (b) A
+   Our theorem is stated in terms of correlation functions            series of 1D wavelets transformations, as depicted in Fig. 1,
+of fermion creation and annihilation operators. Given a               are applied diagonally. (c) Lattice sites correspond either to
+sequence f ∈ `2 (Z), we define the corresponding      anni-           scaling (solid) or wavelet (striped) outputs from the preceding
+                                                                      transformations. (d) A series of 1D wavelets transformations
+                                               P
+hilation and creation operators via a(f ) = n∈Z f [n]an
+                                                                      are applied across the other diagonal. (e) The lattice now
+and a† (f ) = n∈Z f [n]∗ a†n . We are interested in comput-
+              P
+                                                                      contains five different types of site (labelled A–E). (f) Sites la-
+ing correlation functions of 2N creation and annihilation             belled A, B are differentiated by the application of Hadamards
+operators in a many-body state Ψ,                                     and are truncated, while new sublattices are separately formed
+                                                                      from sites C–E. (g) The Brillouin zone of the 2D free fermions,
+ G({fi })Ψ = hΨ|a† (f1 ) . . . a† (fN )a(fN +1 ) . . . a(f2N )|Ψi .   where the shaded region denotes the Fermi sea. (h) The sites
+                                                                      in (e) approximately correspond to the distinct regions of the
+Other orderings of operators can be obtained by using                 Brillouin zone as shown. Sites A and B contain modes in the
+the canonical anticommutation relations {a(f ), a(g)† } =             occupied |1i or unoccupied |0i states respectively and may be
+hf |gi and {a(f ), a(g)} = 0. The number of creation                  truncated. Sublattices from sites C and D consist of products
+and annihilation operators must be equal to obtain a                  of 1D chains that are only correlated in the back-sloping diag-
+nonvanishing result since we are interested in states that            onal or forward-sloping diagonal directions respectively. The
+are invariant (up to an overall phase) under a global U (1)           sublattice from sites E is self similar to the original lattice.
+(particle number) transformation of the form aα 7→ eiθ aα .
+For a pure state of a finite size system, this invariance
+would simply imply that the state has a fixed number of
+particles. Let D({fi }) denote the maximal support of any
+                                                                                                                                 8
+
+                                                                                                                          101
+                                                                     8                                                    100
+                                                                                                                          10 1
+                                                                     6                                                    10 2
+                                                                                                                          10 3
+
+
+
+
+                                                                 L
+                                                                     4
+                                                                                                                          10 4
+                                                                     2                                                    10 5
+                                                                                                                          10 6
+FIG. 7. Coarse-grained Hamiltonians for the wavelet-scaling          0                                                    10 7
+and scaling-wavelet branches. We show the positive energy                0   1   2   3     4       5   6   7   8    9
+branch (surface) and the relative phase difference between                                     K
+the two components of the positive energy eigenmodes (color
+coding of the coordinate plane). Because the eigenmodes          FIG. 8. Illustration of the error term ε in Theorem 1. The
+are independent of one of the two directions and take the        error ε decreases exponentially for Selesnick’s construction as
+form of the one-dimensional problem studied in Section III,      the parameters K and L are increased.
+the ground state can be disentangled by a tensor product of
+one-dimensional MERAs as in Fig. 1.
+
+                                                                    It is instructive to consider a few features of Theorem 1.
+linear combination of the observables fi (e.g., n for an         Suppose f1 [n] = δn,x and f2 [n] = δn,y . Then G({fi }) is
+n-point function). We will find that correlation functions       simply the two-point function C(x, y) = ha†x ay i, which
+of sparse observables are easier to approximate.                 in the true ground state decays with |y − x| as a power
+   Our result is independent of any specific filter construc-    law, C ∼ |y − x|−1/2 . Yet, Theorem 1 gives a bound
+tion and only depends on the following parameters. Let hs        that is independent of the separation |y − x|. This might
+and gs be two scaling filters of finite length M such that       seem puzzling since for a finite depth L, all correlations
+the half delay condition (6) is approximately satisfied:         between operators separated by more than 2L M vanish.
+                                                                 However, at a distance of |y − x| = M 2L , the two-point
+                            k
+                |hs (k) − ei 2 gs (k)| ≤ ε < 1.           (10)   function is of order C ∼ M −1/2 2−L/2 which is consistent
+                                                                 with Theorem 1: dropping the second term in the square
+We also assume that the filters generate corresponding           root, we still have M −1/2 2−L/2 ≤ M 1/2 2−L/4 .
+multiresolution analyses with scaling functions bounded             More generally, the two terms in the square root in
+in absolute value by some constant B ≥ 1. Then we have           Theorem 1 have different physical interpretations. The
+the following a priori error estimate:                           first is associated with the convergence of the renormaliza-
+                                                                 tion group transformation, while the second is associated
+Theorem 1. Let |Ωi denote the exact ground state of              with the goodness of approximation of the phase relation.
+the Hamiltonian (1) and |ΩMERA i the many-body state             Indeed, Eq. (10) requires that the phase relation (5) is
+prepared by L layers of the MERA quantum circuit con-            approximately correct or, when this is not the case for
+structed from two scaling filters as above. Then we have         some k, that both hs (k) and gs (k) are small in magnitude
+the following error bound for correlation functions: For         (cf. Section III).
+all f1 , . . . , f2N with kfi k2 ≤ 1,                               Our proof of Theorem 1 makes this intuition precise.
+                                                                 We show that Eq. (10) guarantees that the single-particle
+                G({fi })Ω − G({fi })ΩMERA
+                                                                 modes prepared by the MERA are approximate eigen-
+                √ q
+            ≤ 24 N C2−L/2 + 6ε log22 (C/ε)                       modes, and the boundedness of the scaling function en-
+                                                                 sures that the truncation error decreases exponentially
+                                          p                      with the number of layers of the tensor network. Together,
+where the constant C is given by 23/2         D({fi }) BM .
+                                                                 this implies that the two-point correlation functions of
+   Theorem 1 shows that correlation functions can be             the states |Ωi and |ΩMERA i are approximately equal. We
+approximated to arbitrarily high fidelity for a MERA             then use a robust version of Wick’s theorem [43] to show
+constructed from suitable scaling filters. As discussed in       that higher correlation functions can likewise be approxi-
+Section III, Selesnick’s algorithm gives rise to such filters,   mated up to small error. We refer to Appendix A for a
+parametrized by two integers K and L [30]. Their length          rigorous mathematical proof.
+is M = K + L, and we numerically find that B remains                It is remarkable that the error converges as L → ∞:
+bounded, while ε decreases exponentially as we increase          even though correlation functions now depend on an in-
+K and L (see Fig. 8). Thus the error bound in Theorem 1          finite number of “non-ideal” (finite ε) layers, the total
+is likewise exponentially small if the number of layers L is     error is bounded. This is a consequence of the hierarchical
+sufficiently large. We illustrate this in Section VI below,      renormalization group structure of the network combined
+where we numerically approximate the energy density and          with the boundedness of the scaling functions.
+more general two-point functions.                                   Note that Theorem 1 does not provide an error esti-
+                                                                                                                                                                                                        9
+
+mate on the fidelity between the true ground state and
+the MERA state for an infinite system. Indeed, these                                                  10 2
+
+
+
+
+                                                                   relative error in energy density
+
+
+
+
+                                                                                                                                      relative error in energy density
+                                                                                                                                                                         10 2
+two states are expected to necessarily be orthogonal in                                               10 3
+the thermodynamic limit, since any finite error per unit
+volume will result in zero overlap as the system size is                                              10 4
+                                                                                                                                                                         10 3
+taken to infinity. Nevertheless, Theorem 1 proves that our                                            10 5
+construction can yield correlation functions that approxi-                                                    K=1
+                                                                                                              K=2
+mate those of the true ground state to arbitrary accuracy.                                            10 6    K=3                                                               K=1
+                                                                                                              K=4                                                        10 4   K=2
+Therefore, all intensive (not scaling with system size)                                               10 7    K=5                                                               K=3
+physical properties that can be inferred from these are                                                       0.24 *   2.22                                                     K=4
+                                                                                                      10 8    EW'16                                                             K=5
+likewise well-reproduced. Our results can thus be seen                                                        EV'13                                                      10 5   0.48 *   1.11
+
+as another instance where we can rigorously construct                                                        101          102   103                                              102        103   104
+tensor network states for critical systems or for quantum                                                     bond dimension                                                    bond dimension
+field theories if we focus on correlation functions, a point
+first raised in [44, 45].                                         FIG. 9. Relative error in the energy density for the approxi-
+   On a finite ring of size V , the one-dimensional model has     mate ground states prepared by our quantum circuits in one
+an energy gap ∆ ∼ 1/V . In such a situation, the infinite         dimension (left) and in two dimensions (right), for various
+system L → ∞ circuit must be modified to fit into the             values of the wavelet parameters K, L (dashed lines indicate
+finite-size system. We expect that there exists an analogue       same L). For comparison we also display the relative error for
+of Theorem 1 that guarantees correlation functions are            the analytical construction from [29] and for the numerically
+well-approximated for sufficiently small ε. Moreover, in          optimized non-Gaussian MERA from [47].
+this finite-size setting and with sufficiently small ε, the
+state |ΩMERA i can have high overlap with |Ωi. Indeed, if
+PΩ = |Ωi hΩ| is the ground state projector and EΩ is the          the one from [29] but its energy density estimate is out-
+ground state energy, then we have ∆(1 − PΩ ) ≤ (H − EΩ )          performed by the variationally optimized non-Gaussian
+and hence                                                         MERA from [47].
+                                                                     A similar procedure works for the two-dimensional
+                          1
+  1 − |hΩ|ΩMERA i|2 ≤       (hΩMERA |H|ΩMERA i − EΩ ).            square lattice. The energy density is now given by
+                          ∆                                       PLx PLy             −(`x +`y +1)
+                                                                     `x =1    `y =1 2              e(`x ,`y ) , where e(`x ,`y ) denotes
+Thus if the energies of |Ωi and |ΩMERA i are within               the single-particle energy of a mode obtained from lev-
+1/poly(V ) of each other, then the overlap |hΩ|ΩMERA i|2          els `x , `y of the quantum circuit, which we recall denote
+is within 1/poly(V ) of one. If, as suggested by our numer-       the number of renormalization steps in the x and y di-
+ics, the error ε achieved by Selesnick’s wavelets say, goes       rection, respectively. In other words, min(`x , `y ) is the
+down exponentially with min(K, L), then one would have            level at which we switch to a one-dimensional branch
+high overlap between a MERA state and the true ground             (cf. Fig. 5). It is useful to note that, since the two wavelet
+state using a bond dimension scaling only polynomially            transforms involved are separable, the modes obtained
+in V .                                                            on each sublattice are tensor products of one-dimensional
+                                                                  modes, coupled only by the final Hadamard transforms.
+                                                                  This allows us to carry out all computations in the one-
+            VI.    NUMERICAL RESULTS                              dimensional setting. Our numerical results are shown
+                                                                  in the right panel of Fig. 9 and again show power law
+   Our construction can be used to effectively calcu-             convergence in the effective bond dimension to the true
+late physical properties in real space [46]. For exam-            value −8/π 2 .
+ple, consider the energy density of the approximate                  As a last example, we consider a general two-point
+ground state. Its value for the MERA quantum cir-                 function C(x, y) = ha†x ay i. While the true ground state
+cuit for the infinite one-dimensional discrete line, trun-        is translation-invariant, C(x, y) 6= C(y − x) for the ap-
+                                   PL        −(`+1)               proximate ground state prepared by the quantum cir-
+             P L, is given
+cated at depth
+                          ∗
+                               by      `=1 2        e(`) , with
+e(`) = −2< n φ(`) [n]φ(`) [n + 1] the single-particle en-         cuit, since the latter is not perfectly invariant under
+ergy of a mode φ(`) obtained from the `-th layer. The             arbitrary lattice translations. For simplicity, we only
+scaling factor comes from the fact that at the `-th level of      discuss the one-dimensional case. As above, let φ(`)
+the MERA, the density of degrees of freedom is 2−` , half         denote a single-particle mode obtained from the `-th
+of which are filled. This can be easily be evaluated numer-       level of the MERA quantum circuit. Then we have
+                                                                               PL P
+ically and displays convergence to the true value −2/π,           C(x, y) = `=1 z∈Z φ(`) [x − 2`+1 z]φ∗(`) [y − 2`+1 z]. The
+as illustrated in the left panel of Fig. 9. The numeri-           inner sum corresponds to the different modes obtained
+cal results are consistent with a power law convergence           from the `-th level, obtained as translates of φ(`) ; we
+in the effective bond dimension χ = 2K+L , in agree-              note that only finitely many translates yield a nonzero
+ment with our discussion below Theorem 1. We find that            summand since the φ(`) are finitely supported. The result
+our analytical construction systematically improves over          is shown in Fig. 10. Again we find convergence to the
+                                                                                                                               10
+
+  0.5                      exact    0.5                      exact    of wavelet filters. The design of such pairs of wavelets
+                           C(0,y)                            C(0,y)   had already been carried out in the signal processing
+  0.4                      C(1,y)                            C(1,y)   community.
+                           C(2,y)   0.4                      C(2,y)
+                           C(3,y)                            C(3,y)      The constructions reported here are closely related to
+  0.3                               0.3                               a forthcoming work by three of the authors which uses
+  0.2                                                                 wavelet technology to approximate correlation functions
+                                    0.2                               in a continuum quantum field theory, namely the free
+  0.1                                                                 Dirac field in 1+1 dimensions. As in the case of the
+                                    0.1
+                                                                      thermodynamic limit of the lattice system, the correct
+  0.0                                                                 notion of approximation turns out to be approximation of
+                                    0.0
+  0.1                                                                 correlation functions instead of approximation of states.
+                                    0.1                               Using the free Dirac field construction, it is also possible
+        0   5   10    15       20         0   5   10    15       20   to construct MERA circuits which approximate the corre-
+                y-x                               y-x                 lation functions of interacting Wess-Zumino-Witten field
+                                                                      theories in 1+1 dimensions.
+FIG. 10. Two-point function C(x, y) of the approximate                   There are many immediate directions for further devel-
+ground states in one-dimension for wavelet parameters K =             opment. It is of considerable interest to adapt existing
+L = 1 (left) and K = L = 3 (right).                                   wavelets or design new wavelets that can capture curved
+                                                                      Fermi surfaces; then we would truly be able to describe
+                                                                      a general class of metallic states in two or more dimen-
+exact solution C(y − x) = sin(π(y − x)/2)/(π(y − x)).                 sions. This would, for example, enable us to address
+In particular, the two-point function becomes more and                different chemical potentials in the square lattice model.
+more translation-invariant with increased K, L.                       It is also interesting to adapt our wavelet approach to
+                                                                      describe Dirac points in two or more dimensions; the
+                                                                      basic approach used here is clearly sound, but there is an
+                                                                      interesting wavelet design problem to capture the physics
+                 VII.       CONCLUSIONS                               of the filled Dirac sea. Another very interesting direction
+                                                                      is interacting fermions. For example, similar in spirit to
+   In this work we showed how wavelet theory can be used              Slater-Jastrow wavefunctions, our non-interacting wavelet
+to rigorously construct quantum circuits that approxi-                MERA construction might be used as the starting point
+mate metallic states of non-interacting fermions. Working             for a variational class of wavefunctions for interacting
+directly in the thermodynamic limit, we showed that                   metals.
+arbitrary correlation functions of fermion creation and
+annihilation operators can be approximated to high ac-
+curacy for appropriate choice of circuit parameters. In                              ACKNOWLEDGMENTS
+a finite-size system, we argued based on our numerics
+that a tensor network with bond dimension scaling only                   We acknowledge inspiring discussions with Frank Ver-
+polynomially with system size can achieve unit overlap                straete, Karel van Acoleyen and Matthias Bal. JH ac-
+with the true ground state in the large system size limit.            knowledges funding from the European Commission (EC)
+Although such a bond dimension is high from the point of              via ERC grant ERQUAF (715861). BGS is supported
+view of numerical calculations using a classical computer,            by the Simons Foundation as part of the It From Qubit
+from an information-theoretic point of view it represents             Collaboration; through a Simons Investigator Award to
+an astounding compression of the quantum state. At no                 Senthil Todadri; and by MURI grant W911NF-14-1-0003
+point did we use a variational optimization to determine              from ARO. MW gratefully acknowledges support from the
+the circuit parameters, and the circuits we construct have            Simons Foundation and AFOSR grant FA9550-16-1-0082.
+a plain physical meaning. The essential physics arose from            JC is supported by the Fannie and John Hertz Foundation
+the structure of negative and positive energy eigenspaces             and the Stanford Graduate Fellowship program. VBS was
+and was encapsulated in a half-shift delay between pairs              supported by the EC through grants QUTE and SIQS.
+
+
+
+
+ [1] L. D. Landau, Phys. Z. Sowjet. 11, 26 (1937).                     [5] J. Eisert, M. Cramer, and M. B. Plenio, Rev. Mod. Phys.
+ [2] X.-G. Wen, ArXiv e-prints (2012), arXiv:1210.1281.                    82, 277 (2010), arXiv:0808.3773.
+ [3] M. B. Hastings and X.-G. Wen, Phys. Rev. B 72, 045141             [6] A. Kitaev and J. Preskill, Phys. Rev. Lett. 96, 110404
+     (2005), arXiv:cond-mat/0503554.                                       (2006), arXiv:hep-th/0510092.
+ [4] S. Bravyi, M. B. Hastings,         and S. Michalakis,             [7] M. Levin and X.-G. Wen, Phys. Rev. Lett. 96, 110405
+     Journal of Mathematical Physics 51, 093512 (2010),                    (2006), arXiv:cond-mat/0510613.
+     arXiv:1001.0344.                                                  [8] M. M. Wolf, Phys. Rev. Lett. 96, 010404 (2006),
+                                                                                                                                   11
+
+     arXiv:quant-ph/0503219.                                                 mat/0512165.
+ [9] D. Gioev and I. Klich, Phys. Rev. Lett. 96, 100503 (2006),         [40] In contrast, in the two-dimensional separable wavelet
+     arXiv:quant-ph/0504151.                                                 transform the three components ψsw , ψws , ψws together
+[10] B. Swingle, Phys. Rev. Lett. 105, 050502 (2010),                        usually make up the detail coefficients.
+     arXiv:0908.1724.                                                   [41] G. Evenbly and G. Vidal, Phys. Rev. B 89, 235113 (2014),
+[11] S. Bravyi, M. B. Hastings, and F. Verstraete, Phys. Rev.                arXiv:1310.8372.
+     Lett. 97, 050401 (2006), arXiv:quant-ph/0603121.                   [42] G. Evenbly and G. Vidal, Phys. Rev. Lett. 112, 220502
+[12] F. Verstraete, V. Murg, and J. I. Cirac, Advances in                    (2014), arXiv:1205.0639.
+     Physics 57, 143 (2008), arXiv:0907.2796.                           [43] R. T. Powers and E. Størmer, Commun. Math. Phys. 16,
+[13] R. Orús, Annals of Physics 349, 117 (2014),                            1 (1970).
+     arXiv:1306.2164.                                                   [44] R. König and V. B. Scholz, Nucl. Phys. B 920, 32 (2017),
+[14] G. Vidal, Phys. Rev. Lett. 101, 110501 (2008),                          arXiv:1509.07414.
+     arXiv:quant-ph/0610099.                                            [45] R. König and V. B. Scholz, Phys. Rev. Lett. 117, 121601
+[15] G. Evenbly and G. Vidal, Phys. Rev. Lett. 112, 240502                   (2016), arXiv:1601.00470.
+     (2014), arXiv:1210.1895.                                           [46] Software available at https://github.com/catch22/
+[16] S. Montangero, M. Rizzi, V. Giovannetti, and R. Fazio,                  pyfermions.
+     Phys. Rev. B 80, 113103 (2009), arXiv:0810.1414.                   [47] G. Evenbly and G. Vidal, in Strongly Correlated Systems
+[17] R. N. C. Pfeifer, G. Evenbly, and G. Vidal, Phys. Rev.                  (Springer, 2013) pp. 99–130, arXiv:1109.5334.
+     A 79, 040301 (2009), arXiv:0810.0580.
+[18] P. Corboz, G. Evenbly, F. Verstraete, and G. Vidal, Phys.
+     Rev. A 81, 010303 (2010), arXiv:0904.4151.
+[19] G. Evenbly and G. Vidal, Phys. Rev. B 81, 235102 (2010).
+[20] G. Evenbly and G. Vidal, New J. Phys. 12, 025007 (2010),
+     arXiv:0801.2449.
+[21] M. Aguado and G. Vidal, Phys. Rev. Lett. 100, 070404
+     (2008), arXiv:0712.0348.
+[22] L. Cincio, J. Dziarmaga, and M. M. Rams, Phys. Rev.
+     Lett. 100, 240603 (2008), arXiv:0710.3829.
+[23] G. Evenbly and G. Vidal, Phys. Rev. Lett. 102, 180406
+     (2009), arXiv:0811.0879.
+[24] B. Swingle, J. McGreevy, and S. Xu, Phys. Rev. B 93,
+     205159 (2016), arXiv:1602.02805.
+[25] B. Swingle, Phys. Rev. D 86, 065007 (2012),
+     arXiv:0905.1317.
+[26] X.-L. Qi, arXiv preprint (2013), arXiv:1309.6282.
+[27] F. Pastawski, B. Yoshida, D. Harlow, and J. Preskill, J.
+     High Energy Phys. 2015, 1 (2015), arXiv:1503.06237.
+[28] P. Hayden, S. Nezami, X.-L. Qi, N. Thomas, M. Wal-
+     ter, and Z. Yang, J. High Energy Phys. 2016, 9 (2016),
+     arXiv:1601.01694.
+[29] G. Evenbly and S. R. White, Phys. Rev. Lett. 116, 140403
+     (2016), arXiv:1602.01166.
+[30] I. W. Selesnick, IEEE Trans. Sig. Process. 50, 1144 (2002).
+[31] B. Swingle and J. McGreevy, Phys. Rev. B 93, 045127
+     (2016), arXiv:1407.8203.
+[32] S. Mallat, A wavelet tour of signal processing (Academic
+     Press, 2008).
+[33] G. Evenbly and S. R. White, arXiv preprint (2016),
+     arXiv:1605.07312.
+[34] J. Kogut and L. Susskind, Phys. Rev. D 11, 395 (1975).
+[35] Throughout this paper, we always consider the momenta k
+     to be in (−π, π).
+[36] Here we use that we can choose the wavelet filters as the
+     conjugate mirrors of the scaling filters. For concreteness,
+     we will choose hw (k) = eik h∗s (k+π) and likewise for gw , gs .
+     It is important to observe that k + π ≡ k − sign(k)π ∈
+     (−π, +π) to deal correctly with the half-shift.
+[37] N. Kingsbury, Phil. Trans. R. Soc. Lond. A 357, 2543
+     (1999).        P
+[38] Since ψ(n) = k hs (n−2k)ψs (k)+hw (n−2k)ψw (k), this
+     is clear at the first level of the transform, but it can easily
+     be shown to hold at all levels of the wavelet transform by
+     using Eqs. (5) and (6); see Appendix A.
+[39] G. Vidal, Phys. Rev. Lett. 99, 220405 (2007), arXiv:cond-
+                                                                                                                          12
+
+                                           Appendix A: Proof of Theorem 1
+
+  We start by describing the setup in precise mathematical terms. Any pure gauge-invariant generalized free state Ψ
+can be described by an operator ψ ≥ 0, known as the symbol, such that the correlation functions are given by
+                                                                            N
+                                          G({fi })Ψ = det [hfi |ψ|fN +1−j i]i,j=1 .                                    (A1)
+
+For pure states, ψ is a projection which we can think of as the projection onto the Fermi sea. To connect with physics
+notation note that “gauge-invariant” means effectively that the density matrix Ψ is invariant under a global U (1)
+(particle number) transformation of the form aα 7→ eiθ aα .
+  Both the true ground state and the state prepared by the MERA are pure gauge-invariant generalized free states.
+Following the discussion in Section III, their symbols can be described as follows. We denote by v : `2 (Z) ⊗ C2 → `2 (Z)
+the unitary corresponding to the transformation (b1 , b2 ) 7→ a and by m(θw ) : `2 (Z) → `2 (Z) the Fourier multiplier
+                         k
+by θw (k) = −i sign(k)ei 2 , so that the operator (3) can be written as d = I0 m(θ0 w ) . Recall that u = d(I ⊗ h2 ), with h2
+                                                                                      
+
+the Hadamard gate. Then the symbol of the true ground state |Ωi is given by
+                                                                                       
+                                       I 0 † †         I    0                    I       0
+                              ω = vu          u v =v              (I ⊗ |+i h+|)               v† ,                       (A2)
+                                        0 0             0 m(θw )                  0 m(θw )†
+                            √
+where |+i = (|0i + |1i)/ 2. Next, recall that we are given two pairs of filters, hs , hw and gs , gw . We denote the
+corresponding wavelet transforms, truncated at level L, by
+                                             (L)
+                                           Wh , Wg(L) : `2 (Z) → `2 (Z) ⊗ CL+1 ,
+
+where the first L coordinates of the output correspond to the wavelet outputs and the last one to the remaining scaling
+                                                                                   (L) (L)
+output (see, e.g., [32] for an introduction to wavelet theory). Let us denote by pw , ps the projection onto the wavelet
+outputs and the scaling output, respectively. Then the many-body ground state |ΩiMERA prepared by the MERA
+quantum circuit has symbol
+                                          "                #                 "             #
+                                             (L),†                               (L)
+                                           Wh         0                       W        0
+                                                                          
+                                                                                             †
+                             ωMERA = v               (L),†     p(L)
+                                                                w ⊗ |+i h+|
+                                                                                h
+                                                                                       (L) v .                     (A3)
+                                              0    Wg                           0     Wg
+
+Let F ⊆ `2 (Z) denote a subspace (which we will later take to be the span of the observables fi ). Let
+
+                                             D(F ) := sup |{x ∈ Z : f (x) 6= 0}|
+                                                         f ∈F
+
+denote the maximal support of any sequence in F . We denote by pF the orthogonal projector onto F and abbreviate
+ω|F := pF ωpF .
+  As usual, we will write k−kp for p-norms, k−k∞ for supremum norms, and k−k for operator norms. We will use
+m(θ) : `2 (Z) → `2 (Z) more generally for the Fourier multiplier by some periodic function θ(k).
+  We first prove that the truncation of the MERA only incurs an error that is exponentially small in L.
+Lemma 1. Let hs ∈ `2 (Z) be a scaling filter of length M such that the associated scaling function φh ∈ L2 (R) is
+bounded. Let f ∈ `1 (Z). Then:
+                                                   (L)   −(L−1)/2
+                                        kp(L)
+                                          s Wh f k2 ≤ M 2         kφh k∞ kf k1
+
+Proof. Let δn denote the sequence that is equal to one at site n and zero elsewhere. By the definition of the discrete
+wavelet transform, we have that
+
+                                 (L)
+                                             X Z ∞                                      2
+                             (L)        2
+                           kps Wh δn k2 =             dx φ∗h (x − n)2−L/2 φh (2−L x − m) .
+                                               m∈Z       −∞
+
+
+Since the scaling filter has length M , the scaling function φh is supported in some interval [x0 , x0 + M − 1], and so the
+above is equal to
+
+                X Z x0 +M −1                                      2      X Z 2−L (x0 +M −1)−m
+                                dx φ∗h (x − n)2−L/2 φh (2−L x − m) ≤                            dy |φh (y)|2 ,
+                m∈Z   x0                                                 m∈Z    2−L x   0 −m
+                                                                                                                          13
+
+where we have used the Cauchy-Schwarz inequality. Since there are at most 2M nonzero summands, we can upper
+bound this by M 2 2−L+1 kφh k2∞ . We have thus established that
+                                                        (L)         −(L−1)/2
+                                                kp(L)
+                                                  s Wh δ n k 2 ≤ M 2         kφh k∞ ,
+from which the lemma follows at once.
+   Now recall that our two scaling filters hs and gs have length M and that the associated scaling functions are bounded
+in absolute value by B. Let f ∈ F . Then v † f = (fh , fg ) where kf k1 = kfh k1 + kfg k1 , and we obtain
+           "              #
+                (L)
+             Wh       0      †                (L)                            −(L−1)/2
+                                                                                                 p
+    (L)
+k(ps ⊗ I)                               (L)                (L)  (L)
+                       (L) v f k2 ≤ kps Wh fh k2 + kps Wg fg k2 ≤ M 2                 Bkf k1 ≤ D(F ) BM 2−(L−1)/2 kf k2 ,
+               0    Wg
+
+where the second inequality is Lemma 1 applied to both hs and gs ; the last inequality is the Cauchy-Schwarz inequality.
+Therefore:
+                                    "             #
+                                      (L),†
+                                     Wh       0                    p
+                              kpF v                  (L)
+                                             (L),† (ps   ⊗ I)k ≤ D(F ) BM 2−(L−1)/2                               (A4)
+                                       0    Wg
+
+The same argument establishes that
+                                         
+                                 I    0       (L),† (L)
+                                                             p
+                          kpF v             (Wh    ps ⊗ I)k ≤ D(F ) BM 2−(L−1)/2 .                                     (A5)
+                                  0 m(θw )
+
+We now show that the MERA generates approximate eigenmodes.
+Lemma 2. Let hs , gs be scaling filters such that Eq. (10) holds. Then we have for all ` = 1, . . . , L that
+                                                                       (L),†
+                                        kWg(L),† (I ⊗ |`i) − m(θw )Wh          (I ⊗ |`i)k ≤ ε`.
+Proof. We start with the formula
+                           (L),†                      `−1
+                        Wh         (I ⊗ |`i) = m(hs ) ↑     m(hw ) ↑= m(hs ) ↑ . . . m(hs ) ↑ m(hw ) ↑,                (A6)
+                                                                      |        {z           }
+                                                                                   `−1 times
+
+where ↑ denotes the upsampling operator on `2 (Z), defined by δn 7→ δ2n .
+                                        k                              k
+  Now recall that θw (k) = −i sign(k)ei 2 . Let us define θs (k) = e−i 2 . It is easily verified that θs (k)θw (2k) = θw (k),
+which can equivalently be written as m(θs ) ↑ m(θw ) = m(θw ). Using Eq. (A6) and iteratively applying this relation,
+                (L),†            (L),†                     `−1                        `−1
+                Wg     − m(θw )Wh        (I ⊗ |`i) = m(gs ) ↑      m(gw ) ↑ − m(θs hs ) ↑       m(θw hw ) ↑,
+which can be written as a telescoping sum,
+                                                                     
+       `−2
+       X               j                          `−2−j                       `−1                   
+            m(θs hs ) ↑ m(gs ) − m(θs hs ) ↑ m(gs ) ↑        m(gw ) ↑ + m(θs hs ) ↑      m(gw ) − m(θw hw ) ↑ .
+        j=0
+
+The unitary of the wavelet transform implies that all four maps m(hs ) ↑, m(hw ) ↑, m(gs ) ↑, m(gw ) ↑ are isometries.
+Since the upsampling operator ↑ is an isometry and the Fourier multipliers m(θs ), m(θw ) are clearly unitaries, we
+obtain the desired bound
+                                     (L),†
+              k[Wg(L),† − m(θw )Wh           ](I ⊗ |`i)k ≤ (` − 1)km(gs ) − m(θs hs )k + km(gw ) − m(θw hw )k ≤ ε`.
+For the second inequality, we note that Eq. (10) is not only equivalent to km(gs ) − m(θs hs )k ≤ ε, but it also ensures
+that km(gw ) − m(θw hw )k ≤ ε, which follows from the relation hw (k) = eik h∗s (k + π) and its analogue for gw , gs .
+  It follows directly from Lemma 2 that
+                                                                                   L
+                                                            (L),† (L)
+                                                                                   X
+                                       kWg(L),† p(L)
+                                                 w − m(θw )Wh    pw k ≤ ε                ` ≤ εL2 .                     (A7)
+                                                                                   `=1
+
+However, this upper bound can be arbitrarily large. We will show how to circumvent this issue.
+                                                                                                                            14
+
+Lemma 3. Under the assumptions of Theorem 1, we have that
+               "             #
+                 (S),†                                 
+                Wh       0                     I    0     (L),†
+         kpF v                  (L)
+                        (L),† (pw ⊗ I) − pF v 0 m(θ ) (Wh       ⊗ I)k ≤ C2−L/2 + 6ε log22 (C/ε),
+                  0    Wg                             w
+
+                  p
+where C := 23/2       D(F ) BM ≥ 2.
+                                            0                                     0
+Proof. Let L0 ∈ {1, . . . , L} and write q (L ,L) : `2 (Z) ⊗ CL+1 → `2 (Z) ⊗ CL +1 for the projection onto the first L0 + 1
+                                                                                          (L),†       (L0 ),† (L0 ) (L0 ,L)
+components. It follows from the hierarchical form of the wavelet transform that Wh              and Wh       pw q           and
+                                                (L0 ),† (L0 )
+differ by a term that is the composition of Wh       ps with a partial isometry; likewise for the other wavelet transform.
+Thus, Eq. (A5) implies that
+                                                         
+                 I    0        (L),†              I    0        (L0 ),† (L0 ) (L0 ,L)
+                                                                                             p             0
+          kpF v              (Wh     ⊗ I) − pF v              (Wh      pw q           ⊗ I)k ≤ D(F ) BM 2−(L −1)/2 .
+                  0 m(θw )                         0 m(θw )
+
+                                                                (L0 )   0   (L)   (L0 )   0
+Similarly, Eq. (A4) together with the observation that pw q (L ,L) pw = pw q (L ,L) implies that
+
+                                                  (L0 ),†
+             "               #                 "                  #
+                (L),†
+               Wh       0                        Wh          0       (L0 ) (L0 ,L)
+                                                                                          p             0
+       kpF v                    (L)
+                        (L),† (pw ⊗ I) − pF v              (L0 ),† (pw q           ⊗ I)k ≤ D(F ) BM 2−(L −1)/2 .
+                 0    Wg                           0      Wg
+
+On the other hand, Eq. (A7) ensures that
+
+                                                                   (L0 ),†
+                                                               "                 #
+                  I   0        (L0 ),† (L0 ) (L0 ,L)              Wh          0       (L0 ) (L0 ,L)
+            kpF v            (Wh      pw q           ⊗ I) − pF v            (L0 ),† (pw q           ⊗ I)k ≤ εL02 .
+                  0 m(θw )                                          0      Wg
+
+By combining the above bounds we obtain that
+      "               #
+         (L),†                                       
+        Wh       0                          I    0        (L),†
+                                                                       p             0                   0
+kpF v           (L),†   (p(L)
+                          w   ⊗ I) − p F v              (Wh     ⊗ I)k ≤ D(F ) BM 2−(L −3)/2 + εL02 = C2−L /2 + εL02 .
+          0    Wg                            0 m(θw )
+
+We can still optimize this expression over L0 ∈ {1, . . . , L}. For this, we distinguish two cases: If 2−L/2 > ε/C
+then we choose L0 = L, leading to the bound C2−L/2 + 4ε log22 (C/ε). Otherwise, if 2−L/2 ≤ ε/C, we can choose
+L0 = b2 log2 (C/ε)c and obtain the bound 2ε + 4ε log22 (C/ε). In either case it is true that
+                                       
+                          −L0 /2     02
+                 min
+                   0
+                       C2        + εL     ≤ max{C2−L/2 , 2ε} + 4ε log22 (C/ε) ≤ C2−L/2 + 6ε log22 (C/ε).
+                  L
+
+  We can at last establish our main result.
+
+Proof of Theorem 1. We choose F as the span of the observables f1 , . . . , f2N , so that D(F ) = D({fi }) and dim F ≤ 2N .
+Let δ := C2−L/2 + 6ε log22 (C/ε). We will first establish that kω|F − ωMERA |F k ≤ 2δ. For this, we note that
+                                                                    "                   #                 "           #
+                                                                   (L),†                                 (L)
+                       I 0                    I 0                    W            0
+                                                                                                       
+                                                                                                           W       0
+ω|F − ωMERA |F = pF v          (I ⊗ |+i h+|)          v † pF − pF v    h                    p(L)
+                                                                                             w ⊗ |+i h+|
+                                                                                                             h          †
+                                                                                                                   (L) v pF
+                        0 m                    0 m†                     0     Wg
+                                                                                  (L),†
+                                                                                                            0    Wg
+
+where we have inserted Eqs. (A2) and (A3). We now use the triangle inequality and Lemma 3 twice to obtain
+                                                                         "              #
+                                              I 0                        (L)
+                                                                           Wh        0
+                                                                     
+                                      (L)               †       (L)                         †
+             kω|F − ωMERA |F k ≤ Wh ⊗ I                v pF − pw ⊗ I                 (L) v pF
+                                                0 m†                        0    Wg
+                                                                  "                #                      (A8)
+                                                                  (L),†
+                                        I 0                        Wh         0
+                                                                                            
+                                                 (L),†                                  (L)
+                               + pF v           Wh     ⊗ I − pF v            (L),†     pw ⊗ I   ≤ 2δ.
+                                         0 m                         0     Wg
+
+We now show that
+                                                                                      √
+                                   |G({fi })Ω − G({fi })ΩMERA | ≤ 24kf1 k · · · kf2N k N δ.                              (A9)
+                                                                                                                       15
+
+For this, let us denote by Ω|F and ΩMERA |F the mixed gauge-invariant generalized free states with symbols ω|F and
+ωMERA |F , respectively, which capture all n-point functions with observables from F . It is clear from Eq. (A1) that
+
+        |G({fi })Ω − G({fi })ΩMERA | = |G({fi })Ω|F − G({fi })ΩMERA |F | ≤ kf1 k · · · kf2N k · kΩ|F − ΩMERA |F k1 ,
+
+where k−k1 denotes the trace norm. We now use a result by Powers and Størmer to bound the trace norm distance
+between generalized free states in terms of the trace norm distance of their symbol. Specifically, we use [43, Lemmas 4.1
+and 4.6] to obtain the first inequality in
+                                           p                         p                              √
+                kΩ|F − ΩMERA |F k1 ≤ 12 kω|F − ωMERA |F k1 ≤ 12 2N kω|F − ωMERA |F k ≤ 24 N δ
+
+(as long as the right-hand side is smaller than 1/6); for the second inequality we used that dim F ≤ 2N and the last
+one is Eq. (A8). We have thus established Eq. (A9), and thereby the theorem.
+

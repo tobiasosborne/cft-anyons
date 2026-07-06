@@ -22,6 +22,7 @@ gotcha) goes to agent memory under
 
 | Chunk | Span | Topics |
 |---|---|---|
+| `012_2026-07-06_pipeline_consistency_scoping.md` | 2026-07-06 | Consistency-layer scoping: four pipeline seams, forest-functor composability, GNS-descent lemma, filling flow, two-constant KS closure; 11 sources; plan in reviews/2026-07-06_pipeline_consistency_scoping/ |
 | `011_2026-07-05_qubit_relaxed_gates.md` | 2026-07-05 | Categorical Borchers-Uhlmann pipeline block CA-62--CA-70: vision, state-existence theorem, relaxed gates + re-scan, anyonic word algebra, refinement maps, dilute-TL Koo-Saleur |
 | `010_2026-05-31_qubit_candidate_scan.md` | 2026-05-31 | Qubit candidate Hamiltonian families, algebraic scan, and fixed-SDP scan contract |
 | `009_2026-05-31_qubit_nn_symmetry.md` | 2026-05-31 | Qubit nearest-neighbour lattice-symmetry diagnostics and Pauli current obstruction |

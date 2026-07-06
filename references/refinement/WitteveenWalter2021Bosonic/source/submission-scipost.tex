@@ -1,0 +1,1213 @@
+\documentclass[submission, Phys]{SciPost}
+\pdfoutput=1
+\usepackage{array,bbm,microtype,mathrsfs,amssymb,amsthm,mathtools,enumitem,overpic,booktabs}
+\usepackage[USenglish]{babel}
+\usepackage[capitalize]{cleveref}
+\usepackage{refcount}
+
+\newcommand{\eprint}[2][]{\href{https://arxiv.org/abs/#2}{arXiv:#2}}
+
+
+\allowdisplaybreaks[4]
+
+\newtheorem{thm}{Theorem}\crefname{thm}{Theorem}{Theorems}
+\newtheorem*{thm*}{Theorem}
+\newtheorem{lem}{Lemma}\crefname{lem}{Lemma}{Lemmas}
+\newtheorem{prop}{Proposition}\crefname{prop}{Proposition}{Propositions}
+\newtheorem{cor}{Corollary}\crefname{cor}{Corollary}{Corollaries}
+\theoremstyle{definition}
+\newtheorem{dfn}{Definition}\crefname{def}{Definition}{Definitions}
+\theoremstyle{remark}
+\newtheorem*{rmk}{Remark}
+
+\setlist[enumerate,1]{label=(\roman*)}
+
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\mera}{MERA}
+\DeclareMathOperator{\exact}{exact}
+\DeclareMathOperator{\normalized}{norm}
+\DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
+\DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
+\DeclarePairedDelimiter{\braket}{\langle}{\rangle}
+
+% \renewcommand*{\Affilfont}{\small}
+\newcommand{\ket}[1]{\lvert#1\rangle}
+\newcommand{\CC}{\mathbb C}
+\newcommand{\ZZ}{\mathbb Z}
+\newcommand{\RR}{\mathbb R}
+\newcommand{\NN}{\mathbb N}
+\newcommand{\HH}{\mathbb H}
+\newcommand{\ot}{\otimes}
+\newcommand{\op}{\oplus}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\id}{\mathbbm 1}
+\newcommand{\one}{\mathbf 1}
+\renewcommand{\d}{\ensuremath{\mathrm{d}}}
+\newcommand{\cL}{\mathcal L}
+\newcommand{\bigo}{\mathcal O}
+\newcommand*{\tran}{{\mkern-1.5mu\mathsf{T}}}
+\newcommand{\wnorm}{D}
+
+\urlstyle{same}
+
+\newcommand{\change}[1]{#1}
+% \newcommand{\change}[1]{{\color{blue}#1}}
+% \newcommand{\MW}[1]{{\color{red}#1}}
+% \newcommand{\FW}[1]{{\color{green}#1}}
+
+
+\begin{document}
+
+\begin{center}{\Large \textbf{
+Bosonic entanglement renormalization circuits from wavelet theory
+}}\end{center}
+
+\begin{center}
+Freek Witteveen\textsuperscript{1,*},
+Michael Walter\textsuperscript{1,2}
+\end{center}
+
+\hypersetup{pdftitle={Bosonic entanglement renormalization circuits from wavelet theory},pdfauthor={Freek Witteveen and Michael Walter}}
+
+\begin{center}
+{\bf 1} Korteweg-de Vries Institute for Mathematics and QuSoft, \\ University of Amsterdam, Netherlands
+\\
+{\bf 2} Institute for Theoretical Physics and Institute for Language, Logic, and Computation, \\ University of Amsterdam, Netherlands
+\\
+* f.g.witteveen@uva.nl
+\end{center}
+
+\begin{center}
+April 20, 2021
+\end{center}
+
+% For convenience during refereeing: line numbers
+% \linenumbers
+
+\section*{Abstract}
+{\bf
+Entanglement renormalization is a unitary real-space renormalization scheme.
+The corresponding quantum circuits or tensor networks are known as MERA, and they are particularly well-suited to describing quantum systems at criticality.
+In this work we show how to construct Gaussian bosonic quantum circuits that implement entanglement renormalization for ground states of arbitrary free bosonic chains.
+The construction is based on wavelet theory, and the dispersion relation of the Hamiltonian is translated into a filter design problem.
+We give a general algorithm that approximately solves this design problem and provide an approximation theory that relates the properties of the filters to the accuracy of the corresponding quantum circuits. % in the MERA state.
+Finally, we explain how the continuum limit (a free bosonic quantum field) emerges naturally from the wavelet construction.
+}
+
+
+\vspace{10pt}
+\noindent\rule{\textwidth}{1pt}
+\tableofcontents\thispagestyle{fancy}
+\noindent\rule{\textwidth}{1pt}
+\vspace{10pt}
+
+\section{Introduction}
+\change{An important task in the study of quantum many-body systems is finding useful parameterizations of physically relevant quantum states.
+One successful approach is to consider so-called \emph{tensor network states}, which are defined by contractions of local tensors according to a network or graph structure.
+This gives a natural way to prescribe the entanglement structure of the state, while retaining the ability to describe interesting states such as low energy states of local Hamiltonians.
+% This allows one to restrict to naturally submanifolds of the many-body Hilbert space with certain entanglement structures.
+See~\cite{orus2019tensor,orus2014practical,montangero2018introduction,eisert2010colloquium} for reviews of tensor network states.
+Tensor networks are particularly useful to implement real-space renormalization methods for strongly interacting quantum many-body systems.}
+In one spatial dimension, prominent examples are the density matrix renormalization group~\cite{white1992density}, with the associated tensor network class of matrix product states (MPS)~\cite{schollwock2011density} and \emph{entanglement renormalization}~\cite{vidal2007entanglement}, with the corresponding multiscale entanglement renormalization ansatz (MERA) states~\cite{vidal2007entanglement, vidal2008class}.
+Entanglement renormalization implements a real-space renormalization by a local unitary transformation, decomposing a state into a product state and the renormalized state.
+By applying many such layers one can build a highly entangled state from product states.
+Scale-invariant MERA states are a good variational class for approximating ground states of critical quantum chains and one can extract the conformal data of the continuum limit conformal field theory of the system from the entanglement renormalization superoperator~\cite{evenbly2013quantum}.
+If the entanglement renormalization unitaries are implemented by low-depth local quantum circuits we will call this an \emph{entanglement renormalization circuit} -- see \cref{fig:mera} for an illustration.
+This class of states can be prepared efficiently on a quantum computer, which makes them a promising ansatz class for variational optimization on a quantum computer.
+This latter perspective was introduced in~\cite{kim2017robust}, \change{where the corresponding class was called \emph{DMERA}.
+The contraction cost using known classical contraction algorithms of such DMERA states increases exponentially with the depth of the quantum circuit, compared to which the contraction of these states is exponentially faster on a quantum computer.
+Another appealing property of entanglement renormalization circuits is that they are robust to small errors, which makes them interesting candidates for noisy intermediate-scale quantum (NISQ) devices~\cite{kim2017robust,preskill2018quantum}.}
+Entanglement renormalization circuits are appealing as their depth is logarithmic in the system size, and the circuit depth of a single layer typically scales polylogarithmically in the desired error, and they apply to gapless systems.
+See~\cite{huggins2019towards,zhou2020limits} for some other applications of tensor networks for quantum computing.
+
+Unfortunately our analytic understanding of MERA in general and DMERA in particular is still limited (as compared to for instance MPS).
+One direction in which progress to analytic understanding has been made is in connection to wavelets.
+\change{Wavelet transforms decompose a signal as a linear combination of localized wave packets or `wavelets' at different scales (as compared to the Fourier transform, which uses plane waves).
+This can be implemented iteratively:
+In each step the signal is decomposed into a high-frequency component (the `details' of the signal) and a low-frequency component (the `large scale structure' of the signal).
+The wavelet transform then proceeds iteratively on the low-frequency component of the signal.
+Wavelet theory has many and wide-ranging applications, from practical signal processing applications such as image compression~\cite{mallat2008wavelet} to mathematical analysis~\cite{meyer1992wavelets}.
+The procedure of the wavelet transform is very similar to real-space renormalization, and its original development was partially motivated by applications in real-space renormalization.}
+% In \cref{sec:pir} we give a brief review of the wavelet analysis we will use.}
+
+Recently it has been observed~\cite{evenbly2016entanglement,haegeman2018rigorous,evenbly2018representation} that any finite wavelet transform can be written as a classical linear circuit whose fermionic second quantization gives rise to a free fermionic (D)MERA.
+Moreover, the continuum limit can be precisely related to the corresponding wavelet functions~\cite{witteveen2019quantum}.
+In~\cite{evenbly2016entanglement} it was suggested that a similar result could also be true for free bosonic systems.
+\change{In order to formulate what this entails, we will work with bosonic quantum circuits.
+This means that we have a set of bosonic modes, and a bosonic quantum circuit will be a sequence of operations acting locally on these bosonic modes.
+We restrict to the subclass of Gaussian or linear optics circuits, meaning that each local operation is implemented by time evolution with a quadratic Hamiltonian.
+This is an efficiently simulable subclass of all bosonic quantum circuits (upon adding non-Gaussian bosonic quantum gates, however, bosonic quantum circuits are able of universal quantum computation~\cite{knill2001scheme}).
+In contrast to more usual notions of quantum circuits and tensor networks, the Hilbert spaces are infinite dimensional.
+In particular, the usual definition of a tensor network with a finite bond dimension has no immediate analogue.
+However, finite-depth quantum circuits such as entanglement renormalization circuits of the form of \cref{fig:mera} are still meaningful even in this infinite-dimensional bosonic setup.
+The notion of Gaussian bosonic entanglement renormalization has been introduced and studied in~\cite{evenbly2010entanglement}, in which an extensive explanation of the formalism can be found.}
+% we will briefly review it \cref{sec:ent norm}.}
+
+\begin{figure}[t]
+\centering
+\begin{overpic}[width=0.6\textwidth,grid=false]{dmera-2layers.pdf}
+\put(102,25){\small{Scale/}}
+\put(102,20){\small{circuit}}
+\put(102,15){\small{depth}}
+\put(60,-4){\small{Space}}
+\put(13,49){\tiny{$\ket0$}} \put(33,49){\tiny{$\ket0$}} \put(53,49){\tiny{$\ket0$}} \put(73,49){\tiny{$\ket0$}}
+\put(8,26){\tiny{$\ket0$}} \put(18,26){\tiny{$\ket0$}} \put(28,26){\tiny{$\ket0$}} \put(38,26){\tiny{$\ket0$}} \put(48,26){\tiny{$\ket0$}} \put(58,26){\tiny{$\ket0$}} \put(68,26){\tiny{$\ket0$}} \put(78,26){\tiny{$\ket0$}} \put(88,26){\tiny{$\ket0$}}
+\end{overpic}
+\vspace{0.2cm}
+\caption{The structure of an entanglement renormalization circuit. Each layer is a constant depth quantum circuit that is supposed to implement a real-space renormalization. Every layer takes as input the output of the previous layer and a product state, resulting in an entangled quantum state at the bottom. Layers further up in the figure correspond to structure at larger scales.}
+\label{fig:mera}
+\end{figure}
+
+\subsection{Main results}
+
+In this work we show that one can indeed construct a Gaussian bosonic entanglement renormalization scheme for bosonic quadratic one-dimensional Hamiltonians, using the second quantization of \emph{biorthogonal wavelet filters} or perfect reconstruction filters.
+\change{This extends the wavelet-MERA correspondence substantially.}
+The resulting entanglement renormalization takes the form of a short-depth Gaussian bosonic circuit, providing evidence for the relevance of entanglement renormalization circuits for preparing ground states of (near) critical quantum systems.
+Moreover we can relate, similar as in the fermionic case~\cite{haegeman2018rigorous}, properties of the biorthogonal wavelet transform to the resulting MERA state, and we prove a rigorous approximation theorem for the correlation functions of the MERA state.
+Interestingly, our formalism is not restricted to the scale-invariant case, but can be used to construct entanglement renormalization circuits for arbitrary translation invariant quadratic bosonic Hamiltonians.
+Given such a Hamiltonian, we explain how a corresponding (approximate) entanglement renormalization circuit can be found by solving a filter design problem.
+We also give a general method for constructing such filters, similar to the construction of the Daubechies wavelets.
+\change{This is in contrast to the fermionic case, where the only known constructions are for massless (critical) fermions \cite{evenbly2016entanglement,haegeman2018rigorous}.}
+Finally, the continuum limit of the discrete system is directly related to the biorthogonal scaling and wavelet functions corresponding to the filters.
+For the free massless boson our construction reproduces various scaling dimensions \emph{exactly}.
+If the system is not scale-invariant, we explain how one can still define versions of the wavelet and scaling functions which are not scale-invariant.
+
+A natural application of a quantum computer based on bosonic variables~\cite{knill2001scheme} is to simulate bosonic quantum field theories~\cite{marshall2015quantum}, and wavelets are a very efficient choice of basis to discretize a quantum field theory for this purpose~\cite{brennen2015multiscale}.
+We explain that for any free 1+1-dimensional bosonic field theory, one can use suitably chosen biorthogonal wavelets to discretize the theory and use the corresponding wavelet decomposition to prepare its (approximate) ground state using the bosonic Gaussian entanglement renormalization circuit.
+The idea to use wavelets to discretize a field theory is quite natural, see for instance~\cite{bulut2013wavelets, brennen2015multiscale, stottmeister2020operator} for some recent discussions of discretizing bosonic field theories using wavelets.
+Our approach however fundamentally differs from these works in that we use \emph{biorthogonal} wavelets (as is natural in the bosonic setting), which moreover are specifically designed to target the Hamiltonian of the field theory (rather than using off-the-shelf wavelets such as the Daubechies wavelets).
+We hope that our investigations can provide a potential starting point for the efficient simulation of interacting quantum field theories on quantum computers.
+
+\subsection{Organization of the paper}
+In~\cref{sec:pir} we give a brief review of biorthogonal filters and wavelet theory.
+In~\cref{sec:ent norm} we briefly review the formalism of quadratic bosonic Hamiltonians and Gaussian unitaries.
+We then explain the relation between entanglement renormalization and biorthogonal wavelet filters.
+In particular, in \cref{sec:derivation filter condition} we derive a relation the filters have to satisfy to disentangle the ground state of a given Hamiltonian.
+In~\cref{sec:circuits} we explain how this gives rise to a circuit, and we state~\cref{thm:harmonic chain} which proves bounds on the accuracy of the approximation.
+Finally, in~\cref{sec:continuum} we introduce continuous wavelet functions, and show that this gives a natural interpretation of entanglement renormalization in the corresponding quantum field theory.
+In the appendices we provide a review of the fermionic MERA/wavelet correspondence in~\cref{sec:review fermions}, an algorithm for constructing appropriate biorthogonal filters in~\cref{sec:filter construction}, an explanation of how to construct Gaussian circuits from filters in~\cref{sec:circuit construction} and a precise statement and proof of \cref{thm:harmonic chain} in \cref{sec:approximation}.
+Supporting code used to generate the numerical results in this work can be found at~\cite{pyfermions}.
+
+
+\section{Perfect reconstruction and biorthogonal filters}\label{sec:pir}
+Perfect reconstruction filters, or biorthogonal wavelet filters, are filters that decompose a signal into a high-frequency part and a low frequency part.
+This is reminiscent of the disentangling procedure of entanglement renormalization, and in this work we explain the precise connection.
+We first give a brief account of the theory of biorthogonal wavelet filters, see~\cite{mallat2008wavelet} for an introduction.
+We consider a pair of real-valued sequences~$g_s, h_s \in \ell^2(\ZZ)$, called \emph{scaling} or \emph{low-pass filters}.
+Often they will be finite impulse response (FIR) filters, meaning that they have finite support.
+We demand that these filters satisfy the \emph{perfect reconstruction condition} on their Fourier transforms
+\begin{equation}\label{eq:perfect reconstruction}
+  g_s(k)\overline{h_s(k)} + g_s(k + \pi)\overline{h_s(k + \pi)} = 2
+\end{equation}
+and define corresponding \emph{wavelet} or \emph{high-pass filters} by
+\begin{align}\label{eq:scaling vs wavelet}
+  g_w(k) = e^{-ik}\overline{h_s(k + \pi)} \quad \text{and} \quad h_w(k) = e^{-ik}\overline{g_s(k + \pi)}.
+\end{align}
+These filters can be used to separate a signal $\{f[n]\}_{n \in \ZZ}$ into a low-frequency and a high frequency component, and conversely to reconstruct the original signal from these components.
+For this, we let % let~$W_g f = f^{\text{low}} \op f^{\text{high}}$, where
+\begin{align*}
+  f^{\text{low}}[n] &= \sum_l g_s[l]f[2n + l], \\
+  f^{\text{high}}[n] &= \sum_l g_w[l]f[2n + l],
+\end{align*}
+and we define
+\begin{align*}
+  W_g f = f^{\text{low}} \op f^{\text{high}}.
+\end{align*}
+We similarly define $W_h$ using the filters $h_s$ and $h_w$ in place of $g_s$ and $g_w$, respectively.
+By applying $W_g$ again to $f^{\text{low}}$, the original signal is recursively resolved into scales, see \cref{fig:filterbank}.
+It follows from \cref{eq:perfect reconstruction} that $f$ can be reconstructed from its decomposition $W_g f$ by applying the transposed operation~$W_h^{\tran}$, so $W_g^{-1} = W_h^\tran$~and
+\begin{equation*}
+  f[n] = \sum_l h_s[n - 2l]f^{\text{low}}[l] + h_w[n - 2l]f^{\text{high}}[l].
+\end{equation*}
+The roles of $g$ and $h$ can be exchanged in this procedure.
+
+\begin{figure}
+\centering
+\quad\raisebox{-1cm}{
+\begin{overpic}[width=0.8\textwidth,grid=false]{signal_decomposition}
+\put(31,22){$W_g$} \put(66,22){$W_g$}
+\put(30,30){\scriptsize low}
+\put(20.4,22.5){\scriptsize high}
+\put(65.5,30){\scriptsize low}
+\put(56.1,22.5){\scriptsize high}
+\end{overpic}}
+\caption{Iterating the wavelet decomposition $W_g$ resolves a signal into scales. Illustration for the Haar wavelet filters~\cite{witteveen2019quantum}.}
+\label{fig:filterbank}
+\end{figure}
+
+\section{Entanglement renormalization and filter design}\label{sec:ent norm}
+We will consider translation invariant chains of harmonic oscillators $(q_n, p_n)$, with a Hamiltonian of the form
+\begin{equation}\label{eq:hamiltonian}
+  H = \frac12\bigl(\sum_{n \in \ZZ} p_n^2 + \sum_{n, m \in \ZZ} q_n V_{n - m} q_m\bigr),
+\end{equation}
+where $V_{nm} = V_{n-m}$ defines a positive definite symmetric matrix.
+The ground state of such a quadratic Hamiltonian is a Gaussian state, determined by the dispersion relation $\omega(k)$ of the Hamiltonian.
+We study Gaussian circuits that map an unentangled state to the entangled ground state of a translation invariant Hamiltonian (or  conversely, disentangle the ground state to an unentangled state).
+We consider Gaussian maps defined by $\tilde{q}_n = \sum_m A_{nm} q_m$, $\tilde{p}_n = \sum_m B_{nm} p_m$.
+This preserves the canonical commutation relations if and only if the matrices $A$ and $B$ are such that $B = (A^\tran)^{-1}$.
+By a \emph{Gaussian circuit} we will hence understand a sequence of Gaussian maps, each of which maps modes $(q_n, p_n)$ to a linear combination of itself and its direct neighbours.
+For details about quadratic bosonic Hamiltonians and Gaussian states see, for instance,~\cite{audenaert2002entanglement,plenio2005entropy, walls2007quantum, knill2001scheme}.
+In Fourier space one simply maps a product state to the state with dispersion relation $\omega(k)$ by appropriately `squeezing' each Fourier mode.
+However, this is a very \emph{non-local} operation, whereas we are interested in a procedure that is local in real space.
+For more discussion of this point and variational algorithms to find Gaussian entanglement renormalization maps, see~\cite{evenbly2010entanglement}.
+
+Since $W_g^{-1} = W_h^{\tran}$ the map $W = W_g \op W_h$ defines a Gaussian map for any pair of biorthogonal wavelet filters $(g,h)$.
+This has the structure of a layer of entanglement renormalization, filtering out the high frequency modes.
+However, we need to choose the filters $g$ and $h$ such that $W$ actually disentangles the state, and the wavelet output is unentangled.
+If we normalize the dispersion relation such that $\omega(\pi) = 1$, then the condition for the wavelet output to be disentangled is that the Fourier transforms of the filters satisfy
+\begin{equation}\label{eq:wavelet filter phase relation}
+  g_w(k) = \omega(k)h_w(k).
+\end{equation}
+Intuitively, what happens is that $W$ separates the bosonic modes in high frequency and low frequency modes, and \cref{eq:wavelet filter phase relation} makes sure that the high frequency modes are not entangled to the low frequency modes in the ground state.
+We derive this condition below in \cref{sec:derivation filter condition}.
+The scaling (low frequency) modes are again mapped to a Gaussian state, possibly with a different dispersion relation.
+We can now recursively apply the same construction to the scaling output, as in \cref{fig:mera}, now with the renormalized dispersion relation, given by
+\begin{equation}\label{eq:single layer dispersion}
+  \omega(k) \mapsto \omega\bigl(\tfrac{k}{2}\bigr) \omega\bigl(\tfrac{k}{2} + \pi\bigr),
+\end{equation}
+precomposed with a `squeezing' normalization layer to ensure the normalization $\omega(\pi) = 1$ before we apply the wavelet decomposition.
+We will later see this procedure can be decomposed as a circuit, see \cref{fig:circuit decomposition}.
+
+While we motivated the procedure from the perspective of disentangling a given entangled state, the resulting circuit can also be used in the opposite direction, to prepare the ground state by applying the circuit to a product state, thus realizing the state as a bosonic MERA state.
+A paradigmatic example is the harmonic chain,
+\begin{equation}\label{eq:harmonic chain ham}
+  H = \frac12 \Bigl( \sum_{n \in \ZZ} p_n^2 + m^2q_n^2 + \frac14(q_n - q_{n+1})^2 \Bigr),
+\end{equation}
+which has dispersion relation $\omega(k) = \smash{\sqrt{m^2 + \sin^2\bigl(\frac{k}{2}\bigr)}}$.
+In particular, the \emph{massless} harmonic chain is gapless and has dispersion relation~$\omega(k) = \abs{\sin(\frac{k}{2})}$.
+For the latter, \cref{eq:single layer dispersion} amounts to~$\omega(k) \mapsto \abs{\sin(\frac{k}{4})\cos(\frac{k}{4})} = \frac12\sin(\frac{k}{2})$, so the dispersion relation is invariant under the renormalization step if we include the subsequent normalization.
+Hence the state on the scaling output of the entanglement renormalization will be the same after any number of layers.
+This implies that we can keep iterating the same entanglement renormalization layer with identical filters at each layer, giving a \emph{scale-invariant} bosonic entanglement renormalization procedure for the massless harmonic chain.
+
+In the massive case, the mass renormalizes as
+\begin{equation}\label{eq:mass renormalization}
+  m \mapsto 2\sqrt{m^2 + m^4}.
+\end{equation}
+This is a \emph{relevant} perturbation to the massless chain~\cite{evenbly2010entanglement}, and with increasing number of layers the dispersion relation becomes flat; correspondingly we can let the filters at the deeper layers approach orthogonal wavelet filters.
+
+\subsection{Derivation of filter condition}\label{sec:derivation filter condition}
+We will now derive~\cref{eq:wavelet filter phase relation}.
+The ground state of the Hamiltonian in~\cref{eq:hamiltonian} is completely determined by its covariance matrix $\gamma = \gamma^q \op \gamma^p$, whose Fourier transform is given by
+\begin{equation}\begin{aligned}\label{eq:covariance fourier}
+  \gamma^q(k) &= \frac{1}{2\omega(k)} \\
+  \gamma^p(k) &= \frac{\omega(k)}2.
+\end{aligned}\end{equation}
+The covariance matrix of an unentangled (uncorrelated) product state is $\frac12 \id$.
+Recall that any symplectic linear map $S$ on the set of modes $(q_n, p_n)$ defines a unitary map which maps Gaussian states to Gaussian states.
+Under a map of the form $A \op \bigl(A^{\tran}\bigr)^{-1}$ the covariance matrix transforms as
+\begin{equation*}\begin{aligned}
+  \gamma^q &\mapsto A\gamma^q A^{\tran} \\
+  \gamma^p &\mapsto \bigl(A^{\tran}\bigr)^{-1}\gamma^p A^{-1}.
+\end{aligned}\end{equation*}
+
+We first normalize such that $\omega(\pi) = 1$, which can be implemented by the symplectic (squeezing) map $(\sqrt{\omega(\pi)}\id) \op (1/\sqrt{\omega(\pi)}\id)$.
+Suppose we have filters $(g,h)$ satisfying \cref{eq:wavelet filter phase relation}, then $W = W_g \op W_h$ disentangles the ground state.
+To see that this is indeed true, we compute the result of applying the wavelet decomposition map to the ground state covariance matrix $\gamma = \gamma^q\op \gamma^p$ given in terms of the dispersion relation by \cref{eq:covariance fourier}.
+For this, we remark that from $g_w(k) = \omega(k)h_w(k)$ it follows that $h_s(k) = \omega(k + \pi)g_s(k)$.
+Then,
+\begin{equation*}\begin{aligned}
+  \omega(k)h_w(k)f^{\text{high}}(2k) &= g_w(k)f^{\text{high}}(2k), \\
+% \end{aligned}\end{equation*}
+% and
+% \begin{equation*}\begin{aligned}
+  \omega(k)h_s(k)f^{\text{low}}(2k)
+  % &= \omega(k)\omega(k + \pi)g_s(k)f^{\text{low}}(2k)\\
+  &= g_s(k)\omega^{(1)}(2k)f^{\text{low}}(2k),
+\end{aligned}\end{equation*}
+where $\omega^{(1)}$ is the renormalized dispersion relation on the scaling output defined in \cref{eq:single layer dispersion} in the main text.
+This shows that % if we take the Fourier transform of the reconstruction map $W_h^{\tran}$,
+%\begin{equation*}
+$\omega(k)W_h^{\tran} = W_g^{\tran}(\omega^{(1)} \op \id)$
+%\end{equation*}
+%From this it follows that
+and hence
+\begin{equation*}\begin{aligned}
+  W_h \gamma^p W_h^{\tran} &= W_h  W_g^{\tran} (\gamma^{p,(1)} \op \frac12\id) = \gamma^{p,(1)} \op \frac12\id \\
+  \gamma^{p,(1)}(k) &= \frac12 \omega^{(1)}(k).
+\end{aligned}\end{equation*}
+Similarly, it holds that
+\begin{equation*}\begin{aligned}
+  W_g \gamma^q W_g^{\tran} &= \gamma^{q,(1)} \op \frac12\id \\
+  \gamma^{q,(1)}(k) &= \frac{1}{2\omega^{(1)}(k)}.
+\end{aligned}\end{equation*}
+We thus see that $W$ has unentangled the high-frequency modes to a product state, and the low frequency modes are renormalized to have a new dispersion relation $\omega^{(1)}$ given by \cref{eq:single layer dispersion}.
+
+The full entanglement renormalization circuit consists of repeated applications of such layers.
+To introduce some notation, we let $\omega^{(l)}$ be the dispersion relation after $l$ layers of renormalization, recursively defined by (cf.~\cref{eq:single layer dispersion}, note that we first normalize the dispersion relation by a factor $\omega^{(l)}(\pi)$)
+\begin{equation}\label{eq:renormalized disperson}
+  \omega^{(l+1)}(k) = \frac{\omega^{(l)}(\frac{k}{2})}{\omega^{(l)}(\pi)} \frac{\omega^{(l)}(\frac{k}{2} + \pi)}{\omega^{(l)}(\pi)}.
+\end{equation}
+The normalization by $\omega^{(l)}(\pi)$ could also be absorbed in the filters, but we would like the filters to be such that $g(0) = h(0) = \sqrt2$, as is standard in the signal processing literature and convenient for the analysis.
+Then at the $l$-th layer we need filters $g^{(l)}$,~$h^{(l)}$ satisfying $g^{(l)}_w(k) = \frac{\omega^{(l)}(k)}{\omega^{(l)}(\pi)}h^{(l)}_w(k)$ (cf.~\cref{eq:wavelet filter phase relation}), and we~let
+\begin{equation}\begin{aligned}\label{eq:filter plus squeezing}
+  R_{g^{(l)}} &= W_{g^{(l)}} \sqrt{\omega^{(l)}(\pi)}, \\
+  R_{h^{(l)}} &= W_{h^{(l)}} \frac1{\sqrt{\omega^{(l)}(\pi)}}.
+\end{aligned}\end{equation}
+Finally, we define the $\cL$-layer renormalization map as $R^{(\cL)} = R_g^{(\cL)} \op R_h^{(\cL)}$, where
+$R_a^{(\cL)} = (R_{a^{(\cL-1)}} \op \id^{\op(\cL - 1)}) \circ \ldots \circ (R_{a^{(1)}} \op \id) \circ R_{a^{(0)}}$
+for $a = g,h$.
+Then, $R^{(\cL)}$ maps the state with dispersion relation $\omega$ to a product state with covariance matrix $\frac12\id$ on the~$\cL$ high frequency levels, and a state with dispersion relation $\omega^{(\cL)}$ on the remaining low frequency level.
+
+
+\section{Entanglement renormalization circuits}\label{sec:circuits}
+If $g$ and $h$ are FIR filters of size $2M$, we show in~\cref{sec:circuit construction} that $W$ gives rise to a Gaussian circuit of depth $M$ that maps the low-frequency modes to the odd sublattice and the high-frequency modes to the even sublattice as shown in \cref{fig:circuit decomposition}.
+This is exactly the structure of an entanglement renormalization circuit.
+The converse to this construction is also true: any Gaussian entanglement renormalization circuit as described above arises in this way.
+
+\begin{figure}[t]
+\centering
+\quad\qquad\begin{overpic}[width=0.45\textwidth,grid=false]{single_layer}
+\put(-10,26){$W$}
+% \put(-33,8){\scriptsize{$\omega(\pi)^{\frac12} \op \omega(\pi)^{-\frac12}$}}
+\put(-15,9){\scriptsize{squeezing}} %$\omega(\pi)^{\frac12} \op \omega(\pi)^{-\frac12}$}}
+\put(52,40.5){$a_1$}
+\put(43,30){$a_2$}
+\put(52,19.5){$a_3$}
+\end{overpic}
+\caption{Decomposition of a single layer of the entanglement renormalization map $R^{(1)}$ as a circuit.
+The wavelet transform $W=W_g \op W_h$ is decomposed as a circuit with two-local gates $a_i$, and follows the bottom layer which squeezes by~$\omega(\pi)^{\frac12} \op \omega(\pi)^{-\frac12}$ to normalize the dispersion relation.
+This figure can be interpreted both as a linear circuit implementing a symplectic transformation, and as its second quantization, which is a bosonic Gaussian circuit.}
+\label{fig:circuit decomposition}
+\end{figure}
+
+When using a finite depth circuit, we may not be able to satisfy the relation in \cref{eq:wavelet filter phase relation} exactly if $\omega(k)$ is not a ratio of trigonometric polynomials.
+In particular, this is the case for the harmonic chain.
+In this case we can still hope to \emph{approximate} the dispersion relation, and correspondingly prepare a state that is close the true ground state.
+This raises two interesting questions.
+Firstly, the existence of filters that approximately satisfy \cref{eq:wavelet filter phase relation} is not clear.
+In \cref{sec:filter construction} we describe an explicit procedure for constructing such filters.
+Secondly, one can wonder whether a good approximation of the dispersion relation at the level of a single layer will indeed give rise to a good approximation of the ground state.
+Fortunately, the structure of entanglement renormalization is remarkably robust to small errors~\cite{kim2017robust, borregaard2019noise}, and in~\cite{haegeman2018rigorous} a robustness result for wavelet based fermionic entanglement renormalization was proven.
+The bosonic setting is somewhat different, as the Hilbert spaces are infinite dimensional.
+We will now discuss that when the family of filters has a well-defined `continuum limit', we can nevertheless prove a rigorous approximation theorem.
+
+\change{We would like to bound the approximation error when using $\cL$ layers of entanglement renormalization}.
+Suppose we are given a family of filter pairs $(g^{(l)},h^{(l)})$ for $l=1, \ldots, \cL$, where the $l$-th pair represents the $l$-th layer such that
+\begin{equation}\label{eq:approximate phase main}
+  \bigl\lvert g^{(l)}_w(k) - \frac {\omega^{(l)}(k)}{\omega^{(l)}(\pi)} h^{(l)}_w(k) \bigr\lvert \leq \eps
+\qquad \forall l=1,\dots, \cL,
+\end{equation}
+so they approximately reproduce the dispersion relation at each layer (up to normalization).
+Moreover, we need these families of filters to give rise to a `stable' wavelet decomposition, in the sense that many iterations of the decomposition maps yield a uniformly bounded map.
+This is a standard assumption in wavelet theory.
+If we are only interested in an approximation, and the theory flows to either a critical theory or a trivial theory we only need a small number of `transition layers' and can pick fixed filters $(g^{(l)},h^{(l)}) = (g,h)$ for large $l$.
+In \cref{sec:approximation}, we prove a general approximation theorem in this setting, which applies to an arbitrary quadratic Hamiltonian.
+We measure the error in the two-point functions $\langle p_i p_j \rangle$ and~$\langle q_i q_j \rangle$ (or covariance matrix).
+In the particular case of the harmonic chain in \cref{eq:harmonic chain ham}, our result specializes as follows.
+
+\begin{thm*}[Informal]\label{thm:harmonic chain}
+For the harmonic chain with mass~$m$, the approximation error \change{using the MERA state resulting from $\cL$ layers of entanglement renormalization} is bounded by
+\begin{equation*}\begin{aligned}
+  \abs{\langle p_i p_j \rangle_{\exact} - \langle p_i p_j \rangle_{\mera}} &\leq \bigl(\mathcal O(2^{-\frac{\cL}{2}}) + \mathcal O(\eps \log\tfrac1\eps) \bigr)\sqrt{m^2 + 1}, \\
+  \abs{\langle q_i q_j \rangle_{\exact} - \langle q_i q_j \rangle_{\mera}} &\leq \bigl(\mathcal O(2^{-\frac{\cL}{2}}) + \mathcal O(\eps \log\tfrac1\eps)\bigr)\frac{1}{m},
+\end{aligned}\end{equation*}
+the latter assuming $m>0$. In the massless case, the latter bound is replaced by
+\begin{equation*}
+  \abs{\langle q_i q_j \rangle_{\exact} - \langle q_i q_j \rangle_{\mera}} \leq \bigl(O(2^{-\frac{\cL}{2}}) + \mathcal O(\eps \log\tfrac1\eps\bigr)\bigr)\sqrt{\lvert i-j \rvert}.
+\end{equation*}
+\end{thm*}
+
+% \noindent
+In the massless case, there is an IR divergence and $\langle q_i q_j \rangle$ is only defined up to a constant, so we define $\langle q_i q_j \rangle$ by subtracting the divergence; see \cref{eq:subtract divergence} in \cref{sec:approximation} for details.
+
+The intuition behind the proof is that the contribution of the $\cL$-th layer to the correlation function is bounded by $\mathcal{O}(2^{-\frac{\cL}{2}})$, so we need $\mathcal{O}(\log\frac{1}{\delta})$ layers to get within error $\delta$ (even with perfect filters), while each layer contributes a factor of~$\eps$ to the error in the filter relation.
+Balancing these two contributions yields the desired bound.
+In \cref{sec:filter construction} we provide a construction of filters $g, h$ satisfying \cref{eq:wavelet filter phase relation} for the massless harmonic chain.
+This construction depends on two parameters~$K$ and~$L$, where~$K$ controls the number of vanishing moments of the filters and $L$ controls the accuracy of the approximation of the dispersion relation.
+This corresponds to a circuit depth of $M = K = 2L$ for a single layer.
+\change{In \cref{fig:correlation functions} we illustrate the approximation result by numerically computing correlation functions of the massless harmonic chain using these filters~\cite{pyfermions}.}
+
+If we denote by $M$ the circuit depth of a single layer, then we find numerically that $\eps$ is exponentially small as a function of $M$, whereas the other wavelet-dependent parameters we have suppressed above only grow polynomially. Hence, the total required depth of a single layer of entanglement renormalization for a desired error is polylogarithmic in~$\frac{1}{\eps}$.
+This shows that our entanglement renormalization circuits prepare the ground state very efficiently: a circuit of depth $\mathcal{O}(\operatorname{polylog}(\frac{1}{\delta}))$ achieves an accuracy~$\delta$ on the correlation functions.
+
+\begin{figure}%[htb]
+\centering
+\includegraphics[width=0.85\textwidth]{correlations.pdf}
+\caption{Approximation of correlation functions for the massless harmonic chain by the MERA.
+We used the filter construction of \cref{sec:filter construction} and $\mathcal L = 20$ layers of renormalization.
+The former depends on parameters~$K$ and~$L$ which are explained in the main text.
+We show the correlation functions~$\langle p_0 p_n \rangle$ and~$\langle p_0 p_n \rangle$, as well as their approximation errors~$\Delta^p_{0n} := \abs{\langle p_0 p_n \rangle_{\exact} - \langle p_0 p_n \rangle_{\mera}}$ and $\tilde\Delta^q_{0n} := \abs{\langle q_0 q_n \rangle_{\exact} - \langle q_0 q_n \rangle_{\mera}}$.}
+\label{fig:correlation functions}
+\end{figure}
+
+\section{The continuum limit}\label{sec:continuum}
+The discrete wavelet transform has a natural continuum limit, in terms of continuous scaling and wavelet functions.
+This gives a way to interpret the continuous limit of the entanglement renormalization maps.
+In the following, we demonstrate that the scaling functions are a natural UV cut-off that is compatible with the entanglement renormalization circuits, and in the critical case we find that we can reproduce certain conformal data exactly from a single layer of renormalization.
+We consider the free boson, described by bosonic fields $\phi(x)$, $\pi(x)$ and Hamiltonian
+\begin{equation*}
+  H = \frac12 \int \d x \, \pi(x)^2 + m^2\phi(x)^2 + \bigl(\partial\phi(x)\bigr)^2.
+\end{equation*}
+We are particularly interested in the massless case, which gives rise to a conformal field theory.
+
+\subsection{Scaling and wavelet functions}
+The continuum limit of the discrete biorthogonal wavelet transform is determined by the \emph{scaling functions}.
+Given biorthogonal wavelet filters $g,h$ the associated scaling functions are defined in Fourier space for $a = g,h$ by
+\begin{equation}\label{eq:scaling function}
+  \hat{\phi}^a(k) = \prod_{n=1}^{\infty}\frac{a_s(2^{-n}k)}{\sqrt2}
+\end{equation}
+and the associated \emph{wavelet functions} by
+\begin{equation}\label{eq:wavelet function}
+  \hat{\psi}^a(k) = \frac{1}{\sqrt2} a_w\Bigl(\frac{k}{2}\Bigr)\hat{\phi}^a\Bigl(\frac{k}{2}\Bigr).
+\end{equation}
+Both have compact support if the filters are finite, an example is shown in~\cref{fig:wavelet functions}.
+Moreover, we can define rescaled and shifted versions
+\begin{equation*}\begin{aligned}
+  \psi^a_{l,n}(x) &= 2^{-\frac{l}{2}}\psi^a(2^{-l}x - n),\\
+  \phi^a_{l,n}(x) &= 2^{-\frac{l}{2}}\phi^a(2^{-l}x - n).
+\end{aligned}\end{equation*}
+It then follows that the sets $\{\psi^g_{l,n}\}_{l,n \in \ZZ}$ and $\{\psi^h_{l,n}\}_{l,n \in \ZZ}$ form a dual basis, in the sense that
+\begin{equation*}
+  \braket{\psi^g_{l,n}, \psi^h_{l',n'}} = \int \d x \, \psi^g_{l,n}(x)\psi^h_{l',n'}(x) = \delta_{l,l'}\delta_{n,n'}.
+\end{equation*}
+Moreover,
+\begin{equation*}
+  \braket{\phi^g_{l,n}, \phi^h_{l,n'}} = \int \d x \, \phi^g_{l,n}(x)\phi^h_{l,n'}(x) = \delta_{n,n'}.
+\end{equation*}
+If the filters are finite and the scaling functions are square-integrable functions (which is closely related to the discrete wavelet decomposition being sufficiently stable) the sets $\{\psi^g_{l,n}\}_{l,n \in \ZZ}$ and $\{\psi^h_{l,n}\}_{l,n \in \ZZ}$ form a Riesz basis of $L^2(\RR)$~\cite{cohen1992biorthogonal}.
+\change{This means that we can write any function $f \in L^2(\RR)$ as
+\begin{equation*}
+  f = \sum_{l,n} \braket{\psi^g_{l,n}, f} \psi^h_{l,n} = \sum_{l,n} \braket{\psi^h_{l,n}, f} \psi^g_{l,n}.
+\end{equation*}
+By construction of the scaling and wavelet functions, these are such that if
+\begin{equation*}
+  f = \sum_{n} s[n] \phi^g_{0,n}
+\end{equation*}
+then we can rewrite
+\begin{equation}\label{eq:cont to discrete}
+  f = \sum_{l=0}^{\cL-1} \sum_n w[l,n]\psi^g_{l,n} + \sum_n \tilde{s}[n] \phi^g_{\cL,n}
+\end{equation}
+where we find the coefficients $w[l,n]$ and $\tilde{s}[n]$ precisely by applying the discrete wavelet transformation $W_h$ to the signal $s$.
+Moreover, if we let
+\begin{align}\label{eq:convergence scaling projection}
+  f^h_l &= \sum_n \braket{\phi^g_{l,n}, f} \phi^h_{l,n}\\
+  f^g_l &= \sum_n \braket{\phi^h_{l,n}, f} \phi^g_{l,n}
+\end{align}
+then $f^h_l$ and $f^g_l$ converge in norm to $f$ as $l$ goes to minus infinity.
+See \cite{mallat2008wavelet} for an introduction to scaling and wavelet functions and their properties.
+}
+
+\subsection{Entanglement renormalization for the massless boson}
+
+\change{We now suppose that the biorthogonal wavelet filters $g,h$ are related by the dispersion relation of the massless harmonic chain that was discussed in \cref{sec:ent norm}, that is,
+\begin{align}\label{eq:filter assm}
+  g_w(k) = \abs*{\sin\Bigl(\frac{k}{2}\Bigr)} h_w(k).
+\end{align}
+We claim that, in this case, the scaling functions defined in \cref{eq:scaling function} are related as
+\begin{align}\label{eq:scaling fn claim}
+  \hat{\phi}^g(k) = \frac{\lvert k \rvert}{2 \lvert \sin(\frac{k}{2})\rvert} \hat{\phi}^h(k).
+\end{align}
+To verify this claim, we note that as a consequence of \cref{eq:filter assm} and the relation in \cref{eq:scaling vs wavelet} we have $h_s(k) = \lvert\cos(\frac{k}{2})\rvert g_s(k)$.
+Next, from \cref{eq:scaling function} it follows that $\hat{\phi}^h(k) = \gamma(k) \hat{\phi}^g(k)$, where
+\begin{align*}
+  \gamma(k) = \prod_{n=1}^{\infty} \abs{\cos(2^{-n-1}k)}.
+\end{align*}
+This expression implies that $\gamma(k)$ has to satisfy $\gamma(k) = \abs{\cos(\frac{k}{4})}\gamma(\frac{k}{2})$, and we can easily verify that $\gamma(k) = \frac{2\abs{\sin(\frac{k}{2})}}{\abs{k}}$, which has the right normalization $\gamma(0) = 1$.
+This proves \cref{eq:scaling fn claim}, which in turn, using \cref{eq:filter assm,eq:wavelet function}, also implies that
+\begin{align}
+\nonumber
+  \hat{\psi}^g(k) &= \frac{1}{\sqrt2}g_w\Bigl(\frac{k}{2}\Bigr)\hat{\phi}^g\Bigl(\frac{k}{2}\Bigr)\\
+\nonumber
+  &= \frac{1}{\sqrt2}\abs*{\sin\Bigl(\frac{k}{4}\Bigr)}h_w\Bigl(\frac{k}{2}\Bigr)\frac{\lvert k \rvert}{4 \lvert \sin(\frac{k}{4})\rvert}\hat{\phi}^h\Bigl(\frac{k}{2}\Bigr)\\
+\label{eq:dispersion yay}
+  &= \frac{\lvert k \rvert}{4}\hat{\psi}^h(k).
+\end{align}}%
+\Cref{eq:dispersion yay} shows that wavelet functions are related precisely by the linear dispersion relation of the massless free boson.
+
+We consider correlation functions of smeared fields $\phi(f) = \int \d x\, f(x) \phi(x)$, $\pi(f) = \int \d x\, f(x) \pi(x)$.
+\change{First we consider the case where we have smeared fields $\phi(f)$ with $f$ of the form $f = \sum_{n} s[n] \phi^{g}_{l,n}$ and $\pi(\tilde{f})$ with $\tilde{f}$ of the form $\tilde{f} = \sum_{n} \tilde{s}[n] \phi^{h}_{l,n}$, then because the wavelet functions are precisely related by the correct dispersion relation, in order to compute correlation functions, it suffices to express the functions $f$ and $\tilde{f}$ in the wavelet bases $\{\psi^{h}_{l',n'}\}$ and $\{\psi^{g}_{l',n'}\}$.
+To see this it suffices to look at two-point functions, and suppose that we want to compute $\langle \pi_1(f_1)\pi(f_2)\rangle$, where $f_i = \sum_{n} s_i[n] \phi^{h}_{l,n}$.
+Then, if we rewrite $f_i = \sum_{l,n} w_i[l,n] \psi^{h}_{l,n}$ and we denote by $H$ the operator which is such that it acts as multiplication with $\frac{1}{4}\abs{k}$ in the Fourier domain, so $H \psi^{h} = \psi^{g}$ and hence $2^l H \psi^{h}_{l,n} = \psi^{g}_{l,n}$, then
+\begin{align*}
+  \sum_{l,n} 2^{-l} w_1[l,n]w_2[l,n] &= \braket{\sum_{l,n} w_1[l,n] \psi^{h}_{l,n}, \sum_{l',n'} 2^{-l'} w_2[l',n'] \psi^{g}_{l',n'}}\\
+  &= \braket{\sum_{l,n} w_1[l,n] \psi^{h}_{l,n}, \sum_{l',n'} w_2[l',n'] H \psi^{h}_{l',n'}}\\
+  &= \braket{f_1, Hf_2}
+\end{align*}
+which is indeed the correct correlation function.
+A similar computation holds for correlation functions involving the field $\phi$.
+However, by \cref{eq:cont to discrete} the $w_i[l,n]$ are computed from $s_i[n]$ precisely by applying the discrete wavelet transform, and the factor of $2^{-l}$ derives from our normalization of the dispersion relation (the `squeezing layer' in \cref{fig:circuit decomposition}).
+In other words, the correlation functions will be given precisely by applying the entanglement renormalization circuit to the operators $\sum_n s[n] q_n$ and $\sum_n \tilde{s}[n] p_n$.
+For general functions $f$, we may approximate them with scaling functions as in \cref{eq:convergence scaling projection} and thus map
+\begin{equation}\begin{aligned}\label{eq:discretize}
+  \phi(f) &\mapsto \sum_n \braket{\phi^{h}_{l,n}, f} q_n, \\
+  \pi(f) &\mapsto \sum_n \braket{\phi^{g}_{l,n}, f} p_n.
+\end{aligned}\end{equation}
+(the inner product here is again the $L^2(\RR)$ inner product).
+The scale~$l$ corresponds to a choice of UV cut-off.
+If $l$ is sufficiently small, then by \cref{eq:convergence scaling projection} on can then compute correlation functions using the (discrete) entanglement renormalization circuit to good approximation.}
+This approach is completely analogous to the fermionic construction described in detail in \cite{witteveen2019quantum}.
+It yields a natural way to interpret the continuous limit of bosonic entanglement renormalization as quantum field theory.
+
+As an application, we can consider the entanglement renormalization superoperator~$\Phi$, which coarse-grains operators by conjugating with a single layer of the renormalization circuit.
+For critical lattice models, $\Phi$ has been proposed to approximately encode the conformal data of the continuum limit of the theory~\cite{evenbly2013quantum}.
+For instance, for a primary field in the conformal field theory with scaling dimension $\lambda$, there should be a local operator~$O$ such that $\Phi(O) \approx 2^{-\lambda} O$.
+We will now verify that the entanglement renormalization superoperator reproduces \emph{exactly} the scaling dimensions of the $\phi$ and $\pi$ fields in the massless case, as well as the scaling dimension of a number of descendants (equal to the number of vanishing moments of the wavelet filters), similar as for the fermionic wavelet MERA~\cite{evenbly2016entanglement,witteveen2019quantum}.
+This is seen by considering the operators $O_{\phi}(x) = \sum_n \phi^h(x - n)q_n$ and $O_{\pi}(x) = \sum_n \phi^g(x - n)p_n$ for any $x \in \RR$, which are the discretizations of the operators $\phi(x)$ and $\pi(x)$.
+It can be easily seen that the entanglement renormalization superoperator maps these operators
+\begin{equation*}\begin{aligned}
+   O_{\phi}(x) \mapsto& \sum_{n, l} \sqrt{2}h_s[l]\phi^h(x - 2n - l)q_n\\
+   &= \sum_n \phi^h\Bigl(\frac{x}{2} - n\Bigr) q_n = O_{\phi}\Bigl(\frac{x}{2}\Bigr)
+\end{aligned}\end{equation*}
+where we use that for the scaling function \cref{eq:scaling function} it holds that~\cite{mallat2008wavelet}
+\begin{align}\label{eq:rescaling scaling function}
+   \frac{1}{\sqrt2}\phi^h(\frac{x}{2}) = \sum_n h_s[n]\phi^h(x - n).
+\end{align}
+Similarly one finds $O_{\pi}(x) \mapsto  \frac{1}{2}O_{\pi}(\frac{x}{2})$.
+This corresponds, as expected, to scaling dimensions 0 and 1.
+If the scaling function is differentiable, we see that by differentiating \cref{eq:rescaling scaling function} we get that $\frac{1}{2\sqrt2}\partial_x\phi^h(\frac{x}{2}) = \sum_n h_s[n]\partial_x\phi^h(x - n)$, which leads similarly to a descendent field $O_{\phi^{(1)}} = \sum \partial_x\phi^{h}(x - n)q_n$ with the right scaling dimension.
+It turns out that if $\phi^h$ has $K$ vanishing moments (or equivalently, a factor $(1 + e^{ik})^K$ in the scaling filter~$h_s$~\cite{mallat2008wavelet}), then there exists a vector $\phi^{h,l}[n]$ with $l = 1, \ldots, K$ and $n$ taking integer values on the support of the wavelet such that
+\begin{align*}
+  \frac{1}{2^l\sqrt2}\phi^{h,l}[m] = \sum_n h_s[n]\phi^{h,l}[2m - n]
+\end{align*}
+even if $\phi^h$ is not $l$ time differentiable (note that $\phi^{h,l}$ is only defined at integer values), see Theorem~7.1 in~\cite{strang1996wavelets}, and similarly for $\phi^{g,l}$.
+This shows that computing the eigenvalues of the entanglement renormalization superoperator~$\Phi$ will yield the eigenvalues of $K$ descendants of the $\phi$ and $\pi$ fields.
+At this point we observe that a wavelet filter leading to $K$ vanishing moments must have support at least $2K$, so one needs (as expected) a larger circuit depth to capture more descendent scaling dimensions.
+For example, in our explicit constructions in \cref{sec:filter construction} the filter size is $2K + 4L$ where $L$ controls the accuracy of the approximation of the dispersion relation.
+
+\subsection{The massive bosonic field}
+The free massive boson with mass $m$ can be approached similarly.
+In that case, we suppose we have two families of filters $g^{(l)}$ and $h^{(l)}$, now with $l \in \ZZ$ and such that $\sqrt{(m^{(l)})^2 + 1} \, g^{(l)}_w(k) = \sqrt{(m^{(l)})^2 + \sin^2(\frac{k}{2})} \, h^{(l)}_w(k)$ where $m^{(0)} = m$ and $m^{(l)}$ is the mass after $l$ layers of renormalization, as defined by \cref{eq:mass renormalization}.
+If these filters are chosen in a way that they converge to a fixed \emph{orthonormal} filter as $l$ goes to infinity, and to a fixed pair of biorthogonal filters as in the massless case for $l$ to $-\infty$, it makes sense to define a new type of scaling and wavelet functions which are different at each level $l$ as a generalization of of the scaling and wavelet functions:
+\begin{equation}\begin{aligned}\label{eq:adaptive scaling functions}
+  \hat{\phi}^a_l(k) &= \prod_{j=1}^{\infty} \frac{a^{(l + j)}(2^{-j}k)}{\sqrt2} \\
+  \hat{\psi}^a_l(k) &= \frac{1}{\sqrt2} a^{(l+1)}\Bigl(\frac{k}{2}\Bigr)\hat{\phi}^a_{l+1}\Bigl(\frac{k}{2}\Bigr)
+\end{aligned}\end{equation}
+for $a = g,h$ as a generalization of of the scaling and wavelet functions defined in \cref{eq:scaling function} and \cref{eq:wavelet function}.
+Again, the wavelet functions $\psi^a_{l,n}(x) = 2^{-\frac{l}{2}}\psi_l(2^{-l}x - n)$ for $a = g,h$ form a dual basis (provided they exist).
+The behaviour for~$l \rightarrow \pm \infty$ is consistent with the fact that the mass term is a relevant perturbation of the conformal field theory and the theory flows from a critical massless boson to a trivial theory.
+As before, we can now discretize the theory using the scaling functions at some given scale and use the discrete circuit to compute correlation functions.
+
+
+\subsection{Other perspectives}\label{sec:other perspectives}
+The idea that wavelet theory should be a natural tool to discretize a field theory in order to perform renormalization has a long history~\cite{battle1999wavelets}.
+As mentioned in the introduction, our approach differs from other works such as~\cite{bulut2013wavelets, brennen2015multiscale, stottmeister2020operator} which investigate the use of wavelets to discretize quantum field theories, in that we use biorthogonal wavelets, which moreover are specifically designed to target the Hamiltonian of the field theory.
+There is also a different approach to entanglement renormalization for quantum field theories, known as cMERA~\cite{haegeman2013entanglement, franco2017entanglement}.
+This takes a different perspective by formulating a variational class of states directly in the continuum, rather than considering a discretization.
+In both cases, the correlation functions of the theory are accurately reproduced up to some cut-off.
+The precise relation between MERA and cMERA is not very well understood, for instance it is not clear that discretizing a cMERA state could yield a MERA.
+Intriguingly, cMERA is formally strongly reminiscent of the \emph{continuous wavelet transform} (CWT).
+The continuous wavelet transform~\cite{mallat2008wavelet} can be defined for a much broader class of wavelet functions $\psi$, and if $\psi$ is a biorthogonal wavelet the CWT can be discretized to a discrete wavelet transform.
+Reformulating cMERA as the second quantization of a CWT would therefore give a clear relationship between MERA and cMERA for free bosonic systems.
+\change{A starting point could be the cMERA in \cite{zou2019magic}, which reproduces some scaling dimensions exactly.}
+However, the CWT appears to break some of the symplectic properties of the discrete biorthogonal wavelet transform and it remains an open problem to make this connection more explicit.
+Finally, another reason why the field theory limit of entanglement renormalization is of interest is its tentative relation to holography in theories of quantum gravity, as conjectured in~\cite{swingle2012entanglement}.
+The entanglement renormalization circuit can be thought of as mapping a system into one higher dimension by adding an additional `scale' direction.
+An interpretation in terms of wavelets was proposed in~\cite{qi2013exact} for fermions and extended to bosonic systems in~\cite{singh2016holographic}.
+
+
+\section{Conclusion}
+In this work we have explained how Gaussian entanglement renormalization circuits can be naturally contructed from (and are in fact equivalent to) the second quantizations of biorthogonal wavelet transforms.
+\change{There are a few technical aspects that would be interesting to study in more detail.
+First, one could carry out a fully rigorous analysis of the continuum limit discussed in \cref{sec:continuum}, as in~\cite{witteveen2019quantum}.
+This poses some mathematical challenges.
+For example, if the system is not scale invariant then our notion of wavelet functions goes beyond the standard framework of wavelet theory, and one would have to identify suitable conditions on the filters that ensure that the wavelet and scaling functions as defined in \cref{eq:adaptive scaling functions} are well-behaved functions and that standard wavelet theory generalizes.}
+\change{Second, it would be desirable to identify conditions under which the procedure outlined in \cref{sec:filter construction} is rigorously guaranteed to find good approximate solutions of~\cref{eq:approximate phase main}.
+We note that even for Hilbert pair wavelets, which are relevant in the fermionic setting and which inspired our construction, this is not known and a subject of recent research in the signal processing community \cite{selesnick2002design, achard2017new}.}
+
+Overall, we believe that this work, together with~\cite{evenbly2016entanglement,haegeman2018rigorous} for the fermionic case, completes our conceptual understanding of Gaussian entanglement renormalization for free theories as the second quantization of wavelet decompositions.
+We hope that this offers a path towards constructing and analyzing entanglement renormalization circuits for \emph{interacting} models.
+One clear direction is to apply perturbation theory in the wavelet basis.
+A similar approach has already been taken for cMERA in \cite{cotler2019entanglement}, where one can also do perturbation theory around a Gaussian cMERA.
+Another interesting direction is to investigate integrable models, where we know explicit solutions for the ground state, and try to formulate these in terms of wavelet modes.
+Finally, continuous wavelet transforms might also help illuminate the relation between MERA and cMERA as we discussed in \cref{sec:other perspectives}.
+
+\section*{Acknowledgements}
+We thank Adri\'an Franco Rubio for inspiring discussions during the inception of this project.
+
+\paragraph{Funding information}
+MW acknowledges funding by NWO Veni grant~680-47-459.
+
+\begin{appendix}
+\change{
+\section{Review of the fermionic wavelet-MERA correspondence}\label{sec:review fermions}
+In this appendix we briefly review the construction of entanglement renormalization circuits for massless free fermions, as worked out in~\cite{evenbly2016entanglement,haegeman2018rigorous,witteveen2019quantum}.
+While not strictly needed to understand the results of the current work, which deals with free bosons, it is instructive to contrast the construction and state of the art with the fermionic setting.
+We closely follow the exposition in \cite{haegeman2018rigorous}.
+Let $a_n$ for $n \in \ZZ$ be fermionic operators, satisfying the anticommutation relations $\{a^\dagger_n, a_m\} = \delta_{n,m}$, $\{a_n, a_m\} = \{a^\dagger_n, a^\dagger_m\} = 0$.
+We work in the framework of Gaussian or free fermions.
+We consider Hamiltonians of the form
+\begin{align}\label{eq:quadratic fermionic hamiltonian}
+  H = \sum_{n,m} h_{n,m} a^\dagger_n a_m
+\end{align}
+where $h$ is a Hermitian matrix.
+The ground state of such a Hamiltonian is given by
+\begin{align*}
+  \ket{\psi} = \prod_i a^\dagger(f_i) \ket{\Omega}
+\end{align*}
+where $\ket{\Omega}$ is the Fock vacuum and $a^\dagger(f) := \sum_n f[n] a^\dagger_n$ and where the $f_i$ are all eigenvectors of $h$ with negative eigenvalue (so $\sum_m h_{n,m} f_i[m] = \lambda_i f_i[n]$ with $\lambda_i < 0$).
+In other words, precisely the negative energy modes are occupied in the ground state.
+The set of number-preserving Gaussian operations is given by all evolutions along Hamiltonians of the form in \cref{eq:quadratic fermionic hamiltonian}.
+Such transformations are the \emph{fermionic second quantization} of unitaries acting on the single-particle space. That is, to every unitary operator $U$ acting on $\ell^2(\ZZ)$ we associate the unitary which maps $a_n$ to $\tilde{a}_n = \sum_{m} u_{n,m} a_m$.
+
+We restrict to the nearest neighbor hopping Hamiltonian
+\begin{align}\label{eq:hopping fermions}
+  H = - \sum_{n \in \ZZ} a_n^\dagger a_{n+1} + a_{n+1}^\dagger a_n.
+\end{align}
+As opposed to the current work on bosonic models, so far no general wavelet construction for arbitrary free fermion models is known, but only for the Hamiltonian in~\cref{eq:hopping fermions} and its higher dimensional generalizations.
+To prepare the ground state of this Hamiltonian we separately consider the even and the odd sublattice and let $a_{1,n} = a_{2n}$ and $a_{2,n} = a_{2n+1}$, and we apply a phase gate, writing $b_{i,n} = (-1)^n a_{i,n}$.
+The Hamiltonian in \cref{eq:hopping fermions} is then transformed to
+\begin{align}\label{eq:dirac fermion}
+  H = -\sum_{n \in \ZZ} b_{1,n}^{\dagger}b_{2,n} - b_{2,n}^{\dagger} b_{1,n+1} + b_{2,n}^{\dagger}b_{1,n} - b_{1,n+1}^{\dagger}b_{2,n}.
+\end{align}
+This Hamiltonian can be written in Fourier space as
+\begin{align*}
+  H = \int_{-\pi}^{\pi} \frac{\d k}{2\pi} \begin{pmatrix} b_1(k) \\ b_2(k)\end{pmatrix}^\dagger \begin{pmatrix} 0 & e^{-ik} - 1 \\ e^{ik} - 1 & 0 \end{pmatrix} \begin{pmatrix} b_1(k) \\ b_2(k)\end{pmatrix}
+\end{align*}
+The ground state $\ket{\psi}$ is now given by filling the negative energy modes (the Fermi sea), which can be found by observing that for each $k$ the matrix
+\begin{align*}
+  \begin{pmatrix} 0 & e^{-ik} - 1 \\ e^{ik} - 1 & 0 \end{pmatrix}
+\end{align*}
+has a negative eigenvalue with eigenvector
+\begin{align*}
+  \frac{1}{\sqrt2}\begin{pmatrix} 1 \\ -\sgn(k)ie^{i\frac{k}{2}} \end{pmatrix}
+\end{align*}
+which means that the space of negative energy modes consists of all functions~$f = (f_1, f_2)$ in~$\ell^2(\ZZ) \ot \CC^2$ which are such that their Fourier transforms satisfy $f_2(k) = -\sgn(k)ie^{i\frac{k}{2}}f_1(k)$.
+That is, if $f$ is such a function, then $(b_1(f_1)^\dagger + b_2(f_2)^\dagger) \ket{\psi} = 0$.
+We now consider a pair of orthogonal wavelet filters (note that in contrast to the bosonic case, this is not a pair of biorthogonal filters, but two filters which are each orthogonal) $g_w$ and $h_w$, and we let $W_g$ and $W_h$ denote the corresponding wavelet decomposition maps, which are now orthogonal, i.e. $W_a^{-1} = W_a^{\tran}$ for $a = g,h$.
+In particular, this means that we can apply the fermionic second quantization of $W_h$ to the $b_1$ fermions and $W_g$ to the $b_2$ fermions.
+If the filters are such that for $-\pi < k < \pi$
+\begin{align}\label{eq:hilbert pair}
+  g_w(k) = -i\sgn(k)e^{i\frac{k}{2}}h_w(k)
+\end{align}
+this will allow us to renormalize the ground state.
+To see this, consider any mode $f = (f_1, f_2)$ in the Fermi sea, so $f_2(k) = -\sgn(k)ie^{i\frac{k}{2}}f_1(k)$.
+When we apply the wavelet transforms $f_i$ is mapped to $(f_{i,w}, f_{i,s})$, a wavelet and a scaling component.
+Then one can show that from \cref{eq:hilbert pair} it follows that $f_{1,w} = f_{2,w}$ and $f_{2,s}(k) = -\sgn(k)ie^{i\frac{k}{2}}f_{1,s}(k)$.
+We may now apply (the fermionic second quantization of) a Hadamard gate
+\begin{align*}
+  H = \frac{1}{\sqrt2}\begin{pmatrix} 1 & 1 \\ 1 & -1 \end{pmatrix}
+\end{align*}
+to the wavelet component, which then disentangles the wavelet component of the negative energy mode.
+This shows that if we take the the ground state $\ket{\psi}$ and we first apply the wavelet transforms $W_g$ and $W_h$ followed by $H$ on the wavelet output, we map to $\ket{\psi}$ to itself on the scaling output and the product state $\prod_n b_{1,n}^\dagger \ket{\Omega}$ (that is, the state in which all even sublattice modes $b_{1,n}$ are filled and all odd sublattice modes $b_{2n}$ are not filled) on the wavelet output.
+Thus we have implemented a layer of entanglement renormalization.
+One can write the fermionic second quantization of an orthogonal wavelet transform with a finite filter as a finite depth fermionic Gaussian circuit \cite{evenbly2018representation}.
+We may iteratively apply the renormalization to the scaling component to completely completely disentangle the ground state, and if we consider the circuit in the opposite direction then it maps layers of product states to the ground state of \cref{eq:dirac fermion}.
+One may think of this way of preparing the ground state as filling the Fermi sea layer by layer, now choosing a wavelet basis for the Fermi sea instead of the usual Fourier basis.
+
+The relation \cref{eq:hilbert pair} can not be satisfied exactly by a pair of finite filters, but it can be approximated.
+In \cite{evenbly2016entanglement} it was shown that a construction using Daubechies D4 filters already gives a good result, and in \cite{haegeman2018rigorous} a general method using known constructions from signal processing applications \cite{selesnick2002design} was suggested, and it was also shown that a good approximation of \cref{eq:hilbert pair} leads to a good approximation of the ground state (which inspired our \cref{thm:approximation}).
+The Hamiltonian in \cref{eq:dirac fermion} is in fact the Kogut-Susskind discretization of the Dirac fermion \cite{kogut1975hamiltonian}.
+In \cite{witteveen2019quantum} it has been worked out how the wavelet and scaling functions corresponding to the filters $g$ and $h$ have a natural interpretation in the quantum field theory, analogous to the discussion in \cref{sec:continuum}.
+In \cref{tab:comparison} we give an overview of the analogies between the fermionic and bosonic case.
+
+\begin{table}
+  \begin{footnotesize}
+\begin{tabular}{p{2.6cm}|p{5.5cm}|p{5.5cm}}
+   & Fermions (at criticality) \cite{evenbly2016entanglement,haegeman2018rigorous} & Bosons \\
+  \hline\hline
+  Gaussian unitaries & $a_n \mapsto \sum_{m} U_{n,m}a_m$ for $U$ unitary & $q_n \mapsto A_{n,m} q_m$ and $p_n \mapsto A_{n,m} p_m$ with $A^{-1} = B^\tran$ \\
+  \hline
+  Hamiltonian & $H = -\sum_n a_n^\dagger a_{n+1} + a_{n+1}^\dagger a_n$ & $H = \frac12\bigl(\sum_{n \in \ZZ} p_n^2 + \sum_{n, m \in \ZZ} q_n V_{n - m} q_m\bigr)$ with dispersion relation $\omega(k)$ \\
+  \hline
+  Wavelet filters & $g$, $h$ orthogonal wavelet filters & $(g,h)$ pair of biorthogonal wavelet filters \\
+  \hline
+  Filter relation & $g_w(k) = -i\sgn(k)e^{i\frac{k}{2}}h_w(k)$ for~$k \in (-\pi,\pi)$ & $g_w(k) = \omega(k)h_w(k)$ \\
+  \hline
+  Application of wavelet transform & $b_{1,n} = (-1)^n a_{2n}$, $b_{2,n} = (-1)^n a_{2n+1}$, and apply $W_h$ to the $b_1$ fermions and $W_g$ to the $b_2$ fermions & $A = W_g$, $B = W_h$ \\
+  \hline
+  Disentangling circuit & Apply wavelet decomposition, then $H$ on wavelet modes. & Apply squeezing to normalize dispersion relation, then apply the wavelet decomposition. \\
+  \hline
+  Continuum theory & Free Dirac fermion & Free bosonic scalar field (for $\omega(k)=\abs{\sin(\frac{k}{2})}$) \\
+  \hline
+  Wavelet functions & $\hat{\psi}^g(k) = -i\sgn(k)\hat{\psi}^h(k)$ & $\hat{\psi}^g(k) = \frac{\abs{k}}{4}\hat{\psi}^h(k)$
+\end{tabular}
+\end{footnotesize}
+
+\caption{Comparison of the wavelet-MERA correspondence for fermions and bosons.}
+\label{tab:comparison}
+\end{table}
+}
+
+\section{Construction of filters}\label{sec:filter construction}
+Next we will explain how to construct filter pairs that yield a good approximation of a given dispersion relation.
+Suppose we are given a dispersion relation $\omega(k)$.
+Let us assume that $\omega(k) = \omega(-k)$.
+We would like to construct a biorthogonal filter pair $(g,h)$ such that
+\begin{equation}\label{eq:rat approx}
+  g_w(k) \approx \omega(k) h_w(k)
+\end{equation}
+or equivalently
+\begin{equation}\label{eq:approximate scaling relation}
+  h_s(k) \approx \omega(k + \pi) g_s(k)
+\end{equation}
+We will describe a general approach to this problem inspired by the Daubechies wavelet construction, similar to the construction of Hilbert pair wavelets due to Selesnick~\cite{selesnick2002design} which were previously used in the construction of fermionic MERAs~\cite{haegeman2018rigorous}.
+For this, we start with a rational approximation
+\begin{equation*}
+  \omega(k + \pi) \approx \frac{a(k)}{b(k)},
+\end{equation*}
+where $a$ and $b$ are real finite symmetric sequences on $[-L,L]$.
+The approximation only has to be accurate around~$k=0$.
+We will make the following ansatz for the Fourier transform of the scaling filters
+\begin{equation}\begin{aligned}\label{eq:filter ansatz}
+  g_s(k) &= b(k)(1 + e^{ik})^K f(k), \\
+  h_s(k) &= a(k)(1 + e^{ik})^K f(k)
+\end{aligned}\end{equation}
+where $f(k)$ is the Fourier transform of a real finite sequence $f[n]$ that still needs to be determined.
+The parameter $K$ determines the number of vanishing moments of the biorthogonal wavelets, just as in the Daubechies wavelet construction.
+By construction, $g_s(k)$ and $h_s(k)$ are small near $k=\pi$, and \cref{eq:approximate scaling relation} is satisfied.
+In order for \cref{eq:filter ansatz} to generate biorthogonal wavelet filters, they need to satisfy the condition in \cref{eq:perfect reconstruction} which translates to
+\begin{equation*}
+  s(k)f(k)f(-k) + s(k+\pi)f(k + \pi)f(\pi -k) = 2
+\end{equation*}
+where $s(k) = a(k)b(k)(2\cos(\frac{k}{2}))^{2K}$.
+One may try to solve this by letting $r(k) = f(k)f(-k)$. Then $r$ should be taken as a solution to the linear system
+\begin{equation*}
+  \sum_l s[2n - l]r[l] = \delta_0[n].
+\end{equation*}
+Now, if possible, we perform a spectral factorization $r(k) = f(k)f(-k)$.
+A necessary and sufficient condition for this is that $r(k) \geq 0$ for all $k$.
+Unfortunately, we do not know of a condition on $a$ and $b$ that guarantees this.
+The resulting filters $(g,h)$ will have support of size $2M$ where $M = K + 2L$.
+Finally, in the scale-invariant case, the stability condition that will be required in \cref{thm:approximation} can be checked explicitly for compactly supported filters by looking at the operators $P^g$ and $P^h$ defined by
+\begin{equation*}
+  (P^a f)(k) = \lvert a(\frac{k}{2}) \rvert^2 f(\frac{k}{2}) + \lvert a(\frac{k}{2} + \pi) \rvert^2 f(\frac{k}{2} + \pi)
+\end{equation*}
+on the space of polynomials of degree at most $2M$ with zero mean.
+The filters yield square integrable scaling functions and uniformly bounded wavelet decomposition maps if and only if the eigenvalues of $P^g$ and $P^h$ are smaller in absolute value than~$2$ (see~\cite{cohen1992stability} or Theorem~4.2 in~\cite{cohen1995wavelets}).
+
+For the massless harmonic chain, one particular choice for $a$ and $b$ is given by
+\begin{equation}\begin{aligned}\label{eq:all pass construction}
+  a(k) &= \frac12 (e^{-iLk}d(k)^2 + e^{iLk}d(-k)^2),\\
+  b(k) &= d(k)d(-k).
+\end{aligned}\end{equation}
+where $d[n]$ is a maximally flat all-pass filter with delay $\frac14$ of degree $L$~\cite{selesnick2002design}, so it has the property that $e^{-iLk}d(-k)/d(k) \approx e^{-i\frac{k}{2}}$ on $k \in (-\pi,\pi)$.
+In \cref{fig:approximation error} we show the goodness of the approximation in \cref{eq:rat approx,eq:approximate scaling relation} as a function of $K$ and $L$.
+The resulting filters and wavelets for $K=2$, $L=4$ are shown in \cref{fig:wavelet functions}.
+We remark that the construction in \cref{eq:all pass construction} is not necessarily optimal.
+\change{From numerical evidence in \cref{fig:approximation error} it appears that the accuracy of the approximation improves exponentially with increasing support~\cite{pyfermions}.
+An interesting open problem is to rigorously prove the existence of approximate solutions to \cref{eq:rat approx} with (exponentially) improving approximation accuracy as the filter size increases.}
+
+\begin{figure}%[htb]
+\centering
+\begin{overpic}[width=0.85\textwidth,grid=false]{filters.pdf}
+\put(-5,74){(a)} \put(-5,48){(c)} \put(-5,22){(e)}
+\put(103,74){(b)} \put(103,48){(d)} \put(103,22){(f)}
+\end{overpic}
+\caption{\change{The results of using $K=2$, $L=4$ in the construction of \cref{eq:all pass construction}:
+(a)~scaling filters~$g_s$ and~$h_s$,
+(b)~wavelet filters~$g_w$ and~$h_w$,
+(c)~absolute value squared of the Fourier transforms of the scaling filters~$\abs{g_s(k)}^2$ and~$\abs{h_s(k)}^2$,
+(d)~absolute value squared of the Fourier transforms of the wavelet filters~$\abs{g_w(k)}^2$ and~$\abs{h_w(k)}^2$,
+(e)~scaling functions~$\phi^g$ and~$\phi^h$, and
+(f)~wavelet functions~$\psi^g$ and~$\psi^h$.}}
+\label{fig:wavelet functions}
+\end{figure}
+
+\begin{figure}%[htb]
+\centering
+\includegraphics[width=0.8\textwidth]{error_KL.pdf}
+\caption{Approximation errors for $\eps = \max_k \, \abs{g_w(k) - \abs{\sin(\frac{k}{2})} h_w(k)}$ and $\max_k \, \abs{\psi^g(k) - \frac{\abs{k}}{4} \psi^h(k)}$ for different values of $K$ and $L$ for a filter pair constructed using \cref{eq:all pass construction}. For fixed $K$ the error appears to decrease exponentially in $L$.}
+\label{fig:approximation error}
+\end{figure}
+
+\section{Construction of circuits from filters}\label{sec:circuit construction}
+
+We now discuss how to explicitly construct a Gaussian circuit from a given pair of biorthogonal wavelet filters, and show that any translation-invariant Gaussian circuit of the form of \cref{fig:circuit decomposition} always arises from such a filter pair.
+
+Motivated by the fermionic setting it has been extensively discussed in~\cite{evenbly2018representation} how to construct \emph{unitary} local circuits from \emph{orthogonal} wavelet filters.
+The construction for biorthogonal wavelet filters is very similar and the symmetric case has already been discussed in~\cite{evenbly2018representation}, but for completeness we provide it here.
+Given a pair of biorthogonal filters $(g,h)$ of support $2M$ we will construct a binary circuit of depth $M$ that implements the wavelet decomposition map.
+We will assume that $g$ and $h$ are supported on $[-M + 1, M]$, which we can always achieve by a shift.
+By a binary circuit of depth $M$ we mean a sequence of maps $A_1, \ldots A_M$ on $\ell^2(\ZZ)$ such that
+\begin{equation*}
+  A_i = \bigoplus_{n = \text{even}} (a_i)_{n,n+1}
+\end{equation*}
+for $i$ even, and similarly a sum over odd terms if $i$ is odd.
+Here $a_i$ is a two by two matrix.
+These maps will be such that $A = A_M \circ \ldots \circ A_1$ implements the wavelet reconstruction map in the sense that $A f = W_g^{\tran}(f_{\text{odd}} \op f_{\text{even}})$ and $(A^\tran)^{-1} f = W_h^{\tran}(f_{\text{odd}} \op f_{\text{even}})$ where $f_{\text{even}}[n] = f[2n]$ and $f_{\text{odd}}[n] = f[2n-1]$, as in \cref{fig:circuit decomposition}.
+By shift invariance this is equivalent to
+\begin{equation}\begin{aligned}\label{eq:classical circuit}
+  A \delta_1 &= g_s \\
+  A \delta_2 &= g_w \\
+  (A^\tran)^{-1} \delta_1 &= h_s \\
+  (A^\tran)^{-1} \delta_2 &= h_w
+\end{aligned}\end{equation}
+as illustrated for $g$ in \cref{fig:circuit construction}.
+\begin{figure}%[t]
+\centering
+\quad\raisebox{-2.5cm}{
+\begin{overpic}[width=0.3\textwidth,grid=false]{filter_construction}
+\put(4,42){$0$} \put(14,42){$0$} \put(24,42){$0$} \put(34,42){$0$} \put(44,42){$\mathbf{1}$} \put(54,42){$0$} \put(64,42){$0$} \put(74,42){$0$} \put(84,42){$0$} \put(94,42){$0$}
+\put(48,31){$a_1$} \put(38,19){$a_2$} \put(48,7){$a_3$}
+\put(50,-5){$\mathbf{g_s}$}
+\end{overpic}}
+\quad\raisebox{-2.5cm}{
+\begin{overpic}[width=0.3\textwidth,grid=false]{filter_construction}
+\put(4,42){$0$} \put(14,42){$0$} \put(24,42){$0$} \put(34,42){$0$} \put(44,42){$0$} \put(54,42){$\mathbf{1}$} \put(64,42){$0$} \put(74,42){$0$} \put(84,42){$0$} \put(94,42){$0$}
+\put(48,31){$a_1$} \put(38,19){$a_2$} \put(48,7){$a_3$}
+\put(50,-5){$\mathbf{g_w}$}
+\end{overpic}}
+\vspace{0.2cm}
+\caption{Illustration of \cref{eq:classical circuit}, which gives the equations the $a_i$ have to satisfy in order for the circuit to implement $W_g$.}
+\label{fig:circuit construction}
+\end{figure}
+Now $A \op (A^\tran)^{-1}$ is a binary circuit, and its second quantization gives a Gaussian bosonic quantum circuit.
+It remains to construct the matrices $a_i$ given the filters $g$ and $h$.
+We will need the perfect reconstruction condition \cref{eq:perfect reconstruction} which becomes
+\begin{equation*}
+  \sum_l g_s[2n + l]h_s[l] = \delta_0[n]
+\end{equation*}
+upon applying the inverse Fourier transform.
+In particular, the vectors $(g_s[-M+1], g_s[-M+2])^\tran$ and $(h_s[M-1], h_s[M])^{\tran}$ are orthogonal, and so are $(g_s[M-1], g_s[M])^\tran$ and $(h_s[-M+1], h_s[-M+2])^{\tran}$.
+Furthermore we will use that the wavelet filters are derived from the scaling filters as
+\begin{equation}\begin{aligned}\label{eq:wavelet from scaling}
+  g_w[n] &= (-1)^{(1-n)}h_s[1 - n] \\
+  h_w[n] &= (-1)^{(1-n)}g_s[1 - n]
+\end{aligned}\end{equation}
+which follows directly from \cref{eq:scaling vs wavelet}.
+First suppose that $M = 1$.
+In that case we let
+\begin{equation*}
+  a_1 = \begin{pmatrix} g_s[0] & g_w[0] \\ g_s[1] & g_w[1] \end{pmatrix}.
+\end{equation*}
+Using the perfect reconstruction condition we may now check that
+\begin{equation*}
+  (a_1^\tran)^{-1} = \begin{pmatrix} h_s[0] & h_w[0] \\ h_s[1] & h_w[1] \end{pmatrix}
+\end{equation*}
+so this satisfies \cref{eq:classical circuit}.
+For $M > 1$ we will construct the $A_i$ recursively.
+Let
+\begin{equation*}\begin{aligned}
+  g_M = \begin{pmatrix} g_s[M-1] & g_s[-M + 2] \\ g_s[M] & g_s[-M + 1] \end{pmatrix}\\
+  a_M = \frac{1}{\sqrt{\det(g_M)}} g_M
+\end{aligned}\end{equation*}
+then it is clear that $A_M^{-1}$ maps $g_s$ to a sequence $g^{(M-1)}_s$ on $[-M + 2,M-1]$ and $A_M^\tran$ maps $h_s$ to a sequence $h^{(M-1)}_s$ on $[-M + 2,M-1]$ using the orthogonality properties derived from the perfect filter condition
+In the non-generic degenerate case that~$\det(g_M) = 0$, the size of the support can only be decreased by~1 and an additional layer is needed.
+Moreover, since $A_M$ is invariant under shifts of 2, it is easy to see that $g^{(M-1)}_s$ and $h^{(M-1)}_s$ still satisfy the perfect reconstruction property.
+Finally, if we let $\alpha$ denote the map defined by $\alpha x[n] = (-1)^{(1-n)}x[1 - n]$, then in order to see that $A_M^{-1}$ maps $g_w$ to the wavelet filter $g^{(M-1)}_w$ defined by $\alpha h^{(M-1)}_s$, it suffices to check that $ A_M^{-1} \alpha = \alpha A_M^\tran$ or equivalently $ A_M^{-1} = \alpha A_M^\tran \alpha$.
+This follows from the inversion formula for two by two matrices with determinant~1, i.e.,
+\begin{equation*}
+  \begin{pmatrix} a & b \\ c & d \end{pmatrix}^{-1} = \begin{pmatrix} d & -b \\ -c & a \end{pmatrix}.
+\end{equation*}
+Now we can recursively apply the same procedure to $(g^{(M-1)}, h^{(M-1)})$ to construct $A_{M-1}, \ldots, A_1$.
+We have now seen that we can construct a circuit from a filter pair.
+
+Conversely, given a circuit of the form $A = A_M \circ \ldots \circ A_1$ as described above, \emph{define} filters $g$ and $h$ by \cref{eq:classical circuit}.
+We can then check that these filters form perfect reconstruction filters, in the sense that $W_h^\tran = W_g^{-1}$.
+If we assume $\det(a_i) = 1$ for $i = 1,\ldots,M$, the wavelet and scaling filters are related as in \cref{eq:wavelet from scaling}.
+
+
+\section{Approximation theorem}\label{sec:approximation}
+
+In this appendix we state and prove a general approximation result for translation-invariant quadratic Hamiltonians of the form \cref{eq:hamiltonian}.
+We obtain the theorem in the main text by specializing to the harmonic chain (as explained at the very end of this appendix).
+Our proof strategy is inspired by the techniques in~\cite{haegeman2018rigorous}, with the technical complications that the wavelet transforms are not unitary and are allowed to vary layer by layer.
+
+If $g_s,h_s\in\ell^2(\ZZ)$ are a pair of scaling filters that satisfy the perfect reconstruction condition in \cref{eq:perfect reconstruction} of the main text, then we can define corresponding wavelet filters $g_w,h_w\in\ell^2(\ZZ)$ and single-layer decomposition maps~$W_g, W_h \colon \ell^2(\ZZ) \to \ell^2(\ZZ) \op \ell^2(\ZZ)$ such that $W_h^T W_g = W_g^T W_h = \id$.
+
+Now suppose that we are given a sequence of filters $g_s^{(l)}, h_s^{(l)}$ as above.
+Here, $l\in\NN$ for convenience of notation.
+In practice, one is usually interested in a finite number of layers; in this case we may choose the sequence of filters to eventually become constant.
+For $a = g, h$ and $\cL\in\NN$, we define the $\cL$-layer decomposition maps
+\begin{equation*}\begin{aligned}
+  &W_a^{(\cL)} \colon \ell^2(\ZZ) \rightarrow \ell^2(\ZZ)^{\ot (1+\cL)}, \\
+  &W_a^{(\cL)} := \bigl( W_{a^{(\cL-1)}} \op \id^{\op (\cL - 1)} \bigr) \circ \ldots  \circ \bigl( W_{a^{(1)}} \op \id \bigr) \circ W_{a^{(0)}},
+\end{aligned}\end{equation*}
+and write $W^{(\cL)} = W_h^{(\cL)} \op W_g^{(\cL)}$.
+% Recall that the family of filters $\{g^{(l)}\}$ and $\{h^{(l)}\}$ are called stable if the corresponding wavelet and scaling functions exist, are square integrable, and the wavelets form a Riesz basis.
+% Equivalently, this means that the wavelet decomposition map is bounded, independently of the number of layers.
+We assume that the family is \emph{stable} in the sense that the corresponding (generalized) scaling functions~$\phi^a_l$ defined in \cref{eq:adaptive scaling functions} exist, are square integrable, and bounded in $L^\infty$-norm.
+We can also define the wavelet decomposition maps starting at layer~$\cL' \geq 0$, that is,
+\begin{equation*}\begin{aligned}
+  &W_a^{(\cL',\cL)} \colon \ell^2(\ZZ) \rightarrow \ell^2(\ZZ)^{\ot (1+\cL-\cL')}, \\
+  &W_a^{(\cL', \cL)} := \bigl( W_{a^{(\cL)}} \op \id^{\op (\cL-\cL'-1)} \bigr) \circ \ldots  \circ \bigl( W_{a^{(\cL' + 1)}} \op \id \bigr) \circ W_{a^{(\cL')}}.
+\end{aligned}\end{equation*}
+For $\cL'=0$ we recover $W_a^{(\cL)}$ as defined earlier.
+We assume that the wavelet decomposition maps are bounded.
+Finally, we shall assume that the filters have finite support.
+Then the same is true for the scaling functions.
+In the case that the filters are independent of $l$, the above notion of stability is equivalent to the familiar notion from wavelet theory.
+For finitely supported filters there exists an easy criterion to determine this, see~\cite{cohen1992biorthogonal}.
+
+For the entanglement renormalization circuit, we also insert a squeezing operation between each wavelet decomposition layer, defining $R_{a^{(l)}}$, $R_a^{(\cL)}$ and $R^{\cL}$ for $a = g, h$ as in \cref{eq:filter plus squeezing}.
+Our approximation to the covariance matrix is then given by
+\begin{equation}\begin{aligned}\label{eq:mera covariance matrices}
+  \gamma^{q,(\cL)}_{\mera} &= \frac12 R_h^{(\cL),\tran}R_h^{(\cL)}, \\
+  \gamma^{p,(\cL)}_{\mera} &= \frac12 R_g^{(\cL),\tran}R_g^{(\cL)}.
+\end{aligned}\end{equation}
+Suppose the filter pairs $g^{(l)}$, $h^{(l)}$ approximately satisfy the renormalized dispersion relation at each level as in \cref{eq:approximate phase main}.
+That is,
+\begin{equation}\label{eq:approximate phase supp}
+  \abs{g^{(l)}_w(k) - \frac {\omega^{(l)}(k)}{\omega^{(l)}(\pi)} h^{(l)}_w(k) } =
+\abs{ g^{(l)}_w(k) - \tilde{g}^{(l)}_w(k) }
+\leq \eps,
+\end{equation}
+where we have introduced the filter
+\begin{equation}\label{eq:filter tilde}
+  \tilde{g}^{(l)}_w(k) := \frac{\omega^{(l)}(k)}{\omega^{(l)}(\pi)} h^{(l)}_w(k).
+\end{equation}
+This filter, together with $\tilde{h}^{(l)}_w(k) := \omega^{(l)}(\pi) / \omega^{(l)}(k) \times g^{(l)}_w(k)$, forms a pair of biorthogonal wavelet filters, with corresponding scaling filters $\tilde g^{(l)}_s, \tilde h^{(l)}_s$ that satisfy \cref{eq:perfect reconstruction}.
+However, these filters are almost never finitely supported.
+By construction, $\tilde{g}^{(l)}, h^{(l)}$ satisfy \cref{eq:wavelet filter phase relation} exactly.
+
+We now state our approximation theorem for general dispersion relations.
+We measure the approximation error in terms of quantities
+\begin{equation}\begin{aligned}\label{eq:define delta}
+  \Delta^p_{nm} := \abs{\gamma^p_{nm} - (\gamma^{p,(\cL)}_{\mera})_{nm}}, \\
+  \Delta^q_{nm} := \abs{\gamma^q_{nm} - (\gamma^{q,(\cL)}_{\mera})_{nm}}.
+\end{aligned}\end{equation}
+If $\omega(0) = 0$, then it is also interesting to regulate the covariance matrix $\gamma^q$ as
+\begin{align}\label{eq:regulated cov}
+  \tilde{\gamma}^q_{nm} := \gamma^q_{nm} - \gamma^q_{nn}
+\end{align}
+and consider
+\begin{equation}\label{eq:define delta tilde}
+  \tilde\Delta^q_{nm} := \abs{\tilde{\gamma}^q_{nm} - (\tilde{\gamma}^{q,(\cL)}_{\mera})_{nm}}.
+\end{equation}
+
+\begin{thm}\label{thm:approximation}
+Consider a translation-invariant Hamiltonian of the form of \cref{eq:hamiltonian}, with dispersion relation~$\omega(k)$ such that $\omega^{(l)}(\pi) \leq 1$ and $\omega^{(l)}(k) \leq \Omega$ for~$l=1,\dots,\cL$ for some $\Omega \geq 1$.
+Suppose we have a sequence of filters such that \cref{eq:approximate phase supp} holds for $\eps \leq 1$, with finite support of size at most~$M$ and scaling functions that are uniformly bounded by~$\norm{\phi^a_l}_\infty \leq B$ for $a=g,h$ and $l=1,\dots,\cL$.
+Assume moreover that the wavelet decomposition maps are uniformly bounded by $\norm{W^{(l',l)}_a} \leq \wnorm$ for all $a = g,h,\tilde{g}$ and $1\leq l\leq l'\leq\cL$, where $D\geq1$.
+Then the approximation error of the covariance matrices can be bounded as follows:
+\begin{equation*}\begin{aligned}
+\Delta^p_{nm} &\leq \wnorm^2\Bigl(C2^{-\frac{\cL}2} + 3\eps \wnorm  \log_2 \frac{C}{\eps}\Bigr), \\
+\Delta^q_{nm} &\leq 2\wnorm^2\Bigl(C2^{-\frac{\cL}2} + 3\eps \wnorm \log_2 \frac{C}{\eps}\Bigr) \norm{\gamma^q \delta_0}, \\
+\tilde\Delta^q_{nm} &\leq 2\wnorm^2\Bigl(C2^{-\frac{\cL}2} + 3\eps \wnorm \log_2 \frac{C}{\eps}\Bigr) \norm{\gamma^q(\delta_n - \delta_m)},
+\end{aligned}\end{equation*}
+where $C := 4B^2 M^{\frac32}\Omega$.
+\end{thm}
+
+\noindent
+To interpret the error bounds, we note that
+\begin{align}
+\label{eq:first norm interp}
+  \norm{\gamma^q \delta_0}^2 &= \int_{-\pi}^{\pi}\frac{\d k}{\omega(k)^2}, \\
+\label{eq:second norm interp}
+  \norm{\gamma^q(\delta_n - \delta_m)}^2
+&= \int_{-\pi}^{\pi} \d k \, \frac{\sin^2(\frac12(n-m)k)}{\omega(k)^2}.
+\end{align}
+As mentioned earlier, our proof strategy follows~\cite{haegeman2018rigorous} with two technical complications:
+the wavelet transforms are not unitary and are allowed to vary layer by layer.
+
+We will first bound the error that arises from only taking a finite number of layers.
+Let~$p^{(\cL)}_s$ denote the projection onto the first tensor factor of $\ell^2(\ZZ)^{\ot(\cL + 1)}$ and $p^{(\cL)}_w = \id - p^{(\cL)}_s$ the projection onto the remaining tensor factors.
+Thus, $p^{(\cL)}_s W_a^{(\cL)} f$ is the scaling component of the decomposed signal and $p^{(\cL)}_w W_a^{(\cL)}$ its wavelet component.
+The following lemma confirms the intuition that, for finitely supported signals, lower-frequency wavelet modes contribute less.
+
+\begin{lem}\label{lem:IR bound}
+Suppose we have sequence of filters as above, with finite support of size at most~$M$ and scaling functions that are uniformly bounded by $\norm{\phi^a_l}_\infty \leq B$ for $a=g,h$ and $l=1,\dots,\cL$.
+Then,
+\begin{equation}\label{eq:IR bound}
+  \lVert p^{(\cL)}_s W_a^{(\cL)} \delta_n \rVert \leq 2^{-\frac{\cL - 1}{2}} B^2 M^{\frac32}
+\end{equation}
+where $\delta_n$ is the unit signal concentrated at $n$.
+\end{lem}
+\begin{proof}
+Let $b$ denote the filters dual to $a$ (i.e., $b=h$ if $a=g$, and vice versa).
+We note that
+$p^{(\cL)}_s W_a^{(\cL)}\delta_n[m] = \braket{\phi^b_{0,n}, \phi^a_{\cL,m}}$, where $\phi^a_{\cL,m}(x) := 2^{-\cL/2} \phi^a_\cL(2^{-\cL} x - m)$ are the translated and shifted scaling functions.
+This follows from the fact that $\braket{\phi^b_{0,n}, \phi^a_{0,m}} = \delta_{nm}$ and by applying inductively the fact that by definition of the scaling functions $\phi^a_{l+1,m} = \sum_n a_s^{(l+1)}(2m - n)\phi^a_{l,n}$.
+Now we can proceed as in the proof of Lemma~1 in~\cite{haegeman2018rigorous} and estimate
+\begin{equation*}\begin{aligned}
+  \lVert p^{(\cL)}_s W_a^{(\cL)} \delta_n \rVert^2
+  &=  \sum_m \bigl\lvert \int_{-\infty}^{\infty} \,\d x\, \phi^b_{0}(x - n) 2^{-\frac{\cL}{2}}\phi^a_{\cL}(2^{-\cL}x - m) \bigr\rvert^2  \\
+  &=  \sum_m \bigl\lvert \int_{x_0 +n}^{x_0 + n+M - 1} \,\d x\, \phi^b_{0}(x - n) 2^{-\frac{\cL}{2}}\phi^a_{\cL}(2^{-\cL}x - m) \bigr\rvert^2  \\
+  &\leq \sum_m \lVert \phi^b_{0} \rVert^2 \int_{x_0 +n}^{x_0 + n+M - 1} \,\d x\, \lvert 2^{-\frac{\cL}{2}}\phi^a_{\cL}(2^{-\cL}x - m)\rvert^2  \\
+  &= 2^{-\cL} \lVert \phi^b_{0} \rVert^2 \sum_m \int_{x_0 +n}^{x_0 + n+M - 1} \,\d x\, \lvert \phi^a_{\cL}(2^{-\cL}x - m)\rvert^2  \\
+  &\leq 2^{-\cL + 1} M^2 \lVert \phi^b_{0} \rVert^2 \lVert \phi^a_{\cL} \rVert_{\infty}^2,
+\end{aligned}\end{equation*}
+where in the second line we use that $\phi^b$ is compactly supported on $[x_0, x_0 + M -1]$ for some $x_0$, in the third inequality we use Cauchy-Schwarz, and for the final inquality we use that at most $2M$ terms in the sum have nonzero overlap.
+Finally we may estimate $\lVert \phi^b_{0} \rVert^2 \leq M B^2$ and $\lVert \phi^a_{\cL} \rVert_{\infty}^2 \leq B^2$, which yields \cref{eq:IR bound}.
+\end{proof}
+
+\noindent
+The following lemma bounds the approximation error for $\cL$ layers as a function of an intermediate layer~$\cL'$ that will later be chosen appropriately.
+
+\begin{lem}\label{lem:multiple layer error}
+Suppose we have a sequence of filters such that \cref{eq:approximate phase supp} holds, with finite support of size at most~$M$ and scaling functions that are uniformly bounded by $\norm{\phi^a_l}_\infty \leq B$ for $a=g,h$ and $l=1,\dots,\cL$.
+Assume moreover that the wavelet decomposition maps are uniformly bounded by $\norm{W^{(l',l)}_a} \leq \wnorm$ for all $a = g,h,\tilde{g}$ and $1\leq l\leq l'\leq\cL$, where $D\geq1$.
+Finally, let $\cL' \in \{1, \ldots, \cL\}$.
+Then we have the following bounds:
+\begin{enumerate}
+\item For all $f \in \ell^2(\ZZ)$ and $n\in\NN$,
+\begin{equation}\begin{aligned}\label{eq:error q covariance}
+  \abs{\braket{\delta_n | \gamma^q - \gamma^{q,(\cL)}_{\mera} | f}}
+&\leq 2 \wnorm^2 \left( \eps \cL' \wnorm + 2^{-\frac{\cL' - 1}{2}} B^2 M^{\frac32} \max \, \{2\norm{\gamma^{p,(\cL)}}, 1\} \right) \norm{\gamma^q f}.
+\end{aligned}\end{equation}
+\item Assuming $\omega^{(l)}(\pi) \leq 1$ for all~$l=0,\dots,\cL-1$, we have the following bound for all $n\in\NN$:
+\begin{equation}\label{eq:error p covariance}
+  \norm{(\gamma^p - \gamma^{p,(\cL)}_{\mera}) \delta_n}
+% \leq \eps \cL' \wnorm^3 + 2^{-\frac{\cL'-1}2} B^2 M^{\frac32} \wnorm^2 \left(\frac12 + \norm{\gamma^{p,(\cL')}}\right)
+\leq \wnorm^2 \left( \eps \cL' \wnorm + 2^{-\frac{\cL'-1}2} B^2 M^{\frac32} \max \, \{ 2\norm{\gamma^{p,(\cL')}}, 1 \} \right).
+\end{equation}
+\end{enumerate}
+Here, we recall that $\gamma^q(k) = \frac1{2\omega(k)}$ and $\gamma^{p,(l)}(k) = \frac12 \omega^{(l)}(k)$.
+\end{lem}
+
+\noindent
+To interpret these bounds, we note that $\norm{\gamma^{p,(\cL)}} = \max_k \frac{\omega^{(\cL)}(k)}2$, which is typically~$\mathcal O(1)$.
+As a remark, for the critical harmonic chain we that $\omega^{(l)}(\pi) = \frac12$, in which case it is not hard to see that the scaling of \cref{eq:error p covariance} can be improved to $2^{-\frac32 \cL'}$.
+
+\begin{proof}[Proof of \cref{lem:multiple layer error}]
+(i) To prove \cref{eq:error q covariance}, we first observe that by definition of $\tilde{g}$ it holds that
+\begin{equation*}
+  R_{h^{(l)}} \omega^{(l)}(k) = (\omega^{(l+1)} \op \id) R_{\tilde g^{(l)}}
+\end{equation*}
+and hence
+\begin{equation}\label{eq:Rh vs Rgtilde}
+  R^{(\cL)}_h \gamma^p = (\gamma^{p,(\cL)} \op \frac12\id) R^{(\cL)}_{\tilde g},
+\end{equation}
+where $\gamma^{p,(\cL)}(k) = \frac12 \omega^{(\cL)}(k)$ denotes the covariance matrix defined using the renormalized dispersion relation.
+We use this, together with the fact that $4\gamma^p \gamma^q = \id$ on the domain of~$\gamma^q$ to write
+\begin{equation*}\begin{aligned}
+  \gamma^q - \gamma^{q,(\cL)}_{\mera} f
+&= (I - \gamma^{q,(\cL)}_{\mera} 4 \gamma^p) \gamma^q f \\
+&= (W_h^{(\cL'),\tran}W_g^{(\cL')} - R_h^{(\cL),\tran}R_h^{(\cL)} 2\gamma^p) \gamma^q f \\
+&= (W_h^{(\cL'),\tran}W_g^{(\cL')} - R_h^{(\cL),\tran}(2\gamma^{p,(\cL)} \op \id) R^{(\cL)}_{\tilde g}) \gamma^q f \\
+&= (W_h^{(\cL'),\tran}W_g^{(\cL')} - W_h^{(\cL),\tran}(2\gamma^{p,(\cL)} \op \id) W^{(\cL)}_{\tilde g}) \gamma^q f.
+\end{aligned}\end{equation*}
+for $f$ in the domain of $\gamma^q$.
+Thus,
+\begin{equation}\begin{aligned}\label{eq:estimate covariance}
+  \abs{\braket{\delta_n | \gamma^q - \gamma^{q,(\cL)}_{\mera} | f}}
+&\leq \abs{\braket{\delta_n | W_h^{(\cL'),\tran} p^{(\cL')}_s W_g^{(\cL')} | \gamma^q f}} \\
+&+ \abs{\braket{\delta_n | W_h^{(\cL'),\tran} p^{(\cL')}_w \bigl(W_g^{(\cL')} - W_{\tilde{g}}^{(\cL')}\bigr) | \gamma^q f}} \\
+&+ \abs{\braket{\delta_n | (W_h^{(\cL),\tran}(2\gamma^{p,(\cL)} \op \id) W_{\tilde{g}}^{(\cL)} - W_h^{(\cL'),\tran} p^{(\cL')}_w W_{\tilde{g}}^{(\cL')}) | \gamma^q f}}.
+\end{aligned}\end{equation}
+We will bound the three terms separately, starting with the second term.
+By our assumption on the filters (\cref{eq:approximate phase supp}), $\norm{W_{g^{(l)}} - W_{\tilde{g}^{(l)}}} \leq 2\eps$.
+Hence, using a telescoping sum,
+\begin{equation}\label{eq:Wg vs Wgtilde}
+  \norm{W^{(\cL')}_{g} - W^{(\cL')}_{\tilde{g}}}
+\leq \sum_{l=0}^{\cL'-1} \norm{W^{(l+1,\cL')}_{g}} \norm{W_{g^{(l)}} - W_{\tilde{g}^{(l)}}} \norm{W^{(l)}_{\tilde{g}}}
+\leq 2 \eps \cL' \wnorm^2,
+\end{equation}
+so we obtain the estimate
+\begin{equation*}
+  \abs{\braket{\delta_n | W_h^{(\cL'),\tran} p^{(\cL')}_w \bigl(W_g^{(\cL')} - W_{\tilde{g}}^{(\cL')}\bigr) | \gamma^q f}}
+\leq \norm{W_h^{(\cL')}} \norm{W_g^{(\cL')} - W_{\tilde{g}}^{(\cL')}} \norm{\gamma^q f}
+\leq 2\eps \cL' \wnorm^3 \norm{\gamma^q f}.
+\end{equation*}
+The first term in \cref{eq:estimate covariance} can be bounded directly using \cref{lem:IR bound},
+\begin{equation*}
+  \abs{\braket{\delta_n | W_h^{(\cL'),\tran} p^{(\cL')}_sW_g^{(\cL')} |\gamma^q f}}
+\leq \norm{p^{(\cL')}_s W_h^{(\cL')} \delta_n} \norm{W_g^{(\cL')}\gamma^q f}
+\leq 2^{-\frac{\cL' - 1}{2}} B^2 M^{\frac32} \wnorm \norm{\gamma^q f},
+\end{equation*}
+and the third term may be similarly bounded as
+\begin{equation*}\begin{aligned}
+&\quad\abs{\braket{\delta_n | (W_h^{(\cL),\tran}(2\gamma^{p,(\cL)} \op \id)W_{\tilde{g}}^{(\cL)} - W_h^{(\cL'),\tran} p^{(\cL')}_w W_{\tilde{g}}^{(\cL')}) | \gamma^q f}} \\
+% &= \abs{\braket{\delta_n | (W_h^{(\cL),\tran}(2\gamma^{p,(\cL)} \op \id^{\op(\cL-\cL')} \op \id^{\op\cL'})W_{\tilde{g}}^{(\cL)} - W_h^{(\cL'),\tran} p^{(\cL')}_w W_{\tilde{g}}^{(\cL')}) | \gamma^q f}} \\
+% &= \abs{\braket{\delta_n | (W_h^{(\cL),\tran}(2\gamma^{p,(\cL)} \op \id^{\op(\cL-\cL')} \op 0)W_{\tilde{g}}^{(\cL)} | \gamma^q f}} \\
+% &= \abs{\braket{\delta_n | (W_h^{(\cL'),\tran} (W_h^{(\cL-\cL'),\tran} \op \id^{\op\cL'}) (2\gamma^{p,(\cL)} \op \id^{\op(\cL-\cL')} \op 0)W_{\tilde{g}}^{(\cL)} | \gamma^q f}}
+&= \abs{\braket{\delta_n | (W_h^{(\cL'),\tran} (W_h^{(\cL',\cL),\tran} \op \id^{\op\cL'}) (2\gamma^{p,(\cL)} \op \id^{\op(\cL-\cL')} \op 0^{\op\cL'})W_{\tilde{g}}^{(\cL)} | \gamma^q f}} \\
+&= \abs{\braket{\delta_n | (W_h^{(\cL'),\tran} p^{(\cL')}_s (W_h^{(\cL',\cL),\tran} \op 0^{\op\cL'}) (2\gamma^{p,(\cL)} \op \id^{\op\cL})W_{\tilde{g}}^{(\cL)} | \gamma^q f}} \\
+&\leq \norm{p^{(\cL')}_s W_h^{(\cL')} \delta_n} \norm{W_h^{(\cL',\cL)}} \norm{2\gamma^{p,(\cL)} \op \id^{\op\cL}} \norm{W_{\tilde{g}}^{(\cL)}} \norm{\gamma^q f} \\
+% &\leq 2^{-\frac{\cL' - 1}{2}} B^2 M^{\frac32} \wnorm \max \, \{ 2\norm{\gamma^{p,(\cL)}}, 1 \} D \norm{\gamma^q f} \\
+&\leq 2^{-\frac{\cL' - 1}{2}} B^2 M^{\frac32} \wnorm^2 \max \, \{ 2\norm{\gamma^{p,(\cL)}}, 1 \} \norm{\gamma^q f}.
+\end{aligned}\end{equation*}
+By combining the three estimates we obtain \cref{eq:error q covariance}.
+
+(ii) To prove \cref{eq:error p covariance} we use \cref{eq:mera covariance matrices,eq:Rh vs Rgtilde} to write
+\begin{equation*}\begin{aligned}
+  \gamma^p - \gamma^{p,(\cL)}_{\mera}
+&= \gamma^p - \frac12 R_g^{(\cL),\tran} R_g^{(\cL)}
+= \gamma^p R^{(\cL'),\tran}_h R_g^{(\cL')} - \frac12 R_g^{(\cL),\tran} R_g^{(\cL)} \\
+&= R^{(\cL'),\tran}_{\tilde g} (\gamma^{p,(\cL')} \op \frac12\id) R_g^{(\cL')} - \frac12 R_g^{(\cL),\tran} R_g^{(\cL)}.
+\end{aligned}\end{equation*}
+Therefore,
+\begin{equation*}\begin{aligned}
+  \norm{( \gamma^p - \gamma^{p,(\cL)}_{\mera} ) \delta_n}
+&\leq \norm{R^{(\cL'),\tran}_{\tilde g} \gamma^{p,(\cL')} p^{(\cL')}_s R_g^{(\cL')} \delta_n} \\
+&+ \frac12 \norm{(R^{(\cL'),\tran}_{\tilde g} - R^{(\cL'),\tran}_g) p^{(\cL')}_w R_g^{(\cL')} \delta_n} \\
+&+ \frac12 \norm{(R^{(\cL'),\tran}_g p^{(\cL')}_w R_g^{(\cL')} - R_g^{(\cL),\tran} R_g^{(\cL)}) \delta_n}
+\end{aligned}\end{equation*}
+As before we bound the three terms separately, starting with the second term.
+Since $\omega^{(l)}(\pi) \leq 1$, we may estimate $\norm{R^{(\cL')}_g} \leq \norm{W^{(\cL')}_g} \leq D$ and $\norm{R^{(\cL')}_{\tilde{g}} - R^{(\cL')}_g} \leq 2\eps \cL' \wnorm^2$ by a telescoping sum as in \cref{eq:Wg vs Wgtilde}.
+Thus:
+\begin{equation*}\begin{aligned}
+  \frac12 \norm{(R^{(\cL'),\tran}_{\tilde g} - R^{(\cL'),\tran}_g) p^{(\cL')}_w R_g^{(\cL')} \delta_n}
+&\leq \frac12 \norm{(R^{(\cL'),\tran}_{\tilde g} - R^{(\cL'),\tran}_g)} \norm{R_g^{(\cL')}}
+\leq \eps \cL' \wnorm^3.
+\end{aligned}\end{equation*}
+For the remaining terms, we note that $\omega^{(l)}(\pi) \leq 1$ also implies that $\norm{p^{(\cL')}_s R^{(\cL')}_g \delta_n} \leq \norm{p^{(\cL')}_s W^{(\cL')}_g \delta_n} \leq 2^{-\frac{\cL' - 1}{2}} B^2 M^{\frac32}$ using \cref{lem:IR bound}.
+We can thus bound the first term by
+\begin{equation*}\begin{aligned}
+  \norm{R^{(\cL'),\tran}_{\tilde g} \gamma^{p,(\cL')} p^{(\cL')}_s R_g^{(\cL')} \delta_n}
+&\leq \norm{R^{(\cL'),\tran}_{\tilde g}} \norm{\gamma^{p,(\cL')}} \norm{p^{(\cL')}_s R_g^{(\cL')} \delta_n}
+\leq 2^{-\frac{\cL' - 1}{2}} B^2 M^{\frac32} \wnorm \norm{\gamma^{p,(\cL')}},
+\end{aligned}\end{equation*}
+and similarly the third term, where we find
+\begin{equation*}\begin{aligned}
+  \frac12 \norm{(R_g^{(\cL),\tran} R_g^{(\cL)} - R^{(\cL'),\tran}_g p^{(\cL')}_w R_g^{(\cL')}) \delta_n}
+&= \frac12 \norm{R_g^{(\cL),\tran} R_g^{(\cL',\cL)} p^{(\cL')}_s R_g^{(\cL')} \delta_n} \\
+&\leq \frac12 \norm{R_g^{(\cL),\tran}} \norm{R_g^{(\cL',\cL)}} \norm{p^{(\cL')}_s R_g^{(\cL')} \delta_n} \\
+&\leq \frac12 2^{-\frac{\cL' - 1}{2}} B^2 M^{\frac32} \wnorm^2.
+\end{aligned}\end{equation*}
+By combining the three estimates we obtain \cref{eq:error p covariance}.
+\end{proof}
+
+\noindent
+We finally prove our general approximation theorem.
+
+\begin{proof}[Proof of \cref{thm:approximation}]
+Choosing
+$\cL' = \min \, \{ \lfloor 2 \log_2 \frac{C}{\eps}\rfloor , \cL \}$,
+we see that
+\begin{equation*}\begin{aligned}
+  \eps \cL' \wnorm + 2^{-\frac{\cL'-1}2} B^2 M^{\frac32} \max \, \{ 2\norm{\gamma^{p,(\cL')}}, 1 \}
+  &\leq \eps \cL' \wnorm + 2^{-\frac{\cL'-1}2} B^2 M^{\frac32} \Omega \\
+  &\leq 2\eps \wnorm \log_2 \frac{C}{\eps} + \max\{C2^{-\frac{\cL}2}, \eps\} \\
+  &\leq 3\eps \wnorm \log_2 \frac{C}{\eps} + C2^{-\frac{\cL}2},
+\end{aligned}\end{equation*}
+where we have used that $\frac{C}{\eps} \geq 2$.
+% Notice that $\max{\norm{\phi^g},\norm{\phi^h}} \geq 1$ and $\norm{\phi^g} \leq BM^{\frac12}. Also $\eps \leq 1$, $\Omega \geq 1$ by assumption, so $C/\eps \geq 4M^{\frac12} \geq 2$.
+Now the result follows from \cref{eq:error p covariance} and \cref{eq:error q covariance} in \cref{lem:multiple layer error}, choosing $f = \delta_m$ or $f = \delta_m - \delta_n$ in the latter (and using $\norm{\gamma^q \delta_m} = \norm{\gamma^q \delta_0}$).
+\end{proof}
+
+Finally, we claim that the theorem in the main text is just the specialization of \cref{thm:approximation} to the harmonic chain with mass~$m$.
+The correlation functions are related to the covariance matrices as follows:
+\begin{align*}
+  \langle p_i p_j \rangle = \gamma^p_{ij}, \\
+  \langle q_i q_j \rangle = \gamma^q_{ij},
+\end{align*}
+the latter assuming $m>0$.
+If $m = 0$ then the latter has a divergence, so we instead define
+\begin{align}\label{eq:subtract divergence}
+  \langle q_i q_j \rangle := \gamma^q_{ij} - \gamma^q_{ii} = \tilde\gamma^q_{ij},
+\end{align}
+where $\tilde\gamma^q$ is the regulated covariance matrix defined in \cref{eq:regulated cov}.
+Accordingly, we would like to bound the quantities $\Delta^p_{ij}$ as well as $\Delta^q_{ij}$ (in the massive case) or $\tilde\Delta^q_{ij}$ (in the massless case), which are defined in \cref{eq:define delta,eq:define delta tilde}.
+% Accordingly, we would like to bound
+% \begin{align*}
+%   \abs{\langle p_i p_j \rangle_{\exact} - \langle p_i p_j \rangle_{\mera}} &= \Delta^p_{ij}
+% \end{align*}
+% and
+% \begin{align*}
+%   \abs{\langle q_i q_j \rangle_{\exact} - \langle q_i q_j \rangle_{\mera}} &= \begin{cases}
+%   \Delta^q_{ij} & \text{ if $m>0$}, \\
+%   \tilde\Delta^q_{ij} & \text{ if $m=0$},
+%   \end{cases}
+% \end{align*}
+% where $\Delta^p_{ij}$, $\Delta^q_{ij}$, $\tilde\Delta^q_{ij}$ are the quantities defined in \cref{eq:define delta,eq:define delta tilde}.
+This is exactly achieved by \cref{thm:approximation}.
+We first normalize the dispersion relation of the harmonic chain~$\omega(k)$ by a factor $\sqrt{m^2 + 1}$ to $\omega_{\normalized}$, so that $\omega_{\normalized}(\pi) = 1$.
+There $\omega_{\normalized}^{(l)}(k) \leq 1$ and we may apply \cref{thm:approximation} with $\Omega = 1$.
+We write~$\gamma$ for the original covariance matrix of the harmonic chain and~$\gamma_{\normalized}$ for the covariance matrix where the dispersion relation has been normalized, that is, $\gamma_{\normalized}^p = \frac{1}{\sqrt{m^2 + 1}} \gamma^p$ and $\gamma_{\normalized}^q = \sqrt{m^2 + 1} \gamma^q$.
+Then,
+\begin{equation*}
+  \frac1{m^2+1} \norm{\gamma_{\normalized}^q \delta_0}^2 = \norm{\gamma^q \delta_0}^2
+= \int_{-\pi}^{\pi}\frac{\d k}{\omega(k)^2}
+= \int_{-\pi}^{\pi}\frac{\d k}{m^2 + \sin^2\bigl(\frac{k}{2}\bigr)}
+\leq \frac{2\pi}{m^2},
+\end{equation*}
+so applying \cref{thm:approximation} using the covariance matrix $\gamma_{\normalized}$ and restoring the factor $\sqrt{m^2 + 1}$ yields the results for $\Delta^p_{ij}$ and $\Delta^q_{ij}$.
+In the massless case we can use \cref{eq:second norm interp} and estimate
+\begin{equation*}\begin{aligned}
+\norm{\gamma^q (\delta_i - \delta_j)}^2
+&= \int_{-\pi}^{\pi}\d k\, \frac{\sin^2(\frac{\lvert i - j \rvert k}{2})}{\sin^2(\frac{k}{2})} \\
+&\leq 2 \left( \int_0^{\frac{2}{\lvert i - j \rvert}} \d k\, \frac{\pi^2 \lvert i - j \rvert^2}{4} + \int_{\frac{2}{\lvert i-j\rvert}}^{\pi}\d k\, \frac{\pi^2}{k^2} \right) \\
+&\leq 2\pi^2\lvert i-j\rvert,
+\end{aligned}\end{equation*}
+since $\lvert\sin(\frac{k}{2})\rvert \geq \frac{\lvert k \rvert}{\pi}$ and $\lvert \sin(\frac{nk}{2}) \rvert \leq \min \, \{\frac{n\lvert k \rvert}{2}, 1\}$ on the interval~$(-\pi,\pi)$, yielding the estimate for $\tilde\Delta^q_{ij}$.
+
+
+\end{appendix}
+
+\bibliography{library.bib}
+
+\nolinenumbers
+
+\end{document}
