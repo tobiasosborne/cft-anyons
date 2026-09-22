@@ -95,6 +95,8 @@ before treating report edits as complete.
 | 75 | `CA-81-CFT-MACHINE-OAR-CONTRACT` | `report/sections/81_cft_machine_oar_contract.tex` | The CFT Machine and Its Quantitative OAR Contract |
 | 76 | `CA-82-ISING-MODULAR-COMPILER` | `report/sections/82_ising_modular_compiler.tex` | A Supported Ising Modular-Data Compiler |
 | 77 | `CA-83-COSET-LATTICE-STRESS` | `report/sections/83_coset_lattice_stress.tex` | Coset Lattice Stress Generators with Exact Core Stabilization |
+| 78 | `CA-84-COSET-HAMILTONIAN-AND-OAR` | `report/sections/84_coset_hamiltonian_and_oar.tex` | Coset Positivity and a Scalar-Augmented OAR Tower |
+| 79 | `CA-85-SMEARED-COSET-AND-LOCALITY` | `report/sections/85_smeared_coset_and_locality.tex` | Smooth Coset Symmetry Limits and Local Reconstruction |
 
 ## Adding a shard
 

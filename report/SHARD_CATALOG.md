@@ -700,3 +700,20 @@ single ~200-line source file it points to.
 - Summary: Proves exact current-tail truncation and eventual finite-energy-core equality, with sparse rational witnesses at central charges one half and seven tenths.
 - Summary: Keeps the coherent local coset observable tower and removal of ambient spectator sectors as the remaining construction problem.
 - Keywords: GKO, coset, Sugawara, lattice Virasoro, sparse CAR, exact stabilization, minimal models, OAR
+
+## `CA-84-COSET-HAMILTONIAN-AND-OAR`
+
+- Source: `report/sections/84_coset_hamiltonian_and_oar.tex`
+- Title: Coset Positivity and a Scalar-Augmented OAR Tower
+- Summary: Proves an explicit negative expectation of the raw finite coset zero mode and constructs positive finite vacuum-descendant Hamiltonians.
+- Summary: Gives coherent unital finite algebra maps through an independent scalar summand, compatible vacuum states and exact dynamics covariance.
+- Summary: Separates this constrained observable prescription from the original CAR refinement and leaves its local fusion-space realization open.
+- Keywords: coset, positivity, scalar augmentation, OAR, vacuum module, Gram matrix, fusion-space locality
+
+## `CA-85-SMEARED-COSET-AND-LOCALITY`
+
+- Source: `report/sections/85_smeared_coset_and_locality.tex`
+- Title: Smooth Coset Symmetry Limits and Local Reconstruction
+- Summary: Coordinates microscopic, current and Fourier cutoffs to prove core, strong-resolvent and unitary convergence of quartic coset smearings.
+- Summary: Reconstructs the minimal-model local net from finite descendant compressions in the scalar-augmented OAR representation, without asserting a local fusion-space encoding.
+- Keywords: coset, smooth stress, strong resolvent, projective symmetry, Fourier cutoff, OAR, local reconstruction

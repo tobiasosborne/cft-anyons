@@ -1,0 +1,106 @@
+% REPORT-SHARD: 02_states_and_equivariance
+\section{Wilson's triangle, effective states, and symmetry reduction}
+
+\subsection{The two directions of the construction}
+
+At fixed coarse scale $k$, the Wilson row consists of actual microscopic
+states pulled back from finer systems:
+\[
+ \omega_{k,n}=\omega_n\circ\alpha_n^k,\qquad n\ge k.
+\]
+The horizontal limit $n\to\infty$ defines $\omega_k$; compatibility of these
+limits then defines a state on the observable inductive limit. The diagram
+separates state convergence from merely comparing operators at two scales:
+\[
+\begin{array}{ccccccc}
+ &&&&\omega_{k+2,k+2}&\longrightarrow\cdots&\omega_{k+2}\\
+ &&&&\downarrow&&\downarrow\\
+ &&\omega_{k+1,k+1}&\longrightarrow&\omega_{k+1,k+2}&\longrightarrow\cdots&\omega_{k+1}\\
+ &&\downarrow&&\downarrow&&\downarrow\\
+ \omega_{k,k}&\longrightarrow&\omega_{k,k+1}&\longrightarrow&\omega_{k,k+2}
+ &\longrightarrow\cdots&\omega_k
+\end{array}
+\]
+Each horizontal row consists of functionals on its fixed coarse algebra.
+Vertical arrows are pullbacks by the appropriate refinement map. The
+rightmost column is the compatible limiting family.
+
+WT-1 above gives norm convergence with explicit tails. It is stronger than
+the existence of an unspecified subsequential scaling limit. WT-2 turns the
+tail into an algorithm for finite-observable expectations only when a
+computable modulus and a computable upper bound on the observable norm are
+supplied. These are analytic inputs to be produced by a concrete backend.
+
+\subsection{A finite Gram consequence and a necessary warning}
+
+For $a_1,\ldots,a_p\in A_k$, form
+$G_n(i,j)=\omega_{k,n}(a_i^*a_j)$ and
+$G(i,j)=\omega_k(a_i^*a_j)$. WT-3 gives
+\[
+ \|G_n-G\|\le t_k(n)\sum_i\|a_i\|^2.
+\]
+For a coefficient vector $z$, the quadratic form difference is the
+state difference on $b^*b$, $b=\sum_i z_i a_i$. WT-1 bounds it by
+$t_k(n)\|b\|^2$; Cauchy--Schwarz bounds
+$\|b\|^2\le\|z\|_2^2\sum_i\|a_i\|^2$. Taking the supremum proves the claim.
+
+Gram convergence alone does not control kernels: positive matrices
+$\operatorname{diag}(1,1/n)$ converge to $\operatorname{diag}(1,0)$.
+Likewise $R\Omega=0$ does not imply $R=0$ on the observable orbit.
+In two dimensions, choose $R=|1\rangle\langle1|$, $\Omega=|0\rangle$
+and $B=|1\rangle\langle0|+|0\rangle\langle1|$. Then $R\Omega=0$ but
+$RB\Omega=|1\rangle$. This is the explicit VR-2 counterexample.
+
+\sources{\path{cft_machine/research/wilson_triangle.md}, WT-1--WT-3;
+\path{cft_machine/research/virasoro_routes.md}, VR-2.}
+
+\subsection{Finite-group fixed points commute with a strict algebra limit}
+
+Suppose a fixed finite group $G$ acts by automorphisms on every $A_k$,
+and all unital injective refinements are equivariant. Then
+\[
+ \varinjlim A_k^G\ \cong\ (\varinjlim A_k)^G.
+\]
+One inclusion is immediate. For the other, approximate any invariant element
+of the limit by a local element and average that approximant over $G$.
+The average stays local and invariant, and its error is no larger because
+the finite-group conditional expectation is contractive.
+
+This is a strict C*-algebra statement. It does not automatically transport
+local nets, state-dependent weak closures, twisted sectors, or extensions.
+Those distinctions were retained in the broader orbifold proposal.
+
+\subsection{Invariant states and their GNS representation}
+
+EQ-1 adds invariant microscopic states. Equivariance makes every Wilson row
+invariant, and restricting it to fixed points cannot increase its dual-norm
+drift. In the full limiting GNS representation,
+\[
+ U_g[a]=[\beta_g(a)],\qquad
+ P_G=\frac1{|G|}\sum_gU_g
+\]
+are well-defined unitaries and the projection onto invariant vectors.
+The identity
+$P_G\pi(a)\Omega=\pi(|G|^{-1}\sum_g\beta_g(a))\Omega$ shows
+\[
+ \overline{\pi(A^G)\Omega}=\mathcal H^G.
+\]
+Thus the fixed-algebra vacuum GNS is exactly the invariant cyclic subspace.
+
+EQ-2 proves the represented closure identity on the full Hilbert space,
+\[
+ \pi(A^G)''=(\pi(A)'')^G.
+\]
+For an invariant weak-limit operator, average a weakly converging net of
+represented algebra elements. Finite averaging is weak-operator continuous,
+which gives the reverse inclusion. The equality on the full Hilbert space
+must be distinguished from restricting to the vacuum space $\mathcal H^G$.
+
+Local versions require the action and the continuum identification to
+preserve the relevant interval algebras. This is exactly why independent
+factor parities are appropriate for products of Ising nets, while an arbitrary
+orbifold construction still needs additional local and sector arguments.
+
+\sources{\path{cft_machine/research/equivariant_oar.md}, EQ-1/EQ-2;
+\path{cft_machine/research/realisation_and_fidelity.md}, fixed-point lemmas;
+Fewster--Rejzner source lines 1255--1268 for represented weak closures.}

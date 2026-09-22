@@ -11,7 +11,7 @@ all of them.
 file is authoritative.
 
 > **Status (2026-09-22): active research.** The lab-book scaffold, Julia
-> package, local checks, and report through CA-74 exist. The previous project
+> package, local checks, and report through CA-85 exist. The previous project
 > remains archived (`archive/legacy-consolidation/`); papers under
 > `references/` and `literature/` are ground truth. The broader algorithm
 > investigation lives in `cft_machine/`, using existing approaches as
@@ -57,6 +57,14 @@ not a restriction on the algorithm. Investigate other mechanisms. New proofs
 use Lamport's structured notation with explicit assumptions, hierarchical
 numbered steps, and dependencies. Tobias requests Astra research collaborators
 and skeptical reviewer subagents to referee substantial new material.
+
+**Locality clarification (Tobias, 2026-09-22):** global admissibility
+constraints may be fusion constraints built into the Hilbert space. Pursue
+local models on fusion spaces that incorporate those constraints
+automatically. Do not infer nonlocality merely from a constrained space;
+prove the range/local action of the Hamiltonian and refinement operators in
+the relevant fusion-space presentation. The computed descendant spaces in
+`cft_machine/` are not yet identified with such a local categorical model.
 
 The central failure mode to avoid is a plausible mathematical, physical, or
 numerical claim with **no traceable source, derivation, convention, or checked

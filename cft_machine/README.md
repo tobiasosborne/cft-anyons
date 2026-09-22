@@ -5,6 +5,10 @@ or functor, that turns fusion/modular tensor category data into concrete
 lattice systems and microscopic Virasoro generators, whose OAR limit through
 Wilson's triangle is a rigorous CFT with matching modular data.
 
+The detailed pdflatex synthesis is [report.pdf](report.pdf), with source
+[report.tex](report.tex). It records the completed work and remaining gaps
+at the requested wind-up boundary.
+
 The existing anyon construction is a source of ideas. This workspace also
 investigates source-controlled free-fermion constructions, energy estimates
 for generator convergence, and equivariant/orbifold constructions.
@@ -30,12 +34,19 @@ braided equivalence of full representation categories are distinct targets.
 - `research/coset_route.md`: explicit current-product stress generators
   beyond the Ising branch, with finite-core stabilization and remaining
   local-observable obligations.
+- `research/smeared_coset_limits.md`: microscopic smooth-stress core,
+  strong-resolvent and unitary limits with coordinated cutoffs.
+- `research/coset_hamiltonian.md` and `coset_observable_system.md`: raw
+  negativity, positive descendant models, strict scalar-augmented OAR and
+  its represented local reconstruction.
 - `benchmarks/fermion/`: source-modified microscopic KS modes, lattice
   Hamiltonians, scaling maps, and reproducible tests.
 - `benchmarks/fermion/WILSON_PROOF.md`: nontrivial horizontal limits of
   microscopic Dirac states with an explicit dual-state-norm tail estimate.
 - `benchmarks/coset/`: exact sparse-CAR witnesses of coset stress generators
   at central charges 1/2 and 7/10, with explicit cutoff certificates.
+- `benchmarks/coset_hamiltonian/` and `benchmarks/unitized_oar/`: exact
+  extracted spaces, Gram matrices, positivity and unital refinement checks.
 - `reviews/`: independent cross-refereeing by the Astra collaborators.
 
 The supported compiler domain is deliberately explicit. It does not accept
@@ -81,11 +92,15 @@ finite checks verify the implemented formulas and detect regressions.
 ## Current frontier
 
 The Ising branch is supported by the explicit construction and cited source
-theorems. The coset branch constructs and controls microscopic stress modes,
-including an exact finite-core stabilization result, but still needs a
-coherent local coset observable tower and removal of the ambient fermion
-sectors. The orbifold route still needs microscopic seed and local-extension
-constructions. A general category-to-CFT algorithm or functor remains open.
+theorems, with an additional upper inclusion for all uniformly bounded local
+lattice sequences having weak limits. The coset branch now controls smooth
+stress unitaries and has a strict constrained finite-algebra OAR construction
+on computed vacuum descendants. Its identification with a categorical fusion
+space supporting local interactions remains open. As Tobias clarified, global
+fusion constraints themselves are compatible with locality; what needs proof
+is the local operator realization, not an unconstrained tensor-product form.
+The orbifold route still needs microscopic seeds and local extensions.
+A general category-to-CFT algorithm or functor remains open.
 
-The compiled record is CA-81–CA-83 in the root `report.pdf`; the latest
+The compiled record is CA-81–CA-85 in the root `report.pdf`; the latest
 worklog records what was verified and which problems remain.

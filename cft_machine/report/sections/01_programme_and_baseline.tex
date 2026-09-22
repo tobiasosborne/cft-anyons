@@ -1,0 +1,106 @@
+% REPORT-SHARD: 01_programme_and_baseline
+\section{The programme, its input, and the inherited starting point}
+
+\subsection{What a completed machine must produce}
+
+The required output is more than a Hamiltonian with a plausible low-energy
+spectrum. It must connect categorical input to a finite microscopic family,
+its observable algebras, states and refinements, explicit symmetry generators,
+a mathematically controlled OAR limit, and the modular data of the resulting
+local CFT. The category-to-model construction may make choices, but those
+choices must be visible. If it is called a functor, the objects, morphisms,
+composition law and transported physical data must also be specified.
+
+The working output tuple is
+\[
+ \bigl((A_N,H_N,\omega_N),\ \alpha_{N'}^N,\ L_{N,n},\
+       (\mathcal A,\mathcal H,\Omega,U),\ \text{modular comparison}\bigr).
+\]
+Here the first entries are microscopic; the last two require analysis and
+sector theory. The present code supplies this tuple on its declared Ising
+domain. The later constrained coset construction supplies a different
+finite-algebra OAR prescription with a local continuum reconstruction, while
+its local fusion-space implementation remains open.
+
+\subsection{Category, modular data, and additional conformal information}
+
+A fusion category alone does not specify modular $S,T$ matrices. A braided
+target, or a distinct defect/soliton target, must be declared. For modular
+input the minimum fidelity requirement here is matching modular data under
+a unit-preserving relabelling. A braided equivalence is a stronger assertion:
+the registered Mignard--Schauenburg examples show that modular data do not
+determine a modular category up to braided equivalence.
+
+The twist diagonal $\Theta=\operatorname{diag}(\theta_a)$ and the character
+matrix $T=e^{-2\pi i c/24}\Theta$ are kept distinct. A real central-charge
+lift is not silently read off from topological data. Category data can admit
+multiple conformal realizations; tensoring with a holomorphic net preserves
+the representation category while changing conformal information. This does
+not rule out an algorithm that makes an explicit choice of realization.
+
+\sources{\path{cft_machine/research/realisation_and_fidelity.md};
+Evans--Gannon source lines 250--260, 333--335, 473--480;
+Bischoff source lines 364--408; Mignard--Schauenburg source lines 121--129,
+175--179, all under \path{references/cft-machine/realisation/}.}
+
+\subsection{The inherited lab book}
+
+The existing project supplied several useful components and warnings.
+They were treated as inspiration and checked against the current source/code
+record, rather than adopted as an exclusive route.
+
+\begin{longtable}{@{}p{0.15\textwidth}p{0.77\textwidth}@{}}
+\toprule
+Block & Role in the present investigation\\\midrule
+CA-02--09 & Many-particle Hilbert grammar, sectors, and Fibonacci fusion-path
+kinematics. The full categorical input includes coherence data beyond path counts.\\
+CA-10--22 & Lattice symmetry candidates, energy or mass first moments, and
+the distinction between Lorentzian and Galilean targets.\\
+CA-23--33 & Gaussian dispersion/current diagnostics, explicit normalization
+and boundary policies, and a distinction between symbol calculations and
+full representation/continuum theorems.\\
+CA-34--61 & Qubit local equations and moment-SDP filters. The recorded
+99-point exact first-moment scan rejected every point for that route;
+this did not disprove the known scaling limits of its inputs.\\
+CA-62--74 & Algebra-first categorical construction, variable-number anyons,
+corner refinements, categorical residuals, and the finite Jones--Wenzl kernel
+calculation. This was the repository endpoint at the start of the new work.\\
+\bottomrule
+\end{longtable}
+
+The qubit scan's local run reports 9 current collapses, 27 conservation-witness
+failures and 63 exact boost-witness failures. Its relaxed successor uses
+different, explicitly scoped verdicts. These results motivated avoiding an
+exact full-Hilbert-space lattice Virasoro demand.
+
+The latest inherited Fibonacci result was the rank-322 dilute image at
+$L=4$, with a one-dimensional Jones--Wenzl kernel in the 323-dimensional
+diagram algebra. Its surjectivity conclusion uses a numerical rank input.
+The initial orientation reran its 113 assertions; none of the new work expanded
+the Fibonacci computation beyond the existing $L\le4$ budget.
+
+\sources{Root \path{report/SHARD_CATALOG.md};
+\path{runs/2026-05-31-qubit-candidate-scan/summary.toml};
+\path{report/sections/74_jw_kernel_decision.tex};
+\path{test/runtests.jl}, CA-74 testset. These are inherited results, not new
+continuum conclusions of this report.}
+
+\subsection{Scope and proof status in this report}
+
+\begin{description}
+\item[Source theorem.] A result imported from a registered primary source,
+with its hypotheses checked for the stated application.
+\item[Local proof.] A derivation given in the repository using Lamport's
+ASSUME/PROVE, hierarchical steps and explicit dependencies.
+\item[Finite witness.] A reproducible computation asserting a known value
+or invariant, with a producer, run bundle and regression checks.
+\item[Proposal.] An unimplemented construction or a missing mathematical
+interface. It is not promoted by a favorable finite test.
+\end{description}
+
+The independent referee reports assess particular claims under particular
+hypotheses. They are evidence of scrutiny, not formal proof certificates.
+Every distinction becomes important below: a strong operator limit need not
+be a norm inductive limit; a finite stress difference need not be a positive
+Hamiltonian; and a globally constrained space need not already be a
+categorical fusion space with local operators.

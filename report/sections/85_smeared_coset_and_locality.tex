@@ -1,0 +1,129 @@
+% SHARD-ID: CA-85-SMEARED-COSET-AND-LOCALITY
+% SHARD-TITLE: Smooth Coset Symmetry Limits and Local Reconstruction
+% SHARD-SUMMARY: Coordinates microscopic, current and Fourier cutoffs to prove core, strong-resolvent and unitary convergence of quartic coset smearings.
+% SHARD-SUMMARY: Reconstructs the minimal-model local net from finite descendant compressions in the scalar-augmented OAR representation, without asserting a local fusion-space encoding.
+% SHARD-KEYWORDS: coset, smooth stress, strong resolvent, projective symmetry, Fourier cutoff, OAR, local reconstruction
+
+\section{Smooth Coset Symmetry Limits and Local Reconstruction}
+\label{sec:smeared-coset-and-locality}
+
+\subsection{Sources and Scope}
+
+Dependencies: CA-83, CA-84; SC-1/SC-2 in
+\path{cft_machine/research/smeared_coset_limits.md}; CO-2/CO-3 in
+\path{cft_machine/research/coset_observable_system.md}; CONVENTIONS (ab).
+
+% Source: references/cft-machine/coset-symmetry/CarpiWeiner2004/source.tex:721--788,864--976 -- mode energy bounds, common cores and self-adjoint stress.
+% Source: references/text/CFTFromLatticeFermions.txt:1451--1558,3497--3530 -- OAR operator convergence, resolvent/unitary implication.
+% Source: references/cft-machine/virasoro/GoddardKentOlive1986/source.txt:35--82,165--233 -- unitary highest-weight modules and coset construction.
+% Source: references/cft-machine/realisation/KawahigashiLongo2002/source.tex:624--635,1008--1024,1106--1178 -- vacuum net and complete modular sectors.
+% Referee: cft_machine/reviews/oar_second_pass_referee.md.
+
+\subsection{Three Cutoffs and an Ambient Operator Theorem}
+
+For a real smooth function $f$ on the circle, set
+$\widehat f_n=(2\pi)^{-1}\int f(x)e^{-inx}\,dx$ and
+\[
+ \|f\|_{3/2}=\sum_n|\widehat f_n|(1+|n|^{3/2}).
+\]
+The microscopic quartic operator is
+\[
+ T_M(f)=\sum_{|n|\le K_M}\widehat f_n C_{M,n,R_M},\qquad
+ K_M=\lfloor M/16\rfloor,\quad R_M=\lfloor M/8\rfloor.
+\]
+Its lift $A_M(f)$ uses the unital CAR refinement, not a one-particle or
+many-body corner extension. Each finite lift is bounded self-adjoint;
+its norm is not assumed uniformly bounded in $M$.
+
+\textbf{Common-core lemma SC-1.} The algebraic finite-free-energy space
+decomposes orthogonally into unitary highest-weight coset modules. At the
+lowest unused free grade, positive modes annihilate; diagonalize the
+Hermitian $C_0$ there and generate descendants. Adjoint pairing preserves
+orthogonal complements. Finite free-grade multiplicity makes this procedure
+exhaust the space. The positive norm identity
+$\|C_{-1}v\|^2=2h\|v\|^2$ gives nonnegative lowest weights.
+
+The sourced Carpi--Weiner bound is uniform in lowest weight at fixed $c$:
+\[
+ \|T(f)\xi\|\le r_c\|f\|_{3/2}\|(1+C_0)\xi\|.
+\]
+It therefore applies to the module sum. The self-adjoint closures and their
+resolvents form direct sums, and the finite-free-energy vectors are a common
+core. This modulewise argument does not declare the whole ambient sector
+sum to be a single projective vacuum representation: its rotation phases
+can differ.
+
+\textbf{Theorem SC-2 [structured proof].}
+\textbf{Prove} $A_M(f)$ converges to $T(f)$ on that core, in strong
+resolvent sense, and through its one-parameter unitaries.
+\begin{description}
+\item[$\langle1\rangle1$.] On $P_e$, every retained microscopic mode
+agrees exactly with its continuum mode once
+$R_M>e+K_M$ and $M/2-1/2>e+2R_M$. The displayed schedules meet both
+conditions eventually; $M\ge32(e+1)$ suffices.
+\item[$\langle1\rangle2$.] Hence the remaining error is only a
+continuum Fourier tail, bounded by
+\[
+ r_c\|(1+C_0)\xi\|
+ \sum_{|n|>K_M}|\widehat f_n|(1+|n|^{3/2})\longrightarrow0.
+\]
+\item[$\langle1\rangle3$.] For core vectors,
+\[
+ (A_M-i)^{-1}(T-i)\xi-\xi
+   =(A_M-i)^{-1}(T-A_M)\xi\longrightarrow0.
+\]
+The resolvent norms are at most one, and $(T-i)$ maps a graph core densely
+into the Hilbert space. Extend the limit by density; similarly at $-i$.
+\item[$\langle1\rangle4$.] The self-adjoint strong-resolvent theorem
+gives strong convergence of $e^{itA_M}$, uniformly on compact $t$ intervals.
+Finite unitary products converge by telescoping and unit norm.
+\item[$\langle1\rangle5$.] QED by $\langle1\rangle1$--$\langle1\rangle4$.
+\end{description}
+This is an ambient microscopic symmetry limit. It does not by itself remove
+the extra current and charge sectors or prove positivity of the raw finite
+Hamiltonian, which CA-84 disproves.
+
+\subsection{Local Fields in the Descendant OAR Representation}
+
+In the vacuum module of CA-84, grade selection gives the exactly finite
+compression
+\[
+ T_b(f)=P_bT(f)P_b
+       =\sum_{|n|\le b}\widehat f_n P_bC_nP_b.
+\]
+The CAR construction computes every retained matrix element using the safe
+schedule of CH-2. A computable smearing supplies only finitely many requested
+Fourier coefficients at each stage; no large many-body exponentiation was
+performed in the numerical work.
+
+The algebra element $(e^{itT_b(f)},1)$ is represented as identity off $V_b$.
+Its strong limit is $e^{itT(f)}$: the zero-extended finite compressions
+converge on the essential core, and the preceding resolvent argument applies.
+The complementary scalar matters; a bare corner unitary would omit identity
+on the remaining Hilbert space.
+
+Let $\mathcal B(I)$ be the sup-norm C*-algebra of sequences generated by
+these bounded unitary approximants with real smooth $f$ supported in $I$.
+The strong-star limit map is a $*$-homomorphism on this generated algebra.
+Its kernel is a closed ideal, and the quotient identifies with the C*-algebra
+generated by the limiting stress unitaries. Vacuum GNS weak closures give
+the sourced minimal-model Virasoro net and its complete sector data.
+
+This represented field construction is additional to the genuine strict
+OAR norm limit $K(\mathcal H_{\rm vac})+\mathbb C1$. Strong-star-null
+sequences are not generally norm-null, so the quotient is not relabelled
+as the norm-soft inductive limit of the source.
+
+\subsection{The Local Fusion-Space Question}
+
+The finite descendant matrices currently do not retain spatial intervals:
+finitely many Fourier moments of functions supported in any nonempty
+interval can be independently specified. Nor can refinement preserve every
+same-smearing compression exactly, since a smearing can have all low
+moments zero and higher moments nonzero.
+
+These facts concern this specific encoding, not global fusion constraints
+in general. The next task is to identify a categorical fusion-space basis
+and local interactions/refinements that realize the required matrices and
+limits. No such identification or bounded-range implementation is claimed
+in the present work.

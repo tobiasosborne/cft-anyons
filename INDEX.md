@@ -71,6 +71,14 @@ lab book points here, to the script and run artifact that back it.
 | `cft_machine/benchmarks/coset/run.jl` | Exact sparse-CAR producer: `cft_machine/benchmarks/coset/runs/2026-09-22/`, central charges 1/2 and 7/10 with exact descendant norms, cutoff flags and code hash; 127 assertions, two rejected mutations, at most 96 sparse states. |
 | `cft_machine/reviews/` | Skeptical Astra cross-referee reports and resolved issues. |
 | `cft_machine/reviews/check_compiler.jl`, `check_coset.jl` | Retained independent referee regression scripts: 13 exact modular-phase/relabel checks and 18 finite-boundary/zero-mode checks, with standalone `.txt` outputs and commands in the reports. |
+| `cft_machine/reviews/second_pass_ising.md`, `oar_second_pass_referee.md` | Precise OAR audit, maximal bounded-local-WOT Ising inclusion, ultraviolet-edge qualification, and cross-review of smooth coset symmetry limits. |
+| `cft_machine/research/smeared_coset_limits.md` | SC-1/SC-2: common-core decomposition and microscopic quartic smooth-stress resolvent/unitary convergence. |
+| `cft_machine/research/coset_hamiltonian.md` | CH-1 raw finite zero-mode negativity; CH-2 computable nested vacuum descendants; CH-3 positive extracted Hamiltonians. |
+| `cft_machine/research/coset_observable_system.md` | CO-1 genuine strict scalar-augmented OAR; CO-2 smooth compressed field limits; CO-3 represented local reconstruction, distinct from a norm-soft quotient. |
+| `cft_machine/benchmarks/coset_hamiltonian/run.jl` | Producer for its `runs/2026-09-22/`: exact negative expectations and positive extracted-space witnesses; 261 assertions, penalty mutation rejected, peak 2744 sparse states. |
+| `cft_machine/benchmarks/unitized_oar/run.jl` | Producer for its `runs/2026-09-22/`: eight exact computed descendant stages, Gram matrices, unital maps, states and dynamics; 19 generic and 212 integrated assertions, scalar-character mutation rejected. |
+| `cft_machine/report.tex` and `cft_machine/report.pdf` | Standalone 26-page pdflatex synthesis requested at wind-up; source sections under `cft_machine/report/sections/`, compiled twice and all page renders inspected. |
+| `cft_machine/compiler_minimal/README.md` | Explicitly unimplemented tricritical modular-frontend proposal; no compiler code or acceptance claim. |
 | `references/cft-machine/` | Append-only source packages and per-topic manifests for the new workspace. |
 
 ## Report shards

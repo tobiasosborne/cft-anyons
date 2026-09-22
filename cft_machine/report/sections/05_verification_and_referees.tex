@@ -1,0 +1,143 @@
+% REPORT-SHARD: 05_verification_and_referees
+\section{Implementation, computational evidence, and skeptical review}
+
+\subsection{The executable record}
+
+Every numerical headline in this report has a producing script and a run
+bundle. Exact arithmetic is used for modular recognition, sparse CAR
+calculations and Gram-coordinate OAR maps. Floating calculations are confined
+to the declared finite fermion matrices and analytic-error witnesses, with
+explicit tolerances. No full package test suite or large many-body
+diagonalization was run.
+
+\begin{longtable}{@{}p{0.48\textwidth}rp{0.29\textwidth}@{}}
+\toprule
+Standalone suite & Assertions & Main invariant\\\midrule
+Source-modified complex fermions & 548 & CAR modes, cocycles, Fourier/local
+Hamiltonian oracles, cutoff bounds\\
+Self-dual Majorana specialization & 96 & Conjugation, quadratic factor,
+half-central term\\
+Actual Dirac Wilson rows & 116 & Negative spectral projector, pullback
+composition, covariance and state tails\\
+Exact Ising modular compiler & 215 & Cyclotomic data, emitted recipes,
+factor parity, local sampling\\
+Sparse CAR coset stress & 127 & Current levels, vacuum descendants,
+exact central invariants, refinement signs\\
+Coset Hamiltonian and descendants & 261 & Raw negative expectations,
+exact Gram spaces, positive repaired dynamics\\
+Scalar-augmented OAR, generic & 19 & Unitality, products, metric adjoints,
+state and dynamics covariance\\
+Actual descendant OAR stages & 212 & Computed basis embeddings and
+compressed modes across physical cutoffs\\
+\bottomrule
+\end{longtable}
+
+The retained independent referee scripts add 13 modular phase/relabel
+checks and 18 finite-boundary/zero-current checks. Those are distinguished
+from repeated executions of the main suites. The earlier orientation also
+reran the inherited CA-74 testset; it is not counted as new code coverage.
+
+The fermion previews use one-particle matrices of dimension at most 64.
+The sparse coset calculation uses up to 96 occupation bits, not a
+$2^{96}$ allocation. The first coset suite reached 96 sparse intermediate
+states; the polarized Hamiltonian checks reached 2744, under a hard 5000
+state guard. Commands were capped at 60 seconds, with one Julia/BLAS thread.
+
+\subsection{Actual outputs, rather than just acceptance flags}
+
+The Ising producer emits four finite instances: one or two declared factors,
+with 8 or 16 sites per factor. The run includes the exact modular matrices,
+twists and character phase, sector-label transport, every quadratic mode's
+terms and normal-order scalar, the spatial Hamiltonian, covariance and
+refinement entries. It preserves the individual stress families as well as
+their total sum.
+
+The coset producer records exact rational descendant norms at $c=1/2$ and
+$c=7/10$, with distinct flags for the general CR-2 and the smaller vacuum
+CR-3 cutoff certificates. The Hamiltonian producer records the negative raw
+expectations and extracted positive spaces. The scalar-OAR producer records
+eight low-grade stages with exact Grams, positive complementary energies,
+and verified algebra/state/dynamics identities.
+
+Source hashes accompany all producers. They allow a future run to identify
+which implementation generated the data, rather than relying on a worklog
+claim or the appearance of a table.
+
+\subsection{Mutation tests that exposed real regressions}
+
+\begin{longtable}{@{}p{0.45\textwidth}p{0.47\textwidth}@{}}
+\toprule
+Deliberate corruption & What detects it\\\midrule
+Remove the no-wrap KS correction & Spurious ultraviolet crossing and wrong
+central term; 33 assertions failed.\\
+Choose the opposite Dirac spectral sea & Ground-state covariance/sign
+oracles; 48 assertions failed.\\
+Remove the Majorana half factor & Wrong self-dual central normalization;
+12 assertions failed.\\
+Corrupt cyclotomic polynomial reduction & Exact field, modular and
+recognition identities fail.\\
+Remove the twist-matching condition & An unsupported chirality is accepted;
+the rejection test fails.\\
+Change the Sugawara denominator & Wrong coset stress invariants;
+16 assertions failed.\\
+Omit the occupation-dependent Fock insertion phase & CAR intertwining
+fails in the auxiliary odd-insertion witness; 13 assertions failed.\\
+Change the positive complementary penalty & Extracted positivity/energy
+checks fail; 32 assertions failed.\\
+Replace the independent OAR scalar by a vacuum character & Multiplication
+fails for a nonmultiplicative state pair.\\
+\bottomrule
+\end{longtable}
+
+All corruptions were restored before final verification. A useful late
+referee finding was that the first scalar-character mutation did \emph{not}
+fail: the chosen product pair accidentally made the vacuum functional
+multiplicative on that pair. The sentinel was corrected to a pair with
+$\omega(ab)\ne\omega(a)\omega(b)$, and the mutation then genuinely failed.
+The report does not use the original green run as rejected-mutation evidence.
+
+\subsection{Substantive referee corrections}
+
+Three Astra collaborators performed research and cross-refereed work they
+had not authored. The environment's four-thread limit prevented an additional
+fresh referee thread, so roles were reassigned for independent cross-review.
+The parent also inspected the current sources/code and reran the main checks.
+
+The reviews made the following material changes to the scientific record:
+\begin{enumerate}
+\item Separated a generator-refinement square from Wilson rows of actual
+microscopic states, and added the nontrivial Dirac-state construction.
+\item Replaced an insufficient stress-subnet argument by the full even local
+CAR reconstruction and direct even-Fermi/Ising source identity.
+\item Required independent factor parities and retained each factor stress
+family, avoiding both a larger observable extension and a smaller diagonal net.
+\item Added the computable norm upper bound required by the effective
+Wilson expectation algorithm.
+\item Tracked the actual central charge of the holomorphic orbifold recipe;
+modular matching alone does not satisfy an arbitrary prescribed lift.
+\item Corrected finite coset adjointness at zero-current indices and sharpened
+the support threshold without increasing compute budgets.
+\item Distinguished the norm limit $K(\mathcal H)+\mathbb C1$ from its
+represented local field limits, and the new constrained refinement from the
+original unital CAR refinement.
+\item Established the stronger bounded-local-WOT Ising upper inclusion,
+while explicitly recording ultraviolet states excluded by the chosen RG.
+\end{enumerate}
+
+\subsection{Practical failures and what they taught}
+
+Two transient Astra capacity errors were retried. A source extraction lost
+the factor 2 in the GKO Sugawara coefficient; the original PDF was visually
+checked. Author TeX was kept unchanged, including its whitespace and hashes.
+Mutation logs were retained as text artifacts because ordinary LaTeX-style
+\texttt{.log} files are ignored by the repository.
+
+The first integrated descendant-matrix test timed out at the fixed 60-second
+limit. It recomputed each sparse action once per matrix row. The corrected
+code computes each necessary action once and uses the proved energy grading
+to skip exactly vanishing columns; the operator is unchanged. The final
+212-assertion integration suite passed within the original cap.
+
+\sources{Run bundles below \path{cft_machine/benchmarks/} and
+\path{cft_machine/compiler/}; referee records below
+\path{cft_machine/reviews/}; root \path{INDEX.md} and worklogs 014--015.}

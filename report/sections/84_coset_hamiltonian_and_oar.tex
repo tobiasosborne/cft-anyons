@@ -1,0 +1,143 @@
+% SHARD-ID: CA-84-COSET-HAMILTONIAN-AND-OAR
+% SHARD-TITLE: Coset Positivity and a Scalar-Augmented OAR Tower
+% SHARD-SUMMARY: Proves an explicit negative expectation of the raw finite coset zero mode and constructs positive finite vacuum-descendant Hamiltonians.
+% SHARD-SUMMARY: Gives coherent unital finite algebra maps through an independent scalar summand, compatible vacuum states and exact dynamics covariance.
+% SHARD-SUMMARY: Separates this constrained observable prescription from the original CAR refinement and leaves its local fusion-space realization open.
+% SHARD-KEYWORDS: coset, positivity, scalar augmentation, OAR, vacuum module, Gram matrix, fusion-space locality
+
+\section{Coset Positivity and a Scalar-Augmented OAR Tower}
+\label{sec:coset-hamiltonian-and-oar}
+
+\subsection{Sources, Dependencies, and Scope}
+
+\textbf{Status: local derivations and exact finite witnesses.}
+Dependencies: CA-83, CH-1--CH-3 in
+\path{cft_machine/research/coset_hamiltonian.md}, CO-1--CO-3 in
+\path{cft_machine/research/coset_observable_system.md}; CONVENTIONS (aa).
+
+% Source: references/text/CFTFromLatticeFermions.txt:694--714,879--892 -- CAR signs and normal ordering.
+% Source: references/cft-machine/virasoro/GoddardKentOlive1986/source.txt:123--217 -- current/coset normalization.
+% Source: literature/md/2010.11121/2010.11121.md:101--111,126--180 -- strict unital OAR and GNS.
+% Source: references/cft-machine/coset-observables/Landsman1998/source.tex:2481--2523 -- C*-homomorphisms, ideals, closed images.
+% Producers: cft_machine/benchmarks/coset_hamiltonian/run.jl;
+%   cft_machine/benchmarks/unitized_oar/run.jl.
+% Runs: corresponding runs/2026-09-22/results.toml files.
+% Referee: cft_machine/reviews/second_pass_ising.md (CO cross-review section).
+
+\subsection{The Raw Finite Zero Mode Is Not Positive}
+
+For $k=1$, fill flavor 1 at every momentum in both copies and leave flavor 2
+empty. Let $v$ be this normalized polarized occupation vector. For even $M$
+and $0\le R<M$, the raw coset polynomial of CA-83 obeys
+\[
+ \langle v,C_{M,0,R}v\rangle=-\frac{(M-R)(M-R-1)}{12}.
+\]
+\textbf{Proof CH-1 [structured calculation].}
+\begin{description}
+\item[$\langle1\rangle1$.] In each copy,
+$\sum_a\|J_0^a v\|^2=M^2/4+M/2$: the third current has eigenvalue
+$M/2$, and each of the other two flips one of $M$ flavors with amplitude
+magnitude $1/2$. The two-copy diagonal current has squared norm $M^2+M$.
+\item[$\langle1\rangle2$.] The zero-mode Sugawara difference is
+$2(M^2/4+M/2)/3-(M^2+M)/4=-M(M-1)/12$.
+\item[$\langle1\rangle3$.] For $1\le p\le R$, each copy has $M-p$
+retained flavor-flip transitions. Counting the two normally ordered terms
+gives a coset contribution $(M-p)/6$.
+\item[$\langle1\rangle4$.] Sum $\langle1\rangle3$ and add
+$\langle1\rangle2$. QED by finite summation.
+\end{description}
+Thus the sea, whose raw energy is zero, is not a ground state when $R<M-1$.
+No diagonalization is needed. Exact checks give
+\[
+\begin{array}{c|cc}
+M & R=3 & R=4\\\hline
+8&-5/3&-1\\16&-13&-11
+\end{array}
+\]
+The witness has auxiliary energy $M^2/2$, so it does not contradict
+stabilization on a fixed low-energy subspace as $M$ grows.
+
+\subsection{Computable Vacuum-Descendant Spaces}
+
+\textbf{Construction CH-2.} Let $V_b$ be the span of the vacuum and words
+$C_{-n_1}\cdots C_{-n_t}\Omega$ with $n_j\ge1$ and $\sum_jn_j\le b$.
+Construct them using the finite CAR polynomials at
+\[
+ R_b=2b+1,\qquad M_b=16(b+1).
+\]
+There are finitely many words. At every intermediate grade at most $b$,
+CR-2's conditions hold: $R_b>2b$ and
+$M_b/2-1/2=8b+15/2>b+2R_b$. Thus the finite vectors agree exactly
+with their continuum representatives.
+
+Exact Gram elimination removes linear dependencies. If the retained column
+vectors form $U_b$ and $G_b=U_b^*U_b$, then
+$P_b=U_bG_b^{-1}U_b^*$ is their orthogonal projector. Refinement identifies
+the same words across scales, so the isometries $J_{Bb}:V_b\to V_B$
+compose exactly. On these spaces both $E$ and $C_0$ act by total grade.
+The grade-zero space is the vacuum line.
+
+The implemented preview through grade three uses
+$(\Omega,C_{-2}\Omega,C_{-3}\Omega)$ when present, with exact Gram diagonal
+$(1,c/2,2c)$ and grades $(0,2,3)$. It uses the smaller CR-3 vacuum windows
+at $M=8,16$, not a large computation of the general schedule.
+
+\textbf{Positive Hamiltonians CH-3.} The ambient operator
+\[
+ H_b=P_bEP_b+(b+1)(1-P_b)
+\]
+is positive and has unique vacuum ground state: its first block has
+nonnegative grades and one zero vector, while its other block is strictly
+positive. This is a different Hamiltonian from the raw quartic zero mode.
+Its global projection currently has no proved local fusion-space realization.
+
+\subsection{An Independent Scalar Gives Genuine Unital OAR}
+
+Define $A_b=B(V_b)\oplus\mathbb C$ and, for $B\ge b$,
+\[
+ \alpha_{Bb}(a,\lambda)=
+ \bigl(J_{Bb}aJ_{Bb}^*+\lambda(1-J_{Bb}J_{Bb}^*),\lambda\bigr).
+\]
+The scalar is independent of $a$; replacing it with a state expectation
+would generally preserve only complete positivity, not multiplication.
+
+\textbf{Proof CO-1.}
+\begin{description}
+\item[$\langle1\rangle1$.] The two first-coordinate summands have
+orthogonal supports. Multiplication and adjoints are preserved, and
+$(1,1)$ maps to $(1,1)$.
+\item[$\langle1\rangle2$.] Compressing by $J_{Bb}^*$ recovers $a$;
+the second coordinate recovers $\lambda$. The map is injective.
+\item[$\langle1\rangle3$.] The complementary projection splits into
+the newly added shell and the transported previous shell. Substitution
+proves $\alpha_{DB}\alpha_{Bb}=\alpha_{Db}$.
+\item[$\langle1\rangle4$.] The states
+$\omega_b(a,\lambda)=\langle\Omega,a\Omega\rangle$ are compatible.
+Their Wilson rows are constant. The norm inductive limit is
+$K(\mathcal H_{\rm vac})+\mathbb C1$, and the vacuum GNS is
+$\mathcal H_{\rm vac}=\overline{\bigcup_bV_b}$, since finite-rank operators
+act cyclically on $\Omega$.
+\item[$\langle1\rangle5$.] QED by $\langle1\rangle1$--$\langle1\rangle4$.
+\end{description}
+The finite Hamiltonian $(E|_{V_b},b+1)$ is positive. Its dynamics intertwine
+exactly: the old subspace and the new shell are energy-reducing, and the
+embedded coarse algebra is scalar on the new shell. The Hamiltonians
+themselves need not intertwine.
+
+\subsection{What the Construction Does Not Identify}
+
+This is a new constrained observable prescription. It is generally not
+the restriction of the original unital CAR refinement, which retains all
+new-mode multiplicities. The new map instead inserts the selected sea
+when it transports the matrix block.
+
+Likewise the ambient penalized resolvents tend to
+$P(E+i)^{-1}P$, where $P$ projects onto the limiting vacuum module. This
+has a kernel on the discarded ambient sectors and is not a self-adjoint
+resolvent on that entire ambient Hilbert space. The new vacuum GNS
+representation is essential.
+
+Global constraints can be intrinsic fusion constraints. Their presence is
+not an obstruction to locality. What remains unproved is the identification
+of these descendant spaces with categorical fusion spaces, together with a
+local realization of the Hamiltonian and refinement operations on them.
