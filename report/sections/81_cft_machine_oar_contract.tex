@@ -1,0 +1,120 @@
+% SHARD-ID: CA-81-CFT-MACHINE-OAR-CONTRACT
+% SHARD-TITLE: The CFT Machine and Its Quantitative OAR Contract
+% SHARD-SUMMARY: Restates the algorithmic north star with Wilson-triangle state construction and microscopic Virasoro convergence as separate compatible requirements.
+% SHARD-SUMMARY: Gives a Lamport proof of quantitative horizontal state convergence and records the independently reviewed graph-norm generator theorem.
+% SHARD-KEYWORDS: algorithm, functor, OAR, Wilson triangle, Lamport proof, state convergence, microscopic Virasoro
+
+\section{The CFT Machine and Its Quantitative OAR Contract}
+\label{sec:cft-machine-oar-contract}
+
+\subsection{Sources, Dependencies, and Status}
+
+This shard records Tobias's 2026-09-22 formulation of the programme and
+the new workspace \texttt{cft\_machine/}. It does not assert a universal
+construction. Dependencies: CA-62, CA-67, CA-72, CA-73;
+CONVENTIONS (u)--(y).
+
+% Source: literature/md/2010.11121/2010.11121.md:126--180 -- OAR
+%   inductive algebra, horizontal state limits, compatibility, and GNS.
+% Source: references/text/CFTFromLatticeFermions.txt:221--247 -- strong
+%   convergence of microscopic KS modes on the finite-energy core.
+% Source: references/cft-machine/proofs/lamport1993.tex:150--170 --
+%   hierarchical short proof-step numbering.
+% Local derivation: cft_machine/research/wilson_triangle.md, WT-1--WT-3.
+% Local derivation: cft_machine/research/virasoro_routes.md, VR-1--VR-2.
+% Independent reviews: cft_machine/reviews/fermion_referee.md and
+%   cft_machine/reviews/fidelity_referee.md; effective norm-bound repair applied.
+
+\subsection{The Actual Construction Target}
+
+\textbf{Programme.} Discover an algorithm, or functor, from categorical
+data to concrete lattice systems and microscopic Virasoro generators,
+whose limit through operator-algebraic renormalisation (OAR) and Wilson's
+triangle is a rigorous CFT with the input modular data. Indeterminate-number
+anyon spaces are one mechanism; they do not restrict the search.
+
+A successful output names the microscopic algebras and Hamiltonians,
+refinement maps, renormalized states, symmetry generators, limiting local
+CFT, and modular-data comparison. Any additional conformal input must be
+explicit. Matching a finite spectrum, producing limiting commutators,
+or checking a finite moment problem does not supply the complete output.
+
+The new workspace investigates a source-controlled fermion seed, a
+graph-norm convergence criterion, and equivariant fixed-point constructions
+alongside the anyonic tower. The source-grounded comparison and scoped
+claims are in \texttt{cft\_machine/research/}.
+
+\subsection{A Quantitative Wilson-State Theorem}
+
+\textbf{Theorem WT-1 [local derivation].}
+\textbf{Assume} unital C*-algebras $A_k$ and coherent unital injective
+$*$-maps $\alpha_n^k:A_k\to A_n$ for $n\ge k$. Let $\omega_n$ be
+microscopic states. Suppose for each fixed $k$ there are nonnegative
+$d_{k,n}$ with
+\[
+ \|\omega_{n+1}\circ\alpha_{n+1}^k-
+       \omega_n\circ\alpha_n^k\|\le d_{k,n},\qquad
+ \sum_{n\ge k}d_{k,n}<\infty.
+\]
+The norm is the dual operator norm. Set $t_k(n)=\sum_{j\ge n}d_{k,j}$.
+\textbf{Prove} there is a unique state $\omega$ on the inductive algebra
+whose restrictions are the horizontal row limits, and
+\[
+ \|\omega\circ i_k-\omega_n\circ\alpha_n^k\|\le t_k(n).
+\]
+
+\begin{description}
+\item[$\langle1\rangle1$.] Every row is norm Cauchy.
+\textsc{By} telescoping adjacent differences and summability; for $m>n$
+the difference is bounded by $\sum_{j=n}^{m-1}d_{k,j}$.
+\item[$\langle1\rangle2$.] Its limit $\omega_k$ is a state with the
+stated tail bound. \textsc{By} completeness of the dual, closure of
+positivity and normalization under norm limits, and $\langle1\rangle1$.
+\item[$\langle1\rangle3$.] The limiting family is compatible:
+$\omega_l\circ\alpha_l^k=\omega_k$. \textsc{By} coherence, the analogous
+equality holds for every microscopic scale $n\ge l$; take row limits.
+\item[$\langle1\rangle4$.] Define $\omega(i_k(a))=\omega_k(a)$ on the
+dense algebraic union. It is well-defined, bounded, positive and unital.
+\textsc{By} $\langle1\rangle2$--$\langle1\rangle3$; continuous extension
+gives existence and density gives uniqueness.
+\item[$\langle1\rangle5$.] The GNS maps $[a]_k\mapsto[\alpha_l^k(a)]_l$
+are compatible isometries preserving cyclic vectors. \textsc{By}
+multiplicativity, unitality, and
+$\omega_l(\alpha_l^k(a^*a))=\omega_k(a^*a)$.
+\item[$\langle1\rangle6$.] QED \textsc{by}
+$\langle1\rangle2$--$\langle1\rangle5$.
+\end{description}
+
+\textbf{Effective corollary WT-2.} If expectations and refinements are
+computable and the tail has a computable modulus, an observable $a\in A_k$
+with a supplied computable bound $B\ge\|a\|$ can be evaluated in the
+limit to error $\eta$: choose $n$ with $t_k(n)B<\eta/2$ and compute its
+row expectation to error $\eta/2$. The modulus is substantive analytic
+input; finitely sampled decay does not provide it.
+
+\subsection{The Generator Contract and Its Boundary}
+
+\textbf{Conditional local theorem VR-1.} The companion proof in
+\path{cft_machine/research/virasoro_routes.md} constructs limiting
+modes and all their finite products under four explicit hypotheses:
+compatible isometric refinements with a positive auxiliary control operator,
+uniform bounds between successive graph norms, summable refinement defects
+in those norms, and vanishing weighted closure residuals. Its proof uses
+complete graph spaces and a direct telescoping identity for products.
+
+The finite identity embeds as a projection $P_N$, with $P_N\to1$ on the
+common smooth domain. A corner embedding is not identified with a unital
+observable map. Both central coefficients of CONVENTIONS (s) remain explicit.
+Adjoint pairing on the domain does not prove essential self-adjointness.
+
+These two contracts must use the \emph{same} state and representation
+system. WT-1 alone constructs no dynamics; VR-1 alone constructs no local
+OAR algebras. Positive energy, integration of smeared modes, local-net
+axioms, rationality, and modular fidelity need separate proofs or carefully
+verified applications of existing theorems.
+
+\textbf{Numerical scope.} The fermion benchmark separately checks a
+generator-refinement square and the pullbacks of finite Dirac ground-state
+covariances. Its compatible limiting chiral sea is not substituted for
+these nontrivial Wilson rows. The corresponding source and run paths are
+listed in \texttt{INDEX.md} and the benchmark README.

@@ -92,6 +92,9 @@ before treating report edits as complete.
 | 72 | `CA-72-GNS-DESCENT-CORNER-CALCULUS` | `report/sections/72_gns_descent_corner_calculus.tex` | GNS Descent and the Corner Calculus of Placement Refinements |
 | 73 | `CA-73-CATEGORICAL-RESIDUAL-SET` | `report/sections/73_categorical_residual_set.tex` | The Categorical Residual Set on the Anyonic Word Tower |
 | 74 | `CA-74-JW-KERNEL-DECISION` | `report/sections/74_jw_kernel_decision.tex` | The Jones-Wenzl Kernel Decision for the Dilute Evaluation Map |
+| 75 | `CA-81-CFT-MACHINE-OAR-CONTRACT` | `report/sections/81_cft_machine_oar_contract.tex` | The CFT Machine and Its Quantitative OAR Contract |
+| 76 | `CA-82-ISING-MODULAR-COMPILER` | `report/sections/82_ising_modular_compiler.tex` | A Supported Ising Modular-Data Compiler |
+| 77 | `CA-83-COSET-LATTICE-STRESS` | `report/sections/83_coset_lattice_stress.tex` | Coset Lattice Stress Generators with Exact Core Stabilization |
 
 ## Adding a shard
 

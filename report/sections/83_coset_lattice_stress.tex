@@ -1,0 +1,130 @@
+% SHARD-ID: CA-83-COSET-LATTICE-STRESS
+% SHARD-TITLE: Coset Lattice Stress Generators with Exact Core Stabilization
+% SHARD-SUMMARY: Builds finite quartic lattice stress polynomials from flavored CAR currents and the sourced diagonal SU(2) coset recipe.
+% SHARD-SUMMARY: Proves exact current-tail truncation and eventual finite-energy-core equality, with sparse rational witnesses at central charges one half and seven tenths.
+% SHARD-SUMMARY: Keeps the coherent local coset observable tower and removal of ambient spectator sectors as the remaining construction problem.
+% SHARD-KEYWORDS: GKO, coset, Sugawara, lattice Virasoro, sparse CAR, exact stabilization, minimal models, OAR
+
+\section{Coset Lattice Stress Generators with Exact Core Stabilization}
+\label{sec:coset-lattice-stress}
+
+\subsection{Sources, Dependencies, and Scope}
+
+\textbf{Status: source-based recipe with a local stabilization proof and
+exact finite witnesses.} This constructs stress generators inside an
+ambient fermion theory. It does not yet construct the local coset lattice
+theory itself. Dependencies: CA-81, CA-82; CONVENTIONS (z).
+
+% Source: references/text/CFTFromLatticeFermions.txt:879--892 -- normal ordered CAR cocycle.
+% Source: references/text/CFTFromLatticeFermions.txt:4160--4191,4248--4318 -- current shifts and flavored level-one currents.
+% Source: references/cft-machine/virasoro/GoddardKentOlive1986/source.txt:123--217 -- Sugawara, diagonal coset and minimal-series central charge.
+% Source: references/cft-machine/virasoro/GoddardKentOlive1986/source.pdf, printed pp.107--108, Eqs.(2.5)--(2.9) -- coefficient 1/(2 beta) visually checked because extraction drops factor 2.
+% Source: references/cft-machine/realisation/KawahigashiLongo2002/source.tex:1008--1024 -- continuum coset equals minimal Virasoro net.
+% Local derivation: cft_machine/research/coset_route.md, CR-1--CR-3.
+% Producer: cft_machine/benchmarks/coset/run.jl.
+% Run: cft_machine/benchmarks/coset/runs/2026-09-22/results.toml.
+% Independent review: cft_machine/reviews/coset_referee.md.
+
+\subsection{An Explicit Microscopic Polynomial}
+
+Take $k+1$ two-flavor complex fermion copies, $k\ge1$, with half-integer
+momenta in the finite window and the filled negative sea. Let
+$t^a=\sigma_a/2$ and use the no-wrap one-particle shifts
+\[
+ j_{M,p}^a(e_r\otimes v)=e_{r-p}\otimes t^a v
+\]
+when both labels are in the window, and zero otherwise. Normal-ordered
+complex second quantization gives finite quadratic currents $J_{M,p}^{u,a}$.
+Let $I$ sum the first $k$ copies, $J$ denote the last, and $D=I+J$.
+For a level-$l$ family $X$ define
+\[
+ \begin{aligned}
+ \mathsf S^{[l]}_{M,n,R}(X)&=\frac1{l+2}
+  \sum_{a=1}^3\ \sum_{\substack{|p|\le R\\|n-p|\le R}}
+   {:}X_{M,n-p}^a X_{M,p}^a{:},\\
+ C_{M,n,R}&=\mathsf S^{[k]}(I)+\mathsf S^{[1]}(J)-\mathsf S^{[k+1]}(D).
+ \end{aligned}
+\]
+The normal ordering orders current modes, keeping their contraction terms
+when the displayed products are expanded. Thus $C$ is an explicit CAR
+polynomial of degree at most four, not an unspecified continuum operator.
+
+The infinite current cocycle has coefficient $p\delta_{ab}/2$ at level
+one: exactly $p$ Fermi crossings contribute $\Tr(t^at^b)=\delta_{ab}/2$.
+Independent copies add levels. The sourced GKO result gives
+\[
+ c=\frac{3k}{k+2}+1-\frac{3(k+1)}{k+3}
+   =1-\frac6{(k+2)(k+3)}.
+\]
+This fixes the normalization before any finite computation.
+
+\subsection{Exact Stabilization on Free-Energy Cores}
+
+\textbf{Theorem CR-2 [local derivation].}
+\textbf{Assume} the no-wrap finite currents above, compatible sea GNS
+embeddings, and auxiliary excitation energy
+\[
+ E_M=\sum_{u,f,r>0}r\,n_{u,f,r}
+       +\sum_{u,f,r<0}|r|(1-n_{u,f,r}).
+\]
+Let $P_e$ project onto auxiliary energy at most $e$.
+\textbf{Prove} the embedded $C_{M,n,R}$ agrees with the continuum coset
+mode $C_n$ on $P_e$ whenever
+\[
+ R>e+|n|,\qquad M/2-1/2>e+2R.
+\]
+\begin{description}
+\item[$\langle1\rangle1$.] $[E_M,J_{M,p}]=-pJ_{M,p}$.
+\textsc{By} each nonzero bilinear moving occupation from $r$ to $r-p$;
+the scalar subtraction has $p=0$. Consequently $J_{M,p}P_e=0$ for $p>e$
+by nonnegativity of $E_M$. The same holds in the infinite sea.
+\item[$\langle1\rangle2$.] Every omitted normally ordered current pair
+annihilates $P_e$. \textsc{By} its indices summing to $n$: if either
+absolute value exceeds $R$, one index is positive and greater than $e$.
+Normal ordering places that mode on the right; use $\langle1\rangle1$.
+\item[$\langle1\rangle3$.] Retained products agree with continuum
+products in the safe window. \textsc{By} deviations from the sea lying
+within $|r|\le e$, one current action involving only $|r|\le e+|p|$,
+and two retained actions involving only $|r|\le e+2R$.
+\item[$\langle1\rangle4$.] The finite retained sum equals the continuum
+sum on $P_e$. QED \textsc{by} $\langle1\rangle2$--$\langle1\rangle3$.
+\end{description}
+
+The choice $R_M=\lfloor M/8\rfloor$ eventually meets both conditions for
+every fixed $e,n$. A fixed word of modes uses the enlarged core
+$e+\sum_j|n_j|$ and therefore also stabilizes exactly. The symmetric
+two-index cutoff preserves finite adjoints; same-sign pairs must be grouped
+before taking adjoints, and zero-index pairs use the exact same-component
+commutation of $J_0^a$ with $J_p^a$.
+
+\textbf{Vacuum corollary CR-3.} For $n\ge1$, the smaller conditions
+$R\ge n$ and $M/2-1/2>n$ suffice for
+$C_{M,-n,R}\Omega=C_{-n}\Omega$. Indeed, positive and zero currents
+annihilate the sea, so only two negative indices of total magnitude $n$
+contribute; all involved orbitals have $|r|\le n$.
+
+\subsection{Exact Witnesses and the Remaining Interface}
+
+The sparse-CAR producer evaluates the actual polynomials with exact complex
+rational amplitudes and canonical fermion signs. No many-body matrix is
+allocated. At $M=8,16$ and $R=3,4$, it gives
+\[
+\begin{array}{c|c|cc}
+ k&c&\|C_{-2}\Omega\|^2&\|C_{-3}\Omega\|^2\\\hline
+ 1&1/2&1/4&1\\
+ 2&7/10&7/20&7/5
+\end{array}
+\]
+The independent oracle is $c(n^3-n)/12$, not a fitted central charge.
+The run distinguishes the general CR-2 window from the smaller CR-3
+vacuum window. CAR signs, level addition, adjoint pairings and refined
+descendants are checked separately; coefficient and embedding-sign
+mutations are rejected.
+
+What remains is a coherent \emph{local coset observable} construction.
+The ambient fermion tower retains additional sectors. A stress difference
+does not remove them, and finite commutants or vacuum-cyclic compressions
+have not been shown to commute with refinement. Global finite-scale
+positivity and microscopic ground states of the quartic Hamiltonian are
+also unproved. The result solves a generator and cutoff-control problem;
+it does not yet enlarge the completed modular-data compiler beyond CA-82.

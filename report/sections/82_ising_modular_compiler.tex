@@ -1,0 +1,127 @@
+% SHARD-ID: CA-82-ISING-MODULAR-COMPILER
+% SHARD-TITLE: A Supported Ising Modular-Data Compiler
+% SHARD-SUMMARY: Constructs microscopic Majorana Hamiltonians, corrected KS modes, and factorwise even observable towers from exact Ising modular input and declared tensor products.
+% SHARD-SUMMARY: Identifies the NS sampled-generator local limit using the even real-fermion net and the sourced complete Ising sector data, with all factor stress families retained.
+% SHARD-KEYWORDS: Ising, modular data, compiler, Majorana, even CAR, OAR, local net, tensor product, Koo-Saleur
+
+\section{A Supported Ising Modular-Data Compiler}
+\label{sec:ising-modular-compiler}
+
+\subsection{Sources, Dependencies, and Scope}
+
+\textbf{Status: explicit supported construction using existing continuum
+theorems.} The code and structured derivations live in
+\texttt{cft\_machine/compiler/}; the source-controlled numerical backend
+is \texttt{cft\_machine/benchmarks/fermion/}. This is not a constructor
+for arbitrary categories. Dependencies: CA-81; CONVENTIONS (u), (w), (y), (z).
+
+% Source: references/category-theory/RowellStongWang2009Classification/source/RSWfinal3.tex:2441--2474 -- Ising modular data.
+% Source: references/text/CFTFromLatticeFermions.txt:879--892 -- normal ordering and complex/self-dual Schwinger terms.
+% Source: references/text/CFTFromLatticeFermions.txt:1843--1889 -- sharp CAR refinement and spatial nonlocality.
+% Source: references/text/CFTFromLatticeFermions.txt:3379--3420 -- modified KS modes eliminating spurious momentum wrap.
+% Source: references/text/CFTFromLatticeFermions.txt:3483--3530 -- strong-core, unitary and Bogoliubov convergence.
+% Source: references/cft-machine/realisation/LongoMartinettiRehren2009/source/LMR.tex:1165--1168 -- real Fermi even subnet is Vir_{1/2}.
+% Source: references/cft-machine/realisation/Bockenhauer1994/source.tex:324--355,563--588 -- even CAR and NS vacuum representation; universal circle algebra caveat.
+% Source: references/cft-machine/realisation/KawahigashiLongo2002/source.tex:1027--1157 -- complete rationality, all sectors, fusion and twists.
+% Source: references/cft-machine/realisation/KawahigashiLongoMuger1999/source.tex:969--977,1518--1527 -- type-I hypothesis and tensor-sector completeness.
+% Local derivations: cft_machine/compiler/PROOF.md and LOCAL_LIMIT.md.
+% Run artifacts: cft_machine/compiler/runs/2026-09-22/;
+%   cft_machine/benchmarks/fermion/runs/2026-09-22/.
+
+\subsection{Exact Input and Concrete Output}
+
+In order $(1,\sigma,\psi)$ the supported seed has
+\[
+ S=\frac12\begin{pmatrix}1&\sqrt2&1\\\sqrt2&0&-\sqrt2\\1&-\sqrt2&1\end{pmatrix},
+ \qquad \Theta=\operatorname{diag}(1,e^{\pi i/8},-1),\qquad c=\frac12.
+\]
+The compiler compares $S$, twists, fusion multiplicities and the selected
+real $c$ exactly, allowing unit-preserving relabelling. Rational polynomial
+arithmetic modulo $z^8+1$ represents $z=e^{\pi i/8}$ and
+$\sqrt2=z^2-z^6$. Character $T$ retains its separate vacuum phase
+$e^{-2\pi i c/24}$; it is not coerced into this smaller cyclotomic field.
+Explicit factor lists declare products; no general factorization algorithm
+or reconstruction of arbitrary $F/R$ data is claimed.
+
+At even size $M$, take antiperiodic momenta
+$r=-M/2+1/2,\ldots,M/2-1/2$ and $\epsilon_M=2\pi/M$. The finite
+microscopic mode matrix is the source-modified weighted shift
+\[
+ A_{M,n}e_r=\cos^2(\epsilon_M n/4)
+ \frac{\sin(\epsilon_M(r-n/2))}{\epsilon_M}e_{r-n}
+\]
+when both labels are in the window, and zero otherwise. The normal-ordered
+self-dual quadratic $Q_M(A_{M,n})$ includes the factor $1/2$ and the
+vacuum scalar; the recipe emits its actual CAR terms.
+The $n=0$ sine Hamiltonian is nearest-neighbour in the real spatial basis,
+with an antiperiodic seam. Its positive-momentum occupation energies are
+positive, so the declared sea is its finite ground state. This chiral
+Hamiltonian is distinct from the auxiliary two-component Dirac benchmark.
+
+The algebra map refines CAR generators by the isometric zero-padding map,
+$\Psi(f)\mapsto\Psi(Jf)$. It is unital and preserves conjugation and
+parity. A one-particle corner matrix $JAJ^*$ is not substituted for this
+CAR algebra map.
+
+\subsection{The Local Observable Theory}
+
+The selected finite observable algebra is the even self-dual CAR algebra.
+For $k$ factors take independent parity fixed points $(\mathbb Z_2)^k$.
+Total parity alone would retain odd-times-odd fields and give a different
+observable extension. Refinements are equivariant and the sea states are
+compatible. Thus these initial chiral states give constant Wilson rows;
+CA-81's nonconstant Dirac rows are a separate example of the same formalism.
+
+The local reconstruction uses norm limits of even products of smoothly
+sampled, interval-supported real antiperiodic test sections. Its represented
+weak closure is the output interval algebra. This prescription defines the
+sampled-generator local net; it does not assert equality with a maximal
+construction using every arbitrary bounded scaling sequence.
+
+\textbf{Local convergence argument [structured derivation].}
+\textbf{Assume} a smooth real test section $f$ supported inside a fixed
+interval chart, sampled as $v_M(x)=\sqrt{\epsilon_M}f(x)$.
+\textbf{Prove} its sharp Fourier embedding converges to $f$ in $L^2(dx)$.
+\begin{description}
+\item[$\langle1\rangle1$.] Every fixed Fourier coefficient converges.
+\textsc{By} the Riemann sum for the coefficient in the orthonormal basis
+$e^{irx}/\sqrt{2\pi}$.
+\item[$\langle1\rangle2$.] The norms converge to $\|f\|_2$.
+\textsc{By} unitarity of the discrete Fourier transform and the Riemann sum
+$\epsilon_M\sum_x|f(x)|^2\to\int|f|^2$.
+\item[$\langle1\rangle3$.] Weak convergence and convergence of norms
+give strong convergence. \textsc{By} density of finite Fourier sums,
+$\langle1\rangle1$, boundedness from $\langle1\rangle2$, and expansion
+of the squared Hilbert-space difference.
+\item[$\langle1\rangle4$.] QED \textsc{by} $\langle1\rangle3$.
+\end{description}
+CAR norm continuity then gives convergence of every fixed even field
+product. Density of supported smooth tests identifies the generating local
+even CAR algebra. The NS vacuum representation and the sourced even-net
+identity identify its vacuum interval net with $\operatorname{Vir}_{1/2}$.
+The universal global circle observable algebra is not identified with a plain
+even CAR algebra; the source explicitly distinguishes them.
+
+\subsection{Symmetry and Modular Fidelity}
+
+The source's modified-KS theorem supplies the strong finite-energy limit
+and convergence of its unitary implementers in the Majorana representation.
+The finite Schwinger computation separately checks the self-dual central
+coefficient $(n^3-n)/24$; it is not a central term of a finite matrix
+commutator without normal ordering.
+
+The complete-net sector theorem at minimal-model parameter $m=3$ gives
+three sectors, with weights $0,1/16,1/2$, Ising fusion and the displayed
+twists and $S$. This supplies fidelity of the identified local net rather
+than guessing its sectors from finite spectra.
+
+For products, the compiler retains each factor's stress family and their
+placed sum. The sum alone is not the full tensor-product net. The sourced
+tensor-sector completeness result and factorwise braiding give product
+modular data and additive central charge. The output explicitly records
+the relation between input labels and canonical product labels.
+
+This construction establishes a supported branch. General category inputs,
+other Ising chiralities, arbitrary central-charge lifts, and general tensor
+functors remain outside its implemented domain. The broader machine must
+expand that domain with additional constructions and proofs.

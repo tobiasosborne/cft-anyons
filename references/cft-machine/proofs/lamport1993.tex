@@ -1,0 +1,2159 @@
+%%* "How to Write a Proof"
+%
+%  Corrected 2 Dec 92 based on comments by Peter Hancock.
+%  Minor correction 19 Dec 92
+%  Modified 6 Jan 93 to clarify short step-numbering scheme
+%  Minor modifications, 5 Feb 93 and 8 Feb 93
+%  Revised 1 Dec 93
+
+\documentstyle[11pt,fleqn,titlepage]{article}
+
+\makeatletter
+%%%%%%%%%%%%%%%file pf.sty
+% pf.sty
+%
+% last modified on Wed Dec  1 16:02:28 PST 1993 by lamport
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       THE pf STYLE                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%  CONTENTS
+%    1. Introduction
+%    2. The Basic Commands
+%    3. Different Styles of Numbering 
+%    4. Indentation
+%    5. Assumptions
+%    6. Portions of a Proof
+%    7. Conjunctions and Disjunctions
+%    8. Miscellany
+%    9. List of all Commands and Environments
+%
+%  1. INTRODUCTION
+%
+%    The pf style provides commands and environments for typesetting
+%    hierarchically structured proofs.  Below is an example of what 
+%    such a proof looks like, and the commands that generate it.
+%    The commands are explained individually below.  Then
+%
+%    THE OUTPUT                         THE INPUT
+%    ~~~~~~~~~~                         ~~~~~~~~~
+%    Any text...                        Any text
+%                                       \begin{proof}
+%    1. Text of step 1.                   \step{label-1}{Text of step 1.}
+%                                         \begin{proof}
+%       1.1. Text of step.                  \step{label-1.1}{Text of step}
+%                                            \begin{proof}
+%            Proof: Paragraph                  \pf\ Paragraph proof.~\qed
+%            proof. []                       \end{proof}
+%                                      
+%       1.2. Text of step.                   \step{label-1.2}{Text of step.}
+%                                            \begin{proof}
+%            Proof: Paragraph                  \pf\ Paragraph proof.~\qed
+%            proof. []                       \end{proof}
+%
+%       1.3. QED                             \qedstep
+%                                            \begin{proof}
+%            1.3.1. Text of step               \step{label-1.3.1}{Text...}
+%                   Proof: ... []              \begin{proof} ... \end{proof}
+%                                            
+%            1.3.2. QED                        \qedstep
+%                   Proof: ...                 \begin{proof}...\end{proof}
+%                                            \end{proof}
+%                                         \end{proof}
+%
+%    2. Text of step 2.                   \step{label-2}{Text of step 2.}
+%        Proof: ...                        \begin{proof} \pf\ ... \end{proof}
+%
+%    3. QED                               \qedstep
+%       Proof: ...                        \begin{proof} \pf\ ... \end{proof}
+%     
+%
+%   The best way to read such proofs is hierarchically.  To find out
+%   how, search below for the \pfhidelevel command and the \hideqedproof
+%   command.
+%
+%
+% 2. THE BASIC COMMANDS
+%
+% The proof Environment:
+%   Increments the proof depth, and indents the enclosed text the
+%   appropriate amount.  For example, if the proof environment follows a
+%   \step command that produces step number 2.6.7, then the first \step
+%   command inside the environment will produce step number 2.6.7.1.
+%
+% \step{LABEL}{TEXT}
+%    This command produces a proof step such as
+%        2.6.7.1. TEXT
+%    The step number 2.6.7.1 is determined by the position of the \step
+%    command in the proof.  The LABEL is a symbol label used to refer to the
+%    step number.  A subsequent \stepref{LABEL} command will generate the
+%    step number 2.6.7.1.  The same LABEL may be re-used, but
+%    not in a context where it is legal to refer to a previous step with the
+%    same label.  (See the discussion of step numbering below.)
+%    
+%    This command is equivalent to
+%           \begin{step+}{LABEL}
+%              TEXT
+%           \end{step+}
+%    The step+ environment form is more convenient if TEXT is long or
+%    complicated.
+%
+% \qedstep
+%    This command produces something like
+%    
+%       2.6.7.5. QED
+%    
+%    If the proof of step 2.6.7 is a sequence of steps (rather than a
+%    paragraph proof), then the last step in its proof is normally of this
+%    form.  The "QED" in the statement simply denotes the current
+%    goal---what must be proved to prove step 2.6.7.  The proof of this QED
+%    step will be followed immediately by the
+%    \end{proof} command that ends the proof of step 2.6.7.
+%    
+%    The pf style does not enforce this method of structuring proofs;
+%    the proof of statement 2.6.7 could end with an ordinary \step
+%    command.
+%
+% \pf, \qed
+%    These are simple text-producing commands that normally begin and end a
+%    paragraph-style proof.  However, they are not required.  Remember to
+%    put a "\ " after the \pf command, and to tie the \qed command to the
+%    last word of the proof with a "~".
+%
+% \pfsketch
+%    
+%    An intuitive prook sketch often introduces a multi-step proof, as in
+%    
+%         1.3. All odd numbers are prime.
+%              Proof sketch:  The proof is by induction, with the
+%              base case proved in step 1 and the induction step in
+%              step 2.
+%              1.3.1. The number 1 is a prime.
+%                     Proof: ...
+%              1.3.2. If n is an odd prime, then n+2 is prime.
+%                     Proof: ...
+%              1.3.3. QED
+%                     Proof: 1.3.1, 1.3.2, and mathematical induction.
+%    
+%    This is entered as 
+%    
+%      \step{label-1.3}{All odd numbers  are prime}
+%      \begin{proof}
+%      \pfsketch\ The proof is by induction...
+%       \step{label-1.3.2}{The number 1 is a prime}
+%       ...
+%      \end{proof}
+%    
+%    The \pfsketch command is, like \pf, just produces the text.  It isn't
+%    required by the pf style.
+%    
+%
+%  3. DIFFERENT STYLES OF NUMBERING 
+%
+%    In the long style of proof numbering, a step number is something like
+%    2.6.7.5, meaning that it is the fifth step in the proof of statement
+%    2.6.7, which is the seventh step in the proof of statement 2.6, which
+%    is...  Statement 2.6.7.5 has the short name <4>5, meaning it is the
+%    fifth statement in the current level-4 proof.  Numbering style is
+%    controlled by the commands
+%    
+%      \pfshortnumbers{N} : Use short step numbers for all levels
+%                           >= N (Default is N = 1, using only short
+%                           numbers.
+%    
+%    These are local declarations that obey the usual scoping rules.  Thus,
+%    putting a \pfshortnumbers declarations right after a \begin{proof}
+%    command causes all steps in that proof to have short numbers.
+%
+%    Steps 2.6.7.5, 2.6.6.5, and 4.9.1.5 all have the same short numbers
+%    <4>5.  However, no ambiguity arises from the use of short numbers
+%    because at most one of these steps can be mentioned at any point in a
+%    proof.  Let the ANCESTORS of step 2.6.7.5 be steps 2.6.7, 2.6, and 2.
+%    Let the ELDER SIBLINGS of step 2.6.7.5 be steps 2.6.7.1, 2.6.7.2,
+%    2.6.7.3, and 2.6.7.4.  The proof statement 2.6.7.5 may refer only
+%    to steps in the following two sets:
+%       (i) The elder siblings of itself and of its ancestors.
+%      (ii) Itself and its ancestors.
+%    The steps in (i) are the previously-proved assertions that can be used
+%    in the proof of 2.6.7.5.  The assumptions of the steps in (ii) are the
+%    ones that are being assumed in the proof.  (Assumptions are discussed
+%    below.)
+%    
+%    The command \stepref{LABEL} anywhere in the proof of step 2.6.7.5 (or in
+%    the step itself) produces the step number of a step lying in sets (i)
+%    or (ii) having LABEL as its label (the first argument of its \step
+%    command).  An error message is generated if the \step command has a
+%    label that is the label of a step in set (i) or (ii).
+%    
+%    Note that the last step of a proof is never an elder sibling, so it
+%    can't be in the set (i) for any statement.  A QED-step has no
+%    assumptions, so it can't be in the set (ii) for any statement.  That is
+%    why the \qedstep command does not specify a label.  Actually, \qedstep
+%    is defined to equal \label{qedstepN}{...}, where N is the current
+%.   level number. Thus, an error will be generated if two \qedstep commands 
+%    occur in the same proof, since they will have the same labels.
+
+%
+%    Short step numbers are really nice.  They take up less space and are
+%    easier to read.  They are the preferred form for long proofs.  However,
+%    long step numbers are better for referring to a proof step from outside
+%    the proof.  The pf style allows you to print the long numbers of steps as
+%    marginal notes, something like
+%    
+%       Theorem:  ...
+%       ...
+%     2.4.5.6.         <4>6. All odd numbers greater than 2 are prime.
+%     2.4.5.6.1.             <5>1. The number 3 is prime.
+%       ...
+%    
+%    (The long numbers are printed in a smaller font, so it looks
+%    better than you'd guess from this.)  The relevant commands are:
+%    
+%    \pfsidenumbers{N}{D} 
+%       Print side numbers for proof steps of all levels \geq N, left-aligned 
+%       a distance D to the left of the left margin of the text.
+%    
+%    \pfnosidenumbers  
+%       Do not print side numbers (the default)
+%
+%
+%  4. INDENTATION
+%
+%    There are two styles of indentation:
+%    
+%       Long Style 
+%          1. XXXXX
+%             1.1. XXXXX
+%                  1.1.1. XXXXX
+%                         1.1.1.1. XXXX
+%                                  Proof: ...
+%    
+%       Short Style 
+%          1. XXXXX
+%            1.1. XXXXX
+%              1.1.1. XXXXX
+%                1.1.1.1. XXXX
+%                  Proof: ...
+%    
+%    In the long style, the proof of a statement lines up with the text of
+%    the statement.  In the short form, each level is indented the same
+%    distance from the next higher level.  The relevant declarations
+%    are
+%    
+%    \pflongindent 
+%       Indent proofs to full width of item label
+%    
+%    \pfshortindent 
+%       Indent proofs by the length parameter \pfindent (the default)
+%
+%
+%  5. ASSUMPTIONS
+%
+%    A common form of a step is 
+%        
+%          <4>5. Assume: 1. n is an odd number
+%                        2. n > 2
+%                Prove:  n is prime 
+%    
+%    This asserts that the Prove clause follows from the Assume clause.  The
+%    "QED" at the end of the proof of this step refers to the Prove clause.
+%    The input to produce this is
+%    
+%        \step{label-4.5}{
+%          \assume{\begin{enumerate}
+%                    \item $n$ is an odd number
+%                    \item $n>2$
+%                  \end{enumumerate}}
+%          \prove{$n$ is prime}}
+%    
+%    The relevant command syntax is
+%    
+%       \assume{TEXT}
+%       \prove{TEXT}
+%    
+%    The formatting of the enumerate environment is changed to work
+%    propertly inside a proof environment.  (It is actually redefined
+%    to be the pfenum environment, described far below.)  Note that
+%    \label and \ref command for subitem b of item 3 produces the label
+%    "3b".  Note: there is an enumerate* environment that is like
+%    enumerate, except it indents the items.
+%     
+%    
+%    Another form of assumption is a Case assumption.  The statement
+%    
+%          <5>1. Case: n is of the form 4n+1
+%    
+%    means
+%    
+%          <5>1. Assume: n is of the form 4n+1
+%                Prove:  QED
+%    
+%    where QED is the current goal.  A proof by cases is structured
+%    as follows
+%    
+%          <4>5. Assume: 1. n is an odd number
+%                        2. n > 2
+%                Prove:  n is prime 
+%    
+%               <5>1. Assume: n equals 4m+1 for some m
+%                     Prove:  QED
+%                     Proof:  ... []
+%    
+%               <5>2. Assume: n equals 4m+3 for some m
+%                     Prove:  QED
+%                     Proof: ... []
+%    
+%               <5>3. QED
+%                     Proof: By <5>1, <5>2, and assumption <4>.2 (which 
+%                     states that n is odd), since any odd number has
+%                     the form 4m+1 or 4m+3. []
+%    
+%    A case assumption is produced with a \case command, which works like
+%    \assume and \prove.  It has the syntax
+%    
+%        \case{TEXT}
+%    
+%    Corresponding to the \assume, \prove, and \case commands are
+%    the assume+, prove+, and case+ environments.  For example, \prove{TEXT}
+%    is equivalent to \begin{prove+} TEXT \end{prove+}
+%    
+%    Note the reference, in the proof of <5>3, to the second conjunct of the
+%    Assume clause in statement <4>5 as "assumption <4>.2".  Since a proof
+%    of a step can only use assumptions in that step or its ancestors, a
+%    level number suffices to identify an assumption.  The Assume clause of
+%    statement <4>5 is called "assumption <4>".  The ".2" refers to the
+%    second item in that clause.  As mentioned below, this use of ".2" to
+%    refer to the second component of a conjunction can be used 
+%    in other circumstances as well.
+%    
+%    When long numbering is used, assumptions must be referred to by the
+%    name of the statement containing the assumption.  Thus, "assumption
+%    2.6.7.5.2" could potentially mean either the Assume clause of statement
+%    2.6.7.5.2, or the second item in the Assume clause of 2.6.7.5.  One way
+%    to remove the ambiguity is to use something other than "." in long step
+%    numbers.  The possibilities 2:6:7:5 and 2-6-7-5 don't look too good;
+%    the best alternative to "." seems to be a raised period ($\cdot$).  The
+%    "." is changed by redefining \pfdot, as described below.  Assumptions
+%    are referred to with the following commands:
+%    
+%       \levelref{LABEL}
+%         If \stepref{LABEL} produces <4>5, then \levelref{label} 
+%         produces <4>.
+%         If \stepref{LABEL} produces 2.6.7.5, then \levelref{label} also 
+%         produces 2.6.7.5.
+%
+%       \toplevel
+%         If \stepref{LABEL} produces <4>5, then \toplevel
+%         produces "<0>".
+%         If \stepref{LABEL} produces 2.6.7.5, then \toplevel
+%         produces "0".
+%
+%
+%  6. PORTIONS OF A PROOF
+%
+%    You may want to format only part of a proof--for example, you might
+%    want to write the proof of statement 2.1.3 as a separate proof.  You'd
+%    want something like
+%    
+%    2.1.3. All odd numbers are prime.
+%           2.1.3.1. ...
+%    
+%    To do this, first imagine the shortest proof you can that has a
+%    statement numbered 2.1.3: 
+%    
+%        1. X
+%        2. X
+%           2.1. X
+%                2.1.1. X
+%                2.1.2. X
+%                2.1.3. All odd numbers are prime.
+%                       2.1.3.1. ...
+%    
+%    Write this using the \step command and prove environment.  Now, change
+%    every \step{LABEL}{X} command to \nostep{LABEL}, and change the proof
+%    environments surrounding the proofs of steps 2 and 2.1 by noproof
+%    environments.  This yields
+%    
+%        \begin{proof}
+%          \nostep{label-1}
+%          \nostep{label-2}
+%          \begin{noproof}
+%            \nostep{label-2.1}
+%            \begin{noproof}
+%              \nostep{label-2.1.1}
+%              \nostep{label-2.1.2}
+%        
+%               \step{label-2.1.3} All oddnumbers are prime
+%               \begin{proof}
+%                  \step{label-2.1.3.1} ...
+%               \end{proof}
+%              \end{noproof}
+%            \end{noproof}
+%        \end{proof}
+%    
+%    which produces the desired result.  Note that the labels of the \nostep
+%    commands can be used to refer to the corresponding step numbers.
+%
+%  7. CONJUNCTIONS AND DISJUNCTIONS
+%
+%    It is very convenient to write conjunctions as lists bulleted by \land.
+%    This is done with the conj environment, where
+%    
+%     $X =  \begin{conj}    PRODUCES    X =  /\ A
+%             A \\ B \\ C                    /\ B
+%           \end{conj}$                      /\ C
+%
+%    The conj* environment is similar, except it numbers the conjuncts.
+%    
+%     $X = \begin{conj*}    PRODUCES    X = 1./\ A
+%            A \\ B \\ C                    2./\ B
+%          \end{conj*}$                     3./\ C
+%
+%    If X is defined in this way, then X.2 denotes the formula B.
+%
+%    The disj and disj* environments are similar. Disjuncts
+%    are numbered a, b, c 
+%
+%    These environments are implemented with the array environment.
+%    They should nest properly.  They can be used only in math mode.
+%
+%
+%  8. MISCELLANY
+%
+%    \pfhidelevel{N} : A counter that controls what levels of proof
+%        are shown.  The command \setcounter{pfhidelevel}{2} causes
+%        only level-1 and level-2 steps to be printed, and the proofs
+%        of level-2 steps (including all level-3 and higher steps)
+%        to be omitted.  The default value of the counter is very large.
+%        The value of the counter should always be positive.
+%
+%   \unhideqedproof 
+%   \hideqedproof   : Used in conjunction with the pfhidelevel counter.
+%        The \unhideqedproof command causes one extra level of proof 
+%        to be displayed for the lowest level \qedstep.  The \hideqedproof
+%        returns to the default of not showing this extra level.
+%       
+%    \pflet  : like \prove and \assume, but with keyword "Let"
+%
+%    \kwfont : Selects the font for the keywords "Proof", "Assume",
+%              "Prove", and "Case".  Default is \sc; you can 
+%              change it by something like \renewcommand{\kwfont}{\em}
+%
+%    \pfdot : Defines the "." in long step numbers.  Try
+%             \renewcommand{\pfdot}{\mbox{$\cdot$}} for variety.
+%
+%    \pfindent : The amount by which proof levels are indented in
+%                the short indent option.  Changed with \setlength.
+%                This is a local declaration.
+%
+%    \pfstepnumber{LEVEL}{NUMBER}{LONGNUMBER} :
+%        Generates either <LEVEL>NUMBER or LONGNUMBER, depending
+%        on the numbering style in effect.
+%
+%    \pflevelnumber{LEVEL}{LONGNUMBER} :
+%        Generates either <LEVEL> or LONGNUMBER, depending
+%        on the numbering style in effect.
+%
+%    The following parameters control vertical spacing.  
+%    
+%      \pftopsep  : space above first proof environment
+%      \pfbotsep  : space below first proof environment
+%      \pfsep     : space above and below inner proof environment
+%      \stepsep   : space above and below proof step
+%    
+%    The last two are set to zero, and probably should remain there.  It
+%    might be desirable to have vertical spacing depend more finely on the
+%    level number.  This can be done using the \makefcn command (see far
+%    below), and will be if there seems to be a need.  However,
+%    zero extra vertical spacing seems to be fine.
+%
+%    \pf, \qed, \pfsketch  :  Described above.  Can be changed with 
+%                             \renewcommand
+%
+%
+%  9. LIST OF ALL COMMANDS AND ENVIRONMENTS
+%
+%    Text-Producting Commands            Environments
+%      \pf, \pfsketch                      proof
+%      \qed                                noproof
+%      \step                               step+   [version of \step]        
+%      \nostep                             assume+ [version of \assume]
+%      \qedstep                            prove+  [version of \prove]        
+%      \assume                             case+   [version of \case]        
+%      \prove                              conj, conj*
+%      \pflet                              disj, disj*
+%      \case                               pfenum, enumerate*
+%      \pfdot ["." in long names]          
+%      \stepref, \levelref, \toplevel
+%      \pfstepnumber, \pflevelnumber
+%      
+%    Declarations
+%      \kwfont [keyword font]
+%      \pfshortnumbers
+%      \pfsidenumbers, \pfnosidenumbers
+%      \pflongindent, \pfshortindent
+%      \pfindent
+%      \pftopsep, \pfbotsep  
+%      \pfsep, \stepsep   
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       SPACING                               %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% COMMANDS
+%   \pflongindent == Indent proofs to full width of item label
+%   \pfshortindent == Indent proofs by \pfindent [the default]
+
+\newif\if@pfLongIndent %  true if indent proof to width of label.
+\@pfLongIndentfalse
+\newcommand{\pflongindent}{\@pfLongIndenttrue}
+\newcommand{\pfshortindent}{\@pfLongIndentfalse}
+
+% PARAMETERS
+%  \pfindent   == indentation at beginning of a proof
+%  \pftopsep   == space above first proof environment
+%  \pfbotsep   == space below first proof environment
+%  \pfsep      == space above and below inner proof environment
+%  \stepsep    == space above and below proof step
+%  pfhidelevel == counter, specifying level at which proofs are hidden
+
+\newlength{\pfindent}      
+\newlength{\pftopsep}  
+\newlength{\pfbotsep}  
+\newlength{\pfsep}  
+\newlength{\stepsep}        
+\newbox{\pfbox}
+\newcounter{pfhidelevel}
+\setcounter{pfhidelevel}{9999}
+\newcommand{\pfhidelevel}[1]{\setcounter{pfhidelevel}{#1}}
+
+\setlength{\pfindent}{1em} 
+\setlength{\pftopsep}{1ex}     % space above first proof environment
+\setlength{\pfbotsep}{1ex}     % space below first proof environment
+\setlength{\pfsep}{0pt}        % space above and below inner proof environment
+\setlength{\stepsep}{0pt}      % space above and below proof step
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                   STEP NUMBERING                            %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% COMMANDS
+%   \pfshortnumbers{N} == Use short step numbers for all levels >= N
+%
+%   \pfsidenumbers{N}{D} == print side numbers for proof steps of all
+%                           levels >= N, left-aligned length D 
+%                           to left of left margin
+%   \pfnosidenumbers     == do not print side numbers (the default)
+
+%\newcommand{\pflongnumbers}{\@pfLongNumberstrue}
+\newcommand{\pfshortnumbers}[1]{\pfshortNumberLevel=#1\relax}
+
+\newcount\pfshortNumberLevel \pfshortNumberLevel=0
+
+% \@pfLongNumbersfalse}
+% \newif\if@pfLongNumbers %  true if indent proof to width of label.
+%\@pfLongNumbersfalse
+
+\newcommand{\pfstepnumber}[3]{%
+   \ifnum \pfLevelCount < \pfshortNumberLevel
+       #3%
+     \else $\langle#1\rangle#2$%
+   \fi}
+
+\newcommand{\pflevelnumber}[2]{%
+   \ifnum \pfLevelCount < \pfshortNumberLevel
+       #2%
+     \else $\langle#1\rangle$%
+   \fi}
+
+\newif\if@pfSideNumbers %  true if putting long numbers at margin
+\@pfSideNumbersfalse
+\newcounter{pf@sidenumberdepth}
+\newlength{\pf@sidenumberoutdent}
+\newcommand{\pfsidenumbers}[2]{\@pfSideNumberstrue
+     \setcounter{pf@sidenumberdepth}{#1}%
+     \addtocounter{pf@sidenumberdepth}{-1}%
+     \setlength{\pf@sidenumberoutdent}{#2}}
+\newcommand{\pfnosidenumbers}{\@pfSideNumbersfalse}
+
+
+\newcount\pfLevelCount  \pfLevelCount=0 % current level number
+\newcount\pfStepCount   \pfStepCount=0  % current step number
+\newcommand{\pfLongLevel}{} % The long version of current level--e.g., 2.7.5
+\newcommand{\pfLongStep}{}  % The long version of current step--e.g., 2.7.5.2
+\newcommand{\pfStepName}{}  % {current level name}{current step name} 
+
+% \pfSetName ==  LongStep := current long step name
+%                StepName := current step name
+\newcommand{\pfSetName}{%
+  \edef\pfLongStep{%
+    \ifnum\pfLevelCount>\@ne
+      \pfLongLevel\pfdot\the\pfStepCount
+     \else\the\pfStepCount\fi}%
+  \edef\pfStepName{%
+   \ifnum \pfLevelCount < \pfshortNumberLevel
+    {\pfLongStep}{\pfLongStep}%
+    \else
+     {$\langle\the\pfLevelCount\rangle$}%
+     {$\langle\the\pfLevelCount\rangle\the\pfStepCount$}%
+   \fi}}
+
+% \pfSetRef{foo} ==  IF \pf@foo UNDEFINED
+%                       THEN \pf@foo := StepName 
+%                       ELSE WARNING
+\newcommand{\pfSetRef}[1]{%
+  \@ifundefined{pf@#1}%
+    {\expandafter
+      \edef\csname pf@#1\endcsname{\pfStepName}}%
+    {\typeout{WARNING:
+         proof step "#1" (<\the\pfLevelCount>\the\pfStepCount) 
+        already defined}}%
+    }
+
+
+\newcommand{\pfPrintStepNumber}[2]{#2}
+\newcommand{\pfPrintLevelNumber}[2]{#1}
+
+% \stepref{FOO} == Print \pf@FOO as a step number
+\newcommand{\stepref}[1]{\@ifundefined{pf@#1}{{\bf ??}\typeout{WARNING:
+ proof step "#1" undefined}}{\expandafter\expandafter\expandafter
+ \pfPrintStepNumber\csname pf@#1\endcsname}}
+
+\newcommand{\levelref}[1]{\@ifundefined{pf@#1}{{\bf ??}\typeout{WARNING:
+ proof step #1 undefined}}%
+  {\expandafter\expandafter\expandafter
+ \pfPrintLevelNumber\csname pf@#1\endcsname}}
+
+\newcommand{\toplevel}{\pflevelnumber{0}{0}}
+
+\newlength{\pf@outdent}
+\newcommand{\pfSideNumber}{%
+  \if@pfSideNumbers 
+   \ifnum\pfLevelCount>\value{pf@sidenumberdepth}%
+    \hspace*{-\pf@outdent}%
+    \makebox[0pt][l]{\footnotesize\pfLongStep}%
+    \hspace*{\pf@outdent}%
+    \else\fi
+   \else\fi}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                   THE pflist ENVIRONMENT                    %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%% The pflist environment is the same as list environment except 
+%% it can be nested deeper.
+
+\def\pflist#1#2{\ifnum \@listdepth >15\relax \@toodeep 
+     \else \global\advance\@listdepth\@ne \fi
+  \rightmargin \z@ \listparindent\z@ \itemindent\z@
+  \csname @list\romannumeral\the\@listdepth\endcsname 
+  \def\@itemlabel{#1}\let\makelabel\@mklab \@nmbrlistfalse #2\relax
+  \@trivlist
+  \parskip\parsep \parindent\listparindent
+  \advance\linewidth -\rightmargin \advance\linewidth -\leftmargin
+  \advance\@totalleftmargin \leftmargin
+  \parshape \@ne \@totalleftmargin \linewidth 
+  \ignorespaces}
+
+\def\endpflist{\global\advance\@listdepth\m@ne
+    \endtrivlist}
+
+\let\@listvii=\@listv
+\let\@listviii=\@listv
+\let\@listix=\@listv
+\let\@listx=\@listv
+\let\@listxi=\@listv
+\let\@listxii=\@listv
+\let\@listxiii=\@listv
+\let\@listxiv=\@listv
+\let\@listxv=\@listv
+\let\@listxvi=\@listv
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                   THE proof ENVIRONMENT                     %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+
+\newenvironment{proof}{%       BEGIN:
+  \edef\pfLongLevel          % LongLevel := 
+   {\ifnum\pfLevelCount>\z@  %    IF LevelCount > 0
+     \ifnum\pfLevelCount>\@ne%     THEN IF LevelCount > 1
+      \pfLongLevel\pfdot\else\fi  %            THEN LongLevel * "." FI
+      \the\pfStepCount       %          * StepCount
+     \else\fi}%              %     ELSE FI
+  \advance\pfLevelCount\@ne  %   LevelCount := LevelCount + 1
+  \@tempcnta=\value{pfhidelevel}%
+  \ifnum\@tempcnta<\@ne
+    \setcounter{pfhidelevel}{1}%
+    \typeout{WARNING: pfhidelevel < 1, setting to 1}%
+    \@tempcnta=\@ne\fi
+  \advance\@tempcnta\@ne
+  \if@qedstep
+    \advance\@tempcnta\@ne
+    \ifnum\pfLevelCount 
+        = \@tempcnta 
+     \sbox{\pfbox}\bgroup\begin{minipage}{\textwidth}\fi
+  \else     
+   \ifnum\pfLevelCount 
+        = \@tempcnta 
+     \sbox{\pfbox}\bgroup\begin{minipage}{\textwidth}\fi\fi
+  \pfStepCount=\z@           %   StepCount  := 0
+  \ifnum\pfLevelCount>\@ne   %   IF LevelCount > 1
+   \begin{pflist}{}{%          %     THEN Begin List with
+    \topsep=\pfsep\relax     %           \topsep     := \pfsep
+    \itemsep=\z@             %           \itemsep    := 0
+    \parsep=\z@              %           \parsep     := 0
+    \partopsep=\z@           %           \partopsep  := 0
+    \if@pfLongIndent         %          IF LongIndent
+     \settowidth{\leftmargin}%%           THEN
+      {\expandafter          %              \leftmargin := width of step name
+       \pfPrintStepNumber    %                             + \labelsep
+       \pfStepName.}%
+     \advance\leftmargin
+     \labelsep 
+    \else                    %           ELSE
+    \leftmargin=\pfindent    %            \leftmargin := \pfindent
+    \fi\relax        
+   }   \item[]
+   \else \par                %     ELSE \par
+    \addvspace{\pftopsep}%   %          addvspace of \pftopsep
+    \parindent=\z@           %          \parindent := 0
+    \parskip = \z@           %          \parskip := 0
+    \@ifundefined{mathindent}{%
+      \abovedisplayskip=\z@ plus .2ex       % set display skips
+      \abovedisplayshortskip=\z@ plus .2ex
+      \belowdisplayskip=\z@ plus .2ex
+      \belowdisplayshortskip=\z@ plus .2ex}{%
+      \mathindent=1em}%
+    \let\enumerate\pfenum       %   enumerate environment <- pfenum
+    \let\endenumerate\endpfenum %
+ \fi
+\@qedstepfalse
+    }%                       % END:
+  {\ifnum\pfLevelCount>\@ne  %   IF LevelCount > 1
+    \end{pflist}%              %     THEN End List
+   \else \par                %     ELSE \par
+     \addvspace{\pfbotsep}%  %          addvspace of \pfbotsep
+   \fi
+  \@tempcnta=\value{pfhidelevel}%
+  \advance\@tempcnta\@ne
+  \if@qedstep
+    \advance\@tempcnta\@ne
+    \ifnum\pfLevelCount 
+        = \@tempcnta 
+     \end{minipage}\egroup\sbox{\pfbox}{}\@qedstepfalse\fi
+  \else 
+      \ifnum\pfLevelCount 
+        =\@tempcnta 
+        \end{minipage} 
+        \egroup\sbox{\pfbox}{}\fi
+ \fi}
+
+
+\newenvironment{noproof}{%   % BEGIN:
+  \edef\pfLongLevel          % LongLevel := 
+   {\ifnum\pfLevelCount>\z@  %    IF LevelCount > 0
+     \ifnum\pfLevelCount>\@ne%     THEN IF LevelCount > 1
+      \pfLongLevel.\else\fi  %            THEN LongLevel * "." FI
+      \the\pfStepCount       %          * StepCount
+     \else\fi}%              %     ELSE FI
+  \advance\pfLevelCount\@ne  %   LevelCount := LevelCount + 1
+  \pfStepCount=\z@           %   StepCount  := 0
+  \par                       %   \par
+  \parindent=\z@             %          \parindent := 0
+  \parskip = \z@             %          \parskip := 0
+  \@ifundefined{mathindent}{%
+      \abovedisplayskip=\z@ plus .2ex       % set display skips
+      \abovedisplayshortskip=\z@ plus .2ex
+      \belowdisplayskip=\z@ plus .2ex
+      \belowdisplayshortskip=\z@ plus .2ex}{%
+      \mathindent=1em}%
+  \let\enumerate\pfenum       %   enumerate environment <- pfenum
+  \let\endenumerate\endpfenum %
+  }%                         % END:
+  {\par}                     %  \par
+
+%% step 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                     \step, \assume, ETC.                    %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\newcommand{\step}[2]{\begin{step+}{#1}#2\end{step+}}
+\newif\if@qedstep %  true right after a \qedstep if in the scope of an 
+                  %  \unhideqedproof declaration
+\@qedstepfalse
+
+\newif\if@unhideqedstep % set true by \unhideqproof, false by \hideqproof. 
+
+\@unhideqedstepfalse
+\newcommand{\unhideqedproof}{\@unhideqedsteptrue}
+\newcommand{\hideqedproof}{\@unhideqedstepfalse}
+
+\newcommand{\qedstep}{\step{qedstep\the\pfLevelCount}{Q.E.D.}
+\if@unhideqedstep\@qedsteptrue\fi}
+
+\newcommand{\nostep}[1]{% 
+  \advance\pfStepCount\@ne       % StepCount := StepCount + 1
+  \pfSetName                     % SetName
+  \pfSetRef{#1}%                 % SetRef
+  }
+
+\newenvironment{step+}[1]%
+ {\endgroup                      % Move Outside environment scope
+  \advance\pfStepCount\@ne       % StepCount := StepCount + 1
+  \pfSetName                     % SetName
+  \pfSetRef{#1}%                 % SetRef
+ \begingroup\@endpefalse         % Move inside environment scope
+   \def\@currenvir{step+}%       %   by simulating \begin{step+}
+ \begin{pflist}{}{%                % Begin list environment with
+   \setlength
+     {\pf@outdent}{\textwidth}%  %   \pf@outdent = outdent
+   \addtolength                  %                 for side numbers
+    {\pf@outdent}{-\linewidth}%  
+   \addtolength
+    {\pf@outdent}%
+    {\pf@sidenumberoutdent}%
+   \topsep=\stepsep\relax        %   \topsep     := \stepsep
+   \itemsep=\z@                  %   \itemsep    := 0
+   \parsep=\z@                   %   \parsep     := 0
+   \partopsep=\z@                %   \partopsep  := 0
+   \settowidth{\labelwidth}%     %   \labelwidth := width of step name.
+     {\expandafter
+      \pfPrintStepNumber
+      \pfStepName.}%
+   \leftmargin=\labelwidth\relax %   \leftmargin := \labelwidth
+   \advance\leftmargin\labelsep %                   + \labelsep
+   \relax}%
+ \item[\pfSideNumber%               % \item[ \pfSideNumber
+  \expandafter                       %        StepNumber]
+  \pfPrintStepNumber\pfStepName.]}%
+ {\end{pflist}}
+
+%%%%% \assume, \prove, and \case commands
+
+\newenvironment{assume+}{%
+ \begin{pflist}{}{%                % Begin list environment with
+   \topsep=\z@                   %   \topsep     := 0
+   \itemsep=\z@                  %   \itemsep    := 0
+   \parsep=\z@                   %   \parsep     := 0
+   \partopsep=\z@                %   \partopsep  := 0
+   \settowidth{\labelwidth}%     %   \labelwidth := width "Assume:"
+     {{\kwfont Assume\/}:}%
+   \leftmargin=\labelwidth\relax %   \leftmargin := \labelwidth
+   \advance\leftmargin\labelsep  %                   + \labelsep
+   \relax}%
+ \item[{\kwfont Assume\/}:]}%    % \item[Assume:]]
+ {\end{pflist}}
+
+\newcommand{\assume}[1]{\begin{assume+}#1\end{assume+}}
+
+\newcommand{\prove}[1]{\begin{prove+}#1\end{prove+}}
+\newenvironment{prove+}{%
+ \begin{pflist}{}{%                % Begin list environment with
+   \topsep=\z@                   %   \topsep     := 0
+   \itemsep=\z@                  %   \itemsep    := 0
+   \parsep=\z@                   %   \parsep     := 0
+   \partopsep=\z@                %   \partopsep  := 0
+   \settowidth{\labelwidth}%     %   \labelwidth := width "Assume:"
+     {{\kwfont Assume\/}:}%
+   \leftmargin=\labelwidth\relax %   \leftmargin := \labelwidth
+   \advance\leftmargin\labelsep  %                   + \labelsep
+   \relax}%
+ \item[{\kwfont 
+          Prove\/}:\hfill]}%     % \item[Prove:]]
+ {\end{pflist}}
+
+\newcommand{\pflet}[1]{\begin{pflet+}#1\end{pflet+}}
+\newenvironment{pflet+}{%
+ \begin{pflist}{}{%                % Begin list environment with
+   \topsep=\z@                   %   \topsep     := 0
+   \itemsep=\z@                  %   \itemsep    := 0
+   \parsep=\z@                   %   \parsep     := 0
+   \partopsep=\z@                %   \partopsep  := 0
+   \settowidth{\labelwidth}%     %   \labelwidth := width "Assume:"
+     {{\kwfont Let\/}:}%
+   \leftmargin=\labelwidth\relax %   \leftmargin := \labelwidth
+   \advance\leftmargin\labelsep  %                   + \labelsep
+   \relax}%
+ \item[{\kwfont 
+          Let\/}:\hfill]}%     % \item[Let:]]
+ {\end{pflist}}
+
+%\newcommand{\prove}[1]{%
+% \begin{pflist}{}{%                % Begin list environment with
+%   \topsep=\z@                   %   \topsep     := 0
+%   \itemsep=\z@                  %   \itemsep    := 0
+%   \parsep=\z@                   %   \parsep     := 0
+%   \partopsep=\z@                %   \partopsep  := 0
+%   \settowidth{\labelwidth}%     %   \labelwidth := width "Assume:"
+%     {{\kwfont Assume\/}:}%
+%   \leftmargin=\labelwidth\relax %   \leftmargin := \labelwidth
+%   \advance\leftmargin\labelsep  %                   + \labelsep
+%   \relax}%
+% \item[{\kwfont Prove\/}:\hfill]     % \item[Prove:]]
+% #1
+% \end{pflist}}
+
+\newcommand{\case}[1]{%
+ \begin{pflist}{}{%                % Begin list environment with
+   \topsep=\z@                   %   \topsep     := 0
+   \itemsep=\z@                  %   \itemsep    := 0
+   \parsep=\z@                   %   \parsep     := 0
+   \partopsep=\z@                %   \partopsep  := 0
+   \settowidth{\labelwidth}%     %   \labelwidth := width "Case:"
+     {{\kwfont Case\/}:}%
+   \leftmargin=\labelwidth\relax %   \leftmargin := \labelwidth
+   \advance\leftmargin\labelsep  %                   + \labelsep
+   \relax}%
+ \item[{\kwfont
+           Case\/}:]             % \item[Case:]]
+ #1
+ \end{pflist}}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       MISCELLANY                            %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\newcommand{\pf}{{\kwfont Proof\/}:}
+\newcommand{\pfsketch}{{\kwfont Proof sketch\/}:}
+%\newcommand{\qed}{\rule{.4em}{1.75ex}}
+\newcommand{\qed}{{\fboxsep=\z@\fbox{\rule{.5em}{0pt}\rule{0pt}{2ex}}}}
+\let\kwfont=\sc
+\def\pfdot{.}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                        STACKS                               %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% \@push{\stack}{element}  == \stack := <<element>> :o: \stack
+% \@pop{\stack}{\cmd}  == \cmd := head(\stack)
+%                            \stack := tail(\stack)
+% \newstack{\stack}  == \stack := emptystack
+%
+% \@head{\stack}{\var}  ==  \var := head(\stack)
+%   Note: to push a counter value, use \the\value{ctr}
+%         to push a length \foo, use \the\foo
+
+%
+\def\@push#1#2{{\let\@nil\relax\let\@elt\relax\xdef#1{#2\@elt#1}}}
+\def\@pop#1#2{{\let\@nil\relax\let\@elt\relax
+              \xdef#2{\expandafter\@innerhead#1}
+              \xdef#1{\expandafter\@innerpop#1}}}
+\def\@innerpop#1\@elt#2\@nil{#2\@nil}
+\def\@head#1#2{{\let\@elt\relax\xdef#2{\expandafter\@innerhead#1}}}
+\def\@innerhead#1\@elt#2\@nil{#1}
+\def\newstack#1{\gdef#1{\@nil}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%           LISTS OF CONJUNCTIONS AND DISJUNCTIONS            %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%    \begin{conj}       ->   /\ A
+%      A \\ B \\ C           /\ B
+%    \end{conj}              /\ C
+%
+%    \begin{conj*}      ->   1./\ A
+%      A \\ B \\ C           2./\ B
+%    \end{conj*}             3./\ C
+%
+%    The disj and disj* environments are similar. Disjuncts
+%    are numbered a, b, c 
+%
+%    These environments are arrays; they must be used in math mode.
+
+\newcounter{pf@conjCounter}   % counter for conj* and disj*
+\newstack\pf@conj             % stack of counters
+
+\newenvironment{conj}{%
+ \begin{array}[t]{@{\land\;}l@{}}%
+ }{%
+ \end{array}}
+
+\newenvironment{disj}{%
+ \begin{array}[t]{@{\lor\;}l@{}}%
+ }{%
+ \end{array}}
+
+\newenvironment{conj*}{%
+ \@push\pf@conj{\the\value{pf@conjCounter}}%
+ \setcounter{pf@conjCounter}{0}%
+ \begin{array}[t]{@{\addtocounter{pf@conjCounter}{1}%
+   \mbox{\protect\small\protect\arabic{pf@conjCounter}.}
+   \land\;}l@{}}%
+ }{%
+ \end{array}%
+ \@pop\pf@conj\pf@temp
+  \setcounter{pf@conjCounter}{\pf@temp}}
+
+\newenvironment{disj*}{%
+ \@push\pf@conj{\the\value{pf@conjCounter}}%
+ \setcounter{pf@conjCounter}{0}%
+ \begin{array}[t]{@{\addtocounter{pf@conjCounter}{1}%
+   \mbox{\protect\small\protect\alph{pf@conjCounter}.}
+   \lor\;}l@{}}%
+ }{%
+ \end{array}%
+ \@pop\pf@conj\pf@temp
+  \setcounter{pf@conjCounter}{\pf@temp}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      ENUMERATED LISTS                       %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% pfenum environment : In proofs, the enumerate environment 
+%                      is redefined to be the pfenum environment
+%
+% enumerate* environment : Like pfenum, except with additional
+%                          indentation.
+%
+% \enumindent :  The indentation for enumerate*
+% pfenumdepth  : Depth of current pfenum list
+% pfenum       : pfenum list counter
+%
+% Uses counters pfenumi, ... , pfenumiii just like the
+% ordinary enumerate environment uses counters enumi, ... , enumiv.
+% \pf@setEnumWidth{\cmd} : Sets \cmd to the width of the label of the
+%                          item number 2 for the current enumeration level.
+%
+% \pf@enumLabel : prints the current pfenum label, using the
+%                 pfenumi... counter.
+
+\newcounter{pfenum}
+\newcounter{pfenumdepth}
+\newlength{\enumindent}
+\setlength{\enumindent}{1em}
+
+\@definecounter{pfenumi}
+\@definecounter{pfenumii}
+\@definecounter{pfenumiii}
+%\@definecounter{pfenumiv}
+
+\def\labelpfenumi{\thepfenumi.}    
+\def\thepfenumi{\arabic{pfenumi}}     
+ 
+\def\labelpfenumii{(\thepfenumii)}
+\def\thepfenumii{\alph{pfenumii}}
+\def\p@pfenumii{\thepfenumi}
+
+\def\labelpfenumiii{\thepfenumiii.}
+\def\thepfenumiii{\roman{pfenumiii}}
+\def\p@pfenumiii{\thepfenumi\thepfenumii}
+
+%\def\labelpfenumiv{\thepfenumiv.}
+%\def\thepfenumiv{\Alph{pfenumiv}}     
+%\def\p@pfenumiv{\p@pfenumiii\thepfenumiii}
+
+
+\newcommand{\pf@setEnumWidth}[1]{%
+  \settowidth{#1}{\setcounter{\@pfenumctr}{2}%
+  \csname the\@pfenumctr\endcsname.%
+  \setcounter{\@pfenumctr}{0}}}
+
+
+
+\newcommand{\pf@enumLabel}{%
+  \hfill\makebox[0pt][r]{\csname the\@pfenumctr\endcsname.}}
+
+\newenvironment{pfenum}{%        % BEGIN
+  \ifnum \value{pfenumdepth}>2%  %  IF pfenumdepth > 2
+    \relax\@toodeep \else        %    THEN error
+  \addtocounter{pfenumdepth}{1}% %    ELSE  pfenumdepth := pfenumdepth + 1
+  \edef\@pfenumctr{pfenum%           %          @pfenumctr  := pfenumN
+    \romannumeral\the            %            where N = Roman(pfenumdepth)
+    \value{pfenumdepth}}%        %
+   \fi                           %  FI
+  \begin{pflist}%                  %   Begin list environment with
+  {\pf@enumLabel}{%              %    Default label = pf@enumlabel
+   \labelsep=                    %   \labelsep =
+    \ifcase\value{pfenumdepth}   %     CASE OF pfenumdepth
+      \labelsep                  %        
+     \or .67\labelsep            %       1 -> .67\labelsep
+     \or .67\labelsep            %       2 -> .67\labelsep
+     \else \labelsep             %      >2 -> \labelsep
+     \fi                         %
+   \topsep=\z@                   %    \topsep     := 0
+   \itemsep=\z@                  %    \itemsep    := 0
+   \parsep=\z@                   %    \parsep     := 0
+   \partopsep=\z@                %    \partopsep  := 0
+   \pf@setEnumWidth\labelwidth   %    set \labelwidth with setEnumWidth
+   \leftmargin=\labelwidth\relax %    \leftmargin := \labelwidth
+   \advance\leftmargin\labelsep  %                   + \labelsep
+   \relax
+   \usecounter{\@pfenumctr}%       %    counter @pfenumctr
+ }%
+ }{%                             % END
+   \end{pflist}%                   %   End list
+   \addtocounter{pfenumdepth}{-1}%   pfenumdepth := pfenumdepth - 1
+ }
+
+\newenvironment{enumerate*}{%    % BEGIN
+  \ifnum \value{pfenumdepth}>2%  %  IF pfenumdepth > 2
+    \relax\@toodeep \else        %    THEN error
+  \addtocounter{pfenumdepth}{1}% %    ELSE  pfenumdepth := pfenumdepth + 1
+  \edef\@pfenumctr{pfenum%           %          @pfenumctr  := pfenumN
+    \romannumeral\the            %            where N = Roman(pfenumdepth)
+    \value{pfenumdepth}}%        %
+   \fi                           %  FI
+  \begin{pflist}%                  %   Begin list environment with
+  {\pf@enumLabel}{%              %    Default label = pf@enumlabel
+   \labelsep=                    %   \labelsep =
+    \ifcase\value{pfenumdepth}   %     CASE OF pfenumdepth
+      \labelsep                  %        
+     \or .67\labelsep            %       1 -> .67\labelsep
+     \or .67\labelsep            %       2 -> .67\labelsep
+     \else \labelsep             %      >2 -> \labelsep
+     \fi                         %
+   \topsep=\z@                   %    \topsep     := 0
+   \itemsep=\z@                  %    \itemsep    := 0
+   \parsep=\z@                   %    \parsep     := 0
+   \partopsep=\z@                %    \partopsep  := 0
+   \pf@setEnumWidth\labelwidth   %    set \labelwidth with setEnumWidth
+   \leftmargin=\labelwidth\relax %    \leftmargin := \labelwidth
+   \advance\leftmargin\labelsep  %                   + \labelsep
+   \advance\leftmargin\enumindent%                   + \enumindent
+   \relax
+   \usecounter{\@pfenumctr}%       %    counter @pfenumctr
+ }%
+ }{%                             % END
+   \end{pflist}%                   %   End list
+   \addtocounter{pfenumdepth}{-1}%   pfenumdepth := pfenumdepth - 1
+ }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                        FUNCTIONS                            %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \makefcn{\FOO}{V0}{{V1}...{Vk}} :
+%      Defines \FOO{n}  ==  CASE  n = 0    -> V0
+%                                 n = 1    -> V1
+%                                 ...
+%                                 n \geq k -> Vk
+%
+%      Useful when Vi is a dimension applying to a depth-i environment
+
+\def\makefcn#1#2#3{{\let\or\relax
+     \gdef\fcn@temp{}%
+     \gdef\fcn@tempb{#2}%
+     \@tfor\foo:=#3\do{\xdef\fcn@temp{\fcn@temp\or\foo}\xdef\fcn@tempb{\foo}}%
+     \let\ifcase\relax\let\else\relax\let\fi\relax
+     \xdef#1##1{\ifcase ##1 #2\fcn@temp\else\fcn@tempb\fi}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                        FUNCTIONS                            %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% \pfif{A}{B}{C} :  if A then B    \pfIF{A}{B}{C} :  if A
+%                        else C                        THEN B
+%                                                      ELSE C
+
+\newcommand{\pfmathdef}[1]{\relax\ifmmode #1\else $#1$\fi}
+\newcommand{\pfif}[3]{{\pfmathdef{%
+ \begin{array}[t]{@{}l@{\;\;}l@{\;\;}l@{}}
+   {\bf if}\;\;#1&{\bf then}&#2\\
+                 &{\bf else}&#3
+   \end{array}}}}
+
+\newcommand{\pfIF}[3]{{\pfmathdef{%
+ \begin{array}[t]{@{}l@{\;\;}l@{}}
+   {\bf if}\;\;#1\\ 
+  \begin{array}[t]{@{\hspace{1em}}l@{\;\;}l@{}}
+     {\bf then}&#2\\
+     {\bf else}&#3
+   \end{array}
+  \end{array}}}}
+
+%%%%%%%%%%%%%%%end file pf.sty
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                 MODIFICATION DATE                            %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                              %
+% Defines \moddate to expand to the modification date like     %
+%                                                              %
+%    Mon  5 Aug 1991  [10:34]                                  %
+%                                                              %
+% and \prdate to print it in a large box.  Assumes editor      %
+% updates modification date in standard SRC style.             %
+% (Should work for any user name).                             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\ypmd{%                                                    %
+%                                                              %
+%                                                              %
+  endypmd}                                                     %
+%                                                              %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\moddate}{\expandafter\xpmd\ypmd}                     %
+\def\xpmd Last modified                                           %
+on #1 #2 #3 #4:#5:#6 #7 #8 by #9 endypmd{#1 \ #3 #2 #8 \ [#4:#5]} %
+\newcommand{\prdate}{\noindent\fbox{\Large\moddate}}              %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% FOR SRC Report--
+    \oddsidemargin   .47in     %   Left margin on odd-numbered pages.
+    \evensidemargin 1.06in     %   Left margin on even-numbered pages.
+
+
+   \topmargin       .47in    %    Nominal distance from top of page to top of
+   \headheight        0pt    %    Height of box containing running head.
+   \headsep           0pt    %    Space between running head and text.
+%  \topskip = 10pt           %    '\baselineskip' for first line of page.
+% Bottom of page:
+   \footheight       12pt  %    Height of box containing running foot.
+   \footskip        1.5cm    %    Distance from baseline of box containing 
+                             %    foot to baseline of last line of text.
+
+
+\newcommand{\N}{{\bf N}}
+\newcommand{\Q}{{\bf Q}}
+\newcommand{\Z}{{\bf Z}}
+
+\newcommand{\deq}{\mathrel{\stackrel{\scriptscriptstyle\Delta}{=}}}
+
+%% Set \stepsep for proofs according to level.
+\makefcn{\mylevelsep}{.3em}{{.3em}{.1em}{0pt}}
+\renewcommand{\stepsep}{\mylevelsep{\pfLevelCount}}
+
+
+\title{How to Write a Proof}
+\author{Leslie Lamport}
+\date{\moddate}
+
+\begin{document}
+%\maketitle
+
+%%%%%%%%%%% table of contents--remove from final version? %%%%%%%%%%%%
+% \thispagestyle{empty}
+% \tableofcontents
+% \typeout{**** Remove Table of Contents ****}
+% \newpage
+% \pagenumbering{arabic}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+\pagenumbering{roman}
+\thispagestyle{empty}
+\vspace*{2.23cm}
+
+\noindent
+{\Large \bf How to Write a Proof}
+
+\vspace{.5cm}
+
+{\large
+\noindent
+Leslie Lamport\\[.25cm]
+February 14, 1993\\[\jot]
+revised December 1, 1993}
+
+
+\cleardoublepage
+
+\mbox{}
+
+\vfill
+
+\noindent
+{\bf \copyright Digital Equipment Corporation 1993}\\[\baselineskip]
+This work may not be copied or reproduced in whole or in part for 
+any commercial purpose. Permission to copy in whole or in part
+without payment of fee is granted for nonprofit educational and
+research purposes provided that all such whole or partial copies
+include the following: a notice that such copying is by permission
+of the Systems Research Center of Digital Equipment Corporation
+in Palo Alto, California; an acknowledgment of the authors and
+individual contributors to the work; and all applicable portions
+of the copyright notice. Copying, reproducing, or republishing for
+any other purpose shall require a license with payment of fee to
+the Systems Research Center. All rights reserved.
+
+\cleardoublepage
+\thispagestyle{empty}
+
+\subsubsection*{Author's Abstract} 
+\vspace{-2pt} 
+
+A method of writing proofs is proposed that makes it much harder to
+prove things that are not true.  The method, based on hierarchical
+structuring, is simple and practical.
+
+\cleardoublepage
+\thispagestyle{empty}
+\tableofcontents
+\thispagestyle{empty}
+
+\cleardoublepage
+\pagenumbering{arabic}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Mathematical Proofs}
+
+Mathematical notation has improved over the past few centuries.  In the
+seventeenth century, a mathematician might have written
+\begin{equation} \label{eq:old-math}
+ \begin{minipage}{.85\textwidth}
+    There do not exist four positive integers, the last being greater than
+    two, such that the sum of the first two, each raised to the power of
+    the fourth, equals the third raised to that same power.
+ \end{minipage}
+\end{equation}
+How much easier it is to read the modern version
+\begin{equation} \label{eq:new-math}
+ \begin{minipage}{.85\textwidth}
+    There do not exist positive integers $x$, $y$, $z$, and $n$,
+    with $n>2$, such that $x^{n}+y^{n}=z^{n}$.
+ \end{minipage}
+\end{equation}
+Yet, the structure of mathematical proofs has not changed in 300 years.
+The proofs in Newton's {\em Principia\/} differ in style from those of
+a modern textbook only by being written in Latin.  Proofs are still
+written like essays, in a stilted form of ordinary prose.
+
+Formulas written in prose, like (\ref{eq:old-math}), are hard to
+understand and hard to get right.  Proofs written in prose are also hard to
+understand and hard to get right.  Anecdotal evidence suggests that as
+many as a third of all papers published in mathematical journals
+contain mistakes---not just minor errors, but incorrect theorems and
+proofs.
+
+Statement (\ref{eq:new-math}) is easier to read than statement
+(\ref{eq:old-math}) for two reasons: variables are given names, and
+formulas are written in a more structured fashion.  The benefits of
+using names is obvious.  The benefit of structure is less obvious; we
+are so used to formulas like $x^{n}+y^{n}=z^{n}$ that we tend to take
+their structure for granted, and to think they are easy to read just
+because they are short.  Although the brevity of the formula helps, it
+is primarily its structure that makes it easier to understand than
+a prose version.  The expression
+ \[ \begin{tabular}[b]{@{}c@{}}
+      $x$ raised to the power $n$ \\
+         {\bf plus}  \\ 
+      $y$ raised to the power $n$ 
+    \end{tabular}
+    \hspace*{2em} {\bf equals} \hspace*{2em}
+         \mbox{$z$ raised to the power $n$}
+    \]
+is quite long, but it is easy to read because of its structure.
+
+The same principles that make formulas easier to understand can make
+proofs easier to understand: proof steps should be referred to by name,
+and the structure of the proof should be manifest.
+
+The proof style I advocate is a refinement of one, 
+called {\em natural deduction}, that has been used by
+some logicians for almost a century.
+Natural deduction has been viewed primarily as a method of
+writing proofs in a formal logic.  What I will describe is a practical
+method for writing the less formal proofs of ordinary mathematics.  It
+is based on hierarchical structuring---a successful tool for managing
+complexity.
+
+A method for structuring proofs was presented by
+Leron~\cite{leron:structuring}.  However, his goal was to communicate
+proofs better, not to make them more rigorous.  Despite their
+hierarchical structuring, the proofs Leron advocated are quite
+different from the ones presented here.  They do not seem to be any
+better than conventional proofs for avoiding errors.
+
+Avoiding mistakes when manipulating formulas requires careful, detailed
+calculations.  Avoiding mistakes when proving theorems requires
+careful, detailed proofs.  When first shown a detailed, structured
+proof, most mathematicians react: ``I don't want to read all those
+details; I want to read only the general outline and perhaps some of
+the more interesting parts.'' My response is that this is precisely why
+they want to read a hierarchically structured proof.  The high-level
+structure provides the general outline; readers can look at as much or
+as little of the lower-level detail as they want.  However, until one
+gets used to them, structured proofs do look intimidating.
+
+The ideal tool for reading a structured proof would be a computer-based
+hypertext system.  It would allow the reader to concentrate on a
+particular level in the structure, suppressing lower-level details.  In
+a printed version, one can ignore lower-level details only by skipping
+over that part of the text.  While this is not ideal, the structure is
+displayed by the format, making such skipping fairly easy---certainly
+much easier than in a prose-style proof, where the format provides
+little clue to the logical structure.
+
+
+
+\section{An Example}
+
+\pfshortnumbers{99}
+
+I take as an example the classic proof that $\sqrt{2}$ is irrational.
+Letting \Q\ denote the set of rationals, the precise statement of the
+result to be proved is
+ \[ \mbox{{\bf Theorem} \ There does not exist $r$ in \Q\ such 
+     that $r^{2}=2$.}
+ \]
+To illustrate hierarchical structure, the proof is carried out to a
+much lower level of detail than necessary for a typical reader.
+
+\subsection{The High-Level Proof}
+The high-level structure of the proof---what one would see first with a
+hypertext system---appears in Figure~\ref{fig:high-level-proof}.
+The proof assumes a lemma from which one can deduce that, for any
+integer $n$, if $2$ divides $n^{2}$ then $2$ divides $n$.  The
+set of integers is denoted by \Z.
+
+After the statement of the theorem comes a {\sc Proof Sketch}, which is
+an informal explanation of the following proof.  The proof sketch
+serves as a ``road map'' to the proof, helping the reader understand
+intuitively why the proof works.  This proof is so simple that the
+proof sketch is almost superfluous---the only information it provides
+that is not obvious from the high-level proof itself is that the lemma is
+used to prove steps 2 and~3.
+
+Next comes the {\sc Assume} and {\sc Prove} clauses.  They assert that
+to prove the theorem, it suffices to assume the two hypotheses $r\in Q$
+and $r^{2}=2$, and to prove {\em false}.  
+
+Finally comes the proof.  This is a sequence of statements that ends
+with ``Q.E.D.'', which denotes the assertion to be proved---in this
+case, {\em false}.  Think of this proof as the left half (the
+statements) of a high-school geometry style proof, the right half (the
+reasons) being omitted.\footnote{In their introductory plane geometry
+course, students in the U. S. are taught to write proofs in a two-column
+format, the left column containing a sequence of statements and
+the right column containing their justifications.}
+
+\begin{figure}
+\small
+% \setlength{\stepsep}{.3em}
+{\bf Theorem} \ There does not exist $r$ in \Q\ such that $r^{2}=2$.
+\begin{proof}
+\pfsketch\ We assume $r^{2}=2$ for $r\in\Q$ and obtain a contradiction.
+Writing $r=m/n$, where $m$ and $n$ have no common divisors (step 1),
+we deduce from $(m/n)^{2}=2$  and the lemma that both $m$ and $n$
+must be divisible by 2 (steps 2 and~3).
+\assume{\begin{enumerate}
+  \item $r\in\Q$
+  \item $r^{2}=2$
+\end{enumerate}}
+\prove{False}
+\step{1}{Choose $m$, $n$ in \Z\ such that
+   \begin{enumerate}
+    \item $\gcd(m,n) =1$
+    \item $r = (m/n)$
+  \end{enumerate}}
+
+\step{2}{2 divides $m$.}
+
+\step{3}{2 divides $n$.}
+
+\qedstep
+\end{proof}
+\normalsize
+\caption{The highest level of a structured proof of the irrationality
+         of $\protect\sqrt{2}$.}
+\label{fig:high-level-proof}
+\end{figure}
+
+
+
+
+\subsection{Lower Levels of the Proof}
+
+Let us now examine the proof of step 1, which appears in
+Figure~\ref{fig:step1}.  It is clear enough what must be proved, so no
+{\sc Assume}/{\sc Prove} is needed.  The proof consists of five steps,
+numbered 1.1 through 1.5.  There is also a {\sc Let} statement, which
+defines the required $m$ and $n$.  (I prefer $\deq$ to the more common
+symbol $\equiv$ for ``equals by definition'', since $\equiv$
+can also mean logical equivalence.)
+
+\begin{figure}
+\small
+% \setlength{\stepsep}{.1em}
+\begin{proof}
+\step{1}{Choose $m$, $n$ in \Z\ such that
+   \begin{enumerate}
+    \item $\gcd(m,n) =1$
+    \item $r = (m/n)$
+  \end{enumerate}}
+\begin{proof}
+\step{1.1}{Choose $p$, $q$ in \Z\ such that $q\neq 0$ and $r=p/q$.}
+\pflet{$m$ $\deq$ $p/\gcd(p,q)$\\
+       $n$ $\deq$ $q/\gcd(p,q)$}
+\step{1.2}{$m,n\in \Z$}
+\step{1.3}{$r=m/n$}
+\step{1.4}{$\gcd(m,n) =1$}
+\qedstep
+\end{proof}
+\end{proof}
+\normalsize
+\caption{The proof of Step 1.}
+\label{fig:step1}
+\end{figure}
+
+Each of these five steps in turn has its proof.  The proof of 1.1 is
+just
+\begin{quote}\small
+\pf\ By assumption :1.
+\end{quote}
+Assumption :1 is the first assumption ($r\in\Q$) in the proof of the
+theorem.  (The numbering scheme for assumptions is explained below.)
+A hierarchical proof must stop somewhere.  The general question of
+where to stop is addressed in Section~\ref{sec:how-many-levels}.  In
+this proof, we assume the reader understands that the definition
+of \Q\ implies that $r$ can be written as the requisite quotient of
+integers.  The proof of 1.2 is the equally simple.
+\begin{quote}\small
+\pf\ 1.1 and definition of $m$ and $n$.
+\end{quote}
+Step 1.3 is proved by a string of equalities, each with a brief
+justification.
+\begin{quote}\small
+\begin{tabbing}
+\pf\ $m/n$ \= $=$ $\displaystyle\frac{p/\gcd(p,q)}{q/\gcd(p,q)}$ \ 
+                                  \= [Definition of $m$ and $n$]\\
+                  \> = $p/q$ \> [Simple algebra]\\
+                  \> = $r$  \> [By 1.1]
+\end{tabbing}
+\end{quote}
+This type of proof, consisting of a string of equalities, is simple
+and direct; it works as well for proving any transitive relation, such
+as $<$, logical equivalence, and implication.  It should be used
+whenever possible.
+
+Step 1.4 has the multistep proof shown in Figure~\ref{fig:step1.4},
+consisting of steps 1.4.1 through 1.4.3.  The ``1.4:1'' in the proof
+of step 1.4.1 denotes assumption~1 ($s$ divides $m$) in the proof of
+step 1.4.  The theorem itself is considered to be a step having the
+null string as its number, which explains why ``:1'' denotes
+assumption~1 of the theorem.
+
+\begin{figure}
+\small
+% \setlength{\stepsep}{.1em}
+\begin{proof}
+\nostep{1}
+\begin{noproof}
+\nostep{1.1}
+\nostep{1.2}
+\nostep{1.3}
+\step{1.4}{$\gcd(m,n) =1$}
+\pf\ By the definition of the gcd, it suffices
+to:
+\assume{\begin{enumerate}
+          \item $s$ divides $m$
+          \item $s$ divides $n$
+        \end{enumerate}}
+\prove{$s=\pm 1$}
+\begin{proof}
+  \step{1.4.1}{$s\cdot\gcd(p,q)$ divides $p$.}
+    \begin{proof}
+      \pf\ 1.4:1 and the definition of $m$.
+    \end{proof}
+  \step{1.4.2}{$s\cdot\gcd(p,q)$ divides $q$.}
+    \begin{proof}
+      \pf\ 1.4:2 and definition of $n$.
+    \end{proof}
+  \qedstep
+    \begin{proof}
+      \pf\ 1.4.1, 1.4.2, and the definition of gcd.
+    \end{proof}
+\end{proof}
+\end{noproof}
+\end{proof}
+\normalsize
+\caption{The proof of step 1.4.}
+\label{fig:step1.4}.
+\end{figure}
+\section{Further Details}
+
+%try
+\subsection{A More Compact Numbering Scheme} 
+\pfshortnumbers{0} 
+\pflongindent
+
+The numbering scheme used in the example is fine for short proofs,
+with few levels of nesting.  However, long proofs can have many
+levels---I often write proofs more than six levels deep.  The number
+3.1.1.1.1.2 takes a lot of space, and having to distinguish it from
+3.1.1.1.2 can soon lead to eye strain.
+
+
+We eliminate long step numbers by abbreviating 3.1.1.1.2, a five-part
+step number ending in 2, as \pfstepnumber{5}{2}{?}.
+Figure~\ref{fig:pf-part} shows a fragment of a proof written with the
+two numbering styles.
+\begin{figure}
+\pfshortindent
+\centering
+\begin{minipage}{.5\textwidth}
+\pfshortnumbers{99}\small
+\begin{proof}
+\nostep{1}
+\nostep{2}
+\nostep{3}
+\begin{noproof}
+\nostep{3.1}
+\begin{noproof}
+\nostep{3.1.1}
+\begin{noproof}
+\step{3.1.1.1}{\assume{$x\in S$}\prove{\ldots}}
+\begin{proof}
+\step{3.1.1.1.1}{\ldots}
+\step{3.1.1.1.2}{\ldots}
+\qedstep %3.1.2.1.3
+\begin{proof}
+By~\stepref{3.1.1.1.1}~and~assumption~\levelref{3.1.1.1}.
+\end{proof}
+\end{proof} %3.1.1.1
+\step{3.1.1.2}{\assume{$x\in T$}\prove{\ldots}}
+\ldots
+\end{noproof} %3.1.1
+\end{noproof} %3.1
+\end{noproof} %3
+\end{proof}
+%\centering 
+%\normalsize (a) Long step numbers 
+\end{minipage}%
+\hspace{.1\textwidth}%
+\begin{minipage}{.4\textwidth}
+\pfshortnumbers{0}\small
+\begin{proof}
+\nostep{1}
+\nostep{2}
+\nostep{3}
+\begin{noproof}
+\nostep{3.1}
+\begin{noproof}
+\nostep{3.1.1}
+\begin{noproof}
+\step{3.1.1.1}{\assume{$x\in S$}\prove{\ldots}}
+\begin{proof}
+\step{3.1.1.1.1}{\ldots}
+\step{3.1.1.1.2}{\ldots}
+\qedstep %3.1.2.1.3
+\begin{proof}
+By~\stepref{3.1.1.1.1}~and~assumption~\levelref{3.1.1.1}.
+\end{proof}
+\end{proof} %3.1.1.1
+\step{3.1.1.2}{\assume{$x\in T$}\prove{\ldots}}
+\ldots
+\end{noproof} %3.1.1
+\end{noproof} %3.1
+\end{noproof} %3
+\end{proof}
+%\centering 
+%\normalsize (b) Abbreviated step numbers 
+\end{minipage}%
+\caption{Part of a proof, with long and abbreviated step numbers.}
+\label{fig:pf-part}
+\end{figure}
+%
+%
+% \begin{figure}
+% \pfshortnumbers{99}\pflongindent
+% \centering
+% \begin{minipage}{.75\textwidth}
+% \begin{proof}
+% \nostep{1}
+% \nostep{2}
+% \nostep{3}
+% \begin{noproof}
+% \nostep{3.1}
+% \begin{noproof}
+% \nostep{3.1.1}
+% \begin{noproof}
+% \step{3.1.1.1}{\assume{$x\in S$}\prove{\ldots}}
+% \begin{proof}
+% \step{3.1.1.1.1}{\ldots}
+% \step{3.1.1.1.2}{\ldots}
+% \qedstep %3.1.2.1.3
+% \begin{proof}
+% By~\stepref{3.1.1.1.1}~and~assumption~\levelref{3.1.1.1}.
+% \end{proof}
+% \end{proof} %3.1.1.1
+% \step{3.1.1.2}{\assume{$x\in T$}\prove{\ldots}}
+% \ldots
+% \end{noproof} %3.1.1
+% \end{noproof} %3.1
+% \end{noproof} %3
+% \end{proof}
+% \end{minipage}
+% \caption{Part of a proof.}
+% \label{fig:pf-part}
+% \end{figure}
+To understand why abbreviated numbers suffice, consider where step
+3.1.1.1.2 can be used in this proof.  The step can be used only after
+it is proved, but it cannot be used just anywhere after its proof.  Step
+3.1.1.1.2 cannot be used in the proof of step 3.1.1.2 because it was
+proved under the assumption of step 3.1.1.1, which is different from
+step 3.1.1.2's assumption.  The step can be used only where the
+assumptions under which it was proved hold, which means that it can be
+used only within the proof of its parent, step 3.1.1.1.  Step
+3.1.1.1.2 is the only one in the proof of its parent with a five-part
+number ending in 2.  Although there can be many proof steps with the
+same abbreviated number \pfstepnumber{5}{2}{?}, no two of them have
+the same parent, so at most one of them may be used at any point in
+the proof.  A reference to step \pfstepnumber{5}{2}{?} always refers
+to the most recent step with that number.  Part 3 of the statement of
+step \pfstepnumber{5}{2}{?} is numbered \pfstepnumber{5}{2}{?}.3.
+
+
+References to assumptions can be abbreviated even more.  An assumption
+can be used only in the proof of a step, or the proof of one of its
+descendants.  We let \pflevelnumber{5}{?} denote the assumption of the
+level-five step that is an ancestor of (or is) the current step, and
+\pflevelnumber{5}{?}:3 denote the third numbered part of that
+assumption.  Since the statement of the theorem has a zero-part
+number, its assumption is number~\pflevelnumber{0}{?}.
+
+
+Figure~\ref{fig:complete-proof} contains the complete proof of
+our example, written with the abbreviated numbering scheme.
+
+
+% \begin{figure}
+% \pfshortnumbers{0}\pflongindent
+% \centering
+% \begin{minipage}{.53\textwidth}
+% \begin{proof}
+% \nostep{1}
+% \nostep{2}
+% \nostep{3}
+% \begin{noproof}
+% \nostep{3.1}
+% \begin{noproof}
+% \nostep{3.1.1}
+% \begin{noproof}
+% \step{3.1.1.1}{\assume{$x\in S$}\prove{\ldots}}
+% \begin{proof}
+% \step{3.1.1.1.1}{\ldots}
+% \step{3.1.1.1.2}{\ldots}
+% \qedstep %3.1.2.1.3
+% \begin{proof}
+% By~\stepref{3.1.1.1.1}~and~assumption~\levelref{3.1.1.1}.
+% \end{proof}
+% \end{proof} %3.1.1.1
+% \step{3.1.1.2}{\assume{$x\in T$}\prove{\ldots}}
+% \ldots
+% \end{noproof} %3.1.1
+% \end{noproof} %3.1
+% \end{noproof} %3
+% \end{proof}
+% \end{minipage}
+% \caption{The proof of Figure~\protect\ref{fig:pf-part} with
+%          short numbers.}
+% \label{fig:pf-part-short}
+% \end{figure}
+
+
+
+%try
+
+
+%try
+% To see how long step numbers can be eliminated, consider where in the
+% proof one can use step 3.1.1.1.2.  The step can be used only after it
+% is proved, but it cannot be used anywhere after its proof.  Step
+% 3.1.1.1.2 is proved under certain assumptions---the assumptions of its
+% ``parent'', step 3.1.1.1, and the assumptions of all its parent's
+% ancestors.  A step can be used only in a context in which the
+% assumptions under which it was proved hold, which means that it can be
+% used only within the proof of its parent.  Step 3.1.1.1.2 is the only
+% one in the proof of its parent with a five-part number ending in 2.
+% We can therefore abbreviate step number 3.1.1.1.2 as
+% \pfstepnumber{5}{2}{?}.  Although there can be many proof steps with
+% the same abbreviated number \pfstepnumber{5}{2}{?}, no two of them
+% have the same father, so at most one of them may be used at any point
+% in the proof.
+% 
+% Steps can therefore be numbered with their abbreviated numbers.  A
+% reference to step \pfstepnumber{5}{2}{?} always refers to the most
+% recent step with that number.  Furthermore, an assumption can be used
+% only in the proof of a step, or the proof of one of its descendants.
+% Hence, assumption \pflevelnumber{5}{?} refers to the assumption of the
+% level-five step that is an ancestor of (or is) the current step, and
+% \pflevelnumber{5}{?}:3 is the third numbered part of that assumption.
+% Since the statement of the theorem has a zero-part number, its
+% assumption is number~\pflevelnumber{0}{?}.  
+% 
+% This abbreviated numbering scheme is used in
+% Figure~\ref{fig:complete-proof}, which contains the complete proof of
+% our example.
+
+\begin{figure}[p]
+\small
+{\bf Theorem} \ There does not exist $r$ in \Q\ such that $r^{2}=2$.
+\begin{proof}
+\pfsketch\ We assume $r^{2}=2$ for $r\in\Q$ and obtain a contradiction.
+Writing $r=m/n$, where $m$ and $n$ have no common divisors (%
+ step 
+\pfstepnumber{1}{1}{?}),
+we deduce from $(m/n)^{2}=2$  and the lemma that both $m$ and $n$
+must be divisible by 2 (%
+ %steps 
+\pfstepnumber{1}{2}{} and~\pfstepnumber{1}{3}{}).
+\assume{\begin{enumerate}
+  \item $r\in\Q$
+  \item $r^{2}=2$
+\end{enumerate}}
+\prove{False}
+\step{1}{Choose $m$, $n$ in \Z\ such that
+   \begin{enumerate}
+    \item $\gcd(m,n) =1$
+    \item $r = (m/n)$
+  \end{enumerate}}
+\begin{proof}
+  \step{1.1}{Choose $p$, $q$ in \Z\ such that $q\neq 0$ and $r=p/q$.}
+  \begin{proof}
+    \pf\ By assumption \pflevelnumber{0}{?}:1.
+  \end{proof}
+
+  \pflet{$m$ $\deq$ $p/\gcd(p,q)$\\
+         $n$ $\deq$ $q/\gcd(p,q)$}
+
+  \step{1.2}{$m,n\in \Z$}
+  \begin{proof}
+    \pf\ \stepref{1.1} and definition of $m$ and $n$.
+  \end{proof}
+
+  \step{1.3}{$r=m/n$}
+   \begin{proof}
+    \begin{tabbing}
+      \pf\ $m/n$ \= $=$ $\displaystyle\frac{p/\gcd(p,q)}{q/\gcd(p,q)}$ \ 
+                                        \= [Definition of $m$ and $n$]\\
+                        \> = $p/q$ \> [Simple algebra]\\
+                        \> = $r$  \> [By \stepref{1.1}]
+    \end{tabbing}
+   \end{proof} % of 1.3
+
+  \step{1.4}{$\gcd(m,n) =1$}
+  \pf\ By the definition of the gcd, it suffices
+  to:
+  \assume{\begin{enumerate}
+            \item $s$ divides $m$
+            \item $s$ divides $n$
+          \end{enumerate}}
+  \prove{$s=\pm 1$}
+  \begin{proof}
+    \step{1.4.1}{$s\cdot\gcd(p,q)$ divides $p$.}
+      \begin{proof}
+        \pf\ \levelref{1.4}:1 and the definition of $m$.
+      \end{proof}
+    \step{1.4.2}{$s\cdot\gcd(p,q)$ divides $q$.}
+      \begin{proof}
+        \pf\ \levelref{1.4}:2 and definition of $n$.
+      \end{proof}
+    \qedstep
+    \begin{proof}
+      \pf\ \stepref{1.4.1}, \stepref{1.4.2}, and the definition of gcd.
+    \end{proof}
+
+  \end{proof} % step 1.4
+
+  \qedstep
+\end{proof} % step{1}
+
+\step{2}{2 divides $m$.}
+\begin{proof}
+  \step{2.1}{$m^{2}=2n^{2}$}
+  \begin{proof}
+    \pf\ \stepref{1}.1 implies $(m/n)^{2}=2$.  
+  \end{proof}
+  \qedstep
+  \begin{proof}
+     \pf\ By \stepref{2.1} and the lemma.
+  \end{proof}
+\end{proof} % step 2
+
+\end{proof}
+\normalsize
+\caption{A proof of the irrationality
+         of $\protect\sqrt{2}$.}
+\label{fig:complete-proof}
+\end{figure}
+
+\begin{figure}[tp]
+\small
+\begin{proof}
+\nostep{1}
+\nostep{2}
+
+\step{3}{2 divides $n$.}
+\begin{proof}
+  \step{3.1}{Choose $p$ in \Z\ such that $m=2p$.}
+  \begin{proof}
+    \pf\ By \stepref{2}.  
+  \end{proof}
+
+  \step{3.2}{$n^{2}=2p^{2}$}
+  \begin{proof}
+    \begin{tabbing}
+      \pf\ 2 \= = $(m/n)^{2}$  \  \= [\stepref{1}.2 and \toplevel:2]\\
+             \> = $(2p/n)^{2}$    \> [\stepref{3.1}] \\
+             \> = $4p^{2}/n^{2}$  \> [Algebra]\\
+      from which the result follows easily by algebra.
+    \end{tabbing}
+  \end{proof}
+
+  \qedstep
+  \begin{proof}
+    \pf\ By \stepref{3.2} and the lemma.
+  \end{proof}
+\end{proof} % step 3
+\qedstep
+\begin{proof}
+  \pf\ \stepref{1}.1, \stepref{2}, \stepref{3}, and definition of gcd.
+\end{proof}
+
+\end{proof}
+\normalsize
+\begin{center}
+Figure~\ref{fig:complete-proof} (continued)
+\end{center}
+\end{figure}
+
+
+
+\subsection{Proof by Cases}
+
+Proof by cases can be expressed with a 
+{\sc Case} step, where
+\begin{quote}\small
+\case{Statement of assumption.}
+\end{quote}
+is an abbreviation for
+\begin{quote}\small
+\assume{Statement of assumption.}
+\prove{Q.E.D.}
+\end{quote}
+The proof of the final ``Q.E.D.'' step explains why the cases
+considered are exhaustive; it is usually simple.
+Figure~\ref{fig:case} illustrates the use of the {\sc Case} construct
+to structure a proof by induction.  Note how step
+\pfstepnumber{1}{1}{?} is used in the proofs of both cases, showing
+why {\sc Case} steps provide more flexibility than would a strictly
+hierarchical proof-by-cases construct.
+
+\begin{figure}
+\small
+{\bf Theorem} \ All natural numbers are interesting.
+\assume{$n$ a natural number.}
+\prove{$n$ is interesting.}
+\begin{proof}
+\step{1}{A number is interesting if it is the smallest number not in
+         an interesting set.}
+  \begin{proof}
+    \pf\ By definition of interesting.
+  \end{proof}
+\step{2}{\case{$n=0$}}
+  \begin{proof}
+  \pf\ By \stepref{1}, since $0$ is the smallest natural number not in 
+    $\emptyset$.
+  \end{proof}
+\step{3}{\case{\begin{enumerate}
+                 \item $n>0$
+                 \item $n-1$ is  interesting
+               \end{enumerate}}}
+  \begin{proof}
+   \pf\ By \stepref{1}, since case assumption \levelref{3} 
+   implies that $\{k : k \leq n-1\}$ is interesting.
+%    since the set of all numbers not greater than
+%    an interesting number is interesting.
+  \end{proof}
+\qedstep
+\begin{proof}
+\pf\ Steps \stepref{2} and \stepref{3}, assumption \pflevelnumber{0}{},
+ and mathematical induction.
+\end{proof}
+\end{proof}
+\normalsize
+\caption{The {\sc Case} construct.}
+\label{fig:case}
+\end{figure}
+
+\section{How Good Are Structured Proofs?}
+
+\subsection{My Experience}
+
+Some twenty years ago, I decided to write a proof of the
+Schroeder-Bernstein theorem for an introductory mathematics class.
+The simplest proof I could find was in Kelley's classic general
+topology text~\cite[page 28]{kelley:general}.  Since Kelley was
+writing for a more sophisticated audience, I had to add a great deal
+of explanation to his half-page proof.  I had written five pages when
+I realized that Kelley's proof was wrong.  Recently, I wanted to
+illustrate a lecture on my proof style with a convincing incorrect
+proof, so I turned to Kelley.  I could find nothing wrong with his
+proof; it seemed obviously correct! Reading and rereading the proof
+convinced me that either my memory had failed, or else I was very
+stupid twenty years ago.  Still, Kelley's proof was short and would
+serve as a nice example, so I started rewriting it as a structured
+proof.  Within minutes, I rediscovered the error.
+
+My interest in proofs stems from writing correctness proofs of
+algorithms.  These proofs are seldom deep, but usually have
+considerable detail.  Structured proofs provided a way of coping with
+this detail.  The style was first applied to proofs of ordinary
+theorems in a paper I wrote with Mart\'{\i}n
+Abadi~\cite{abadi:existence}.  He had already written conventional
+proofs---proofs that were good enough to convince us and, presumably,
+the referees.  Rewriting the proofs in a structured style, we
+discovered that almost every one had serious mistakes, though the
+theorems were correct.  Any hope that incorrect proofs might not lead
+to incorrect theorems was destroyed in our next
+collaboration~\cite{abadi:composing}.  Time and again, we would make a
+conjecture and write a proof sketch on the blackboard---a sketch that
+could easily have been turned into a convincing conventional
+proof---only to discover, by trying to write a structured proof, that
+the conjecture was false.  Since then, I have never believed a result
+without a careful, structured proof.  My skepticism has helped avoid
+numerous errors.
+
+I have also found structured proofs very helpful when I need a variant
+of an existing theorem, perhaps with a slightly weaker hypothesis.  In
+a properly written proof, where every use of an assumption or a proof
+step is explicit, simple text searching reveals exactly where every
+hypothesis is used.
+
+\subsection{Writing Structured Proofs}
+\label{sec:how-many-levels}
+
+A structured proof format by itself will not eliminate errors.  Proofs
+must be written carefully, with enough detail.  
+% I have written sloppy proofs of incorrect results, not catching the
+% errors until I wrote more careful proofs for others to read.  But, I
+% did catch the errors myself; I did not leave the task to my readers.
+%
+Most errors come from not carrying out the proof to enough levels.
+The lowest-level, paragraph-style proofs should be short and
+completely transparent.  One must be a skeptical reader of one's own
+proofs.  My own rule of thumb is to expand the proof until the lowest
+level statements are obvious, and then continue for one more level.
+This takes discipline.  But, unlike conventional proofs, in which
+adding more detail can make a proof more confusing, structured proofs
+accommodate as much detail as desired.
+
+Structured proofs are longer than conventional ones.  Although the
+formatting is partly responsible, structured proofs are longer mainly
+because they include more detail.  They make it obvious when steps
+have been forgotten or important details omitted.  They make it hard to
+be sloppy.  The assertion ``this case is similar to the previous one''
+is not acceptable; one is forced to find the appropriate
+general step that makes the proof of both cases easy.  Writing a
+rigorous proof is harder than writing a sloppy one, and lazy writers
+will find excuses to avoid doing it.  A common excuse is that
+structured proofs are too long.  But, shorter proofs are not
+necessarily better ones; the shortest proof is always ``left as an
+exercise for the reader.''
+
+When journals are distributed electronically, they can include proofs
+down to the lowest reasonable level; the reader can suppress
+uninteresting details when viewing the article on the screen or
+printing it locally.  But, for paper journals, extra pages mean
+killing extra trees.  It may be inappropriate for a journal to print a
+proof with so much detail.  I recommend that authors provide two
+versions of their proofs: a very detailed one for themselves, the
+referees, and interested colleagues; and a less detailed one for paper
+publication.  It is quite easy to convert a detailed proof into a less
+detailed one by compressing the lower levels into paragraph-style
+proofs.  Although the reader must fill in the low-level details, such
+proofs are much better than unstructured ones, in which authors seem
+to choose randomly which details to supply and which to omit.
+
+\subsection{Reading Structured Proofs} 
+
+So far, readers' reactions to structured proofs have been mixed.
+Skeptical readers---ones who check for errors---like these proofs much
+more than conventional ones.  Readers who want to skim the proofs are
+less happy with the style.  Part of the problem is that the length of
+the proofs and the unfamiliar format are intimidating.  The best way
+to read a structured proof is level by level---first reading the
+high-level steps \pfstepnumber{1}{1}{}, \pfstepnumber{1}{2}{},
+\pfstepnumber{1}{3}{},~\ldots, then the proofs of those steps, and so
+on.  However, having to skip over the lower-level steps makes reading
+the high-level ones inconvenient.  With hypertext, this is not a
+problem.  With printed text, a layered presentation---the complete
+higher-level proof followed by the lower-level proofs---may
+help~\cite[section B.7~(page~48)]{abadi:old-fashioned-src}.
+
+These structured proofs do not seem ideal for someone who wants to
+understand the important ideas of a proof without reading any of the
+details.  Satisfying such readers may just require better proof
+sketches.  Or, perhaps a better way of annotating a proof with
+comments is needed.  Hypertext can provide graphical aids for finding
+one's way around a proof and highlighting important steps.  Maybe such
+aids can be developed for the printed page.
+ 
+\subsection{The Future}
+
+Modern mathematical notation has evolved over hundreds of years.  Its
+proof style is still stuck in the seventeenth century.  Mathematicians
+tend to be conservative, and many are unwilling to consider that there
+might be a better way of writing proofs.  But, I am told that
+mathematicians are embarrassed to learn that they published incorrect
+theorems, so they are motivated to avoid errors.  I believe they will
+like structured proofs if they can be persuaded to try them.
+
+Computer scientists are more willing to explore unconventional proof
+styles.  Unfortunately, I have found that few of them care whether
+they have published incorrect results.  They often seem glad that an
+error was not caught by the referees, since that would have meant one
+fewer publication.  I fear that few computer scientists will be
+motivated to use a proof style that is likely to reveal their
+mistakes.  Structured proofs are unlikely to be widely used in
+computer science until publishing incorrect results is considered
+embarrassing rather than normal.
+
+The proof style described here has been developed over the past
+several years.  I have written many hundreds of pages of structured
+proofs, mostly of algorithms.  I consider the style to be a great
+improvement over conventional, unstructured proofs.  But, this is not
+the last word on the subject.  I look forward to seeing structured
+proof styles evolve as mathematicians and computer scientists find
+better ways to write a proof.
+
+\addcontentsline{toc}{section}{Acknowledgements}
+\section*{Acknowledgements}
+
+My information about mathematicians' errors and embarrassment comes
+mainly from George Bergman.  The {\sc Case} construct and several
+other details of the proof format were developed in discussions with
+Urban Engberg and Peter Gr\o{}nning.  Peter Dickman and Lyle Ramshaw
+found errors in an earlier version.
+
+\addcontentsline{toc}{section}{References}
+\bibliographystyle{plain}
+%\bibliography{mybib}
+\begin{thebibliography}{1}
+
+\bibitem{abadi:existence}
+Mart\'{\i}n Abadi and Leslie Lamport.
+\newblock The existence of refinement mappings.
+\newblock {\em Theoretical Computer Science}, 82(2):253--284, May 1991.
+
+\bibitem{abadi:old-fashioned-src}
+Mart\'{\i}n Abadi and Leslie Lamport.
+\newblock An old-fashioned recipe for real time.
+\newblock Research Report~91, Digital Equipment Corporation, Systems Research
+  Center, 1992.
+
+\bibitem{abadi:composing}
+Mart\'{\i}n Abadi and Leslie Lamport.
+\newblock Composing specifications.
+\newblock {\em ACM Transactions on Programming Languages and Systems},
+  15(1):73--132, January 1993.
+
+\bibitem{kelley:general}
+John~L. Kelley.
+\newblock {\em General Topology}.
+\newblock The University Series in Higher Mathematics. D. Van Nostrand Company,
+  Princeton, New Jersey, 1955.
+
+\bibitem{leron:structuring}
+Uri Leron.
+\newblock Structuring mathematical proofs.
+\newblock {\em American Mathematical Monthly}, 90(3):174--185, March 1983.
+
+\end{thebibliography}
+
+\end{document}

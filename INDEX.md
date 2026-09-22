@@ -52,6 +52,27 @@ lab book points here, to the script and run artifact that back it.
 | `reviews/2026-05-31_qubit_candidate_scan/` | Orchestration record for the sourced/synthetic candidate scan subagents feeding CA-53--CA-61. |
 | `reviews/2026-07-05_bu_pipeline/` | Orchestration record for the categorical Borchers-Uhlmann pipeline block (CA-62--CA-70): two-model design competition, state-existence audit, relaxed-gate design, refinement-map investigation, dilute-TL Koo-Saleur chase, and source acquisitions. |
 
+## CFT-machine workspace (2026-09-22)
+
+| Entry | Purpose / evidence |
+|---|---|
+| `cft_machine/README.md` | Algorithm/functor workspace and reproducibility entry point. |
+| `cft_machine/compiler/` | Exact Ising modular-input recognition and declared tensor-product lattice recipes; own README, tests and run producer. |
+| `cft_machine/compiler/run.jl` | Emits four exact-matching Ising/product previews and explicit CAR recipes into `cft_machine/compiler/runs/2026-09-22/`, with eight source-code hashes; 215 standalone assertions and two rejected mutations. |
+| `cft_machine/benchmarks/fermion/FermionBenchmark.jl` | Source-modified complex/Majorana KS modes, explicit quadratic CAR terms, Dirac Hamiltonian, and sharp refinements. |
+| `cft_machine/benchmarks/fermion/WilsonStates.jl` | Actual finite Dirac ground-state covariance pullbacks and proved dual-state-norm tail modulus. |
+| `cft_machine/benchmarks/fermion/run.jl` | Producer for `cft_machine/benchmarks/fermion/runs/2026-09-22/`: complex and Majorana Schwinger terms, mode refinement defects, nontrivial Wilson-state rows, source hashes. |
+| `cft_machine/benchmarks/fermion/test.jl`, `test_wilson.jl` | 760 standalone finite assertions; independent matrix/sum/Fourier oracles and three mutation regressions. |
+| `cft_machine/research/wilson_triangle.md` | WT-1 horizontal state construction, WT-2 effective expectation algorithm, WT-3 Gram error bound. |
+| `cft_machine/research/virasoro_routes.md` | VR-1 graph-norm/product convergence criterion and VR-2 vacuum-null counterexample. |
+| `cft_machine/research/realisation_and_fidelity.md` | Source-based realization branches and strict finite-group fixed-point transport lemmas. |
+| `cft_machine/research/equivariant_oar.md` | EQ-1 invariant Wilson states and GNS fixed vectors; EQ-2 represented weak fixed-point closures. |
+| `cft_machine/research/coset_route.md` | CR-1 current/coset normalization, CR-2 exact finite-core stabilization, CR-3 vacuum safe window; full coset observable construction remains open. |
+| `cft_machine/benchmarks/coset/run.jl` | Exact sparse-CAR producer: `cft_machine/benchmarks/coset/runs/2026-09-22/`, central charges 1/2 and 7/10 with exact descendant norms, cutoff flags and code hash; 127 assertions, two rejected mutations, at most 96 sparse states. |
+| `cft_machine/reviews/` | Skeptical Astra cross-referee reports and resolved issues. |
+| `cft_machine/reviews/check_compiler.jl`, `check_coset.jl` | Retained independent referee regression scripts: 13 exact modular-phase/relabel checks and 18 finite-boundary/zero-mode checks, with standalone `.txt` outputs and commands in the reports. |
+| `references/cft-machine/` | Append-only source packages and per-topic manifests for the new workspace. |
+
 ## Report shards
 
 See `report/SHARD_CATALOG.md` for the searchable shard catalogue.

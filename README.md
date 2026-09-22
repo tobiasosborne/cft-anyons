@@ -2,12 +2,11 @@
 
 A reproducible research lab book pursuing one concrete goal — the **north star**:
 
-> Given a (unitary) fusion or modular tensor category (together with whatever
-> additional data is needed — OPE coefficients / conformal data), construct a
-> family of **microscopic (lattice) models and their symmetry generators** whose
-> continuum limit **provably** yields a mathematically rigorous QFT/CFT that
-> **(i)** realises the input category data and **(ii)** carries a **full
-> projective unitary representation** of the symmetries.
+> Discover an **algorithm, or functor**, from fusion/modular tensor category
+> data to concrete **lattice systems and microscopic Virasoro generators**
+> whose continuum limit through **operator-algebraic renormalisation (OAR)
+> and Wilson's triangle** is a mathematically rigorous CFT with the starting
+> category's modular data. Additional conformal input must be explicit.
 
 The working belief is that this is achievable at least for **rational CFTs**, and
 perhaps for all QFTs. The two non-negotiable success criteria are **provability**
@@ -21,6 +20,10 @@ local source, a checked derivation, a reproducible run, or an explicitly marked
 open question.
 
 ## How it's organised
+
+- **`cft_machine/`** — the broader constructive investigation, initiated
+  2026-09-22. It develops alternative mechanisms alongside the variable-number
+  anyon route, with Lamport structured proofs and executable benchmarks.
 
 - **`report.tex` + `report/sections/*.tex`** — the lab book, written as
   self-contained **~200-line shards**. `report/SHARD_CATALOG.md` is the
@@ -41,8 +44,7 @@ open question.
 ```bash
 make check-report-shards    # deterministic shard-structure guard (the gate)
 make report                 # build report.pdf via latexmk
-make test                   # Julia invariant checks (Pkg.test)
-make ci-before-push         # all of the above, skipping absent tools
+# Run the touched Julia testset standalone; full Pkg.test is suspended.
 ```
 
 ## Working here
@@ -53,6 +55,9 @@ conventions before derivations · reproducibility is part of the result) plus
 numbered Rules. Deliberately **no beads, no multi-gate validation, no mandatory
 reviewer-gating, no CI** — the heavy apparatus of the previous project was
 archived on purpose.
+
+The CFT-machine checks are documented in `cft_machine/README.md`. Respect
+the laptop compute limits and the full-suite suspension in `AGENTS.md`.
 
 ## License
 

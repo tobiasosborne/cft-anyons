@@ -10,28 +10,25 @@ all of them.
 `AGENTS.md` and `CLAUDE.md` are a pair: `CLAUDE.md` is a thin pointer here, this
 file is authoritative.
 
-> **Status: bootstrapping.** This is a fresh start. The previous project was
-> archived (`archive/legacy-consolidation/`); only the papers under
-> `references/` and `literature/` carry over as ground truth. The lab-book
-> scaffold described below (`report.tex`, `report/sections/`, the shard guard,
-> `Project.toml`) does **not exist yet** — building it is the first work item.
-> Until it exists, the §Layout entries are a *target*, and an agent may create
-> scaffolding (this file, `CONVENTIONS.md`, the report skeleton, the guard
-> script) without a pre-existing source. Do not add substantive *mathematical*
-> content until the source, convention, and reproducibility paths exist.
+> **Status (2026-09-22): active research.** The lab-book scaffold, Julia
+> package, local checks, and report through CA-74 exist. The previous project
+> remains archived (`archive/legacy-consolidation/`); papers under
+> `references/` and `literature/` are ground truth. The broader algorithm
+> investigation lives in `cft_machine/`, using existing approaches as
+> inspiration while exploring alternatives.
 
 ---
 
 ## What this is — the north star
 
-A reproducible research lab book pursuing one concrete goal:
+A reproducible research lab book pursuing one concrete goal, clarified by
+Tobias on 2026-09-22:
 
-> **Given** a (unitary) fusion or modular tensor category, together with whatever
-> additional data is needed (OPE coefficients / conformal data), **construct a
-> family of microscopic (lattice) models and their symmetry generators whose
-> continuum limit provably yields a mathematically rigorous QFT/CFT that (i)
-> realises the input category data and (ii) carries a full projective unitary
-> representation of the symmetries.**
+> **Discover an algorithm, or functor, taking fusion/modular tensor category
+> data (and explicitly declared additional data when necessary) to concrete
+> lattice systems and microscopic Virasoro generators whose continuum limit,
+> through operator-algebraic renormalisation and Wilson's triangle, is a
+> mathematically rigorous CFT with the starting category's modular data.**
 
 In one line: a constructive, *provable* pipeline from categorical data →
 microscopic models (+ lattice symmetry generators) → a rigorous continuum (C)FT
@@ -54,6 +51,12 @@ a result in hand. Write every step toward it as a question, proposal, or
 hypothesis until a local source, a local derivation, or a reproducible run
 supports it. The specific sub-question in flight is recorded in the worklog, not
 fixed here.
+
+Indeterminate-number anyon Hilbert spaces are one mechanism under investigation,
+not a restriction on the algorithm. Investigate other mechanisms. New proofs
+use Lamport's structured notation with explicit assumptions, hierarchical
+numbered steps, and dependencies. Tobias requests Astra research collaborators
+and skeptical reviewer subagents to referee substantial new material.
 
 The central failure mode to avoid is a plausible mathematical, physical, or
 numerical claim with **no traceable source, derivation, convention, or checked

@@ -10,6 +10,7 @@ New sources are filed under `references/<topic>/` with a per-topic `SOURCES.md`
 
 | Source ID | Topic manifest |
 |---|---|
+| CFT-MACHINE-2026 | [`references/cft-machine/SOURCES.md`](../cft-machine/SOURCES.md) — algorithm/functor investigation, realization and OAR/Virasoro source manifests |
 | `SRC-SCHOTTENLOHER-CFT` | [`references/cft/SOURCES.md`](../cft/SOURCES.md) — Schottenloher, *A Mathematical Introduction to CFT* (LNP 759, 2008) |
 | `SRC-WEINBERG-QFT1` | [`references/qft/SOURCES.md`](../qft/SOURCES.md) — Weinberg, *The Quantum Theory of Fields*, Vol. I (Cambridge University Press, 1995) |
 | `SRC-KOO-SALEUR-1994` | [`references/lattice-symmetry/SOURCES.md`](../lattice-symmetry/SOURCES.md) — Koo and Saleur, "Representations of the Virasoro algebra from lattice models" (arXiv:hep-th/9312156, Nucl. Phys. B426, 1994) |

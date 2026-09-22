@@ -769,3 +769,233 @@ reviews/2026-07-06_pipeline_consistency_scoping/PLAN.md (C1).
 **Sweep status:** CA-71 uses this convention.  CA-68 predates it and is
 consistent (its placement and offset are recorded above).  Periodic chains
 remain excluded pending the (r) periodic entry.
+
+## (u) CFT-machine target and structured proofs (2026-09-22)
+**Choice:** `cft_machine/` develops the user's algorithm/functor target:
+categorical input to microscopic lattices and Virasoro generators, followed
+by an operator-algebraic renormalisation (OAR) limit through Wilson's triangle.
+The minimum fidelity target is equality of modular matrices after a declared
+unit-preserving sector relabelling; a braided category equivalence is a
+stronger, separately named target. Fusion-only input must supply a braided
+target or state a distinct defect-category target before modular fidelity is
+meaningful. The twist matrix `Theta = diag(theta_a)` is distinguished from
+character `T = exp(-2*pi*i*c/24) Theta`; a real central charge lift is input
+data or a proved output, never silently inferred from topological data.
+The proposed functor's initial morphisms are unitary tensor equivalences
+preserving all chosen conformal and dynamical data; extension to arbitrary
+tensor functors is an open problem.
+
+Proofs in the new workspace use Lamport's hierarchical notation: explicit
+ASSUME/PROVE, numbered steps `<1>1`, `<2>1`, dependencies introduced by BY,
+and QED naming the steps that establish the claim. A structured mathematical
+proof is not described as machine-checked unless a proof assistant checks it.
+**Reasoning:** explicit user direction on the actual north star and proof
+style; modular-data fidelity and existence of a complete construction must
+not be replaced by finite spectra or theorem-shaped interface declarations.
+**Source:** user instructions 2026-09-22; the target and fidelity source
+anchors are developed in `cft_machine/research/realisation_and_fidelity.md`;
+Lamport, `references/cft-machine/proofs/lamport1993.tex`.
+**Sweep status:** new `cft_machine/` work only; prior shards retain their
+historical notation and claim status.
+
+## (v) CFT-machine conditional analytic interfaces (2026-09-22)
+**Choice:** scale indices are `N >= 0`; refinement isometries are
+`J_N:H_N -> H_{N+1}`. A proposed graph-norm certificate names positive
+control operators `K_N >= 1`, exact intertwining `J_N K_N = K_{N+1} J_N`
+on explicit invariant cores, and norms `||v||_{N,s}=||K_N^s v||`.
+Microscopic modes satisfy `T_{N,n}^*=T_{N,-n}` on the stated domains.
+Cross-scale defects and uniform bounds are specified between graph norms
+of orders `s+1` and `s`, for every nonnegative integer `s` needed by an
+operator product. These are hypotheses to verify, not established anyonic
+properties. Central terms retain the two constants of (s).
+
+For the fixed-point transport lemma only, `B,A` are unital C*-algebras,
+a finite group `G` acts by *-automorphisms `beta,alpha`, and `Phi:B->A`
+is an equivariant *-isomorphism. Write `B^G={b:beta_g(b)=b for all g}`
+and `E_B(b)=sum_g beta_g(b)/|G|`. A theorem at this level is not a claim
+that fixed points commute with an arbitrary scaling limit.
+The strict-system extension uses unital injective equivariant *-maps
+`alpha_{N+1}^N:A_N->A_{N+1}` with a fixed finite group at all scales,
+and the norm C*-inductive limit. Its fixed-point comparison is only at
+the observable-algebra level; states, GNS closures, and sectors are separate.
+**Reasoning:** domain control is required for products of unbounded limits;
+an abstract orbifold transport result requires equivariance of the whole
+limiting construction, not just matching lattice spectra.
+**Source:** proposed interfaces for local derivations in
+`cft_machine/research/virasoro_routes.md` and
+`cft_machine/research/realisation_and_fidelity.md`; OAR framework in
+`literature/md/2010.11121/2010.11121.md:126`--`:180`.
+**Sweep status:** new CFT-machine research notes only.
+
+## (w) Source-modified chiral fermion benchmark (2026-09-22)
+**Choice:** circle length `2*pi` (source half-length `L=pi`), even number
+`M` of sites, spacing `epsilon=2*pi/M`, antiperiodic momenta
+`r=-M/2+1/2,...,M/2-1/2`, orthonormal momentum coordinates. The default
+complex chiral KS matrix is
+`A_n e_r = cos(epsilon*n/4)^2 * sin(epsilon*(r-n/2))/epsilon * e_(r-n)`
+when `r-n` belongs to the momentum window, and zero otherwise.
+The continuum comparison is `B_n e_r=(r-n/2)e_(r-n)` on the infinite
+half-integer momentum space. No-wrap truncation is the source's modified
+KS prescription; periodic wrap is only a named negative control.
+Refinement uses zero-padding into the doubled momentum window in these
+orthonormal coordinates. The sea projector is `S=1_(r<0)`.
+The two-component Dirac symbol, when used, is
+`[[0,exp(-i*epsilon*r)-1],[exp(i*epsilon*r)-1,0]]/epsilon`.
+Float64 checks use explicit absolute tolerance `1e-11`; sample sizes
+`M=8,16,32` cap Dirac matrix dimension at 64. Fixed-core comparisons name
+their momentum window and mode integers. No many-body diagonalisation.
+**Reasoning:** source-modified modes remove ultraviolet wrap contributions;
+finite one-particle commutators alone cannot establish a nonzero central
+term. The normal-ordering/Schwinger trace is checked separately.
+**Source:** `references/text/CFTFromLatticeFermions.txt`, Eqs. (27), (45),
+(110), (145), (184), and especially (197)--(199) at lines 3379--3420.
+**Sweep status:** `cft_machine/benchmarks/fermion/` only; this entry makes
+no Majorana, Ising-sector, or categorical-fidelity identification.
+The Dirac block order is `(component1,component2)` for each momentum;
+`sigma_y=[[0,-i],[i,0]]`, continuum symbol `r*sigma_y`, and the
+negative-energy covariance is `P_M=(I-h_M/E_M)/2`,
+`E_M=2*abs(sin(epsilon*r/2))/epsilon`. This finite covariance is distinct
+from the exactly compatible limiting chiral sea `S`. The orthonormal
+Fourier matrix uses `U[x,r]=exp(i*r*x)/sqrt(M)` on
+`x=0,epsilon,...,(M-1)*epsilon`, with an antiperiodic seam. The analytic
+KS scalar bound to check is
+`epsilon^2*(abs(r-n/2)^3/6+n^2*abs(r-n/2)/16)`; finite sampled errors
+are witnesses for the formula, not a proof of uniform OAR convergence.
+For the self-dual/Majorana specialization only, charge conjugation is the
+antilinear reflection `Gamma e_r=e_(-r)` and quadratic implementers use
+the source's self-dual CAR convention, whose Schwinger cocycle is one
+half the complex-CAR cocycle (same source Eq. (28)). The even chiral
+Virasoro subnet is the potential Ising target; no identification of the
+whole graded field algebra or all spin observables with that subnet is made.
+
+## (x) Quantitative Wilson triangle (2026-09-22)
+**Choice:** `A_k` are unital C*-algebras and `alpha_n^k:A_k->A_n`,
+`n>=k`, are coherent unital injective *-maps. `omega_n` is the chosen
+microscopic state at scale `n`; `omega_{k,n}=omega_n o alpha_n^k` is its
+row-`k` pullback. The row-drift bound `d_{k,n}` controls
+`||omega_{k,n+1}-omega_{k,n}||` in dual operator norm. Its summable tail
+is `t_k(n)=sum_{j>=n}d_{k,j}`. A computable tail modulus is extra
+algorithmic input until derived for a particular lattice family.
+**Reasoning:** constructive horizontal convergence requires a quantitative
+bound; a finite list of small changes or a fitted exponent is insufficient.
+**Source:** OAR definitions (2.8)--(2.12),
+`literature/md/2010.11121/2010.11121.md:126`--`:155`; local proof in
+`cft_machine/research/wilson_triangle.md`.
+**Sweep status:** CFT-machine Wilson-state theorem only.
+
+## (y) Exact Ising modular-input compiler (2026-09-22)
+**Choice:** the first supported categorical domain is the standard chiral
+Ising modular datum in unit-first order `(1,sigma,psi)` and declared tensor
+products of these data. Exact scalars use `Q(zeta_16)`, represented by rational
+polynomials modulo `zeta_16^8+1`; `sqrt(2)=zeta_16^2-zeta_16^6`.
+The seed twists are `(1,zeta_16,-1)` and
+`S=[[1,sqrt(2),1],[sqrt(2),0,-sqrt(2)],[1,-sqrt(2),1]]/2`.
+The selected real conformal central charge is `1/2` per factor.
+Product sectors are lexicographically ordered tuples, with tensor-product
+S, componentwise-product twists, additive conformal weights/central charge,
+and factorwise fusion. A seed may be relabelled with its unit fixed.
+An explicit tensor factorization is input evidence, not inferred from fusion
+rules alone. Unsupported modular data produce an explicit unsupported result
+or error; neither numeric closeness nor an Ising fusion table alone accepts
+an input. Computed examples use at most two factors and at most 16 sites per
+factor; no tensor-product many-body matrices are constructed.
+**Reasoning:** the positive constructor must match the user's modular data
+exactly and expose its supported domain. The target is the tensor product of
+the even local chiral Virasoro subnets; the whole graded fermion algebra is
+not silently substituted for that target.
+**Source:** `references/category-theory/RowellStongWang2009Classification/source/RSWfinal3.tex:2441`--`:2474`;
+`references/cft-machine/realisation/KawahigashiLongo2002/source.tex:1027`--`:1157`;
+`references/cft-machine/realisation/KawahigashiLongoMuger1999/source.tex:1518`--`:1527`.
+**Sweep status:** `cft_machine/compiler/` only.
+Exact scalar coefficients use arbitrary-precision `Rational{BigInt}`.
+The character T matrix is retained as the exact pair
+`(vacuum_phase_exponent=-c/24, twists)` denoting the exponential phase
+times the twist diagonal; that phase is generally outside `Q(zeta_16)`.
+The selected minimal-model representatives at `m=3` are `(1,1),(1,2),(1,3)`.
+For `k` factors, retain all factor-resolved stress families. Their sum is
+the total stress tensor, but this sum alone is not identified with the
+entire tensor-product local net. The chiral Hamiltonian is the source's
+normal-ordered self-dual sine-symbol quadratic `Q_0`, kept distinct from
+the benchmark's two-component Dirac Hamiltonian.
+
+For the actual finite-Dirac-state Wilson benchmark in (w),(x), embeddings
+are `kron(J,I_2)` in the interleaved component order. A row at coarse `M`
+uses fine `Q=M,2M,4M` with `Q<=32`. The covariance limit is
+`P_infty(r)=(I-sign(r)*sigma_y)/2`. The proposed bound to derive and test is
+`||P_Q(r)-P_infty(r)|| <= epsilon_Q*abs(r)/4`.
+Dual state-norm estimates require a separate quasi-free product-state
+argument; covariance error is not identified with full state error by fiat.
+
+## (z) Equivariant OAR and coset candidate conventions (2026-09-22)
+**Choice (equivariant state transport):** a fixed finite group `G` acts
+on each strict OAR algebra by *-automorphisms, refinement maps are
+equivariant, and the microscopic states are invariant. In their limiting
+GNS representation define `U_g[a]=[beta_g(a)]`, fixed vectors `H^G`, and
+the averaging projection `P_G=sum_g U_g/|G|`. Local statements require
+the action and the named continuum identification to preserve every
+interval algebra. A product of Ising observable nets uses independent
+factor parities `G=(Z_2)^k`, not only total fermion parity.
+**Source:** local derivation `cft_machine/research/equivariant_oar.md`;
+`references/qft/FewsterRejzner2019/source/AQFTIMPRS-Oct2019.tex:1255`--`:1268`
+(local weak closures); existing conventions (g),(v),(x).
+
+**Choice (new coset research only):** Hermitian generators
+`t^a=sigma_a/2` satisfy `Tr(t^a t^b)=delta_ab/2`. Integer level `k>=1`
+currents use
+`[J_p^a,J_q^b]=i*epsilon_abc*J_(p+q)^c+(k/2)*p*delta_ab*delta_(p+q,0)`.
+Sugawara has coefficient `1/(k+2)` in this normalization. Source lattice
+currents are reindexed with `p=-k_source` so positive modes lower energy.
+For `k=m-2`, let `I` sum the first `k` level-one copies, `J` the last
+copy, and `D=I+J`. The proposed coset stress is
+`Sug_k(I)+Sug_1(J)-Sug_(k+1)(D)`.
+Normal ordering of `J_a J_b` places the first factor on the right when
+its mode index `a>=0`; otherwise it leaves the order unchanged.
+The current cutoff and microscopic momentum cutoff are independent
+indices; any diagonal limit must supply a bound before identifying them.
+**Source:** newly registered GKO original source under
+`references/cft-machine/virasoro/`, Eqs. (2.5)--(2.9);
+`references/text/CFTFromLatticeFermions.txt`, Eq. (232).
+**Sweep status:** equivariant theorem and `coset_route.md` only;
+no interacting-lattice or general minimal-model realization claimed.
+The coset candidate uses auxiliary free-sea excitation energy
+`E_M=sum_(flavor,r>0) r*n_r + sum_(flavor,r<0)|r|*(1-n_r)`.
+Its projection `P_e` means energy at most `e>=0`; this control is not the
+coset Hamiltonian. Candidate current cutoff `R_M=floor(M/8)` retains
+only pairs `p,n-p` with BOTH `|p|<=R_M` and `|n-p|<=R_M`, to preserve
+adjointness. Claims of eventual equality must check the stated safe
+threshold, rather than assume that this diagonal schedule always suffices.
+
+For the Ising compiler the finite observable algebra is the fixed algebra
+of the graded tensor product of self-dual CAR factors under independent
+factor parities `(Z_2)^k`. In each real spatial factor it is generated by
+`i*Psi(e_x)*Psi(e_y)` for `x<y` and the identity. Use the NS vacuum
+representation and its interval net, not an asserted universal circle
+observable algebra. Local reconstruction is defined from limits of even
+products of smooth interval-supported real antiperiodic test sections.
+Sampling uses `v_M[x]=sqrt(epsilon_M)*f(x)`, transformed by the unitary
+discrete Fourier matrix of (w), with continuum Fourier basis
+`exp(i*r*x)/sqrt(2*pi)`. This defines the sampled-generator local net;
+it is not an assertion about every arbitrary bounded local scaling sequence.
+**Sources for this specialization:**
+`references/cft-machine/realisation/LongoMartinettiRehren2009/source/LMR.tex:1165`--`:1168`;
+`references/cft-machine/realisation/Bockenhauer1994/source.tex:324`--`:355`,
+`:563`--`:588`.
+The sampling Hilbert norm is `L^2([0,2*pi],dx)`. Bockenhauer's normalized
+angular-measure convention is related by `f_Bock=sqrt(2*pi)*f_here`.
+The implemented sampling chart avoids the antiperiodic seam; other interval
+charts require the declared antiperiodic continuation.
+
+Sparse coset witnesses use exact `Complex{Rational{BigInt}}` amplitudes and
+`BigInt` occupation keys, ordered by copy, increasing momentum, then flavor
+`1,2`. The canonical ket has occupied creators in increasing orbital order;
+creation/annihilation at orbital `i` has sign `(-1)^N_(occupied below i)`.
+The sea fills both flavors at every negative momentum. The complex current
+is `sum t^a_fg c^dagger_(u,r-p,f)c_(u,r,g)` minus its vacuum scalar.
+Sea-preserving Fock refinement adds negative fine sea orbitals, with phase
+`(-1)^(sum_(occupied coarse i)d_i - sum_(coarse sea i)d_i)`, where `d_i`
+counts added occupied fine orbitals before coarse orbital `i`.
+This phase prescription is a local derivation target, not inferred from
+vacuum insertion in the Fibonacci backend. Runs use `k=1,2`, `M=8,16`,
+`|n|<=3`, `R=3,4`, and at most 5000 sparse states per intermediate vector;
+up to 96 occupation bits are allowed. No dense many-body or one-particle
+matrices or diagonalization are used in this sparse benchmark.
