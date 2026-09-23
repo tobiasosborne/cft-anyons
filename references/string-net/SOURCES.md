@@ -86,3 +86,88 @@ relabelled `SRC-LEVIN-WEN-2007-TEE`.
     the local rules.
   - `source/strnet.tex:806`--`:813` -- the other `N` phases have no smooth
     continuum limit.
+
+### SRC-FIDKOWSKI-ETAL-2006 -- Fidkowski, Freedman, Nayak, Walker, Wang, from string nets to nonabelions
+
+- **Authors:** Lukasz Fidkowski, Michael Freedman, Chetan Nayak, Kevin Walker,
+  Zhenghan Wang
+- **Title:** From String Nets to Nonabelions
+- **Journal:** Commun. Math. Phys. 287, 805 (2009)
+- **arXiv:** `cond-mat/0610583`
+- **Local arXiv source package:**
+  `references/string-net/FidkowskiEtAl2006/FidkowskiEtAl2006_arxiv_eprint.tar.gz`
+  (SHA256 `8350c0a10faeef88c9c7ce64d58053f63c31291300671b37b7841df5601fa44d`)
+- **Local arXiv PDF:** `references/string-net/FidkowskiEtAl2006/FidkowskiEtAl2006_arxiv.pdf`
+  (13 pages; SHA256 `67302d8588477943756ba9f9cc8abecbc24a1c4f6c665cffe7ff77564f94709a`)
+- **Extracted source TeX:**
+  `references/string-net/FidkowskiEtAl2006/source/string_nets-10-8-LF-2.tex`
+  (1020 lines; SHA256 `f5165cdce484ba4cecc174be971d026f040594f3f71c86740ce5716a71e521e9`)
+- **Retrieval:** arXiv e-print and PDF, 2026-09-23 (`https://arxiv.org/abs/cond-mat/0610583`).
+- **Verified anchor ranges:**
+  - `:92`--`:102` -- Tutte's formula connects DFib to the `Q = tau+2` Potts
+    model; the exactly solvable point is the high-temperature limit of the
+    low-temperature expansion; conjectured one-parameter family with a bond
+    fugacity.
+  - `:547`--`:556` -- chromatic polynomial, delete-contract recursion.
+  - `:700`--`:747` -- `<G>_tau = tau^{-5} tau^{(3/2)V(Ghat)} chi_Ghat(tau+1)`
+    (eq. `tp1`), Tutte's golden identity, Theorem: `<G>_tau^2 = chi_Ghat(tau+2)/(tau+2)`
+    for any planar net; note on vertex fugacity from non-unitary normalisation.
+  - `:775`--`:790` -- Fortuin-Kasteleyn; `0 < Q <= 4` critical precisely at the
+    self-dual point `gamma = sqrt(Q)`; loop gas with weight `d^2` per loop is
+    critical iff `d <= sqrt 2`.
+  - `:803`--`:824` -- low-temperature expansion `Z = sum_G chi_Ghat(Q) (e^{-beta J})^L`
+    over trivalent graphs; criticality condition `e^{beta_c J} - 1 = sqrt Q`
+    (square-lattice self-dual value); `Psi(G) = <G>_tau` is the isotopy-invariant
+    wave function.
+  - `:846`--`:848` -- identification of the Levin-Wen ground state with
+    `Psi(G) = <G>_tau`.
+
+### SRC-FENDLEY-KRUSHKAL-2008 -- Fendley and Krushkal, Tutte chromatic identities from the Temperley-Lieb algebra
+
+- **Authors:** Paul Fendley and Vyacheslav Krushkal
+- **Title:** Tutte chromatic identities from the Temperley-Lieb algebra
+- **Journal:** Geom. Topol. 13, 709 (2009)
+- **arXiv:** `0711.0016`
+- **Local arXiv source package:**
+  `references/string-net/FendleyKrushkal2008/FendleyKrushkal2008_arxiv_eprint.tar.gz`
+  (SHA256 `82a5fbd22c79feaaf28c5a6790f3bbfef8b9536333bccee9768e52f3939c3972`)
+- **Local arXiv PDF:** `references/string-net/FendleyKrushkal2008/FendleyKrushkal2008_arxiv.pdf`
+  (25 pages; SHA256 `b8b5a2f40c4562fb7af18c188d68bdaca1241d2df7b4a9891982dbdaba4fe348`)
+- **Extracted source TeX:** `references/string-net/FendleyKrushkal2008/source/Tutte-new.tex`
+  (1999 lines; SHA256 `62881978e32e8aad0bae8861dcb15ed45122ec39ad84777a3be807f2bfebf03c`)
+- **Retrieval:** arXiv e-print and PDF, 2026-09-23 (`https://arxiv.org/abs/0711.0016`).
+- **Verified anchor ranges:**
+  - `:115`--`:135` -- Tutte's golden identity
+    `chi_T(phi+2) = (phi+2) phi^{3V(T)-10} chi_T(phi+1)^2` and the linear
+    relation at `Q = phi+1`.
+  - `:225`--`:235`, `:270`--`:280` -- the chromatic algebra at `Q = phi+1` and
+    the Jones-Wenzl projector `P^{(4)}` generating its unique proper ideal.
+  - `:315`--`:325` -- physics application to Fibonacci quantum loop models.
+  - `:915`--`:925` -- `chi_Ghat(phi+2)/(phi+2)` evaluates in the product of
+    two chromatic algebras at `phi+1` as `phi^{-4} chi_Ghat(phi+1)^2`.
+
+### SRC-FENDLEY-2008 -- Fendley, topological order from quantum loops and nets
+
+- **Authors:** Paul Fendley
+- **Title:** Topological order from quantum loops and nets
+- **Journal:** Ann. Phys. 323, 3113 (2008)
+- **arXiv:** `0804.0625`
+- **Local arXiv source package:**
+  `references/string-net/Fendley2008/Fendley2008_arxiv_eprint.tar.gz`
+  (SHA256 `f284ee1afd49da3e994c57865f1b59a6e02d9388d6fbc53a690e76f38c264584`)
+- **Local arXiv PDF:** `references/string-net/Fendley2008/Fendley2008_arxiv.pdf`
+  (29 pages; SHA256 `5e28c7af96be83f7f0369a03b4a3922110e64f36a9d11800c95dd749363988dd`)
+- **Extracted source TeX:** `references/string-net/Fendley2008/source/nets-rev.tex`
+  (2368 lines; SHA256 `c061414d297ee5f24afa7c23c8fc762134d4fb422bc8cadaa88f4acd78b46ac2`)
+- **Retrieval:** arXiv e-print and PDF, 2026-09-23 (`https://arxiv.org/abs/0804.0625`).
+- **Verified anchor ranges:**
+  - `:185`--`:210` -- the `d = sqrt 2` barrier for quantum loop models; nets
+    with chromatic-polynomial weights as the way past it.
+  - `:424`--`:441` -- completely packed loops are the `Q = d^4` Potts model at
+    its self-dual point, critical only for `Q <= 4`.
+  - `:640`--`:656` -- the Fibonacci case `k = 3`, `d = phi`; Tutte's golden
+    identity implies the classical loop model is critical.
+  - `:1030`--`:1082` -- `<N|Psi> = alpha (d^2-1)^{-L_N/2} chi_Nhat(d^2)`
+    (eq. `netchrome`), the dual graph, and the Potts low-temperature expansion
+    `Z_Potts = sum_N K^{L_N} chi_Nhat(Q)` (eq. `ZPotts`) with `K` the weight per
+    unit length of domain wall.

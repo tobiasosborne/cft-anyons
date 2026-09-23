@@ -1102,3 +1102,41 @@ versus cap and which hop is `h^+` is a labelling; reflection symmetry
 (weights, `n = -2 cos 4 lambda`); `:849` of the strip source (identity at
 `u = 0`); CA-66 (birth/death maps); CA-69 (dTL generators).
 **Sweep status:** CA-86 only.
+
+## (ad) Fibonacci vertex tile normalisation (2026-09-23)
+**Choice:** For Fibonacci on the site object `O = 1 ⊕ τ` of (r), the vertex
+morphism is the sourced `Δ ∈ Fib(τ → τ ⊗ τ)` with the **isotropic
+normalisation** `Δ†Δ = √φ · id_τ` (so a bubble on a τ string equals `√φ`
+and the theta graph equals `φ^{3/2} = √(d_τ^3)`), matching the raw cup
+`v†v = φ · id_1` of (r) and the Levin–Wen normalisation `v_i = √d_i` in
+which `F` is tetrahedrally symmetric. The two **vertex tiles** on sites
+`j, j+1` are
+`ν_j^R = (ι_τ ⊗ ι_τ) ∘ Δ ∘ (π_1 ⊗ π_τ)` (the τ on site `j+1` splits into
+τ τ on `j, j+1`) and `ν_j^L = (ι_τ ⊗ ι_τ) ∘ Δ ∘ (π_τ ⊗ π_1)`, with
+adjoints the merging tiles; `(ν^R)†ν^R = √φ P_{0X}`, `(ν^L)†ν^L = √φ P_{X0}`,
+`ν^R (ν^R)† = √φ P_τ` where `P_τ = φ^{-1/2} Δ Δ†` is the τ-channel projector
+on `τ ⊗ τ`. In the fusion-path basis `{|11>, |ττ;1>}`, `{|1τ>, |τ1>, |ττ;τ>}`
+the thirteen tiles are the matrix units: nine parity-preserving ones (the
+dTL image of CA-69/CA-74) and the four vertex tiles. A **reflection-symmetric**
+net-gas Hamiltonian uses equal couplings for `ν^L` and `ν^R`; the sign
+relating them under site reflection is `+1` in the tetrahedrally symmetric
+gauge, which is the gauge assumed here (a different `F` gauge changes the
+relative phase of `|ττ;τ>` and must be recorded if used).
+**Reasoning:** the isotropic normalisation makes the C-evaluation of a
+spacetime net isotopy invariant, so that Corollary 86.2 (Levin–Wen rules
+(2)–(4) automatic, rule (1) broken only by tile weights) extends verbatim
+from loops to trivalent nets. Any other normalisation multiplies every vertex
+tile by a constant and is absorbed into the vertex coupling `v`.
+**Source:** `references/text/PenneysUnitaryFusionCategories.md:610`--`:625`
+(Fib: `v`, `Δ` unique normalised basis elements; `v†v = φ`, `Δ†Δ = √φ`,
+`v†Δ = 0`, minimal central projections of `End(τ⊗τ)`);
+`references/string-net/LevinWen2005/source/strnet.tex:588`--`:611`
+(normalisation `v_i = √d_i` and tetrahedral symmetry of `F`).
+**Addendum (CA-87, checked):** in the F-gauge of (b) the cup entry of the
+Temperley--Lieb flip generator is `+phi^{-1/2}` (the opposite sign violates
+the TL relations at residual 0.76), while the vertex sign is a free gauge of
+`|ττ;τ>`. Because `1 ⊕ τ ≅ τ ⊗ τ`, the thirteen tiles are the Fibonacci
+quotient of `TL_4(phi)` and the (ad) vertex tiles are components of the TL
+generator across a pair boundary (Theorem 87.2). The convention stands; it
+is no longer an independent normalisation.
+**Sweep status:** CA-87 only.

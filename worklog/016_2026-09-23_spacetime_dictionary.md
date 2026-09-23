@@ -1,5 +1,77 @@
 # Worklog chunk 016 — 2026-09-23
 
+## The net case (CA-87): the dilute Fibonacci chain is the golden chain blocked
+
+### Context
+
+Tobias asked for step 3 of the P1 plan, the Fibonacci net gas with the
+trivalent vertex on. The plan was to define the six-coupling dilute
+Hamiltonian, derive its spacetime net gas via CA-86, and look for exact
+leverage on where it is critical.
+
+### What changed and what was discovered
+
+- Acquired three sources under `references/string-net/` (Fidkowski et al.
+  2006, Fendley–Krushkal 2008, Fendley 2008) for the chromatic-polynomial
+  evaluation of Fibonacci nets and the Potts low-temperature expansion.
+- CONVENTIONS (ad): vertex tile normalisation (isotropic, `Δ†Δ = √φ`).
+- Solving the Temperley–Lieb relations in `End(O⊗O)` by hand gives a unique
+  reflection-symmetric flip generator `F = φ(|u><u| ⊕ |w><w|)`; the python
+  check (`scripts/python/net_tl_representation_check.py`, run bundle
+  `runs/2026-09-23-net-tl-representation/`) confirms every TL relation to
+  1e-16 for L = 3..6, and then shows `H = -Σ e_i` on L dilute sites is
+  **exactly isospectral** to the golden chain on 2L sites, all digits.
+- That forced the real theorem (Lemma 87.1): `1 ⊕ τ ≅ τ ⊗ τ`, so the dilute
+  Fibonacci chain of L sites *is* the dense golden chain of 2L sites with
+  sites paired; nearest-neighbour dilute = pair-aligned range-four dense.
+  The "vertex tile outside dTL" of CA-74 is a TL generator across a pair
+  boundary. For Fibonacci there is no net gas beyond loops.
+- Proposition 87.3: the isotropic Fibonacci net gas with vertex fugacity
+  `φ^{-3/4}` equals `φ^{-2} Z_Potts(Q = φ+1, K = x)` (from the sourced
+  `<G>_τ` formula, Euler's relation, one-point unions, and the sourced Potts
+  expansion). Critical in the c = 7/10 class; the honeycomb critical
+  coupling still needs a local source (the sourced `e^{βJ}-1 = √Q` is the
+  square-lattice value).
+- Table of six calibrated critical points of the dilute Fibonacci chain,
+  all with c ∈ {7/10, 4/5}.
+
+### Why these choices
+
+The blocking lemma is what the numerics were telling me; it is more useful
+than the "net representation of TL" I set out to construct, because it says
+where the net question is real: categories with `1 ⊕ X` not of the form
+`Y ⊗ Ȳ`, Haagerup being the case at hand (dimension argument in the shard).
+It also resolves the CA-69/CA-74 thread conceptually.
+
+### Frictions and dead ends
+
+- First version of the check demanded all four sign gauges pass; the cup
+  sign is tied to the F-gauge (b) and the opposite sign fails at 0.76, so
+  the criterion was wrong, not the algebra. Fixed; the expected-failure is
+  now asserted.
+- The golden-chain cross-check first built the dilute basis for 2L = 18
+  sites (75025-dim dense matrices, 42 GB); rewritten in the dense basis.
+- numpy had to be pip-installed in the container. Julia port pending.
+- I nearly wrote the shard as "a new critical point with the vertex on";
+  the isospectrality caught that before it was written. Rule 4.
+
+### Acceptance
+
+- `python3 scripts/python/net_tl_representation_check.py` exits 0: TL
+  relations PASS for cup sign +, FAIL (as expected) for cup sign −; mutation
+  RED (3e-3); net and golden spectra identical for N = 5..15.
+- Guard: 82 shards pass. No PDF rebuild (no LaTeX here).
+
+### Pointers and open threads
+
+- CA-87; CONVENTIONS (ad) + addendum; INDEX rows for the script and run.
+- Next: the Haagerup dilute chain `1 ⊕ ρ` (not blocked): enumerate
+  `End(O⊗O)`, look for algebra structure and a critical Hamiltonian; then
+  the holomorphicity condition. Resolve the HLOTT/Wolf contradiction first.
+- Whether the range-four golden-chain family has any critical point outside
+  {7/10, 4/5} is open and cheap to probe numerically (dims F_{2L+1}).
+
+
 ## Realignment on intent, and the spacetime Trotter dictionary (CA-86)
 
 ### Context

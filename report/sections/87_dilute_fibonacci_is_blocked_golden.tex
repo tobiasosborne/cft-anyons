@@ -1,0 +1,223 @@
+% SHARD-ID: CA-87-DILUTE-FIBONACCI-IS-BLOCKED-GOLDEN
+% SHARD-TITLE: The Net Case: the Dilute Fibonacci Chain Is the Golden Chain Blocked
+% SHARD-SUMMARY: Proves that whenever the site object 1+X is Y x Ybar, the dilute chain is the dense Y-chain with sites paired; for Fibonacci 1+tau = tau x tau, so the vertex tile is a Temperley-Lieb generator across a pair boundary and there is no net gas beyond loops.
+% SHARD-SUMMARY: Solves the Temperley-Lieb relations in End(O x O) uniquely, verifies all relations to machine precision for L <= 6, and finds H = -sum e_i exactly isospectral to the golden chain on 2L sites (N = 5..15).
+% SHARD-SUMMARY: Identifies the isotropic Fibonacci net gas with the Q = phi+1 Potts low-temperature expansion at vertex fugacity phi^{-3/4}, critical in the c = 7/10 class, and moves the genuine net question to categories such as Haagerup where 1+X is not Y x Ybar.
+% SHARD-KEYWORDS: dilute chain, golden chain, blocking, Temperley-Lieb, vertex tile, net gas, chromatic polynomial, Potts, Tutte, Fibonacci, Haagerup
+
+\section{The Net Case: the Dilute Fibonacci Chain Is the Golden Chain Blocked}
+\label{sec:dilute-fibonacci-blocked}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: derived and checked.}  Lemma 87.1 is a categorical
+identity; Theorem 87.2 is derived by hand and checked by the reproducible run
+`runs/2026-09-23-net-tl-representation/` (script
+`scripts/python/net_tl_representation_check.py`, INDEX.md); Proposition 87.3
+assembles three sourced identities; the last subsection is a proposal.
+
+Dependencies: CA-65, CA-66, CA-69, CA-74, CA-86; CONVENTIONS.md (b), (r),
+(ac), (ad).
+
+% Source: references/text/PenneysUnitaryFusionCategories.md:610--625 -- Fib:
+%   tau x tau = 1 + tau; v, Delta normalised basis elements; v^+v = phi,
+%   Delta^+Delta = sqrt(phi); minimal central projections of End(tau x tau).
+% Source: references/string-net/FidkowskiEtAl2006/source/string_nets-10-8-LF-2.tex:700--747 --
+%   <G>_tau = tau^{-5} tau^{(3/2)V(Ghat)} chi_Ghat(tau+1); golden identity;
+%   1/(tau+2)-normalised chromatic polynomial multiplicative under 1-point
+%   unions; vertex fugacity from non-unitary normalisations.
+% Source: references/string-net/FidkowskiEtAl2006/source/string_nets-10-8-LF-2.tex:775--790,
+%   :803--824, :846--848 -- 0 < Q <= 4 critical at the self-dual point;
+%   low-temperature expansion over trivalent graphs; e^{beta_c J} - 1 = sqrt Q
+%   (square-lattice value); Psi(G) = <G>_tau is the Levin-Wen ground state.
+% Source: references/string-net/Fendley2008/source/nets-rev.tex:1030--1082 --
+%   Fibonacci net amplitude proportional to chi_Nhat(d^2), d^2 = phi+1; the
+%   dual graph; Z_Potts = sum_N K^{L_N} chi_Nhat(Q) (eq. ZPotts); chi vanishes
+%   unless N is a net.
+% Source: references/string-net/Fendley2008/source/nets-rev.tex:424--441 --
+%   completely packed loops with weight sqrt Q are the Q-state Potts model at
+%   its self-dual point, critical only for Q <= 4.
+% Source: references/string-net/FendleyKrushkal2008/source/Tutte-new.tex:225--235,
+%   :270--280 -- the chromatic algebra at Q = phi+1 and the Jones-Wenzl
+%   projector P^{(4)} generating its unique proper ideal.
+% Source: references/text/GoldenChainFeiguinEtAl.txt:21--26, :238--242, :274--285 --
+%   golden chain critical with c = 7/10, exact RSOS map; spectrum table with
+%   the weights 1/10, 3/5, 3/2 and descendants.
+% Source: literature/md/2110.03008/2110.03008.md:41--44 -- Haagerup H_3: six
+%   simples 1, a, a^2, rho, a rho, a^2 rho; a^3 = 1, a rho = rho a^{-1},
+%   rho^2 = 1 + (1 + a + a^2) rho; non-commutative, no braiding.
+% Source: literature/md/1801.05959/1801.05959.md:27, :37 -- strange-correlator
+%   weights carry no positivity guarantee; Fibonacci tau-projection gives the
+%   critical hard-hexagon model, c = 4/5, with some negative weights.
+
+\subsection{Blocking: When Dilute Is Dense in Disguise}
+
+\textbf{Lemma 87.1 [derived].}  Let \(\Cc\) be a unitary fusion category and
+\(O=\one\oplus X\) the site object of (r).  If there is a simple \(Y\) with
+\(Y\otimes\bar Y\cong\one\oplus X\), then for every \(L\)
+\[
+  O^{\otimes L}\;\cong\;(Y\otimes\bar Y)^{\otimes L},
+  \qquad
+  \operatorname{End}_{\Cc}(O^{\otimes L})\;\cong\;\operatorname{End}_{\Cc}\big((Y\bar Y)^{\otimes L}\big),
+\]
+and a nearest-neighbour operator on \(O\)-sites \(j,j+1\) is a range-four
+operator on the alternating \(Y\bar Y\) chain, aligned to pairs.  For
+self-dual \(Y\) the right-hand side is the dense \(Y\)-chain on \(2L\) sites.
+
+\textbf{Proof.}  Tensor the isomorphism \(O\cong Y\otimes\bar Y\) \(L\) times;
+\(\operatorname{End}\) is functorial; a morphism on \(O\otimes O\cong
+(Y\bar Y)^{\otimes 2}\) has support on four consecutive \(Y\)-sites.  \(\square\)
+
+\textbf{Instances.}  Fibonacci: \(\tau\otimes\tau=\one\oplus\tau\), so the
+dilute \(\one\oplus\tau\) chain of \(L\) sites is the golden chain of \(2L\)
+sites.  The dimensions agree: CA-66 gives \(\dim\mathcal H_L=F_{2L+1}\) for the
+dilute chain and \(\dim\operatorname{End}(O^{\otimes L})=F_{4L-1}\), which are
+the fusion-path count and \(\sum_c m_c^2\) of \(\tau^{\otimes 2L}\).
+Ising: \(\sigma\otimes\sigma=\one\oplus\psi\).  \(SU(2)_k\):
+\(\tfrac12\otimes\tfrac12=0\oplus1\), so the dilute spin-1 chain is the dense
+spin-\(\tfrac12\) chain.  Haagerup \(H_3\) with \(X=\rho\): the sourced rule
+\(\rho^2=\one+(\one+a+a^2)\rho\) gives \(d_\rho^2=1+3d_\rho\), so
+\(d_\rho=(3+\sqrt{13})/2\) and the invertibles have dimension 1; no simple
+\(Y\) has \(d_Y^2=1+d_\rho=(5+\sqrt{13})/2\), so no such \(Y\) exists.
+
+\textbf{Consequence for CA-69/CA-74.}  The correct two-site algebra of the
+dilute Fibonacci chain is \(\operatorname{End}(\tau^{\otimes4})\), the Fibonacci
+quotient of \(\mathrm{TL}_4(\varphi)\), of dimension 13; the dilute algebra
+\(\mathrm{dTL}_2(\varphi)\) of dimension 9 is its parity-preserving subalgebra.
+The ``vertex tile outside dTL'' of CA-74 is a Temperley--Lieb generator
+acting across a pair boundary.  For Fibonacci there is no net gas beyond
+loops: every trivalent history is a loop history of the blocked chain.
+
+\subsection{The Temperley--Lieb Generators in Tile Form}
+
+Write \(\mathrm{TL}_{2L}(\varphi)\), \(e_i^2=\varphi e_i\),
+\(e_ie_{i\pm1}e_i=e_i\), on the dilute chain as
+\[
+  e_{2j-1}=\varphi\,P_0^{(j)}\ (j=1,\dots,L),\qquad
+  e_{2j}=F_{j,j+1}\ (j=1,\dots,L-1),
+\]
+with \(P_0^{(j)}\) the vacancy projector of site \(j\) (the pair
+\(\tau_{2j-1}\tau_{2j}\) fused to \(\one\)) and \(F\in\operatorname{End}(O\otimes O)\)
+unknown.  In the pair basis \(\{\ket{\one\one},\ket{\tau\tau;\one}\}\oplus
+\{\ket{\one\tau},\ket{\tau\one},\ket{\tau\tau;\tau}\}\) of (ad) the relations
+\(e_{2j\pm1}e_{2j}e_{2j\pm1}=e_{2j\pm1}\) force the vacancy-diagonal entries
+\(\langle\one\one|F|\one\one\rangle=\langle\tau\one|F|\tau\one\rangle=\langle\one\tau|F|\one\tau\rangle=\varphi^{-1}\);
+\(F^2=\varphi F\) with reflection symmetry then forces rank one in each block.
+
+\textbf{Theorem 87.2 [derived; checked].}  Up to the sign of the vertex
+entry, the unique reflection-symmetric solution is
+\[
+  F=\varphi\,\ket{u}\!\bra{u}\;\oplus\;\varphi\,\ket{w}\!\bra{w},\qquad
+  u=(\varphi^{-1},\ \varphi^{-1/2}),\qquad
+  w=(\varphi^{-1},\ \varphi^{-1},\ \pm\varphi^{-3/2}),
+\]
+with the cup sign \(+\) tied to the \(F\)-gauge of (b).  All Temperley--Lieb
+relations, including \([F_{j,j+1},F_{j+1,j+2}]=0\), which involves the
+\(F\)-move, hold to machine precision for \(L=3,\dots,6\); the opposite cup
+sign fails at \(7.6\times10^{-1}\); a 1\% mutation of the vertex entry fails
+at \(3\times10^{-3}\).  Moreover \(H=-\sum_ie_i\) on the dilute chain of
+\(L\) sites and the golden chain \(-\varphi\sum_jP_{\one}^{(j,j+1)}\) on
+\(2L\) sites have identical dimension \(F_{2L+1}\) and identical spectra:
+\[
+\begin{array}{c|c|c|c}
+N=2L-1 & \dim & E_0 & \text{first gaps}\\\hline
+5 & 13 & -6.5141330104 & 0.746587,\ 1.891335,\ 2.463767\\
+9 & 89 & -11.4453171319 & 0.483796,\ 1.270064,\ 1.624217\\
+15 & 1597 & -18.8535471512 & 0.316696,\ 0.841769,\ 1.066473
+\end{array}
+\]
+in both representations, digit for digit (run bundle).  This is Lemma 87.1
+made explicit: \(F_{j,j+1}=\varphi P_{\one}^{(2j,2j+1)}\) rewritten in the
+pair basis.  In tile language every one of the six couplings of CA-86 is on:
+\[
+  F=\tfrac1\varphi P_{00}+\tfrac1\varphi(b+d)+P_{\one}^{\tau\tau}
+  \;\oplus\;\tfrac1\varphi(P_{0\tau}+P_{\tau0})+\tfrac1\varphi(h^++h^-)
+  +\varphi^{-7/4}(\nu^R+\nu^L+\mathrm{h.c.})+\varphi^{-2}P_{\tau}^{\tau\tau},
+\]
+with the raw cup \(b\) of (r) and the (ad)-normalised vertex tiles.
+
+\textbf{Colour reading.}  \(u_1^2=\varphi^{-2}=1/Q\), \(u_2^2=\varphi^{-1}=(Q-1)/Q\),
+\(w_1^2=1/Q\), \(w_3^2=\varphi^{-3}=(Q-2)/Q\) with \(Q=\varphi+1\): these are
+the probabilities that a Potts spin flipped uniformly over \(Q\) colours
+stays, creates a wall pair, hops a wall, or splits a wall into two.  \(F\) is
+the flip generator of the \(Q=\varphi+1\) Potts chain in domain-wall
+variables, and \(H\) is that chain at its self-dual point.  The gap ratios at
+\(N=15\), \(2.658\) and \(3.368\), sit near \(8/3\) and \(10/3\), the ratios
+\((3/5+1)/(3/5)\) and \(2/(3/5)\) expected from the weights \(3/5\) and the
+level-two vacuum descendant of the sourced golden-chain spectrum.
+
+\subsection{The Isotropic Net Gas Is the \(Q=\varphi+1\) Potts Model}
+
+\textbf{Proposition 87.3 [derived from sourced identities].}  With the
+vertex normalisation (ad), the isotopy-invariant evaluation of a planar
+Fibonacci net \(N\) with \(V_3\) trivalent vertices is
+\[
+  \langle N\rangle=\varphi^{-2}\,\varphi^{\frac34V_3(N)}\,\chi_{\widehat N}(\varphi+1),
+\]
+\(\chi_{\widehat N}\) the chromatic polynomial of the dual graph.  Hence the
+isotropic net gas with edge fugacity \(x\) and vertex fugacity
+\(y=\varphi^{-3/4}\) is
+\[
+  \sum_N x^{E(N)}y^{V_3(N)}\langle N\rangle=\varphi^{-2}\,Z_{\mathrm{Potts}}(Q=\varphi+1,\ K=x),
+\]
+the low-temperature expansion of the \(Q=\varphi+1\) Potts model with domain
+walls on the net lattice and spins on its dual.
+
+\textbf{Proof.}  The sourced formula reads \(\langle G\rangle=\varphi^{-5}\varphi^{\frac32F(G)}\chi_{\widehat G}(\varphi+1)\)
+for a connected net, \(F(G)\) its number of faces.  Euler with \(3V_3=2E\)
+gives \(F=2+\tfrac12V_3\), so \(\langle G\rangle=\varphi^{-2}\varphi^{\frac34V_3}\chi_{\widehat G}\).
+Checks: a loop (\(V_3=0\), \(\chi=Q(Q-1)=\varphi^3\)) gives \(\varphi\); a
+theta (\(V_3=2\), \(\chi=Q(Q-1)(Q-2)=\varphi^2\)) gives \(\varphi^{3/2}\),
+the theta value of (ad).  For \(k\) components \(\langle N\rangle\) is
+multiplicative while \(\widehat N\) is a \(k\)-fold one-point union, so
+\(\chi_{\widehat N}=\prod_i\chi_{\widehat N_i}/Q^{k-1}\); the factors
+\(\varphi^{-2k}\) and \(Q^{k-1}=\varphi^{2(k-1)}\) combine to \(\varphi^{-2}\).
+The sourced low-temperature expansion \(Z_{\mathrm{Potts}}=\sum_NK^{E(N)}\chi_{\widehat N}(Q)\)
+then matches term by term at \(y=\varphi^{-3/4}\).  \(\square\)
+
+Since \(Q=\varphi+1<4\), the model has a critical point, in the universality
+class of completely packed loops with weight \(\sqrt Q=\varphi\), i.e.\ the
+dense branch of CA-86 with \(c=7/10\).  The sourced condition
+\(e^{\beta_cJ}-1=\sqrt Q\) is the square-lattice self-dual value; the
+triangular-lattice value for honeycomb domain walls needs a local source
+(open).  Two remarks.  Chromatic polynomials at non-integer \(Q\) take both
+signs, so the net-gas weights are not positive: positivity lives in the
+fusion-path basis of the blocked chain, not in the net basis, exactly as the
+strange-correlator source warns.  And the critical net gas is, by Lemma 87.1,
+the golden chain again, with the Potts critical point as its self-dual point.
+
+\subsection{What This Does to the Principle}
+
+Every calibrated critical point of the Fibonacci \(\one\oplus\tau\) chain is
+now a point of the pair-aligned range-four golden chain family:
+\[
+\begin{array}{l|l|c}
+\text{point} & \text{identity} & c\\\hline
+\text{dense, antiferromagnetic} & \text{golden chain} & 7/10\\
+\text{dense, ferromagnetic} & Z_3\text{ parafermion (sourced)} & 4/5\\
+\text{dilute } A_2^{(2)}\text{ branch 1 (CA-86)} & \text{range-four integrable point} & 4/5\\
+\text{dilute } A_2^{(2)}\text{ branch 2 (CA-86)} & \text{range-four integrable point} & 7/10\\
+\text{Potts / isotropic net gas} & \text{golden chain, self-dual} & 7/10\\
+\text{hard-hexagon strange correlator (sourced)} & \text{tau-projected string-net} & 4/5
+\end{array}
+\]
+Two universality classes, both minimal models with Fibonacci defect lines.
+For Fibonacci the trivalent vertex adds nothing that Temperley--Lieb does not
+already contain, and Intuition~3's ``forced'' creation and annihilation is
+the statement that pairs of \(\tau\) fuse to the vacuum.  The net-gas
+question is therefore not void in general but void for Fibonacci.
+
+\textbf{Proposal.}  The genuine net case is a category whose site object is
+not a product: Haagerup with \(O=\one\oplus\rho\), for which
+\(\operatorname{End}(O\otimes O)\) is not a Temperley--Lieb quotient and the
+vertex tiles \(\rho\otimes\rho\to\rho\), \(\alpha\rho\), \(\alpha^2\rho\) carry
+three independent couplings.  The blocked-chain trick is unavailable, no
+integrable line is known, and the isotropic net evaluation is not a
+chromatic polynomial.  This is the concrete form of the acid test: the first
+computation is the Haagerup analogue of Theorem 87.2, namely whether any
+tile combination in \(\operatorname{End}(O\otimes O)\) generates a known
+algebra with a critical Hamiltonian, and the second is the lattice
+holomorphicity condition of the sweep.  Open items: Julia port of the run
+bundle; a local source for the triangular-lattice Potts critical coupling;
+and whether the range-four golden-chain family has any critical point
+outside \(\{7/10,4/5\}\).

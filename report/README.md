@@ -98,6 +98,7 @@ before treating report edits as complete.
 | 78 | `CA-84-COSET-HAMILTONIAN-AND-OAR` | `report/sections/84_coset_hamiltonian_and_oar.tex` | Coset Positivity and a Scalar-Augmented OAR Tower |
 | 79 | `CA-85-SMEARED-COSET-AND-LOCALITY` | `report/sections/85_smeared_coset_and_locality.tex` | Smooth Coset Symmetry Limits and Local Reconstruction |
 | 80 | `CA-86-SPACETIME-TROTTER-DICTIONARY` | `report/sections/86_spacetime_trotter_dictionary.tex` | String-Net Histories as Trotter Expansions: the Spacetime Dictionary |
+| 81 | `CA-87-DILUTE-FIBONACCI-IS-BLOCKED-GOLDEN` | `report/sections/87_dilute_fibonacci_is_blocked_golden.tex` | The Net Case: the Dilute Fibonacci Chain Is the Golden Chain Blocked |
 
 ## Adding a shard
 
