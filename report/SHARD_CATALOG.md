@@ -717,3 +717,12 @@ single ~200-line source file it points to.
 - Summary: Coordinates microscopic, current and Fourier cutoffs to prove core, strong-resolvent and unitary convergence of quartic coset smearings.
 - Summary: Reconstructs the minimal-model local net from finite descendant compressions in the scalar-augmented OAR representation, without asserting a local fusion-space encoding.
 - Keywords: coset, smooth stress, strong resolvent, projective symmetry, Fourier cutoff, OAR, local reconstruction
+
+## `CA-86-SPACETIME-TROTTER-DICTIONARY`
+
+- Source: `report/sections/86_spacetime_trotter_dictionary.tex`
+- Title: String-Net Histories as Trotter Expansions: the Spacetime Dictionary
+- Summary: Proves that the brick-wall Trotter expansion of an anyonic chain Hamiltonian built from morphisms of C is a sum over string-net histories whose amplitude factorises into a C-evaluation obeying the Levin-Wen rules times a product of tile weights that breaks isotopy.
+- Summary: Calibrates the dictionary on the dense and dilute Temperley-Lieb integrable lines, where the tile weights are the sourced face weights and the Hamiltonian limit, the isotropic point and Nienhuis's honeycomb critical point lie in one commuting family.
+- Summary: Derives x = 1/(2 cos lambda) at u = lambda, reproducing the Nienhuis critical fugacity on branch 1 and the second-branch value on branch 2, and states the Fibonacci net-gas frontier beyond loops.
+- Keywords: Levin-Wen, string-net, Trotter, transfer matrix, spacetime history, dilute O(n), Nienhuis, honeycomb, integrable line, Fibonacci, net gas

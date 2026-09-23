@@ -1,0 +1,271 @@
+% SHARD-ID: CA-86-SPACETIME-TROTTER-DICTIONARY
+% SHARD-TITLE: String-Net Histories as Trotter Expansions: the Spacetime Dictionary
+% SHARD-SUMMARY: Proves that the brick-wall Trotter expansion of an anyonic chain Hamiltonian built from morphisms of C is a sum over string-net histories whose amplitude factorises into a C-evaluation obeying the Levin-Wen rules times a product of tile weights that breaks isotopy.
+% SHARD-SUMMARY: Calibrates the dictionary on the dense and dilute Temperley-Lieb integrable lines, where the tile weights are the sourced face weights and the Hamiltonian limit, the isotropic point and Nienhuis's honeycomb critical point lie in one commuting family.
+% SHARD-SUMMARY: Derives x = 1/(2 cos lambda) at u = lambda, reproducing the Nienhuis critical fugacity on branch 1 and the second-branch value on branch 2, and states the Fibonacci net-gas frontier beyond loops.
+% SHARD-KEYWORDS: Levin-Wen, string-net, Trotter, transfer matrix, spacetime history, dilute O(n), Nienhuis, honeycomb, integrable line, Fibonacci, net gas
+
+\section{String-Net Histories as Trotter Expansions: the Spacetime Dictionary}
+\label{sec:spacetime-trotter-dictionary}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: derived.}  Lemma 86.1 and
+Proposition 86.4 are checked local derivations; the face
+weights, branch data and central charges they use are source-local; the
+final subsection is a proposal.  Reproducibility: the trigonometric identities
+of Proposition 86.4 were evaluated numerically for
+\(L=2,\dots,5\) on both branches (worklog chunk 016); a Julia port is an
+open item.
+
+Dependencies: CA-65, CA-66, CA-69, CA-74; CONVENTIONS.md (a), (b), (r), (ac).
+
+% Source: references/string-net/LevinWen2005/source/strnet.tex:497--524 -- the
+%   four local rules; :548--576 -- their RG motivation; :777--791, :806--813 --
+%   a_s = d_s / sum d_i^2 is the unique phase with a smooth continuum limit.
+% Source: references/lattice-symmetry/KooSaleur1993/source/9312156.tex:318--323,
+%   :724--738 -- sqrt(Q) = 2 cos gamma; log of the diagonal TL transfer matrix
+%   = (u/sin gamma) sum_j e_j + O(u^2), a commuting family.
+% Source: references/lattice-symmetry/ZhouBatchelor1997/source/9611156.tex:105--145 --
+%   dilute O(n) loop weights rho_1..rho_9(u), n = -2 cos 4 lambda; honeycomb
+%   Nienhuis model at u = lambda, 2 lambda; :237--262 -- dilute A_L face
+%   weights, n = 2 cos(pi/(L+1)); :264--276 -- the four branches; :388--399,
+%   :430--455 -- c = 1 - 6/(h(h-1)), h = L+2 (branch 1), L+1 (branch 2).
+% Source: references/lattice-symmetry/DiluteA22Strip2022/source/stripA22.tex:669--745 --
+%   face operator = nine tiles in dTL_2(beta); :800--806, :849 -- crossing
+%   symmetry u <-> 3 lambda - u; identity-arc factorisation at u = 0.
+% Source: references/lattice-symmetry/ChelkakGlazmanSmirnov2016/source/StressTensor.tex:561,
+%   :572--584, :600 -- Nienhuis x_c(n) = 1/sqrt(2 + sqrt(2-n)), second branch
+%   1/sqrt(2 - sqrt(2-n)), c(kappa) at x_c and x > x_c.
+% Source: references/text/GoldenChainFeiguinEtAl.txt:21--26, :238--242 --
+%   golden chain critical, c = 7/10, exact map to the k = 3 RSOS model.
+% Source: references/cft/AasenFendleyMong2020/source/_Statistical_mechanics_from_fusion_categories.tex:15--20,
+%   :537--553 -- weights sum_chi A(chi) P^(chi); Hamiltonian from A = 1 - eps A_j;
+%   beyond Temperley-Lieb, integrability requires further fine-tuning.
+
+\subsection{The Levin--Wen Rules and What They Fix}
+
+\textbf{Source-local.}  Levin and Wen specify a fixed-point wave function
+\(\Phi\) on string-net configurations by four local linear relations:
+(1) topological invariance, (2) a closed type-\(i\) loop contributes
+\(d_i\), (3) a bubble on a string is \(\delta_{ij}\), (4) the \(F\)-move.
+Rules (2)--(3) are motivated by scale invariance of an RG fixed point, rule
+(1) by the expectation that topological phases have topologically invariant
+fixed points, and rule (4) is the simplest completing constraint.  The
+plaquette coefficients \(a_s=d_s/\sum_i d_i^2\) are not chosen: they are the
+unique choice with a smooth continuum limit.  The lesson carried forward is
+that a \emph{principle} (scale invariance of the fixed point) fixes the model.
+
+\subsection{The Trotter Dictionary}
+
+\textbf{Setting (CONVENTIONS (r), (ac)).}  \(\Cc\) unitary fusion, \(O=\one\oplus X\), \(A_L=\operatorname{End}_{\Cc}(O^{\otimes L})\).
+A nearest-neighbour Hamiltonian is \(H=-\sum_{j}h_j\) with
+\(h_j\in\operatorname{End}_{\Cc}(O\otimes O)\) acting on sites \(j,j+1\).
+Fix a basis of \emph{elementary tiles} \(D_\alpha\) of
+\(\operatorname{End}_{\Cc}(O\otimes O)\) consisting of morphism diagrams
+(vacancy projectors, through-strings, cup, cap, hops, and for non-loop
+categories the fusion vertices), and expand \(h_j=\sum_\alpha c_\alpha D_\alpha^{(j)}\)
+with \(c_\alpha\in\mathbb{C}\).  Brick-wall Trotter with step \(\delta\tau\):
+\[
+  U(\delta\tau)=\prod_{j\ \mathrm{odd}}e^{\delta\tau h_j}\prod_{j\ \mathrm{even}}e^{\delta\tau h_j},
+  \qquad
+  e^{-\beta H}=U(\delta\tau)^{M}+O(\beta\,\delta\tau)\ \ (\beta=M\delta\tau)
+\]
+on a finite chain, by the Lie--Trotter formula.  A \emph{history} \(\Gamma\)
+assigns to each plaquette of the \(M\)-row brick lattice either the identity
+tile or one elementary tile \(D_{\alpha(p)}\).  Composing the tiles row by
+row gives a morphism \(\operatorname{Ev}_{\Cc}(\Gamma)\in A_L\), the
+\(\Cc\)-evaluation of the spacetime string-net drawn by \(\Gamma\).
+
+\textbf{Lemma 86.1 [derived; tile expansion].}  To first order per plaquette,
+\[
+  U(\delta\tau)^{M}
+  =\sum_{\Gamma}\Big(\prod_{p:\,\alpha(p)\neq\mathrm{id}}\delta\tau\,c_{\alpha(p)}\Big)\,
+  \operatorname{Ev}_{\Cc}(\Gamma)\;+\;R,
+\]
+where \(R\) collects every term carrying a second-order factor
+\(O(\delta\tau^2\|h_j\|^2)\) on at least one plaquette.
+\textbf{Proof.}  \(e^{\delta\tau h_j}=1+\delta\tau h_j+O(\delta\tau^2\|h_j\|^2)\) per plaquette.
+Expanding \(\prod_p(1+\delta\tau h_{j(p)})\) and each \(h_j\) in tiles gives
+exactly the sum over histories with one tile per plaquette; composition of
+the tiles in the brick order is the composition in \(A_L\), which is
+\(\operatorname{Ev}_{\Cc}(\Gamma)\).  The remainder collects all terms with a
+second-order factor on at least one plaquette.  \(\square\)
+
+\textbf{Corollary 86.2 [the Levin--Wen rules are automatic].}  \(\operatorname{Ev}_{\Cc}(\Gamma)\) obeys rules (2), (3), (4): a closed
+\(X\)-loop evaluates to \(d_X\) by the raw cup normalisation
+\(v^\dagger v=d_X\operatorname{id}_\one\) of (r); a bubble between simple
+labels is \(\delta\) by Schur; recoupling is the \(F\)-move.  Rule (1),
+isotopy, holds for \(\operatorname{Ev}_{\Cc}\) alone (planar isotopy of
+morphism diagrams in a pivotal category) and fails for the full amplitude,
+which carries the geometric factor \(\prod_p\delta\tau\,c_{\alpha(p)}\)
+depending on how many plaquettes each string traverses.  Hence
+\[
+  \text{amplitude}(\Gamma)=\underbrace{\operatorname{Ev}_{\Cc}(\Gamma)}_{\text{topological}}
+  \times\underbrace{\textstyle\prod_p w(p)}_{\text{geometric}},
+  \qquad w(\mathrm{id})=1,\ w(\alpha)=\delta\tau\,c_\alpha .
+\]
+This is the spacetime reading made precise: rules (2)--(4) intact, rule (1)
+replaced by anisotropic tile weights (identity tiles weigh 1, all others
+\(O(\delta\tau)\)); isotropy can only emerge in the continuum.
+
+\textbf{Proposition 86.3 [derived; exactness on an integrable line].}  Suppose the tiles carry weights \(\rho_\alpha(u)\) forming a face operator
+\(X_j(u)=\sum_\alpha\rho_\alpha(u)D^{(j)}_\alpha\) with \(X_j(0)=N(0)\cdot 1\),
+whose diagonal-to-diagonal (brick-wall) transfer matrices
+\(T(u)=\prod_{j\ \mathrm{odd}}X_j(u)\prod_{j\ \mathrm{even}}X_j(u)\) commute for
+all \(u\), as the sourced \(\hat\tau_D\) does.  Then
+\(h_j=X_j'(0)/N(0)-(N'(0)/N(0))\,1\) satisfies
+\(1+\delta\tau h_j=X_j(\delta\tau)/N(\delta\tau)+O(\delta\tau^2)\), the
+Trotter product is \(T(\delta\tau)^M\) up to normalisation, and \(H\)
+commutes with \(T(u)\) for every \(u\).  In particular the ground state of
+\(H\) is a common eigenvector of the transfer matrices at every \(u\),
+including the isotropic point.
+
+\textbf{Proof.}  The first two claims are Taylor expansion.  For the third, the Taylor
+coefficients of a commuting one-parameter family commute with every member
+of the family, and \(H\) is the first coefficient of \(-\log T(u)\).  \(\square\)
+On an integrable line no perturbative matching of rates is needed: \(u\)
+interpolates exactly between the Hamiltonian limit and the isotropic point.
+
+\subsection{Dense Calibration}
+
+Take \(X\) with \(d=d_X\) and \(H=-\sum_j e_j\), \(e_j=b_jd_j\) the cup-cap
+generator of CA-66 (\(e_j^2=d\,e_j\)).  Because \(e_j^2\propto e_j\),
+\[
+  e^{\beta e_j}=1+w(\beta)\,e_j,\qquad w(\beta)=\frac{e^{\beta d}-1}{d}=\beta+O(\beta^2),
+\]
+so the brick-wall expansion is \emph{exact} with two tiles per plaquette and
+\[
+  \langle\mathrm{out}|U^{M}|\mathrm{in}\rangle
+  =\sum_{\Gamma}w^{\#\{e\text{-tiles}\}}\,d^{\#\{\text{closed loops}\}}\,
+  \langle\mathrm{out}|\Gamma_{\mathrm{open}}|\mathrm{in}\rangle .
+\]
+This is the sourced diagonal Temperley--Lieb transfer matrix at small
+spectral parameter: with \(d=\sqrt{Q}=2\cos\gamma\),
+\(\log(Q^{-L/2}\epsilon_y^L\hat\tau_D(u))=(u/\sin\gamma)\sum_je_j+O(u^2)\),
+a commuting family, so Proposition 86.3 applies.  For
+\(d=\varphi\), \(\gamma=\pi/5\), the antiferromagnetic sign is the golden
+chain, critical with \(c=7/10\) by the exact RSOS map.  The dense chain has
+no continuous parameter at all: the category fixes \(\gamma\) and the
+remaining choice is a sign.
+
+\subsection{Dilute Calibration}
+
+\textbf{Tiles (CONVENTIONS (ac)).}  The dilute face operator is a linear
+combination of nine tiles.  With in-nodes on the left and bottom edges
+(sites \(j\), \(j+1\)) and out-nodes on the top and right edges, the tiles
+are, in the source's numbering:
+\(1\): both vacant, \(P_{00}\);
+\(2,3\): one through-string, \(P_{X0},P_{0X}\);
+\(8\): two through-strings, \(P_{XX}\);
+\(9\): cap-then-cup, \(e_j\);
+\(4,5\): cap \(d_j\) and cup \(b_j\);
+\(6,7\): hops \(h_j^{\pm}\).
+The sourced weights, normalised so that \(\rho_{1,2,3,8}(0)=1\) and
+\(\rho_{4,\dots,7,9}(0)=0\), are
+\[
+\begin{aligned}
+\rho_1&=1+\tfrac{\sin u\,\sin(3\lambda-u)}{\sin2\lambda\sin3\lambda},&
+\rho_{2,3}&=\tfrac{\sin(3\lambda-u)}{\sin3\lambda},&
+\rho_{4,5}&=\tfrac{\sin u}{\sin3\lambda},\\
+\rho_{6,7}&=\tfrac{\sin u\,\sin(3\lambda-u)}{\sin2\lambda\sin3\lambda},&
+\rho_8&=\tfrac{\sin(2\lambda-u)\sin(3\lambda-u)}{\sin2\lambda\sin3\lambda},&
+\rho_9&=-\tfrac{\sin u\,\sin(\lambda-u)}{\sin2\lambda\sin3\lambda},
+\end{aligned}
+\]
+with loop fugacity \(n=-2\cos4\lambda\).  The \(u=0\) values confirm the
+tile assignment: \(X_j(0)=P_{00}+P_{X0}+P_{0X}+P_{XX}=1\), matching the
+sourced factorisation into identity-arc triangles.  The Hamiltonian limit
+\(H_{\mathrm{dil}}=-\sum_jX_j'(0)\) is
+\[
+  H_{\mathrm{dil}}=\sum_j\Big[
+  -\tfrac{P_{00}}{\sin2\lambda}
+  +\cot3\lambda\,(P_{X0}+P_{0X})
+  +\tfrac{\sin5\lambda}{\sin2\lambda\sin3\lambda}P_{XX}
+  -\tfrac{b_j+d_j}{\sin3\lambda}
+  -\tfrac{h_j^++h_j^-}{\sin2\lambda}
+  +\tfrac{\sin\lambda}{\sin2\lambda\sin3\lambda}\,e_j\Big].
+\]
+Every coupling is a function of \(\lambda\) alone.  For a Temperley--Lieb
+type category with \(d=2\cos(\pi/(L+1))\) the equation \(n=d\) has the two
+solutions \(\lambda=\tfrac{\pi}{4}\tfrac{L}{L+1}\) (branch 1) and
+\(\lambda=\tfrac{\pi}{4}\tfrac{L+2}{L+1}\) (branch 2), both critical, with
+\(c=1-6/(h(h-1))\), \(h=L+2\) resp.\ \(h=L+1\).  Fibonacci is \(L=4\):
+branch 1 gives \(c=4/5\), branch 2 gives \(c=7/10\).
+
+\textbf{Proposition 86.4 [derived; honeycomb reduction at \(u=\lambda\)].}  At \(u=\lambda\) the nine-tile model is the honeycomb \(O(n)\) loop model
+with edge fugacity \(x=1/(2\cos\lambda)\).  On branch 1 this is Nienhuis's
+critical point \(x_c(n)=1/\sqrt{2+\sqrt{2-n}}\); on branch 2 it is the
+second-branch value \(1/\sqrt{2-\sqrt{2-n}}\).
+
+\textbf{Proof.}  Split each square tile along the diagonal from the bottom-left to the
+top-right corner into two trivalent vertices, \(A\) with edges
+\(\{\mathrm{top},\mathrm{left},\mathrm{diag}\}\) and \(B\) with
+\(\{\mathrm{bottom},\mathrm{right},\mathrm{diag}\}\).  Give each occupied
+half-edge of a tile weight \(x^{1/2}\) and the internal diagonal weight
+\(x\).  Then the tiles weigh: \(1\mapsto1\); \(2,3\mapsto x\) (an arc inside
+\(A\) or \(B\)); \(4,5,6,7\mapsto x^2\) (an arc through the diagonal);
+\(8\mapsto x^2\); \(9\mapsto0\) (it would use the diagonal twice).  At
+\(u=\lambda\): \(\rho_9=0\); \(\rho_4=\rho_5=\rho_6=\rho_7=\rho_8=\sin\lambda/\sin3\lambda\);
+\(\rho_{2,3}=\sin2\lambda/\sin3\lambda\);
+\(\rho_1=1+\sin\lambda/\sin3\lambda=2\sin2\lambda\cos\lambda/\sin3\lambda\).
+Hence \(\rho_2/\rho_1=1/(2\cos\lambda)=:x\) and
+\(\rho_4/\rho_1=\sin\lambda/(4\sin\lambda\cos^2\lambda)=x^2\), consistent.
+Finally \(x^{-2}=4\cos^2\lambda=2+2\cos2\lambda\) and
+\(\sqrt{2-n}=\sqrt{2+2\cos4\lambda}=2|\cos2\lambda|\), so \(x=x_c\) when
+\(\cos2\lambda\ge0\) (branch 1, \(\lambda<\pi/4\)) and \(x=1/\sqrt{2-\sqrt{2-n}}\)
+when \(\cos2\lambda<0\) (branch 2).  \(\square\)
+
+\textbf{Checked arithmetic (Fibonacci, \(L=4\)).}
+\[
+\begin{array}{c|c|c|c|c|c}
+\text{branch} & \lambda & x=1/(2\cos\lambda) & \text{Nienhuis value} & c & \text{couplings }(-\rho_1',-\rho_2',-\rho_4',-\rho_6',-\rho_8',-\rho_9')\\\hline
+1 & \pi/5 & 0.618034 & x_c=0.618034 & 4/5 & (-1.0515,\ -0.3249,\ -1.0515,\ -1.0515,\ 0,\ +0.6498)\\
+2 & 3\pi/10 & 0.850651 & \tilde x_c=0.850651 & 7/10 & (-1.0515,\ -3.0777,\ -3.2361,\ -1.0515,\ -3.4026,\ +2.7528)
+\end{array}
+\]
+The same identities hold for \(L=2,3,5\) (worklog 016).  Note the sign of
+the \(e_j\) term: the integrable dilute chain has a \emph{repulsive}
+cup-cap term on both branches, opposite to the dense golden chain, and on
+branch 1 the \(P_{XX}\) coupling vanishes because \(\sin5\lambda=\sin\pi=0\).
+
+\subsection{What the Calibration Says About the Principle}
+
+For Temperley--Lieb type input the machine closes with no continuous
+choice.  The category fixes \(n=d\), hence \(\lambda\) up to a branch; the
+couplings of \(H_{\mathrm{dil}}\) are functions of \(\lambda\); the
+Hamiltonian, the isotropic point \(u=3\lambda/2\) and the honeycomb point
+\(u=\lambda\) are one commuting family; the limit is critical with a sourced
+\(c\).  Isotropy is restored along the family, not imposed.  The geometric
+parameter is the anisotropy \(u\), not a coupling.  The residual freedom is
+the branch: two critical points for \(u>0\), two more with an Ising factor
+for \(u<0\).  Whether a principle selects among branches is open.
+
+\subsection{Beyond Loops: the Fibonacci Net Gas (Proposal)}
+
+For Fibonacci on \(O=\one\oplus\tau\), \(O\otimes O=2\cdot\one\oplus3\cdot\tau\), so
+\(\operatorname{End}(O\otimes O)=M_2\oplus M_3\) has dimension 13, while
+\(\mathrm{dTL}_2(\varphi)\) has dimension 9 (CA-69).  The four missing
+dimensions are the vertex tiles \(\tau\otimes\tau\leftrightarrow\tau\) with
+one vacancy, which CA-74 proves lie outside the dilute loop algebra.  The
+general reflection-symmetric nearest-neighbour Hamiltonian therefore has,
+beyond the loop couplings above, a vertex coupling \(v\):
+\[
+  h=\big[\text{diag}(\epsilon_{00},\epsilon_{1})+w(b+d)\big]_{\one\text{-block}}
+  \oplus\big[\text{diag}(\mu,\mu,\epsilon_{\tau})+t(h^++h^-)+v(\nu+\nu^\dagger)\big]_{\tau\text{-block}},
+\]
+with \(\nu:\ket{\tau\tau\to\tau}\mapsto\ket{\tau\one}+\ket{\one\tau}\) built
+from the vertex morphism of \(\Cc\) (normalisation to be fixed in
+CONVENTIONS before use).  Lemma 86.1 turns any such \(h\) into a
+\emph{trivalent net gas} in spacetime with per-tile weights
+\(\delta\tau\cdot(\text{coupling})\) and the \(\Cc\)-evaluation of the net.
+Two corners are calibrated on the quantum side: \(\mu\to-\infty\) freezes
+every site to \(\tau\) and recovers the dense chain (\(c=7/10\) or \(4/5\)
+by sign); the \(v=0\) hyperplane is the parity-preserving dilute loop
+sector of CA-74, which contains \(H_{\mathrm{dil}}\).  No integrable line is known once \(v\neq0\): the sourced statement is
+that beyond Temperley--Lieb, integrability requires further fine-tuning.
+Proposition 86.3 is therefore unavailable, and the
+comparison of rates is genuinely first-order: the open problem is to find
+the locus in \((\epsilon,\mu,w,t,v)\) at which the net gas is critical.  The
+first analytical tool to point at it is a lattice holomorphicity condition
+on a \(Z(\Cc)\)-spin defect endpoint, which is the next shard.

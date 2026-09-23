@@ -14,6 +14,7 @@ New sources are filed under `references/<topic>/` with a per-topic `SOURCES.md`
 | `SRC-SCHOTTENLOHER-CFT` | [`references/cft/SOURCES.md`](../cft/SOURCES.md) — Schottenloher, *A Mathematical Introduction to CFT* (LNP 759, 2008) |
 | `SRC-WEINBERG-QFT1` | [`references/qft/SOURCES.md`](../qft/SOURCES.md) — Weinberg, *The Quantum Theory of Fields*, Vol. I (Cambridge University Press, 1995) |
 | `SRC-KOO-SALEUR-1994` | [`references/lattice-symmetry/SOURCES.md`](../lattice-symmetry/SOURCES.md) — Koo and Saleur, "Representations of the Virasoro algebra from lattice models" (arXiv:hep-th/9312156, Nucl. Phys. B426, 1994) |
+| `SRC-LEVIN-WEN-2005` | [`references/string-net/SOURCES.md`](../string-net/SOURCES.md) — Levin and Wen, "String-net condensation: A physical mechanism for topological phases" (arXiv:cond-mat/0404617, Phys. Rev. B 71, 045110, 2005); registered 2026-09-23, fixing the `SRC-STRING-NET` mislabel below |
 | `SRC-HONGLER-JOHANSSON-KYTOLA-2013` | [`references/lattice-symmetry/SOURCES.md`](../lattice-symmetry/SOURCES.md) — Hongler, Johansson Viklund, and Kytola, "Lattice Representations of the Virasoro Algebra I: Discrete Gaussian Free Field" (arXiv:1307.4104v1, EPFL open-access preprint) |
 
 The flat tables below are the legacy layout inherited from the prior effort.
@@ -27,7 +28,7 @@ The flat tables below are the legacy layout inherited from the prior effort.
 | SRC-GOLDEN-CHAIN | `references/GoldenChainFeiguinEtAl.pdf` | `references/text/GoldenChainFeiguinEtAl.txt` | `dd4c24aa99a8acfb818a2d18a2314284f687db424499dc77a6c62baff58b6cda` |
 | SRC-KZ-FIB | `references/IsingLikeFibonacciAnyonsKZ.pdf` | `references/text/IsingLikeFibonacciAnyonsKZ.txt` | `27cea8bd613354501465c2b80aae60592a47570c3a50858b43b453d079293076` |
 | SRC-TL-JONES | `references/TemperleyLiebRootsJonesQuotient.pdf` | `references/text/TemperleyLiebRootsJonesQuotient.txt` | `f3a6f25dc59047dd38fa1a92107da96cb8c012dbca7bae88beeb76725bde29f3` |
-| SRC-STRING-NET | `references/StringNetCondMat0510613.pdf` | `references/text/StringNetCondMat0510613.txt` | `34be325625e0bc012977e6a6053e20c428b1a68dcfecff41b2b0935b105d9ff8` |
+| SRC-LEVIN-WEN-2007-TEE (formerly mislabelled `SRC-STRING-NET`; this is Levin--Wen 2007, *Detecting topological order in a ground state wave function*, cond-mat/0510613, **not** the 2005 string-net paper) | `references/StringNetCondMat0510613.pdf` | `references/text/StringNetCondMat0510613.txt` | `34be325625e0bc012977e6a6053e20c428b1a68dcfecff41b2b0935b105d9ff8` |
 | SRC-ENO | `references/EtingofNikshychOstrikFusionCategories.pdf` | `references/text/EtingofNikshychOstrikFusionCategories.txt` | `fa7e21ceab3e9933f7fe22e13dbfb4678d092edfd062f2ac48e94463f7f15124` |
 | SRC-PENNEYS-UFC | `references/text/PenneysUnitaryFusionCategories.md` | same file | `305f6c151362f6e505ad46fccff48d66c5ed6523582c57be84f40a88a8d20918` |
 | SRC-DEFECT-FOCK | `references/GaugingDefectsQuantumSpinSystems.pdf` | `references/text/GaugingDefectsQuantumSpinSystems.txt` | `a3f5ba8198d38851874464654b9147c0e4b6552c7291598f1982f73fbe9be0f9` |

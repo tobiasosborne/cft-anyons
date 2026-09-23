@@ -22,6 +22,7 @@ gotcha) goes to agent memory under
 
 | Chunk | Span | Topics |
 |---|---|---|
+| `016_2026-09-23_spacetime_dictionary.md` | 2026-09-23 | Intent realignment (principle, not target CFT); CA-86 spacetime Trotter dictionary; dense/dilute TL calibration and the u = λ honeycomb reduction to Nienhuis's x_c; Levin–Wen 2005 source acquired, manifest mislabel fixed |
 | `015_2026-09-22_fusion_space_windup.md` | 2026-09-22 | Stronger Ising locality, smooth coset unitaries, raw negativity and positive descendant OAR, fusion-space locality clarification, 26-page pdflatex wind-up synthesis |
 | `014_2026-09-22_cft_machine.md` | 2026-09-22 | Broader algorithm/functor north star; exact Ising modular compiler and local OAR reconstruction; quantitative Wilson and graph-norm proofs; exact sparse coset stress route; Astra cross-referees; CA-81–CA-83 |
 | `013_2026-07-06_categorical_residuals.md` | 2026-07-06 | CA-73 categorical residual set, exact transport/stretched dichotomy; Fibonacci local-operator machinery; L=4 dilute image = parity-even = 322 < 323 (1-dim JW kernel); Pkg.test suspension + laptop compute budget |
