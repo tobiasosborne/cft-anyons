@@ -8,6 +8,8 @@ lab book points here, to the script and run artifact that back it.
 
 | Script | Purpose |
 |---|---|
+| `scripts/python/run_four_port_consistency.py` | Exact four-port sewing/Gram/crossing/semion-tensor probes; fifteen test groups, five rejected mutations, exact data and source/dependency/producer hashes. |
+| `scripts/python/four_port_sewing.py`, `four_port_semion.py`, `test_four_port_consistency.py` | Null-quotient sewing, scalar descendant coefficients, semion BPZ/F/R and reflected kernels, conditional multiplicity selection and Fibonacci midpoint equations. |
 | `scripts/python/run_small_category_inputs.py` | Exact VecZ2/semion/Fibonacci input probes, stress Gram and Ward blocks through grade four; ten test groups and four rejected mutations, with source/producer hashes. |
 | `scripts/python/small_category_sewing.py`, `small_category_stress.py`, `test_small_category_inputs.py` | Fusion-channel multiplication/Frobenius and categorical cohomology checks; independent Virasoro normal ordering, Gram positivity, null descent and vacuum-block Ward solving. |
 | `scripts/python/run_local_conformal_checks.py` | Produces exact universal identity checks and five rejected mutations for `reconstruction/`; records raw outputs, versions and producer hashes. |
@@ -41,6 +43,7 @@ lab book points here, to the script and run artifact that back it.
 
 | Run bundle | Producer | Headline |
 |---|---|---|
+| `runs/2026-10-21-four-port-consistency/` | `scripts/python/run_four_port_consistency.py` | Exact semion four-port tensor ansatz and conditional doublet selection; explicit Fibonacci equations/coefficients without crossing exclusion. Not a complete CFT or KS/OAR construction. |
 | `runs/2026-10-21-small-category-inputs/` | `scripts/python/run_small_category_inputs.py` | VecZ2/Fibonacci binary solutions, semion A=1+s obstruction, categorical cohomology contraction, selected-lift stress blocks and null equation. Partial reconstruction tests, not a CFT/KS/OAR solution. |
 | `runs/2026-10-21-local-conformal-consistency/` | `scripts/python/run_local_conformal_checks.py` | Eleven symbolic identities pass; five mathematical mutations rejected; restored pass. Formal identities only, not a CFT or continuum construction. |
 | `runs/2026-05-31-qubit-sdp-smoke/` | `scripts/julia/qubit_sdp_smoke.jl` | Mosek returns `:not_excluded_at_level` for the zero-residual moment problem and `:excluded` for the artificial identity and forced-`ZZ` contradiction instances. |
@@ -89,12 +92,13 @@ lab book points here, to the script and run artifact that back it.
 
 ## Fresh local reconstruction investigation (2026-10-21)
 
-`reconstruction/README.md` maps eight short research notes: concrete cell
+`reconstruction/README.md` maps thirteen short research notes: concrete cell
 equations, local implementation/curvature obstructions, formal sewing
 deformations, cutoff-dependent microscopic KS/OAR conditions, and a mixed
 product/action deformation complex, followed by small-category binary,
-cohomology and local stress probes. CONVENTIONS (ac)–(ah) and worklogs
-016–017 record scope and the offline/local-commit direction.
+cohomology and local stress probes, and the four-port sewing/crossing
+system with semion/Fibonacci illustrations. CONVENTIONS (ac)–(ai) and
+worklogs 016–018 record scope and the offline/local-commit direction.
 These notes have not been promoted to report shards or a general theorem.
 
 ## Report shards

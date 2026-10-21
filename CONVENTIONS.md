@@ -1287,3 +1287,71 @@ is tested on the same forms. Three-point functionals place the ket at 0,
 the primary insertion at z, and the bra at infinity, with leading power
 `z^(h_out-h_in-h_insert)`. These conventions precede the new Ward/null
 derivations; no primary multiplicities are inferred from the category.
+
+## (ai) Four-port sewing and crossing probes (2026-10-21)
+**Choice:** four chiral insertions are ordered at (infinity,1,z,0), with
+0<z<1 as the initial real branch. Their external vectors and primary
+multiplicities remain part of the data. A categorical sector is not
+identified with one Virasoro module. For identical external weight h,
+a monic Virasoro block of internal weight H begins
+`z^(H-2h) sum_(n>=0) b_n z^n`, b_0=1. Numerical illustrations use only
+the selected lifts in (ah), and exact descendant calculations stop at grade4.
+All null vectors must be annihilated by the sewing covectors before an
+inverse Gram matrix on the positive quotient is used.
+
+Generic Hilbert sewing uses explicitly reflected/dual-oriented internal
+ports and their positive Hermitian Gram form. An arbitrary bilinear disc
+pairing is not silently identified with that form. Fix tree kets by
+`t_L=F_cat t_R`; dual analytic block columns then transform by
+`U_cat=F_cat^(-T)` (equal to conjugate(F_cat) in unitary gauge).
+Coefficient/value columns satisfy `K_L=F_cat K_R`. Analytic monic block
+bases may need separate invertible normalization maps. The real symmetric
+involutory small-category F matrices hide this duality distinction, so an
+independent complex-basis sanity check is required.
+
+For the semion analytic ansatz choose an additional primary multiplicity
+space W=C^2 with its standard positive form and antisymmetric epsilon,
+epsilon_12=1, epsilon_21=-1. This is an explicit analytic choice, not the
+categorical quantum dimension (which is 1). Use
+`E1_abcd=epsilon_ab epsilon_cd`, `E2_abcd=epsilon_ac epsilon_bd`,
+`E3_abcd=epsilon_ad epsilon_bc` and the positive square root of z(1-z)
+on the initial interval. Branch continuation and leg permutations must be
+specified before reading a braid phase or comparing crossing matrices.
+
+**Source:** user request 2026-10-21;
+`references/categorical-reconstruction/FuchsRunkelSchweigert2002/source/hep.tex:2495–2515,5786–5815`;
+`references/categorical-reconstruction/BrehmRunkel2024/source/main.tex:728–776,1013–1019`;
+local four-port derivations in the forthcoming reconstruction notes.
+**Sweep status:** four-port equations/probes only; no full CFT, local
+Hamiltonian, or KS/OAR limit is inferred from these functions.
+
+For the explicit semion four-port ansatz, normalized leading tensors are
+E1/2 and E3/2 in the standard W^tensor4 Hermitian norm. Define the chosen
+pair reflection by
+`K(A)_(alpha beta,cd)=-sum_ab epsilon_(a beta) epsilon_(b alpha) A_abcd`:
+it reverses the reflected pair and includes the declared duality sign.
+The antiunitary multiplicity duality is J=epsilon composed conjugation,
+so J^2=-1. These are added analytic/orientation data, not a derived tensor
+fiber functor on the semion category. For the braid calculation only,
+an adjacent positive half-exchange has log Q increasing by i*pi, where
+`Q=product_(i<j)(x_i-x_j)`; the other difference-pair products do not wind.
+Its square root acquires i. Leg permutations and numerator signs are
+checked separately before identifying R=i.
+
+The common-point crossing jet conditions use the symmetric chart
+z<->1-z and compatible transported external legs/local coordinates. Only
+in that tier, with a fixed crossing matrix U, the equation is
+`B(z)=U B(1-z)` and `(1-(-1)^k U) B^(k)(1/2)=0`.
+Taylor coefficients near z=0 through grade4 are not exact midpoint jets.
+
+The semion multiplicity-selection subproblem varies W=C^d with d positive
+even and real orthogonal antisymmetric epsilon (canonical 2x2 blocks).
+Normalize leading cup-pair tensors by E1/d,E3/d. Retain the same pair
+reflection K and the selected c=1,h=1/4 null equation. This is a declared
+ansatz, not a theorem that every categorical carrier has this form.
+Require positive GRADED Hilbert sewing: the internal weight-one coefficient
+is a Gram sum and hence PSD. Pointwise positivity of the full four-port
+kernel is strictly weaker and is not substituted for that requirement.
+The selection proposition assumes integer nonnegative grading of the
+categorical vacuum carrier and a unique normalized grade-zero vacuum.
+Its null L_-1 descendant therefore supplies no energy-one contribution.

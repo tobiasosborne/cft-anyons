@@ -22,6 +22,7 @@ gotcha) goes to agent memory under
 
 | Chunk | Span | Topics |
 |---|---|---|
+| `018_2026-10-21_four_port_consistency.md` | 2026-10-21 | Four-port equations and linearization; exact semion tensor F/R and graded positivity; conditional doublet selection; Fibonacci functional hierarchy; fifteen exact checks/five mutations; local commit, no push |
 | `017_2026-10-21_small_category_inputs.md` | 2026-10-21 | Local commit of prior work; explicit VecZ2/Fibonacci sewing solutions, semion ansatz obstruction, categorical cohomology contraction, selected-lift Ward/null checks; no push |
 | `016_2026-10-21_local_conformal_reconstruction.md` | 2026-10-21 | Concrete cell/Ward/Taylor equations; innerness, anomaly, associative and mixed product/action complexes; explicit KS/OAR conditions; eleven symbolic checks and five rejected mutations; Git deferred offline |
 | `015_2026-09-22_fusion_space_windup.md` | 2026-09-22–2026-10-21 | Latest: fresh categorical boundary-sewing discussion, standard KS requirement and no-example constraint; earlier: coset/Ising advances and pdflatex wind-up |

@@ -11,7 +11,9 @@ by the stress tensor belonging to the same local observable theory.
 recurrences, conditional algebraic obstruction calculations, and a separate
 list of quantitative microscopic certificates. At the user's subsequent
 request, small VecZ2/semion/Fibonacci inputs now test the categorical and
-low-grade stress equations. No complete category-to-CFT reconstruction or
+low-grade stress equations. The four-port system is now explicit, with an
+exact semion tensor ansatz, a conditional primary-multiplicity selection,
+and necessary Fibonacci functional equations. No complete category-to-CFT reconstruction or
 universal existence/sufficiency theorem is claimed. Commits are local;
 network synchronization and pushing are deferred by the user.
 
@@ -27,8 +29,13 @@ network synchronization and pushing are deferred by the user.
 | [06_small_category_sewing.md](06_small_category_sewing.md) | Exact VecZ2/Fibonacci dagger Frobenius solutions and an associator obstruction for the semion A=1+s ansatz. |
 | [07_small_category_cohomology.md](07_small_category_cohomology.md) | Explicit separability contraction proving vanishing categorical Hochschild groups for the two positive solutions; scope of their categorical derivations. |
 | [08_small_category_stress.md](08_small_category_stress.md) | Selected modular lifts, exact stress Gram forms, vacuum exchange coefficients through grade four and a semion null-state channel equation. |
+| [09_four_port_equations.md](09_four_port_equations.md) | Typed four-port sewings, full-carrier contractions, positive null quotients, categorical/analytic dual-basis maps and normalization equations. |
+| [10_four_port_linearization.md](10_four_port_linearization.md) | Reflected positivity, countable common-chart Taylor equations, metric/collar variations and formal cokernel obstructions. |
+| [11_semion_four_port.md](11_semion_four_port.md) | Exact null ODE, two Virasoro functions inside one tensor-valued semion channel, F=-1 and declared R=i, positive reflected kernels. |
+| [12_fibonacci_four_port.md](12_fibonacci_four_port.md) | Exact conditional descendant coefficients, normalization-aware crossing and midpoint hierarchy; separate conditional modular-character obstruction. |
+| [13_semion_multiplicity.md](13_semion_multiplicity.md) | Under the stated finite skew-dual ansatz, graded Hilbert positivity plus null/crossing equations force primary multiplicity two; pointwise positivity does not. |
 
-Root `CONVENTIONS.md` (ac)–(ah) fixes signs and scope. The newly acquired
+Root `CONVENTIONS.md` (ac)–(ai) fixes signs and scope. The newly acquired
 source map is `references/categorical-reconstruction/SOURCES.md`; the notes
 also cite already registered sources by exact local anchors.
 
@@ -100,6 +107,13 @@ and four rejected mutations are recorded in
 software versions and source/producer hashes. No chain diagonalization or
 computation beyond the declared grade/arity-four budget is used.
 
+Four-port checks use `python3 scripts/python/run_four_port_consistency.py`.
+Fifteen exact test groups pass and five deliberately incorrect choices are
+rejected. The bundle `runs/2026-10-21-four-port-consistency/` records raw
+outputs, exact block/tensor/kernel data, software versions and ten source/
+producer/dependency hashes. No truncated Taylor series is treated as an
+exact analytic continuation or midpoint crossing test.
+
 ## What this makes possible next
 
 The next task can now be formulated without selecting a model: choose a
@@ -109,6 +123,8 @@ sewing/Ward/stress equations; and derive the identities between those
 equations. That would identify which parts form an actual local deformation
 complex, and which remaining conditions are positivity or analytic bounds.
 Solving that system and proving its realization theorem remain separate tasks.
-The small-input tests now solve particular binary equations and formal
-stress blocks; the next unresolved test is their compatible positive
-four-port sewing with the prescribed categorical associator.
+The small-input tests solve particular binary equations and formal stress
+blocks. Four-port equations now have the explicit semion solution within
+its declared analytic/duality ansatz; Fibonacci's completed analytic blocks
+and positive four-port sewing remain unknown. For both, complete carriers,
+higher sewing, local Hamiltonians, standard KS and OAR remain further tasks.
