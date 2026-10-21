@@ -10,8 +10,11 @@ all of them.
 `AGENTS.md` and `CLAUDE.md` are a pair: `CLAUDE.md` is a thin pointer here, this
 file is authoritative.
 
-> **Status (2026-09-22): active research.** The lab-book scaffold, Julia
-> package, local checks, and report through CA-85 exist. The previous project
+> **Status (2026-10-21): active research.** The lab-book scaffold, Julia
+> package, local checks, and report through CA-85 exist. The fresh local
+> conformal-sewing investigation is mapped in `reconstruction/README.md`
+> (LC-1--LC-13, equations, conditional proofs and exact run bundles; no
+> complete category-to-CFT construction). The previous project
 > remains archived (`archive/legacy-consolidation/`); papers under
 > `references/` and `literature/` are ground truth. The broader algorithm
 > investigation lives in `cft_machine/`, using existing approaches as
@@ -55,8 +58,10 @@ fixed here.
 Indeterminate-number anyon Hilbert spaces are one mechanism under investigation,
 not a restriction on the algorithm. Investigate other mechanisms. New proofs
 use Lamport's structured notation with explicit assumptions, hierarchical
-numbered steps, and dependencies. Tobias requests Astra research collaborators
+numbered steps, and dependencies. Tobias requests research collaborators
 and skeptical reviewer subagents to referee substantial new material.
+His latest explicit model preference (2026-10-21) is **GPT-6.1 at xhigh**
+for delegated work, superseding the earlier Astra preference.
 
 **Locality clarification (Tobias, 2026-09-22):** global admissibility
 constraints may be fusion constraints built into the Hilbert space. Pursue
@@ -81,6 +86,10 @@ Before adding mathematical content, numerical claims, scripts, or figures, read:
 5. `report.tex` and the relevant shard under `report/sections/`
 6. The latest chunk under `worklog/` (current state + open threads)
 7. The relevant local source manifest under `references/**/SOURCES.md`
+
+The current independent reconstruction notes have their own map in
+`reconstruction/README.md`; they are not yet included in the root PDF.
+Read their stated assumptions and claim boundaries before extending them.
 
 ---
 

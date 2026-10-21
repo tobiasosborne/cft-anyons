@@ -13,9 +13,9 @@ list of quantitative microscopic certificates. At the user's subsequent
 request, small VecZ2/semion/Fibonacci inputs now test the categorical and
 low-grade stress equations. The four-port system is now explicit, with an
 exact semion tensor ansatz, a conditional primary-multiplicity selection,
-and necessary Fibonacci functional equations. No complete category-to-CFT reconstruction or
-universal existence/sufficiency theorem is claimed. Commits are local;
-network synchronization and pushing are deferred by the user.
+and necessary Fibonacci functional equations. No complete category-to-CFT
+reconstruction or universal existence/sufficiency theorem is claimed.
+The latest research state and handoff are recorded in `worklog/`.
 
 ## Read order
 

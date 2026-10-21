@@ -1,5 +1,46 @@
 # Worklog chunk 018 — 2026-10-21
 
+## Durable handoff and requested publication
+
+Tobias explicitly requested that all work be recorded durably, committed
+and pushed. This supersedes the earlier no-push/network deferral. The three
+research commits already on the branch are `f91f8ed` (equations and
+obstruction complexes), `4e284c4` (small inputs) and `4cf16eb` (four-port
+equations, examples and conditional multiplicity selection).
+
+Audited the durable evidence chain: all thirteen numbered reconstruction
+notes and every producer/dependency/source named by the three result
+bundles are tracked. All twenty recorded result-bundle hash entries match,
+as do the twelve acquired package/extraction hashes. The 80-shard report
+guard passes. Code and mathematics are unchanged, so the already recorded
+passing tests and rejected mutations were not needlessly rerun. The main
+report source is unchanged and its PDF has not been presented as containing
+the new independent notes.
+
+Updated AGENTS.md to point at the current reconstruction map and preserve
+the latest explicit delegation preference: GPT-6.1 at xhigh. Removed the
+obsolete push-deferral sentence from that map. This final documentation
+commit and the preceding research commits form the requested push.
+The pre-existing untracked `.beads/` and `summary.pdf` are outside this
+research change and remain untouched.
+
+Resume from `reconstruction/README.md` and LC-9--LC-13. The main success
+criterion remains a category-faithful rigorous CFT from local Hamiltonians,
+standard KS and a common OAR/state construction. The exact semion four-port
+ansatz and its doublet selection are conditional local results; they do
+not yet provide complete carriers or higher sewing. Fibonacci has explicit
+necessary equations and exact low-grade coefficients, not an analytic
+four-port solution. Its separate character argument assumes modular
+character covariance and is not a four-port exclusion.
+
+Next work should connect the complete graded carriers, internal stress and
+higher sewing before claiming a microscopic construction. Keep categorical
+sectors distinct from Virasoro-primary multiplicities, graded Hilbert
+positivity distinct from pointwise positivity, and conformal lifts distinct
+from modular residues. All of these distinctions are explicit in (ac)--(ai)
+and the notes. Do not replace the general machinery by importing a known
+lattice model and treating that as a solution.
+
 ## Four-port equations and small-category illustrations
 
 ### Context
