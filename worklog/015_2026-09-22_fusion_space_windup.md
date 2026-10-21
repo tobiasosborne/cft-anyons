@@ -1,4 +1,89 @@
-# Worklog chunk 015 — 2026-09-22
+# Worklog chunk 015 — 2026-09-22–2026-10-21
+
+## 2026-10-21 — Fresh conceptual start: categorical boundary sewing
+
+### Context
+
+After a read-only orientation, Tobias expressed dissatisfaction with the
+project and requested a fresh conceptual start. His goal remains categorical
+data plus explicit conditions producing refining lattice Hilbert spaces and
+local Hamiltonians, whose **standard Koo–Saleur prescription** has a rigorous
+OAR CFT limit realizing the input data. He expressly forbids reasoning from
+model-specific examples: do not redirect this discussion into the existing
+Ising/coset implementation or an example-driven search.
+
+His proposed organizing argument starts with a rigorous Hamiltonian CFT,
+cuts space into cells with boundary-CFT data, regulates recursively until
+categorical/module-category structure remains, and seeks to reverse the
+gluing. The present task is synthesis and identification of rigorous paths,
+not a request to implement or archive the old project.
+
+During the discussion Tobias explicitly confirmed that lattice quantities
+must be allowed to depend on the cutoff. CONVENTIONS (ac) records this:
+local dimensions, couplings and refinement data may run along a declared
+joint lattice/truncation schedule; no fixed cell truncation is assumed.
+
+### What changed
+
+Acquired four primary source packages under
+`references/categorical-reconstruction/`, with unchanged author texts,
+precise anchors, scope limitations and SHA256 checks:
+
+- Brehm–Runkel I and II: the directly relevant boundary-hole lattice
+  construction, regulator removal, and the explicitly proposed stability
+  condition for a lattice continuum limit.
+- Bartels–Douglas–Henriques II: factorization along circles and intervals
+  via Connes fusion, starting with a finite-index conformal net.
+- Fuchs–Runkel–Schweigert I: categorical boundary/full-CFT sewing data
+  relative to supplied chiral information.
+
+Indexed the source manifest in `references/manifest/SOURCES.md`.
+No implementation, report shard, PDF, or accepted theorem changed.
+CONVENTIONS (ac) records the user's subsequent cutoff-dependence direction.
+Two Astra collaborators independently examined the sewing route and the
+reverse argument; their source anchors were checked directly by the parent.
+
+### Why these choices
+
+The source search follows the user's structural argument. It separates
+categorical sewing channels, their analytic realizations, and quantitative
+regulator/refinement control. Information loss is not itself an objection
+to selecting **some** realization; it does prevent treating categorical
+compression as an already-proved lossless inverse.
+
+Prospective directions discussed, not adopted or proved here: a finite
+presentation of positive cell amplitudes; local Hamiltonians from a regular
+anisotropic transfer family; one-step refinement estimates implying summable
+errors; and a Ward-identity bridge to the ordinary KS density prescription.
+Supplying an entire target CFT would solve a conditional discretization
+problem, not the original categorical realization problem.
+
+### Frictions and source cautions
+
+- Brehm–Runkel distinguish removing the cutoff/holes on a fixed cellulation
+  from taking a lattice continuum limit at fixed local truncation. Their
+  proposed irrelevance criterion must not be promoted to a general theorem.
+- Kong–Zheng's existing local source `1905.04924.md:639–641` explicitly
+  flags analytic sewing sufficiency and the richer vertex tensor structure;
+  its physical classification statements have their own status labels.
+- Q-system extension results already assume an ambient conformal QFT;
+  Connes-fusion factorization already assumes a conformal net.
+- Locality of a transfer operator does not supply a locality proof for its
+  logarithm. Standard KS convergence is an independent requirement, including
+  control of intermediate/high-energy states in products and commutators.
+
+### Acceptance and pointers
+
+All twelve package/extraction SHA256 records verified; report structure
+guard still passes for 80 shards. This source-only change requires no new
+numerical run and no report rebuild. The preceding orientation separately
+reran 215 compiler assertions, 19 generic scalar-OAR assertions and the
+package load; these do not validate the new research proposal.
+
+Primary navigation: `references/categorical-reconstruction/SOURCES.md`.
+The conceptual discussion and the user's no-example constraint supersede
+the old wind-up entry's suggested next implementation task. There is no
+new general realization theorem or selected reconstruction architecture.
 
 ## Continuation results and requested pdflatex wind-up
 

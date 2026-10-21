@@ -1,0 +1,77 @@
+﻿
+Unprotect[NonCommutativeMultiply];
+SetAttributes[NonCommutativeMultiply, Listable];
+CNumberQ[expr_] := And @@ (FreeQ[expr, #] & /@ operators);
+x_ ** y_ := x y /; CNumberQ[x] || CNumberQ[y];
+(x_?CNumberQ y_) ** z_ := x y ** z;
+x_ ** (y_?CNumberQ z_) := y x ** z;
+(x_ + y_) ** z_ := x ** z + y ** z;
+x_ ** (y_ + z_) := x ** y + x ** z;
+NCPower[_, 0] := 1;
+NCPower[x_, 1] := x;
+NCPower[x_, n_] := NonCommutativeMultiply @@ Table[x, {n}];
+NCExp[x_, n_] := Sum[(1/m!) NCPower[x, m], {m, 0, n}];
+NCExpand[x_] := 
+  Expand[x //. y_NonCommutativeMultiply :> Distribute[y]];
+HC[x_ ** y_] := HC[y] ** HC[x];
+HC[x_ + y_] := HC[x] + HC[y];
+HC[x_ y_] := HC[x] HC[y];
+HC[x_?CNumberQ] := Conjugate[x];
+SetAttributes[HC, Listable];
+
+operators = {L, vac, prim};
+L[m__] ** L[n__] := L[m, n];
+L[m___, n_] ** vac := 0 /; n > -2;
+L[m___, n_] ** prim[_] := 0 /; n > 0;
+L[m___, 0] ** prim[i_] := h[i] L[m] ** prim[i];
+vac ** L[n_, m___] := 0 /; n < 2;
+prim[_] ** L[n_, m___] := 0 /; n < 0;
+prim[i_] ** L[0, m___] := h[i] prim[i] ** L[m];
+L[a___, m_, n_, b___] := 
+  L[a, n, m, b] + (m - n) L[a, m + n, b] + 
+    If[m + n == 0, c (m^3 - m)/12 L[a, b], 0] /; m > n;
+L[] := 1;
+HC[vac] := vac;
+HC[prim[i_]] := prim[i];
+HC[L[n__]] := L @@ Reverse[-{n}];
+vac ** vac := 1;
+prim[i_] ** prim[i_] := 1;
+level[HoldPattern[x_ ** y_]] := level[x] + level[y];
+level[x_ y_] := level[x] + level[y];
+level[L[m__]] := -Plus[m];
+level[_?CNumberQ] := 0;
+level[vac] := 0;
+level[prim[_]] := 0;
+SetAttributes[level, Listable];
+levels[x_] := Union[level[List @@ Expand[x]]];
+SortByLevel[x_] := 
+  Sort[List @@ Expand[x], (level[#1] < level[#2]) &];
+SelectLevel[x_, l_] := Select[Expand[x], (level[#] == l) &];
+GroupByLevel[x_] := Map[(SelectLevel[x, #]) &, levels[x]];
+LevelBasis[NN_Integer, 
+   i_] := ((L @@ #) ** prim[i] &) /@ (-IntegerPartitions[NN]);
+VacBasis[NN_Integer] := ((L @@ #) ** vac &) /@ (-IntegerPartitions[NN,
+       All, Table[i, {i, 2, NN}]]);
+KacMatrix[NN_Integer, i_] := 
+  Outer[NonCommutativeMultiply, HC[LevelBasis[NN, i]], 
+    LevelBasis[NN, i]] // Expand;
+LL[mk_Integer, z1_, {i_, zi_}][
+   f_] := -(h[i] (mk + 1) (zi - z1)^mk f + (zi - z1)^(mk + 1) D[f, 
+       zi]);
+LL[mk_Integer, z1_, hz1_List, hz2__List][f_] := 
+  LL[mk, z1, hz1][f] + LL[mk, z1, hz2][f];
+LL[mkList_List, z1_, hz__List] := 
+  Composition @@ (LL[#, z1, hz] & /@ mkList);
+beta[mkList_List, i_, m_, n_] :=
+  Limit[
+    zn^(2 h[n]) LL[mkList, 0, {m, zm}, {n, zn}][
+       (zn - zm)^(h[i] - h[n] - h[m]) zn^(h[m] - h[n] - 
+           h[i]) zm^(h[n] - h[m] - h[i])
+       ] /. {zm -> 1},
+    zn -> Infinity
+    ] // FullSimplify;
+Levelbetas[NN_Integer, i_, m_, n_] := 
+  beta[#, i, m, n] & /@ (-IntegerPartitions[NN]);
+BlockCoefficient[NN_Integer, i_, j_, l_, m_, n_] := 
+  Levelbetas[NN, i, j, l].Inverse[KacMatrix[NN, i]].Levelbetas[NN, i, 
+    m, n];

@@ -8,6 +8,8 @@ lab book points here, to the script and run artifact that back it.
 
 | Script | Purpose |
 |---|---|
+| `scripts/python/run_local_conformal_checks.py` | Produces exact universal identity checks and five rejected mutations for `reconstruction/`; records raw outputs, versions and producer hashes. |
+| `scripts/python/local_conformal_identities.py`, `test_local_conformal_identities.py` | Free-expression/Taylor/cocycle checks for local sewing, Ward and obstruction formulas; eleven tests, no model-specific computation. |
 | `scripts/check_report_shards.sh` | Deterministic structural guard for the sharded lab book. |
 | `scripts/ci_before_push.sh` | Local pre-push gate (shard guard + report build + Julia tests). |
 | `src/CftAnyons.jl` | Seed Julia backend: golden-ratio invariant helper, finite-group averaging projector helper, Fibonacci fusion-path count helper, Poincare vector-field bracket helper, nearest-neighbour boost-current coefficient helper, and includes for the Galilei, Gaussian-boson, qubit Pauli, and qubit SDP helper files. |
@@ -37,6 +39,7 @@ lab book points here, to the script and run artifact that back it.
 
 | Run bundle | Producer | Headline |
 |---|---|---|
+| `runs/2026-10-21-local-conformal-consistency/` | `scripts/python/run_local_conformal_checks.py` | Eleven symbolic identities pass; five mathematical mutations rejected; restored pass. Formal identities only, not a CFT or continuum construction. |
 | `runs/2026-05-31-qubit-sdp-smoke/` | `scripts/julia/qubit_sdp_smoke.jl` | Mosek returns `:not_excluded_at_level` for the zero-residual moment problem and `:excluded` for the artificial identity and forced-`ZZ` contradiction instances. |
 | `runs/2026-05-31-qubit-candidate-scan/` | `scripts/julia/qubit_candidate_scan.jl` | The fixed first-moment-route scan checks 99 qubit Hamiltonian samples: 9 current-collapsed, 27 conservation-witness failures, and 63 exact boost-witness failures; self-dual TFIM reaches and fails the boost gate. |
 | `runs/2026-07-05-qubit-relaxed-scan/` | `scripts/julia/qubit_relaxed_scan.jl` | The CA-64 relaxed gates re-scan the same 99 points: 9 stay current-collapsed, 27 queued on conservation profiles, 63 (incl. critical TFIM, XXZ, Heisenberg) move to queued_gns_scaling; TFIM boost profile decreases sqrt(6) -> 1.3416 over supports 2..5 with optimizing speed v^2 = -2; sentinel SDP objectives give no exclusion certificate at level 2. |
@@ -80,6 +83,15 @@ lab book points here, to the script and run artifact that back it.
 | `cft_machine/report.tex` and `cft_machine/report.pdf` | Standalone 26-page pdflatex synthesis requested at wind-up; source sections under `cft_machine/report/sections/`, compiled twice and all page renders inspected. |
 | `cft_machine/compiler_minimal/README.md` | Explicitly unimplemented tricritical modular-frontend proposal; no compiler code or acceptance claim. |
 | `references/cft-machine/` | Append-only source packages and per-topic manifests for the new workspace. |
+
+## Fresh local reconstruction investigation (2026-10-21)
+
+`reconstruction/README.md` maps five short research notes: concrete cell
+equations, local implementation/curvature obstructions, formal sewing
+deformations, cutoff-dependent microscopic KS/OAR conditions, and a mixed
+product/action deformation complex. CONVENTIONS (ac)–(ag) and worklog 016
+record scope and the offline direction.
+These notes have not been promoted to report shards or a general theorem.
 
 ## Report shards
 

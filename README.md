@@ -21,6 +21,12 @@ open question.
 
 ## How it's organised
 
+- **`reconstruction/`** — the fresh, model-independent investigation begun
+  2026-10-21: local conformal sewing equations, stress as an internal
+  geometric generator, cohomological obstruction calculations and explicit
+  cutoff-dependent KS/OAR conditions. The equations and their solvability
+  are separate research tasks.
+
 - **`cft_machine/`** — the broader constructive investigation, initiated
   2026-09-22. It develops alternative mechanisms alongside the variable-number
   anyon route, with Lamport structured proofs and executable benchmarks.

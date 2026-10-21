@@ -10,6 +10,7 @@ New sources are filed under `references/<topic>/` with a per-topic `SOURCES.md`
 
 | Source ID | Topic manifest |
 |---|---|
+| CATEGORICAL-RECONSTRUCTION-2026 | [`references/categorical-reconstruction/SOURCES.md`](../categorical-reconstruction/SOURCES.md) — boundary-cell regulation, categorical sewing, conformal-net factorization, and explicit analytic reconstruction gaps |
 | CFT-MACHINE-2026 | [`references/cft-machine/SOURCES.md`](../cft-machine/SOURCES.md) — algorithm/functor investigation, realization and OAR/Virasoro source manifests |
 | `SRC-SCHOTTENLOHER-CFT` | [`references/cft/SOURCES.md`](../cft/SOURCES.md) — Schottenloher, *A Mathematical Introduction to CFT* (LNP 759, 2008) |
 | `SRC-WEINBERG-QFT1` | [`references/qft/SOURCES.md`](../qft/SOURCES.md) — Weinberg, *The Quantum Theory of Fields*, Vol. I (Cambridge University Press, 1995) |
