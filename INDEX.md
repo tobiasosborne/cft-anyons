@@ -8,6 +8,8 @@ lab book points here, to the script and run artifact that back it.
 
 | Script | Purpose |
 |---|---|
+| `scripts/python/run_small_category_inputs.py` | Exact VecZ2/semion/Fibonacci input probes, stress Gram and Ward blocks through grade four; ten test groups and four rejected mutations, with source/producer hashes. |
+| `scripts/python/small_category_sewing.py`, `small_category_stress.py`, `test_small_category_inputs.py` | Fusion-channel multiplication/Frobenius and categorical cohomology checks; independent Virasoro normal ordering, Gram positivity, null descent and vacuum-block Ward solving. |
 | `scripts/python/run_local_conformal_checks.py` | Produces exact universal identity checks and five rejected mutations for `reconstruction/`; records raw outputs, versions and producer hashes. |
 | `scripts/python/local_conformal_identities.py`, `test_local_conformal_identities.py` | Free-expression/Taylor/cocycle checks for local sewing, Ward and obstruction formulas; eleven tests, no model-specific computation. |
 | `scripts/check_report_shards.sh` | Deterministic structural guard for the sharded lab book. |
@@ -39,6 +41,7 @@ lab book points here, to the script and run artifact that back it.
 
 | Run bundle | Producer | Headline |
 |---|---|---|
+| `runs/2026-10-21-small-category-inputs/` | `scripts/python/run_small_category_inputs.py` | VecZ2/Fibonacci binary solutions, semion A=1+s obstruction, categorical cohomology contraction, selected-lift stress blocks and null equation. Partial reconstruction tests, not a CFT/KS/OAR solution. |
 | `runs/2026-10-21-local-conformal-consistency/` | `scripts/python/run_local_conformal_checks.py` | Eleven symbolic identities pass; five mathematical mutations rejected; restored pass. Formal identities only, not a CFT or continuum construction. |
 | `runs/2026-05-31-qubit-sdp-smoke/` | `scripts/julia/qubit_sdp_smoke.jl` | Mosek returns `:not_excluded_at_level` for the zero-residual moment problem and `:excluded` for the artificial identity and forced-`ZZ` contradiction instances. |
 | `runs/2026-05-31-qubit-candidate-scan/` | `scripts/julia/qubit_candidate_scan.jl` | The fixed first-moment-route scan checks 99 qubit Hamiltonian samples: 9 current-collapsed, 27 conservation-witness failures, and 63 exact boost-witness failures; self-dual TFIM reaches and fails the boost gate. |
@@ -86,11 +89,12 @@ lab book points here, to the script and run artifact that back it.
 
 ## Fresh local reconstruction investigation (2026-10-21)
 
-`reconstruction/README.md` maps five short research notes: concrete cell
+`reconstruction/README.md` maps eight short research notes: concrete cell
 equations, local implementation/curvature obstructions, formal sewing
 deformations, cutoff-dependent microscopic KS/OAR conditions, and a mixed
-product/action deformation complex. CONVENTIONS (ac)–(ag) and worklog 016
-record scope and the offline direction.
+product/action deformation complex, followed by small-category binary,
+cohomology and local stress probes. CONVENTIONS (ac)–(ah) and worklogs
+016–017 record scope and the offline/local-commit direction.
 These notes have not been promoted to report shards or a general theorem.
 
 ## Report shards

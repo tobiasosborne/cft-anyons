@@ -9,9 +9,11 @@ by the stress tensor belonging to the same local observable theory.
 
 **Current result:** a proposed cell-equation system, explicit local Taylor
 recurrences, conditional algebraic obstruction calculations, and a separate
-list of quantitative microscopic certificates. There is no universal
-existence/sufficiency theorem, no solved category, and no inference from
-model-specific examples. Git/network operations are deferred by the user.
+list of quantitative microscopic certificates. At the user's subsequent
+request, small VecZ2/semion/Fibonacci inputs now test the categorical and
+low-grade stress equations. No complete category-to-CFT reconstruction or
+universal existence/sufficiency theorem is claimed. Commits are local;
+network synchronization and pushing are deferred by the user.
 
 ## Read order
 
@@ -22,8 +24,11 @@ model-specific examples. Git/network operations are deferred by the user.
 | [03_sewing_deformations.md](03_sewing_deformations.md) | Sewing multipliers; explicit normalized binary deformation complex and H²/H³ statements; limits of a proposed full deformation complex. |
 | [04_cutoff_oar.md](04_cutoff_oar.md) | Explicit nearest-neighbour KS tier, finite patch flux obstruction, state/GNS consistency and energy-weighted refinement estimates; analytic conclusions still requiring proof. |
 | [05_mixed_complex.md](05_mixed_complex.md) | Derived CE/Hochschild complex coupling an associative product to its Lie derivation action; explicit mixed first-order and gauge equations. |
+| [06_small_category_sewing.md](06_small_category_sewing.md) | Exact VecZ2/Fibonacci dagger Frobenius solutions and an associator obstruction for the semion A=1+s ansatz. |
+| [07_small_category_cohomology.md](07_small_category_cohomology.md) | Explicit separability contraction proving vanishing categorical Hochschild groups for the two positive solutions; scope of their categorical derivations. |
+| [08_small_category_stress.md](08_small_category_stress.md) | Selected modular lifts, exact stress Gram forms, vacuum exchange coefficients through grade four and a semion null-state channel equation. |
 
-Root `CONVENTIONS.md` (ac)–(ag) fixes signs and scope. The newly acquired
+Root `CONVENTIONS.md` (ac)–(ah) fixes signs and scope. The newly acquired
 source map is `references/categorical-reconstruction/SOURCES.md`; the notes
 also cite already registered sources by exact local anchors.
 
@@ -88,6 +93,13 @@ sign. The restored run passes.
 These checks validate algebraic formulas and detect sign/coefficient
 regressions. They do not validate analytic CFT existence or a continuum limit.
 
+The separately requested small-input probe is reproduced by
+`python3 scripts/python/run_small_category_inputs.py`. Its ten exact tests
+and four rejected mutations are recorded in
+`runs/2026-10-21-small-category-inputs/`, with matrices, block coefficients,
+software versions and source/producer hashes. No chain diagonalization or
+computation beyond the declared grade/arity-four budget is used.
+
 ## What this makes possible next
 
 The next task can now be formulated without selecting a model: choose a
@@ -97,3 +109,6 @@ sewing/Ward/stress equations; and derive the identities between those
 equations. That would identify which parts form an actual local deformation
 complex, and which remaining conditions are positivity or analytic bounds.
 Solving that system and proving its realization theorem remain separate tasks.
+The small-input tests now solve particular binary equations and formal
+stress blocks; the next unresolved test is their compatible positive
+four-port sewing with the prescribed categorical associator.

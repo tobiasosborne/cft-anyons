@@ -1234,3 +1234,56 @@ from the cutoff. A simultaneous infinitesimal change has
 from associative coherence, Lie Jacobi, and the derivation equation.
 **Sweep status:** a formal algebra/action fragment; no identification with
 the complete geometric, internal-stress or analytic reconstruction complex.
+
+## (ah) Small-category probes of the consistency equations (2026-10-21)
+**Choice:** the user now explicitly requests Z2/Fibonacci tests. Use labels
+0=unit, 1=x. `VecZ2` means Z2-graded complex vector spaces with the usual
+untwisted associator, defined here by fusion x*x=unit and all admissible
+F=1. Compare separately with the semion fusion category, whose sole
+nontrivial associator is F^(xxx)_x=-1. Fibonacci has x*x=unit+x and the
+existing real unitary F matrix in intermediate-channel order (unit,x).
+F maps left ((ab)e c)d channels to right (a (bc)f)d channels; these
+rank-two examples have real symmetric F, so the inverse is the same matrix.
+Trivial-unit associators and the Fibonacci total-unit F block are 1.
+
+The first boundary algebra ansatz is A=unit+x, with isometric unit
+inclusion and unit multiplication coefficients 1. Set m_xx^unit=alpha;
+Fibonacci additionally has m_xx^x=beta. Do not impose braided commutativity
+on a boundary algebra. Dagger uses orthonormal fusion vertices. Canonical
+positive real representatives, if verified, are alpha=1 for VecZ2 and
+alpha=sqrt(phi), beta=1/sqrt(phi) for Fibonacci. These are derivation/test
+targets, not an assumption that the conformal sewing equations are solved.
+Specialness is m m^dagger=d_A id; the separability map is m^dagger/d_A.
+An obstruction for A=unit+x does not exclude another boundary algebra.
+
+Exact categorical scalars are computed in Q(r), r=sqrt(phi)>0, via
+r^4-r^2-1=0. No numerical rank or positivity tolerance is used. Categorical
+Hochschild cochains are Hom_C(x^tensor n,A), not vector-space maps on x;
+the algebraic gauge quotient need not preserve a fixed dagger metric.
+
+For stress probes keep T(z)=sum L_n z^(-n-2), L_n^*=L_-n and
+[L_m,L_n]=(m-n)L_(m+n)+c*(m^3-m)*delta_(m+n,0)/12.
+Highest-weight vectors have norm 1; PBW words are ordered by decreasing
+positive mode indices. Select (c,h)=(1,1/4) for the positive semion and
+(14/5,2/5) for positive Fibonacci only as the smallest nonnegative lifts
+of their sourced modular residues. These choices do not determine the
+whole graded carrier. Stress checks cap at grade 4; categorical maps use
+at most four x inputs, respecting the existing compute cap.
+
+**Source:** user direction 2026-10-21;
+`references/category-theory/RowellStongWang2009Classification/source/RSWfinal3.tex:2353–2409,700–703`;
+`references/text/TrebstShortIntroductionFibonacciAnyons.txt:310–324`;
+`references/categorical-reconstruction/FuchsRunkelSchweigert2002/source/hep.tex:2278–2285,2396–2408,2820–2862`;
+`references/cft/Schottenloher2008/Schottenloher2008.md:2925–2947`.
+**Sweep status:** new small-category probes only. No prior gauge or
+continuum theorem is changed; commits are local and pushes remain deferred.
+
+The local stress probe uses a scalar vacuum exchange block normalized as
+`F(z)=z^(-2h) sum_(k>=0) z^k v_k`, v_0=Omega. Both external highest
+weights are h; the output vacuum module is quotiented by L_-1 Omega=0.
+This is one intertwiner component, not the complete categorical carrier.
+Ward recursion is derived from (9.6) of Schottenloher, and null-state descent
+is tested on the same forms. Three-point functionals place the ket at 0,
+the primary insertion at z, and the bra at infinity, with leading power
+`z^(h_out-h_in-h_insert)`. These conventions precede the new Ward/null
+derivations; no primary multiplicities are inferred from the category.
