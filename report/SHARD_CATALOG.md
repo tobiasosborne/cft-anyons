@@ -725,3 +725,22 @@ single ~200-line source file it points to.
 - Summary: Coordinates microscopic, current and Fourier cutoffs to prove core, strong-resolvent and unitary convergence of quartic coset smearings.
 - Summary: Reconstructs the minimal-model local net from finite descendant compressions in the scalar-augmented OAR representation, without asserting a local fusion-space encoding.
 - Keywords: coset, smooth stress, strong resolvent, projective symmetry, Fourier cutoff, OAR, local reconstruction
+
+## `CA-86-SPACETIME-TROTTER-DICTIONARY`
+
+- Source: `report/sections/86_spacetime_trotter_dictionary.tex`
+- Title: String-Net Histories as Trotter Expansions: the Spacetime Dictionary
+- Summary: Proves that the brick-wall Trotter expansion of an anyonic chain Hamiltonian built from morphisms of C is a sum over string-net histories whose amplitude factorises into a C-evaluation obeying the Levin-Wen rules times a product of tile weights that breaks isotopy.
+- Summary: Calibrates the dictionary on the dense and dilute Temperley-Lieb integrable lines, where the tile weights are the sourced face weights and the Hamiltonian limit, the isotropic point and Nienhuis's honeycomb critical point lie in one commuting family.
+- Summary: Derives x = 1/(2 cos lambda) at u = lambda, reproducing the Nienhuis critical fugacity on branch 1 and the second-branch value on branch 2, and states the Fibonacci net-gas frontier beyond loops.
+- Keywords: Levin-Wen, string-net, Trotter, transfer matrix, spacetime history, dilute O(n), Nienhuis, honeycomb, integrable line, Fibonacci, net gas
+
+## `CA-87-DILUTE-FIBONACCI-IS-BLOCKED-GOLDEN`
+
+- Source: `report/sections/87_dilute_fibonacci_is_blocked_golden.tex`
+- Title: The Net Case: the Dilute Fibonacci Chain Is the Golden Chain Blocked
+- Summary: Proves that whenever the site object 1+X is Y x Ybar, the dilute chain is the dense Y-chain with sites paired; for Fibonacci 1+tau = tau x tau, so the vertex tile is a Temperley-Lieb generator across a pair boundary and there is no net gas beyond loops.
+- Summary: Solves the Temperley-Lieb relations in End(O x O) uniquely, verifies all relations to machine precision for L <= 6, and finds H = -sum e_i exactly isospectral to the golden chain on 2L sites (N = 5..15).
+- Summary: Identifies the isotropic Fibonacci net gas with the Q = phi+1 Potts low-temperature expansion at vertex fugacity phi^{-3/4}, critical in the c = 7/10 class, and moves the genuine net question to categories such as Haagerup where 1+X is not Y x Ybar.
+- Keywords: dilute chain, golden chain, blocking, Temperley-Lieb, vertex tile, net gas, chromatic polynomial, Potts, Tutte, Fibonacci, Haagerup
+

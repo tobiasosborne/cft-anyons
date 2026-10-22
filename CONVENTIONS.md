@@ -1355,3 +1355,75 @@ kernel is strictly weaker and is not substituted for that requirement.
 The selection proposition assumes integer nonnegative grading of the
 categorical vacuum carrier and a unique normalized grade-zero vacuum.
 Its null L_-1 descendant therefore supplies no energy-one contribution.
+
+## (aj) Fibonacci vertex tile normalisation (2026-09-23)
+**Choice:** For Fibonacci on the site object `O = 1 ⊕ τ` of (r), the vertex
+morphism is the sourced `Δ ∈ Fib(τ → τ ⊗ τ)` with the **isotropic
+normalisation** `Δ†Δ = √φ · id_τ` (so a bubble on a τ string equals `√φ`
+and the theta graph equals `φ^{3/2} = √(d_τ^3)`), matching the raw cup
+`v†v = φ · id_1` of (r) and the Levin–Wen normalisation `v_i = √d_i` in
+which `F` is tetrahedrally symmetric. The two **vertex tiles** on sites
+`j, j+1` are
+`ν_j^R = (ι_τ ⊗ ι_τ) ∘ Δ ∘ (π_1 ⊗ π_τ)` (the τ on site `j+1` splits into
+τ τ on `j, j+1`) and `ν_j^L = (ι_τ ⊗ ι_τ) ∘ Δ ∘ (π_τ ⊗ π_1)`, with
+adjoints the merging tiles; `(ν^R)†ν^R = √φ P_{0X}`, `(ν^L)†ν^L = √φ P_{X0}`,
+`ν^R (ν^R)† = √φ P_τ` where `P_τ = φ^{-1/2} Δ Δ†` is the τ-channel projector
+on `τ ⊗ τ`. In the fusion-path basis `{|11>, |ττ;1>}`, `{|1τ>, |τ1>, |ττ;τ>}`
+the thirteen tiles are the matrix units: nine parity-preserving ones (the
+dTL image of CA-69/CA-74) and the four vertex tiles. A **reflection-symmetric**
+net-gas Hamiltonian uses equal couplings for `ν^L` and `ν^R`; the sign
+relating them under site reflection is `+1` in the tetrahedrally symmetric
+gauge, which is the gauge assumed here (a different `F` gauge changes the
+relative phase of `|ττ;τ>` and must be recorded if used).
+**Reasoning:** the isotropic normalisation makes the C-evaluation of a
+spacetime net isotopy invariant, so that Corollary 86.2 (Levin–Wen rules
+(2)–(4) automatic, rule (1) broken only by tile weights) extends verbatim
+from loops to trivalent nets. Any other normalisation multiplies every vertex
+tile by a constant and is absorbed into the vertex coupling `v`.
+**Source:** `references/text/PenneysUnitaryFusionCategories.md:610`--`:625`
+(Fib: `v`, `Δ` unique normalised basis elements; `v†v = φ`, `Δ†Δ = √φ`,
+`v†Δ = 0`, minimal central projections of `End(τ⊗τ)`);
+`references/string-net/LevinWen2005/source/strnet.tex:588`--`:611`
+(normalisation `v_i = √d_i` and tetrahedral symmetry of `F`).
+**Addendum (CA-87, checked):** in the F-gauge of (b) the cup entry of the
+Temperley--Lieb flip generator is `+phi^{-1/2}` (the opposite sign violates
+the TL relations at residual 0.76), while the vertex sign is a free gauge of
+`|ττ;τ>`. Because `1 ⊕ τ ≅ τ ⊗ τ`, the thirteen tiles are the Fibonacci
+quotient of `TL_4(phi)` and the (aj) vertex tiles are components of the TL
+generator across a pair boundary (Theorem 87.2). The convention stands; it
+is no longer an independent normalisation.
+**Sweep status:** CA-87 only.
+
+## (ak) Spacetime tile dictionary for anyonic chains (2026-09-23)
+**Choice:** A nearest-neighbour Hamiltonian on the site-object chain of (r) is
+written `H = -sum_j h_j`, `h_j in End_C(O tensor O)`, and expanded in a basis
+of **elementary tiles**: morphism diagrams on two sites (vacancy projectors
+`P_00, P_X0, P_0X, P_XX`; cup `b_j` and cap `d_j` of CA-66 with the raw
+normalisation of (r); hops `h_j^+ : |X 1> -> |1 X>`, `h_j^- = (h_j^+)^dagger`;
+the cup-cap `e_j = b_j d_j`; and, for categories with `N_{XX}^X != 0`, the
+vertex tiles `nu, nu^dagger` between `|XX -> X>` and `|X1>, |1X>`, whose
+normalisation is NOT YET FIXED and must be recorded before first use).
+Imaginary time runs upward; Trotter is **brick-wall** with odd bonds first,
+step `delta tau`, `beta = M delta tau`. A **history** assigns one tile (or
+the identity) to each plaquette; its amplitude is the C-evaluation of the
+composed diagram times the product of tile weights (CA-86, Lemma 86.1).
+**Dilute nine-tile identification:** with in-nodes on the left and bottom
+edges of a tile (sites `j, j+1`) and out-nodes on the top and right, the
+source numbering of the dilute O(n) tiles maps to `1 = P_00`, `2,3 = P_X0,
+P_0X`, `8 = P_XX`, `9 = e_j`, `4 = d_j` (cap), `5 = b_j` (cup), `6,7 = h_j^+-`.
+The identification is pinned by `u = 0`, where the face operator must be the
+identity (`rho_{1,2,3,8}(0) = 1`, all others 0). Loop fugacity is identified
+with the quantum dimension, `n = beta_dTL = d_X`, consistent with the raw
+cup-cap = `d_X` of (r); for dilute `A_L` type input `n = 2 cos(pi/(L+1))` and
+`lambda` is one of the two branch solutions of `n = -2 cos 4 lambda`.
+**Reasoning:** the dictionary makes the Levin--Wen rules (2)--(4) automatic
+(they are properties of the C-evaluation) and isolates rule (1), isotopy, as
+the only thing the tile weights break; brick-wall order is the choice that
+makes the plaquettes compose as a planar diagram. Which of tiles 4/5 is cup
+versus cap and which hop is `h^+` is a labelling; reflection symmetry
+(`rho_4 = rho_5`, `rho_6 = rho_7`) makes the Hamiltonian independent of it.
+**Source:** `references/lattice-symmetry/DiluteA22Strip2022/source/stripA22.tex:669--745`
+(nine tiles, direction of action); `references/lattice-symmetry/ZhouBatchelor1997/source/9611156.tex:105--145`
+(weights, `n = -2 cos 4 lambda`); `:849` of the strip source (identity at
+`u = 0`); CA-66 (birth/death maps); CA-69 (dTL generators).
+**Sweep status:** CA-86 only.

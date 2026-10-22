@@ -22,6 +22,7 @@ gotcha) goes to agent memory under
 
 | Chunk | Span | Topics |
 |---|---|---|
+| `019_2026-09-23_spacetime_dictionary.md` | 2026-09-23 (work date; merged 2026-10-22) | Records 2026-09-23 work merged on 2026-10-22 (renumbered from 016; CONVENTIONS (ac)/(ad) -> (ak)/(aj)). Intent realignment (principle, not target CFT); CA-86 spacetime Trotter dictionary; dense/dilute TL calibration and the u = λ honeycomb reduction to Nienhuis's x_c; CA-87 net case: 1⊕τ ≅ τ⊗τ so the dilute Fibonacci chain is the golden chain blocked, isotropic net gas = Q = φ+1 Potts; Levin–Wen 2005 and three chromatic-polynomial sources acquired |
 | `018_2026-10-21_four_port_consistency.md` | 2026-10-21 | Four-port equations and linearization; exact semion tensor F/R and graded positivity; conditional doublet selection; Fibonacci functional hierarchy; fifteen exact checks/five mutations; local commit, no push |
 | `017_2026-10-21_small_category_inputs.md` | 2026-10-21 | Local commit of prior work; explicit VecZ2/Fibonacci sewing solutions, semion ansatz obstruction, categorical cohomology contraction, selected-lift Ward/null checks; no push |
 | `016_2026-10-21_local_conformal_reconstruction.md` | 2026-10-21 | Concrete cell/Ward/Taylor equations; innerness, anomaly, associative and mixed product/action complexes; explicit KS/OAR conditions; eleven symbolic checks and five rejected mutations; Git deferred offline |
