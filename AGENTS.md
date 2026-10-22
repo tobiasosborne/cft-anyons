@@ -93,6 +93,26 @@ OAR contracts and calibrations of `cft_machine/`, the sewing / fidelity
 equations of `reconstruction/`) into one model-independent pipeline; each
 brings a layer the others lack.
 
+**Layering principle (Tobias, 2026-10-22).** Three decisions that kept
+resurfacing are settled by one rule: **state every result at the most general
+layer at which it is true, and say exactly what extra data the next layer
+needs.** Concretely:
+(i) *Chirality.* Chiral and non-chiral (full, two-chiral) targets are both in
+scope. Do not restrict attention to one prematurely; it is not yet known which
+constructions belong to which. Every statement names the setting it targets,
+and chiral/full is a declared layer, not a global choice.
+(ii) *Input data.* Work in layers of increasing data. A statement that needs
+only fusion data is stated for fusion data; one that needs braiding, modular
+data, a central-charge lift, characters, or a chiral-algebra presentation
+says so explicitly and is placed at that layer. The extra data required for a
+statement's truth is part of the statement.
+(iii) *Targets.* Existence of a limit, existence of a conformal limit, and
+fidelity to a particular targeted theory are successive layers; fidelity is
+more restrictive and needs more data. Keep the ladder explicit: more general
+statements require less data, more specific ones more.
+A shard or note that silently fixes a layer (one chirality, one enrichment,
+one target) is incomplete until it names the layer and the data.
+
 ## Entry point — read order
 
 Before adding mathematical content, numerical claims, scripts, or figures, read:
@@ -234,6 +254,12 @@ Numbered, non-negotiable. Re-read after compaction.
     drifting into model-specific detail that does not feed the general
     construction, stop and lift it back to the general statement or drop it.
     See the north-star paragraph *Models are examples, never the subject*.
+
+17. **Layer by data.** Every statement names the chirality setting it targets,
+    the input data it needs (fusion / braided / modular / enriched), and which
+    rung of the target ladder (limit exists / conformal / faithful to a
+    declared theory) it reaches. See the north-star paragraph *Layering
+    principle*.
 
 ---
 
