@@ -75,6 +75,24 @@ The central failure mode to avoid is a plausible mathematical, physical, or
 numerical claim with **no traceable source, derivation, convention, or checked
 invariant** in the lab book's evidence chain.
 
+**Models are examples, never the subject (Tobias, 2026-10-22).** The second
+failure mode, and historically the one that actually stalled this project, is
+hyperfixation on a model example: Fibonacci, Ising, the golden chain, the
+semion, a particular coset. Progress ground to a halt repeatedly because work
+narrowed to irrelevant details of one model. The object of study is the
+**general construction** for an arbitrary (unitary) fusion / modular category
+with declared extra data. Every shard, note, proof and script is written for
+the general input first; a specific category appears only as an *instance*,
+in an examples table or a test, to calibrate or falsify the general statement.
+A result that is true only for Fibonacci, or that exploits an accident of one
+model (e.g. 1+tau = tau x tau), is a calibration datum or a warning, not a
+result. The present integration goal (2026-10-22) is to **align and integrate**
+the several approaches already investigated here (the variable-N algebraic
+tower CA-62--74, the spacetime / Levin--Wen Trotter dictionary CA-86--87, the
+OAR contracts and calibrations of `cft_machine/`, the sewing / fidelity
+equations of `reconstruction/`) into one model-independent pipeline; each
+brings a layer the others lack.
+
 ## Entry point — read order
 
 Before adding mathematical content, numerical claims, scripts, or figures, read:
@@ -209,6 +227,13 @@ Numbered, non-negotiable. Re-read after compaction.
 15. **Repeat rules.** Re-read this file at session start, after `/clear`, after
     any compaction. The agent that re-reads catches drift; the one that doesn't
     ships it.
+
+16. **No model hyperfixation.** State and prove things for a general category
+    first. A model (Fibonacci, Ising, semion, ...) enters only as an instance
+    in an examples table or test. If you notice a shard, note or session
+    drifting into model-specific detail that does not feed the general
+    construction, stop and lift it back to the general statement or drop it.
+    See the north-star paragraph *Models are examples, never the subject*.
 
 ---
 
