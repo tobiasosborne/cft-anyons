@@ -105,6 +105,7 @@ before treating report edits as complete.
 | 85 | `CA-85-SMEARED-COSET-AND-LOCALITY` | `report/sections/85_smeared_coset_and_locality.tex` | Smooth Coset Symmetry Limits and Local Reconstruction |
 | 86 | `CA-86-SPACETIME-TROTTER-DICTIONARY` | `report/sections/86_spacetime_trotter_dictionary.tex` | String-Net Histories as Trotter Expansions: the Spacetime Dictionary |
 | 87 | `CA-87-DILUTE-FIBONACCI-IS-BLOCKED-GOLDEN` | `report/sections/87_dilute_fibonacci_is_blocked_golden.tex` | The Net Case: the Dilute Fibonacci Chain Is the Golden Chain Blocked |
+| 88 | `CA-88-LAYERED-TARGETS` | `report/sections/88_layered_targets.tex` | The Layered Target Grid: Setting, Input Data, and Target Rungs |
 
 ## Adding a shard
 

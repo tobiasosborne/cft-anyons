@@ -1,0 +1,234 @@
+% SHARD-ID: CA-88-LAYERED-TARGETS
+% SHARD-TITLE: The Layered Target Grid: Setting, Input Data, and Target Rungs
+% SHARD-SUMMARY: Defines, for a general unitary fusion category C, three layer ladders: the chirality setting (open chain to chiral net, periodic chain to full two-chiral theory), input data L0-L4 (fusion, braided, modular, enriched, declared target theory) and target rungs R0-R5 (tower, Wilson state, mode representation, local conformal limit, fidelity, coherence).
+% SHARD-SUMMARY: Places CA-71--CA-87, WT-1/VR-1 and LC-1--LC-13 on the grid, restates the six Astra headline conjectures D1-C--D6-C at the most general layer where each is plausibly true with its first attackable lemma, and fixes the three tags every future statement carries.
+% SHARD-KEYWORDS: layering principle, chiral versus full, input data layer, target ladder, fidelity, enrichment, Drinfeld centre, Wilson triangle, WT-1, VR-1, headline conjectures, D1-C, D2-C, D3-C, D4-C, D5-C, D6-C, Zini-Wang
+
+\section{The Layered Target Grid: Setting, Input Data, and Target Rungs}
+\label{sec:layered-targets}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: definitions and placement [proposal]; nothing is proved or promoted.}  This shard implements the
+layering principle (AGENTS.md, Rule~17): every statement names its chirality setting, its input-data layer and the
+target rung it reaches.  Definitions 88.1--88.3 are organisational conventions; Remark 88.4 is a trivial derived
+monotonicity; every placement inherits the grade of its source shard or review and changes none.  The six
+restatements of \S\ref{sec:layered-conjectures} are \emph{proposals} built from the reviewers' reformulations.
+The ``CA-88'' IDs proposed in the D1, D2, D4, D5 and D6 integration packages are superseded by this shard.
+
+Dependencies: CA-68, CA-71--CA-74, CA-75 (layering paragraph), CA-76--CA-82, CA-86, CA-87; LC-1--LC-13;
+CONVENTIONS (r), (u), (af), (ak).
+
+% Source: AGENTS.md:96-115 -- layering principle (i) chirality, (ii) input data, (iii) targets; :258-262 Rule 17.
+% Source: report/sections/75_integration_map.tex:246-258 -- decisions taken, pointer to CA-88.
+% Source: reviews/2026-07-06_pipeline_consistency_scoping/PLAN.md:244-247 -- D1: chiral vs full,
+%   open vs periodic; "the periodic scaling limit is the interchiral algebra, not Vir x Vir".
+% Source: report/sections/80_lattice_sewing_and_fidelity_certificate.tex:241-245 -- open decision, chiral vs full.
+% Source: explorations/2026-10-22-astra/D6-functor-and-obstruction-theory/REVIEW.md:76-98 -- chirality objection A1,
+%   source gap on lattice chirality (:86-90), fix: full net with left chiral subnet A, C ~ Rep(A) (:94-98); :121-125 A4.
+% Source: literature/md/1903.12334/1903.12334.md:76 -- anomaly-free 2d order is a pair (C, c), c chiral (nearest source).
+% Source: references/cft-machine/realisation/EvansGannon2018/source.tex:334 -- an MTC fixes c only mod 8.
+% Source: cft_machine/research/realisation_and_fidelity.md:22-37 -- synthesis input, c lift, chiral vs full, enriched data;
+%   :39-44 non-uniqueness; :46-56 minimum vs categorical fidelity.
+% Source: references/cft-machine/realisation/Bischoff2018/source.tex:364-373 -- open UMTC realisation problem;
+%   :374-381 holomorphic tensoring; :384-397 Z(F) modular, quantum double nets, F recovered as solitons;
+%   :661-664 braided C modular iff Z(C) ~ C boxtimes C^rev.
+% Source: references/cft/AasenFendleyMong2020/source/_Topological_defect_lines.tex:163-212 -- lattice C-defects on the
+%   periodic chain commute with the transfer matrix and fuse by N_ab^c.
+% Source: explorations/2026-10-22-astra/D5-fidelity-lattice-sewing/NOTE.md:66-137 -- conventions P1-P7, data E1-E7.
+% Source: explorations/2026-10-22-astra/D4-koo-saleur-beyond-free/NOTE.md:9-70 -- D4-C, input S (:11-21).
+% Source: explorations/2026-10-22-astra/D6-functor-and-obstruction-theory/NOTE.md:7-51 -- D6-C, selection clause (:9-24), chiral clause (:32-35), quantifiers (:36-44).
+% Source: explorations/2026-10-22-astra/D{1..6}/INTEGRATION.md section (d) -- D1:92-122, D2:104-125, D3:76-88,
+%   D4:87-125, D5:111-134, D6:93-126 (headline verdicts, first attackable lemmas).
+% Source: references/lattice-symmetry/ZiniWang2018/source/main.tex:871-895 -- Conj. 4.3, Rmk. 9 (chiral UMM prior art).
+% Source: reconstruction/README.md:21-35 -- LC-1..LC-13 status; reconstruction/01_cells.md:28 (C a chiral sector category);
+%   reconstruction/04_cutoff_oar.md:22-24, :118, :129 (periodic tier, both chiral families).
+
+\subsection{Three Axes}
+
+Throughout, \(\Cc\) is a unitary fusion category.  Microscopic choices (site object \(O\), tiles \(h\in\operatorname{End}_\Cc
+(O\otimes O)\), boundary and seam, refinements, states; D5's E5, NOTE.md:124--127) are \emph{declarations at every
+layer}, not a data layer: they are part of a construction, not of its input.
+
+\textbf{Definition 88.1 [proposal; setting axis \(\mathsf S\)].}
+\(\mathsf S_{\mathrm{ch}}\): an \emph{open} chain with declared endpoints, targeting a \emph{chiral} conformal net \(\Alg\)
+(one stress family).  Fidelity means: the sector category \(\mathrm{DHR}_{\mathrm{fin}}(\Alg)\) is braided equivalent to a
+declared chiral UMTC \(\mathsf B\) (\(\mathsf B=\Cc\) for modular \(\Cc\)), as in Theorem~80.9.
+\(\mathsf S_{\mathrm{full}}\): a \emph{periodic} chain targeting a full two-dimensional local net with chiral subnets
+\(\Alg_L,\Alg_R\), two stress families (\(\Vir\times\overline{\Vir}\)) and a declared gluing (extension; for the diagonal
+case the Cardy invariant \(M=1\), D5 P6).  Fidelity means: the lattice \(\Cc\)-symmetry, i.e.\ the periodic defect
+operators that commute with the transfer matrix and fuse by \(N_{ab}^c\) (AFM-D:163--212), converges into the full
+theory's symmetry (defect) data, and the declared identifications hold: \(\Rep(\Alg_L)\simeq\Cc\) for modular \(\Cc\) (D6
+REVIEW:94--98), with two-chiral bulk data \(\Cc\boxtimes\overline{\Cc}\simeq Z(\Cc)\) (Bischoff:661--664); for fusion-only
+\(\Cc\) the braided target is \(Z(\Cc)\), with \(\Cc\) recovered as defects/solitons (Bischoff:384--397).
+\emph{Warning (PLAN.md:244--247):} the periodic lattice algebra's scaling limit is the interchiral algebra, not
+\(\Vir\times\overline{\Vir}\); the open/periodic choice is part of the setting, not a boundary detail.
+\emph{Source gap (Law~1):} no local source settles whether a 1D local tower can have a chiral limit with \(c\neq0\)
+(\(c_L\neq c_R\)); the nearest is 1903.12334:76 (D6 REVIEW:86--90).  So \(\mathsf S_{\mathrm{ch}}\) is neither excluded nor
+established; it is a declared tag.
+
+\textbf{Definition 88.2 [proposal; data ladder \(\mathsf L\)].}
+\(\mathsf L0\) \emph{fusion}: \(\Irr\Cc\), \(N_{ab}^c\), \(F\), dagger, pivotal/spherical structure, \(d_a>0\).
+\(\mathsf L1\) \emph{braided}: in addition \(R\) obeying the hexagons.
+\(\mathsf L2\) \emph{modular}: \(R\) nondegenerate (Bischoff:655--658); hence \(S\), twists \(\theta_i\), and \(c\bmod 8\) (EG:334).
+\(\mathsf L3\) \emph{enriched} \(\mathsf E\): a real lift \(c\) (\(c_L,c_R\) in \(\mathsf S_{\mathrm{full}}\)), weights \(h_i\) with
+\(e^{2\pi ih_i}=\theta_i\), and characters or a finite presentation of the vacuum chiral algebra (D5 E2--E3,
+NOTE.md:107--118; D6 E.energy/E.fields, NOTE.md:14--17); in \(\mathsf S_{\mathrm{full}}\) also the sewing data E4
+(NOTE.md:119--123).  \(\mathsf L4\) \emph{declared target theory}: an effective sewing completion \(\mathcal S\) (D4-C's input,
+D4 NOTE.md:11--21) or a sourced rigorous net (CA-82).
+The ladder is not fully linear: for fusion-only \(\Cc\), \(\mathsf L0\) already determines the modular \(Z(\Cc)\)
+(Bischoff:384--386), which is why \(\mathsf S_{\mathrm{full}}\) reaches modular-type targets from fusion input, whereas
+\(\mathsf L3\) is never determined by \(\mathsf L2\): \(c\) only mod 8, and tensoring with a holomorphic net preserves the
+category (Bischoff:374--381; \path{realisation_and_fidelity.md}:39--44).
+
+\textbf{Definition 88.3 [proposal; target rungs \(\mathsf R\)].}  Minimal data and current certificate source per rung:
+\begin{center}\footnotesize
+\begin{tabular}{p{0.9cm}p{5.6cm}p{1.6cm}p{5.6cm}}
+\toprule
+Rung & Content & Min.\ data & Certificate in repo \\
+\midrule
+\(\mathsf R0^{c}\) & local isometric/corner refinement tower & \(\mathsf L0\) & CA-68, CA-71 [derived] \\
+\(\mathsf R0^{u}\) & local \emph{unital} injective \(*\)-refinements & \(\mathsf L1\)? & 76.2 unital but nonlocal; 76.4 exists for all \(\Cc\), locality open; 76.5 local at \(\mathsf L1\) [proposal] \\
+\(\mathsf R1\) & a Wilson-triangle limit state & none & WT-1 (CA-81); drift via 76.1, 76.6 [cond.] \\
+\(\mathsf R2\) & Virasoro / extended-mode rep.\ on the same GNS system & none (\(\Vir\)); \(\mathsf L3\) (extended) & VR-1 (CA-81); 79.2 via P0--P3 [cond.]; 78.13 [proposal] \\
+\(\mathsf R3\) & local conformal theory (positive energy, integration, net axioms) in the declared setting & none & D2-C's conclusion; ingredients 80.2--80.5, 78.9--78.11; no categorical instance \\
+\(\mathsf R4\) & faithful to declared \((\Cc,\mathsf E)\) & \(\mathsf L2\) (braided); \(\mathsf L3\) (\(T\), characters) & 80.9 two-sided [cond., PP gap]; 80.8: fusion operators never reach \(\mathsf R4\) \\
+\(\mathsf R5\) & coherent/functorial over enrichment-preserving equivalences & \(\mathsf L3\) & D6-C clause; none \\
+\bottomrule
+\end{tabular}
+\end{center}
+\(\mathsf R4\) is itself layered: defect fidelity (\(\Cc\) acts faithfully by defects; \(\mathsf L0\), D2 \S5, Lemma 80.7) is
+necessary, never sufficient (Prop.~80.8); braided sector fidelity needs \(\mathsf L2\) and Theorem 80.9's (F1)--(F3\('\));
+matching \(T\) and characters needs \(\mathsf L3\) (80.9 closing remark); identification with one net needs \(\mathsf L4\).
+\(S,T\) agreement alone is the \emph{minimum} target, not categorical fidelity (\path{realisation_and_fidelity.md}:46--56).
+\(\mathsf R0^{u}\) at \(\mathsf L0\) is open: for non-braided \(\Cc\) the 76.5 lift needs a half-braiding on \(O\).
+
+\textbf{Remark 88.4 [derived; monotonicity].}  A statement proved at \(\mathsf Lk\) holds verbatim at every
+\(\mathsf Lk'\ge\mathsf Lk\) by forgetting data.  A rung certificate implies the lower rungs only if all are certified on
+the \emph{same} refinement, state and representation system (CA-81, ``same state and representation system'');
+separately obtained \(\mathsf R1\) and \(\mathsf R2\) certificates do not compose.
+
+\subsection{Existing Results on the Grid}
+
+Grades are those of the source shard; ``\(\to\mathsf Rj\)'' marks a finite or conditional ingredient that feeds rung
+\(j\) without reaching it; ``any'' means the statement is setting-agnostic.
+\begin{center}\footnotesize
+\begin{tabular}{p{2.5cm}p{1.2cm}p{1.2cm}p{1.6cm}p{7.3cm}}
+\toprule
+Result & \(\mathsf S\) & \(\mathsf L\) & \(\mathsf R\) & Comment \\
+\midrule
+CA-71--CA-74, CA-68 & open & \(\mathsf L0\) & \(\mathsf R0^{c}\) & July tower: corner maps, residual calculus, JW kernel; nonunital \\
+WT-1, VR-1 (CA-81) & any & none & \(\mathsf R1\); \(\mathsf R2\) & category-free contracts; must share one system \\
+76.1--76.4, 76.9 & open & \(\mathsf L0\) & \(\to\mathsf R1\) & drift from corner weight; unital extension; local first tangent \\
+76.5; 76.6--76.7 & open & \(\mathsf L1\); \(\mathsf L0\) & \(\to\mathsf R0^u\); \(\to\mathsf R1\) & braided lift [proposal]; gap route [cond.] \\
+76.10 (D3-C); 76.12 & open & \(\mathsf L0\) & \(\to\mathsf R0\), \(\mathsf R1\) & UV locality [conj.]; dichotomy (G)/(L) [open] \\
+CA-77 & any & \(\mathsf L0\) & \(\mathsf R0^c\) & pointed carrier, grading, dual-pair blocking, Fock carrier \\
+CA-78 & any (D2-C full) & \(\mathsf L0\) (\(\mathsf L1\) for 78.8) & \(\to\mathsf R2\), \(\mathsf R3\) & finite selection equations; interface lemmas [cond.]; D2-C \\
+CA-79 & full & \(\mathsf L0\); 79.9 \(\mathsf L3\) & \(\to\mathsf R2\); \(\to\mathsf R4\) & shell certificate 79.2 [cond.]; no-go 79.8; \(c>1\) growth \\
+CA-80 & any; 80.9 ch & \(\mathsf L0\); 80.9 \(\mathsf L2\)/\(\mathsf L3\) & \(\to\mathsf R3\); \(\to\mathsf R4\) & sewing, reflection positivity [derived]; 80.9 assumes (F1)\(=\mathsf R3\) \\
+CA-82 & ch & \(\mathsf L4\) & \(\mathsf R4\) & Ising calibration; \(\mathsf R4\) by cited net theorems, reads no \(F,R\) \\
+CA-83--CA-85 & ch & \(\mathsf L4\) & \(\mathsf R2\)--\(\mathsf R3\) & coset calibrations; scalar-augmented, no local fusion-space encoding \\
+CA-86, CA-87 & any & \(\mathsf L0\) & finite & Trotter dictionary; blocking lemma; no tower, no limit \\
+LC-1--LC-3, LC-5--LC-13 & ch & \(\mathsf L2\)--\(\mathsf L3\) & \(\to\mathsf R3\), \(\mathsf R4\) & continuum equations only; declared lifts (LC-8, LC-11) \\
+LC-4 & full & \(\mathsf L0\) & \(\to\mathsf R1\), \(\mathsf R2\) & periodic KS tier; both chiral families \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{The Six Headline Conjectures, Restated}
+\label{sec:layered-conjectures}
+
+Each entry gives the tags \((\mathsf S;\mathsf L;\) rung reached \(/\) rung claimed\()\) of the headline \emph{as written},
+then a restatement [proposal] at the most general layer where it is plausibly true, the first attackable lemma, and
+the next layer's demand.  All six were graded ``needs reformulation'' (INTEGRATION.md \S(d)).
+
+\textbf{D1-C} (open; \(\mathsf L0\) + declared reaction morphisms and analytic hypotheses; only the carrier
+(77.8) reached \(/\) a \(z=2\) resolvent limit, off the conformal ladder).  \emph{Restated (\(\mathsf L0\), any, \(\mathsf R0^u+\mathsf R1\)):}
+on the pointed configuration carrier of 77.8, for any unitary fusion \(\Cc\) and \(O=\one\oplus X\), there are coherent
+local unital refinements of a number-changing field algebra compatible with one state family satisfying WT-1
+(D1 INTEGRATION:102--105; CA-77 open problem).  The collision-sewing version stays a conjecture with its caveat: the
+limit exists only with the tuned contact term \(-2\varepsilon^{-2}\sum n_jn_{j+1}\); hard-core hopping gives Dirichlet
+collisions and decoupled sectors (CA-77 \S Conjecture).  \emph{First lemma:} the discrete collision-trace lower bound
+for \(N\in\{0,1,2\}\) with general \(b,v\) (INTEGRATION:107--111).  \emph{Next layer:} \(\mathsf R2\) needs KS/Ward data D1
+does not supply; \(\mathsf R4\) needs braided/ribbon marking of the tower (\(\mathsf L1\)/\(\mathsf L2\); INTEGRATION (e)7, (e)9).
+
+\textbf{D2-C} (full; \(\mathsf L0\) + declared certificate C1--C6; none reached \(/\) \(\mathsf R3\)).  Split in two.
+\emph{(i) Ward-to-KS transfer lemma (\(\mathsf L0\), full, \(\to\mathsf R2\)):} under C1 and C3, the discrete contour
+identity with summable residuals implies VR-1 A3/A4 for the standard KS modes of \(k\) on the same GNS core
+(Target 78.13).  \emph{(ii) Selection proper:} which \(h\in\operatorname{End}_\Cc(O\otimes O)\) carries a certificate; at
+\(\mathsf L0\) it is category-blind (\(\Cc=\mathrm{Vec}\) admits every qudit chain, D2 REVIEW:79) and remains a question.
+\emph{First lemma:} (i), tested first on C3 for the in-repo free-fermion benchmark (D2 INTEGRATION:117--121).
+\emph{Next layer:} chiral-sector equality with \(\Cc\) is not in D2-C (NOTE.md:40--45); it is \(\mathsf R4\) at
+\(\mathsf L2\), plus a \(c\) lift at \(\mathsf L3\) (INTEGRATION (e)13).
+
+\textbf{D3-C} (open; \(\mathsf L0\), pointed \(O\); first order reached by 76.9 \(/\) uniform locality, \(\to\mathsf R0\)).
+\emph{Restated (\(\mathsf L0\), open, \(\to\mathsf R0\)):} a UV locality lemma: the polar heat refinement has a
+quasi-local generator uniformly in \(L\) for \(0\le t\le t_0\) (Conjecture 76.10 as stated).  The IR question is
+separate and is the dichotomy 76.12: (G) global fidelity at rate \(o(a_n^{1+z})\), or (L) a local unital lift with
+state-adapted witnesses.  \emph{First lemma:} a locally summable generator for the \(t^2\) coefficient via (6.3) and pair
+locality (D3 INTEGRATION:84).  \emph{Next layer:} \(\mathsf R1\) needs a selected fine vacuum and gap (76.6) or
+\(\mathsf R0^u\) locally (76.5, so \(\mathsf L1\) on current evidence).
+
+\textbf{D4-C} (full, diagonal; \(\mathsf L4\); \(\to\mathsf R2\) by 79.2 [cond.] \(/\) \(\mathsf R4\)).  \emph{Restated, relative
+(\(\mathsf L4\), full, \(\mathsf R4\)):} given a modular \(\Cc\) and a supplied effective completion \(\mathcal S\), a
+pointed categorical carrier with bounded support growth carries tile Hamiltonians whose standard KS modes satisfy P
+and whose limit is the diagonal theory of \(\mathcal S\), with the KS part separated from fidelity (D4
+INTEGRATION:98--101).  This is an inverse-discretisation conjecture strengthening Zini--Wang Conj.~4.3 and Rmk.~9,
+which are chiral (\(\mathsf S_{\mathrm{ch}}\), \(\mathsf L4\): a UMM VOA; approximants of \(L_m\)) (ZW:871--895).
+\emph{Attackable core (\(\mathsf L0\), any, \(\to\mathsf R2\)):} the shell certificate P0--P3 of Theorem 79.2.  \emph{First
+lemma:} P0--P3 for the sourced quasi-free calibration (INTEGRATION:103--111).  \emph{Next layer:} complete sector
+correspondence and braided equivalence with \(\Cc\) (INTEGRATION (e)12).
+
+\textbf{D5-C} (full; \(\mathsf L2\) + selected E1--E7; none \(/\) \(\mathsf R4\) uniformly).  \emph{Restated
+(\(\mathsf L2\); setting of whichever chiral subnet is declared; \(\mathsf R4\) given \(\mathsf R3\)):} two-sided fidelity,
+a fully faithful endpoint functor plus an index bound \(\le\operatorname{Dim}\mathsf B\) imply complete braided
+fidelity (Theorem 80.9), with its gap: finite-dimensional Pimsner--Popa bounds do not pass to commutants (\(n\) vs
+\(n^2\)).  The universal-procedure clause is dropped (it contains Bischoff:364--373 and is trivialised by proof search,
+D5 REVIEW:210, :251); for \(\Cc=\mathrm{Vec}\) a nontrivial target needs \(c>0\), an \(\mathsf L3\) datum (REVIEW:182--185).
+\emph{First lemma:} compatible state-preserving \(E_k\) with \(E_k-\lambda_k\mathrm{id}\) CP, \(\lambda_k\to1/D\), give a normal
+\(E\ge D^{-1}\mathrm{id}\) (INTEGRATION:121--125).  \emph{Next layer:} \(T\) and characters at \(\mathsf L3\); (F1) is
+\(\mathsf R3\) and is assumed, not supplied.
+
+\textbf{D6-C} (chiral; \(\mathsf L2\) input, selects \(\mathsf L3\); none \(/\) \(\mathsf R5\)).  \emph{Restated} as three
+parts: (a) \emph{enrichment synthesis} \(\mathsf L2\to\mathsf L3\): select \(\mathsf E\) with a realising completely
+rational net; open and containing the realisation problem (Bischoff:364--373); (b) the relative D4-C above
+(\(\mathsf L4\to\mathsf R4\)); (c) \emph{coherent selection} (\(\mathsf R5\)) along enrichment-preserving braided
+equivalences, with the automorphism-lifting hypothesis explicit (D6 REVIEW:121--125).  The chiral clause is replaced by
+the declared-setting tag: in \(\mathsf S_{\mathrm{full}}\) the target is a full net whose left chiral subnet realises
+\(\Cc\) (REVIEW:94--98).  \emph{First lemma (\(\mathsf L1\), open, \(\to\mathsf R0^u,\mathsf R1\)):} the braided vacancy
+tower with lifts \(\mathrm{Ad}_{U_n}\circ B_n(\cdot\otimes\mathrm{id})B_n^\dagger\) is a strict local OAR tower with drift
+\(d_{k,n}\le p_ne_n+2(1-p_n)\) (D6 INTEGRATION:110--115; Proposal 76.5 + 76.1), checked first on a non-pointed braided
+instance with sourced \(F,R\).  \emph{Next layer:} (a) itself.
+
+\subsection{How to Read a Statement under the Layering Principle}
+
+Every statement carries three tags: \((\mathsf S;\ \mathsf L;\ \mathsf R)\), with \(\mathsf S\in\{\text{ch},\text{full},
+\text{any}\}\), \(\mathsf L\in\{\text{none},\mathsf L0,\dots,\mathsf L4\}\) and \(\mathsf R\) the rung it \emph{reaches}; a
+conjecture also states the rung it \emph{claims}.  Microscopic declarations (\(O\), \(h\), boundary, refinements, states)
+are listed beside the tags.  A statement that silently fixes a layer (one chirality, one enrichment, one target) is
+incomplete until it names the layer and the data (AGENTS.md:113--115).  Two working rules follow:
+state the result at the lowest \(\mathsf L\) and broadest \(\mathsf S\) at which its proof runs, and record the extra
+data the next rung needs as part of the statement, as the restatements above do.
+
+\subsection{What This Does Not Claim}
+
+No rung is reached here.  The grid does not decide chirality: \(\mathsf S_{\mathrm{ch}}\) versus \(\mathsf S_{\mathrm{full}}\) is a
+declared tag pending the source gap above.  The full-setting fidelity notion (defect data plus \(\Cc\boxtimes\overline{\Cc}
+\simeq Z(\Cc)\) bulk identification) is a definition, not a theorem about any lattice limit.  The minimal-data column of
+Definition 88.3 records current evidence; a lower layer may suffice for \(\mathsf R0^u\).
+
+\subsection{Examples (Instances Only)}
+
+\begin{center}\footnotesize
+\begin{tabular}{p{2.0cm}p{12.0cm}}
+\toprule
+Instance & Known placements on the grid \\
+\midrule
+Fibonacci & \(\mathsf L2\) available; tower CA-71--CA-74 at (open; \(\mathsf L0\); \(\mathsf R0^c\)); CA-87 finite; LC-12 \S5 obstruction at \(\mathsf L3\) (\(c=14/5\) lift). \\
+Ising & CA-82 at (ch; \(\mathsf L4\); \(\mathsf R4\) by cited theorems); the only instance at \(\mathsf R4\), and it reads no \(F,R\). \\
+Semion & \(\mathsf L2\) (pointed modular); LC-11/LC-13 conditional four-port at \(\mathsf L3\) (declared \(R=i\)); no rung reached. \\
+Haagerup & \(\mathsf L0\) only (not braided); \(\mathsf S_{\mathrm{full}}\) via \(Z(\Cc)\) is its natural modular target (Bischoff:384--390, open); no rung. \\
+Vec & At \(\mathsf L0\) every qudit chain is in scope (D2 REVIEW:79); at \(\mathsf R4\) nontrivial only with \(c>0\) at \(\mathsf L3\). \\
+\bottomrule
+\end{tabular}
+\end{center}

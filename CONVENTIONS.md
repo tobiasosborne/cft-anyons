@@ -1517,3 +1517,21 @@ residual); both are shard-scoped.
 **Source:** `explorations/2026-10-22-astra/D4-koo-saleur-beyond-free/NOTE.md:71-109`;
 `references/lattice-symmetry/GransSamuelssonEtAl2020/source/Linnea11.5.tex:791-820`.
 **Sweep status:** CA-79 only.
+
+## (aq) Layer tags: setting, data layer, rung (2026-10-22)
+**Scope:** every statement in CA-88 and all statements written after 2026-10-22 (AGENTS.md Rule 17).
+**Choice:** A statement carries three tags. *Setting:* `chiral` (open chain, chiral net target),
+`full` (periodic chain, two-chiral target), `both`, or `any` (independent of chirality). *Data layer:*
+`L0` fusion (fusion rules, F, dagger, pivotal/spherical), `L1` braided (adds R), `L2` modular (adds
+nondegenerate S, T, c mod 8), `L3` enriched E (adds a c lift, sector weights, characters or a finite
+presentation of the vacuum chiral algebra), `L4` declared target (a sewing completion or rigorous net);
+`category-free` for statements such as WT-1/VR-1 that use no categorical data. *Rung:* `R0^c` local
+corner/isometric tower exists, `R0^u` tower of local unital maps, `R1` Wilson-triangle limit state,
+`R2` Virasoro or extended modes on a common domain, `R3` local conformal theory, `R4` faithful to a
+declared (C,E) with sub-rungs R4 defect (L0, necessary only) / braided (L2) / T and characters (L3) /
+one specific theory (L4), `R5` functorial over enrichment-preserving equivalences. The notation
+`->Rj` marks a finite or conditional ingredient that feeds rung j without reaching it. A statement
+that fixes a layer silently is incomplete until tagged.
+**Source:** CA-88 (`report/sections/88_layered_targets.tex`); AGENTS.md Rule 17 and the north-star
+paragraph *Layering principle* (Tobias, 2026-10-22).
+**Sweep status:** CA-88 and the round-2 exploration briefs (`explorations/2026-10-22-astra-r2/`).

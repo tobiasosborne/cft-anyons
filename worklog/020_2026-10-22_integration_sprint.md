@@ -1,5 +1,46 @@
 # Worklog chunk 020 — 2026-10-22
 
+## Layering rulings and CA-88 (layered target grid)
+
+### Context
+
+- Tobias resolved the three recurring open decisions (chiral vs full; bare vs
+  enriched input; existence vs fidelity of the limit) by one rule, recorded as
+  the north-star paragraph "Layering principle" (`AGENTS.md:96-115`) and Rule 17.
+
+### What changed
+
+- New shard CA-88-LAYERED-TARGETS (`report/sections/88_layered_targets.tex`):
+  setting axis (open/chiral vs periodic/full, with what fidelity means in each),
+  data ladder L0 fusion, L1 braided, L2 modular, L3 enriched E, L4 declared
+  target, and rungs R0 (split R0^c corner / R0^u unital) to R5. Places CA-68,
+  CA-71--87, WT-1/VR-1, LC-1--13 on the grid and restates D1-C..D6-C.
+- Registered in `report.tex`, `report/README.md`, `report/SHARD_CATALOG.md`.
+
+### Why these choices
+
+- R0 split because the repo has local corner towers (CA-71) but local unital
+  maps only as a braided proposal (76.5): the layering exposes that R0^u at L0
+  is open. R4 is itself layered (defect, braided, enriched, one net).
+- Full setting over fusion-only C reaches modular targets through Z(C)
+  (Bischoff2018:384-397): the data ladder is not fully linear.
+
+### Frictions / dead ends
+
+- Source gap kept open: no local source on whether a 1D local tower can have a
+  chiral (c_L != c_R) limit (D6 REVIEW:86-90). Chirality stays a declared tag.
+- The "CA-88" IDs proposed in the D1/D2/D4/D5/D6 INTEGRATION packages are superseded.
+- The L/R/S tags are not yet a CONVENTIONS.md entry (Law 2 follow-up).
+
+### Acceptance
+
+- `make check-report-shards`: 89 shards, all <= 280 lines. `make report` builds,
+  no undefined references. No Julia run.
+
+### Pointers
+
+- CA-88, CA-75 (layering paragraph), CA-80 (open decision), PLAN.md:244-247.
+
 ## Integration sprint: survey, CA-86/87 merge, six Astra explorations, CA-76--CA-80
 
 ### Context

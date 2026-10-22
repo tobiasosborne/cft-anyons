@@ -786,3 +786,11 @@ single ~200-line source file it points to.
 - Summary: Identifies the isotropic Fibonacci net gas with the Q = phi+1 Potts low-temperature expansion at vertex fugacity phi^{-3/4}, critical in the c = 7/10 class, and moves the genuine net question to categories such as Haagerup where 1+X is not Y x Ybar.
 - Keywords: dilute chain, golden chain, blocking, Temperley-Lieb, vertex tile, net gas, chromatic polynomial, Potts, Tutte, Fibonacci, Haagerup
 
+
+## `CA-88-LAYERED-TARGETS`
+
+- Source: `report/sections/88_layered_targets.tex`
+- Title: The Layered Target Grid: Setting, Input Data, and Target Rungs
+- Summary: Defines, for a general unitary fusion category C, three layer ladders: the chirality setting (open chain to chiral net, periodic chain to full two-chiral theory), input data L0-L4 (fusion, braided, modular, enriched, declared target theory) and target rungs R0-R5 (tower, Wilson state, mode representation, local conformal limit, fidelity, coherence).
+- Summary: Places CA-71--CA-87, WT-1/VR-1 and LC-1--LC-13 on the grid, restates the six Astra headline conjectures D1-C--D6-C at the most general layer where each is plausibly true with its first attackable lemma, and fixes the three tags every future statement carries.
+- Keywords: layering principle, chiral versus full, input data layer, target ladder, fidelity, enrichment, Drinfeld centre, Wilson triangle, WT-1, VR-1, headline conjectures, D1-C, D2-C, D3-C, D4-C, D5-C, D6-C, Zini-Wang
