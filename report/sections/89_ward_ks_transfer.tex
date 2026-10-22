@@ -1,0 +1,253 @@
+% SHARD-ID: CA-89-WARD-KS-TRANSFER
+% SHARD-TITLE: Ward-to-Koo--Saleur Transfer: Graph-Norm Interfaces, Derivative Matching and the Contact Cocycle
+% SHARD-SUMMARY: Category-free conditional interfaces into VR-1 for the standard KS modes: A2/A4 transfer from geometric modes with vanishing discrepancy (explicit bound), A3 from holomorphic derivative-level refinement matching, and the contact cocycle (A2 + translation + low-energy anchor force z_mn = (m^3 c* - m c)/12; Ward contacts give c* = 12 kappa_3, c = 24b - 12 kappa_1).
+% SHARD-SUMMARY: Negatives: insertion and real gate errors control neither commutators nor derivatives; A2 fails for K = 1+(H-E_0)/v; A3 for every gate-intertwining refinement forces c* = 0, refuting that clause of conjecture E4. Open core: the operator lift W2 of the discrete contour identity.
+% SHARD-KEYWORDS: Ward identity, Koo-Saleur, VR-1, graph norm, transfer lemma, refinement defect, metric derivative, Cauchy estimate, contact term, Virasoro cocycle, central charge, c star, zero-mode shift, translation covariance, D2-C, Target 78.13, E4
+
+\section{Ward-to-Koo--Saleur Transfer: Graph-Norm Interfaces, Derivative Matching and the Contact Cocycle}
+\label{sec:ward-ks-transfer}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: mixed, labelled per statement; review grade WEAKER-RESULT-PROVED.}  Theorem 89.1(i)--(iii) is
+\emph{conditional} (proved under its hypotheses); Lemma 89.2 and Proposition 89.8 are \emph{derived}; Lemma 89.5 is
+\emph{conditional} but carries almost no transfer content (REVIEW F1); Propositions 89.3, 89.4, 89.6, 89.7 are
+\emph{negative, derived}; 89.3 and the strong form of 89.7 are the reviewer's.  The round-2 conjecture E4 is
+\emph{not proved}; its ``any refinement'' A3 clause is \emph{false} whenever \(c^*\neq0\) (89.7).  Lemma 89.L is a
+\emph{proposal}.  \textbf{Layer tags (aq):} 89.1--89.7 are \emph{full, one chiral family at a time; category-free;
+\(\to\mathsf R2\)} (89.4, 89.6 setting \emph{any}; 89.8 setting \emph{both}).  No categorical datum enters any proof: they
+apply verbatim to every unitary fusion \(\Cc\) with a declared periodic realisation.  The periodic translation
+\(U_r\) used in 89.1(iii) and 89.7 is \emph{declared extra data}: for non-braided \(\Cc\) with flux sectors it is a
+half-braiding (\(Z(\Cc)\)) datum, not a fusion consequence (REVIEW:206).  Nothing reaches \(\mathsf R2\): no instance
+of any hypothesis set is verified.  Reproducibility: exact SymPy checks (\path{checks/run_checks.py}, five groups,
+five mutations rejected) and reviewer checks R1--R4 (\path{checks/review/review_checks.py}, all pass) in the
+exploration directory; they verify displayed finite identities and calibrations, not W1/W2 or any certificate.
+
+Dependencies: CA-78 (Conjecture 78.12, Lemma 78.11, Target 78.13), CA-79 (\eqref{eq:79-ks}, Lemma 79.1, Theorem
+79.2, Lemma 79.6), CA-81 (VR-1), CA-88 (grid, D2-C); LC-W; CONVENTIONS (s), (v), (ad), (ak), (ap), (aq).
+
+% Source: explorations/2026-10-22-astra-r2/E4-ward-to-ks-transfer/NOTE.md:33-82 -- KS modes (1), graph norms (2)-(3), energy warning.
+% Source: .../E4-ward-to-ks-transfer/NOTE.md:84-204 E4-W; :206-258 E4-T, E4-N1; :260-334 E4-A, E4-N2; :336-365 E4-N3;
+%   :367-410 E4-P; :412-493 E4-C; :495-547 checks, open lemmas; :557-579 ledger and tags.
+% Source: .../E4-ward-to-ks-transfer/REVIEW.md:8-36 grade, F1-F3; :74-98 E4-W reading (F1); :100-158 step verdicts;
+%   :160-197 R-A2, R-N3'; :199-210 refutation attempts (:206 translation datum, :210 c not an output); :212-224 tags; :226-243 grade.
+% Source: .../E4-ward-to-ks-transfer/INTEGRATION.md:7-39 theorem as established; :41-90 destination, amendments; :92-118 links; :120-136 next lemma.
+% Source: .../E4-ward-to-ks-transfer/checks/review/review_output.txt:1-9 -- R1-R4 PASS; R2 values 0.849, 2.072, 3.119 (L=4,6,8).
+% Source: explorations/2026-10-22-astra-r2/briefs/E4-ward-to-ks-transfer.md:66-85 -- conjecture E4 as posed.
+% Source: cft_machine/research/virasoro_routes.md:55-76 -- VR-1 A1-A4; :151-177 exclusions; :179-192 VR-2 (vacuum-null is not operator-null).
+% Source: explorations/2026-10-22-astra/D2-selection-principle/NOTE.md:655-701 -- contour identity (19), "Still open" :695-701;
+%   :549-594 L9 Gram amplification, L10 collars.  D2 INTEGRATION.md:104-121 -- transfer target; free-fermion first test.
+% Source: report/sections/78_categorical_selection_equations.tex:233-251; 79_ks_shell_and_refinement_defect.tex:61-81, :112-155.
+% Source: reconstruction/01_cells.md:164-195 -- LC-W propagation law; accumulated sum not bounded.
+% Source: references/cft/Schottenloher2008/Schottenloher2008.md:2507-2517, 2552-2589, 2610-2634 -- diagonal cocycle recurrence.
+% Source: references/lattice-symmetry/GransSamuelssonEtAl2020/source/Linnea11.5.tex:791-820 (KS normalisation);
+%   :3191-3198, 3220-3229 (two constants c, c*; limiting bracket conjectural there).
+% Source: references/lattice-symmetry/KooSaleur1993/source/9312156.tex:1095-1108 -- commutators need intermediate-state control.
+% Source: references/lattice-symmetry/ChelkakGlazmanSmirnov2016/source/StressTensor.tex:527-532 -- convergence only at n=1.
+% Source: CONVENTIONS.md:801-810 (v) graph norms; :704-718 (s) two central constants; :1483-1534 (ap), (aq).
+
+\subsection{Setting and the Conjecture as Posed}
+
+A tower \((H_r,J_r,K_r)\), \(N=N_r\to\infty\), satisfies VR-1 A1: finite Hilbert spaces, isometries \(J_r\),
+\(K_r\ge1\), \(K_{r+1}J_r=J_rK_r\).  The modes \(T_{r,n}\) are the standard KS modes \eqref{eq:79-ks} of (ap),
+\(T_{r,n}=\frac N{4\pi}\sum_jz^{nj}(k_j-\varepsilon_r-\mathcal J_j)+b_r\delta_{n0}\), \(k_j=-h_{r,j}/v_r\),
+\(\mathcal J_j=i[k_j,k_{j+1}]\), with no change of prescription.  Graph norms (v):
+\(|X|_{s,d}^{t\leftarrow r}:=\|K_t^sXK_r^{-s-d}\|\) (scale superscripts omitted within one scale).  VR-1 A2:
+\(|T_{r,n}|_{s,1}\le C_{n,s}\); A3: \(e_{r,n,s}:=|T_{r+1,n}J_r-J_rT_{r,n}|_{s,1}\) summable in \(r\); A4:
+\(|[T_m,T_n]-(m-n)T_{m+n}-z_{mn}1|_{s,2}\to0\), \(z_{mn}=\delta_{m+n,0}(m^3c^*-mc)/12\), constants kept separate
+as in (s).  \emph{Geometric modes} \(S_{r,m}=N^{-1}\sum_jf_m(j)Q_{r,j}+b_r\delta_{m0}\), \(f_m(j)=e^{2\pi imj/N}\), are
+built from boundary metric insertions \(Q_{r,j}\) on the positive quotient; \(D_{r,n}:=T_{r,n}-S_{r,n}\),
+\(d_{r,n,s}:=|D_{r,n}|_{s,1}\).  A \emph{periodic translation} is a unitary \(U_r\), \(U_r^{N}=1\), commuting with
+\(K_r\) and the time gates, with \(U_rT_{r,n}U_r^*=e^{-2\pi in/N}T_{r,n}\) (declared; see Status).
+
+\textbf{Conjecture E4 [conjectural as posed; full, \(\mathsf L0\), \(\mathsf R2\); brief:66--77].}  If the gate metric
+derivative equals \(h\) minus a continuity current with residual summable in the graph norm of
+\(K_N=1+(H_N-E_0)/v\) (C1), and discrete Ward equations hold with convergent contact coefficients (C3), then (a)
+the KS modes satisfy A4 with \(z_{mn}\) fixed by the contacts, (b) they satisfy A3 for \emph{any} refinement that
+intertwines the gates up to a summable error, and (c) the central charge is the Ward contact coefficient.
+\emph{Verdict (REVIEW:226--240).}  (a) is not proved: its whole content sits in W2 (Lemma 89.5, Remark F1).
+(b) is \textbf{false} whenever \(c^*\neq0\) (Proposition 89.7), and real gate errors cannot give A3 (89.6).
+(c) holds only for \(c^*=12\kappa_3\); \(c\) also records the declared zero-mode shift \(b\) (89.1(iii)).  Its
+literal control \(K_N\) violates A2 (89.3).
+
+\textbf{Theorem 89.1 [conditional; full, one chiral family at a time; category-free; \(\to\mathsf R2\);
+INTEGRATION:9--34].}  Let \((H_r,J_r,K_r)\) satisfy A1, with \(\min\operatorname{spec}K_r=1\), and a periodic translation.
+(i) \emph{Transfer.} If \(S_{r,n}\) satisfy A2 (\(|S_{r,n}|_{s,1}\le M_{n,s}\)) and A4, and \(d_{r,n,s}\to0\), then
+\(T\) satisfies A2 and A4 with the same central term, with bound \eqref{eq:89-transfer}.
+(ii) \emph{Refinement.} If holomorphic metric families \(B_{r,n}(\eta)\) with \(B_{r,n}'(0)=S_{r,n}\) obey
+\eqref{eq:89-holo}, \(J_r\) and \(K_r\) are independent of \(\eta\), and \(d\) is summable, then \(T\) satisfies A3 with
+bound \eqref{eq:89-A3}.
+(iii) \emph{Contact cocycle.} If \(T\) satisfies A2 and A4-type residuals with convergent scalars
+\(z^{(r)}_{mn}\to z_{mn}\) vanish in \(|\cdot|_{s,2}\), then \(z_{mn}=\delta_{m+n,0}(m^3c^*-mc)/12\) with
+\(c^*=2(a_2-2a_1)\), \(c=2a_2-16a_1\), \(a_m:=z_{m,-m}\).  If the scalar contacts are first- and third-derivative
+Ward contacts \(\kappa_1,\kappa_3\) (cylinder chart) with zero-mode shift \(b\), then \(c^*=12\kappa_3\),
+\(c=24b-12\kappa_1\).
+
+\subsection{Graph-Norm Calculus and the Choice of Control}
+
+\textbf{Lemma 89.2 [derived; any; category-free].}  \(|XY|_{s,d+e}\le|X|_{s,d}|Y|_{s+d,e}\) and
+\(|X|_{s,d+1}\le|X|_{s,d}\).  \textbf{Proof.} Insert \(K^{-s-d}K^{s+d}\) between \(X\) and \(Y\); \(\|K^{-1}\|\le1\).
+\(\square\) (NOTE:50--69.)
+
+\textbf{Proposition 89.3 (R-A2) [negative, derived; reviewer; full; category-free; \(\to\mathsf R2\)].}
+\textbf{Assume} the KS modes with \(\varepsilon_N=E_0/(Nv_N)\), \(K_N=1+(H_N-E_0)/v_N\), \(b_N\) bounded, and spectral
+width \(w_N:=\max\operatorname{spec}K_N-1\ge w>0\) for large \(N\).  \textbf{Prove} A2 fails at \((n,s)=(0,0)\).
+\(\langle1\rangle1\). \(T_0+\bar T_0=N(K-1)/(2\pi)+2b\) (Lemma 79.1).  \(\langle1\rangle2\). On the top eigenvector,
+\(\max(|T_0|_{0,1},|\bar T_0|_{0,1})\ge\tfrac12|Nw_N/(2\pi)+2b|/(1+w_N)\to\infty\).  QED (REVIEW:162--172).
+So E4's literal control is not admissible; every A2-dependent statement here needs another \(K\), e.g.\ the
+conformal \(1+E_N\) or CA-79's \(Q^p\), \(p>1\) (Theorem 79.2).  This sharpens NOTE:71--82, which called A2 for this
+\(K\) only ``very strong''.
+
+\subsection{Transfer of A2 and A4: Theorem 89.1(i)}
+
+\textbf{Proof of (i) (E4-T; NOTE:208--243, REVIEW:100--106).}  \(\langle1\rangle1\). A2 for \(T\) with
+\(C_{n,s}=M_{n,s}+\sup_rd_{r,n,s}\), BY the triangle inequality.  \(\langle1\rangle2\). With \(R^S,R^T\) the A4
+residuals, exactly \(R^T_{mn}=R^S_{mn}+[D_m,S_n]+[S_m,D_n]+[D_m,D_n]-(m-n)D_{m+n}\).  \(\langle1\rangle3\). Lemma
+89.2 on each product, with consecutive graph orders:
+\begin{equation}\label{eq:89-transfer}
+\begin{split}
+q^T_{r,m,n,s}\le q^S_{r,m,n,s}&+d_{r,m,s}M_{n,s+1}+M_{n,s}d_{r,m,s+1}+M_{m,s}d_{r,n,s+1}+d_{r,n,s}M_{m,s+1}\\
+&+d_{r,m,s}d_{r,n,s+1}+d_{r,n,s}d_{r,m,s+1}+|m-n|\,d_{r,m+n,s}\;\longrightarrow0.
+\end{split}
+\end{equation}
+\(\langle1\rangle4\). QED; the barred family is identical.  The two-chiral conclusion additionally needs zero
+mixed contact with vanishing two-loss error; the intended supplier is CA-91 Theorem 91.5, which needs \emph{equal ledgers}
+(e.g.\ from a linear parity, Theorem 91.1) and the zero-mode condition ZC (E2 INTEGRATION:107--112; this corrects INTEGRATION:94--99).
+
+\textbf{Proposition 89.4 (E4-N1) [negative, derived; any; category-free].}  Summable insertion error does not bound
+commutators without a product bound: on \(\mathbb C^2\), \(K=1\), \(S_r=2^r\operatorname{diag}(1,0)\),
+\(D_r=2^{-r}\sigma_x\) give \(\sum_r|D_r|_{s,1}<\infty\) but \(|[S_r,D_r]|_{s,2}=1\) (NOTE:245--258).  This is why A2
+enters (i); special cancellation may replace it only as a proved product bound.
+
+\textbf{Lemma 89.5 (E4-W, demoted) [conditional; full; category-free; \(\to\mathsf R2\); NOTE:84--204].}
+\textbf{Assume} W0: \(N\to\infty\), \(S_{r,m}\) as above, \(D_NF(j)=(F(j+1)-F(j-1))/(2i\ell_N)\), \(\ell_N=2\pi/N\),
+\(d_N(m)=\sin(m\ell_N)/\ell_N\).  W1: on all boundary vectors of the positive quotient,
+\([S_{r,m},Q_{r,j}]=f_mD_NQ_{r,j}+2(D_Nf_m)Q_{r,j}+[\kappa_{3,r}D_N^3f_m+\kappa_{1,r}D_Nf_m](j)1+X_{r,m,j}+W_{r,m,j}\)
+(exchange error \(X\), Ward error \(W\)).  W2: \(E_{r,m,n}:=N^{-1}\sum_jf_n(j)(X+W)_{r,m,j}\) has
+\(|E_{r,m,n}|_{s,2}\le w_{r,m,n,s}\to0\); \(\kappa_{i,r}\to\kappa_i\), \(b_r\to b\).  W3: A2 for \(S\).  \textbf{Prove}
+\(S\) satisfies A4 with \(z_{mn}=\delta_{m+n,0}\{\kappa_3m^3+(\kappa_1-2b)m\}\).
+\(\langle1\rangle1\). Periodic summation by parts (\(D_Nf_m=d_N(m)f_m\)) gives, for \(N>|m+n|\),
+\([S_m,S_n]=\beta_NS_{m+n}+z^{(r)}_{mn}1+E_{r,m,n}\), \(\beta_N=2d_N(m)-d_N(m+n)\),
+\(z^{(r)}_{mn}=\delta_{m+n,0}[\kappa_{3,r}d_N(m)^3+(\kappa_{1,r}-2b_r)d_N(m)]\).
+\(\langle1\rangle2\). \(|\sin x-x|\le|x|^3/6\) gives \(|\beta_N-(m-n)|\le\ell_N^2(2|m|^3+|m+n|^3)/6=:a_{N,m,n}\).
+\(\langle1\rangle3\). \(q^S_{r,m,n,s}\le w_{r,m,n,s}+a_{N,m,n}M_{m+n,s}+|z^{(r)}_{mn}-z_{mn}|\to0\), BY W2, W3,
+\(\|K^{-2}\|\le1\).  QED.  At finite \(N\), \(\beta_N\) is not antisymmetric (\(\beta_N(m,m)\neq0\)); \(X+W\) absorbs it.
+
+\textbf{Remark F1 [derived; reviewer; REVIEW:15--22, :86--98].}  W1 does not constrain \(X,W\): they are defined by it.
+Hence \(E_{r,m,n}\equiv[S_m,S_n]-\beta_NS_{m+n}-z^{(r)}_{mn}1\) identically (check R1, deviation \(4\cdot10^{-15}\)),
+and W2 \emph{is} A4 with \(\beta_N\) in place of \(m-n\).  Lemma 89.5 is the elementary implication
+``\(\beta_N\)-A4 \(\Rightarrow\) A4''; the contour-to-commutator problem sits entirely inside W2.  The local sufficient
+condition \(N^{-1}\sum_j(|X_j|_{s,2}+|W_j|_{s,2})\to0\) would require each local commutator to carry the scalar
+\(\kappa_3d_N^3f_m(j)\), while the KS central term is a state-level effect of the assembled sum: this local
+route is \textbf{unverified and plausibly never satisfied}, and is not advertised.
+
+\subsection{A3 from Differentiated Matching: Theorem 89.1(ii)}
+
+Hypothesis of (ii): for each \(r,n\), \(B_{r,n}\), \(B_{r+1,n}\) are holomorphic on a neighbourhood of the same disk
+\(|\eta|\le\rho_{r,n}\) (Fourier factors, cell counts, velocity, anomaly line and zero-mode origin included), and
+\begin{equation}\label{eq:89-holo}
+F_{r,n}(\eta):=B_{r+1,n}(\eta)J_r-J_rB_{r,n}(\eta),\qquad\sup_{|\eta|=\rho_{r,n}}|F_{r,n}(\eta)|_{s,1}\le u_{r,n,s},
+\qquad\sum_ru_{r,n,s}/\rho_{r,n}<\infty .
+\end{equation}
+\textbf{Proof of (ii) (E4-A; NOTE:262--306, REVIEW:112--119).}  \(\langle1\rangle1\). \(F'(0)=(2\pi i)^{-1}\oint
+F(\eta)\eta^{-2}d\eta\) for the finite matrix \(F\); the fixed weights pass through the integral, so
+\(|S_{r+1,n}J_r-J_rS_{r,n}|_{s,1}\le u_{r,n,s}/\rho_{r,n}\).  \(\langle1\rangle2\). Exact \(K\) transport and isometry
+(functional calculus on the reducing range of \(J_r\)) give \(|D_{r+1,n}J_r|_{s,1}\le d_{r+1,n,s}\),
+\(|J_rD_{r,n}|_{s,1}\le d_{r,n,s}\).  \(\langle1\rangle3\). Adding,
+\begin{equation}\label{eq:89-A3}
+e_{r,n,s}\le u_{r,n,s}/\rho_{r,n}+d_{r+1,n,s}+d_{r,n,s},
+\end{equation}
+summable.  QED.  A2 is not used.  A directly certified summable bound on \(F'(0)\), or D2-L10 collars for this
+derivative (Lemma 78.11), may replace \eqref{eq:89-holo}.  If \(J\) depends on \(\eta\), the connection terms
+\(B_{r+1,n}(0)J'_r(0)-J'_r(0)B_{r,n}(0)\) must be kept; CA-79 Lemma 79.6 (compression/leakage) is their concrete
+source.  A1 plus (i) and (ii) let VR-1 apply unchanged.
+
+\textbf{Proposition 89.6 (E4-N2) [negative, derived; any; category-free].}  Uniformly close, positive, entire real
+gate families need not have close metric derivatives: for an orthogonal projection \(A\neq0\),
+\(\epsilon_r=2^{-r-2}\), \(G_r(t,\eta)=\exp[-t(1+\epsilon_r\sin(\eta/\epsilon_r^2))A]\), \(G=e^{-tA}\), one has
+\(\sup_{0\le t\le1,\eta\in\mathbb R}\|G_r-G\|\le\epsilon_r\) but \(\|\partial_\eta(G_r-G)(1,0)\|=e^{-1}/\epsilon_r\)
+(NOTE:308--334).  The complex growth \(\sim e^{\rho/\epsilon^2}\) breaks \eqref{eq:89-holo}: the Cauchy bound is a
+genuine added hypothesis.  It is an operator family, not a C1 certificate.
+
+\textbf{Proposition 89.7 (E4-N3 strengthened to R-N3\('\)) [negative, conditional reductio; reviewer; full;
+category-free; \(\to\mathsf R2\); NOTE:336--365, REVIEW:174--197].}  \textbf{Assume} A1, \(N_r\to\infty\), a periodic
+translation, \(\min\operatorname{spec}K_r=1\), and that \(T\) satisfies A3 for \(J\) and A4 with \((c^*,c)\).
+\textbf{Prove} either \(c^*=0\), or A3 fails for \(J'_r:=U_{r+1}^{k_r}J_r\), \(k_r\) even, \(|k_r-N_{r+1}/2|\le1\); \(J'\)
+has the same gate-intertwining errors as \(J\).
+\(\langle1\rangle1\). \(\Theta:=U^{k_r}_{r+1}\) gives \(\Theta T_n=\lambda_rT_n\Theta\), \(\lambda_r\to-1\) for odd \(n\); with
+\(\Delta,\Delta'\) the defects of \(J,J'\), \(\Delta'=\Theta(\lambda^{-1}\Delta+(\lambda^{-1}-1)JT_{r,n})\), and \(\Theta J\) is a graph
+isometry, so \(|\Delta'|_{s,1}\ge|\lambda^{-1}-1|\,|T_{r,n}|_{s,1}-|\Delta|_{s,1}\).
+\(\langle1\rangle2\). Case A: \(\limsup_r|T_{r,n}|_{s,1}>0\) for some odd \(n\), some \(s\): A3 fails for \(J'\).
+\(\langle1\rangle3\). Case B: \(|T_{r,n}|_{s,1}\to0\) for all odd \(n\), all \(s\).  Then
+\(|T_nT_{-n}|_{s,2}\le|T_n|_{s,1}|T_{-n}|_{s+1,1}\to0\), so A4 gives \(T_0+z_{n,-n}/(2n)\to0\) in \(|\cdot|_{s,2}\) for
+\(n=1,3\); the difference is a scalar and \(\|K^{-2}\|=1\), so \(z_{1,-1}/2=z_{3,-3}/6\), i.e.\ \(c^*=0\) (check R4).  QED.
+A2 is not used.  Hence E4(b) holds only vacuously or with \(c^*=0\); A3 needs \emph{coordinate-resolved}
+differentiated matching as in (ii).  An even \(k_r\) preserves a brick-wall sweep (REVIEW:132--135).
+
+\subsection{The Contact Cocycle: Theorem 89.1(iii)}
+
+\textbf{Proof of (iii) (E4-C; NOTE:412--493, REVIEW:144--158).}  Let \(R_{r,m,n}\) be the residuals with the
+limiting scalars, norms \(q_{r,m,n,s}\to0\).
+\(\langle1\rangle1\). \(z\) is antisymmetric, diagonal and real.  \(\langle2\rangle1\). Add \((m,n)\), \((n,m)\): operator
+parts cancel, \(\|K^{-2}\|=1\).  \(\langle2\rangle2\). For \(m+n\neq0\), \(N>|m+n|\), averaging over \(U_r^j\) kills the
+operator part by its Fourier character, is contractive (\([U_r,K_r]=0\)), and leaves the scalar.
+\(\langle2\rangle3\). For \((m,-m)\) the operator part is self-adjoint; test on a \(K\)-eigenvector of eigenvalue 1.
+\(\langle1\rangle2\). Finite Jacobi.  By A2 and Lemma 89.2,
+\(|[T_l,R_{mn}]|_{s,3}\le C_{l,s}q_{r,m,n,s+1}+q_{r,m,n,s}C_{l,s+2}\to0\).  The \(T_{l+m+n}\) coefficients cancel
+algebraically; the scalar \((m-n)z_{l,m+n}+(n-l)z_{m,n+l}+(l-m)z_{n,l+m}\) has vanishing \(|\cdot|_{s,3}\) norm, and
+\(\|K^{-3}\|=1\) forces it to vanish.
+\(\langle1\rangle3\). The triple \((m,1,-m-1)\) gives \((m-1)a_{m+1}=(m+2)a_m-(2m+1)a_1\) (\(m\ge2\)), solved by
+\(a_m=(a_2-2a_1)(m^3-m)/6+a_1m=(m^3c^*-mc)/12\); oddness covers \(m\le0\).  This is the diagonal recurrence of
+Schottenloher (2507--2634) with the linear coboundary kept.  \(\langle1\rangle4\). The \(\kappa\) dictionary: with
+Lemma 89.5's contacts \(a_m=\kappa_3m^3+(\kappa_1-2b)m\), so \(c^*=12\kappa_3\), \(c=24b-12\kappa_1\).  QED.
+The anchor \(\min\operatorname{spec}K=1\) is essential: without it a scalar identity can vanish in weighted norm.
+Only \(c^*\) is a Ward output; \(c=c^*\) needs \(b=(c^*+12\kappa_1)/24\), an input or a further equation (REVIEW:210),
+consistent with Lemma 79.1 (\(c\mapsto c+24d\), \(c^*\) fixed).
+
+\textbf{Proposition 89.8 (E4-P) [derived, formal; both; category-free; \(\to\mathsf R2\); NOTE:369--410].}  In the
+plane convention (ad), if the scalar part of the ordered contact is \(\sum_{k\ge1}a_k(w)(z-w)^{-k}1\) (finitely many
+terms), then with \(f_m=z^{m+1}\), \(g_n=w^{n+1}\),
+\(z_{mn}=\operatorname{Res}_wg_n(w)\sum_{k\ge1}\frac{a_k(w)}{(k-1)!}\partial_w^{k-1}f_m(w)\).  For D2 (19) (\(a_4=c_W/2\)):
+\(z_{mn}=\delta_{m+n,0}c_W(m+1)m(m-1)/12\); the nonscalar residue is \((m-n)L_{m+n}\), and pole coefficients
+\(A_2,A_1\) would give \((A_2-A_1)(m+1)-A_1(n+1)\), so the Ward values \(A_2=2,A_1=1\) are essential; a shift
+\(T_n=L_n+b\delta_{n0}\) gives \(c^*=c_W\), \(c=c_W+24b\).  Plane-to-cylinder formally gives \(\kappa_1=0\),
+\(\kappa_3=c_W/12\), consistent with 89.1(iii) (REVIEW:137--142).  Formal residue calculus only: the lattice chart-change
+estimate is open.
+
+\subsection{The First Gap and the Next Lemma}
+
+\textbf{First gap [open].}  Turn the correlation-level contour identity D2 (19) into the operator two-loss estimate
+W2.  By Remark F1 this is A4 up to \(\beta_N\): the conjecture's entire A4 content sits here.  LC-W proves only the
+propagation law, not a bound on its accumulated sum (\path{reconstruction/01_cells.md}:164--195).  Further open
+lemmas (NOTE:522--547): uniform Ward errors after Gram conditioning (D2-L9); A2 for an admissible control;
+the differentiated matching \eqref{eq:89-holo} with \(K\) transport; chart change and both chiralities.
+
+\textbf{Lemma 89.L (probe-word Ward-to-residual) [proposal; full; category-free; \(\to\mathsf R2\);
+INTEGRATION:120--136].}  \textbf{Assume} D2's contour identity (19) holds with residuals \(R_n(f,y,A)\) for every
+probe word \(A\) in a family whose reflected boundary vectors are dense in each graph space, and the residuals and
+collar insertions obey the one-sided two-loss bound of D2-L10 (Lemma 78.11) with constants tending to zero.
+\textbf{Prove} W2: \(|[S_m,S_n]-\beta_NS_{m+n}-z^{(r)}_{mn}|_{s,2}\to0\).  All probe words, not the vacuum alone, are
+needed: vacuum-null is not operator-null (VR-2, virasoro\_routes:179--192).  \emph{First test:} the in-repo free-fermion benchmark
+(\path{cft_machine/benchmarks/fermion/}; D2 INTEGRATION:117--121) with \(K=1+E_N\), at the laptop budget.
+
+\subsection{What This Does Not Claim}
+
+No instance of any hypothesis set of Theorem 89.1 is constructed or verified for any \(\Cc\); nothing reaches
+\(\mathsf R2\).  No discrete Ward identity is shown to imply A4 (that is W2).  No \(c=c^*\), no positive energy, smooth
+smearing, mode-number uniformity, self-adjointness, integration or net (VR-1 exclusions, virasoro\_routes:151--177).
+The Carpi--Weiner continuum bound is not lattice A2.  Proposition 89.8 is formal, not contour convergence.  No
+categorical selection: the statements are category-free, which is their scope, not a fidelity claim.
+
+\begin{center}\footnotesize
+\begin{tabular}{p{3.6cm}p{10.4cm}}
+\toprule
+Instance & Calibration datum for the general statements \\
+\midrule
+Any unitary fusion \(\Cc\), declared periodic realisation & 89.1, 89.5: no fusion identity enters; translation declared (half-braiding datum if non-braided). \\
+\(\mathrm{Vec}\), \(O=\one\) & All modes scalar or zero; 89.1(iii) gives \(c=c^*=0\); consistent (REVIEW:203). \\
+\(\mathrm{Vec}\), \(O=\mathbb C^2\), Heisenberg density & 89.3: \(\max|T_0K^{-1}|=0.849,\,2.072,\,3.119\) at \(L=4,6,8\), linear growth (check R2). \\
+Unit-multiplicity \(2\times2\) block of any \(\Cc\) & 89.4, 89.6 witnesses; not conformal certificates. \\
+CGS \(n=1\) point & Stress convergence proved in source (StressTensor:527--532); \textbf{not verified} to satisfy W2 or \eqref{eq:89-holo}. \\
+\bottomrule
+\end{tabular}
+\end{center}

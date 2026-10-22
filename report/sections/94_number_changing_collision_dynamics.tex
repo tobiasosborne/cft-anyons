@@ -1,0 +1,276 @@
+% SHARD-ID: CA-94-NUMBER-CHANGING-COLLISION-DYNAMICS
+% SHARD-TITLE: Number-Changing Collision Dynamics on the Pointed Carrier: a Tuned Continuum Theorem and Three Obstructions
+% SHARD-SUMMARY: For any unitary fusion C and pointed O = 1 + X, a fixed pure-hop density has no full-Fock projected-resolvent limit after any scalar subtraction (N1), the repaired limit is not a chamber-Laplacian extension (N2), and the grading condition G_r forces every range-r limit to conserve occupation (N3).
+% SHARD-SUMMARY: The tuned positive-square D1-C family (hop eps^-2, contact eps^-1, fusion cross eps^-1/2, pair cross eps^0) converges in projected-resolvent sense on the whole Fock carrier, with no subsequence or N-uniform estimate, to a closed collision form with lower-sector sources; its coefficient image is a finite PSD block cone. z = 2, below R1.
+% SHARD-KEYWORDS: number-changing dynamics, pointed carrier, configuration Fock space, collision trace, Mosco lower bound, projected resolvent, closed quadratic form, interior-boundary condition, moment cone, grading obstruction, contact tuning, Robin collision, D1-C, E6
+
+\section{Number-Changing Collision Dynamics on the Pointed Carrier: a Tuned Continuum Theorem and Three Obstructions}
+\label{sec:number-changing-collision-dynamics}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: derived (positive and negative); each statement carries its own label.}  NOTE, REVIEW, INTEGRATION are
+the files in \path{explorations/2026-10-22-astra-r2/E6-number-changing-continuum/}; ``D1 NOTE'' etc.\ those in
+\path{explorations/2026-10-22-astra/D1-carrier-theory/}.  The review grades the brief's E6 (\path{briefs/E6-number-changing-continuum.md}:69--97)
+\textbf{COUNTEREXAMPLE (verified)}, with a \textbf{proof-complete replacement} and no invalid step (REVIEW:9--29): E6(a), (b) fail by
+N1 (94.1); E6(c), as unrestricted surjectivity, fails by N3 (94.11), which does not settle (c) without \((G_r)\) or for a
+local target class (REVIEW:21--24); the positive theorem is for a \emph{different, \(\varepsilon\)-dependent} family (REVIEW:26--29).
+Global \(H^2\) regularity (94.8) and general range \(r\) (94.13) are \emph{conditional}; 94.16 is \emph{conjectural}.  Finite
+evidence (\path{checks/}: \path{check_e6.py}, five groups GREEN, three mutations RED, \path{raw_output.txt}:3--14; \path{review_N1_N3.py};
+\path{review_tuned_convergence.py}) supports finite algebra and counting steps only, not the theorem (NOTE:776--778).
+
+\textbf{Layer tags (CONVENTIONS (aq)) of the main results 94.6, 94.7, 94.10.}  Setting \emph{any} (open interval
+\((0,1)\), ordered configurations, nonrelativistic kinetic energy; no chiral or full target selected).  Data \(\mathsf L0\)
+plus declared \((b_\alpha,v_\beta,\lambda_\alpha,\kappa_\beta,\mu\), contact tuning\()\); \(\mathsf L1\)--\(\mathsf L4\) unused.  Rung
+\(\mathsf R0^{c}\) (carrier, Theorem 77.8) plus an \emph{off-ladder \(z{=}2\) resolvent limit}; \textbf{not} \(\mathsf R1\),
+which in CA-88 is a Wilson-triangle limit state (Definition 88.3), none being constructed (NOTE:807--811;
+REVIEW:218--223).  \emph{Per statement:} all of 94.1--94.15 have setting any (open interval) and data \(\mathsf L0\) plus the
+declared data they name (94.3 uses only a finite-dimensional fibre).  94.6--94.8, 94.10 reach the off-ladder limit; 94.3--94.5 and
+94.13 feed it (\(\to\) that limit); 94.1, 94.9, 94.11, 94.14 are negative at this layer; 94.12 is \(\mathsf L0\) naturality, not \(\mathsf R5\);
+94.16 is conjectural at the same tags.
+
+\textbf{Source gap (Law 1).}  No local source treats Mosco convergence, extension classification, boundary triples, point
+interactions or interior-boundary-condition Hamiltonians (NOTE:58--66; REVIEW:58--61); all analytic lemmas are proved inline.
+Prior art on this operator class may exist; a novelty or comparison claim needs a source first (REVIEW:239--242).
+Dependencies: CA-77 (77.4, 77.8, Conjecture with Caveat), CA-88 (88.3, D1-C entry), D1-T7; CONVENTIONS (a), (b), (r), (t), (u),
+(ak), (al), (am), (aq), and the shard-local conventions of \S\ref{sec:ncd-setting} (proposed for CONVENTIONS).
+
+% Source: explorations/2026-10-22-astra-r2/E6-number-changing-continuum/NOTE.md:18-66 conventions, gap; :74-131 N1; :135-188 P1, q;
+%   :192-398 L1-L3; :402-461 T1; :465-598 P2, N2, T2; :602-687 N3; :691-761 P3, P4, codim-2.   REVIEW.md:9-29 grade; :63-65 Penneys:319;
+%   :69-176 verdicts; :178-211 refutation attempts, scope omission; :213-242 Rule 16/17, minor issues.   INTEGRATION.md:9-33 (a); :61-79; :104-117.
+% Source: explorations/2026-10-22-astra/D1-carrier-theory/NOTE.md:35-41 D1-C; :483-516 D1-T7; :534-543 source bounds;
+%   REVIEW.md:78-98 contact tuning (R1), inert category (R2); INTEGRATION.md:128-132 hypotheses (e)2-(e)4.
+% Source: report/sections/77_pointed_carrier_invariants.tex:93-117, :207-226, :233-248; 88_layered_targets.tex:84-99, :145-153.
+% Source: references/text/PenneysUnitaryFusionCategories.md:195-237 (:219 summands); :319 tensor a linear dagger-functor;
+%   :321 Hilb_fd(G,omega); :394-398 coherence; :528-538 isometry inner product.   CONVENTIONS.md:1431-1448 (al); :1450-1467 (am); :1521-1537 (aq).
+
+\subsection{Setting and Shard-Local Conventions}
+\label{sec:ncd-setting}
+
+\(\Cc\) is unitary fusion; \((O,\eta)\) is pointed, \(O\cong\one\oplus X\) (CONVENTIONS (am)), not necessarily connected.
+Fibres \(E_{c,n}=\Hom(c,X^{\otimes n})\) carry the isometry inner product (Penneys:528--538);
+\(\mathcal F=\hoplus_{c,n}L^2(\Delta_n;E_{c,n})\), no \(n!\); \(P_n\) is the occupation projection; \(K_\varepsilon\) are the box maps of
+Theorem 77.8 on the uniform mesh \(\varepsilon=1/L\).  \(\pi_{00},\pi_{X0},\pi_{0X},\pi_{XX}\) are the coisometries of
+\(O^{\otimes2}\) onto its summands, \(P_{XX}=\pi_{XX}^\dagger\pi_{XX}\).  Energies: \(H=\sum_{j=1}^{L-1}k_j\), \(k=-h^{(\mathrm{ak})}\)
+as in (al).  \(T_{n,i}\) is the collision trace on \(\{x_i=x_{i+1}\}\) with collapsed measure \(dy=dS/\sqrt2\);
+\(D_{n,i}=\partial_i-\partial_{i+1}\) is its outward flux.  \(B_{b,n,i}:E_{c,n}\to E_{c,n+1}\) inserts \(b\in\Hom(X,X^{\otimes2})\) at
+position \(i\); \(V_{v,n,i}:E_{c,n}\to E_{c,n+2}\) inserts \(v\in\Hom(\one,X^{\otimes2})\) in gap \(i\), on
+\(\Gamma_{n,i}=\{y_1<\dots<y_i<t<y_{i+1}<\dots\}\).  Coherent unitors/associators are implicit; no braiding is used.
+``Extension of the minimal Laplacian'' means containing \(A_{\min}=\bigoplus(-\Delta+\mu n)\) on finite-sector
+\(C_c^\infty\) vectors, vacuum included (NOTE:18--56).
+
+\subsection{Fixed Densities Fail, and the Corrected Scaling}
+
+\textbf{Proposition 94.1 [negative; E6-N1] (NOTE:74--121; REVIEW:69--83).}  \textbf{Assume} any \(\Cc\), any \(X\neq0\), the
+pure-hop density \(k=-\pi_{X0}^\dagger\pi_{0X}-\pi_{0X}^\dagger\pi_{X0}\), \(H_\varepsilon=\varepsilon^{-2}\sum_jk_j\), real scalars \(s_\varepsilon\).
+\textbf{Prove} no self-adjoint \(H\) on \(\mathcal F\) has \(K_\varepsilon(H_\varepsilon-s_\varepsilon-i)^{-1}K_\varepsilon^*\to(H-i)^{-1}\) strongly.\\
+\(\langle1\rangle1\). \(\Omega\) has energy \(0\) at every scale: projected resolvent \(a_\varepsilon\Omega\), \(a_\varepsilon=(-s_\varepsilon-i)^{-1}\).  \(\langle1\rangle2\). A
+resolvent is injective, so \(a_\varepsilon\to a\neq0\) and \(s_\varepsilon\) tends to a finite real number.  \(\langle1\rangle3\). For unit \(e\in E_{c,1}\),
+\(0\neq f\in C_c^\infty(0,1)\), \(u_\varepsilon(j)=\sqrt\varepsilon f((j-\tfrac12)\varepsilon)e\): \(K_\varepsilon u_\varepsilon\to fe\), \(H_\varepsilon u_\varepsilon=-2\varepsilon^{-2}u_\varepsilon+w_\varepsilon\),
+\(\sup_\varepsilon\|w_\varepsilon\|\le\sup|f''|\).  \(\langle1\rangle4\). With \(d_\varepsilon=-2\varepsilon^{-2}-s_\varepsilon-i\), \(R_\varepsilon u_\varepsilon=d_\varepsilon^{-1}(u_\varepsilon-R_\varepsilon w_\varepsilon)\to0\)
+(\(|d_\varepsilon|\to\infty\), \(\|R_\varepsilon\|\le1\)).  \(\langle1\rangle5\). Hence \((H-i)^{-1}(fe)=0\), contradicting injectivity.  QED.
+The real-resolvent wording fails too (\(|1-(\lambda+i)t|^2\ge(1+\lambda^2)^{-1}\); NOTE:123--131).  \emph{Reviewer additions:} N1 survives
+scaling the diagonal part by \(\varepsilon^{-2}\) too, the mismatch being a number-proportional chemical potential, never a scalar
+(REVIEW:79--80); a generalised (pseudo-)resolvent limit exists only for an operator on the vacuum line, so N1 refutes exactly
+the claimed self-adjoint \(H_h\) on \(\mathcal F\) (REVIEW:81--83).  \(k=0\) refutes a mandatory nonzero Laplacian in E6(b) (NOTE:121).
+
+\textbf{The tuned family (D1-C; D1 NOTE:35--41).}  Fix finitely many \(b_\alpha\in\Hom(X,X^{\otimes2})\),
+\(v_\beta\in\Hom(\one,X^{\otimes2})\), weights \(\lambda_\alpha,\kappa_\beta\ge0\), and \(\mu>0\);
+\[
+  H_\varepsilon=\sum_j\Big[\varepsilon^{-2}D_h^\dagger D_h+\sum_\alpha\lambda_\alpha\varepsilon^{-1}D_{b_\alpha}^\dagger D_{b_\alpha}
+  +\sum_\beta\kappa_\beta\varepsilon^{-1}D_{v_\beta}^\dagger D_{v_\beta}\Big]_j+\mu\hat N,
+\]
+\(D_h=\pi_{X0}-\pi_{0X}\), \(D_b=\pi_{XX}-\sqrt\varepsilon\,b\,\pi_{X0}\), \(D_v=\pi_{XX}-\varepsilon\,v\,\pi_{00}\).  \(D_h^\dagger D_h\) is hard-core hopping
+plus the contact attraction \(-2\varepsilon^{-2}n_jn_{j+1}\) (D1 REVIEW:78--87): CA-77's caveat (77:240--246), kept deliberately.
+
+\textbf{Proposition 94.2 [derived; E6-P1, scale identification] (NOTE:150--173; REVIEW:85--88).}  Expanding the squares,
+\[
+  \varepsilon^{-1}D_b^\dagger D_b=\varepsilon^{-1}P_{XX}-\varepsilon^{-1/2}(\pi_{XX}^\dagger b\pi_{X0}+\mathrm{h.c.})+\pi_{X0}^\dagger b^\dagger b\pi_{X0},\quad
+  \varepsilon^{-1}D_v^\dagger D_v=\varepsilon^{-1}P_{XX}-(\pi_{XX}^\dagger v\pi_{00}+\mathrm{h.c.})+\varepsilon\,\pi_{00}^\dagger v^\dagger v\pi_{00},
+\]
+so the finite collision-form scalings are hop \(\varepsilon^{-2}\), contact (upper trace-square) \(\varepsilon^{-1}\), fusion cross term
+\(\varepsilon^{-1/2}\), pair cross term \(\varepsilon^{0}\).  \(\langle1\rangle1\). With \(n\) spectators a \(1\to2\) birth has amplitudes
+\(\varepsilon^{(n+1)/2},\varepsilon^{(n+2)/2}\) on \(\sim\varepsilon^{-(n+1)}\) grid points: a cross coefficient \(g\) contributes \(g\sqrt\varepsilon\).
+\(\langle1\rangle2\). A \(0\to2\) birth contributes \(g\).  \(\langle1\rangle3\). Hence \(g_b=\varepsilon^{-1/2}\), \(g_v=1\), by the D1-T7
+Riemann sums (D1 NOTE:498--508).  QED.  The brief's uniform \(\varepsilon^{-1}\) on fixed \(b,v\) tiles gives cross sizes
+\(\varepsilon^{-1/2},\varepsilon^{-1}\), inconsistent even for D1-C; in a mutation run the vacuum energy grows as \(223,933,3813\) at
+\(L=12,24,48\) (\path{checks/review_tuned_convergence_output.txt}:6).
+
+\subsection{The Closed Collision Form}
+
+On its maximal finite-energy domain (NOTE:175--188),
+\[
+  q(\psi)=\sum_{c,n}\!\int_{\Delta_n}\!\Big(\sum_i\|\partial_i\psi_n\|^2+\mu n\|\psi_n\|^2\Big)
+  +\sum_{\alpha}\lambda_\alpha\!\!\sum_{n\ge1,i}\!\|T_{n+1,i}\psi_{n+1}-B_{b_\alpha,n,i}\psi_n\|^2
+  +\sum_{\beta}\kappa_\beta\!\!\sum_{n\ge0,i}\!\|T_{n+2,i+1}\psi_{n+2}-V_{v_\beta,n,i}\psi_n\|^2_{L^2(\Gamma_{n,i})}.
+\]
+
+\textbf{Lemma 94.3 [derived; E6-L1] (NOTE:192--229; REVIEW:90--93).}  For a finite-dimensional fibre, functions smooth on
+\(\overline{\Delta_n}\) are dense in \(H^1(\Delta_n)\), and face traces are continuous \(H^1\to L^2\):
+\(\|f|_F\|^2\le C_n(d^{-1}\|f\|^2+d\|\nabla f\|^2)\), \(0<d\le\tfrac12\).  Proof: dilation about an interior point, mollification,
+integration along the inward pyramid (Jacobian \(\propto(1-t)^{n-1}\)).  Constants depend on \(n\); used sectorwise only.
+
+\textbf{Lemma 94.4 [derived; E6-L2] (NOTE:231--289; REVIEW:95--103).}  \textbf{Assume} the tuned data, \(\mu>0\).
+\textbf{Prove} \(q\) is densely defined, nonnegative and closed, finite-particle vectors smooth on closed chambers form a
+form core, and a unique nonnegative self-adjoint \(H\) has \(q(\varphi,\psi)=\langle\varphi,H\psi\rangle\).\\
+\(\langle1\rangle1\). \(V_0=D(q_0)\) is complete.  \(\langle1\rangle2\). \(q=q_0+\|T\psi-S\psi\|_G^2\) with
+\(\|S\psi\|_G^2\le B\sum_nn\|\psi_n\|^2+V\|\psi\|^2\), \(B=\sum\lambda_\alpha\|b_\alpha\|^2\), \(V=\sum\kappa_\beta v_\beta^\dagger v_\beta\) (D1
+NOTE:534--543; \(\|\mathrm{id}\otimes b\otimes\mathrm{id}\|\le\|b\|\) as \(\otimes\) is a linear \(\dagger\)-functor, Penneys:319, REVIEW:63--65);
+so \(S\) is bounded on \(V_0\) since \(\mu>0\).  \(\langle1\rangle3\). \(T:V_0\to G\) is closed by sectorwise trace continuity (94.3).
+\(\langle1\rangle4\). The form norm is equivalent to \(\|\psi\|_0^2+\|T\psi\|_G^2\); \(q\) is closed.  \(\langle1\rangle5\). Truncation at particle number
+\(M\) converges in this norm, keeping the lower sources into sectors \(M{+}1,M{+}2\): the core.  \(\langle1\rangle6\)--\(\langle1\rangle7\). The
+variational resolvent \(R_z\) gives \(D(H)=\Ran R_z\); \(w=R_z(g+zw)\) gives \(H^*=H\).  QED.  \(\mu>0\) is needed (REVIEW:103).
+
+\textbf{Lemma 94.5 [derived; E6-L3, collision-trace Mosco lower bound] (NOTE:293--398; REVIEW:105--127).}  \textbf{Assume}
+\(K_\varepsilon u_\varepsilon\rightharpoonup\psi\), \(\sup_\varepsilon\langle u_\varepsilon,H_\varepsilon u_\varepsilon\rangle<\infty\).  \textbf{Prove}
+\(q(\psi)\le\liminf_\varepsilon\langle u_\varepsilon,H_\varepsilon u_\varepsilon\rangle\).\\
+\(\langle1\rangle1\). With \(f_\varepsilon=\varepsilon^{-n/2}u_\varepsilon\) the hopping energy is exactly \(E_{\varepsilon,n}=\varepsilon^{n-2}\sum_{\text{edges}}\|f_\varepsilon(j')-f_\varepsilon(j)\|^2\);
+fibres move by unitors only.  \(\langle1\rangle2\). Summation by parts on \(\Omega_d\Subset\Delta_n\) gives \(\psi_n\in H^1\), \(\int\|\nabla\psi_n\|^2\le\liminf E_{\varepsilon,n}\).
+\(\langle1\rangle3\). On a separated patch \(U\) of a collision face, the normal collar mean \(M_{\varepsilon,h}\) over \(m=\lfloor h/\varepsilon\rfloor\)
+cells obeys \(\|A_\varepsilon-M_{\varepsilon,h}\|^2_{L^2(U)}\le hE_{\varepsilon,n}\) (telescoping gives the sharper \((m/2)\sum\|\Delta_s\|^2\),
+REVIEW:112--113) and \(\|M_{\varepsilon,h}\|^2\le(m\varepsilon)^{-1}\|K_\varepsilon u_{\varepsilon,n}\|^2\); \(M_{\varepsilon,h}\rightharpoonup A_h\psi\) and
+\(\|T\psi-A_h\psi\|^2_{L^2(U)}\le(h/3)\|\partial_{i+1}\psi\|^2_{\mathrm{collar}}\), so \(A_\varepsilon\rightharpoonup T\psi\).
+\(\langle1\rangle4\). On \(U\) the discrete lower sources are exactly \(B(K_\varepsilon u_{\varepsilon,n-1})\) and the pulled-back
+\(V(K_\varepsilon u_{\varepsilon,n-2})\), weakly convergent; the face weight is \(\varepsilon^{-1}\varepsilon^n=\varepsilon^{n-1}\).
+\(\langle1\rangle5\). Weak lower semicontinuity on finite collections of terms, each counted once, then monotone exhaustion of
+\(\Omega_d\), patches, sectors and reactions.  QED.  No constant is \(N\)-uniform: each depends on a finite collection
+\((n,d,U,h)\), and the supremum is taken after the liminf (REVIEW:126--127).
+
+\subsection{The Tuned Continuum Theorem}
+
+\textbf{Theorem 94.6 [derived; E6-T1] (NOTE:402--446; REVIEW:129--137).}  \textbf{Assume} any \(\Cc\), any \(X\), the tuned
+family.  \textbf{Prove} \(K_\varepsilon(H_\varepsilon+z)^{-1}K_\varepsilon^*f\to(H+z)^{-1}f\) strongly for all \(z>0\), \(f\in\mathcal F\), along all
+\(\varepsilon=1/L\) (REVIEW:205--206), with \(H\) from 94.4: no subsequence, scalar subtraction, imported trace/core hypothesis
+or \(N\)-uniform estimate.\\
+\(\langle1\rangle1\). Smooth finite-particle vectors have strongly convergent sampling sequences with energies \(\to q\) (D1-T7,
+D1 NOTE:483--516; re-verified, REVIEW:130--132).  \(\langle1\rangle2\). The core of 94.4 and a diagonal choice of mesh thresholds
+give every \(\psi\in D(q)\) a recovery sequence.  \(\langle1\rangle3\). The minimiser \(u_\varepsilon\) of
+\(F_\varepsilon(u)=\langle u,H_\varepsilon u\rangle+z\|u\|^2-2\operatorname{Re}\langle K_\varepsilon^*f,u\rangle\) has \(\|u_\varepsilon\|\le\|f\|/z\), energy
+\(\le\|f\|^2/z\).  \(\langle1\rangle4\). By 94.5 and \(\langle1\rangle2\) every weak cluster point minimises
+\(F(u)=q(u)+z\|u\|^2-2\operatorname{Re}\langle f,u\rangle\), whose unique minimiser is \((H+z)^{-1}f\).  \(\langle1\rangle5\). For a
+recovery sequence \(v_\varepsilon\), \(z\|u_\varepsilon-v_\varepsilon\|^2\le F_\varepsilon(v_\varepsilon)-F_\varepsilon(u_\varepsilon)\to0\).  QED.
+\(K_\varepsilon K_\varepsilon^*\to I\) is not used; \(\langle K_\varepsilon^*f,v\rangle=\langle f,K_\varepsilon v\rangle\) suffices (REVIEW:136--137).  This closes
+D1 INTEGRATION (e)2--(e)3, the closedness/core hypotheses and the liminf gap (D1 INTEGRATION:128--130).
+
+\textbf{Corollary 94.7 [derived; number-change criterion] (NOTE:448--461; REVIEW:138--140).}  With
+\(\beta=\sum_\alpha\lambda_\alpha b_\alpha\), \(\nu=\sum_\beta\kappa_\beta v_\beta\): \(H\) fails to commute with some \(P_k\) iff \(\beta\neq0\) or
+\(\nu\neq0\).  \(\langle1\rangle1\). Only \(\beta,\nu\) are off-diagonal in \(n\) (94.10); if both vanish \(q\) splits.
+\(\langle1\rangle2\). Otherwise semisimplicity gives smooth tests with nonzero mixed form.  \(\langle1\rangle3\). Reduction by \(P_k\)
+passes to the form, \(\Ran(H+1)^{-1}\) being form-dense (94.11 \(\langle2\rangle1\)--\(\langle2\rangle2\)).  QED.  Individual maps
+can cancel: equal weights on \(b\) and \(-b\) give \(\beta=0\).
+
+\textbf{Proposition 94.8 [derived on regular vectors; global \(H^2\) conditional; E6-P2] (NOTE:465--493; REVIEW:142--144).}
+\(D(H)\) is the variational domain of 94.4.  For vectors regular enough to integrate by parts,
+\((H\psi)_n=-\Delta\psi_n+\mu n\psi_n-\sum_\alpha\lambda_\alpha\sum_iB_{b_\alpha}^*R_{b_\alpha}-\sum_\beta\kappa_\beta\sum_i\int_{\mathrm{gap}_i}V_{v_\beta}^*R_{v_\beta}\,dt\), and on collision face \(i\):
+\(D_{n,i}\psi_n+\sum_\alpha\lambda_\alpha(T_{n,i}\psi_n-B_{b_\alpha}\psi_{n-1})+\sum_\beta\kappa_\beta(T_{n,i}\psi_n-V_{v_\beta}\psi_{n-2})=0\);
+outer faces are Neumann.  \(\partial_\nu=(\partial_i-\partial_{i+1})/\sqrt2\) and \(dS=\sqrt2\,dy\) leave no residual \(\sqrt2\).  No global
+\(H^2\) theorem is asserted (regularity at intersecting faces is open, NOTE:832).
+
+\textbf{Proposition 94.9 [negative; E6-N2] (NOTE:495--518; REVIEW:146--148).}  If an active reaction map is nonzero,
+\(H\not\supseteq A_{\min}\).  \(\langle1\rangle1\). Semisimplicity gives a one-particle \(C_c^\infty\) vector \(\psi\) with \(B\psi\neq0\), or
+\(\psi=\Omega\) for \(v\neq0\) (Penneys:195--219).  \(\langle1\rangle2\). Its upper sectors and traces vanish, so
+\(q(\psi)=\langle\psi,A_{\min}\psi\rangle+\|S\psi\|^2>\langle\psi,A_{\min}\psi\rangle\), contradicting \(\psi\in D(H)\).  QED.
+\emph{Reviewer strengthening:} such \(\psi\) is not in \(D(H)\) at all, the mixed form being a boundary functional of the
+upper sector (REVIEW:147--148).  Lower-sector \emph{interior} values feed upper-sector collision conditions: the limit is
+of interior-boundary type on a stratified configuration space, not a Lagrangian datum of independent chamber Laplacians.
+
+\textbf{Theorem 94.10 [derived; E6-T2, coefficient image] (NOTE:522--598; REVIEW:150--156).}  For arbitrary finite
+reaction lists put \(a_b=\sum\lambda_\alpha\), \(Q_b=\sum\lambda_\alpha b_\alpha^\dagger b_\alpha\in\operatorname{End}X\), \(a_v=\sum\kappa_\beta\),
+\(\gamma=\sum\kappa_\beta v_\beta^\dagger v_\beta\), \(a=a_b+a_v\).  Then
+\(q=q_0+a\sum\|T\psi\|^2-2\operatorname{Re}\sum\langle T\psi_{n+1},B_\beta\psi_n\rangle-2\operatorname{Re}\sum\langle T\psi_{n+2},V_\nu\psi_n\rangle
++\sum\langle\psi_n,(Q_b)_i\psi_n\rangle+\gamma\|\psi\|^2\) depends only on \((a,\beta,\nu,Q_b,\gamma)\).  With \(M=\Hom(X,X^{\otimes2})\),
+\(W=\Hom(\one,X^{\otimes2})\), a tuple is attained iff some split \(a=a_b+a_v\), \(a_b,a_v\ge0\), satisfies
+\[
+  a_b>0:\ \beta\in M,\ Q_b-\beta^\dagger\beta/a_b\in G_M;\qquad a_v>0:\ \nu\in W,\ \gamma-\nu^\dagger\nu/a_v\in G_W;\qquad
+  a_b=0\Rightarrow\beta=Q_b=0;\ \ a_v=0\Rightarrow\nu=\gamma=0,
+\]
+\(G_M=\{\sum d_j^\dagger d_j:d_j\in M\}\).  Writing \(X=\bigoplus_cc^{m_c}\), \(X^{\otimes2}=\bigoplus_cc^{n_c}\), \(G_M\) is the cone of PSD blocks of
+\(\operatorname{End}X\) supported on charges with \(n_c>0\); \(G_W=\mathbb R_{\ge0}\) if \(W\neq0\), else \(\{0\}\).
+\(\langle1\rangle1\). Expand the squares; both reaction types range once over every collision face.  \(\langle1\rangle2\).
+Necessity: \(Q_b-\beta^\dagger\beta/a_b=\sum\lambda_\alpha(b_\alpha-\beta/a_b)^\dagger(b_\alpha-\beta/a_b)\).  \(\langle1\rangle3\). Reconstruction: if
+\(Q_b-\beta^\dagger\beta/a_b=\sum_{j\le k}d_j^\dagger d_j\), the \(2k\) maps \(\beta/a_b\pm\sqrt{k/a_b}\,d_j\) of weight \(a_b/2k\) have the right
+zeroth, first and second moments; likewise for \(v\).  \(\langle1\rangle4\). Row-Gram decomposition gives the blocks
+(Penneys:195--237, 470--478, 528--530).  QED.  \emph{Reviewer addition:} the identities hold exactly at finite \(\varepsilon\)
+(REVIEW:156).  The test is finitely many PSD and zero-block conditions, decidable under an effective exact encoding
+(NOTE:546--549).  T2 classifies this family only, not arbitrary cutoff-dependent densities.
+
+\subsection{Obstructions, Naturality, and Range}
+
+\textbf{Proposition 94.11 [negative; E6-N3, grading obstruction] (NOTE:602--687; REVIEW:158--168).}  \textbf{Assume} \((G_r)\):
+\(\Hom(X^{\otimes p},X^{\otimes q})=0\) for \(0\le p\neq q\le r\), and some \(c\) occurs in both \(X^{\otimes m}\), \(X^{\otimes n}\), distinct \(m,n\ge2\).
+\textbf{Prove} (i) every strong projected-resolvent limit of range-\(r\) categorical densities, under any scaling or scalar
+subtraction, commutes with every \(P_k\); (ii) some charge-preserving self-adjoint \(H_*\supseteq A_{\min}\) on \(\mathcal F\) does not.\\
+\(\langle1\rangle1\). Degree-\((q{-}p)\) tiles lie in \(\Hom(Z_p,Z_q)=0\) (Proposition 77.4, 77:93--117).  \(\langle1\rangle2\). Commutation with the
+bounded \(P_k\) survives strong limits.  \(\langle1\rangle3\)--\(\langle1\rangle4\). With face functionals \(\ell_s(\psi_s)=\int\rho_s\langle e_s,T\psi_s\rangle\)
+(\(s=m,n\)), \(H^1\)-bounded by 94.3, \(q_*=\sum\|\nabla\psi\|^2+|\ell_m-\ell_n|^2\) is closed.  \(\langle1\rangle5\). \(H_*\supseteq A_{\min}\).  \(\langle1\rangle6\).
+Tests \(u_m\pm u_n\) get added energies \(0\), \(4\): \(q_*\) does not split, and reduction would pass to the form (\(\langle2\rangle1\):
+\(\Ran(H_*+1)^{-1}\) is form-dense; \(\langle2\rangle2\): \(P_k\) would split \(q_*\)).  QED.  \emph{Reviewer additions:} N3 also holds for
+the reading ``induced by a morphism, natural in \(c\)'', since \(e_me_n^*\) is induced by \(\iota_m\iota_n^*:X^{\otimes n}\to X^{\otimes m}\), which
+exists as \(n>r\) (REVIEW:164--166); the Lagrangian graph remark (NOTE:645--656) is \emph{formal}, an \(L^2\times L^2\) trace pairing
+not being a boundary triple on polytopes (REVIEW:167--168, :234--235).  The countertarget is nonlocal along faces and couples
+faces of different dimension: N3 refutes unrestricted surjectivity only, not a local stratified target class (NOTE:682--687).
+It is the \(\mathbb Z\)-graded analogue of the parity statement 77.4(3); its instance is in the examples table only.
+
+\textbf{Proposition 94.12 [derived; E6-P3, naturality at the nonrelativistic layer] (NOTE:691--711; REVIEW:170--171).}  A
+unitary tensor equivalence transporting \((O,\eta,X)\), reactions and couplings induces unitaries with \(K'_\varepsilon W_\varepsilon=WK_\varepsilon\),
+\(H'_\varepsilon W_\varepsilon=W_\varepsilon H_\varepsilon\), \(H'=WHW^*\) (unitary \(\dagger\)-functors preserve isometry inner products; tensorators are unitary).  Not \(\mathsf R5\).
+
+\textbf{Proposition 94.13 [derived estimate; general range \(r\) conditional; E6-P4] (NOTE:721--742; REVIEW:173).}  If an
+adjacent-pair face sample is replaced by one reached through \(\le r\) allowed moves, edge multiplicity \(\le C_{n,r}\), then
+\(\|A_\varepsilon-A'_\varepsilon\|^2_{L^2(U)}\le C_{n,r}\,\varepsilon E_{\varepsilon,n}\to0\).  T1 extends to a positive range-\(r\) family \emph{provided} it controls
+nearest-neighbour graph energy, has only codimension-one reaction traces, bounded lower sources, and smooth recovery with a
+closed core; this is a conditional extension, not a claim about every range-\(r\) density.
+
+\textbf{Proposition 94.14 [negative; higher-codimension \(H^1\) trace obstruction] (NOTE:744--761; REVIEW:175--176).}  A tile
+creating three coincident particles addresses a codimension-two stratum.  With normal radius \(R\) and cutoff \(\log(h/R)/\log(h/\delta)\), the normal
+gradient energy is at most a fixed multiple of \(\int_\delta^h[R\log(h/\delta)]^{-2}R\,dR=1/\log(h/\delta)\to0\) while the stratum value stays fixed; no continuous
+\(H^1\)-to-triple-trace map exists.  This defeats 94.5's trace hypothesis for such tiles, not renormalised constructions.
+
+\textbf{Remark 94.15 [derived; where \(\Cc\) enters] (NOTE:713--719; REVIEW:224--228).}  The category enters through the fibres
+\(E_{c,n}\), the admissible Hom spaces \(M,W\), the coherent insertions (which may contain \(F\)-matrices in fusion-tree bases), the
+support cones of 94.10 (charges with \(n_c>0\)) and the obstruction \((G_r)\).  Every analytic estimate is \emph{category-inert}:
+finite-dimensional norms, bounded maps and the exclusion grid only.  No braiding, twist, modular data or central charge
+enters; \(\mathsf L0\) does not select \(b,v,\mu\) or the contact tuning (D1 INTEGRATION (e)4 stands); no sector category is
+recovered.  94.11 sharpens D1 REVIEW R2 (``inert category'', D1 REVIEW:92--98): fusion rules restrict the \emph{attainable} range-\(r\)
+dynamics.  \emph{Scope omission (REVIEW:208--211):} for non-connected \(O\), degree-\(\pm1\) tiles create a single particle from a
+vacancy; these bulk sources lie outside the D1 family and T1, and a fixed-density classification must include them.
+
+\subsection{Next Lemma: Contact Trichotomy}
+
+\textbf{Target 94.16 [conjectural; any (open interval); \(\mathsf L0\) + declared \(t,c_\varepsilon\); \(\mathsf R0^{c}\) + off-ladder
+\(z{=}2\)] (INTEGRATION:104--117).}  Let \(h\in\operatorname{End}_\Cc(O\otimes O)\) be fixed, self-adjoint, with number-conserving
+block \(t\cdot\)hop plus diagonal, scaled by \(\varepsilon^{-2}\), with counterterm \(\varepsilon^{-2}\epsilon_{\mathrm{bot}}\hat N\) (\(\epsilon_{\mathrm{bot}}\) the one-particle band
+bottom), D1's outer-endpoint terms, and two-particle contact coefficient \(c_\varepsilon\varepsilon^{-2}n_jn_{j+1}\).  Conjecture: the
+projected resolvents on \(P_{\le2}\mathcal F\) converge iff \(c_\varepsilon=-2t+\kappa\varepsilon+o(\varepsilon)\), giving Robin collisions with
+parameter \(\kappa\) plus D1-type reaction coupling; if \((c_\varepsilon+2t)/\varepsilon\to+\infty\), collisions are Dirichlet and sectors
+decouple; if \((c_\varepsilon+2t)/\varepsilon\to-\infty\), a bound pair dives to \(-\infty\) and there is no limit.  The tuned family is the
+instance \(t=1\), \(c_\varepsilon=-2+a\varepsilon\), \(a\) as in 94.10.  Reading ``above/below'' at scale \(\varepsilon\) sharpens INTEGRATION:113--115.
+It turns N1 and open problem 1 (NOTE:830) into a classification, testable with a modified \path{checks/review_tuned_convergence.py}.
+
+\textbf{Effect on other shards.}  D1-C (CA-77, Conjecture with Caveat) is proved for the tuned family by 94.6, without its
+closedness/core hypotheses; the caveat stands, since the tuning is necessary (94.1).  CA-88's D1-C collision-sewing version is
+derived, its first lemma (\(N\le2\)) superseded by 94.5 for all \(N\); the restated \(\mathsf R0^{u}+\mathsf R1\) target stays open (INTEGRATION:61--79).
+
+\subsection{What This Does Not Claim}
+
+No limit for arbitrary or fixed densities, no classification of all self-adjoint or local stratified extensions, no global
+\(H^2\) regularity, no renormalised higher-codimension reactions, no range-\(r\) theorem beyond 94.13's hypotheses.  The result
+is a \(z{=}2\) nonrelativistic resolvent limit: no local unital refinement (\(\mathsf R0^{u}\)), Wilson state (\(\mathsf R1\)), modes,
+conformality, reflection-positive history sum, Ward/KS data or fidelity (NOTE:821--834).  \(\hat N\) is not a CFT particle number.
+
+\subsection{Examples (Instances Only)}
+
+\begin{center}\footnotesize
+\begin{tabular}{p{3.6cm}p{7.2cm}p{3.6cm}}
+\toprule
+Instance & Calibration or obstruction datum & Evidence \\
+\midrule
+Any \(\Cc\), \(X=0\) & \(\mathcal F\) is the vacuum line; \(H=0\); consistent with 94.10. & NOTE:842; REVIEW:201 \\
+Any \(\Cc\), \(X\ne0\), pure hop & No scalar subtraction gives a full-Fock limit (94.1); the one-particle projected resolvent falls \(\sim\varepsilon^2\) while the vacuum response stays fixed. & \path{review_N1_N3_output.txt}:1--4; \path{raw_output.txt}:10--13 \\
+Vec, \(X=\one\) (scalar fibres) & Tuned \(N\le2\) compression, \(\lambda=\kappa=\mu=1\), \(b=0.7\), \(v=1.3\), \(L\le96\): low eigenvalues Cauchy (max.\ differences \(0.265,0.143,0.074\)); \(\langle\Omega|H|\Omega\rangle\to\gamma=1.69\); \(N{=}2\) weight \(\approx0.052\) retained. & \path{review_tuned_convergence_output.txt}:1--7 \\
+\(\Hilb_{\mathrm{fd}}(\mathbb Z_d)\), \(X\) a generating grade, \(d>r\) & \(X^0,\dots,X^r\) distinct simples, so \((G_r)\) holds; \(X^{\otimes2}\), \(X^{\otimes(d+2)}\) share a simple; 94.11 applies (nearest-neighbour: \(d=3\), \(r=2\)); \(d=3\) fails \(G_3\). & Penneys:321; \path{review_N1_N3_output.txt}:5--8 \\
+Any \(\Cc\) with \(M\ne0\), weights on \(b\) and \(-b\) & Nonzero tiles, \(\beta=0\); with \(\nu=0\) the limit conserves \(\hat N\) (94.7). & NOTE:845 \\
+Non-self-dual \(X\), \(W=0\) & \(\nu=\gamma=0\); pure contact weight from zero maps allowed (94.10). & REVIEW:196--197 \\
+\bottomrule
+\end{tabular}
+\end{center}

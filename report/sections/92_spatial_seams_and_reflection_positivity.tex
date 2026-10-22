@@ -1,0 +1,268 @@
+% SHARD-ID: CA-92-SPATIAL-SEAMS-AND-REFLECTION-POSITIVITY
+% SHARD-TITLE: Spatial Seams, Reflection Pairings and a Finite Osterwalder-Schrader Lemma
+% SHARD-SUMMARY: For any unitary fusion C and a declared unitary seam pairing s (s coev = ev^dagger; it exists iff O(x)Obar and Obar(x)O have equal multiplicities), the bent kernel K_s(T) = s^dagger rot(T) decides spatial reflection positivity of one crossing tile blockwise, and the linear history 1+th has an exact Schur criterion uniform in N and M.
+% SHARD-SUMMARY: Self-adjointness of h is neither necessary nor sufficient and the witnesses depend on s; a category-free finite OS contraction lemma holds; the F-composed-with-dagger crossing and the perpendicular commutator are ill-typed as posed; multi-tile reflection coherence is the open gap.
+% SHARD-KEYWORDS: spatial reflection positivity, seam pairing, bent kernel, plaquette seam, Schur complement, Osterwalder-Schrader, finite reconstruction, crossing, transfer matrix, Yang-Baxter, train argument, reflection coherence, self-duality, E3
+
+\section{Spatial Seams, Reflection Pairings and a Finite Osterwalder--Schrader Lemma}
+\label{sec:spatial-seams-reflection-positivity}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: mixed; every statement carries its own label.}  Source grade: WEAKER-RESULT-PROVED (REVIEW.md:10--23).
+Theorems 92.3 and 92.5 are \emph{derived, conditional} on a declared seam pairing \(s\) and on the reflected-half
+hypothesis (RH), which the review found \emph{assumed through the definition of the pairing, not derived}
+(REVIEW.md:116--120).  Lemma 92.2 is \emph{derived}; Proposition 92.4 is \emph{conditional}; Propositions 92.6 and
+92.9 are \emph{derived, negative}; Remark 92.7 is \emph{derived} in \(\mathrm{Vec}\) and \emph{conjectural} in general;
+Lemmas 92.8 and 92.10 are \emph{derived} and category-free; the reflection-coherence lemma is a \emph{proposal}.
+This shard addresses the spatial-RP gap stated at CA-80:137--140.  It does \emph{not} answer CA-75 Link (a2), which
+asks for a spatial \emph{sewing} identity and an anomaly-line limit (REVIEW.md:51).  Reproducibility: exact
+SymPy/NumPy scripts \path{checks/check_seams.py}, \path{checks/check_categories.py} (with recorded mutations) and the
+reviewer's independent \path{checks/review_checks.py} (19 PASS); no Julia port.  NOTE, REVIEW, INTEGRATION below
+are the files in \path{explorations/2026-10-22-astra-r2/E3-reflection-positivity/}.
+
+\textbf{Layer tags (CONVENTIONS (aq)).}  92.3--92.5: (\(\mathsf S_{\mathrm{full}}\) for the untwisted reflection;
+chiral only with a declared twisted reflection; \(\mathsf L0\) plus the microscopic declaration \(s\); finite,
+\(\to\mathsf R3\)).  A seam pairing is a declaration, not a data layer (CA-88:49--51); the note's tags ``L3 over
+L0'' and ``R0'' are superseded (REVIEW.md:236--254; INTEGRATION.md:4--6, :119--122).  92.6, 92.9: same setting,
+\(\mathsf L0\), finite.  92.8, 92.10: (any; category-free; finite, 92.8 \(\to\mathsf R3\)).
+
+Dependencies: CA-78 (78.1, 78.2, 78.7, erratum), CA-80 (80.1--80.4, :137--140), CA-86 (86.1), CA-88 (88.2--88.3);
+CONVENTIONS (b), (r), (ak), (al), (am), (ao), (aq).
+
+% Source: explorations/2026-10-22-astra-r2/E3-reflection-positivity/NOTE.md:14-65 conventions; :37-48 pairing, K_s;
+%   :79-117 E3-N; :122-199 E3-S; :201-214 multi-tile; :216-229 obstruction; :233-282 E3-L; :286-362 E3-OS,
+%   strictness, two directions; :366-482 E3-Y/D/T; :566-591 open problems; :593-600 examples.
+% Source: explorations/2026-10-22-astra-r2/E3-reflection-positivity/REVIEW.md:10-23 grade; :51 CA-75 mismatch;
+%   :67-81 reading of E3(a); :83-107 E3-N + pairing dependence; :109-147 E3-S, gauge, multi-tile, S3;
+%   :149-164 E3-L; :166-184 E3-OS, rotation; :186-204 E3-Y/D/T; :206-222 checks (symmetric braiding);
+%   :234-255 Rule 17 audit; :257-270 refutations; :272-299 first gap.
+% Source: explorations/2026-10-22-astra-r2/E3-reflection-positivity/INTEGRATION.md:10-45 statement (a);
+%   :47-83 destination; :85-96 grid; :98-122 links; :124-136 reflection-coherence lemma.
+% Source: explorations/2026-10-22-astra-r2/E3-reflection-positivity/checks/review_output.txt:1-42;
+%   seams_output.txt:1-10; categories_output.txt:1-11.
+% Source: explorations/2026-10-22-astra-r2/briefs/E3-reflection-positivity.md:50-93 -- conjecture E3 (a)-(c).
+% Source: references/text/PenneysUnitaryFusionCategories.md:398-430 duality; :530-568 vertex normalisation;
+%   :682-708 anti-monoidal dual functor; :917 self-duality need not exist; :992-1030 unitary dual functor, traces.
+% Source: references/cft/Schottenloher2008/Schottenloher2008.md:4113-4117, :4150-4172 (momentum), :4616-4642 (S1-S3).
+% Source: explorations/2026-10-22-astra/D5-fidelity-lattice-sewing/NOTE.md:231-239 -- crossing-kernel precursor.
+% Source: report/sections/80_lattice_sewing_and_fidelity_certificate.tex:70-104, :137-140; 78_...:44-68, :147-174.
+
+\subsection{Setting and the Seam Pairing}
+
+\(\Cc\) is unitary fusion, \(O\neq0\) a site object (CONVENTIONS (r); (am) for \(O=\one\oplus\one\)), with dual
+\((\overline O,\mathrm{ev}_O:\overline O\otimes O\to\one,\mathrm{coev}_O:\one\to O\otimes\overline O)\) from the unitary
+spherical structure, raw cups of squared norm \(d_O\) (CONVENTIONS (b); Penneys:992--1030).  Tiles, \(h\) and \(H=-\sum
+h_j\) follow (ak), (al).  The \emph{linear history} tile \(1+th\) (CA-86 Lemma 86.1) and the \emph{exact} tile
+\(e^{th}\) (CA-78 Prop.~78.2) are kept apart.  Put \(W_+=O\otimes\overline O\), \(W_-=\overline O\otimes O\), with cut
+spaces \(\mathcal H(W)=\bigoplus_a\Hom(a,W)\) as in CA-80.  \emph{Spatial RP} means positivity over all linear
+combinations of half-patch insertions, not of one scalar partition sum (NOTE.md:52--55).
+
+\textbf{Definition 92.1 [declaration; \(\mathsf L0\)].}  A \emph{seam pairing} is a unitary \(s:W_+\to W_-\) with
+\(s\,\mathrm{coev}_O=\mathrm{ev}_O^\dagger\), declared with a rule pairing all non-seam tiles with their reflected
+adjoints.  The rule is antilinear, involutive and compatible with dagger and sewing; the reverse seam uses \(s^\dagger\)
+(NOTE.md:37--47).  It is fixed before \(h\).  \emph{Gauge (REVIEW.md:122--132):} \(s\circ W\) with \(W\) unitary in
+\(\operatorname{End}_\Cc(W_+)\) and \(W\mathrm{coev}_O=\mathrm{coev}_O\) is equally admissible and changes the kernel to
+\(W^\dagger K_s\).  On non-vacuum blocks and on \(\mathrm{coev}_O^\perp\) \(W\) is free, so polar decomposition makes
+those blocks PSD for \emph{some} \(s\): single-tile RP is a property of \((\Cc,O,h,s)\).
+
+\textbf{Lemma 92.2 [derived; existence of \(s\)].}  A unitary \(s\) with \(s\,\mathrm{coev}_O=\mathrm{ev}_O^\dagger\)
+exists iff \(\dim\Hom(a,W_+)=\dim\Hom(a,W_-)\) for all \(a\in\Irr\Cc\) (INTEGRATION.md:17--18); in particular when
+\(O\cong\overline O\).
+\(\langle1\rangle1\). Necessity: a unitary isomorphism preserves multiplicities (NOTE.md:216--218).
+\(\langle1\rangle2\). Sufficiency: matching orthonormal bases of each \(\Hom(a,W_\pm)\) give a unitary \(V\); \(V\mathrm{coev}_O\) and
+\(\mathrm{ev}_O^\dagger\) lie in \(\Hom(\one,W_-)\) with equal norm \(\sqrt{d_O}\), so a unitary \(U\) on that block maps one to the
+other; set \(s=(U\oplus1)V\).  \(\langle1\rangle3\). If \(\psi:O\to\overline O\) is an isomorphism, \(\psi\otimes\psi^{-1}:W_+\to W_-\)
+is one, so the multiplicities agree.  QED.
+\(s\) alone does not supply the whole reflection rule (NOTE.md:45--47).  At \(\mathsf L1\) the identity
+\(\mathrm{ev}^\dagger=c_{O,\overline O}(\theta_O\otimes1)\mathrm{coev}\) would supply \(s\); it is a reviewer remark with
+\emph{no local source} (Law~1 gap, REVIEW.md:241--245) and is not used.  Self-duality need not exist (Penneys:917).
+
+\subsection{The Bent Kernel and Single-Tile Spatial RP}
+
+With associators inserted for the named bracketings, and \(v_{a,\mu}:a\to W_+\) isometric inclusions,
+\begin{equation}
+  \operatorname{rot}(T)=(1_{\overline O}\otimes1_O\otimes\mathrm{coev}_O^\dagger)(1_{\overline O}\otimes T\otimes1_{\overline O})
+  (\mathrm{ev}_O^\dagger\otimes1_O\otimes1_{\overline O}),\quad K_s(T)=s^\dagger\operatorname{rot}(T),\quad
+  K^a_{\mu\nu}=d_a^{-1}\operatorname{tr}_\Cc\big(v_{a,\mu}^\dagger K_s(T)v_{a,\nu}\big).\tag{92.1}
+\end{equation}
+\emph{Evaluation prescription} (NOTE.md:144--173): expand \(O,\overline O\) into simples keeping every copy and vertex
+index; place a tile on a non-adjacent slot as \(F_{\mathrm{path}}^\dagger(1\otimes D_\alpha\otimes1)F_{\mathrm{path}}\)
+(CA-78:44--53); insert the oriented cups in their actual slots; multiply by \(s^\dagger\), not by an unprovided
+braiding; divide Penneys-normalised vertices by \((d_id_j/d_k)^{1/4}\) (Penneys:530--568).  Each entry is then a
+finite sum of products of \(F\)-symbols, pivotal cups and entries of \(s\), with all multiplicities; in arbitrary
+cut bases use the inverse Gram of CA-80:70--81.
+
+\textbf{(RH) [hypothesis, not derived].}  After bending, the reflected half-patch, read through \(s\), evaluates to the
+adjoint of the half-amplitude.
+
+\textbf{Theorem 92.3 [derived, conditional on \(s\) and (RH); E3-S].}  \textbf{Assume} Definition 92.1, one crossing
+tile \(T=\sum_\alpha w_\alpha D_\alpha\), half-insertions spanning \(\mathcal H(W_+)\), and (RH).  \textbf{Prove}
+spatial RP iff every block \(K^a=[K^a_{\mu\nu}]\) of (92.1) is PSD.
+\(\langle1\rangle1\). \(\operatorname{rot}\) is type-correct and complex-linear into \(\Hom(W_+,W_-)\) (intermediate word
+\(\overline O\otimes O\otimes O\otimes\overline O\)); it is not an endomorphism.  BY Penneys:398--430.
+\(\langle1\rangle2\). \(v^\dagger Xv\in\operatorname{End}(a)=\mathbb C\) and \(\operatorname{tr}_\Cc=d_a\cdot\)scalar, so
+\(K^a\) is the \(a\)-block of \(K_s(T)\).  BY Penneys:1010--1019.
+\(\langle1\rangle3\). BY (RH), all remaining cuts run along tile legs and CA-80 Lemma 80.1 gives the mixed form
+\(q(x,y)=\langle x,K_s(T)y\rangle\).  This is where (RH) enters; the review: E3-S is ``close to a definition plus
+Lemma 80.2; the real content is the explicit oriented formula'' (REVIEW.md:116--120).
+\(\langle1\rangle4\). CA-80 Lemma 80.2 with spanning; \(d_a>0\) is harmless.  QED.
+The Hermiticity equations \(K^a_{\mu\nu}=\overline{K^a_{\nu\mu}}\) are \emph{spatial}, not the temporal dagger pairing of
+Cor.~80.3.  Theorem 92.3 is the typed form of D5's crossing-kernel test (D5 NOTE.md:231--239; REVIEW.md:57).
+
+\textbf{Proposition 92.4 [conditional; multi-tile sufficiency].}  \textbf{Assume} several crossing tiles whose ports
+and pairings tensor and reassociate compatibly, disjoint along the seam, all other tiles in reflected pairs, any extra
+seam insertion positive and placed inside the reflected factorisation.  \textbf{Prove} \(K_{s,i}\ge0\) for all \(i\)
+implies all-patch spatial RP.  \(\langle1\rangle1\). \(K_{s,i}=B_i^\dagger B_i\) blockwise, so \(\bigotimes_iK_{s,i}=
+(\bigotimes B_i)^\dagger(\bigotimes B_i)\ge0\).  \(\langle1\rangle2\). Reassociation is unitary; charge restriction and
+half-patch attachment give a compression \(V^\dagger(\bigotimes K_{s,i})V\ge0\).  QED (NOTE.md:201--214).
+Necessity holds only if the admitted patches include single-tile full-span tests.  Compatibility is not automatic
+for non-braided \(\Cc\) (planar order of the seam word) and may be unsatisfiable (REVIEW.md:133--141).  On a
+translation-invariant brick lattice ``bulk tiles in reflected pairs'' is \(\Theta_x(h)=h\).
+
+\subsection{The Linear History: an Exact Schur Criterion}
+
+Let \(u=\mathrm{coev}_O\), \(e=u/\sqrt{d_O}\), \(P=\ket e\bra e\), \(Q=1-P\), \(A=K_s(h)\), \(a=\langle e,Ae\rangle\),
+\(b=QAe\), \(C=QAQ|_{Q\mathcal H}\), \(C^+\) the inverse on \(\Ran C\).
+
+\textbf{Theorem 92.5 [derived, conditional on \(s\), (RH), one crossing tile with full span; E3-L].}
+\textbf{Prove} (i) \(K_s(1)=uu^\dagger=d_OP\); (ii) \(1+th\) is spatially RP for all \(0<t<\varepsilon\), some
+\(\varepsilon>0\), iff
+\begin{equation}
+  A=A^\dagger,\qquad C\ge0,\qquad b\in\Ran C;\tag{92.2}
+\end{equation}
+(iii) at a given \(t>0\) iff (92.2) and \(d_O+t(a-b^\dagger C^+b)\ge0\), i.e.\ for
+\(t\le t_*=d_O/(b^\dagger C^+b-a)\) when the denominator is positive, and for all \(t\) otherwise.
+\(\langle1\rangle1\). At \(T=1\) the interchange law cancels the associators: \(\operatorname{rot}(1)=\mathrm{ev}_O^\dagger
+\mathrm{coev}_O^\dagger\); unitarity of \(s\) gives \(s^\dagger\mathrm{ev}_O^\dagger=\mathrm{coev}_O\).  Hence
+\begin{equation}
+  K_s(1+th)=\begin{pmatrix}d_O+ta & tb^\dagger\\ tb & tC\end{pmatrix}.\tag{92.3}
+\end{equation}
+Checked with nontrivial 3-cocycles, including non-self-dual \(O\) (\path{review_output.txt}:2--4).
+\(\langle1\rangle2\). Positivity at any \(t>0\) forces \(A=A^\dagger\) and \(C\ge0\); for \(z\in\ker C\) the term linear
+in \(\lambda\) on \(\lambda e+z\) forces \(b^\dagger z=0\), so \(b\in(\ker C)^\perp=\Ran C\).
+\(\langle1\rangle3\). Under (92.2), \(\langle(\alpha,y),K_s(1+th)(\alpha,y)\rangle=t\|C^{1/2}(y+C^+b\alpha)\|^2
++(d_O+ta-tb^\dagger C^+b)|\alpha|^2\); \(y=-C^+b\alpha\) gives necessity.
+\(\langle1\rangle4\). \(d_O>0\) and finite dimension give (ii) from (iii).  QED (NOTE.md:233--272).
+\(\varepsilon\) depends only on \((d_O,a,b,C)\), so for identical crossing tiles it is \emph{uniform in chain length \(N\)
+and row number \(M\)} (REVIEW.md:159--162).  The criterion is not \(K_s(h)\ge0\) (Prop.~92.6(iii)).  Checks: 300 random
+pencils and a range failure (\path{review_output.txt}:31--32; \path{seams_output.txt}:6).
+\emph{Exact gates [derived remark].}  For \(e^{th}\) the criterion is only pointwise, \(K^a(w(t))\ge0\) with the CA-78
+ODE; RP near \(t=0\) implies \(A=A^\dagger\) and \(QAQ\ge0\), but the range condition is not inferable: \(\big[\begin{smallmatrix}
+1&t\\t&t^2\end{smallmatrix}\big]\ge0\) has derivative \(\big[\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\big]\), whose pencil fails
+it (an illustration, not a categorical gate; NOTE.md:274--282).
+
+\subsection{Negative Results and Pairing Dependence}
+
+\textbf{Proposition 92.6 [derived, negative; E3-N, flip pairing on a unit-multiplicity corner].}  In any \(\Cc\) take
+\(O=\one\oplus\one\) and the flip pairing.  Then \(K(T)_{(ik),(jl)}=T_{(il),(kj)}\) and \(K(A\otimes B)=\ket{\mathrm{vec}A}
+\bra{\mathrm{vec}B^\dagger}\) (N1), with \(Z=\mathrm{diag}(1,-1)\):
+(i) \(h=-Z\otimes Z=h^\dagger\), \(1+th>0\) for \(0<t<1\), yet \(\langle\mathrm{vec}Z,K(1+th)\mathrm{vec}Z\rangle=-4t\); the
+exact gate gives \(-4\sinh t\).  Self-adjointness is not sufficient.
+(ii) \(h=E_{01}\otimes E_{10}\neq h^\dagger\), \(h^2=0\), and \(K(e^{th})=K(1+th)=\ket{\mathrm{vec}1}\bra{\mathrm{vec}1}+t\ket{\mathrm{vec}
+E_{01}}\bra{\mathrm{vec}E_{01}}\ge0\).  Self-adjointness is not necessary.
+(iii) \(h=-1\): \(K(h)\not\ge0\), yet \(K(1+th)=(1-t)\ket{\mathrm{vec}1}\bra{\mathrm{vec}1}\ge0\) for \(t\le1\) and \(K(e^{th})\ge0\).
+\emph{Proof.} (N1) by hand from (92.1) (REVIEW.md:84--86) and on all 16 matrix units (\path{seams_output.txt}:2--5).
+\(\square\)  \emph{Reviewer additions} (REVIEW.md:87--107): (a) the witnesses \emph{depend on} \(s\): with
+\(s'=\mathrm{flip}\circ(X\otimes\overline X)\), \(X\) the global on-site flip commuting with \(h\),
+\(K_{s'}(1-tZ\otimes Z)\ge0\) (\path{review_output.txt}:35); (i) refutes only the literal untwisted \(\Theta_x\).  (b) The
+witness transfers to the connected site \(O=\one\oplus g\) in \(\mathrm{Vec}_{\mathbb Z_2}^\omega\),
+\(\mathrm{Vec}_{\mathbb Z_3}^\omega\), \(Z=P_\one-P_g\): eigenvalue \(-2t\), \(\omega\)-independent (\path{review_output.txt}:29--30).
+For general \(O=\one\oplus X\) it needs \(s\) natural for \(\operatorname{End}(O)\): a remark, not proved.
+
+\textbf{Remark 92.7 [derived in \(\mathrm{Vec}\) with the flip; conjectural in general].}  By (N1), \(K_{\mathrm{flip}}(h)\) is
+Hermitian iff \(h_{(il),(kj)}=\overline{h_{(jk),(li)}}\) for all indices, i.e.\ \(h=Ph^\dagger P\) with \(P\) the swap
+(\path{review_output.txt}:33).  So untwisted spatial RP needs a parity-invariant \(h\); the general-\(\Cc\) form
+``\(K_s(h)\) Hermitian iff \(\Theta_x(h)=h\)'' is part (iii) of the coherence proposal below.  Hence the setting tag
+``full; chiral only with a twisted reflection'' (REVIEW.md:248--254; E2 link: INTEGRATION.md:100--105).
+
+\subsection{A Finite Osterwalder--Schrader Lemma (Category-Free)}
+
+\textbf{Lemma 92.8 [derived; E3-OS].}  \textbf{Assume} a finite space \(V\), a shift \(\tau\), a nonzero PSD form
+\(q_0\), and \(q_1(f,g)=q_0(f,\tau g)\) with \(0\le q_1\le q_0\).  \textbf{Prove} \(T[f]=[\tau f]\) is a well-defined
+positive contraction on \(\mathcal H=V/\mathrm{rad}\,q_0\); if \(T\) is injective, \(E=-a^{-1}\log T\ge0\) and
+\(T^n=e^{-naE}\); if \(\tau1=1\), \(q_0(1,1)=1\), then \(\Omega=[1]\) has zero energy; multi-time kernels are positive.
+\(\langle1\rangle1\). For PSD \(q\), \(q(z,z)=0\Rightarrow q(f,z)=0\) (vary \(\lambda\) in \(z+\lambda f\)).
+\(\langle1\rangle2\). \(z\) null \(\Rightarrow q_1(z,z)=0\Rightarrow q_0(f,\tau z)=0\ \forall f\): \(T\) is well defined.
+\(\langle1\rangle3\). \(\langle[f],T[g]\rangle=q_1(f,g)\), so \(T=T^\dagger\), \(0\le T\le1\).
+\(\langle1\rangle4\). Diagonalise; eigenvalues in \((0,1]\) under injectivity.
+\(\langle1\rangle5\). \(\sum_{ij}\langle v_i,T^{n_i+n_j}v_j\rangle=\|\sum_iT^{n_i}v_i\|^2\).  QED (NOTE.md:286--317).
+\emph{Strictness} (NOTE.md:333--341): injectivity is needed for a Hamiltonian on the whole quotient (\(K(1)\) above has
+rank one), and the lower bound is needed (\(q_0=1\), \(\tau=-1\)).  \emph{What it does not give:} Theorem 92.3 supplies
+\(q_0\); the bound \(q_1\le q_0\), shift closure and compatibility of the two forms are unproved for any strip.  No
+covariance, locality, field regularity or continuum.  A reflection excludes positive momentum: \(JPJ^\dagger=-P\),
+\(P\ge0\) force \(P=0\); positive energy and signed momentum (Schottenloher:4113--4117, :4150--4172), and covariance is
+a separate axiom (:4616--4642).
+
+\subsection{Two Directions: What Fails as Posed and What Survives}
+
+\textbf{Proposition 92.9 [derived, negative; brief E3(b), E3(c) as posed].}  (i) The temporal and spatial transfers
+act on cut spaces of different objects and dimensions; a perpendicular commutator is undefined until a common
+carrier is identified (NOTE.md:366--376).  (ii) \(\operatorname{rot}\) is complex-linear and ``\(F\) composed with
+dagger'' conjugate-linear, so they differ on any nonzero complex space (literal reading).  Robustly, no single-tile
+similarity exists: the identity tile has full temporal rank and rank-one spatial \(K(1)\).  \emph{Not refuted:} a
+relation between whole-lattice row and column transfers, e.g.\ \(\Tr T_t^M=\Tr T_x^L\) on a torus, true for any
+tensor network without an \(F\)-move; E3(b) is false only in its literal clause (REVIEW.md:174--184).  (iii) On one
+cut, YBE gates need not give commuting brick sweeps (CA-78 Prop.~78.7(i)) and commuting gates need not satisfy YBE
+under any analytic reparametrisation (78.7(ii)); for the perpendicular pair these are analogies (REVIEW.md:197--199).
+
+\textbf{Lemma 92.10 [derived under its hypotheses; E3-Y, E3-D, E3-T].}  (Y) \textbf{Assume} one carrier
+\(\mathcal H\), auxiliary \(A,B\), \(L_{aj}(u)\) trivial on \(B\), \(L_{bj}(v)\) trivial on \(A\), \(R\) invertible on
+\(A\otimes B\), \([L_{aj},L_{bk}]=0\) (\(j\neq k\)), \(RL_{aj}L_{bj}=L_{bj}L_{aj}R\), and a linear closure with
+\(\mathrm{Cl}(M_aM_b)=t(u)t(v)\), \(\mathrm{Cl}(M_bM_a)=t(v)t(u)\), \(\mathrm{Cl}(R^{-1}XR)=\mathrm{Cl}(X)\).
+\textbf{Prove} \([t(u),t(v)]=0\).  \(\langle1\rangle1\). Regroup \(M_aM_b=\mathsf A_N\cdots\mathsf A_1\),
+\(\mathsf A_j=L_{aj}L_{bj}\).  \(\langle1\rangle2\). \(R\mathsf A_j=\mathsf B_jR\) for \(j=N,\dots,1\).  \(\langle1\rangle3\).
+Apply \(\mathrm{Cl}\).  QED.  (D) With defects \(D_j=R\mathsf A_j-\mathsf B_jR\),
+\([t(u),t(v)]=\mathrm{Cl}\big(R^{-1}\sum_k\mathsf B_N\cdots\mathsf B_{k+1}D_k\mathsf A_{k-1}\cdots\mathsf A_1\big)\); \(N\) terms,
+no uniform bound, no converse.  (T) On a common carrier two transfers starting at \(1\) commute to first order, and
+\begin{equation}
+  [e^{\delta A}e^{\delta B},e^{\delta B}e^{\delta A}]=-\delta^3[A+B,[A,B]]+O(\delta^4),\qquad
+  A=\textstyle\sum_{\mathrm{odd}}h_j,\ B=\sum_{\mathrm{even}}h_j\tag{92.4}
+\end{equation}
+(NOTE.md:378--473; \path{seams_output.txt}:7; \path{review_output.txt}:41).  Identifying the two directional transfers
+with \(t(u),t(v)\) of one closed family is \emph{unproved} for general \(\Cc\); (T) answers the brief's first-order
+request with zero (REVIEW.md:200--204).
+
+\subsection{The First Gap: Reflection Coherence}
+
+(RH) for a multi-tile brick seam is \emph{assumed via the definition of the pairing, not derived}; \(s\) is pinned
+only on \(\mathrm{coev}_O\) and is gauge beyond it (REVIEW.md:289--299).  \textbf{Reflection-coherence lemma
+[proposal; full; \(\mathsf L0\) + a declared unitary self-duality \(\psi:O\to\overline O\), or \(\mathsf L1\); finite].}
+Build \(\Theta_x\) from the antilinear anti-monoidal functor \(X\mapsto(X^\vee)^\dagger\) (Penneys:682--708, :992--1003)
+composed with \(\psi\) (or a braiding, or E2's mirror carrier).  Prove (i) \(\Theta_x\) is antiunitary on every cut
+space, compatible with Lemma 80.1 sewing, \(\Theta_x^2\) trivial on observables; (ii) the induced \(s\) satisfies
+\(s\,\mathrm{coev}_O=\mathrm{ev}_O^\dagger\), Frobenius--Schur phases tracked; (iii) \(K_s(h)\) Hermitian iff
+\(\Theta_x(h)=h\) (INTEGRATION.md:124--136).  With Prop.~92.4 this would give spatial RP of the whole CA-86 linear
+history for self-dual sites, a statement about \((\Cc,O,h)\), not \((\Cc,O,h,s)\).  An FS phase is absorbed in the
+vacuum entry of \(s\); \(\Theta_x^2=-1\) on pseudo-real sites is unexamined (REVIEW.md:270).  Further open lemmas
+(NOTE.md:566--591): exact-gate, strip-translation, crossing-and-closure, continuum.  \emph{Layer observation:} a
+coherent \(s\) is available for self-dual \(O\) at \(\mathsf L0\) with declared \(\psi\), expected at \(\mathsf L1\)
+(unsourced), and can fail for non-self-dual \(O\) in non-braided \(\Cc\): the \(\mathsf L0/\mathsf L1\) split of
+\(\mathsf R0^u\) (CA-88:104).
+
+\subsection{What This Does Not Claim}
+
+No whole-history iff for spatial RP for general \((\Cc,O,h)\); no coherent \(s\) for the whole brick grammar; no
+spatial sewing identity across a plaquette seam and no anomaly-line limit (CA-75 Link (a2) stays open; only the seam
+operator exists); no crossing relation between directional transfers; no lattice OS axioms beyond Lemma 92.8; no
+positive momentum, Euclidean covariance or continuum.  Nothing reaches \(\mathsf R1\)--\(\mathsf R5\).  Theorem 92.5
+is for the linear history only; exact gates are characterised pointwise; multi-tile necessity is not claimed.
+
+\subsection{Examples (Instances Only)}
+
+\begin{center}\footnotesize
+\begin{tabular}{p{3.4cm}p{10.6cm}}
+\toprule
+Instance & Calibration datum for the general statements \\
+\midrule
+Any \(\Cc\), \(O=\one\oplus\one\) & Prop.~92.6: flip pairing; \(-Z\otimes Z\) gives \(-4t\); \(E_{01}\otimes E_{10}\) positive; \(h=-1\) (\path{seams_output.txt}:2--5). \\
+\(\mathrm{Vec}_{\mathbb Z_2}^\omega\), \(\mathrm{Vec}_{\mathbb Z_3}^\omega\), \(O=\one\oplus g\) & \(K_s(1)=uu^\dagger\) with cocycles; witness eigenvalue \(-2t\); \(\omega\) changes \(K_s(T)\) beyond the left gauge (\path{review_output.txt}:2--30). \\
+\(\mathrm{Vec}_{\mathbb Z_3}\), \(O=\one\oplus g\), \(\bar g=g^2\) & \(T=1+\mathrm{Swap}/2\), graded flip \(s\): blocks \(\big[\begin{smallmatrix}3/2&1\\1&3/2\end{smallmatrix}\big]\), \([1/2]\), \([1/2]\) (\path{categories_output.txt}:2--4). \\
+\(\Rep(A_4)\), real \(V\), \(N_{VV}^V=2\) & \(T=1+\mathrm{Swap}/2\), \(s=\mathrm{Swap}\): blocks \(7/2,1/2,1/2,\tfrac12I_2\); \(K\) via the fibre functor, so (92.1) is not exercised entry by entry; the multiplicity block is scalar (weak test; REVIEW.md:217--222). \\
+\(\mathrm{Vec}_{S_3}\), \(O=\one\oplus(12)\oplus(123)\) & \(W_+\not\cong W_-\): no \(s\) (Lemma 92.2); self-dual \(\one\oplus(12)\oplus(13)\oplus(23)\) has matching ports (\path{review_output.txt}:37--40). \\
+\bottomrule
+\end{tabular}
+\end{center}
+\emph{Caveat (REVIEW.md:209--216):} both positive calibrations use a \emph{symmetric braiding} as \(s\) (the flip in
+abelian \(\mathrm{Vec}_{\mathbb Z_3}\), \(\mathrm{Swap}\) in \(\Rep(A_4)\)): a hidden \(\mathsf L1\) ingredient of the
+examples, not of the theorems.  No positive instance has a non-braided \(\Cc\) with a non-self-dual site.

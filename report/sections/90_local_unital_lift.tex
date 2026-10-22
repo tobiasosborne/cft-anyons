@@ -1,0 +1,277 @@
+% SHARD-ID: CA-90-LOCAL-UNITAL-LIFT
+% SHARD-TITLE: Local Unital Lifts from Relative Half-Braidings
+% SHARD-SUMMARY: For unitary fusion C and pointed O = 1 + X, a pointed unitary relative half-braiding of O on <O> (a braiding suffices) gives the dyadic lift alpha_L(a) = B_L(a (x) 1)B_L^dagger: a unital injective *-map extending vacuum insertion, support [2j-1,2k-1] (r = 0), exact occupation degree, natural, WT-1 A1; CA-76's strict drift bound applies, A3 does not follow.
+% SHARD-SUMMARY: Finite half-braiding equations with the integer condition [O][x] = [x][O] in K(<O>), which (review Prop. R-1) obstructs every one-gap lift of the same support pattern; the contiguous shuffle needs depth L-1 (optimal). Closes CA-75 Link (b1) and supersedes Proposal 76.5 at this layer.
+% SHARD-KEYWORDS: local unital lift, relative half-braiding, Drinfeld centre, pointed site object, vacuum insertion, dyadic refinement, WT-1, A1, Wilson drift, occupation grading, Grothendieck ring, one-gap lift, Bratteli inclusion matrix, circuit depth, Link (b1), Proposal 76.5, R0^u
+
+\section{Local Unital Lifts from Relative Half-Braidings}
+\label{sec:local-unital-lift}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: mixed; every statement carries its own label.}  Derived: Lemma 90.0, Theorem 90.1, Negative 90.N, Corollary
+90.W, Proposition 90.V, Proposition 90.2 (part (b) is the reviewer's Proposition R-1), Proposition 90.3, Corollary 90.D (an
+implication from a \emph{supplied} circuit).  Proposal: Target 90.T.  Open: arbitrary local dyadic lifts at \(\mathsf L0\),
+WT-1 A3 for any non-trivial state family, the periodic seam, parity covariance.  Review grades (carried, not upgraded):
+braided headline \textbf{PROOF-COMPLETE}; non-braided converse \textbf{WEAKER-RESULT-PROVED}, sharpened by R-1 (E1
+REVIEW:12--21).  \textbf{Abbreviations:} ``E1 NOTE/REVIEW/INTEGRATION'' are \path{NOTE.md}, \path{REVIEW.md},
+\path{INTEGRATION.md} in \path{explorations/2026-10-22-astra-r2/E1-local-unital-lift/}, whose \path{checks/} hold Python/NumPy
+Float64 calibrations (commands: \path{checks/README.md}:8--13, REVIEW:180--183) that calibrate and do not prove; a port to
+\path{scripts/} with a run bundle is open.  No Julia or \LaTeX{} run was made.  Proofs are structured, not proof-assistant.
+This shard \textbf{closes CA-75 Link (b1)} and \textbf{supersedes CA-76 Proposal 76.5} for braided \(\Cc\) and for
+\(\mathsf L0\) with a declared pointed relative half-braiding, and answers D3 open problem 1 at that layer.
+Dependencies: CA-68, CA-71, CA-75, CA-76, CA-88; WT-1; CONVENTIONS (r), (t), (x), (am), (an), (aq).
+
+\textbf{Layer tags [(aq)].}  Setting is \(\mathsf{any}\): no target theory enters; the microscopic declaration is an
+\emph{open} chain with declared endpoints (REVIEW:114--119).  ``\(+\)H'' means Definition 90.H's datum.
+\begin{center}\footnotesize
+\begin{tabular}{p{4.4cm}p{1.0cm}p{4.4cm}p{4.2cm}}
+\toprule
+Statement & \(\mathsf S\) & \(\mathsf L\) & \(\mathsf R\) \\
+\midrule
+Lemma 90.0, Theorem 90.1, Neg.\ 90.N & any & \(\mathsf L0\)+H (in particular \(\mathsf L1\)) & \(\mathsf R0^{u}\) \\
+Corollary 90.W & any & \(\mathsf L0\)+H, declared states & \(\to\mathsf R1\) (conditional on summability) \\
+Proposition 90.V & any & \(\mathsf L0\)+H, constructed states & \(\mathsf R1\) (vacuum product only); negative \\
+Proposition 90.2 (a); (b) & any & \(\mathsf L0\) & \(\to\mathsf R0^{u}\); negative for one-gap lifts \\
+Proposition 90.3, Corollary 90.D & any & \(\mathsf L0\)+H (90.D: \(+\) a supplied circuit) & \(\mathsf R0^{u}\) implementation \\
+Target 90.T & any & \(\mathsf L0\) & \(\to\mathsf R0^{u}\) [proposal] \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+% Source: explorations/2026-10-22-astra-r2/E1-local-unital-lift/NOTE.md:19-26 (H); :30-68 E1.1; :72-117 E1.2; :119 absolute
+%   number; :123-147 E1.3-E1.4; :151-160 E1.5; :162-191 E1.6, boundary; :195-224 E1.7, D3 dressing; :234-284 ledger, tags, examples.
+% Source: .../E1-local-unital-lift/REVIEW.md:10-21 verdict; :23-43 citations; :45-120 step verdicts; :122-146 refutation
+%   attempts; :148-168 Proposition R-1; :170-176 corrections.  INTEGRATION.md:6-31 statements; :49-91 amendments, links, next lemma.
+% Source: explorations/2026-10-22-astra-r2/briefs/E1-local-unital-lift.md:50-81 -- Conjecture E1 and the converse question.
+% Source: report/sections/68_variable_n_refinement_maps.tex:51-92 (V_L, corner, Boundary); 71_...:102-113 (V_psi V_phi = V_psi.phi);
+%   76_...:75-81 (76.B), :90-108 (76.1), :133-147 (76.4, 76.5), :236-247 (76.12); 75_integration_map.tex:149-155 (Link (b1)).
+% Source: references/text/PenneysUnitaryFusionCategories.md:219-237, :319, :325-348, :395-398 -- splittings, unitary tensor
+%   structure, monoidal functors/tensorators, associator suppression.  FuchsRunkelSchweigert2002/source/hep.tex:806-819, :921-924,
+%   :1023-1125 (references/categorical-reconstruction/) -- coherence, braiding naturality and tensoriality.
+% Source: literature/md/1704.04221/1704.04221.md:298-307 (half-braiding); references/text/EtingofNikshychOstrikFusionCategories.md:1221
+%   (K(Z(C)) -> centre of K(C)); cft_machine/research/wilson_triangle.md:18-129 (WT-1, WT-2); literature/md/2010.11121/2010.11121.md:164-176.
+% Run: .../E1-local-unital-lift/checks/output.txt:1-6; red_phase_free.txt:12; review_pointed_lift_output.txt:1-13;
+%   review_one_gap_obstruction_output.txt:1-4.
+
+\subsection{Setting and the Transport Datum}
+
+\(\Cc\) is unitary fusion and \((O,\eta)\) is pointed as in (am): \(\eta^\dagger\eta=1\), \(p_0=\eta\eta^\dagger\),
+\(p_1=1-p_0\), \(O\cong\one\oplus X\); \(X\) may contain unit summands and need not be simple, self-dual or
+multiplicity-free.  \(W_M=O^{\otimes M}\) (left-associated, (r)), \(\Alg_M=\operatorname{End}_\Cc(W_M)\) acting on
+\(\bigoplus_c\Hom(c,W_M)\), and \(\mathcal D=\langle O\rangle\) is the \emph{full} fusion subcategory generated by \(O\), so
+every \(W_M\) and every endomorphism of it lies in \(\mathcal D\).  \textbf{Support} means membership:
+\(a\in\Alg_{[j,k]}:=1_{W_{j-1}}\otimes\operatorname{End}(W_{k-j+1})\otimes1_{W_{M-k}}\) (single-site algebras need not
+generate \(\Alg_M\)).  \textbf{Degree}: with \(N_M=\sum_jp_1^{(j)}\), \(a\) has degree \(q\) iff \([N_M,a]=qa\); this is the
+(am) grading since the \(Q_{M,n}\) are the spectral projections of \(N_M\) (REVIEW:49--53).  \(V_L\) is the CA-68 dyadic
+insertion (placement \(\varphi(j)=2j-1\), (t)), \(\theta_L=\mathrm{Ad}\,V_L\) its corner map.
+
+\textbf{Definition 90.H [definition; \(\mathsf L0\) plus a declared datum; NOTE:19--26].}  A \emph{pointed unitary
+relative half-braiding} of \((O,\eta)\) on \(\mathcal D\) is a family of unitaries \(t_Y:Y\otimes O\to O\otimes Y\),
+\(Y\in\mathcal D\), with (associators and unitors suppressed; Penneys:319, :395--398; FRS:806--819)
+\[
+ t_\one=1_O,\quad t_Z(f\otimes1_O)=(1_O\otimes f)t_Y\ (f:Y\to Z),\quad t_{Y\otimes Z}=(t_Y\otimes1_Z)(1_Y\otimes t_Z),\quad
+ t_Y(1_Y\otimes\eta)=\eta\otimes1_Y. \tag{H}
+\]
+\(z_Y=t_Y^{-1}\) is a half-braiding of \(O\) relative to \(\mathcal D\) (1704.04221:298--307); unitarity and pointedness are
+imposed, not inferred from that source.
+
+\textbf{Remark 90.R [derived; NOTE:16, :160, :283--284; REVIEW:49--53, :79--83].}  (a) A unitary braiding \(c\) on
+\(\Cc\), or only on \(\mathcal D\), gives \(t_Y=c_{Y,O}\) satisfying (H) (FRS:921--924, :1023--1125); the \(\eta\) identity
+uses \(c_{Y,\one}=\mathrm{id}\), standard but not displayed at a cited local line (\emph{Law 1 gap}, REVIEW:31).  The
+opposite crossing gives a different valid tower; no mixture is made.  (b) A lift of \(O\) to \(Z(\Cc)\) with a central
+pointed inclusion restricts to (H) but is strictly stronger (\(\mathrm{Vec}_G\) row of the table).  (c) Centrality of the
+chosen \(\eta\) is needed: a half-braiding on \(O\) with non-central point breaks intertwining (\(\mathrm{Vec}_{\mathbb Z/2}\)
+row).  (d) Conversely a central \(\eta\) splits \(O=\one\oplus X\) in \(Z(\mathcal D)\), as \(p_0,p_1\) are then central.
+
+\subsection{The One-Gap Lift}
+
+\textbf{Lemma 90.0 [derived; E1.1, NOTE:30--68; REVIEW:55--61, every step valid].}  \textsc{Assume} (H), \(0\le s\le M\),
+\(b_{M,s}=1_{W_s}\otimes t_{W_{M-s}}:W_M\otimes O\to W_{M+1}\) (new site after old site \(s\)),
+\(\beta_{M,s}(a)=b(a\otimes1_O)b^\dagger\), and \(v_{M,s}\) the \(\eta\)-insertion in that gap.  \textsc{Prove}: \(\beta\) is a
+unital injective \(*\)-homomorphism, \(\beta(a)v=va\), and for \(a\in\Alg_{[j,k]}\)
+\[
+ \beta(a)\in\Alg_{[j,k]}\ (s\ge k),\qquad \Alg_{[j+1,k+1]}\ (s<j),\qquad \Alg_{[j,k+1]}\ (j\le s<k). \tag{90.1}
+\]
+\(\langle1\rangle1\). \(b\) is unitary; tensor interchange and dagger (Penneys:319) give a unital \(*\)-map; compressing by
+\(1\otimes\eta\) returns \(a\), so it is injective.
+\(\langle1\rangle2\). The \(\eta\) identity on the suffix gives \(b(1\otimes\eta)=v\), so \(\beta(a)v=b(1\otimes\eta)a=va\).
+\(\langle1\rangle3\). \(s\ge k\): \(b\) acts only after site \(k\) and on the ancilla; interchange.
+\(\langle1\rangle4\). \(s<j\): \(a=1_{W_s}\otimes a_{\rm tail}\) with \(a_{\rm tail}\) an endomorphism of the whole suffix;
+naturality gives \(t(a_{\rm tail}\otimes1)t^\dagger=1_O\otimes a_{\rm tail}\).  No generation by one-site operators is used;
+this is where (H) on the \emph{full} \(\mathcal D\) is needed.
+\(\langle1\rangle5\). \(j\le s<k\): with \(A=W_{j-1}\), \(J=W_{s-j+1}\), \(R=W_{k-s}\), \(C'=W_{M-k}\), the tensor identity gives
+\(b=(1_{AJ}\otimes t_R\otimes1_{C'})(1_{AJR}\otimes t_{C'})\); the second factor commutes past \(a\), leaving
+\(1_A\otimes[(1_J\otimes t_R)(a_{JR}\otimes1_O)(1_J\otimes t_R^\dagger)]\otimes1_{C'}\in\Alg_{[j,k+1]}\).  \(\square\)
+Only (H) is used: no self-duality, multiplicity-freeness, ribbon structure or TL quotient (REVIEW:61).
+
+\subsection{The Dyadic Lift}
+
+\textbf{Theorem 90.1 [derived; E1.2 (braided) and E1.5 (\(\mathsf L0\)+H), NOTE:72--117, :151--158; REVIEW:63--70,
+:79--83; PROOF-COMPLETE].}  \textsc{Assume} Definition 90.H.  Let \(\alpha_L=\beta_{M_L,s_L}\circ\cdots\circ\beta_{M_1,s_1}\)
+with \(M_i=L+i-1\), \(s_i=2i-1\); equivalently, with \(B_L:W_L\otimes W_L\to W_{2L}\) interleaving
+\(\mathrm{old}_1..\mathrm{old}_L,\mathrm{new}_1..\mathrm{new}_L\) into \(\mathrm{old}_1,\mathrm{new}_1,\dots,\mathrm{old}_L,\mathrm{new}_L\)
+by a crossing \(t_O\) of \(\mathrm{old}_j\) with \(\mathrm{new}_i\) exactly when \(i<j\),
+\[
+ \alpha_L(a)=B_L(a\otimes1_{W_L})B_L^\dagger . \tag{90.2}
+\]
+\textsc{Prove}: (i) \(\alpha_L\) is a unital injective \(*\)-homomorphism with \(\alpha_L(a)V_L=V_La\);
+(ii) \(\alpha_L(\Alg_{[j,k]})\subset\Alg_{[2j-1,2k-1]}\), uniformly in \(L\), \(n\) and \(\Cc\), so \(r=0\) in the brief's
+convention, and \(\alpha_L(f^{(j)})=f^{(2j-1)}\) for \(f\in\operatorname{End}(O)\); (iii) \([N_{2L},\alpha_L(a)]=\alpha_L([N_L,a])\);
+(iv) for a unitary (braided, at \(\mathsf L1\)) strong monoidal equivalence with unitary \(u:F(O)\to O'\) carrying
+\((F(\eta),F(t))\) to \((\eta',t')\), \(F_{2L}\alpha_L=\alpha'_LF_L\); (v) for \(L_n=2^nL_0\) the composites
+\(\alpha^k_n=\alpha_{n-1}\cdots\alpha_k\) form a coherent directed system of unital injective \(*\)-maps (WT-1 A1).
+\par\(\langle1\rangle1\). Before step \(i\), \(\mathrm{old}_i\) sits at \(2i-1\) and the suffix is \(\mathrm{old}_{i+1..L}\); so
+step \(i\) inserts right after \(\mathrm{old}_i\), and expanding suffix crossings by the tensor identity gives (90.2).
+\par\(\langle1\rangle2\). (i): Lemma 90.0 for each \(\beta\); the one-gap isometries compose to \(V_L\) (CA-71:102--113, (t)).
+\par\(\langle1\rangle3\). (ii): by (90.1), insertions \(i<j\) shift both endpoints, \(j\le i<k\) only the right one, \(i\ge k\)
+neither; hence the length-\((2(k-j+1)-1)\) interval
+\[
+ [\,j+(j-1),\ k+(j-1)+(k-j)\,]=[2j-1,2k-1]. \tag{90.3}
+\]
+\par\(\langle1\rangle4\). (iii): naturality gives \(t_O(p_e\otimes1)=(1\otimes p_e)t_O\); the \(\eta\) identity and unitarity give
+\(t_Y(1_Y\otimes p_0)t_Y^\dagger=p_0\otimes1_Y\) (the one place pointedness enters).  Summing strand by strand,
+\[
+ N_{2L}B_L=B_L(N_L\otimes1+1\otimes N_L),\qquad [N_{2L},\alpha_L(a)]=\alpha_L([N_L,a]). \tag{90.4}
+\]
+\par\(\langle1\rangle5\). (iv): \(F\) and the tensorators (Penneys:325--348) carry the finite composite \(B_L\) to \(B'_L\).
+\emph{Law 1 gap:} braided and unitary monoidal functors are not defined at a cited local line (REVIEW:30).  Compatibility
+with composition of equivalences is asserted (NOTE:113), not proved, and not used (REVIEW:68).
+\par\(\langle1\rangle6\). (v): cocycle by associativity of composition; WT-1 A1 and the norm inductive limit
+(2010.11121:164--176).  Path independence across placement forests is not asserted (A1 does not need it).  \(\square\)
+
+\emph{Consequences [derived].}  For \(h\in\Alg_{[j,j+1]}\), \(\alpha_L(h)\in\Alg_{[2j-1,2j+1]}\) and
+\(\alpha_L(h)P_L=\theta_L(h)\): a \emph{homomorphic} local representative replacing the local representative of
+Correction 76.B (INTEGRATION:80--82).  The lift transports constants with unit \(1\), the corner with unit \(P_L\); these
+are different observables (NOTE:263).  \(\alpha_L\) is not reflection-equivariant (placement \(2j-1\), one crossing type;
+the mirror is the opposite-crossing lift with even placement; INTEGRATION:69--71).
+
+\textbf{Negative 90.N [derived, negative; NOTE:119; REVIEW:70].}  By (90.3), \(\alpha_L(N_L)=\sum_jp_1^{(2j-1)}\), so
+\(N_{2L}-\alpha_L(N_L)=\sum_jp_1^{(2j)}\), of norm exactly \(L\) when \(X\ne0\).  Reading (iii) as a uniformly bounded
+\emph{absolute-number} difference is false; what holds is the (am) endomorphism-degree statement (90.4).
+
+\subsection{Wilson Consequences}
+
+\textbf{Corollary 90.W [derived; E1.3, NOTE:123--134; REVIEW:72--73].}  \textsc{Assume} Theorem 90.1, states \(\omega_n\) on
+\(\Alg_{L_n}\), and the (an) quantities with \(W_n=V_n\).  \textsc{Prove} \(d_{k,n}\le p_ne_n+2(1-p_n)\) for \(k\le n\) (\(p_ne_n:=0\) at \(p_n=0\)).
+\(\langle1\rangle1\). Theorem 90.1(i) is the intertwining hypothesis of Proposition 76.1(iii)--(iv) (CA-76:90--108).
+\(\langle1\rangle2\). At \(p_n=0\), \(\tau_n,e_n\) are undefined and the bound \(2\) is the trivial one; at \(p_n=1\) the
+bound is \(e_n\), not \(0\).  \(\square\)  Summable bounds would give WT-1 A3 (\path{wilson_triangle.md}:18--107; computable
+tails for WT-2, :109--129); none is supplied here.
+
+\textbf{Proposition 90.V [derived; E1.4, NOTE:136--147; REVIEW:75--78].}  (a) \(e_M=\eta^{\otimes M}\) and
+\(\omega^{\rm vac}_M(a)=e_M^\dagger ae_M\) satisfy \(e_{2M}=V_Me_M\), so \(\omega^{\rm vac}_{2M}\alpha_M=\omega^{\rm vac}_M\): \(p_n=1\),
+\(e_n=0\), zero drift, and a WT-1 limit state exists.  This \(\mathsf R1\) instance is the \emph{trivial vacuum product
+state}; no criticality is claimed.  (b) \emph{Negative.}  If \(X\ne0\), take a simple \(x\), an isometry \(u:x\to X\), and
+\(f_M=(\iota u)\otimes\eta^{\otimes(M-1)}\); \(\omega^{\rm occ}_M(a)=f_M^\dagger af_M\) is also compatible.  Alternating
+\(\omega_n\) between the two families gives \(p_n=1\) at every step, yet on \(2p_0^{(1)}-1\) adjacent pullbacks alternate
+\(\pm1\): drift exactly \(2\), \(e_n=2\), no limit.  So \(p_n=1\) alone does not give A3.
+
+\subsection{Non-Braided Input: Finite Equations and the One-Gap Obstruction}
+
+Theorem 90.1 already runs at \(\mathsf L0\) with Definition 90.H; neither a braiding of \(\Cc\) nor a lift of \(O\) to
+\(Z(\Cc)\) is needed (Remark 90.R).  The question is when the datum exists, and whether anything else can work.
+
+\textbf{Proposition 90.2 [derived; (a) E1.6, NOTE:162--189, REVIEW:84--86; (b) reviewer Proposition R-1,
+REVIEW:148--168].}  (a) Let \(s_i\) run over the simples of \(\mathcal D\) (unit included) and
+\(f_{ij;k,\mu}:s_k\to s_i\otimes s_j\) be complete orthonormal isometric embeddings, all multiplicities kept.  Pointed
+unitary relative half-braidings are exactly the solutions of the finite system (associators on both sides)
+\[
+ z_\one=1_O,\quad z_i(\eta\otimes1_i)=1_i\otimes\eta,\quad
+ (f_{ij;k,\mu}\otimes1_O)z_k=(1_i\otimes z_j)(z_i\otimes1_j)(1_O\otimes f_{ij;k,\mu}),\quad z_i\text{ unitary}. \tag{90.5}
+\]
+A necessary integer condition is
+\[
+ \Delta_{x,c}:=\dim\Hom(c,O\otimes x)-\dim\Hom(c,x\otimes O)=0\ \ \forall\,x,c\ \text{simple},
+ \quad\text{i.e. } [O][x]=[x][O]\ \text{in } K(\mathcal D). \tag{90.6}
+\]
+\(\langle1\rangle1\). Necessity: naturality, tensor identity, unitarity, centrality of \(\eta\); a unitary is an isomorphism in
+each charge block, so \(\Delta\ne0\) excludes (90.5) (cf.\ ENO:1221).
+\(\langle1\rangle2\). Sufficiency: \(z_Y=\sum_{i,\mu}(v_{i,\mu}\otimes1_O)z_i(1_O\otimes v_{i,\mu}^\dagger)\) is unitary and
+basis-independent, natural by Schur, tensorial by summing (90.5) against \(f^\dagger\).  \(\square\)  (90.6) is only
+necessary; the associator-dependent equations (90.5) remain.
+(b) \textsc{Assume} \(M\ge2\), \(1\le s\le M-1\), \(J=W_s\), \(R=W_{M-s}\), and \emph{any} unital \(*\)-homomorphism
+\(\beta:\Alg_M\to\Alg_{M+1}\) with \(\beta(a)v_{M,s}=v_{M,s}a\), \(\Alg_{[j,k]}\to\Alg_{[j,k]}\) for \(k\le s\) and
+\(\Alg_{[j,k]}\to\Alg_{[j+1,k+1]}\) for \(j>s\) (straddling intervals unconstrained).  \textsc{Prove} \(\Delta_{x,c}=0\) for every
+simple \(c\) and every simple \(x\) that is a summand of both \(J\) and \(R\).
+\(\langle1\rangle1\). \(\beta(a\otimes1_R)=a\otimes1_O\otimes1_R\) and \(\beta(1_J\otimes b)=1_J\otimes1_O\otimes b\), by the
+pattern, intertwining and \(v^\dagger v=1\).
+\(\langle1\rangle2\). On \(S=\operatorname{End}(J)\otimes\operatorname{End}(R)\), block \((i,j)\) sits in block \(c\) of
+\(\operatorname{End}(J\otimes R)\) with multiplicity \(N_{ij}^c\) and in block \(c'\) of \(\operatorname{End}(J\otimes O\otimes
+R)\) with multiplicity \(T_{ij}^{c'}=\dim\Hom(c',s_i\otimes O\otimes s_j)\).
+\(\langle1\rangle3\). With \(\Lambda\) the inclusion matrix of \(\beta\), \(\sum_cN_{ij}^c\Lambda_{cc'}=T_{ij}^{c'}\) (uniqueness
+of decomposition of finite-dimensional representations).
+\(\langle1\rangle4\). \(i=\one\) (as \(\one\subset O\subset J\)) gives \(\Lambda_{xc'}=\dim\Hom(c',O\otimes x)\); \(j=\one\) gives
+\(\Lambda_{xc'}=\dim\Hom(c',x\otimes O)\).  \(\square\)
+So (90.6) is necessary for \emph{every} one-gap lift with the support pattern (90.1), not only for the half-braiding
+construction, once \(x\) occurs in \(W_s\) and \(W_{M-s}\).  \textbf{Not decided:} dyadic lifts with slack \(r\) or another
+internal placement, where the left/right images are only lifts with unknown inclusion matrices (REVIEW:165--168).
+
+\textbf{Boundary [open; NOTE:191, :269].}  (i)--(iii) constrain algebra maps, not crossings; \(z\) is not reconstructed
+from an arbitrary \(\alpha\).  Existence or a complete obstruction for arbitrary local dyadic unital lifts at \(\mathsf L0\) is open.
+
+\subsection{Circuit Depth and Dressing}
+
+\textbf{Proposition 90.3 [derived; E1.7, NOTE:195--214; REVIEW:91--102].}  \textsc{Assume} Theorem 90.1, \(X\ne0\), the fine
+\(2L\)-site chain and the contiguous input \(a\mapsto a\otimes1_{W_L}\).  \textsc{Prove}: \(B_L\) is a nearest-neighbour
+circuit of \(t_O\) crossings of depth \(L-1\) with \(L(L-1)/2\) gates, and any range-\(w\), depth-\(D\) circuit \(U\) with
+\(U(a\otimes1)U^\dagger=\alpha_L(a)\) obeys \(D(w-1)\ge L-1\) \hfill\textup{(90.7)}
+\(\langle1\rangle1\). Layer \(t=1,\dots,L-1\): crossings on \((p,p+1)\), \(p=L-t+2i-1\), \(i=1,\dots,t\), exchanging
+\(\mathrm{old}_{L+i-t}\) with \(\mathrm{new}_i\); disjoint and adjacent by induction on \(t\).
+\(\langle1\rangle2\). Each pair \(i<j\) crosses once (at \(t=L+i-j\)) and the final word is interleaved.  A shuffle of two
+increasing sequences is \(321\)-avoiding, so all its reduced words are commutation-equivalent: no braid
+(Yang--Baxter) move, which a relative half-braiding need not supply among old strands, is used, and tensor interchange
+identifies the schedule with \(B_L\) (the combinatorial lemma made explicit at REVIEW:92--97).
+\(\langle1\rangle3\). One layer enlarges an interval support by at most \(w-1\) at each end (interchange).
+\(\langle1\rangle4\). \(p_0^{(L)}\otimes1\) has support \(\{L\}\) and image \(p_0^{(2L-1)}\) (Theorem 90.1(ii)).  A \(p_0\) outside an
+interval is not in that interval algebra: compressing the other sites to \(\eta\), interval operators give equal scalars on
+\(\eta\) and on an isometric simple summand of \(X\) at the omitted site, \(p_0\) gives \(1\) and \(0\).  \(\square\)
+So no fixed depth and range implement the family in this geometry, while \(\alpha_L\) itself has zero support growth.
+Distributed-ancilla geometries change the input convention and are not compared (NOTE:216).
+
+\textbf{Corollary 90.D [derived implication; NOTE:218--224; REVIEW:104].}  For a \emph{supplied} output circuit \(U\) of
+depth \(D\) and range \(w\), \(W=UV_L\) and \(\alpha^U=\mathrm{Ad}_U\circ\alpha_L\) satisfy \(\alpha^U(a)W=Wa\), and an \(m\)-site
+input has output support length \(\le2m-1+2D(w-1)\): \(r=2D(w-1)\).  Degree preservation needs \([U,N_{2L}]=0\) in addition.
+\(U\) is not constructed; a quasi-local \(U\) needs its own tail estimate (D3's dressing lemma stays open).
+
+\subsection{Integration Status and the Next Lemma}
+
+CA-75 Link (b1) is closed at \((\mathsf{any};\ \mathsf L0+\text{H};\ \mathsf R0^u)\); without the datum at \(\mathsf L0\) it is
+open.  Proposal 76.5 is superseded by Theorem 90.1, including the owed non-pointed check with sourced \(F,R\)
+(Fibonacci row).  D3-3's local-witness route (Question 76.12 (L)) becomes applicable; its witness hypotheses remain.
+Corrections 76.A, 76.C and Negative 76.11(d) are untouched.  Theorem 90.1 is open-chain only: periodic seam coherence of
+\(B_L\) (needed by \(\mathsf S_{\rm full}\), LC-4) is open (NOTE:273).
+
+\textbf{Target 90.T [proposal; dyadic transport-extraction; INTEGRATION:85--91].}  Let \(\alpha_L:\Alg_L\to\Alg_{2L}\) be
+unital \(*\)-maps with \(\alpha_L(a)V_L=V_La\) and \(\alpha_L(\Alg_{[j,k]})\subset\Alg_{[2j-1-r,\,2k-1+r]}\) for a fixed \(r\) and
+all \(L\).  Show that the Bratteli argument of 90.2(b) survives the slack (block \(r\) sites at the cut, track the inclusion
+matrices of the left and right partial lifts), forcing \([O][x]=[x][O]\) in \(K(\mathcal D)\) for every simple \(x\) of
+\(\mathcal D\); or exhibit a local dyadic lift for the \(\mathrm{Vec}_{S_3}\) row.  Either outcome settles \(\mathsf R0^u\) at
+\(\mathsf L0\) up to the associator equations (90.5).
+
+\subsection{What This Does Not Claim}
+
+No WT-1 A3 for any non-trivial state family; \(\mathsf R1\) is reached only for the vacuum product state.  No critical
+state, gap, KS convergence, or rung \(\ge\mathsf R2\); no periodic or parity-covariant lift; no decision for arbitrary local
+dyadic lifts at \(\mathsf L0\), and (90.6) is not claimed sufficient.  Naturality (iv) concerns the tower construction, not
+\(\mathsf R5\).  The depth bound concerns contiguous ancillas only.  The finite checks are Float64 calibrations; the
+``not braided'' status of \(\mathrm{Vec}_{\mathbb Z_3}^\omega\) is a finite-grid search, not a proof (REVIEW:189--190).
+
+\subsection{Examples (Instances Only)}
+
+\begin{center}\footnotesize
+\begin{tabular}{p{3.3cm}p{10.7cm}}
+\toprule
+Instance & Calibration datum for the general statements \\
+\midrule
+any \(\Cc\), \(X=0\); \(\mathrm{Vec}\), \(O=\mathbb C^d\) & \(\alpha_L=\mathrm{id}\) (excluded from (90.7)); tensor shuffle with \(t=\) flip (REVIEW:144). \\
+Fibonacci, \(O=\one\oplus\tau\) & Sourced \(F,R\) (\path{RSWfinal3.tex}:2379--2407), \(\le4\) sites: all matrix-unit tests pass; phase-free crossing fails block naturality, error \(0.786\) (\path{output.txt}:4--6, \path{red_phase_free.txt}:12). \\
+\(\mathrm{Vec}_{\mathbb Z_3}\), \(O=\one\oplus g\) & Non-self-dual \(X\): passes \(L=2,3\); the \(g\)--\(g\) phase is tested only at \(L=4\) (\(\mathbb Z_n\) needs \(n\) old sites) (\path{review_pointed_lift_output.txt}:2--3). \\
+semion, \(O=\one\oplus2g\); \(\one\oplus\one'\oplus g\) & Multiplicity, nontrivial associator, unit summand in \(X\): pass; phase-free crossing fails support (:4--6). \\
+\(\mathrm{Vec}_{\mathbb Z_3}^\omega\), \(O=\one\oplus g\) & Non-braided (grid search): three pointed half-braidings; Theorem 90.1 checks pass at \(L=4\); also \(O=\one\oplus g\oplus g^2\) (:7--11). \\
+\(\mathrm{Vec}_G\), \(O=\one\oplus g\), \(g\) noncentral & \(\langle g\rangle\) cyclic with symmetric braiding, so 90.1 applies; \([O][h]-[h][O]=[gh]-[hg]\ne0\): no lift to \(Z(\mathrm{Vec}_G)\) (NOTE:283). \\
+\(\mathrm{Vec}_{\mathbb Z/2}\), non-central point & Half-braiding on \(O\) with \(\eta\) not central: \(\alpha(h)V=-Vh\) (NOTE:284; \path{review_pointed_lift_output.txt}:12). \\
+\(\mathrm{Vec}_{S_3}\), \(O=\one\oplus g\oplus h\), \(gh\ne hg\) & \(\Delta\ne0\) on \(\langle O\rangle=S_3\) (four clashing entries at \(M=2,s=1\)): no one-gap lift (90.2(b)); dyadic lifts undecided (Target 90.T) (\path{review_one_gap_obstruction_output.txt}:1--4). \\
+\bottomrule
+\end{tabular}
+\end{center}

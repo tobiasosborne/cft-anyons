@@ -723,7 +723,7 @@ single ~200-line source file it points to.
 - Source: `report/sections/80_lattice_sewing_and_fidelity_certificate.tex`
 - Title: Exact Lattice Cells, Temporal Reflection Positivity, and a Two-Sided Fidelity Certificate
 - Summary: For any unitary fusion category C, finite history-sum patches sew exactly along tile legs (inverse Gram, F^{-T} dual bases); temporal reflection positivity is blockwise positivity of the seam operator, forcing h self-adjoint but no sign rule on tile coefficients; Ward residuals obey an exact product rule.
-- Summary: Fusion operators alone never certify fidelity (D_a = d_a 1); a fully faithful endpoint functor plus an annular index bound mu <= Dim B forces braided equivalence onto the complete sector category, conditional on an index limit step that finite-dimensional Pimsner-Popa bounds do not currently supply.
+- Summary: Fusion operators alone never certify fidelity (D_a = d_a 1); a fully faithful endpoint functor plus an annular index bound mu <= Dim B forces braided equivalence onto the complete sector category, conditional on an index limit step, supplied from finite data under a common normal state by CA-93.
 - Keywords: lattice sewing, history sum, reflection positivity, Gram contraction, dual basis, Ward residual, Duhamel, defect operators, fidelity, Pimsner-Popa index, four-interval inclusion, KLM, Verlinde, character growth, chiral versus full
 
 ## `CA-81-CFT-MACHINE-OAR-CONTRACT`
@@ -792,5 +792,53 @@ single ~200-line source file it points to.
 - Source: `report/sections/88_layered_targets.tex`
 - Title: The Layered Target Grid: Setting, Input Data, and Target Rungs
 - Summary: Defines, for a general unitary fusion category C, three layer ladders: the chirality setting (open chain to chiral net, periodic chain to full two-chiral theory), input data L0-L4 (fusion, braided, modular, enriched, declared target theory) and target rungs R0-R5 (tower, Wilson state, mode representation, local conformal limit, fidelity, coherence).
-- Summary: Places CA-71--CA-87, WT-1/VR-1 and LC-1--LC-13 on the grid, restates the six Astra headline conjectures D1-C--D6-C at the most general layer where each is plausibly true with its first attackable lemma, and fixes the three tags every future statement carries.
+- Summary: Places CA-71--CA-94 (incl. the round-2 results CA-89--CA-94 and their verdicts), WT-1/VR-1 and LC-1--LC-13 on the grid, restates the six Astra headline conjectures D1-C--D6-C at the most general layer where each is plausibly true with its first attackable lemma, and fixes the three tags every future statement carries.
 - Keywords: layering principle, chiral versus full, input data layer, target ladder, fidelity, enrichment, Drinfeld centre, Wilson triangle, WT-1, VR-1, headline conjectures, D1-C, D2-C, D3-C, D4-C, D5-C, D6-C, Zini-Wang
+
+## `CA-89-WARD-KS-TRANSFER`
+
+- Source: `report/sections/89_ward_ks_transfer.tex`
+- Title: Ward-to-Koo--Saleur Transfer: Graph-Norm Interfaces, Derivative Matching and the Contact Cocycle
+- Summary: Category-free conditional interfaces into VR-1 for the standard KS modes: A2/A4 transfer from geometric modes with vanishing discrepancy (explicit bound), A3 from holomorphic derivative-level refinement matching, and the contact cocycle (A2 + translation + low-energy anchor force z_mn = (m^3 c* - m c)/12; Ward contacts give c* = 12 kappa_3, c = 24b - 12 kappa_1).
+- Summary: Negatives: insertion and real gate errors control neither commutators nor derivatives; A2 fails for K = 1+(H-E_0)/v; A3 for every gate-intertwining refinement forces c* = 0, refuting that clause of conjecture E4. Open core: the operator lift W2 of the discrete contour identity.
+- Keywords: Ward identity, Koo-Saleur, VR-1, graph norm, transfer lemma, refinement defect, metric derivative, Cauchy estimate, contact term, Virasoro cocycle, central charge, c star, zero-mode shift, translation covariance, D2-C, Target 78.13, E4
+
+## `CA-90-LOCAL-UNITAL-LIFT`
+
+- Source: `report/sections/90_local_unital_lift.tex`
+- Title: Local Unital Lifts from Relative Half-Braidings
+- Summary: For unitary fusion C and pointed O = 1 + X, a pointed unitary relative half-braiding of O on <O> (a braiding suffices) gives the dyadic lift alpha_L(a) = B_L(a (x) 1)B_L^dagger: a unital injective *-map extending vacuum insertion, support [2j-1,2k-1] (r = 0), exact occupation degree, natural, WT-1 A1; CA-76's strict drift bound applies, A3 does not follow.
+- Summary: Finite half-braiding equations with the integer condition [O][x] = [x][O] in K(<O>), which (review Prop. R-1) obstructs every one-gap lift of the same support pattern; the contiguous shuffle needs depth L-1 (optimal). Closes CA-75 Link (b1) and supersedes Proposal 76.5 at this layer.
+- Keywords: local unital lift, relative half-braiding, Drinfeld centre, pointed site object, vacuum insertion, dyadic refinement, WT-1, A1, Wilson drift, occupation grading, Grothendieck ring, one-gap lift, Bratteli inclusion matrix, circuit depth, Link (b1), Proposal 76.5, R0^u
+
+## `CA-91-PARITY-AND-CHIRAL-DELINEATION`
+
+- Source: `report/sections/91_parity_and_chiral_delineation.tex`
+- Title: Parity, Mixed Koo--Saleur Brackets, and the Chiral/Full Delineation
+- Summary: Category-free, periodic (full) setting, both standard KS families VR-1-certified on one system: a complex-linear unitary reflection commuting with K forces c_L = c_R and c*_L = c*_R without convergence of the parity maps; with equal ledgers all mixed brackets vanish iff [T_0, Tbar_0] = 0, certified by N^2[H, Q_tot] -> 0 for the total current Q_tot (conditional R2).
+- Summary: Delineation: absent right stress forces scalar left stress and zero anomaly; an antiunitary (dagger) reflection preserves chirality and constrains nothing; parity-odd perturbations exist iff the total current is nonzero (never on O = 1, always after unit-multiplicity enlargement); a conjugate-dual mirror types the non-self-dual case.
+- Keywords: parity, reflection, chirality, chiral versus full, Koo-Saleur, mixed brackets, anomaly ledger, c = cbar, VR-1, zero-mode commutator, energy current, current-momentum lemma, antiunitary reflection, parity-odd perturbation, conjugate dual, mirror carrier, non-self-dual, layering
+
+## `CA-92-SPATIAL-SEAMS-AND-REFLECTION-POSITIVITY`
+
+- Source: `report/sections/92_spatial_seams_and_reflection_positivity.tex`
+- Title: Spatial Seams, Reflection Pairings and a Finite Osterwalder-Schrader Lemma
+- Summary: For any unitary fusion C and a declared unitary seam pairing s (s coev = ev^dagger; it exists iff O(x)Obar and Obar(x)O have equal multiplicities), the bent kernel K_s(T) = s^dagger rot(T) decides spatial reflection positivity of one crossing tile blockwise, and the linear history 1+th has an exact Schur criterion uniform in N and M.
+- Summary: Self-adjointness of h is neither necessary nor sufficient and the witnesses depend on s; a category-free finite OS contraction lemma holds; the F-composed-with-dagger crossing and the perpendicular commutator are ill-typed as posed; multi-tile reflection coherence is the open gap.
+- Keywords: spatial reflection positivity, seam pairing, bent kernel, plaquette seam, Schur complement, Osterwalder-Schrader, finite reconstruction, crossing, transfer matrix, Yang-Baxter, train argument, reflection coherence, self-duality, E3
+
+## `CA-93-NORMAL-LIMIT-EXPECTATIONS-AND-FIDELITY`
+
+- Source: `report/sections/93_normal_limit_expectations_and_fidelity.tex`
+- Title: Normal Limit Expectations and the Repaired Two-Sided Fidelity Certificate
+- Summary: Finite expectations E_k on boundedly exhausting N_k in M_k that preserve one normal state faithful on N, with liminf of Pimsner-Popa costs b finite, have a unique state-preserving normal limit expectation E >= b^{-1} id; no commutants, no complete positivity. Counterexamples X1, X2 and a sharp R(x)1 calibration bound the hypotheses.
+- Summary: With b <= Dim C and a fully faithful unitary tensor functor C -> DHR_fin(A) of a completely rational net, mu_A = Dim C and the functor is an equivalence (L0+L4; braided at L1+L4, modularity concluded). This closes route (ii) of CA-80; the doubled chiral net carries Z(C), its diagonal LR extension has trivial DHR category; no instance is known.
+- Keywords: conditional expectation, Pimsner-Popa index, normal limit, bounded exhaustion, Jones projection, four-interval inclusion, mu-index, two-sided fidelity, DHR, Longo-Rehren, Drinfeld centre, doubled net, KLM, lattice certificate, E5
+
+## `CA-94-NUMBER-CHANGING-COLLISION-DYNAMICS`
+
+- Source: `report/sections/94_number_changing_collision_dynamics.tex`
+- Title: Number-Changing Collision Dynamics on the Pointed Carrier: a Tuned Continuum Theorem and Three Obstructions
+- Summary: For any unitary fusion C and pointed O = 1 + X, a fixed pure-hop density has no full-Fock projected-resolvent limit after any scalar subtraction (N1), the repaired limit is not a chamber-Laplacian extension (N2), and the grading condition G_r forces every range-r limit to conserve occupation (N3).
+- Summary: The tuned positive-square D1-C family (hop eps^-2, contact eps^-1, fusion cross eps^-1/2, pair cross eps^0) converges in projected-resolvent sense on the whole Fock carrier, with no subsequence or N-uniform estimate, to a closed collision form with lower-sector sources; its coefficient image is a finite PSD block cone. z = 2, below R1.
+- Keywords: number-changing dynamics, pointed carrier, configuration Fock space, collision trace, Mosco lower bound, projected resolvent, closed quadratic form, interior-boundary condition, moment cone, grading obstruction, contact tuning, Robin collision, D1-C, E6

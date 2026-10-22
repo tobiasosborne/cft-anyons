@@ -106,6 +106,12 @@ before treating report edits as complete.
 | 86 | `CA-86-SPACETIME-TROTTER-DICTIONARY` | `report/sections/86_spacetime_trotter_dictionary.tex` | String-Net Histories as Trotter Expansions: the Spacetime Dictionary |
 | 87 | `CA-87-DILUTE-FIBONACCI-IS-BLOCKED-GOLDEN` | `report/sections/87_dilute_fibonacci_is_blocked_golden.tex` | The Net Case: the Dilute Fibonacci Chain Is the Golden Chain Blocked |
 | 88 | `CA-88-LAYERED-TARGETS` | `report/sections/88_layered_targets.tex` | The Layered Target Grid: Setting, Input Data, and Target Rungs |
+| 89 | `CA-89-WARD-KS-TRANSFER` | `report/sections/89_ward_ks_transfer.tex` | Ward-to-Koo--Saleur Transfer: Graph-Norm Interfaces, Derivative Matching and the Contact Cocycle |
+| 90 | `CA-90-LOCAL-UNITAL-LIFT` | `report/sections/90_local_unital_lift.tex` | Local Unital Lifts from Relative Half-Braidings |
+| 91 | `CA-91-PARITY-AND-CHIRAL-DELINEATION` | `report/sections/91_parity_and_chiral_delineation.tex` | Parity, Mixed Koo--Saleur Brackets, and the Chiral/Full Delineation |
+| 92 | `CA-92-SPATIAL-SEAMS-AND-REFLECTION-POSITIVITY` | `report/sections/92_spatial_seams_and_reflection_positivity.tex` | Spatial Seams, Reflection Pairings and a Finite Osterwalder-Schrader Lemma |
+| 93 | `CA-93-NORMAL-LIMIT-EXPECTATIONS-AND-FIDELITY` | `report/sections/93_normal_limit_expectations_and_fidelity.tex` | Normal Limit Expectations and the Repaired Two-Sided Fidelity Certificate |
+| 94 | `CA-94-NUMBER-CHANGING-COLLISION-DYNAMICS` | `report/sections/94_number_changing_collision_dynamics.tex` | Number-Changing Collision Dynamics on the Pointed Carrier: a Tuned Continuum Theorem and Three Obstructions |
 
 ## Adding a shard
 

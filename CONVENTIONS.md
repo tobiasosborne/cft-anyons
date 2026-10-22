@@ -1464,7 +1464,10 @@ dual-pair blocking root `Y` (`O ≅ Y ⊗ Ybar`) is written `Y` as in CA-87 and 
 multiplicities; keeps unital and corner towers distinct.
 **Source:** `explorations/2026-10-22-astra/D1-carrier-theory/NOTE.md:64-112`; `REVIEW.md:51`;
 `references/text/PenneysUnitaryFusionCategories.md:219-237`, `:1015-1019`; EGNO `:1700-1706`.
-**Sweep status:** CA-77 uses it; CA-65/66/68/71-73/87 are the connected special case.
+**Sweep status:** CA-77 uses it; CA-65/66/68/71-73/87 are the connected special case. *Addition
+(2026-10-22, round 2):* CA-90 adds a second unital tower, the dyadic lift `alpha_L(a) = B_L(a ⊗ 1_{W_L}) B_L^dagger`
+intertwining `V_L` (see (as)). It coexists with the trailing tower `a ⊗ id_O` of this entry; the two are
+different maps and are never identified.
 
 ## (an) Corner-weight / Wilson-drift notation (2026-10-22)
 **Scope:** CA-76 only (corner weights, WT-1 drift and vacuum residuals).
@@ -1516,7 +1519,7 @@ For a refinement isometry `V`: `P = V V^*`, `B_a = V^* k'_a V` (compression), `F
 residual); both are shard-scoped.
 **Source:** `explorations/2026-10-22-astra/D4-koo-saleur-beyond-free/NOTE.md:71-109`;
 `references/lattice-symmetry/GransSamuelssonEtAl2020/source/Linnea11.5.tex:791-820`.
-**Sweep status:** CA-79 only.
+**Sweep status:** CA-79; CA-91 (modes (79-ks) reused with the (at) rewriting); CA-89 (modes reused).
 
 ## (aq) Layer tags: setting, data layer, rung (2026-10-22)
 **Scope:** every statement in CA-88 and all statements written after 2026-10-22 (AGENTS.md Rule 17).
@@ -1528,10 +1531,112 @@ presentation of the vacuum chiral algebra), `L4` declared target (a sewing compl
 `category-free` for statements such as WT-1/VR-1 that use no categorical data. *Rung:* `R0^c` local
 corner/isometric tower exists, `R0^u` tower of local unital maps, `R1` Wilson-triangle limit state,
 `R2` Virasoro or extended modes on a common domain, `R3` local conformal theory, `R4` faithful to a
-declared (C,E) with sub-rungs R4 defect (L0, necessary only) / braided (L2) / T and characters (L3) /
+declared (C,E) with sub-rungs R4 defect (L0, necessary only) / sector tensor equivalence (L0+L4, a
+declared net) / braided (L1+L4 with a declared net, modularity concluded; L2 otherwise) / T and characters (L3) /
 one specific theory (L4), `R5` functorial over enrichment-preserving equivalences. The notation
 `->Rj` marks a finite or conditional ingredient that feeds rung j without reaching it. A statement
 that fixes a layer silently is incomplete until tagged.
 **Source:** CA-88 (`report/sections/88_layered_targets.tex`); AGENTS.md Rule 17 and the north-star
 paragraph *Layering principle* (Tobias, 2026-10-22).
-**Sweep status:** CA-88 and the round-2 exploration briefs (`explorations/2026-10-22-astra-r2/`).
+**Sweep status:** CA-88 and the round-2 exploration briefs (`explorations/2026-10-22-astra-r2/`); CA-89--CA-94.
+*Amendment (2026-10-22, round 2):* the R4 sub-rung list gains the sector-tensor-equivalence rung and the
+braided rung drops to L1+L4 (E5 `REVIEW.md:196-203`; CA-93 Theorem 93.8).
+
+## (ar) Ward-to-KS transfer notation (2026-10-22)
+**Scope:** CA-89 only.
+**Choice:** Two-scale graph norm `|X|^{t<-r}_{s,d} := ||K_t^s X K_r^{-s-d}||` (refines (v); superscripts
+dropped within one scale). Geometric modes `S_{r,m} = N^{-1} sum_j f_m(j) Q_{r,j} + b_r delta_{m0}`,
+`f_m(j) = e^{2 pi i m j/N}`, `Q_{r,j}` boundary metric insertions on the positive quotient; discrepancy
+`D_{r,n} := T_{r,n} - S_{r,n}`, `d_{r,n,s} := |D_{r,n}|_{s,1}`. Symmetric difference
+`D_N F(j) = (F(j+1)-F(j-1))/(2 i l_N)`, `l_N = 2 pi/N`, `d_N(m) = sin(m l_N)/l_N`, finite-size multiplier
+`beta_N = 2 d_N(m) - d_N(m+n)`. Cylinder Ward contacts `kappa_3` (third derivative) and `kappa_1` (first
+derivative); with zero-mode shift `b`: `c* = 12 kappa_3`, `c = 24 b - 12 kappa_1`, keeping (s)'s two
+constants. A periodic translation `U_r` (`U_r^N = 1`, `[U_r,K_r] = 0`, commuting with the gates,
+`U_r T_{r,n} U_r^* = e^{-2 pi i n/N} T_{r,n}`) is declared data; for non-braided C with flux sectors it is a
+half-braiding (Z(C)) datum.
+**Known clash:** `D_{r,n}` (discrepancy) and `D_N` (difference operator) are unrelated to the tiles
+`D_alpha` of (ak)/(ao); `X`, `W` in Lemma 89.5 are exchange and Ward errors, not the `W_gamma` cut objects
+of (al).
+**Source:** `explorations/2026-10-22-astra-r2/E4-ward-to-ks-transfer/NOTE.md:33-69`, `:90-141`;
+`REVIEW.md:137-142`, `:206`.
+**Sweep status:** CA-89 only.
+
+## (as) Local unital lift: crossing and support conventions (2026-10-22)
+**Scope:** CA-90.
+**Choice:** The crossing is `t_Y = c_{Y,O}: Y ⊗ O -> O ⊗ Y` (braided case), or a declared pointed unitary
+relative half-braiding `t` on the full fusion subcategory `D = <O>` satisfying (H) of CA-90 Definition 90.H
+(natural, tensorial, unital, `t_Y(1_Y ⊗ eta) = eta ⊗ 1_Y`). The opposite crossing `c^{-1}_{O,Y}` gives a
+different valid tower and is never mixed with it. `B_L` crosses `old_j` with `new_i` exactly when `i < j`,
+with placement `2j-1` per (t). "Support in [j,k]" means membership in `1 ⊗ End(W_{k-j+1}) ⊗ 1`.
+"Preserves grading" means `[N, alpha(a)] = alpha([N, a])` (the (am) degree), not absolute-number
+closeness. Circuit depth `D` and range `w` refer to the contiguous-ancilla input `a -> a ⊗ 1_{W_L}`.
+**Known clash:** `alpha_L` here is the dyadic lift, not the trailing tower `a ⊗ id_O` of (am).
+**Source:** `explorations/2026-10-22-astra-r2/E1-local-unital-lift/NOTE.md:11-26`; `REVIEW.md:49-53`.
+**Sweep status:** CA-90 only.
+
+## (at) Parity-paired KS notation and certificates (2026-10-22)
+**Scope:** CA-91.
+**Choice:** With (ap)'s modes, write `E_n = a_N sum_j z^(nj)(k_j - \varepsilon_N) + b_N delta_(n,0)`,
+`B_n = a_N sum_j z^(nj) \mathcal J_j`, `L_n := T_(r,n) = E_n - B_n`, `S_n := Tbar_(r,-n) = E_n + B_n` (S
+reverses the barred index, not the sign), `D_r := L_0 - S_0 = -2B_0`, and the total current
+`\mathcal Q_N := sum_j \mathcal J_j` (calligraphic, distinct from (ap)'s grading `Q_r`). Ledgers `z^L`, `z^R`
+are separate as in (s). "Parity" means a complex-LINEAR unitary `P_r` with `P_r k_j P_r^* = k_(-j)` and
+`[P_r,K_r] = 0`, with `k_j` on sites `j,j+1` and the bond-centred site reflection `x -> 1-x`; an antiunitary
+(dagger-type) reflection is a different datum (it preserves chirality). PC: `P_r^2 = 1`,
+`P_(r+1)J_r = J_rP_r`. ZC: `||[L_0,S_0]||_(r;s,2) -> 0` for all s. MW:
+`||[D_r,Tbar_(r,n)] - n Tbar_(r,n)||_(r;s,2) -> 0`. "Equal ledgers" is always stated as a hypothesis or
+derived from a linear parity, never assumed silently.
+**Known clash:** `E_n` here (energy mode) is unrelated to CA-79's shells `E_(r,a)` and to CA-89/CA-93
+uses of `E`; `D_r` differs from (ar)'s discrepancy `D_{r,n}`.
+**Source:** `explorations/2026-10-22-astra-r2/E2-parity-and-chirality/NOTE.md:52-71`, `:95-105`,
+`:183-187`, `:298`; `REVIEW.md:37-42`, `:179-187`.
+**Sweep status:** CA-91 only.
+
+## (au) Spatial seam pairing and bent kernel (2026-10-22)
+**Scope:** CA-92.
+**Choice:** `W_+ = O ⊗ Ō`, `W_- = Ō ⊗ O`. A seam pairing is a declared unitary `s: W_+ -> W_-` with
+`s ∘ coev_O = ev_O^†`, a microscopic declaration (not a data layer), fixed independently of `h`; `s ∘ W`
+with `W` unitary in `End(W_+)`, `W coev_O = coev_O`, is the residual gauge.
+`rot(T) = (1⊗1⊗coev_O^†)(1_Ō⊗T⊗1_Ō)(ev_O^†⊗1⊗1)` (associators inserted), complex-linear
+`O⊗Ō -> Ō⊗O`; `K_s(T) = s^† rot(T) ∈ End(W_+)`. Spatial RP means positivity over all half-patch
+insertions. "Linear history" `1+th` and "exact tile" `e^{th}` are kept distinct.
+**Source:** `explorations/2026-10-22-astra-r2/E3-reflection-positivity/NOTE.md:32-55`, `:128-131`;
+`REVIEW.md:122-132`; CA-92.
+**Sweep status:** CA-92 only.
+
+## (av) Expectation cost, bounded exhaustion and auxiliary states (2026-10-22)
+**Scope:** CA-93 and any later finite-approximant index argument.
+**Choice:** For a normal conditional expectation `E: M -> N`, the cost is
+`K(E) := inf{beta >= 1 : E(x) >= beta^{-1} x for all x in M_+}` `= [M:N]_E` of KLM;
+`q(N subset M) := inf_E K(E)`; so `mu_A <= K(E)` for every `E` on the (al) four-interval inclusion. A
+bounded exhaustion of `M` by increasing `M_k subset M` means every `x in M` is the strong-* limit of a
+norm-bounded sequence `x_k in M_k`; it is a hypothesis, never an implicit density theorem. An auxiliary
+state `psi` is a normal state used to construct limits; it is never the physical vacuum (Lemma 80.10),
+and `Omega_psi` is distinguished from the vacuum vector.
+**Known clash:** `K(E)` (cost) is unrelated to the VR-1 control `K_r` of (v).
+**Source:** `explorations/2026-10-22-astra-r2/E5-two-sided-fidelity/NOTE.md:39-66`; `REVIEW.md:55-58`;
+`references/cft-machine/realisation/KawahigashiLongoMuger1999/source.tex:430-443`.
+**Sweep status:** CA-93.
+
+## (aw) Collision forms on the pointed configuration carrier (2026-10-22)
+**Scope:** CA-94 (E6) and later number-changing continuum statements on `F_{C,X}` of (am).
+**Choice:** `E_{c,n} = Hom(c, X^{⊗n})` with the isometry inner product, linear in the second slot; `F` as
+in (am); `K_eps` the Theorem-77.8 box maps on the uniform mesh `eps = 1/L`. `pi_00, pi_X0, pi_0X, pi_XX`:
+coisometries of `O⊗O` onto its summands, `P_XX = pi_XX^dagger pi_XX`. Physical sign `H = sum_j k_j`,
+`k = -h^(ak)` (al); `j = 1..L-1`, no outer penalty. `T_{n,i}`: collision trace on `{x_i = x_{i+1}}` of
+`Delta_n`, collapsed measure `dy = dS/sqrt2`; `D_{n,i} = d_i - d_{i+1}` is the outward flux (not the unit
+normal derivative). `B_{b,n,i}: E_{c,n} -> E_{c,n+1}` inserts `b: X -> X⊗X` at position i;
+`V_{v,n,i}: E_{c,n} -> E_{c,n+2}` inserts `v: 1 -> X⊗X` in gap i on `Gamma_{n,i}`; the lower input is
+pulled back along `(y,t) -> y`. Tuned family: `D_h = pi_X0 - pi_0X`, `D_b = pi_XX - sqrt(eps) b pi_X0`,
+`D_v = pi_XX - eps v pi_00`. Moments: `a_b = sum lambda`, `beta = sum lambda b`, `Q_b = sum lambda b^dag b`,
+`a_v = sum kappa`, `nu = sum kappa v`, `gamma = sum kappa v^dag v`, `a = a_b + a_v`; `M = Hom(X,X⊗X)`,
+`W = Hom(1,X⊗X)`, `G_M`, `G_W` the Gram cones. `(G_r)`: `Hom(X^{⊗p}, X^{⊗q}) = 0` for `0 <= p != q <= r`.
+"Extension of the minimal Laplacian" means containing `A_min = ⊕(-Δ + mu n)` on finite-sector
+`C_c^infty` vectors, vacuum included. Negative tests use `(H - i)^{-1}`; positive results use
+`(H + z)^{-1}`, `z > 0`; a subtraction proportional to `N-hat` is not a scalar. The one-particle band
+bottom in Target 94.16 is written `epsilon_bot`, keeping `e_j` for the (ak) cup-cap tile.
+**Known clash:** `M` here is a Hom space, not the CA-80 inclusion `M` of (al); `D_h, D_b, D_v` are
+positive-square factors, not the (ak) tiles `D_alpha`.
+**Source:** `explorations/2026-10-22-astra-r2/E6-number-changing-continuum/NOTE.md:18-56`, `:135-148`,
+`:528-544`, `:605`; `explorations/2026-10-22-astra/D1-carrier-theory/NOTE.md:91-104`.
+**Sweep status:** CA-94 only.

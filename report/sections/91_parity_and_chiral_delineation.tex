@@ -1,0 +1,260 @@
+% SHARD-ID: CA-91-PARITY-AND-CHIRAL-DELINEATION
+% SHARD-TITLE: Parity, Mixed Koo--Saleur Brackets, and the Chiral/Full Delineation
+% SHARD-SUMMARY: Category-free, periodic (full) setting, both standard KS families VR-1-certified on one system: a complex-linear unitary reflection commuting with K forces c_L = c_R and c*_L = c*_R without convergence of the parity maps; with equal ledgers all mixed brackets vanish iff [T_0, Tbar_0] = 0, certified by N^2[H, Q_tot] -> 0 for the total current Q_tot (conditional R2).
+% SHARD-SUMMARY: Delineation: absent right stress forces scalar left stress and zero anomaly; an antiunitary (dagger) reflection preserves chirality and constrains nothing; parity-odd perturbations exist iff the total current is nonzero (never on O = 1, always after unit-multiplicity enlargement); a conjugate-dual mirror types the non-self-dual case.
+% SHARD-KEYWORDS: parity, reflection, chirality, chiral versus full, Koo-Saleur, mixed brackets, anomaly ledger, c = cbar, VR-1, zero-mode commutator, energy current, current-momentum lemma, antiunitary reflection, parity-odd perturbation, conjugate dual, mirror carrier, non-self-dual, layering
+
+\section{Parity, Mixed Koo--Saleur Brackets, and the Chiral/Full Delineation}
+\label{sec:parity-chiral-delineation}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: conditional \(\mathsf R2\) implications, derived negatives and finite ingredients; every statement
+carries its own label.}  Lifted from the round-2 note E2, graded WEAKER-RESULT-PROVED with \emph{no invalid step}
+(REVIEW.md:11--16, :147--149).  Theorems 91.1, 91.5, 91.6, Propositions 91.2, 91.7, 91.14 and Corollary 91.10 are
+implications from hypotheses (two VR-1 certificates on one system, a linear parity, ZC/MW/PC) that no categorical
+chain is shown to satisfy: \emph{conditional}.  91.3, 91.8, 91.12 are \emph{derived, negative}; 91.4 is
+\emph{derived} (reviewer); 91.9 is a reviewer's numerical observation; 91.11, 91.13, 91.15 are \emph{derived}, finite.  The brief's conjecture is \emph{not}
+proved as worded (REVIEW.md:214--246): part (b) needs the added zero-mode hypothesis, parity transport needs PC,
+and part (c) holds only in the restricted form 91.10.
+\textbf{Layer tags (CONVENTIONS (aq)).}  91.1--91.10 and 91.14: \((\mathrm{full};\ \text{category-free};\ \mathsf R2\
+[\text{cond.}])\); 91.10 is the delineation, speaking about chiral targets from the full setting; 91.3 and 91.8
+are category-free abstract counterexamples testing the \(\mathsf R2\) interface.  91.11--91.13 and 91.15:
+\((\mathrm{any};\ \mathsf L0;\ \to\mathsf R0,\ \text{finite})\).  The note's own ``\(\mathsf L0\)'' tags (NOTE.md:762--769)
+are superseded by the reviewer's retag (REVIEW.md:43--44, :156--166).
+Reproducibility: \path{checks/check_e2.py} (exact SymPy; \path{raw_output.txt}:1--13, identities pass, six
+mutations rejected) and \path{checks/review_e2_checks.py} (reviewer, numpy, a \(\mathrm{Vec}_{\mathbb Z_3}\) non-self-dual
+instance; \path{review_raw_output.txt}:1--10), both in the E2 directory.  No Julia port.
+
+Dependencies: CA-79 (\eqref{eq:79-ks}, Lemma 79.1, Theorems 79.2, 79.8), CA-81 (VR-1), CA-82 (instance), CA-88;
+CONVENTIONS (m), (s), (v), (af), (al), (ap), (aq).
+
+% Source: explorations/2026-10-22-astra-r2/E2-parity-and-chirality/NOTE.md:18-71 scope, range qualification, (1)-(2);
+%   :92-176 E2-P, E2-P0; :178-363 E2-M, E2-Z, Z0; :365-474 E2-S, E2-V; :476-521 E2-C; :523-634 E2-D/D0/A/T, (19);
+%   :636-704 reflection type, E2-R; :741-758 results ledger; :794-817 open problems; :819-829 examples.
+% Source: explorations/2026-10-22-astra-r2/E2-parity-and-chirality/REVIEW.md:11-16 grade; :37-44 (M1) equal ledgers
+%   omitted from abstract, (M2) retag; :50-149 step verdicts (all valid); :151-166 Rule 16/17 audit; :179-187
+%   refutation 4 (antiunitary reflection preserves chirality); :191-196 refutation 6; :208-212 refutation 8; :214-259.
+% Source: explorations/2026-10-22-astra-r2/E2-parity-and-chirality/INTEGRATION.md:8-40 drafted statement (a);
+%   :69-80 amendments; :82-94 grid; :96-121 links; :123-131 next lemma.
+% Source: explorations/2026-10-22-astra-r2/briefs/E2-parity-and-chirality.md:63-86 conjecture; :67-68 brief's parity.
+% Source: cft_machine/research/virasoro_routes.md:55-80 VR-1 A1-A4; :115-137 word convergence; :154-177 non-conclusions.
+% Source: report/sections/79_ks_shell_and_refinement_defect.tex:52-81 (79-ks), Lemma 79.1; :85-92; :188-201 Thm 79.8.
+% Source: references/text/PenneysUnitaryFusionCategories.md:145 dagger conjugate-linear; :442 simple unit;
+%   :682-698 dual functor; :917-935 self-duality; :992-999 unitary duality.
+% Source: references/lattice-symmetry/GransSamuelssonEtAl2020/source/Linnea11.5.tex:791-822 KS energy/current form.
+% Source: explorations/2026-10-22-astra/D6-functor-and-obstruction-theory/REVIEW.md:76-98 chirality objection, gap, fix.
+% Source: explorations/2026-10-22-astra-r2/E3-reflection-positivity/NOTE.md:355-357 "F composed with dagger" antilinear.
+% Source: AGENTS.md:96-115 layering principle (i)-(iii); Rule 17.
+
+\subsection{Two Corrections Recorded First}
+
+\textbf{(1) The reflection must be complex-linear} [derived; reviewer, REVIEW.md:179--187].  The brief's parity is
+``site reflection composed with the pivotal/dagger structure'' (brief:67--68).  Dagger is conjugate-linear
+(Penneys:145), and so is \(f\mapsto(f^\vee)^\dagger\) (NOTE.md:641--653).  Remark 91.4 shows that such a reflection
+\emph{preserves} each chirality and gives no \(c_L=c_R\) constraint; every result below takes a complex-linear
+unitary \(P_r\) as data.  E3's reflection-positivity reflection is conjugate-linear (E3 NOTE.md:355--357), so RP
+reflection and chirality-exchanging parity are distinct data (INTEGRATION.md:102--106).
+\textbf{(2) Equal ledgers are a hypothesis.}  The note's abstract (NOTE.md:8--10) derives mixed commutation from
+locality, two VR-1 certificates and current conservation and \emph{omits} equal anomaly ledgers, which E2-Z
+assumes (NOTE.md:295; REVIEW.md:37--42, (M1)).  Here every statement that uses them lists them; a linear parity
+supplies them (Theorem 91.1).  Dropping them is open: when the mixed brackets are scalars, the 2-cocycle
+condition forces the defect to vanish, but the general case is unproved (REVIEW.md:208--212).
+
+\subsection{Setting}
+
+A tower \((H_r,J_r,K_r)\) as in VR-1 A1, \(N=N_r\to\infty\); on \(H_r\) a unitary translation \(U_r\), \(U_r^N=1\),
+and self-adjoint velocity-one densities \(k_j\) with \(U_rk_jU_r^*=k_{j+1}\), \(k_j\) supported on sites \(j,j+1\), and
+\([k_j,k_l]=0\) unless \(j,l\) are equal or adjacent (cyclically).  In a categorical instance \(k_j=-h_{N,j}/v_N\in
+\operatorname{End}_\Cc(O\otimes O)\) as in (ap); no categorical datum is used before
+\S\ref{sec:parity-ingredients}.  \emph{Range qualification:} for a range-\(R\) density the adjacent current is not the
+conserved-current prescription; range-\(R\) is open (NOTE.md:33--41).  With \(z\), \(a_N=N/4\pi\), \(\mathcal J_j\),
+\(\varepsilon_N\), \(b_N\) of (ap), rewrite \eqref{eq:79-ks} as
+\begin{equation}\label{eq:91-modes}
+  E_n=a_N\sum_jz^{nj}(k_j-\varepsilon_N)+b_N\delta_{n,0},\ \ B_n=a_N\sum_jz^{nj}\mathcal J_j,\ \
+  L_n:=T_{r,n}=E_n-B_n,\ \ S_n:=\bar T_{r,-n}=E_n+B_n,
+\end{equation}
+\(D_r:=L_0-S_0=-2B_0\), total current \(\mathcal Q_N:=\sum_j\mathcal J_j\) (not the grading \(Q_r\) of (ap)).  Ledgers:
+\(z^{L}_{mn}=\delta_{m+n,0}(m^3c_L^*-mc_L)/12\), \(z^R_{mn}\) likewise, with residuals \(F^L_{mn}=[L_m,L_n]-(m-n)L_{m+n}
+-z^L_{mn}\), \(F^R_{mn}\) the same for \(\bar T\) (CONVENTIONS (s)).  Graph norms \(\|A\|_{(s,d)}=\|K^sAK^{-s-d}\|\) (CONVENTIONS
+(v)) obey \(\|AB\|_{(s,d+e)}\le\|A\|_{(s,d)}\|B\|_{(s+d,e)}\).  ``Both families VR-1'' means A1 for the common system and
+A2--A4 for each family with its own constants \(C^{L,R}_{n,s}\), \(q^{L,R}\) and ledger (VR-1:55--80).
+
+\subsection{Parity: Anomaly Balance without Convergence}
+
+\textbf{Theorem 91.1 (E2-P) [conditional; full; category-free; \(\mathsf R2\)].}  \textbf{ASSUME} both families VR-1
+on one system, and complex-linear unitaries \(P_r\) with \(P_rk_jP_r^*=k_{-j}\), \([P_r,K_r]=0\).  \textbf{PROVE} (a) both
+families and all mixed words converge on one invariant domain \(D\); (b) \(c_L=c_R\) and \(c_L^*=c_R^*\).
+\(\langle1\rangle1\). VR-1's domain is built from \((J,K)\) only, and its word telescoping uses A2, A3 one letter at a
+time; label letters by (chirality, \(n\)).  BY VR-1:115--137 (REVIEW.md:51--52).
+\(\langle1\rangle2\). \(P\mathcal J_jP^*=-\mathcal J_{-j-1}\), \(PE_nP^*=E_{-n}\), hence exactly
+\begin{equation}\label{eq:91-offset}
+  P_rL_nP_r^*-\bar T_{r,n}=(z^{-n}-1)B_{-n},\qquad \|\cdot\|_{(s,1)}\le\pi|n|(C^R_{n,s}+C^L_{-n,s})/N.
+\end{equation}
+BY linearity of \(P_r\), the substitution \(l=-j-1\), and A2 (NOTE.md:116--129).
+\(\langle1\rangle3\). Conjugate \(F^L_{mn}\) by \(P_r\), replace each \(PL_jP^*\) by \eqref{eq:91-offset} and subtract
+\(F^R_{mn}\): \(\|(z^R_{mn}-z^L_{mn})1\|_{(s,2)}\le q^L+q^R+O_{m,n,s}(N^{-1})\), uniformly in \(r\).
+\(\langle1\rangle4\). Do not assume a lower bound on \(K_r^{-2}\): transport a fixed coarse vector \(v\neq0\)
+isometrically; A1 keeps \(\|v\|\), \(\|K^2v\|\) constant, so \(z^L_{mn}=z^R_{mn}\).  At \((1,-1),(2,-2)\):
+\(\Delta c^*-\Delta c=0\), \(8\Delta c^*-2\Delta c=0\), so \(\Delta c=\Delta c^*=0\).  QED (NOTE.md:131--150).
+
+\textbf{Proposition 91.2 (E2-P, transport) [conditional; full; category-free; \(\mathsf R2\)].}  If in addition
+\(P_r^2=1\) and \(P_{r+1}J_r=J_rP_r\) (PC), then \(Pi_rv:=i_rP_rv\) extends to a unitary involution preserving \(D\) with
+\(PT_nP^*=\bar T_n\) on \(D\).  BY PC (well-defined), \([P_r,K_r]=0\) (isometric on every \(H_s\)), and
+\eqref{eq:91-offset} in the limit (NOTE.md:152--158).  Only this statement uses PC.
+
+\textbf{Negative 91.3 (E2-P0) [derived; negative].}  For any \(\Cc\), \(O=\one\oplus\one\), embeddings appending
+\(\ket0\), \(K=1\), zero modes and \(P_N\) the site reversal satisfy every hypothesis of 91.1, but \(P_N\) sends the
+embedded first-site excitation to mutually orthogonal vectors: no strong limit, on any subsequence
+(NOTE.md:163--176).  This refutes convergence of the \emph{specified} \(P_r\) only; here the identity intertwines.
+
+\textbf{Remark 91.4 (antiunitary reflection) [derived; reviewer, REVIEW.md:179--187].}  For antiunitary \(\Theta\) with
+\(\Theta k_j\Theta^*=k_{-j}\): \(\Theta\mathcal J_j\Theta^*=+\mathcal J_{-j-1}\), \(\Theta E_n\Theta^*=E_n\) and
+\(\Theta T_{r,n}\Theta^*=E_n-z^nB_n=T_{r,n}+O(|n|/N)\) in \((s,1)\).  \(\Theta\) preserves each family and constrains
+nothing.  Checked exactly at \(N=5,6\) (\path{review_raw_output.txt}:7--8).
+
+\subsection{Mixed Brackets Reduce to One Zero-Mode Commutator}
+
+\textbf{Identity (E2-M \(\langle1\rangle1\)) [derived].}  With \(C_{mn}=[L_m,S_n]\), \(A_{mn}=C_{mn}-C_{nm}\),
+\(\kappa_{mn}=-ia_N(z^n-z^m)\) (Lemma 79.1) and \emph{equal ledgers},
+\begin{equation}\label{eq:91-antisym}
+  A_{mn}=(4\kappa_{mn}-2(n-m))B_{m+n}-F^L_{mn}-F^R_{-m,-n},\qquad |4\kappa_{mn}-2(n-m)|\le2\pi(m^2+n^2)/N,
+\end{equation}
+so \(\|A_{mn}\|_{(s,2)}\to0\).  The central terms cancel \emph{only} by equal ledgers (REVIEW.md:71--76).
+
+\textbf{Theorem 91.5 (E2-Z) [conditional; full; category-free; \(\mathsf R2\)].}  \textbf{ASSUME} both families VR-1
+on one system with \emph{equal ledgers} (e.g.\ by 91.1).  \textbf{PROVE} on \(D\): all \([T_m,\bar T_n]=0\) iff
+\([T_0,\bar T_0]=0\).  A sufficient finite certificate is
+\begin{equation}\label{eq:91-ZC}
+  \textstyle\|[T_{r,0},\bar T_{r,0}]\|_{(s,2)}=\big\|\tfrac{N^2}{8\pi^2}[\sum_jk_j,\mathcal Q_N]\big\|_{(s,2)}\to0\quad\forall s\qquad\text{(ZC)},
+\end{equation}
+since \([L_0,S_0]=2[E_0,B_0]=2a_N^2[\sum_jk_j,\mathcal Q_N]\) (Z0); ZC is sufficient, not claimed necessary.
+\(\langle1\rangle1\). In the limit, \eqref{eq:91-antisym} gives \(C_{mn}=C_{nm}\); \(C_{00}=0\) by hypothesis.
+\(\langle1\rangle2\). Jacobi and the cyclic sum give \(C_{mn}=X_{m+n}:=C_{m+n,0}\) (off-diagonal: \(k=0\); diagonal: the triple
+\((p,n-p,n)\), \(p\notin\{0,n,n/2\}\)); so \(X_0=0\).
+\(\langle1\rangle3\). Using \(X_0=0\) explicitly: \([L_p,X_q]=-qX_{p+q}\), \([S_p,X_q]=qX_{p+q}\).
+\(\langle1\rangle4\). \([[L_1,S_{-1}],X_q]=-q(q-1)X_q+q(q+1)X_q=2qX_q\), while \([L_1,S_{-1}]=X_0=0\); so \(X_q=0\).
+QED (NOTE.md:305--349; REVIEW.md:89--101).  Exact conservation of the total energy current implies ZC; locality
+alone does not (NOTE.md:351--357).  Another sufficient condition: the current--momentum identification (12) of 91.7
+with \(p_r\) a spectral function of \(U_r\), since then \([p_r,\bar T_{r,0}]=0\) (NOTE.md:358--363).
+
+\textbf{Theorem 91.6 (E2-M) [conditional; full; category-free; \(\mathsf R2\)].}  \textbf{ASSUME} 91.5's hypotheses and
+\(\|[D_r,\bar T_{r,n}]-n\bar T_{r,n}\|_{(s,2)}\le\mu_{r,n,s}\to0\) (MW).  \textbf{PROVE} explicit
+\(b_{r,m,n,s}\to0\), computable from finitely many A2, A4, MW constants, with
+\(\|[T_{r,m},\bar T_{r,n}]\|_{(s,4)}\le b_{r,m,n,s}\) (graph loss four).
+\(\langle1\rangle1\) \eqref{eq:91-antisym}.  \(\langle1\rangle2\) \(W_n=[L_0,S_n]=([D_r,S_n]+nS_n)+F^R_{0,-n}\), small in
+\((s,2)\).  \(\langle1\rangle3\) \((n-m)C_{mn}=[L_0,A_{mn}]+nA_{mn}-V_{mn}+V_{nm}\): off-diagonal loss three.
+\(\langle1\rangle4\) with \(a=|n|+1\), \(b=n-a\): \((a-b)C_{nn}=[L_a,C_{bn}]-[L_b,C_{an}]-[F^L_{ab},S_n]\): loss four.  QED; the
+bounds (7)--(11) are at NOTE.md:199--290.  If all \(q,\mu=O(N^{-\gamma})\), \(b=O(N^{-\min(1,\gamma)})\).
+\emph{Reviewer remark} (REVIEW.md:84--87): in the limit MW is \emph{equivalent} to \([T_0,\bar T_n]=0\) for all \(n\);
+91.6's content is the finite-stage rate and the upgrade from that row to all \((m,n)\).
+
+\textbf{Proposition 91.7 (E2-S) [conditional; full; category-free; \(\to\mathsf R2\)].}  \textbf{ASSUME} 91.6 without MW,
+and self-adjoint \(p_r\) with \(U_r=e^{2\pi ip_r/N}\) (lifts of the phases; extra data) and
+\[
+  \|D_r-p_r\|_{(s,1)}\le\delta_{r,s}\to0\ \ (12),\qquad
+  \|[p_r,\bar T_{r,n}]-n\bar T_{r,n}\|_{(s,2)}\le\nu_{r,n,s}\to0\ \ (13).
+\]
+\textbf{PROVE} MW with \(\mu\le\nu+\delta_{r,s}C^R_{n,s+1}+C^R_{n,s}\delta_{r,s+1}\).  BY \(U\bar T_nU^*=z^n\bar T_n\) (blocks
+\(q\to q'\) need \(q'-q-n\in N\mathbb Z\)) and the product rule (NOTE.md:367--394).  A sufficient full-output form
+of (13) is \(\|\bar T_{r,n}F_{r,n}\|_{(s,2)}=O(N^{-1-\epsilon})\) for the projection \(F_{r,n}\) onto \(p\)-eigenspaces within
+\(|n|\) of the branch ends, with \([p,K]=0\) (NOTE.md:396--409).  \emph{The substantive gap is (12)}; a spectral
+fit ``energy \(\approx|\)momentum\(|\)'' does not prove it, and finite range alone leaves an \(O(N^3)\) bound on a mixed
+sum (NOTE.md:411--420).
+
+\textbf{Negative 91.8 (E2-V) [derived; negative; category-free, not a KS chain].}  On \(\ell^2(\mathbb Z)\) put
+\(A_ne_k=(k-n/2)e_{k-n}\), \(Ke_k=(1+|k|)^pe_k\) (\(p>1\) integer), \(H_r=\Span\{e_k:|k|\le2^r\}\), \(T_{r,n}=\bar T_{r,n}=
+\pi_rA_n\pi_r\), \(P_r=1\).  Both families satisfy A1--A4 with \(c=c^*=0\), coherent exchange and linear zero-mode
+spectrum, yet \([T_1,\bar T_{-1}]e_1=2e_1\) (NOTE.md:422--462; A4 residual \(\sim M^{2-2p}\) re-run,
+\path{review_raw_output.txt}:9--10).  Scope: refutes inference from A1--A4 alone; the copies lack opposite spatial
+momenta and \eqref{eq:91-antisym} fails, so it is \emph{not} a counterexample to 91.5's open converse.
+
+\textbf{Remark 91.9 (ZC is a selection condition at finite \(N\)) [numerical; reviewer].}  \(\|[H,\mathcal Q]\|=0\) for an
+XXZ-type density but \(3.1\) (\(N=5\)), \(4.7\) (\(N=6\)) after a swap-symmetric term \(\beta(n_j+n_{j+1})\)
+(\path{review_raw_output.txt}:3--6; REVIEW.md:191--196): exact ZC depends on the density split, not on \(H\).  The
+graph-norm limit is not settled.
+
+\subsection{The Delineation}
+
+\textbf{Corollary 91.10 (E2-C) [conditional; full, delineating chiral targets; category-free; \(\mathsf R2\)].}
+\textbf{ASSUME} 91.1's hypotheses, and \emph{absent right stress}: \(\bar T_n=t\,\delta_{n,0}1\) on \(D\).  \textbf{PROVE}
+\(T_n=t\,\delta_{n,0}1\), \(c_L^*=c_R^*=0\), \(c_L=c_R=24t\); in the normalisation \(c=c^*\), \(t=0\).  PC is not needed.
+\(\langle1\rangle1\). Barred \((1,-1),(2,-2)\): \(0=2t+(c_R^*-c_R)/12\), \(0=4t+(8c_R^*-2c_R)/12\); so \(c_R^*=0\), \(c_R=24t\).
+\(\langle1\rangle2\). 91.1(b) transfers the ledger.  \(\langle1\rangle3\). VR-1 gives \(\|\bar T_{r,n}-t\delta_{n,0}1\|_{(s,1)}\to0\);
+conjugate by \(P_r\) and use \eqref{eq:91-offset}.  QED (NOTE.md:478--500; REVIEW.md:119--124).
+The valid contrapositive is a \emph{disjunction} (NOTE.md:507--516): a nonzero purely chiral target from a periodic
+chain must drop a linear microscopic parity, \emph{or} the common two-family certificate (refinement, state or
+retained carrier), \emph{or} the standard modes or prescribed limit.  ``Chiral targets require parity-breaking
+densities'' is \emph{not} proved.  A chiral subnet of a larger limit is not absent right stress (NOTE.md:503--505).
+
+\subsection{Finite Ingredients for Parity Breaking}
+\label{sec:parity-ingredients}
+
+Here \(\Cc\) is unitary fusion, \(k_j\in\operatorname{End}_\Cc(O\otimes O)\), \(P_N\) a declared linear reflection.
+
+\textbf{Proposition 91.11 (E2-D) [derived; any; \(\mathsf L0\); \(\to\mathsf R0\)].}  \(H_N(\lambda)=\sum_jk_j-\lambda \mathcal Q_N\),
+\(\lambda\in\mathbb R\), is a self-adjoint range-three \(\Cc\)-morphism Hamiltonian with \(P_NH_N(\lambda)P_N^*=H_N(-\lambda)\);
+it breaks \(P_N\) iff \(\lambda \mathcal Q_N\neq0\).  BY \(P\mathcal J_jP^*=-\mathcal J_{-j-1}\) (91.1 \(\langle1\rangle2\)), so \(P\mathcal Q_NP^*=-\mathcal Q_N\) (NOTE.md:529--551).
+For any local self-adjoint \(a\), the translated sum of \(a-\rho(a)\) works if that \emph{sum} is nonzero.
+
+\textbf{Negative 91.12 (E2-D0) [derived; negative; any; \(\mathsf L0\)].}  No perturbation exists on every fixed
+carrier: for \(O=\one\), \(\operatorname{End}_\Cc(\one)=\mathbb C\) (Penneys:442), every density is scalar and \(\mathcal Q_N=0\).
+
+\textbf{Proposition 91.13 (E2-A) [derived; any; \(\mathsf L0\); \(\to\mathsf R0\)].}  On \(O'=O\otimes(\one\oplus\one)\),
+\(N\ge4\), with Pauli flags (CONVENTIONS (m)) and the \emph{bond-centred} site reflection \(x\mapsto1-x\) (the convention
+making \(P k_jP^*=k_{-j}\) possible; REVIEW.md:132--134), \(g_j=X_jX_{j+1}+Z_jZ_{j+1}\) gives
+\(i[g_j,g_{j+1}]=2(X_jY_{j+1}Z_{j+2}-Z_jY_{j+1}X_{j+2})\), a nonzero sum of \(2N\) Hilbert--Schmidt-orthogonal words;
+91.11 applies.  It changes \(O\), adds degrees of freedom and supplies \emph{no} chiral limit (NOTE.md:564--601).
+
+\textbf{Proposition 91.14 (E2-T) [conditional; full; category-free; \(\mathsf R2\) in the fixed representation].}
+Without changing states or modes, \(2a_N(H_N(\lambda)-N\varepsilon_N)+2b_N=(L_0+S_0)+\lambda D_r\to(1+\lambda)T_0+
+(1-\lambda)\bar T_0\) on \(D\); at \(\lambda=1\) the operators \(\bar T_n\) and their ledger remain: a tilt is not deletion
+(NOTE.md:603--619).  No general ``discard one Fermi edge'' functor is established; the sharp Fourier filter onto
+\(M\) modes has \(\Pi_{xy}=(1-z^{M(x-y)})/[N(1-z^{x-y})]\), nonzero at every odd separation for \(M=N/2\) (NOTE.md:621--634).
+
+\textbf{Lemma 91.15 (E2-R, conjugate-dual mirror) [derived; any; \(\mathsf L0\) + unitary spherical duality; \(\to\mathsf R0\)].}
+On \(V_N=\bigoplus_c\Hom_\Cc(c,O^{\otimes N})\), \(f\mapsto(f^\vee)^\dagger\) is conjugate-linear and changes \(O\to O^\vee\),
+\(c\to c^\vee\) (Penneys:145, :682--698).  With \(W_N\) the conjugate Hilbert space of \(\bigoplus_c\Hom(c^\vee,
+(O^{\otimes N})^\vee)\), \(R_Nf=\overline{(f^\vee)^\dagger}\) is a linear unitary, \(\mu_N(a)=\overline{(a^\vee)^\dagger}\) a
+support-reversing \(*\)-representation, and on \(V_N\otimes W_N\) the swap \(P\) with \(d_j=k_j\otimes1+1\otimes R_Nk_{-j}R_N^*\)
+satisfies \(Pd_jP^*=d_{-j}\) and PC for mirrored refinements.  No self-duality or braiding is used
+(Penneys:917--935, :992--999; NOTE.md:665--698).  It doubles the theory; it supplies no state or mode estimate.
+
+\subsection{What This Says about Rule 17's Chirality Layer}
+
+The results \emph{delineate}; they do not \emph{restrict}.  The layering principle keeps chiral and full targets
+both in scope (AGENTS.md:100--103); 91.10 says exactly which hypotheses a chiral target obtained from a periodic
+chain must drop, and nothing more.  \(\mathsf S_{\mathrm{ch}}\) remains a declared tag: a chiral net may arise as a
+subnet of a full limit (D6 REVIEW.md:94--98), from a parity-breaking construction, or with modified modes (CA-82's
+sine chain is reflection-odd and uses modified modes, so it evades 91.10 through the disjunction;
+INTEGRATION.md:118--120).  The Definition~88.1 source gap is narrowed in the restricted parity-paired standard-KS
+sense only; the general lattice-chirality question remains a source gap.
+
+\textbf{Next lemma (zero-mode, current--momentum) [conjectural target].}  Under 91.1's hypotheses with \(U_r\)
+covariant for both families and \([U_r,K_r]=0\), prove \(\|\tfrac{N_r^2}{8\pi^2}[\sum_jk_j,\mathcal Q_r]\|_{(s,2)}\to0\) for every
+\(s\), via (12) for a spectral logarithm \(p_r\) of \(U_r\); \emph{or} exhibit a nearest-neighbour chain (any \(\Cc\),
+even \(\mathrm{Vec}\)) with both VR-1 certificates and \([T_0,\bar T_0]\neq0\) in the limit (INTEGRATION.md:125--131;
+REVIEW.md:248--252).  Either settles the brief's part (b).
+\emph{Further open} (NOTE.md:794--817): PC from a concrete OAR construction; the range-\(R\) current; a
+category-uniform chiral extraction; R3/R4 completion.
+
+\subsection{What This Does Not Claim}
+
+That ZC follows from the other hypotheses; that PC follows from finite symmetries; that chiral targets require
+parity-breaking densities; any categorical edge-discard functor; any categorical chain meeting either VR-1
+certificate; that a Virasoro \emph{algebra} action on \(D\) is the projective-unitary symmetry of the north star
+(NOTE.md:771--774); anything at \(\mathsf R3\)--\(\mathsf R5\).
+
+\begin{center}\footnotesize
+\begin{tabular}{p{3.6cm}p{10.4cm}}
+\toprule
+Instance & Calibration datum for the general statements \\
+\midrule
+Any \(\Cc\), \(O=\one\) & 91.12: all local endomorphisms scalar; no fixed-carrier parity breaking. \\
+Any \(\Cc\), flags \(O\otimes(\one\oplus\one)\) & Exact \eqref{eq:91-offset}, \eqref{eq:91-antisym}, 91.13 at \(N=4\); current HS norm\(^2=512\) (\path{raw_output.txt}:2). \\
+\(\mathrm{Vec}_{\mathbb Z_3}\), \(O=\one\oplus g\) & Non-self-dual: \eqref{eq:91-offset}, \eqref{eq:91-antisym}, Z0, \(P\mathcal QP^*=-\mathcal Q\) exact at \(N=5,6\); site reversal is linear (REVIEW.md:171--174). \\
+Witt shifts (91.8) & Separate certificates, mixed \((1,-1)e_1=2e_1\); not a KS chain. \\
+Ising compiler (CA-82) & Chiral by a reflection-odd sine \(H\) with modified modes: evades 91.10 via the disjunction. \\
+\bottomrule
+\end{tabular}
+\end{center}

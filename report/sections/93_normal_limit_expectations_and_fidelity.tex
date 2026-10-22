@@ -1,0 +1,261 @@
+% SHARD-ID: CA-93-NORMAL-LIMIT-EXPECTATIONS-AND-FIDELITY
+% SHARD-TITLE: Normal Limit Expectations and the Repaired Two-Sided Fidelity Certificate
+% SHARD-SUMMARY: Finite expectations E_k on boundedly exhausting N_k in M_k that preserve one normal state faithful on N, with liminf of Pimsner-Popa costs b finite, have a unique state-preserving normal limit expectation E >= b^{-1} id; no commutants, no complete positivity. Counterexamples X1, X2 and a sharp R(x)1 calibration bound the hypotheses.
+% SHARD-SUMMARY: With b <= Dim C and a fully faithful unitary tensor functor C -> DHR_fin(A) of a completely rational net, mu_A = Dim C and the functor is an equivalence (L0+L4; braided at L1+L4, modularity concluded). This closes route (ii) of CA-80; the doubled chiral net carries Z(C), its diagonal LR extension has trivial DHR category; no instance is known.
+% SHARD-KEYWORDS: conditional expectation, Pimsner-Popa index, normal limit, bounded exhaustion, Jones projection, four-interval inclusion, mu-index, two-sided fidelity, DHR, Longo-Rehren, Drinfeld centre, doubled net, KLM, lattice certificate, E5
+
+\section{Normal Limit Expectations and the Repaired Two-Sided Fidelity Certificate}
+\label{sec:normal-limit-expectations-fidelity}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: mixed; every statement carries its own label.}  Lemmas 93.1--93.2, Corollary 93.3 and
+Proposition 93.4 are \emph{derived} (pure operator algebra); Examples 93.5--93.6 are \emph{derived, negative};
+Example 93.7 is \emph{derived} and was added by the review; Theorem 93.8 and Corollary 93.9 are \emph{derived
+implications} whose hypotheses are not supplied for any \(\Cc\); Proposition 93.10 is \emph{derived, negative};
+Lemmas 93.11--93.13 are \emph{conditional}; the bare minimal-constant variant is \emph{conjectural}; the annular
+approximant lemma is a \emph{proposal}.  Reviewer grade: PROOF-COMPLETE under the stated hypotheses
+(REVIEW.md:10--21, :207--217).  Ordinary structured proofs, not proof-assistant checked.  Reproducibility: exact
+SymPy witnesses in \path{explorations/2026-10-22-astra-r2/E5-two-sided-fidelity/checks/} (\path{check_expectations.py}:
+4 invariant groups, 5 mutations rejected; \path{review_check.py}: X1, X2, calibration); finite algebra calibrations only.
+Unqualified \path{NOTE.md}, \path{REVIEW.md}, \path{INTEGRATION.md} below are the E5 files of that directory.
+\emph{Layer tags} (CONVENTIONS (aq)), \((\mathsf S;\mathsf L;\mathsf R)\):
+93.1--93.7 (any; category-free; \(\to\mathsf R4\));
+93.8 (chiral; \(\mathsf L0{+}\mathsf L4\) for a tensor equivalence, \(\mathsf L1{+}\mathsf L4\) for a braided one;
+\(\mathsf R4\) sector sub-rung, given \(\mathsf R3\));
+93.9--93.10 (full, with a named doubled chiral net; \(\mathsf L2{+}\mathsf L4\); \(\mathsf R4\) for that net);
+93.11--93.13 (chiral, or an identified chiral subnet; \(\mathsf L2{+}\mathsf L4\); conditional \(\mathsf R3\to\mathsf R4\)).
+
+Dependencies: CA-80 (Theorem 80.9, Proposition 80.8, Lemma 80.10, ``The gap, explicitly''), CA-75 item 13,
+CA-88 (Definitions 88.1--88.3); CONVENTIONS (u), (al), (aq).  This shard closes route (ii) of CA-80's gap.
+
+% Source (E5 = explorations/2026-10-22-astra-r2/E5-two-sided-fidelity/):
+% Source: E5/NOTE.md:35-66 -- scoped notation (cost K, q, bounded exhaustion, auxiliary state psi);
+%   :75-99 E5-G; :103-191 E5-L; :195-227 E5-J; :229-258 E5-N; :260-269 selection certificate (O);
+%   :273-317 E5-X1; :319-338 E5-X2; :342-389 E5-F; :393-450 E5-D; :458-492 EP; :494-522 AN; :524-532 ALL;
+%   :560-572 ledger; :599-614 open problems.
+% Source: E5/REVIEW.md:10-21 headline + Q1-Q3; :62-103 G/L/J/N verdicts (N: sigma-finiteness :100-101);
+%   :105-123 X1, X2 (X2 "weak"); :125-134 F; :136-144 D (KLM c18 is the 1D net, :138-140); :146-156 EP/AN caveats;
+%   :158-188 refutation attempts (Vec :160-162, non-braided :165-167, calibration :168-175, abelian :178-180);
+%   :190-205 Rule-17 audit (layer lowered); :207-217 grade and what is not established.
+% Source: E5/INTEGRATION.md:6-53 -- statement as established (its 89.1/89.2/89.3 are 93.2/93.8/93.9 here);
+%   :84-94 CA-88 cells; :95-110 links (E2 chirality caveat :97-100); :112-123 next lemma and non-vacuity.
+% Source: E5/checks/raw_output.txt:1-12; E5/checks/review_raw_output.txt:1-7.
+% Source: explorations/2026-10-22-astra-r2/briefs/E5-two-sided-fidelity.md:66-91 -- the conjecture as posed.
+% Source: references/cft-machine/realisation/KawahigashiLongoMuger1999/source.tex:430-443 -- PP index, [M:N]_E;
+%   :782-792 modular PCT automatic for conformal nets; :969-972 type-I corollary; :1518-1559 l17, c18;
+%   :1086-1098 LR net (time-zero fields); :1578-1587 p18; :1719-1729 c21 mu = sum d^2; :1861-1879 c23;
+%   :1899-1900 sectors are direct sums of finite-dimensional sectors.
+% Source: references/cft-machine/realisation/Bischoff2018/source.tex:604-626 -- conjugate equations, standard
+%   solutions, d = FP dimension; :620-645 spherical structure, C^rev; :660-664 Z(C) ~ C boxtimes C^rev iff modular;
+%   :1150-1154 DHR_fin; :3323-3337 full extension vs doubled subnet, defects.
+% Source: references/categorical-reconstruction/FuchsRunkelSchweigert2002/source/hep.tex:641-646 -- bimodule defects.
+% Source: report/sections/80_lattice_sewing_and_fidelity_certificate.tex:153-159, :168-185, :187-204, :206-212.
+
+\subsection{Scoped Notation}
+
+All inclusions are unital, in \(\BH(\mathcal H)\).  For a normal conditional expectation \(E:\mathcal M\to\mathcal N\) the
+\emph{cost} is \(K(E):=\inf\{\beta\ge1:E(x)\ge\beta^{-1}x\ \forall x\in\mathcal M_+\}=[\mathcal M:\mathcal N]_E\) (KLM:430--443;
+the infimum is attained when finite), and \(q(\mathcal N\subset\mathcal M):=\inf_EK(E)\).  For the four-interval inclusion
+of (al), \(\mu_\Alg\le K(E)\) for every \(E\); KLM's minimum runs over all expectations, which does not affect this
+inequality (REVIEW.md:55--58).  A \emph{bounded exhaustion} of \(\mathcal M\) by increasing \(\mathcal M_k\subset\mathcal M\)
+means: every \(x\in\mathcal M\) is the strong\(^*\) limit of a norm-bounded sequence \(x_k\in\mathcal M_k\); it is a
+hypothesis, not a density theorem (NOTE.md:58--63).  \(\psi\) is an \emph{auxiliary} normal state, never the physical
+vacuum (Lemma 80.10); \(\varphi:=\psi|_{\mathcal N}\).  \(D:=\operatorname{Dim}\Cc=\sum_id_i^2\).
+
+\subsection{The Normal Limit Expectation}
+
+\textbf{Lemma 93.1 [derived; E5-G; any; category-free; \(\to\mathsf R4\)] (positive-graph passage).}
+\textbf{Assume} a normal expectation \(F:\mathcal M\to\mathcal N\), normal expectations \(E_k:\mathcal M_k\to\mathcal N_k\)
+inside \(\mathcal N\subset\mathcal M\), \(b=\liminf_kK(E_k)<\infty\) realised along \(k_j\), and for each
+\(x\in\mathcal M_+\) bounded positive \(x_j\in\mathcal M_{k_j}\) with \(x_j\to x\) and \(E_{k_j}(x_j)\to F(x)\) ultraweakly.
+\textbf{Prove} \(K(F)\le b\).
+\(\langle1\rangle1\). \(E_{k_j}(x_j)-K(E_{k_j})^{-1}x_j\ge0\), BY definition of \(K\).
+\(\langle1\rangle2\). Pairing with normal positive functionals and passing to the limit gives \(F(x)-b^{-1}x\ge0\),
+BY boundedness and closedness of the positive cone.  QED (NOTE.md:84--90).
+
+\textbf{Lemma 93.2 [derived; E5-L; any; category-free; \(\to\mathsf R4\)] (normal limit expectation).}
+\textbf{Assume}
+(i) increasing \(\mathcal N_k\subset\mathcal M_k\) with \(\mathcal N_k\subset\mathcal N\), \(\mathcal M_k\subset\mathcal M\), bounded
+exhaustions of both \(\mathcal N\) and \(\mathcal M\);
+(ii) normal conditional expectations \(E_k:\mathcal M_k\to\mathcal N_k\), \emph{not} assumed compatible;
+(iii) a normal state \(\psi\) on \(\mathcal M\), faithful on \(\mathcal N\), with \(\psi\circ E_k=\psi|_{\mathcal M_k}\) for all \(k\);
+(iv) \(b:=\liminf_kK(E_k)<\infty\).
+\textbf{Prove} there is a unique \(\psi\)-preserving normal conditional expectation \(E:\mathcal M\to\mathcal N\); it satisfies
+\(E(x)\ge b^{-1}x\) on \(\mathcal M_+\) (so \(q(\mathcal N\subset\mathcal M)\le b\)), and \(E\) and \(\psi\) are faithful.  (i)--(iii)
+alone already construct \(E\).
+\(\langle1\rangle1\). For \(n\in\mathcal N_r\), \(k\ge r\), \(a\in\mathcal M_k\), BY bimodularity and (iii):
+\begin{equation}\label{eq:93-pairing}
+  \psi\big(n^*E_k(a)\big)=\psi\big(E_k(n^*a)\big)=\psi(n^*a).
+\end{equation}
+\(\langle1\rangle2\). For bounded \(a_k\to x\) strong\(^*\), every ultraweak cluster point \(y\in\mathcal N\) of \(E_k(a_k)\) obeys
+\begin{equation}\label{eq:93-Q}
+  \varphi(n^*y)=\psi(n^*x)\qquad\forall n\in\mathcal N,
+\end{equation}
+BY \eqref{eq:93-pairing}, normality of \(\psi\), compactness of the ball and bounded exhaustion of \(\mathcal N\).  If \(y,z\) both
+satisfy \eqref{eq:93-Q}, take \(n=y-z\): \(\varphi((y-z)^*(y-z))=0\), so \(y=z\) BY faithfulness of \(\varphi\).  Define \(E(x):=y\);
+it is independent of the approximants, and every bounded approximating sequence has \(E_k(a_k)\to E(x)\) ultraweakly.
+\(\langle1\rangle3\). \(E\) is linear, unital, completely positive and fixes \(\mathcal N\): approximate the entries of
+\(X^{1/2}\) for positive \(X\in M_m(\mathcal M)\) and take positive ultraweak limits (fixed matrix size).
+\(\langle1\rangle4\). \(\psi\circ E=\psi\) (\(n=1\) in \eqref{eq:93-Q}).  \emph{Normality:} if \(x_\alpha\uparrow x\), then
+\(y:=\sup_\alpha E(x_\alpha)\le E(x)\) and \(\varphi(E(x)-y)=\psi(x)-\lim_\alpha\psi(x_\alpha)=0\), so \(y=E(x)\).  This is the step
+finite-stage normality cannot supply (Example 93.5).
+\(\langle1\rangle5\). Bimodularity passes from \(\mathcal N_r\) to \(\mathcal N\) BY \(\langle1\rangle2\) and normality.
+\(\langle1\rangle6\). Uniqueness: any \(\psi\)-preserving normal expectation satisfies \eqref{eq:93-Q}; apply \(\langle1\rangle2\).
+\(\langle1\rangle7\). Bounded positive approximants along a subsequence realising \(b\) satisfy the hypotheses of Lemma 93.1
+BY \(\langle1\rangle2\); hence \(E(x)\ge b^{-1}x\).
+\(\langle1\rangle8\). \(E(x)=0\), \(x\ge0\) forces \(x=0\) BY \(\langle1\rangle7\); \(\psi(x)=0\) forces \(E(x)=0\).  QED
+(full proof NOTE.md:116--187; every step graded valid, REVIEW.md:67--86).
+\emph{Remarks.}  Neither commutants (KLM:507--556) nor complete positivity of \(E_k-\lambda\,\mathrm{id}\) is used;
+type-I or nonfactor approximants cause no difficulty.  Increasing \(\mathcal M_k\) is not used in \(\langle1\rangle1\)
+(REVIEW.md:69).
+
+\textbf{Corollary 93.3 [derived; E5-J; any; category-free].}  Under Lemma 93.2, in the GNS representation of \(\psi\)
+with vector \(\Omega_\psi\) (not the vacuum), the projections onto \(\overline{\mathcal M_k\Omega_\psi}\) converge strongly to
+\(1\), the Jones projections \(e_k\) onto \(\overline{\mathcal N_k\Omega_\psi}\) converge strongly to \(e\) onto
+\(\overline{\mathcal N\Omega_\psi}\), and \(E_k(x_k)\to E(x)\) strong\(^*\) for bounded \(x_k\to x\) strong\(^*\).  Jones convergence is a
+\emph{consequence}, not a substitute for normality or exhaustion (NOTE.md:195--227; REVIEW.md:88--93).
+
+\textbf{Proposition 93.4 [derived; E5-N; any; category-free] (compatible case, exact criterion).}  \textbf{Assume}
+(i), (ii) of Lemma 93.2 with \(E_l|_{\mathcal M_k}=E_k\) (\(l\ge k\)), \(E_0\) the induced map on
+\(\bigcup_k\mathcal M_k\), and a faithful normal state \(\varphi\) on \(\mathcal N\) (exists on a separable Hilbert space,
+REVIEW.md:100--101).  \textbf{Prove} \(E_0\) extends to a normal expectation \(\mathcal M\to\mathcal N\) iff \(\varphi\circ E_0\)
+extends to a normal positive functional on \(\mathcal M\); and if \(b<\infty\), then \(K(E)=\sup_kK(E_k)=\lim_kK(E_k)=b\).
+\(\langle1\rangle1\). Necessity: \(\psi:=\varphi\circ E\).  \(\langle1\rangle2\). Sufficiency: the extension \(\psi\) restricts to
+\(\varphi\) on \(\mathcal N\) and is preserved by every \(E_k\); apply Lemma 93.2; constant sequences show \(E\) extends \(E_0\).
+\(\langle1\rangle3\). Restriction gives \(K(E_k)\uparrow\) and \(\sup_kK(E_k)\le K(E)\); Lemma 93.2 gives \(\le b\).  QED (NOTE.md:242--252).
+\emph{Selection remark.}  If only minimal stage constants \(q_k=q(\mathcal N_k\subset\mathcal M_k)\) are known, a selection
+certificate (O) is needed: expectations with \(K(E_{k_j})\le q_{k_j}+\delta_j\), \(\delta_j\to0\), along a subsequence realising
+\(\liminf q_k\) (NOTE.md:260--269).  The brief's literal minimal-constant form without (O) is \emph{conjectural}: neither
+proved nor refuted (REVIEW.md:16--17, :212).
+
+\subsection{Sharpness of the Hypotheses}
+
+\textbf{Example 93.5 [derived, negative; E5-X1, verified].}  Let \(D_0,D_1\subset\{0,1\}^{\mathbb N}\) be the eventually-0 and
+eventually-1 sequences, \(\mathcal H=\ell^2(D_0\sqcup D_1)\), \(\mathcal M_k\) the functions of the first \(k\) bits on each copy
+independently, \(\mathcal N_k\) the same function on both copies, \(E_k(f_0,f_1)=\big(\tfrac{f_0+f_1}2,\tfrac{f_0+f_1}2\big)\).  The
+\(E_k\) are compatible and normal with \(K(E_k)=q_k=2\), and both exhaust \(\mathcal N=\mathcal M=\ell^\infty(D_0\sqcup D_1)\)
+boundedly; yet \(E_0(P_0)=\tfrac12\ne P_0\) for \(P_0=(1,0)\), so \emph{no} expectation extends \(E_0\).  The failure is of
+normality: \((0,f_k)\downarrow0\) while \(E_k(0,f_k)\downarrow p_d/2\ne0\) (NOTE.md:273--317; REVIEW.md:105--114).  It refutes
+extension of the maps, not index semicontinuity (the limit has \(q=1\le2\)).
+
+\textbf{Example 93.6 [derived, negative; E5-X2].}  \(\mathcal N=\mathbb C1\subset\mathcal M=M_m(\mathbb C)\), \(m\ge2\), on
+\(L^2(\mathcal M,\tau)\), with \(\mathcal N_k=\mathcal M_k=\mathbb C1\): the stage Jones projections \emph{equal} \(e_{\mathcal N}\) and the stage
+cost is \(1\), but \(q(\mathcal N\subset\mathcal M)=m\).  Jones convergence without ambient exhaustion underestimates the index
+(NOTE.md:319--334).  The review notes X2 drops a hypothesis the brief already contained; no counterexample to the
+index inequality under full exhaustion without a normal state is known; the review sketches why none exists in the
+abelian case, and its noncommutative attempts failed (REVIEW.md:118--123, :176--184; open problem NOTE.md:613--614).
+
+\textbf{Example 93.7 [derived; added by the review] (the bound is attained).}  For the hyperfinite factor, \(R\otimes1\subset
+R\otimes M_n\) with \(\mathcal N_k=M_{2^k}\otimes1\subset\mathcal M_k=M_{2^k}\otimes M_n\), \(E_k=\mathrm{id}\otimes\mathrm{tr}\) and \(\psi\) the
+trace: the hypotheses of Lemma 93.2 and Proposition 93.4 hold and \(K(E_k)=n\min(2^k,n)\uparrow n^2=[R\otimes M_n:R\otimes1]\)
+(REVIEW.md:168--171; \path{checks/review_raw_output.txt}:6).  Lemma 93.2 is not vacuous for genuine subfactors.
+
+\subsection{The Two-Sided Fidelity Theorem at its Lowest Layer}
+
+Let \(\mathcal N=\Alg(I_1)\vee\Alg(I_3)\subset\mathcal M=(\Alg(I_2)\vee\Alg(I_4))'\) be the four-interval inclusion of (al).
+
+\textbf{Theorem 93.8 [derived implication; E5-F with layer lowered by REVIEW \S4; chiral; \(\mathsf L0{+}\mathsf L4\) /
+\(\mathsf L1{+}\mathsf L4\); \(\mathsf R4\) given \(\mathsf R3\)].}  \textbf{Assume}
+(F1) \(\Alg\) is a completely rational conformal net on a separable Hilbert space (this is \(\mathsf R3\), not supplied here);
+(F2\(_0\)) \(\Cc\) is unitary fusion and \(\Phi:\Cc\to\mathrm{DHR}_{\mathrm{fin}}(\Alg)\) is a fully faithful unitary tensor functor;
+(F3\(''\)) the hypotheses of Lemma 93.2 (or of Proposition 93.4) hold for the four-interval inclusion with \(b\le D\).
+\textbf{Prove} (a) \(\mu_\Alg=D\), \(\Phi\) is a unitary tensor equivalence onto \(\mathrm{DHR}_{\mathrm{fin}}(\Alg)\), and \(\Alg\) has no
+further irreducible sectors; (b) if \(\Cc\) is braided and \(\Phi\) braided (\(\mathsf L1\)), \(\Phi\) is a braided equivalence and
+\(\Cc\) is \emph{modular}.
+\(\langle1\rangle1\). \(\mu_\Alg\le K(E)\le b\le D\), BY Lemma 93.2 and KLM:430--443.
+\(\langle1\rangle2\). \(\mu_\Alg=\sum_\rho d(\rho)^2\) over all irreducible finite sectors, BY KLM:1719--1729 (c21), whose modular
+PCT hypothesis is automatic for conformal nets (KLM:782--792); every sector is a direct sum of finite-dimensional ones
+(KLM:1899--1900).
+\(\langle1\rangle3\). The image of \(\Phi\) contributes exactly \(D\): simples stay simple and pairwise inequivalent (full
+faithfulness), and \(d(\Phi(i))=\mathrm{FPdim}(i)=d_i\) \emph{automatically}, since statistical dimension is the
+Frobenius--Perron dimension (B:620--626; REVIEW.md:197--199).  No dimension-preservation hypothesis is needed.
+\(\langle1\rangle4\). An irreducible sector outside the image adds \(d(\rho)^2>0\), contradicting \(\langle1\rangle1\)--\(\langle1\rangle3\);
+\(\Phi\) is essentially surjective; the inverse is chosen unitary (NOTE.md:376--377).  No braiding is used (REVIEW.md:200--201).
+\(\langle1\rangle5\). At \(\mathsf L1\) a braided equivalence results; \(\mathrm{DHR}_{\mathrm{fin}}(\Alg)\) is nondegenerate BY KLM:1861--1863
+(c23), hence so is \(\Cc\).  Twists and ribbon traces for the canonical positive spherical structure are preserved
+(B:617--645; REVIEW.md:128--131).  QED.
+\emph{Scope.}  For a non-braidable \(\Cc\) (F2\(_0\)) is unsatisfiable (the image would inherit a braiding), so 93.8 is vacuous
+there (REVIEW.md:165--167).  \(T\), characters and a central-charge lift remain \(\mathsf L3\) data (CONVENTIONS (u)).
+The chiral tag must be read with E2's caveat: a parity-paired KS limit carries both stress families, so a chiral target
+needs parity breaking or is the left chiral subnet of a full limit (INTEGRATION.md:97--100).
+
+\subsection{The Full-Setting Corollary and a False Reading}
+
+\textbf{Corollary 93.9 [derived; E5-D; full, named doubled chiral net; \(\mathsf L2{+}\mathsf L4\); \(\mathsf R4\) for that net].}
+\textbf{Assume} Theorem 93.8 at \(\mathsf L2\) (\(\Cc\) modular).  \textbf{Prove} KLM's net \(\Alg\otimes\Alg^{\mathrm o}\) has
+\(\mathrm{DHR}_{\mathrm{fin}}(\Alg\otimes\Alg^{\mathrm o})\simeq\Cc\boxtimes\Cc^{\mathrm{rev}}\simeq Z(\Cc)\), of dimension \(D^2\).
+\(\langle1\rangle1\). Irreducible sectors are exactly \(\rho_i\otimes\rho_j^{\mathrm o}\) (KLM:969--972, :1518--1559, l17, c18);
+intertwiners and exchanges factor, the right copy with reversed braiding \(\varepsilon^{\mathrm o}=j(\varepsilon)^*\)
+(KLM:1089--1092; B:643--645).  \(\langle1\rangle2\). \(Z(\Cc)\simeq\Cc\boxtimes\Cc^{\mathrm{rev}}\) iff modular (B:660--664);
+\(\sum_{ij}(d_id_j)^2=D^2\).  QED (NOTE.md:407--419).
+\emph{Which net.}  KLM's c18 concerns their \emph{one-dimensional} net \(\Alg\otimes\Alg^{\mathrm o}\) (time-zero picture); the
+corresponding statement for the 2D light-ray product \(\Alg\otimes\bar\Alg\) on \(\mathbb R\times\mathbb R\) is not locally sourced
+(REVIEW.md:138--140): a Law~1 gap, recorded, not filled.
+
+\textbf{Proposition 93.10 [derived, negative].}  For modular \(\Cc\ne\mathrm{Vec}\) realised as in 93.8, the canonical
+(diagonal) Longo--Rehren extension \(\mathcal B_2\supset\Alg\otimes\Alg^{\mathrm o}\) (KLM:1086--1098) has \emph{trivial} finite
+DHR category: by KLM:1578--1587 (p18) and :1861--1879 (c23, \(\mu_{\mathcal B}=1\)) it has no nontrivial bounded-localised
+finite-index endomorphism, and double-cone sectors restrict to time-zero interval sectors by cofinality (NOTE.md:425--440).
+Since \((a,\one)\) is a nonunit simple of \(Z(\Cc)\), \emph{``\(\mathrm{DHR}\) of the full diagonal extension is \(Z(\Cc)\)'' is false
+as stated} (NOTE.md:441--444; REVIEW.md:20--21).  Correct readings: \(Z(\Cc)\) is the sector category of the doubled chiral
+net, or the centre of the diagonal theory's defect category, which is \(\Cc\) itself (FRS:641--646; NOTE.md:446--450);
+a general full extension declares its own bimodule category (B:3323--3337).
+
+\subsection{What a Lattice Construction Must Supply}
+
+\textbf{Lemma 93.11 [conditional; E5-EP; chiral; \(\mathsf L2{+}\mathsf L4\); \(\to\)(F2), \(\to\mathsf R4\) given \(\mathsf R3\)].}  Finite charged endpoint operators, junction
+matrices for bases of \(\Hom_\Cc(a,b)\), tensorators and conjugate pairs, with bounded product/adjoint limits that are
+unital, multiplicative, locally normal, localised and transportable; identity errors \(\to0\) (both \(U_k^*U_k\to1\) and
+\(U_kU_k^*\to1\)); limiting conjugate pairs proved \emph{standard}; and a fullness certificate (bounded coefficient
+approximation of every limiting intertwiner), imply the functor of (F2) (NOTE.md:458--492).  The review notes the fullness
+certificate nearly restates fullness (REVIEW.md:151--153).
+
+\textbf{Lemma 93.12 [conditional; E5-AN; chiral; \(\mathsf L2{+}\mathsf L4\); \(\to\)(F3\('')\)].}  Represented finite inclusions \(\mathcal N_k\subset\mathcal M_k\)
+with \(\mathcal N_k\subset\mathcal N\), \(\mathcal M_k\subset\mathcal M\), bounded exhaustions of \emph{both}, matrix expectations with
+\(E_k(x)\ge b_k^{-1}x\) and \(\liminf b_k\le D\), and a common normal non-vacuum state (or criterion 93.4), give (F3\('')\) and
+Corollary 93.3 (NOTE.md:494--522).  The literal inclusions must come from the inductive-limit embedding: an extra
+obligation (REVIEW.md:154--156).  No commutant and scaling limit may be interchanged.
+
+\textbf{Lemma 93.13 [conditional; E5-ALL; chiral; \(\mathsf L2{+}\mathsf L4\); \(\mathsf R3\to\mathsf R4\)].}  If one lattice/OAR system has an identified completely
+rational conformal limit net and 93.11, 93.12 hold in that representation, Theorem 93.8 applies (NOTE.md:524--532).  It
+derives no \(\mathsf R1\)--\(\mathsf R3\) and no convergence to \(\mathcal B_2\).
+
+\textbf{Non-vacuity caveat.}  No instance of Lemma 93.2's hypotheses is known for a type \(\mathrm{III}_1\) four-interval
+inclusion.  That inclusion is irreducible with finite index, so its expectation is unique and \(K(E)=\mu_\Alg\)
+(REVIEW.md:56--58); certifying costs must therefore have \(\liminf K(E_k)=\mu_\Alg\) \emph{exactly} (and \(\lim\), in the
+compatible case 93.4): a sharp lattice demand (REVIEW.md:173--175).  Without an instance, 93.8 is a correct
+implication with no known application (INTEGRATION.md:121--123).
+
+\textbf{Next lemma [proposal; any; category-free, then \(\mathsf L0{+}\mathsf L4\)] (annular approximant lemma).}  For a sourced
+completely rational net, construct increasing finite-dimensional \(\mathcal N_k\subset\mathcal M_k\) inside the four-interval
+inclusion with bounded exhaustion of both, a non-vacuum normal state preserved by the \(E_k\), and \(K(E_k)\to\mu_\Alg\);
+equivalently, show the minimal-cost expectations of some exhausting family preserve one normal state
+(INTEGRATION.md:114--123).
+
+\textbf{Effect on CA-80.}  This closes route (ii) of CA-80's ``The gap, explicitly'' (CA-80:198--202), with a common
+normal state replacing compatibility and without complete positivity; routes (i) and (iii) are unnecessary.  Theorem 80.9
+is now conditional on (F1) only, given the 93.2 certificate.  Proposition 80.8 and Lemma 80.10 stay in force.
+
+\subsection{What This Does Not Claim}
+
+No lattice family, annular approximant, common normal state, endpoint functor or completely rational limit net is
+constructed for any \(\Cc\); (F1) is \(\mathsf R3\) and assumed.  The minimal-constant variant without (O), index
+semicontinuity without a normal state, and non-vacuity for conformal-net inclusions are not established
+(REVIEW.md:211--215).  Nothing identifies \(T\), characters, \(c\) or OPE data, gives \(\mathsf R5\), or shows lattice convergence to
+the Longo--Rehren full extension.
+
+\begin{center}\footnotesize
+\begin{tabular}{p{3.6cm}p{10.4cm}}
+\toprule
+Instance & Calibration datum for the general statements \\
+\midrule
+\(\Cc=\mathrm{Vec}\) & \(D=1\): 93.8 gives \(\mu_\Alg=1\), a holomorphic net; consistent, degenerate (REVIEW.md:160--162). \\
+Non-braidable \(\Cc\) (e.g.\ Haagerup) & (F2\(_0\)) unsatisfiable; 93.8 vacuous; full setting via \(Z(\Cc)\) instead. \\
+Any modular \(\Cc\ne\mathrm{Vec}\) & Doubled net \(Z(\Cc)\), \(D^2\); diagonal LR extension: \(\mathrm{Vec}\) (93.9, 93.10). \\
+Two-copy cylinders (X1) & Stage cost 2, compatible, full exhaustion; no normal extension (93.5). \\
+\(\mathbb C1\subset M_m\) (X2) & Equal Jones projections, stage cost 1, true cost \(m\) (93.6); commutant \(n\) vs \(n^2\) is CA-80's gap. \\
+\(R\otimes1\subset R\otimes M_n\) & Stage costs \(n\min(2^k,n)\uparrow n^2\): bound attained (93.7). \\
+\bottomrule
+\end{tabular}
+\end{center}
