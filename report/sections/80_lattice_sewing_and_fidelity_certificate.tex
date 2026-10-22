@@ -1,0 +1,266 @@
+% SHARD-ID: CA-80-LATTICE-SEWING-AND-FIDELITY-CERTIFICATE
+% SHARD-TITLE: Exact Lattice Cells, Temporal Reflection Positivity, and a Two-Sided Fidelity Certificate
+% SHARD-SUMMARY: For any unitary fusion category C, finite history-sum patches sew exactly along tile legs (inverse Gram, F^{-T} dual bases); temporal reflection positivity is blockwise positivity of the seam operator, forcing h self-adjoint but no sign rule on tile coefficients; Ward residuals obey an exact product rule.
+% SHARD-SUMMARY: Fusion operators alone never certify fidelity (D_a = d_a 1); a fully faithful endpoint functor plus an annular index bound mu <= Dim B forces braided equivalence onto the complete sector category, conditional on an index limit step that finite-dimensional Pimsner-Popa bounds do not currently supply.
+% SHARD-KEYWORDS: lattice sewing, history sum, reflection positivity, Gram contraction, dual basis, Ward residual, Duhamel, defect operators, fidelity, Pimsner-Popa index, four-interval inclusion, KLM, Verlinde, character growth, chiral versus full
+
+\section{Exact Lattice Cells, Temporal Reflection Positivity, and a Two-Sided Fidelity Certificate}
+\label{sec:lattice-sewing-fidelity-certificate}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: mixed; every statement carries its own label.}  Lemmas 80.1--80.6 are \emph{derived},
+finite, and hold for every unitary fusion \(\Cc\) (no braiding used).  Lemma 80.7 is \emph{conditional};
+Proposition 80.8 and Lemma 80.10 are \emph{derived, negative}.  Theorem 80.9 is \emph{conditional} with a
+named gap: its checkable finite-dimensional form is \emph{not} proved (the review graded the original
+``overstated'').  Lemmas 80.11--80.12 are \emph{conditional}; Conjecture 80.C is \emph{conjectural}; the
+chiral-versus-full target is an \emph{open decision}.  This shard answers part of CA-75 row (6) and Link~(a)
+and the ``exclusion of unintended sectors'' in CA-75 contract item 13.  Reproducibility: exact SymPy checks
+in the exploration directory (\path{checks/check_cells.py}: six invariant groups pass, five mutations
+rejected; \path{checks/review_pp_constant.py}); a Julia port is an open item.
+
+Dependencies: CA-66, CA-75, CA-82 (instance only), CA-86 (Lemma 86.1); LC-4, LC-9 (Lemma FP-D), LC-12 \S5;
+CONVENTIONS (r), (af), (ak), and the entry (al) (bond energy \(k_j\); see the boundary paragraph).
+
+% Source: explorations/2026-10-22-astra/D5-fidelity-lattice-sewing/NOTE.md:138-323 -- cells, D5-S/P/R/G/W.
+% Source: explorations/2026-10-22-astra/D5-fidelity-lattice-sewing/NOTE.md:346-389 -- D5-D and the scalar falsifier; :391-396 D1 proposal.
+% Source: explorations/2026-10-22-astra/D5-fidelity-lattice-sewing/NOTE.md:398-456 -- D5-F; :458-504 D5-A; :506-515 D5-V.
+% Source: explorations/2026-10-22-astra/D5-fidelity-lattice-sewing/NOTE.md:525-606 -- D5-M, D5-H; :10-64 D5-C.
+% Source: explorations/2026-10-22-astra/D5-fidelity-lattice-sewing/REVIEW.md:113-128 -- grades; :130-142 notes (a)-(e);
+%   :70-80 KLM commutant gap; :144-165 D5-F repairs; :167-178 D5-A, D5-M; :182-211 D5-C refutation tries.
+% Source: explorations/2026-10-22-astra/D5-fidelity-lattice-sewing/checks/review_pp_constant_output.txt:1-3 -- PP index n vs n^2.
+% Source: explorations/2026-10-22-astra/D5-fidelity-lattice-sewing/INTEGRATION.md:111-134 -- verdict, first attackable lemma.
+% Source: reconstruction/09_four_port_equations.md:102-123 -- Lemma FP-D, U = F^{-T}.
+% Source: reconstruction/04_cutoff_oar.md:29,39; CONVENTIONS.md:1203 -- h=-G'(0); continuity identity.
+% Source: CONVENTIONS.md:1397-1428 -- (ak) tiles, H=-sum h_j, e_j=b_j d_j the cup-cap tile, odd bonds first.
+% Source: report/sections/86_spacetime_trotter_dictionary.tex:61-110 -- U=AB brick product, Lemma 86.1.
+% Source: references/cft-machine/realisation/KawahigashiLongoMuger1999/source.tex:430-443 -- PP index;
+%   :507-530 -- Prop. p3, increasing case "after taking commutants"; :688-702, :782-792, :1719-1729
+%   -- complete rationality, modular PCT, mu = sum d(rho)^2; :1899-1900 -- sectors are finite sums.
+% Source: references/cft/AasenFendleyMong2020/source/_fusion_categories_and_diagrammatics.tex:85-88
+%   -- d_a d_b = sum_c N_ab^c d_c.   literature/md/2107.11177/2107.11177.md:1112 -- d_a = d_{bar a}.
+% Source: references/cft/AasenFendleyMong2020/source/_applications_of_trivalent_junctions.tex:123-128
+%   (AFM-J) and _Statistical_mechanics_from_fusion_categories.tex:775 (AFM-S) -- lattice and CFT categories typically differ.
+% Source: references/cft-machine/realisation/Bischoff2018/source.tex:364-372 -- open UMTC realisation problem.
+% Source: reviews/2026-07-06_pipeline_consistency_scoping/PLAN.md:244-247 -- decision D1 (chiral vs full).
+% Source: explorations/2026-10-22-astra/D6-functor-and-obstruction-theory/NOTE.md:8-34 (chiral headline);
+%   D6 REVIEW.md:20-24, :74-100; D2 NOTE.md:18-30 and D4 NOTE.md:18-26 (full two-chiral targets);
+%   D4 NOTE.md:510-527 and D4 REVIEW.md:225 -- D4-G, conditional-ok, sharp c > 1.
+
+\subsection{Setting and Notation}
+
+\(\Cc\) is unitary fusion with site object \(O\) (CONVENTIONS (r)).  Following (ak), \(H=-\sum_jh_j\),
+\(h_j\in\operatorname{End}_\Cc(O\otimes O)\), \(h_j=\sum_\alpha c_\alpha D^{(j)}_\alpha\) in the elementary
+tiles \(D_\alpha\); \(e_j=b_jd_j\) is \emph{only} the cup-cap tile.  The \emph{exact tile} is
+\(\mathcal T_j(t):=e^{th_j}=\sum_\alpha w_\alpha(t)D^{(j)}_\alpha\); its coefficients \(w_\alpha(t)\) differ
+from \(c_\alpha\) (CA-86's first-order weight is \(w_\alpha=\delta\tau\,c_\alpha\)).  The positive bond
+energy is \(k_j:=-h_j\), so \(H=\sum_jk_j\), with current \(J_j:=i[k_j,k_{j+1}]\); \(k_j\) is the density
+called \(h_{(n,j)}\) in (af) and LC-4.  A cut \(\gamma\) carrying ordered object \(W_\gamma\) has Hilbert
+space \(\mathcal H_\gamma=\bigoplus_{a\in\Irr\Cc}\Hom_\Cc(a,W_\gamma)\), all charges and multiplicities
+kept; this is not a tensor factorisation across a fusion constraint.  Hermitian forms are linear in the
+second slot.  A finite patch \(P\) is a fixed oriented brick graph with input/output cuts, and
+\[
+  Z_P=\sum_{\Gamma\text{ on }P}\Big(\prod_pw_{p,\alpha_p}\Big)\operatorname{Ev}_\Cc(\Gamma),
+\]
+internal labels summed and external labels free; with exact tiles there is no \(O(\delta\tau^2)\)
+remainder (contrast Lemma 86.1).
+
+\subsection{Exact Cells and Sewing}
+
+\textbf{Lemma 80.1 [derived; D5-S, REVIEW ``confirmed''].}  \textbf{Assume} finite patches \(P,Q\) sharing a
+cut \(\gamma\) that runs \emph{along tile legs} (a zigzag through no plaquette) with compatible
+orientation, a basis \(\{u_A\}\) of \(\mathcal H_\gamma\) with Gram matrix \(\mathbf G_{AB}=\langle
+u_A,u_B\rangle\), and synthesis map \(U\).  \textbf{Prove} \(Z_{Q\circ P}=Z_Q\big(\sum_{AB}\ket{u_A}
+(\mathbf G^{-1})_{AB}\bra{u_B}\big)Z_P=Z_QZ_P\), and dual block bases transform by \(F^{-T}\).
+\(\langle1\rangle1\). A history on the sewn graph is a pair of histories with a common interface label;
+weights multiply and evaluations compose.  BY the definition of \(Z\).
+\(\langle1\rangle2\). \(\mathbf G=U^\dagger U\) gives \(U\mathbf G^{-1}U^\dagger=1_{\mathcal H_\gamma}\); summing the
+common labels is this insertion.  BY \(\langle1\rangle1\).
+\(\langle1\rangle3\). With tree kets \(t_L=Ft_R\), a dual basis \(b_L=\tilde Ub_R\) satisfies \(\tilde UF^T=1\),
+so \(\tilde U=F^{-T}=\overline F\) in unitary gauge.  This is LC-9 Lemma FP-D (the continuum statement)
+restated at a lattice cut.  QED.
+Regroupings of one weighted graph agree; an \(F\)-move changes basis but does not identify two
+different weighted brick graphs.
+
+\subsection{Temporal Reflection Positivity}
+
+\textbf{Lemma 80.2 [derived; D5-P, ``confirmed''].}  \textbf{Assume} a temporal reflection cut whose
+quotient \(\mathcal H_\gamma\) is spanned by half-patch insertions \(x_r\), and seam operator
+\(\Sigma=\sum_\alpha w_\alpha D_\alpha\).  \textbf{Prove} all-insertion reflection positivity holds iff
+\(\Sigma\ge0\), iff each charge block \(\Sigma^a=[w_{a,\mu\nu}]\ge0\) in multiplicity matrix units.
+\(\langle1\rangle1\). The reflected gluing is \(Q_{rs}=\langle x_r,\Sigma x_s\rangle\), BY Lemma 80.1 and the
+dagger reflection.  \(\langle1\rangle2\). \(\sum\bar z_rz_sQ_{rs}=\langle x,\Sigma x\rangle\) with \(x=\sum
+z_sx_s\) ranging over \(\mathcal H_\gamma\) by spanning.  \(\langle1\rangle3\). \(\operatorname{End}_\Cc(W)
+=\bigoplus_a\operatorname{End}(H_a)\) faithfully, so positivity is blockwise; categorical weights
+\(d_a>0\) do not change it.  QED.
+
+\textbf{Corollary 80.3 [derived; coefficient constraints].}  (i) If \(\mathcal T(t)\) is reflection
+positive for all \(t\in[0,\varepsilon)\) (spanning as in Lemma 80.2), then \(h=\lim_{t\downarrow0}(\mathcal T(t)-1)/t\) is a limit of
+self-adjoint operators, so \(h=h^\dagger\).  (ii) If \(h=h^\dagger\), \(e^{th}>0\) for every real \(t\).
+Writing \(D_\alpha^\dagger=\sum_\beta J_{\beta\alpha}D_\beta\), the condition is
+\(c_\beta=\sum_\alpha J_{\beta\alpha}\overline{c_\alpha}\) (in matrix units
+\(c_{a,\mu\nu}=\overline{c_{a,\nu\mu}}\)).  \textbf{No sign condition \(c_\alpha\ge0\) is necessary}, and
+positive coefficients are not sufficient; for \(h=h^\dagger\) a linearised tile \(1+th\) is positive iff
+\(\lambda_{\min}(h^a)\ge-1/t\) on every block (\(t>0\)).
+
+\textbf{Lemma 80.4 [derived; D5-R and REVIEW note (e)].}  \textbf{Assume} \(h_j=h_j^\dagger\), mutually
+commuting terms within the odd and within the even layer, \(A=\prod_{\mathrm{odd}}e^{th_j}\),
+\(B=\prod_{\mathrm{even}}e^{th_j}\), \(t\) real.  \textbf{Prove} \(R=A^{1/2}BA^{1/2}>0\), \(R'(0)=\sum_jh_j=-H\),
+and \(R=A^{-1/2}(AB)A^{1/2}\); hence CA-86's row \(U=AB\) is similar to a positive operator and
+\(\Tr(AB)^m=\Tr R^m>0\).
+\(\langle1\rangle1\). \(A,B>0\): commuting positive factors.  \(\langle1\rangle2\).
+\(R=(B^{1/2}A^{1/2})^\dagger(B^{1/2}A^{1/2})\) is invertible, so \(R>0\).  \(\langle1\rangle3\). Product rule
+at \(t=0\): two half odd layers give one odd sum.  \(\langle1\rangle4\). Similarity is
+\(A^{-1/2}ABA^{1/2}=A^{1/2}BA^{1/2}\).  QED.
+At fixed volume \(R^M\to e^{-\beta H}\) as the step shrinks; no uniform-in-volume rate is claimed.
+Range-\(r\) densities need an \(r\)-layer palindromic schedule (REVIEW \S5), routine but not written.
+
+\textbf{Lemma 80.5 [derived; D5-G, energy-resolved positivity].}  \textbf{Assume} a finite collar generator
+\(E=E^\dagger\ge0\) with spectral projections \(P_\lambda\) and \(X\) mapping external states to the cut.
+\textbf{Prove} \(Q(t)=X^\dagger e^{-tE}X=\sum_\lambda e^{-t\lambda}X^\dagger P_\lambda X\) has
+\((-1)^kQ^{(k)}(t)\ge0\), and every multi-time kernel \([X_r^\dagger e^{-(t_r+t_s)E}X_s]_{rs}\ge0\).
+\(\langle1\rangle1\). Each coefficient is \((P_\lambda X)^\dagger(P_\lambda X)\).  \(\langle1\rangle2\).
+\(\lambda^ke^{-t\lambda}\ge0\).  \(\langle1\rangle3\). The kernel's form is \(\|\sum_se^{-t_sE}X_su_s\|^2\).  QED.
+Pointwise positivity does not suffice: \(Q(t)=1-\tfrac12e^{-t}>0\) has a negative energy-one coefficient,
+and its two-time determinant is \(-\tfrac12(e^{-t_1}-e^{-t_2})^2<0\).
+
+\textbf{Lemma 80.6 [derived finite identities; D5-W].}  For differentiable \(h(s)\),
+\(\partial_se^{th(s)}=\int_0^te^{(t-u)h}(\partial_sh)e^{uh}\,du\) (variation of constants), and for
+nearest-neighbour \(k_j\) with disjoint-support commutativity
+\(i[H,k_j]=J_{j-1}-J_j\) (this restates (af) and LC-4:39).  For a proposed connection with residual
+\(W_X=\nabla_XZ\), \(W_X(Z_m\cdots Z_1)=\sum_kZ_m\cdots Z_{k+1}W_X(Z_k)Z_{k-1}\cdots Z_1\) and
+\(F_{\mathrm{out}}(X,Y)Z-ZF_{\mathrm{in}}(X,Y)=\nabla_XW_Y-\nabla_YW_X-W_{[X,Y]}\) (anomaly line in
+``out'').  For contractions \(\|W_X(Z_m\cdots Z_1)\|\le\sum_k\|W_X(Z_k)\|\): over a growing patch the
+\emph{total} residual must vanish; small per-tile error is insufficient.  Conformality, the flux and
+improvement equations of LC-4, and scalar curvature are \emph{not} derived.
+
+\textbf{Coverage of CA-75 Link (a).}  (a2) is answered only for cuts along tile legs.  \emph{Not covered:}
+straight spatial seams through plaquettes (the case Link (a2) actually poses), the anomaly-line limit, and
+\emph{spatial} reflection positivity, whose crossing-kernel test changes with the leg reshuffling
+(NOTE.md:231--239).  (a3) gains only the total-residual bookkeeping; (a1) and (a4) are untouched.
+
+\subsection{Defect Operators Do Not Certify Fidelity}
+
+\textbf{Lemma 80.7 [conditional; D5-D, ``conditional-ok''].}  \textbf{Assume} isometric WT-compatible
+embeddings \(J_n\), uniformly bounded defects \(D_{a,n}\) with \(D_{\one,n}=1\),
+\(D_{a,n}D_{b,n}=\sum_cN_{ab}^cD_{c,n}\), \(D_{a,n}^\dagger=D_{\bar a,n}\), and summable
+\(\|D_{a,n+1}J_n-J_nD_{a,n}\|\le\epsilon_{a,n}\) (likewise for adjoints).  \textbf{Prove} strong limits
+\(D_a\) exist and obey the same relations; they commute with the limiting dynamics if the bounded
+evolutions and their commutators converge strongly.  \emph{Sketch:} telescoping with tail
+\(\|v\|\sum_{k\ge n}\epsilon_{a,k}\) on the dense union, extension by uniform bounds, and strong convergence
+of products of uniformly bounded strongly convergent sequences (NOTE.md:356--363).
+
+\textbf{Proposition 80.8 [derived, negative; scalar falsifier].}  For every unitary fusion \(\Cc\), \(D_a:=d_a1\)
+satisfies every hypothesis-level relation of Lemma 80.7 (by \(d_ad_b=\sum_cN_{ab}^cd_c\) and
+\(d_{\bar a}=d_a\)), commutes with every \(H\), and carries no charge separation; for \(|\Irr\Cc|>1\) it is a
+nonfaithful representation of the fusion algebra.  Hence convergent fusion operators, fusion relations and
+commutation with \(H\) cannot certify fidelity for any \(\Cc\).  Actual sectors need localised, locally
+normal, transportable endomorphisms with convergent junctions; Gram lower bounds give only injectivity, not
+fullness (NOTE.md:374--381).
+
+\subsection{The Two-Sided Certificate}
+
+Fix four cyclically ordered intervals covering \(S^1\) up to endpoints;
+\(\mathcal N=\Alg(I_1)\vee\Alg(I_3)\subset\mathcal M=(\Alg(I_2)\vee\Alg(I_4))'\), and
+\(\mu_\Alg=[\mathcal M:\mathcal N]\), the minimal Pimsner--Popa index (KLM:430--443).  Let \(\mathsf B\) be the
+declared chiral UMTC, \(\operatorname{Dim}\mathsf B=\sum_id_i^2\).
+
+\textbf{Theorem 80.9 [conditional; D5-F in the review's repaired form].}  \textbf{Assume}
+(F1) the OAR limit is a completely rational conformal net \(\Alg\) (irreducible, strongly additive, split,
+with modular PCT; none of this follows from WT-1/VR-1);
+(F2) lattice endpoints give a fully faithful unitary braided tensor functor
+\(\Phi:\mathsf B\to\mathrm{DHR}_{\mathrm{fin}}(\Alg)\) with \(d(\Phi(i))=d_i\), preserving twists, duality
+and orientation;
+(F3\('\)) there is a normal conditional expectation \(E:\mathcal M\to\mathcal N\) with
+\(E(x)\ge(\operatorname{Dim}\mathsf B)^{-1}x\) for \(x\in\mathcal M_+\).
+\textbf{Prove} \(\Phi\) is a braided equivalence onto the complete finite-sector category and
+\(\mu_\Alg=\operatorname{Dim}\mathsf B\).
+\(\langle1\rangle1\). \(\mu_\Alg\le[\mathcal M:\mathcal N]_E\le\operatorname{Dim}\mathsf B\) BY (F3\('\)) and
+the PP definition.  \(\langle1\rangle2\). BY (F1) and finiteness, \(\mu_\Alg=\sum_\rho d(\rho)^2\) over all
+irreducible sectors, and every sector is a finite direct sum (KLM:1719--1729, :1899--1900).
+\(\langle1\rangle3\). The image of \(\Phi\) contributes exactly \(\operatorname{Dim}\mathsf B\): simples stay
+simple (\(\operatorname{End}=\mathbb C\)), distinct simples stay inequivalent, dimensions are preserved, BY (F2).
+\(\langle1\rangle4\). An extra simple adds \(d(\rho)^2>0\), contradicting \(\langle1\rangle1\)--\(\langle1\rangle3\);
+so \(\Phi\) is essentially surjective, hence a braided equivalence.  QED.  Normalised \(S\) and twists then
+match by ribbon traces; the character \(T\) needs the declared central-charge lift as well.
+
+\textbf{The gap, explicitly.}  The note's checkable hypothesis was finite-dimensional:
+\(\mathcal N_k\subset\mathcal M_k\) exhausting \(\mathcal N,\mathcal M\) with
+\(E_k\ge(\operatorname{Dim}\mathsf B+\varepsilon_k)^{-1}\mathrm{id}\), passed to the limit by KLM's monotone
+exhaustion (Prop.\ p3(a), KLM:507--527).  KLM proves the increasing case ``after taking commutants''
+(KLM:528--530), which uses commutant-invariance of the index.  That fails for Pimsner--Popa constants of
+finite-dimensional inclusions: \(\mathbb C1\subset M_n\) has index \(n\), while its commutant inclusion
+\(1\otimes M_n\subset M_n\otimes M_n\) on \(\mathbb C^n\otimes\mathbb C^n\) has index \(n^2\)
+(\path{checks/review_pp_constant.py}, exact for \(n=2,3\)).  The finite form also assumes neither
+compatible \(E_k\) nor a preserved state, so no normal limit expectation is built.  \emph{Theorem 80.9
+therefore holds only under (F3\('\)) or factor approximants; a finite-algebra positive-map test is
+currently not a sufficient check.}  No counterexample to the conclusion is known; the gap is in the route.
+\emph{Repair routes} (any one suffices; REVIEW.md:157--163): (i) (F3) for infinite-factor approximants;
+(ii) compatible \(E_k\) preserving a faithful normal state, yielding a normal limit \(E\ge\lambda\,\mathrm{id}\);
+(iii) a complete PP bound plus a sourced commutant lemma (source not local: Law~1 gap).  By Lemma 80.10 the
+state in (ii) cannot be the vacuum.  The pure operator-algebra lemma behind (ii) is the first attackable
+target (INTEGRATION.md:121--125, a \emph{proposal}).  Exhaustion of \(\mathcal M\) itself is the separate
+conditional repair estimate D5-A (NOTE.md:458--504), valid with probes exactly in
+\(\Alg(I_2)\vee\Alg(I_4)\); its hypothesis nearly restates its conclusion (REVIEW.md:167--171).
+
+\textbf{Lemma 80.10 [derived, negative; D5-V].}  \textbf{Assume} \(\mathcal N\subset\mathcal M\),
+\(\Omega\) cyclic for \(\mathcal N\) and separating for \(\mathcal M\), and an \(\mathcal N\)-bimodular
+expectation \(E\) preserving \(\omega=\langle\Omega,\cdot\,\Omega\rangle\).  \textbf{Prove} \(\mathcal M=\mathcal N\).
+\(\langle1\rangle1\). \(\langle n\Omega,E(x)\Omega\rangle=\omega(E(n^*x))=\langle n\Omega,x\Omega\rangle\).
+\(\langle1\rangle2\). Cyclicity gives \(E(x)\Omega=x\Omega\); separation gives \(E(x)=x\).  QED.  By Reeh--Schlieder
+the hypotheses hold for the four-interval inclusion, so an annular expectation preserves the vacuum only if
+\(\mu_\Alg=1\).
+
+\textbf{Lemma 80.11 [conditional; D5-M, valid for \(\mathsf B=\Cc\) only].}  \textbf{Assume} resolved modular
+covariance with multiplicities \(M_{ij}\in\mathbb Z_{\ge0}\), \(M_{\one\one}=1\) (M1); trace-norm convergence of
+lattice traces including defect insertions (M2); defects forming a unital \(*\)-representation of
+\(\mathsf B\)'s fusion algebra with Verlinde \(S\) (M3).  \textbf{Prove} \(MS=SM\), \(MT=TM\); defect
+eigencharacters are \(\lambda_i(a)=S_{ai}/S_{\one i}\) via projections
+\(p_i=S_{\one i}\sum_a\overline{S_{ai}}D_a\); every \(i\) occurs iff the representation is faithful.
+Multiplicities are \emph{not} fixed (proof NOTE.md:545--561; self-adjointness of \(p_i\) uses
+\(S_{\bar ai}=\overline{S_{ai}}\), \(S_{\one i}>0\)).  For \(\mathsf B=Z(\Cc)\) or fusion-only \(\Cc\) a
+tube-algebra version is needed and is not written.
+
+\textbf{Lemma 80.12 [conditional; D5-H, sharp].}  Under \(c>1\), nonnegative weights, a weight-zero vacuum,
+positive characters with \(S\)-covariance and \(S_{\one i}>0\), the vacuum carrier is not a finite sum of
+Virasoro highest-weight families: PBW gives \(\log\chi_\one(i/t)\le\pi t/12+O(1)\), against
+\(\ge\pi ct/12+\log S_{\one\one}\) (NOTE.md:586--599).  It concurs with D4-G and sharpens LC-12 \S5
+(\(c>12/\pi^2\) there) to \(c>1\).
+
+\textbf{Why selection is indispensable.}  (F2) with \(\mathsf B=\Cc\) is a strong demand on \((O,h)\): the
+category defining a lattice model and the category of the continuum primaries typically differ (AFM-J:123--128,
+AFM-S:775).  A selection principle (CA-78; D2) must supply it; nothing in this shard does.
+
+\textbf{Conjecture 80.C [conjectural; D5-C].}  Every computably presented UMTC admits, with some compatible
+declared enrichment, a local lattice family whose OAR/KS limit satisfies (F1)--(F3\('\)) with
+\(\mathsf B=\Cc\).  \emph{Review verdict} (REVIEW.md:26--28, :182--211; INTEGRATION.md:115--117): it contains the
+open UMTC realisation problem (Bischoff2018:364--372) plus the whole analytic layer; it is degenerate for
+\(\Cc=\mathrm{Vec}\) unless \(c>0\) is required; its uniformity clause is trivialised by proof search; it
+nearly duplicates D6-C.  It is not a pipeline step.
+
+\textbf{Open decision: chiral versus full target (PLAN.md D1).}  D6's headline asks a 1D tower for a
+\emph{chiral} limit net, while D2, D4 and D5 target full two-chiral theories with a tested chiral subnet
+(D6 REVIEW.md:20--24, :74--100).  No local source settles whether a 1D lattice can have a chiral OAR limit;
+Theorem 80.9 is stated for whichever chiral subnet the declared target names, and neither periodic boundary
+conditions nor commutation with \(H\) chooses it.
+
+\subsection{What This Does Not Claim}
+
+No critical Hamiltonian, convergent cell family, chiral or full OAR limit, endpoint functor, or index bound
+is constructed for any \(\Cc\).  Spatial reflection positivity, straight spatial seams, OS reconstruction,
+conformality of the Ward residual, and a finite-dimensional route to \(\mu_\Alg\le\operatorname{Dim}\mathsf B\)
+remain open.  Matching \(S,T\), fusion dimensions or closed-loop spectra is not fidelity.
+
+\begin{center}\footnotesize
+\begin{tabular}{p{3.6cm}p{10.4cm}}
+\toprule
+Instance & Calibration datum for the general statements \\
+\midrule
+Arbitrary \(\Cc\), \(D_a=d_a1\) & Proposition 80.8: fusion identities survive with no charge separation. \\
+\(\mathbb C1\subset M_n\), \(n=2,3\) & PP index \(n\) versus commutant \(n^2\): the gap in Theorem 80.9. \\
+Ising (CA-82) & Sector completeness imported from a classified net; Theorem 80.9 is the general mechanism it bypasses. \\
+Semion (LC-13) & Lemma 80.5: graded positivity rejects a pointwise-positive kernel. \\
+Fibonacci (LC-12) & Lemma 80.12 generalises its \(c=14/5\) character-growth argument. \\
+\bottomrule
+\end{tabular}
+\end{center}

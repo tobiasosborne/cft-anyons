@@ -1,0 +1,269 @@
+% SHARD-ID: CA-76-CORNER-TO-WILSON-BRIDGE
+% SHARD-TITLE: Corner-to-Wilson Bridge: Refinement Meets Dynamics
+% SHARD-SUMMARY: For general unitary fusion C with pointed site object O, converts the CA-72 corner weight into WT-1 drift: a strict unital lift gives d_{k,n} <= p_n e_n + 2(1-p_n); a unique gapped fine vacuum with residual eps_n gives d_{k,n} <= 2 eps_n/Delta_{n+1} and non-collapse.
+% SHARD-SUMMARY: Proves isometry and the exactly local first tangent of the polar heat refinement, states Conjecture D3-C with its UV-only verdict, the unital-extension criterion (local braided lift only proposed), negative results, and the global-fidelity versus local-lift dichotomy that is CA-75 Link (b3).
+% SHARD-SUMMARY: Records confirmed corrections to CA-72 Cor. 72.8 (operator-norm softness) and CA-73 Lemma 73.1 (global corner pins, corner unit P).
+% SHARD-KEYWORDS: corner weight, Wilson triangle, WT-1, drift, unital lift, scalar augmentation, vacuum residual, spectral gap, polar refinement, imaginary time, local tangent, D3-C, non-collapse, Link (b3), corner unit, soft C*-system
+
+\section{Corner-to-Wilson Bridge: Refinement Meets Dynamics}
+\label{sec:corner-to-wilson-bridge}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: mixed; every statement carries its own label.}  Derived: Corrections 76.A--C, Propositions 76.1--76.3,
+Corollary 76.4, Proposition 76.9, Negative 76.11.  Conditional: Theorem 76.6, Corollary 76.7, Remark 76.8.  Proposal: 76.5.
+Conjecture: 76.10.  Question: 76.12.  All content is lifted from reviewed in-repo exploration records; their review grades
+are carried, not upgraded.  \textbf{Abbreviations:} ``D\(i\) NOTE/REVIEW/INTEGRATION'' are the files \path{NOTE.md},
+\path{REVIEW.md}, \path{INTEGRATION.md} in \path{explorations/2026-10-22-astra/D1-carrier-theory/},
+\path{.../D3-refinement-meets-dynamics/}, \path{.../D4-koo-saleur-beyond-free/},
+\path{.../D6-functor-and-obstruction-theory/}; ``D3 checks'', ``D6 checks'' are their \path{checks/} bundles.
+Reproducibility: the exact finite checks live in those bundles; porting them to \path{scripts/} with a run bundle is open.
+No Julia or \LaTeX{} run was made for this shard.
+Dependencies: CA-68, CA-71, CA-72, CA-73, CA-75 (Link (b)), CA-84; WT-1; CONVENTIONS (h), (r), (t), (af), (ak), (am), (an).
+
+% Source: explorations/2026-10-22-astra/D3-refinement-meets-dynamics/NOTE.md:10--75 D3-C; :133--153 interface
+%   corrections; :157--206 D3-1, (2.1)--(2.3); :226--260 D3-3; :303--358 D3-4, (4.3); :407--418 (5.1);
+%   :443--518 D3-5, (6.3), (6.2); :541--557 commuting corner, (7.1); :571--612 D3-6; :636--639 centering.
+% Source: .../D3-refinement-meets-dynamics/REVIEW.md:30--36 (C2,C3,C6,C7,C8); :47--54 D3-C pass; :60--68 D3-3
+%   limits and non-collapse corollary; :93--101 global-fidelity/local-lift conjunction; :118--131 grades.
+%   INTEGRATION.md:76--84 D3-C verdict and first attackable lemma.
+% Source: explorations/2026-10-22-astra/D6-functor-and-obstruction-theory/NOTE.md:262--286 P1; :288--311 P2;
+%   :313--323 N1.  REVIEW.md:142--170 R2, P2 caution, N1; :205--225 R1; :246--252 grades.
+%   INTEGRATION.md:110--123 R1+P2 lemma and the owed non-pointed check.
+% Source: explorations/2026-10-22-astra/D1-carrier-theory/NOTE.md:354--363, :377--395 (pins, corner unit, D1-T5b);
+%   REVIEW.md:126, :130, :172 (confirmed).
+% Source: explorations/2026-10-22-astra/D4-koo-saleur-beyond-free/NOTE.md:456--482 (support correction, D4-V);
+%   REVIEW.md:223 (D4-V confirmed).
+% Source: literature/md/2306.16063/2306.16063.md:570--574 -- Def. 33, eq. (29), operator-norm asymptotic homomorphism.
+% Source: references/refinement/HaegemanEtAl2018Wavelet/source/latticefermions.tex:478--479 (finite error per volume:
+%   expected zero overlap); :487--491 (energy/gap overlap inequality).
+% Source: cft_machine/research/wilson_triangle.md:20--38 -- WT-1 A1--A3 and conclusion.
+% Source: reconstruction/04_cutoff_oar.md:22--24 -- LC-4 KS tier lives on a circle (periodic).
+% Run: .../D3-refinement-meets-dynamics/checks/output.txt:3--14; checks/review_check_pointed_output.txt:1--2;
+%   .../D6-functor-and-obstruction-theory/checks/raw_output.txt:5; checks/review_braided_lift_output.txt:2--4.
+
+\subsection{Setting and Notation}
+
+\textbf{Setting [CONVENTIONS (r), (t); notation local to this shard].}  \(\Cc\) is unitary fusion, \(O=\one\oplus X\) with a
+chosen isometric unit inclusion, \(N_n=2^nN_0\) sites on an \emph{open} ordered chain,
+\(\Alg_n=\operatorname{End}_\Cc(O^{\otimes N_n})\) acting faithfully on \(\mathcal H_n=\bigoplus_c\Hom_\Cc(c,O^{\otimes N_n})\).
+\(V_n\) is the CA-71 dyadic vacuum insertion, \(W_n=U_nV_n\) a dressing (\(U_n\) unitary in \(\Alg_{n+1}\)),
+\(P_n=W_nW_n^\dagger\), \(\theta_n=W_n(\cdot)W_n^\dagger\), \(W^k_n=W_{n-1}\cdots W_k\), \(P^k_n=W^k_nW^{k\dagger}_n\),
+\(\theta^k_n=\mathrm{Ad}\,W^k_n\).  States \(\omega_n\) on \(\Alg_n\) are chosen independently; \(p_n=\omega_{n+1}(P_n)\),
+\(q_n=1-p_n\), and for \(p_n>0\) the normalized pullback \(\tau_n=\omega_{n+1}\theta_n/p_n\) has mismatch
+\(e_n=\|\tau_n-\omega_n\|\).  State distances are full dual norms (at most \(2\)); \(\delta_n^2=2(1-\sqrt{p_n})\) is the
+Theorem~72.3 defect.  \(\alpha_n:\Alg_n\to\Alg_{n+1}\) always denotes a genuine unital injective \(*\)-map,
+\(\alpha^k_n=\alpha_{n-1}\cdots\alpha_k\); \(\Phi_\chi\) is the CA-72 UCP completion; \(d_{k,n}\) is as in WT-1 A3.
+\textbf{Signs.}  \(H=\sum_Zh_Z\) with Hermitian interval energy densities, as in (h), (af); a CA-86 Hamiltonian
+\(H=-\sum_jh_j\) of (ak) enters as \(h_Z=-h^{(\mathrm{ak})}_j\).  The (ak) cup-cap tile \(e_j\) is not used, and the
+mismatch \(e_n\) is unrelated to the density subtraction of (af).  \textbf{Clash.}  CA-75 Link (b) writes
+\(\varepsilon_n\) for what is \(q_n\) here; below \(\epsilon_n\) is the vacuum residual of Theorem~76.6.
+
+\subsection{Corrections to CA-72 and CA-73}
+
+\textbf{Correction 76.A [derived; found independently by D1, D3, D6; confirmed].}  Put
+\(\operatorname{cov}_\chi(S,T)=\chi(ST)-\chi(S)\chi(T)\).  If \(P\ne1\), the Theorem~72.7 defect
+\(\operatorname{cov}_\chi(S,T)(1-P)\) has operator norm \(|\operatorname{cov}_\chi(S,T)|\), \emph{whatever}
+\(\omega(1-P)\) is, since \(\|1-P\|=1\).  Witness (plain multi-matrix algebras): \(\theta:M_2\to M_4\) into the first
+block, \(\chi=\Tr/2\), \(S=T=\operatorname{diag}(1,-1)\); the defect is \(1-P\), of norm \(1\), while its GNS seminorm
+vanishes when \(\omega(P)=1\) (D3 checks \path{output.txt}:5).  Source eq.~(29) is an operator-norm asymptotic
+homomorphism property for composites.  Hence Corollary~72.8's reading, that the completion family satisfies eq.~(29)
+precisely when \(\omega_l(1-P)\to0\) in GNS seminorms, is \textbf{not supported as an operator-norm claim}; the
+GNS-seminorm identity of Theorem~72.7 stands.  CA-75:145--147 (``modulus of softness'') inherits this qualification.
+A soft-C*-system statement for any completion family needs its own operator-norm and composition argument.
+
+\textbf{Correction 76.B [derived; D1, D3, D4 concur; confirmed].}  \(\theta_n(1)=P_n\) pins \emph{every} inserted site,
+so \(\theta_n(a_I)\) for \(a_I\) supported on an interval \(I\) contains vacancy projectors on inserted sites far from
+\(I\).  The support statement of Lemma~73.1 (CA-73:169--172, stretched densities on \(\{2j-1,2j,2j+1\}\)) holds for a
+\emph{local representative}, which agrees with \(\theta_n(h_j)\) on \(\Ran W_n\) but is a different element of
+\(\Alg_{n+1}\).  General witness (D3 REVIEW:34): an (ak) hop \(h^+\) moving \(X\) onto a distant inserted site does not
+commute with that site's vacancy pin.  This identifies explicit projectors; it infers no nonlocality from fusion
+constraints.
+
+\textbf{Correction 76.C [derived; confirmed].}  Polynomials with constants transport with corner unit:
+\(\theta(F(h;1))=F(\theta(h);P)\), not \(F(\theta(h);1)\); constants in residuals (central terms, energy shifts)
+transport to multiples of \(P\).  Centering: with \(m=\tau(h)\), the transported coarse centering \(\theta(h)-mP\) and
+the fine centering \(\theta(h)-pm1\) differ by \(m(p1-P)\), whose fine GNS seminorm is exactly \(|m|\sqrt{pq}\).
+
+\subsection{Corner Weight to Wilson Drift}
+
+\textbf{Proposition 76.1 [derived; D6 P2 = D3-1, found independently; confirmed].}  \textsc{Assume} \(W\) is an isometry
+implementing \(\theta:\Alg\to\mathcal B\) between finite multi-matrix algebras, \(P=WW^\dagger\), \(\sigma\) a state on
+\(\mathcal B\), \(p=\sigma(P)>0\), \(q=1-p\), \(\tau=\sigma\theta/p\), \(\rho\) a state on \(\Alg\).  \textsc{Prove}
+\begin{align*}
+ &\text{(i) } \|\sigma\theta-\rho\|\le p\|\tau-\rho\|+q, \qquad
+  \text{(ii) } \|\sigma\Phi_\chi-\rho\|\le p\|\tau-\rho\|+2q,\\
+ &\text{(iii) if } \alpha \text{ is a unital } *\text{-map with } \alpha(a)W=Wa\ \forall a:\
+  \|\sigma\alpha-\rho\|\le p\|\tau-\rho\|+2q,\\
+ &\text{(iv) if each } \alpha_n \text{ intertwines } W_n:\ d_{k,n}\le p_ne_n+2q_n,\qquad
+  q_n=\delta_n^2-\tfrac14\delta_n^4,\ \ 2q_n=(1+\sqrt{p_n})\,\delta_n^2\le2\delta_n^2 .
+\end{align*}
+\par\(\langle1\rangle1\). \(\sigma\theta=p\tau\), so \(\sigma\theta-\rho=p(\tau-\rho)-q\rho\); the triangle inequality gives (i).
+\par\(\langle1\rangle2\). Lemma~72.6: \(\sigma\Phi_\chi=p\tau+q\chi\); subtract \(\rho=p\rho+q\rho\), use \(\|\chi-\rho\|\le2\).
+\par\(\langle1\rangle3\). Intertwining for \(a\) and \(a^*\) gives \(P\alpha(a)=WaW^\dagger=\alpha(a)P\), so
+\(\alpha(a)=\theta(a)+(1-P)\alpha(a)(1-P)\) and \(\sigma\alpha=p\tau+q\eta\), \(\eta\) a state if \(q>0\); conclude as in
+\(\langle1\rangle2\).
+\par\(\langle1\rangle4\). \(\omega_{n+1}\alpha^k_{n+1}-\omega_n\alpha^k_n=(\omega_{n+1}\alpha_n-\omega_n)\alpha^k_n\), and
+pullback along a unital \(*\)-map is contractive; apply \(\langle1\rangle3\) with \(\sigma=\omega_{n+1}\),
+\(\rho=\omega_n\).  The identities follow from \(\sqrt{p_n}=1-\delta_n^2/2\).  \(\square\)
+
+The bound is attained (\(p=9/25\), drift \(2q=32/25\): D6 checks \path{raw_output.txt}:5).  No function of \(q_n\)
+alone bounds \(d_{k,n}\): even \(p_n=1\) leaves \(e_n\) free.  \textbf{Caution [D6 REVIEW:155--161].}  Since \(P_n\) pins
+every inserted site, \(\sum_nq_n<\infty\) is a \emph{global} fidelity demand of exact-RG strength on an extensive chain.
+
+\textbf{Proposition 76.2 [derived; D3-1 (2.2)--(2.3), generalising CA-84; confirmed].}  For any isometries \(W_n\),
+\(\hat\Alg_n=\Alg_n\oplus\mathbb C\), \(\hat\alpha_n(a,z)=(\theta_n(a)+z(1-P_n),z)\), \(\hat\omega_n(a,z)=\omega_n(a)\)
+define a strict unital injective \(*\)-tower (cross terms vanish; composites obey
+\(\theta^n_m(1-P^k_n)+(1-P^n_m)=1-P^k_m\)) with exact adjacent drift
+\(\hat D_n=\|p_n\tau_n-\omega_n\|+q_n\in[\,2q_n,\ p_ne_n+2q_n\,]\) (the dual norm of a direct sum is the sum).  If
+\(\omega_n(P^k_n)\to0\) for each fixed \(k\), the limit on row \(k\) is the character \((a,z)\mapsto z\) (\emph{scalar
+collapse}).  \textbf{Boundary:} \(\hat\alpha_n\) is generally nonlocal through \(P_n\); for it, as for a bare corner,
+every local approximant \(b_B\) of \(\theta(a)\) has \(\|\theta(a)-b_B\|\ge\|a\|/2\) (D3 REVIEW:60--61).
+
+\textbf{Proposition 76.3 [derived; D6 P1; confirmed].}  \textsc{Assume} \(\Alg=\bigoplus_aM_{d_a}\),
+\(\mathcal B=\bigoplus_bM_{e_b}\), \(\theta\) an injective corner \(*\)-map with \(\theta(1)=P\) in which block \(a\) occurs
+in block \(b\) with multiplicity \(r_{ba}\).  \textsc{Prove}: a unital \(*\)-map \(\alpha\) with \(P\alpha(x)P=\theta(x)\),
+\([P,\alpha(x)]=0\) exists iff there are integers \(q_{ba}\ge0\) with \(e_b-\sum_ar_{ba}d_a=\sum_aq_{ba}d_a\) for all \(b\).
+\par\(\langle1\rangle1\). Diagonal matrix units of \(M_d\) map to equal-rank projections, so every representation has
+dimension in \(d\,\mathbb Z_{\ge0}\); restricting \(\alpha\) to \((1-P)\mathcal B(1-P)\) blockwise gives the condition.
+\par\(\langle1\rangle2\). Conversely, \(q_{ba}\) defining copies on the complement give \(\beta\) with \(\beta(1)=1-P\);
+set \(\alpha=\theta+\beta\).  \(\square\)  By \(\langle1\rangle3\) of 76.1 every \(\alpha\) intertwining \(W\) is such an
+extension; block ranks, hence the condition, are invariant under unitary dressing.
+
+\textbf{Corollary 76.4 [derived; reviewer remark R2, D6 REVIEW:142--151].}  For vacuum insertion
+\(\Alg_L\to\Alg_{2L}\) the condition of 76.3 holds for \emph{every} \(\Cc\).  \emph{Proof.}  Block \(c\) maps to block
+\(c\) with \(r_{cc}=1\); with \(m_c(L)=\dim\Hom(c,O^{\otimes L})\) and \(O^{\otimes2L}\cong O^{\otimes L}\otimes
+O^{\otimes L}\) the complement is \(m_c(2L)-m_c(L)=\sum_a(N^c_{a,O^{\otimes L}}-\delta_{ac})m_a(L)\), with nonnegative
+coefficients because \(\one\subset O^{\otimes L}\).  \(\square\)  So the arithmetic never obstructs vacuum insertion;
+the open requirement is \textbf{locality} (and coherence) of the unital lift.
+
+\textbf{Proposal 76.5 [proposal; reviewer R1; pending a non-pointed check].}  For braided \(\Cc\) let
+\(B:O^{\otimes L}\otimes O^{\otimes L}\to O^{\otimes2L}\) interleave the new strands across the old with one fixed
+crossing type, and \(\alpha(T)=B(T\otimes\mathrm{id})B^\dagger\).  Proposed: \(\alpha\) is a unital injective \(*\)-map with
+\(\alpha(T)V_L=V_LT\) (braiding with \(\one\) is trivial), it maps a coarse two-site density on \(j,j+1\) into fine sites
+\(\{2j-1,2j,2j+1\}\) by naturality, and \(\mathrm{Ad}_U\circ\alpha\) intertwines \(W=UV\).  A pointed braided instance
+passes at \(L=2,3\) with a range-2 mutation rejected (D6 checks \path{review_braided_lift_output.txt}:2--4) but cannot
+discriminate braiding phases; a non-pointed check with sourced \(F,R\) is owed (D6 INTEGRATION:117--123).  For
+non-braided \(\Cc\) the construction needs a half-braiding on \(O\) (a lift to \(Z(\Cc)\)): open.
+
+\subsection{Dynamics: Vacuum Residual and Gap}
+
+\textbf{Theorem 76.6 [conditional; D3-4; proof checked, grade conditional-ok].}  \textsc{Assume} \(K_n\ge0\)
+(\(K_n=H_n-E_n\), \(E_n\) a certified ground energy) with unit \(\Omega_n\), \(K_n\Omega_n=0\),
+\(\omega_n=\langle\Omega_n,\cdot\,\Omega_n\rangle\); a unique gapped fine vacuum in the declared comparison carrier,
+\(K_{n+1}\ge\Delta_{n+1}(1-\ket{\Omega_{n+1}}\bra{\Omega_{n+1}})\); a residual
+\(\|(K_{n+1}W_n-\lambda_nW_nK_n)\Omega_n\|\le\epsilon_n\), \(\lambda_n>0\); and either coherent \(\alpha_n\) intertwining
+\(W_n\) or the tower of 76.2.  \textsc{Prove} \(d_{k,n}\le\min(2,2\epsilon_n/\Delta_{n+1})\) and
+\(q_n\le\min(1,(\epsilon_n/\Delta_{n+1})^2)\) on every row; hence \(\sum_n\epsilon_n/\Delta_{n+1}<\infty\) gives WT-1 A3.
+\par\(\langle1\rangle1\). Put \(\psi=W_n\Omega_n\), \(Q=1-\ket{\Omega_{n+1}}\bra{\Omega_{n+1}}\).  As \(K_n\Omega_n=0\) the
+residual is \(K_{n+1}\psi=K_{n+1}Q\psi\), so \(\|Q\psi\|\le\epsilon_n/\Delta_{n+1}\).
+\par\(\langle1\rangle2\). Two pure states with overlap modulus \(u\) are at distance \(2\sqrt{1-u^2}=2\|Q\psi\|\).
+\par\(\langle1\rangle3\). The trial state \(\sigma_n=\langle\psi,\cdot\,\psi\rangle\) obeys \(\sigma_n\alpha_n=\omega_n\) (and
+\(\hat\sigma_n\hat\alpha_n=\hat\omega_n\) for \(\hat\sigma_n(b,z)=\sigma_n(b)\), as \(\psi\in\Ran P_n\)); pullback is contractive.
+\par\(\langle1\rangle4\). \(\psi\in\Ran P_n\) gives \(|\langle\Omega_{n+1},\psi\rangle|^2\le p_n\), so
+\(q_n\le\|Q\psi\|^2\).  \(\square\)
+\par Energy variant: \(E^{\rm tr}_n=\langle\psi,K_{n+1}\psi\rangle\) gives \(d_{k,n}\le2\sqrt{E^{\rm tr}_n/\Delta_{n+1}}\),
+\(q_n\le E^{\rm tr}_n/\Delta_{n+1}\); the overlap inequality is source-local (\path{latticefermions.tex}:487--491).
+Degenerate ground spaces need a selected sector; zero variance does not select the ground state (D3 checks
+\path{output.txt}:13).
+
+\textbf{Corollary 76.7 [conditional; reviewer non-collapse corollary, D3 REVIEW:65--68].}  Under 76.6 let
+\(s_k=\sqrt2\sum_{j\ge k}\epsilon_j/\Delta_{j+1}\le\sqrt2\).  Then \(\omega_n(P^k_n)\ge(1-s_k^2/2)^2\) for all \(n>k\), so
+scalar collapse (76.2) cannot occur, and D1-T5b's sufficient condition \(\sum_n\sqrt{1-p_n}<\infty\) (D1 NOTE:383--385)
+holds.
+\par\(\langle1\rangle1\). Fix phases with \(c=\langle\Omega_{j+1},W_j\Omega_j\rangle\ge0\); then
+\(\|W_j\Omega_j-\Omega_{j+1}\|^2=2-2c\le2(1-c^2)\le2(\epsilon_j/\Delta_{j+1})^2\).
+\par\(\langle1\rangle2\). Telescoping through isometries, \(\|W^k_n\Omega_k-\Omega_n\|\le s_k\); so
+\(\omega_n(P^k_n)\ge(\mathrm{Re}\langle W^k_n\Omega_k,\Omega_n\rangle)^2\ge(1-s_k^2/2)^2\).
+\par\(\langle1\rangle3\). \(\sqrt{q_n}\le\epsilon_n/\Delta_{n+1}\) by 76.6.  \(\square\)
+
+\textbf{Remark 76.8 [derived arithmetic on conditional inputs; D3 (4.3), (5.1)].}  If \(\Delta_n\ge c\,a_n^z\) and
+\(\epsilon_n\le Ca_n^{z+y}\), \(y>0\), \(a_n=2^{-n}\), then \(d_{k,n}\le C'2^{-yn}\), a geometric tail.  A circuit-conjugacy
+comparison with at most \(cN_{n+1}\) mismatch terms of norm \(\eta_n\le Ca_n^u\) gives \(\epsilon_n\le cN_{n+1}\eta_n\)
+plus an energy-origin cost \(2\zeta_n\); summability needs \(u>1+z\).  Dyadic spacing does not sum \(O(1)\) or
+\(O(1/n)\) per-step errors.
+
+\subsection{Polar Heat Refinement}
+
+\textbf{Proposition 76.9 [derived; D3-5; confirmed, also on a constrained multiplicity-two carrier].}  \textsc{Assume}
+finite \(L\), \(H=\sum_Zh_Z\) Hermitian categorical interval terms on the fine open chain, \(V=V_L\), \(P=VV^\dagger\),
+\(P_Z\) the product of vacancy projectors on inserted sites in \(Z\), \(G(t)=V^\dagger e^{-2tH}V\) and
+\(W(t)=e^{-tH}V\,G(t)^{-1/2}\).  \textsc{Prove} \(W(0)=V\), \(W(t)^\dagger W(t)=1\),
+\(\dot W(0)=-(1-P)HV=\sum_Z[P_Z,h_Z]\,V\) with each \([P_Z,h_Z]\) anti-Hermitian, supported in \(Z\), of norm
+\(\le2\|h_Z\|\), and \(\tfrac{d}{dt}W^\dagger HW|_{0}=-2V^\dagger H(1-P)HV\le0\).
+\par\(\langle1\rangle1\). \(e^{-tH}\) is invertible, so \(G>0\) and \(W^\dagger W=G^{-1/2}GG^{-1/2}=1\) in every charge block.
+\par\(\langle1\rangle2\). \(\dot G(0)=-2V^\dagger HV\) and \(\tfrac{d}{dt}G^{-1/2}|_0=V^\dagger HV\), so \(\dot W(0)=-HV+PHV\).
+\par\(\langle1\rangle3\). \(h_Z\) acts trivially on inserted sites outside \(Z\): \(Ph_ZV=P_Zh_ZV\) and \(P_ZV=V\), hence
+\([P_Z,h_Z]V=-(1-P)h_ZV\).  No braiding and no Hilbert tensor factorisation is used.
+\par\(\langle1\rangle4\). Differentiating \(W^\dagger HW\), both terms equal \(-X^\dagger X\), \(X=(1-P)HV\).  \(\square\)
+\par Supplements [derived; confirmed]: \(V^\dagger h_Z(1-P)h_YV=0\) unless \(Z,Y\) share an inserted site; a local tangent
+\(D=\sum_Ix_IV\) with \(V^\dagger D+D^\dagger V=0\) extends to anti-Hermitian
+\(a_I=x_IP_I-P_Ix_I^\dagger-\tfrac12P_I(x_I-x_I^\dagger)P_I\) supported in \(I\), \(\|a_I\|\le3\|x_I\|\),
+\(\sum_Ia_IV=D\) (D3 (6.3)).  For \(t>0\), \(\dot W=-(1-P_t)HW+WK_{\rm frame}\) with \(P_t=WW^\dagger\) not a product of
+local projectors and \(K_{\rm frame}\) generally nonzero (D3 (6.2)): this is the all-orders difficulty.
+
+\textbf{Conjecture 76.10 [conjecture D3-C; review: well posed, no counterexample found, unverifiable].}  \textsc{Assume}
+\(\Cc\) computably presented unitary fusion, \(O=\one\oplus X\), dyadic \(V_L\), \(H_L=\sum_Zh_{L,Z}\) with
+\(\operatorname{diam}Z\le R\), \(\sup_x\sum_{Z\ni x}\|h_{L,Z}\|\le J\); no gap, uniqueness or translation invariance.
+\textsc{Conjecture}: computable \(t_0,\mu,C_0,D_0\) depending only on \((\Cc,O,R,J)\) exist such that, uniformly in \(L\)
+and \(0\le t\le t_0\): (1) \(W_L(t)=U_L(t)V_L\), \(\dot U_L=A_LU_L\), \(A_L=\sum_Ia_{L,I}\) anti-Hermitian and
+charge-preserving with \(\sup_x\sum_{I\ni x}|I|e^{\mu\operatorname{diam}I}\|a_{L,I}\|\le C_0J\); (2)
+\(W_L^\dagger H_LW_L\) has a coarse interval decomposition with a like bound, scalars kept local; (3) \(U_L(t)\) has a
+charge-preserving circuit of depth \(\le D_0\), gate range \(\le\min(2L,\lceil C_0\log((2L+1)/\varepsilon)\rceil)\) and
+norm error \(\varepsilon\).  \textbf{Reviewer verdict (D3 REVIEW:54, INTEGRATION:76--84).}  76.9 is the first-order
+step; an all-orders proof needs a quasi-local replacement for \(P_t\); short-imaginary-time analyticity or cluster
+expansion is the plausible route, but no such source is local, so nothing is asserted.  D3-C is a \emph{UV locality
+lemma}: by 76.11 a fixed-\(t\) near-identity dressing cannot by itself drive \(q_n\) or \(\epsilon_n/\Delta_{n+1}\) to
+zero summably for a critical vacuum.  First attackable lemma: a locally summable generator for the \(t^2\) coefficient,
+via (6.3) and pair locality.
+
+\textbf{Negative 76.11 [derived; confirmed].}
+(a) If \([H,P]=0\), then \(e^{-tH}V=Ve^{-tV^\dagger HV}\) and \(W(t)=V\) for all \(t\): heat filtering inside the
+retained carrier cancels in the polar normalisation.
+(b) Normalised imaginary-time filtering of a vector with ground overlap \(b>0\) leaves excited weight
+\(\le e^{-2t\Delta}(1-b^2)/b^2\); a fixed short time does not beat a closing gap.
+(c) (D3-6) A fixed UV shell gap with vanishing shell coupling does not select the IR vacuum: retain
+\(\Span\{e_1,e_2\}\) in \(H(t)=\bigl(\begin{smallmatrix}0&0&0\\0&t^2/2&t\\0&t&1\end{smallmatrix}\bigr)\), \(0<t<1\).  The
+shell gap is \(1\) and the coupling \(t\to0\), yet the lower \(2\times2\) block has determinant \(-t^2/2<0\), so the
+unique ground state is orthogonal to the retained ground vector \(e_1\) (D3 checks \path{output.txt}:12).  The missing
+condition is control of the induced metric and self-energy (D3 (7.2)--(7.3)) relative to the infrared scale.
+(d) (D4-V, D4 NOTE:465--482) Bare dyadic insertion compresses a nearest-neighbour fine energy to a sum of one-site
+coarse morphisms; if the coarse energy lies outside one-site sums plus scalars, the KS zero modes of (af) cannot be
+exactly covariant under bare insertion.
+
+\subsection{The Dichotomy: CA-75 Link (b3)}
+
+\textbf{Question 76.12 [question; reviewer reading, D3 REVIEW:93--101].}  Every drift route above is of one of two kinds.
+\emph{(G) Global fidelity:} 76.1, 76.2, 76.6 control \(d_{k,n}\) through \(q_n\) or \(\epsilon_n/\Delta_{n+1}\), which
+see the global \(P_n\) and carry an \(O(N_n)\) volume factor; with \(\Delta_n\gtrsim a_n^z\), summability needs local
+density mismatch \(o(a_n^{1+z})\) (76.8).  At fixed local accuracy the source \emph{expects} zero overlap at infinite
+volume (\path{latticefermions.tex}:478--479), so dressing accuracy must improve with \(n\) [expectation, not proved].
+\emph{(L) Local unital lift:} the global-fidelity-free route (D3-3, conditional-ok, D3 NOTE:226--260) bounds
+\(d_{k,n}\) by local witness energies, a full-ball compression constant and a localisation error, but needs a local
+unital lift (76.2's boundary excludes the augmentation) and state-adapted witnesses (natural ones are expected to be
+vacuous at criticality, D3 REVIEW:62).  \textbf{Link (b) status:} (b2) answered by 76.1, with no bound by \(q_n\)
+alone; (b1) answered globally by 76.2, locally only as Proposal 76.5; \textbf{(b3) open}: does a declared dressing family
+achieve (G) at rate \(o(a_n^{1+z})\), or does a local unital lift with state-adapted witnesses achieve (L)?  No route
+here is presently non-vacuous for a critical family.
+
+\textbf{Interface [open].}  All statements use open chains with declared endpoints, while LC-4's KS tier is periodic
+(\path{reconstruction/04_cutoff_oar.md}:22--24, (af)).  LC-4 can consume them only via an open-chain KS tier or a
+periodic version of this shard.
+
+\textbf{What this does not claim.}  No critical vacuum, gap, coupling selection, local unital lift (braided or not),
+proof of D3-C, KS convergence, projective-unitary symmetry or sector fidelity is constructed.  Corrections 76.A--C
+qualify CA-72 and CA-73 without editing them.  76.5 is a proposal, not a theorem.
+
+\begin{center}\small
+\begin{tabular}{@{}p{3.4cm}p{6.6cm}p{4.4cm}@{}}
+\toprule
+Instance (calibration only) & Calibrates & Boundary \\
+\midrule
+\(M_2\to M_4\) corner (no category) & 76.A norm \(1\) at zero GNS seminorm; 76.1 sharp at \(32/25\) & linear algebra only \\
+\(\Cc=\mathrm{Vec}\), \(O=\one\oplus\one\) & global pins, factor 2, polar tangent (D3 checks) & site flip exists only here \\
+pointed \(\mathbb Z/3\), \(O=\one\oplus g\oplus g\) & 76.9 on a constrained, non-self-dual, multiplicity-two carrier & first order only \\
+pointed braided instance & 76.5: unital, extends \(\theta\), range 3, \(L=2,3\) & blind to braiding phases \\
+free-fermion Wilson example & fixed-row computable dyadic tail (D3 NOTE:745) & nonlocal; not uniform in row \\
+\bottomrule
+\end{tabular}
+\end{center}

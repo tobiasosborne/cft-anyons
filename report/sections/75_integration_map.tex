@@ -21,7 +21,7 @@ CONVENTIONS (u), (ac)).  Models occur only in the closing examples table
 (AGENTS.md Rule 16).
 
 Dependencies: CA-01, CA-14, CA-15, CA-62, CA-65--CA-68, CA-71--CA-73,
-CA-81; CA-86 and CA-87 (merged 2026-10-22);
+CA-81; CA-86 and CA-87 (merged 2026-10-22); CA-76--CA-80 (reviewed exploration content, 2026-10-22);
 \texttt{reconstruction/} LC-1--LC-5, LC-9, LC-10, LC-12 (LC-6, LC-11, LC-13 and CA-82 in the examples table only);
 CONVENTIONS (r), (s), (u), (v), (x), (ac)--(af).
 
@@ -51,6 +51,9 @@ CONVENTIONS (r), (s), (u), (v), (x), (ac)--(af).
 % Source: reconstruction/12_fibonacci_four_port.md:169--200 -- conditional genus-one obstruction to finite Virasoro-primary content.
 % Source: report/sections/86_spacetime_trotter_dictionary.tex:80--128 Lemma 86.1, Corollary 86.2, Proposition 86.3.
 % Source: report/sections/87_dilute_fibonacci_is_blocked_golden.tex:55--71 Lemma 87.1; :207--223 proposal.
+% Source: report/sections/76_*.tex--80_*.tex -- statements cited by number; review grades carried there.
+% Source: explorations/2026-10-22-astra/D1..D6/INTEGRATION.md sec. (a) reviewed paragraphs, sec. (d) headline verdicts;
+%   D6 REVIEW.md:241--250 grades; reviews/2026-07-06_pipeline_consistency_scoping/PLAN.md:244--247 decision D1.
 
 \subsection{The Pipeline as Typed Layers}
 
@@ -70,8 +73,8 @@ Layer (general object) & Supplied by & Already general & Missing \\
 \addlinespace
 (2) Dynamics: \(h\in\operatorname{End}_\Cc(O\otimes O)\) self-adjoint; tile decomposition; Trotter history sum
  & CA-86; LC-4 \S1
- & History sum \(=\operatorname{Ev}_\Cc(\Gamma)\times\prod_p w(p)\) for any \(\Cc\) (Lemma~86.1, Cor.~86.2); commuting-family exactness on integrable lines (Prop.~86.3)
- & A selection principle for \(h\) (criticality, branch); in-repo integrable lines only for Temperley--Lieb-type input \\
+ & History sum \(=\operatorname{Ev}_\Cc(\Gamma)\times\prod_p w(p)\) for any \(\Cc\) (Lemma~86.1, exact gate form Prop.~78.2; Cor.~86.2); Prop.~86.3 only under its commutativity hypothesis: the brick sweep is the non-commuting row-to-row transfer, and the ground-state claim needs nondegeneracy (CA-78 erratum)
+ & A selection principle for \(h\) (criticality, branch); CA-78 gives rejection tests only; in-repo integrable lines only for Temperley--Lieb-type input \\
 \addlinespace
 (3) Refinement: isometries \(V_\varphi\), corner maps \(\theta_\varphi\), GNS descent
  & CA-68, CA-71, CA-72, CA-73
@@ -90,25 +93,22 @@ Layer (general object) & Supplied by & Already general & Missing \\
 \addlinespace
 (6) Fidelity: sewing and four-port equations, obstruction complexes, declared target
  & LC-1--LC-5, LC-9, LC-10, LC-12 \S5; \path{realisation_and_fidelity.md}
- & C0--C7 for any \(\Cc\) and module category; HH\(^1\), CE, H\(^3\), mixed complex, cokernel obstructions; \(S,T\) minimum target
+ & C0--C7 for any \(\Cc\) and module category; HH\(^1\), CE, H\(^3\), mixed complex, cokernel obstructions; \(S,T\) minimum target; character-growth threshold sharp at \(c>1\) (Prop.~79.9, Lemma~80.12; conditional)
  & Lattice avatar of the sewing system; complete carriers; extended-algebra content of \(V_\one\) \\
 \bottomrule
 \end{tabular}
 \end{center}
 
-\textbf{Notes on the rows.}  (1) Lemma~87.1 is a \emph{blocking criterion}:
-if a simple \(Y\) has \(Y\otimes\bar Y\cong\one\oplus X\), the dilute tower
-is a dense \(Y\)-tower with paired sites, so layers (2)--(6) inherit nothing
-new from dilution.  (4) WT-1 needs unital injective \(*\)-maps; CA-72
-supplies a non-unital \(*\)-morphism or a unital non-multiplicative map
-(Link~(b) below).  VR-1 has no verified instance: the accepted free-fermion
-estimate holds on fixed momentum cores, not as a uniform graph-norm bound.
-(5) The only sourced convergence theorem is free-fermion (CA-14 boundary);
-the fermion benchmark records that periodic momentum wrap invalidates its
-central-term recipe.  (6) LC-12 \S5, under an explicit modular-character
-hypothesis, forces infinitely many Virasoro-primary families in the vacuum
-carrier for the instance treated there; the general-\(c\) form of that
-constraint on \(V_\one\) is not written (Question, D5).
+\textbf{Notes on the rows.}  (1) Lemma~87.1 is a \emph{blocking criterion}: if a simple \(Y\) has
+\(Y\otimes\bar Y\cong\one\oplus X\), the dilute tower is a dense \(Y\)-tower with paired sites, so
+layers (2)--(6) inherit nothing new from dilution.  (4) WT-1 needs unital injective \(*\)-maps; CA-72
+supplies a non-unital \(*\)-morphism or a unital non-multiplicative map (Link~(b) below).  VR-1 has no
+verified instance: the accepted free-fermion estimate holds on fixed momentum cores, not as a uniform
+graph-norm bound. (5) The only sourced convergence theorem is free-fermion (CA-14 boundary); the fermion
+benchmark records that periodic momentum wrap invalidates its central-term recipe.  (6) LC-12 \S5, under
+an explicit modular-character hypothesis, forces infinitely many Virasoro-primary families in the vacuum
+carrier for the instance treated there; the general-\(c\) form is now sharp at \(c>1\) (CA-79
+Prop.~79.9, CA-80 Lemma~80.12, both conditional).
 
 \subsection{Unwritten Links}
 
@@ -138,25 +138,29 @@ to the layer-(5) KS densities up to residuals that vanish under layers
 cells converge to a solution of C1--C6?
 \end{enumerate}
 
-\textbf{Link (b) [Question]: the CA-72 defect scalar as input to WT-1's A3.}
-WT-1 A3 asks for summable \(d_{k,n}\ge
-\|\omega_{n+1}\circ\alpha^k_{n+1}-\omega_n\circ\alpha^k_n\|\).  CA-72 gives,
-for each placement \(\varphi_n\), the scalar
-\(\varepsilon_n:=1-\omega_{n+1}(P_{\varphi_n})\), which fixes the vacuum defect
-of the descended isometry (Theorem~72.3) and the modulus of softness of the
-unital completion (Corollary~72.8).  Open:
+\textbf{Link (b) [Question]: the CA-72 defect scalar as input to WT-1's A3.} WT-1 A3 asks for summable
+\(d_{k,n}\ge \|\omega_{n+1}\circ\alpha^k_{n+1}-\omega_n\circ\alpha^k_n\|\).  CA-72 gives, for each
+placement \(\varphi_n\), the scalar \(\varepsilon_n:=1-\omega_{n+1}(P_{\varphi_n})\) (written \(q_n\) in
+CA-76), which fixes the vacuum defect of the descended isometry (Theorem~72.3) and the GNS-seminorm
+defect of the unital completion (Corollary~72.8); the operator-norm completion defect is
+\(|\chi(ST)-\chi(S)\chi(T)|\) whenever \(P\neq1\), whatever \(\varepsilon_n\) (CA-76 Correction~76.A).
+Open:
 \begin{enumerate}
-\item[(b1)] \emph{Typing.}  A1 of WT-1 demands coherent unital injective
-\(*\)-maps; \(\theta_\varphi\) is not unital and \(\Phi_\chi\) is not
-multiplicative.  Does a soft variant of WT-1 hold for coherent-up-to-defect
-UCP towers whose multiplicativity defect is the Theorem~72.7 expression?
-\item[(b2)] \emph{Split.}  Is \(d_{k,n}\) bounded by an explicit function
-of \(\{\varepsilon_j\}_{j\ge n}\) plus the mismatch between \(\omega_n\) and
-the normalized pullback of \(\omega_{n+1}\) (Lemma~72.5 Gram domination)?
-\item[(b3)] \emph{Attainability.}  Corollary~72.8 needs only
-\(\varepsilon_n\to0\); WT-1 needs summability.  Does any dressed family
-\(W=UV\) (CA-68) achieve \(\sum_n\varepsilon_n<\infty\) for ground states of
-a fixed layer-(2) Hamiltonian?
+\item[(b1)] \emph{Typing.}  A1 of WT-1 demands coherent unital injective \(*\)-maps; \(\theta_\varphi\)
+is not unital and \(\Phi_\chi\) is not multiplicative.  Does a soft variant of WT-1 hold for
+coherent-up-to-defect UCP towers whose multiplicativity defect is the Theorem~72.7 expression?
+\emph{Status 2026-10-22:} a strict unital tower exists globally by scalar augmentation (Prop.~76.2,
+derived, nonlocal), and a unital reducing extension of vacuum insertion exists for every \(\Cc\)
+(Prop.~76.3, Cor.~76.4); (b1) reduces to a \emph{local} unital lift, proposed only for braided \(\Cc\)
+(Proposal~76.5).
+\item[(b2)] \emph{Split.}  Is \(d_{k,n}\) bounded by an explicit function of \(\{\varepsilon_j\}_{j\ge
+n}\) plus the mismatch between \(\omega_n\) and the normalized pullback of \(\omega_{n+1}\) (Lemma~72.5
+Gram domination)? \emph{Answered in the strict case} (Prop.~76.1, derived): \(d_{k,n}\le
+p_nr_n+2\varepsilon_n\) for intertwining unital lifts, \(r_n\) that mismatch; no bound by \(\varepsilon_n\) alone exists.
+\item[(b3)] \emph{Attainability.}  Corollary~72.8 needs only \(\varepsilon_n\to0\); WT-1 needs
+summability.  Does any dressed family \(W=UV\) (CA-68) achieve \(\sum_n\varepsilon_n<\infty\) for ground
+states of a fixed layer-(2) Hamiltonian?  \emph{Open}; sharpened as global fidelity versus local lift
+(Question~76.12), with a conditional gap route (Thm.~76.6).
 \end{enumerate}
 
 \subsection{One Acceptance Contract}
@@ -210,20 +214,45 @@ LC-4 \S5, LC-12 \S5 constraint.
 
 \subsection{Status of the Six Explorations}
 
+Reviewed paragraphs: \path{explorations/2026-10-22-astra/D*/INTEGRATION.md} \S(a); the content now lives in CA-76--CA-80 with per-statement grades. Every headline was graded \emph{needs
+reformulation} (\S(d) there).
 \begin{description}
-\item[D1 carrier theory.] pending
-(\path{explorations/2026-10-22-astra/D1-carrier-theory/NOTE.md}).
-\item[D2 selection principle.] pending
-(\path{explorations/2026-10-22-astra/D2-selection-principle/NOTE.md}).
-\item[D3 refinement meets dynamics.] pending
-(\path{explorations/2026-10-22-astra/D3-refinement-meets-dynamics/NOTE.md}).
-\item[D4 Koo--Saleur beyond free fields.] pending
-(\path{explorations/2026-10-22-astra/D4-koo-saleur-beyond-free/NOTE.md}).
-\item[D5 fidelity and lattice sewing.] pending
-(\path{explorations/2026-10-22-astra/D5-fidelity-lattice-sewing/NOTE.md}).
-\item[D6 functor and obstruction theory.] pending
-(\path{explorations/2026-10-22-astra/D6-functor-and-obstruction-theory/NOTE.md}).
+\item[D1 carrier theory.] CA-77: unital vs corner towers, occupation grading and parity criterion,
+decidable dual-pair blocking (generalises Lemma~87.1), constant Morita class, configuration Fock carrier
+[derived]; corner corrections in CA-76.  D1-C [conjecture; conditional-ok, framing overstated]: category
+analytically inert, tuned contact term, \(z=2\).
+\item[D2 selection principle.] CA-78: coefficient compiler, exact gate ODE, blocking leakage, cubic
+cokernel test (rejection only), YBE vs brick sweep (converse as repaired) [derived]; interface Lemmas
+78.9--78.11 [conditional-ok]; erratum to Prop.~86.3.  D2-C [conjecture]: sufficiency not selection,
+category-blind, no verified instance.
+\item[D3 refinement meets dynamics.] CA-76: drift bounds and scalar augmentation (76.1--76.2) and polar
+tangent (76.9) [derived]; gap route 76.6 [conditional-ok].  D3-C (76.10) [conjecture, unverifiable]: a
+UV locality lemma that cannot by itself give summable critical drift.
+\item[D4 Koo--Saleur beyond free fields.] CA-79: tile modes, refinement defect, exact-covariance no-go
+[derived]; shell certificate 79.2 and \(c>1\) threshold 79.9 [conditional]; D4-X stays in the note
+[conditional, sketch].  D4-C [conjecture; overstated as a statement about \(\Cc\)]: any spin chain fits the carrier,
+the input is the full CFT, site growth is unconstrained.
+\item[D5 fidelity and lattice sewing.] CA-80: exact sewing along tile legs, temporal reflection
+positivity, Ward product rule, scalar falsifier [derived]; two-sided certificate 80.9 [conditional,
+index limit step open].  D5-C [conjecture, unverifiable]: contains the open UMTC realisation problem and
+nearly duplicates D6-C.
+\item[D6 functor and obstruction theory.] No shard.  P1, P2, N1 [confirmed] are in CA-76 (76.3, 76.1,
+76.A); braided local lift R1 [proposal, 76.5].  Typed source/target and contract K0--K12, adding K8
+dynamics, K10 typed defects, K12 effectivity [proposal; conditional-ok], P3, P4 [confirmed], N2, N3
+remain in the note.  D6-C [conjecture, unverifiable]: contains the realisation problem; its chiral-limit clause
+conflicts with D2/D4/D5.
 \end{description}
+
+\subsection{Decisions Required (2026-10-22)}
+
+\begin{enumerate}
+\item \emph{Chiral vs full target} (PLAN.md D1, open since 2026-07-06): D6 asks for a chiral limit net,
+D2, D4, D5 for full two-chiral theories (CA-80).
+\item \emph{Bare MTC vs enriched input}: are the central-charge lift, sector weights and generating
+fields part of \(\mathsf E\) (D4, D6 INTEGRATION \S(e)), or must the pipeline synthesise them?
+\item \emph{Instances}: does a generic chain \(h\in\operatorname{End}_\Cc(O\otimes O)\) on a categorical
+carrier count as an instance of \(\Cc\), given that the D2 and D4 headlines admit every spin chain?
+\end{enumerate}
 
 \subsection{Examples (Instances Only)}
 
@@ -244,5 +273,5 @@ Haagerup & hypothesis of Lemma~87.1 fails for \(X=\rho\) (CA-87 proposal): first
 
 This shard proves nothing and promotes no status.  Rows inherit the labels
 of their sources; the links and the contract are questions and proposals.
-CA-86 and CA-87 are cited from an unmerged branch and must be re-checked at
-merge.  Reconcilers fill the D1--D6 entries without changing that labelling.
+CA-86 and CA-87 are merged (2026-10-22); the D1--D6 entries carry the
+review grades of their sources and promote nothing.

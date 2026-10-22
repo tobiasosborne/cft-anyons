@@ -1427,3 +1427,93 @@ versus cap and which hop is `h^+` is a labelling; reflection symmetry
 (weights, `n = -2 cos 4 lambda`); `:849` of the strip source (identity at
 `u = 0`); CA-66 (birth/death maps); CA-69 (dTL generators).
 **Sweep status:** CA-86 only.
+
+## (al) Bond energy, exact tiles, cut spaces and annular index notation (2026-10-22)
+**Scope:** the physical bond-energy sign shared by CA-76, CA-78, CA-79, CA-80; cut and index notation of CA-80.
+**Choice:** With (ak)'s `H = -sum_j h_j`, the positive bond energy is `k_j := -h_j`, so `H = sum_j k_j`,
+and the current is `J_j := i[k_j, k_(j+1)]`, giving `i[H, k_j] = J_(j-1) - J_j`. `k_j` is the density
+called `h_(n,j)` in (af) and LC-4 (whose sign is `H = +sum h`, as in (h)). The letter `e_j` remains (ak)'s
+cup-cap tile `b_j d_j` and is never an energy density. The exact tile is `T_j(t) := exp(t h_j) =
+sum_alpha w_alpha(t) D_alpha`; `w_alpha(t)` are tile coefficients, `c_alpha` are coefficients of `h_j`
+(CA-86 first order: `w_alpha = dtau c_alpha`). A cut `gamma` carries `H_gamma = direct-sum_(a in Irr C)
+Hom_C(a, W_gamma)`, all charges and multiplicities retained; bold `G` is the Gram matrix of a cut basis,
+contracted with `G^{-1}`; `Sigma` is the seam operator. Hermitian forms are linear in the second slot.
+For a declared chiral UMTC `B`, `Dim B = sum_i d_i^2`; the four-interval inclusion is
+`N = A(I_1) v A(I_3) subset M = (A(I_2) v A(I_4))'`, `mu_A = [M:N]` the minimal Pimsner-Popa index.
+**Reasoning:** separates the CA-86/(ak) history sign from the (af)/(h) KS sign, and keeps `e_j` for the
+cup-cap tile. In KS contexts with a declared velocity, (ap) further divides by `v_N`.
+**Source:** `explorations/2026-10-22-astra/D5-fidelity-lattice-sewing/NOTE.md:71-100` (P1-P7, renamed per
+`REVIEW.md:81-88`); D2 `NOTE.md:58` (`k = -h`); `references/cft-machine/realisation/KawahigashiLongoMuger1999/source.tex:430-443`
+(PP index).
+**Sweep status:** CA-80; the sign `k = -h^(ak)` is also used by CA-76, CA-78, CA-79.
+
+## (am) Pointed site object and ordered configuration carrier (2026-10-22)
+**Scope:** amends (r) for CA-77 (and the pointed-carrier statements of CA-76); (r) is the connected case.
+**Choice:** A site is a pointed pair `(O, eta)`: `eta: 1 -> O` with `eta^dagger eta = 1`, `p0 = eta eta^dagger`,
+`p1 = 1 - p0`, and a chosen orthogonal splitting `iota: X -> O` of `p1`, so `O ≅ 1 ⊕ X`. `X` MAY contain
+unit summands; `O` is *connected* iff `Hom(1, X) = 0`, and the species object of (r) is exactly the
+connected case. Unital tower `alpha_L(a) = a ⊗ id_O` (trailing insertion); placements `V_phi` per (t)
+insert `eta`; `theta_phi = Ad V_phi` is a corner map, never called unital. Occupation grading
+`A_L^(k) = ⊕_{m-n=k} Q_{L,m} A_L Q_{L,n}` (`Q_{L,n}` = sum of occupation patterns with n factors `p1`).
+Normalised spherical trace `tau_L = Tr_C / d_O^L` with `d_O` the positive spherical dimension (= FPdim).
+Ordered configuration carrier `F_{C,X} = ⊕̂_{c,N} L²(Δ_N; Hom(c, X^{⊗N}))`,
+`Δ_N = {0 < x_1 < ... < x_N < 1}`, Lebesgue measure, NO `N!` factor, no symmetric/braided quotient. A
+dual-pair blocking root `Y` (`O ≅ Y ⊗ Ybar`) is written `Y` as in CA-87 and is not the site object of
+(r); the blocking unitary is chosen with `u eta = d_Y^{-1/2} coev_Y`.
+**Reasoning:** (r) silently assumes `X` has no unit summand (D1 `REVIEW.md:51`); D1 and D4 allow unit
+multiplicities; keeps unital and corner towers distinct.
+**Source:** `explorations/2026-10-22-astra/D1-carrier-theory/NOTE.md:64-112`; `REVIEW.md:51`;
+`references/text/PenneysUnitaryFusionCategories.md:219-237`, `:1015-1019`; EGNO `:1700-1706`.
+**Sweep status:** CA-77 uses it; CA-65/66/68/71-73/87 are the connected special case.
+
+## (an) Corner-weight / Wilson-drift notation (2026-10-22)
+**Scope:** CA-76 only (corner weights, WT-1 drift and vacuum residuals).
+**Choice:** For a dressed insertion `W_n = U_n V_n`: `P_n = W_n W_n^dagger`, `theta_n = Ad W_n`,
+`W^k_n = W_(n-1)...W_k`, `P^k_n = W^k_n (W^k_n)^dagger`; `p_n = omega_(n+1)(P_n)`, `q_n = 1 - p_n`,
+`delta_n^2 = 2(1 - sqrt p_n)` (CA-72 Thm 72.3), `q_n = delta_n^2 - delta_n^4/4`; normalized pullback
+`tau_n = omega_(n+1) theta_n / p_n` with mismatch `e_n = ||tau_n - omega_n||` (NOT the (af) density
+subtraction; CA-75 writes this mismatch `r_n`); state distances are full dual norms (<= 2). `alpha_n`
+always denotes a genuine unital injective *-map; `Phi_chi` the CA-72 UCP completion. `epsilon_n` denotes
+the vacuum residual `||(K_(n+1) W_n - lambda_n W_n K_n) Omega_n||`; CA-75 Link (b)'s `varepsilon_n`
+equals `q_n`. Energy densities follow (h)/(af) (`H = +sum h_Z`); an (ak) Hamiltonian enters as
+`h = -h^(ak)` (= `k` of (al)). Chains are open with declared endpoints unless a periodic tier is named.
+**Source:** CA-76; `explorations/2026-10-22-astra/D3-refinement-meets-dynamics/NOTE.md:82-113`.
+**Sweep status:** CA-76 only.
+
+## (ao) Categorical coefficient compiler and selection equations (2026-10-22)
+**Scope:** CA-78 only (tile coordinates of `h`, gates, spectral R-matrices).
+**Choice:** For the site object `O` of (r)/(am) and `h = h^dagger` in `B_2 = End_C(O^{⊗2})`, keep the sign
+of (ak): `H = -sum_j h_j`; the physical bond energy fed to the KS tier (af) is `k_j := -h_j` of (al).
+Coordinates: `h = sum_alpha c_alpha D_alpha` in any basis `{D_alpha}` of `B_2`. The Gram matrix
+`G_(alpha beta) = tr_C(D_alpha^dagger D_beta)` uses the positive spherical trace and is quotiented by its
+radical before inversion. Dual functionals: `tau^alpha`. Constants: `M^gamma_(alpha beta) =
+tau^gamma(D_alpha D_beta)`. Three-site placements are `A_alpha = D_alpha ⊗ 1` and
+`B_alpha = F^dagger (1 ⊗ D_alpha) F`, with `F` the associator. Coefficients may be complex; only
+`h^dagger = h` constrains them. Gates are `e^{t h} = sum_alpha w_alpha(t) D_alpha`, with no first-order
+truncation. A spectral `R(u)` is regular (`R(0) = 1`) with an additive, dimensionless parameter; it is
+distinct from a categorical braiding `c_(O,O)`, used only when C is braided. Nonlinear reparametrisation
+of `u` changes additive YBE. `e_j` keeps its (ak) meaning; an abstract TL pair is written `e_1, e_2` and
+needs a self-dual summand plus the FS indicator of (r) before it is identified with (ak) tiles.
+`c_conf` denotes a central charge, never a coupling.
+**Source:** `explorations/2026-10-22-astra/D2-selection-principle/NOTE.md:52-89`; `REVIEW.md:180-181`;
+`references/text/PenneysUnitaryFusionCategories.md:1010-1019`.
+**Sweep status:** CA-78 only.
+
+## (ap) KS tile modes, auxiliary shell grading and refinement defect (2026-10-22)
+**Scope:** CA-79 only (velocity-normalised KS modes, shell certificate, refinement defect).
+**Choice:** With `H^raw_N = -sum_j h_(N,j)` as in (ak) and a given velocity `v_N > 0`, the velocity-one
+density is `k_j := -h_(N,j)/v_N` (the `h` of (af); with `v_N = 1` it is the `k_j` of (al)). The forward
+current is written `\mathcal J_j := i[k_j, k_(j+1)]` (three-site support). The scalar density
+subtraction of (af) (there `e_n`) is written `\varepsilon_N`, so `e_j` stays reserved for the cup-cap tile
+of (ak); `b_N` is the separate real zero-mode shift. Modes:
+`T_(N,n) = (N/4pi) sum_j z^(nj)(k_j - \varepsilon_N - \mathcal J_j) + b_N delta_(n,0)`, `z = exp(2 pi i/N)`;
+`Tbar` with `z^(-nj)` and `+\mathcal J_j`. Scale index `r`, `N = N_r`; `Q_r >= 1` is an auxiliary grading
+with `Q_(r+1) J_r = J_r Q_r`, shells `E_(r,a) = 1_[2^a, 2^(a+1))(Q_r)`, cutoffs
+`P_r(Lambda) = 1_[1,Lambda](Q_r)`; the VR-1 control of (v) is `K_r = Q_r^p` with a fixed integer `p > 1`.
+For a refinement isometry `V`: `P = V V^*`, `B_a = V^* k'_a V` (compression), `F_a = (1-P) k'_a V`
+(leakage). Central terms keep `c` and `c*` separately as in (s).
+**Known clash:** `\varepsilon_N` here (density subtraction) differs from `epsilon_n` of (an) (vacuum
+residual); both are shard-scoped.
+**Source:** `explorations/2026-10-22-astra/D4-koo-saleur-beyond-free/NOTE.md:71-109`;
+`references/lattice-symmetry/GransSamuelssonEtAl2020/source/Linnea11.5.tex:791-820`.
+**Sweep status:** CA-79 only.

@@ -93,13 +93,18 @@ before treating report edits as complete.
 | 73 | `CA-73-CATEGORICAL-RESIDUAL-SET` | `report/sections/73_categorical_residual_set.tex` | The Categorical Residual Set on the Anyonic Word Tower |
 | 74 | `CA-74-JW-KERNEL-DECISION` | `report/sections/74_jw_kernel_decision.tex` | The Jones-Wenzl Kernel Decision for the Dilute Evaluation Map |
 | 75 | `CA-75-INTEGRATION-MAP` | `report/sections/75_integration_map.tex` | Integration Map: One Model-Independent Pipeline |
-| 76 | `CA-81-CFT-MACHINE-OAR-CONTRACT` | `report/sections/81_cft_machine_oar_contract.tex` | The CFT Machine and Its Quantitative OAR Contract |
-| 77 | `CA-82-ISING-MODULAR-COMPILER` | `report/sections/82_ising_modular_compiler.tex` | A Supported Ising Modular-Data Compiler |
-| 78 | `CA-83-COSET-LATTICE-STRESS` | `report/sections/83_coset_lattice_stress.tex` | Coset Lattice Stress Generators with Exact Core Stabilization |
-| 79 | `CA-84-COSET-HAMILTONIAN-AND-OAR` | `report/sections/84_coset_hamiltonian_and_oar.tex` | Coset Positivity and a Scalar-Augmented OAR Tower |
-| 80 | `CA-85-SMEARED-COSET-AND-LOCALITY` | `report/sections/85_smeared_coset_and_locality.tex` | Smooth Coset Symmetry Limits and Local Reconstruction |
-| 81 | `CA-86-SPACETIME-TROTTER-DICTIONARY` | `report/sections/86_spacetime_trotter_dictionary.tex` | String-Net Histories as Trotter Expansions: the Spacetime Dictionary |
-| 82 | `CA-87-DILUTE-FIBONACCI-IS-BLOCKED-GOLDEN` | `report/sections/87_dilute_fibonacci_is_blocked_golden.tex` | The Net Case: the Dilute Fibonacci Chain Is the Golden Chain Blocked |
+| 76 | `CA-76-CORNER-TO-WILSON-BRIDGE` | `report/sections/76_corner_to_wilson_bridge.tex` | Corner-to-Wilson Bridge: Refinement Meets Dynamics |
+| 77 | `CA-77-POINTED-CARRIER-INVARIANTS` | `report/sections/77_pointed_carrier_invariants.tex` | Pointed Carriers: Occupation Grading, Dual-Pair Blocking, and Corner Qualifications |
+| 78 | `CA-78-CATEGORICAL-SELECTION-EQUATIONS` | `report/sections/78_categorical_selection_equations.tex` | Finite Selection Equations for a Categorical Nearest-Neighbour Hamiltonian |
+| 79 | `CA-79-KS-SHELL-AND-REFINEMENT-DEFECT` | `report/sections/79_ks_shell_and_refinement_defect.tex` | Koo--Saleur Tiles: Spectral-Shell Certificate and Refinement Defect |
+| 80 | `CA-80-LATTICE-SEWING-AND-FIDELITY-CERTIFICATE` | `report/sections/80_lattice_sewing_and_fidelity_certificate.tex` | Exact Lattice Cells, Temporal Reflection Positivity, and a Two-Sided Fidelity Certificate |
+| 81 | `CA-81-CFT-MACHINE-OAR-CONTRACT` | `report/sections/81_cft_machine_oar_contract.tex` | The CFT Machine and Its Quantitative OAR Contract |
+| 82 | `CA-82-ISING-MODULAR-COMPILER` | `report/sections/82_ising_modular_compiler.tex` | A Supported Ising Modular-Data Compiler |
+| 83 | `CA-83-COSET-LATTICE-STRESS` | `report/sections/83_coset_lattice_stress.tex` | Coset Lattice Stress Generators with Exact Core Stabilization |
+| 84 | `CA-84-COSET-HAMILTONIAN-AND-OAR` | `report/sections/84_coset_hamiltonian_and_oar.tex` | Coset Positivity and a Scalar-Augmented OAR Tower |
+| 85 | `CA-85-SMEARED-COSET-AND-LOCALITY` | `report/sections/85_smeared_coset_and_locality.tex` | Smooth Coset Symmetry Limits and Local Reconstruction |
+| 86 | `CA-86-SPACETIME-TROTTER-DICTIONARY` | `report/sections/86_spacetime_trotter_dictionary.tex` | String-Net Histories as Trotter Expansions: the Spacetime Dictionary |
+| 87 | `CA-87-DILUTE-FIBONACCI-IS-BLOCKED-GOLDEN` | `report/sections/87_dilute_fibonacci_is_blocked_golden.tex` | The Net Case: the Dilute Fibonacci Chain Is the Golden Chain Blocked |
 
 ## Adding a shard
 

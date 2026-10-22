@@ -1,0 +1,270 @@
+% SHARD-ID: CA-79-KS-SHELL-AND-REFINEMENT-DEFECT
+% SHARD-TITLE: Koo--Saleur Tiles: Spectral-Shell Certificate and Refinement Defect
+% SHARD-SUMMARY: For any unitary fusion category C, writes the standard Koo-Saleur modes as Fourier sums of evaluated two- and three-site tiles and reduces VR-1 A1-A4 to a spectral-shell certificate P0-P3 for an exactly transported grading Q, with K = Q^p, p > 1 (conditional; the p = 1 counterexample shows the spare power is needed).
+% SHARD-SUMMARY: Splits the KS refinement defect under any isometry into leakage, compression and phase/geometry parts, proves bare dyadic insertion cannot carry two-site energy and that exact full-stage covariance leaves only the zero representation, and lifts the character-growth obstruction to the sharp threshold c > 1.
+% SHARD-KEYWORDS: Koo-Saleur, tile, spectral shell, graph norm, VR-1, Carpi-Weiner energy bound, refinement defect, leakage, vacuum insertion, exact covariance no-go, character growth, extended fields, inverse discretisation
+
+\section{Koo--Saleur Tiles: Spectral-Shell Certificate and Refinement Defect}
+\label{sec:ks-shell-refinement-defect}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: mixed, labelled per statement.}  Lemmas 79.1, 79.6, 79.7 and
+Theorem 79.8 are \textbf{derived} (finite algebra; graded ``confirmed'' by the
+in-repo review).  Theorem 79.2, Propositions 79.3, 79.4 and 79.9 are
+\textbf{conditional} (graded ``conditional-ok''; hypotheses listed).  Example
+79.5 is \textbf{negative}.  Position 79.10 is a derived argument under stated
+assumptions; \S\ref{sec:ks-shell-conjecture} is \textbf{conjectural} and a
+\textbf{proposal}.  No chain, free or interacting, is shown here to satisfy P0--P3.
+Everything holds for a unitary fusion \(\Cc\) with all multiplicity indices and
+no self-duality, braiding or Temperley--Lieb relation, except Proposition 79.9
+and \S\ref{sec:ks-shell-conjecture}, which need a declared modular target.
+Reproducibility: \path{explorations/2026-10-22-astra/D4-koo-saleur-beyond-free/checks/run_checks.py}
+(Python; 20 exact equality checks, five rejected mutations, qubit sites only,
+i.e.\ \(\Cc=\mathrm{Vec}\); the identities checked are formal).
+
+Dependencies: CA-14, CA-67, CA-68, CA-71, CA-73, CA-75 rows (4)--(6), CA-81,
+CA-86; LC-2, LC-12; CONVENTIONS (r), (s), (t), (v), (af), (ak), (al), (ap).
+
+% Source: explorations/2026-10-22-astra/D4-koo-saleur-beyond-free/NOTE.md:111--172 tile form, D4-T, zero mode;
+%   :238--401 P0--P3, D4-P, D4-B, p=1 counterexample, D4-I; :403--506 D4-R, D4-V, D4-N; :508--612 D4-G, section 5; :9--69 D4-C.
+% Source: explorations/2026-10-22-astra/D4-koo-saleur-beyond-free/REVIEW.md:72--132 step checks; :209--227 grades;
+%   :50 CA-73 support; :51 spare power = referee's stronger weight; :60--68 omitted prior art; :142--192 D4-C attack.
+% Source: explorations/2026-10-22-astra/D4-koo-saleur-beyond-free/INTEGRATION.md:87--121 verdict, first attackable lemma.
+% Source: cft_machine/research/virasoro_routes.md:55--80 VR-1 A1--A4; :41 inverse CFT discretization route.
+% Source: cft_machine/reviews/virasoro_referee.md:155--161 fixed-core estimate is not a graph-norm bound;
+%   "a stronger auxiliary regularity weight ... would be required".
+% Source: references/lattice-symmetry/GransSamuelssonEtAl2020/source/Linnea11.5.tex:791--820 KS energy/current form;
+%   :2489 Tr[L_n,L_-n]=0 at finite N; :3224--3229 c vs c* bookkeeping.
+% Source: references/cft-machine/coset-symmetry/CarpiWeiner2004/source.tex:727--747
+%   ||L_n v|| <= r(1+|n|^{3/2}) ||(1+L_0)v||.
+% Source: references/lattice-symmetry/MilstedVidal2017/source/extraction_koo_saleur.tex:115, :551--575
+%   KS modes H_n on a nonintegrable chain; erroneous low-window overlaps fitted ~1/N^2 (N=13..22).
+% Source: references/lattice-symmetry/ZiniWang2018/source/main.tex:871--895 Conj. 4.3, Rmk. 9.
+% Source: reconstruction/02_obstructions.md:210--219 LC-2 Prop. 5; reconstruction/12_fibonacci_four_port.md:169--195 LC-12 sec. 5.
+% Source: report/sections/67_refinement_requirements_obstructions.tex:104--109, :134 (NG5).
+% Source: report/sections/68_variable_n_refinement_maps.tex:49--64 vacuum insertion V_L; report/sections/73_categorical_residual_set.tex:166--172.
+% Source: references/cft/AasenFendleyMong2020/source/_Topological_defect_lines.tex:186--212; _fusion_categories_and_diagrammatics.tex:175--184.
+% Source: explorations/2026-10-22-astra/D5-fidelity-lattice-sewing/REVIEW.md:105--106, :127 (D5-H, c > 12/pi^2 vs c > 1).
+
+\subsection{The KS Prescription Is a Tile Prescription}
+
+\textbf{Setting.}  \(O\in\Cc\) a site object, \(h_{N,j}\in\operatorname{End}_\Cc(O\otimes O)\)
+self-adjoint, \(H^{\mathrm{raw}}_N=-\sum_j h_{N,j}\) (CONVENTIONS (ak)), a given velocity
+\(v_N>0\), and the velocity-one density \(k_j:=-h_{N,j}/v_N\), which is the \(h\) of (af).
+Declared extra data: a periodic representation on \(N\ge4\) sites with a unitary
+translation \(U_N\), \(U_N^N=1\), \(U_Nk_jU_N^*=k_{j+1}\), and disjoint-support commutativity.
+The forward current is \(\mathcal J_j:=i[k_j,k_{j+1}]\) (three-site support).
+With \(z=e^{2\pi i/N}\), \(a_N=N/4\pi\), a scalar density subtraction \(\varepsilon_N\)
+(the \(e_n\) of (af), renamed to avoid the cup-cap tile \(e_j\) of (ak)) and a
+real zero-mode shift \(b_N\):
+\begin{equation}\label{eq:79-ks}
+  T_{N,n}=a_N\sum_j z^{nj}(k_j-\varepsilon_N-\mathcal J_j)+b_N\delta_{n,0},\qquad
+  \bar T_{N,n}=a_N\sum_j z^{-nj}(k_j-\varepsilon_N+\mathcal J_j)+b_N\delta_{n,0}.
+\end{equation}
+Expanding \(h_j=\sum_\alpha c_\alpha D^{(j)}_\alpha\) in a dagger-stable tile basis (CA-86)
+gives the forward chiral tile
+\(-\sum_\alpha\frac{c_\alpha}{v_N}D^{(j)}_\alpha-\varepsilon_N
+-\frac{i}{v_N^2}\sum_{\alpha,\beta}c_\alpha c_\beta[D^{(j)}_\alpha,D^{(j+1)}_\beta]\):
+both powers \(1/v_N\), \(1/v_N^2\) matter.  The categorical evaluation fixes
+recoupling; the coefficients fix dynamics.  No isotropy, velocity or Ward identity
+follows.
+
+\textbf{Lemma 79.1 (D4-T) [derived].}  \(i[\sum_lk_l,k_j]=\mathcal J_{j-1}-\mathcal J_j\),
+\(T_{N,n}^*=T_{N,-n}\), and
+\([\sum_jz^{mj}k_j,\sum_jz^{nj}k_j]=-i(z^n-z^m)\sum_jz^{(m+n)j}\mathcal J_j\).
+\textbf{Proof.}  Only neighbouring densities fail to commute (interchange law); the
+neighbouring pair carries coefficient \(z^{mj}z^{n(j+1)}-z^{m(j+1)}z^{nj}=z^{(m+n)j}(z^n-z^m)\);
+\(k_j,\mathcal J_j\) are self-adjoint.  \(\square\)  If \(\varepsilon_N=E_0(N)/(Nv_N)\) then
+\(T_{N,0}+\bar T_{N,0}=\frac{N}{2\pi v_N}(H^{\mathrm{raw}}_N-E_0(N))+2b_N\); replacing
+\(T_n\mapsto T_n+d\,\delta_{n,0}\) maps \(c\mapsto c+24d\) and fixes \(c^*\) [derived], so
+a wrong cubic anomaly is never repaired by an energy origin (cf.\ GS:3224--3229).
+
+\subsection{A Spectral-Shell Certificate for VR-1}
+
+\textbf{Setting.}  A tower of finite Hilbert spaces \(H_r\) (\(N=N_r\to\infty\)), isometries
+\(J_r\) (the GNS maps of the proposed refinement), modes \(T_{r,n}\) of \eqref{eq:79-ks},
+and an \emph{auxiliary} grading \(Q_r\ge1\).  Physical energy
+\(E_N=\frac{N}{2\pi v_N}(H^{\mathrm{raw}}_N-E_0)\) almost never intertwines exactly with a
+refinement, so interpretation (\(E_N\)) and regularity (\(Q_r\)) are separated; their uniform
+comparison is a further obligation.  Shells \(E_{r,a}=1_{[2^a,2^{a+1})}(Q_r)\), cutoffs
+\(P_r(\Lambda)=1_{[1,\Lambda]}(Q_r)\); constants below are independent of \(r\); each
+statement applies to both chiralities and to the mixed residuals \([T_{r,m},\bar T_{r,n}]\).
+
+\textbf{Property P [hypothesis; not synthesised from \(\Cc\)].}
+\textbf{P0.} \(Q_{r+1}J_r=J_rQ_r\), \(T_{r,n}^*=T_{r,-n}\).
+\textbf{P1.} For every \(d>0\): \(\|E_{r,a}T_{r,n}E_{r,b}\|\le C_{n,d}\,2^b2^{-d|a-b|}\),
+full shell blocks with all multiplicities.
+\textbf{P2.} With \(z_{mn}=\delta_{m+n,0}(m^3c^*-mc)/12\) and
+\(R_{r,m,n}=[T_{r,m},T_{r,n}]-(m-n)T_{r,m+n}-z_{mn}\): \(\|Q_r^tR_{r,m,n}P_r(\Lambda)\|\to0\)
+for each fixed \(\Lambda\) and real \(t\ge0\).
+\textbf{P3.} \(\Delta_{r,n}=T_{r+1,n}J_r-J_rT_{r,n}\) obeys
+\(\|Q_{r+1}^t\Delta_{r,n}P_r(\Lambda)\|\le A_{n,t}2^{-\alpha_{n,t}r}\Lambda^{\gamma_{n,t}}\),
+\(\alpha_{n,t}>0\), for all \(\Lambda\ge1\) (full output, low input).
+
+P1 is the uniform lattice analogue of the Carpi--Weiner energy bound
+\(\|L_nv\|\le r(1+|n|^{3/2})\|(1+L_0)v\|\) (CW:727--747), with \(Q\) in the role of
+\(1+L_0\) and off-diagonal shell decay added [source-local comparison].  The only local
+evidence on an interacting chain is numerical and fixed-window: on a nonintegrable chain
+the KS modes' low-window overlaps outside the CFT selection rule were fitted to decay as
+\(1/N^2\) for \(N=13,\dots,22\) (MV:115, :567, :573) [source-local; not a shell bound].
+
+\textbf{Theorem 79.2 (D4-P) [conditional].}
+\textbf{ASSUME:} P0--P3; a fixed integer \(p>1\).  \textbf{PROVE:} \(K_r=Q_r^p\) satisfies
+VR-1 A1--A4 (\path{virasoro_routes.md}:55--80); hence modes and all finite words converge
+on \(\bigcap_t\operatorname{Dom}(Q^t)\).  Genuine Virasoro needs in addition \(c^*=c\).
+\begin{itemize}
+\item[\(\langle1\rangle1\).] The \((a,b)\) block of \(Q^tT_nQ^{-t-1}\) is
+\(\le2^tC_{n,d}2^{-(d-t)|a-b|}\) (\(d>t\)); a Schur test on row/column sums bounds the
+operator norm by \(M_{n,t}=2^tC_{n,d}\frac{1+2^{-(d-t)}}{1-2^{-(d-t)}}\), with no shell-dimension factor.
+\item[\(\langle1\rangle2\).] A1 by functional calculus from P0.  A2 at \(t=ps\):
+\(K^sT_nK^{-s-1}=(Q^{ps}T_nQ^{-ps-1})Q^{-(p-1)}\).
+\item[\(\langle1\rangle3\).] Inserting \(Q^{-t-1}Q^{t+1}\):
+\(\|Q^tR_{mn}Q^{-t-2}\|\le B_{mn,t}:=M_{m,t}M_{n,t+1}+M_{n,t}M_{m,t+1}+|m-n|M_{m+n,t}+|z_{mn}|\).
+\item[\(\langle1\rangle4\).] Splitting the input at \(\Lambda\), the \(K\)-weighted residual is
+\(\le\|Q^tRP(\Lambda)\|+B_{mn,t}\Lambda^{-2(p-1)}\) at \(t=ps\); take \(\Lambda\) large, then \(r\) large (P2): A4.
+\item[\(\langle1\rangle5\).] Exact \(Q\)-transport and \(\langle1\rangle1\) give
+\(\|Q_{r+1}^t\Delta_{r,n}Q_r^{-t-1}\|\le2M_{n,t}\); the same split gives
+\(e_{r,n,s}\le A2^{-\alpha r}\Lambda^{\gamma}+2M_{n,ps}\Lambda^{-(p-1)}\) (P3 constants at \(t=ps\)); \(\Lambda=2^{\theta r}\),
+\(\theta\gamma<\alpha\), makes it summable: A3.
+\item[\(\langle1\rangle6\).] QED by \(\langle1\rangle1\)--\(\langle1\rangle5\) and VR-1.  The powers \(ps\) are cofinal, so the smooth domain is unchanged.
+\end{itemize}
+The spare power \(p>1\) is exactly the ``stronger auxiliary regularity weight'' the referee
+requires before a fixed-core estimate may be advertised as a graph-norm certificate
+(referee:155--161; REVIEW:51).
+
+\textbf{Proposition 79.3 (D4-B) [conditional].}  \textbf{ASSUME:} P1 and
+\(\|E_{r,a}R_{r,m,n}E_{r,b}\|\to0\) for each fixed \((a,b)\).  \textbf{PROVE:} P2.
+\(\langle1\rangle1\). Products obey an order-two envelope: summing two P1 bounds over the
+intermediate shell with exponent \(D>d+2\) gives \(C_d2^{2b}2^{-d|a-b|}\).
+\(\langle1\rangle2\). For fixed \(\Lambda\) only finitely many \(b\) occur; the geometric output
+tail is uniformly small.  \(\langle1\rangle3\). The finite rectangle tends to zero.  QED.
+
+\textbf{Proposition 79.4 (D4-I) [conditional].}  \textbf{ASSUME:}
+\(\|\operatorname{ad}_{Q_r}^k(T_{r,\pm n})E_{r,b}\|\le A_{n,k}2^{(k+1)b}\) for all \(k\ge0\),
+uniformly in \(r\).  \textbf{PROVE:} P1.  \(\langle1\rangle1\). For \(a\ge b+2\) the shells are
+separated by \(g\ge2^{a-1}\), and \(Y\mapsto\int_0^\infty e^{-sQ_a}Ye^{sQ_b}ds\) inverts
+\(X\mapsto Q_aX-XQ_b\) with norm \(\le1/g\).  \(\langle1\rangle2\). Applying it \(k\) times gives
+\(2^kA_{n,k}2^b2^{-k(a-b)}\); adjoints give \(a<b\); take \(k>d\).  QED.  Lieb--Robinson
+bounds give no such \emph{relative} estimate by themselves: the rescaling in \(E_N\) is extensive.
+
+\textbf{Example 79.5 [negative; spare power is needed].}  On orthonormal pairs \(a_j,b_j\)
+with \(Q=2^j\) on the \(j\)-th pair, \(T_{r,1}=2^r\ket{a_r}\bra{b_r}\), \(T_{r,-1}=T_{r,1}^*\),
+other modes \(0\), \(c=c^*=0\): P1 holds and all fixed blocks vanish eventually, but
+\(R_{r,1,-1}=2^{2r}(\ket{a_r}\bra{a_r}-\ket{b_r}\bra{b_r})\) has \(\|Q^tRQ^{-t-2}\|=1\) while
+\(\|K^sRK^{-s-2}\|=2^{-2(p-1)r}\).  (It isolates A4; it does not satisfy A3.)
+
+\subsection{KS Modes under Categorical Refinement}
+
+\textbf{Setting.}  Any isometry \(V:H_N\to H_M\) (a CA-71 placement is one instance),
+\(P=VV^*\), \(P^\perp=1-P\), fine densities \(k'_a\), compression \(B_a=V^*k'_aV\), leakage
+\(F_a=P^\perp k'_aV\).
+
+\textbf{Lemma 79.6 (D4-R) [derived].}
+\(V^*\mathcal J'_aV=i([B_a,B_{a+1}]+F_a^*F_{a+1}-F_{a+1}^*F_a)\);
+\(\Delta_n:=T'_{M,n}V-VT_{N,n}=P^\perp T'_{M,n}V+V(V^*T'_{M,n}V-T_{N,n})\) with orthogonal
+ranges; \(V^*T'_{M,n}V=a_M\sum_az_M^{na}(B_a-\varepsilon_M-V^*\mathcal J'_aV)+b_M\delta_{n,0}\).
+If local stretched representatives \(S_j\) satisfy \(S_jV=Vk_j\), then
+\(\Delta_n=\{a_M\sum_az_M^{na}(k'_a-\varepsilon_M-\mathcal J'_a)-a_N\sum_jz_N^{nj}(S_j-\varepsilon_N-i[S_j,S_{j+1}])\}V
++(b_M-b_N)\delta_{n,0}V\): fine-versus-stretched tiles, Fourier phase/scale/velocity, scalar origin.
+\textbf{Proof.} Insert \(1=P+P^\perp\) between \(k'_a\) and \(k'_{a+1}\); use \(V^*V=1\). \(\square\)
+Compressed currents are not currents of compressed densities; the \(F^*F\) terms are the
+missing part.  One inserted vacancy shifts the phase of every later site, so a local density
+error does not give a local KS error; \(O(N_r^{-\epsilon})\) is summable on geometric \(N_r\),
+\(O(1/N)\) on \(N\to N+1\) is not.  \emph{Support remark [derived]:} the corner image is
+\(\theta(k_j)=Vk_jV^*=S_jP\), which pins \emph{every} inserted slot; CA-73:169--171 should be
+read through the local representative \(S_j\) (REVIEW:50).
+
+\textbf{Lemma 79.7 (D4-V) [derived; negative].}  \textbf{ASSUME:} fine energy
+\(\sum_ak'_a\) nearest-neighbour; \(V\) the bare dyadic insertion of CA-68 (one \(\iota_\one\) after each
+site, no dressing).  \textbf{PROVE:} \(V^*(\sum_ak'_a)V\) is a sum of one-site morphisms in
+\(\operatorname{End}_\Cc(O)\).  \(\langle1\rangle1\). Each fine bond meets one coarse factor and one
+\(\iota_\one\); its compression is \((\mathrm{id}\otimes\iota_\one^\dagger)k'(\mathrm{id}\otimes\iota_\one)\) or
+the mirror.  \(\langle1\rangle2\). Sum over bonds.  QED.  \emph{Consequence:} exact covariance of both
+\(T_0\) and \(\bar T_0\) would make \(V^*(T'_0+\bar T'_0)V=T_0+\bar T_0\), i.e.\ coarse \(H^{\mathrm{raw}}_N\)
+a one-site sum plus scalar; whenever it is not, exact covariance fails for this \(V\).
+Leakage in Lemma 79.6 can still mediate two-site terms; dressings change the premise.
+
+\textbf{Theorem 79.8 (D4-N) [derived; negative].}  \textbf{ASSUME:} nonzero finite \(H_r\), A1,
+A4, adjoint pairing, and \(T_{r+1,n}J_r=J_rT_{r,n}\) for all \(n\) on all of \(H_r\).
+\textbf{PROVE:} \(c^*=0\), \(T_{r,n}=0\) for \(n\ne0\), \(T_{r,0}=\frac c{24}1\).
+\(\langle1\rangle1\). Covariance transports \(R_{r,m,n}\) isometrically to every later stage, where A4
+sends it to zero on each vector: \(R_{r,m,n}=0\).  \(\langle1\rangle2\). With \(D=\dim H_r\), traces of
+the \((1,-1)\), \((2,-2)\) brackets give \(0=2\Tr T_0+(c^*-c)D/12\) and \(0=4\Tr T_0+(8c^*-2c)D/12\);
+so \(c^*D/2=0\).  \(\langle1\rangle3\). \([T_0,T_n]=-nT_n\) kills \(T_n\) beyond the spectral diameter
+of \(T_0\); the bracket of \(T_a,T_{k-a}\) then gives \((2a-k)T_k=0\).  \(\langle1\rangle4\). The
+\((1,-1)\) bracket gives \(T_0=\frac c{24}\).  QED.
+\emph{Prior art:} trace cyclicity against a finite-\(N\) central term (GS:2489); finite-matrix
+central terms are coboundaries (LC-2 Prop.~5); no exact implementer for \(c\ne0\) (CA-67:104--109,
+NG5).  New here: \(\langle1\rangle1\) and the zero-representation conclusion.  Hence A3 must be
+approximate; exact \(Q\)-covariance, exact categorical relations and eventual equality on
+fixed low cores are not excluded.
+
+\subsection{Extended Fields Are Declared Data}
+
+\textbf{Proposition 79.9 (D4-G) [conditional].}  \textbf{ASSUME:} finitely many convergent unitary
+sector characters \(\chi_a(\tau)=\Tr_{V_a}q^{L_0-c/24}\), nonnegative, transforming by the declared
+modular \(S\) with \(S_{\one a}>0\); weight-zero vacuum; \(c>1\).  \textbf{PROVE:} \(V_\one\) is not
+a finite sum of Virasoro highest-weight modules.
+\(\langle1\rangle1\). \(M\) modules would give \(\chi_\one(i\beta/2\pi)\le Me^{\beta c/24}\prod_n(1-e^{-\beta n})^{-1}\) (PBW).
+\(\langle1\rangle2\). \(\log\prod\le\sum_k[k(e^{\beta k}-1)]^{-1}\le\pi^2/6\beta\).
+\(\langle1\rangle3\). \(S\) and the positive vacuum row give \(\chi_\one(i\beta/2\pi)\ge S_{\one\one}e^{\pi^2c/6\beta}\).
+\(\langle1\rangle4\). As \(\beta\to0\) this beats \(\langle1\rangle2\) when \(c>1\).  QED.
+The threshold is sharp for this argument.  LC-12 \S5's bound \(\sum k^{-2}<2\) needed
+\(c>12/\pi^2\) and was applied at one \(c\) (D5 REVIEW:105--106); D5-H reaches the same \(c>1\).
+This answers the general-\(c\) question of CA-75:108--111.
+
+\textbf{Position 79.10 [derived argument; assumptions as stated].}  \textbf{ASSUME} the
+hypotheses of Proposition 79.9 for the declared target.  Then (i) Virasoro modes alone, with
+finitely many families per sector label, cannot carry \(V_\one\): additional strong generators
+and their singular OPE coefficients are part of the declared target data, not output of
+\(\Cc\).  (ii) Any \(D\) commuting with every \(h_j\) (closed topological defects do, in the
+self-dual multiplicity-free setting of AFM-T:186--212, AFM-F:175--184) commutes with every
+\(T_n,\bar T_n\); if \(D=W_n\) with \([T_0,W_n]=-nW_n\), then \(nW_n=0\).  So defect operators
+and their polynomials are zero modes, never nonzero chiral generators.  (iii) Endpoint/junction
+fields, higher conserved densities and microscopic currents are \emph{proposals} for avatars;
+their weights, OPEs and positivity are extra equations.  Transport of such avatars under
+VR-1-type bounds with finite losses (D4-X) remains a conditional proof sketch in the note.
+
+\subsection{Headline Conjecture and First Attackable Lemma}
+\label{sec:ks-shell-conjecture}
+
+\textbf{Conjecture (D4-C) [conjectural; review verdict: overstated as a statement about
+\(\Cc\)].}  From an effective positive rational sewing completion \(\mathcal S\) of a UMTC
+\(\Cc\) one can effectively build finite categorical chains, nearest-neighbour tile
+Hamiltonians, local refinements and states whose standard KS modes satisfy P, which satisfy
+WT-1, and whose limit is unitarily the diagonal theory of \(\mathcal S\) with full fidelity to
+\(\Cc\).  Verdict (REVIEW:167--192): the carrier admits unit multiplicities and growing site
+objects, hence \emph{any} spin chain; the input \(\mathcal S\) is the full CFT; site growth is
+unconstrained relative to locality.  It is an inverse-discretisation (lattice-realisability)
+conjecture strengthening ZW Conj.~4.3 and Rmk.~9 (ZW:871--895) and the route of
+\path{virasoro_routes.md}:41, which the note does not cite.  \textbf{Proposal:} restate with a
+pointed carrier \(O=\one\oplus X\) and bounded support growth, separating the KS-certificate
+part from fidelity (REVIEW:231--235).
+
+\textbf{First attackable lemma [proposal].}  Prove P0--P3 for the sourced quasi-free
+calibration (\path{cft_machine/benchmarks/fermion/PROOF.md}:12--76; its source-modified
+modes) with \(Q=1+{}\)normal-ordered one-particle \(|\)momentum\(|\): zero padding transports
+\(Q\) exactly and a mode shifts it by at most \(|n|\) (finite band, P1); the fixed-core defect
+\(O(M^{-2}|r|^3)\) on fixed cores (PROOF.md:50--64) suggests P3 with \(\gamma\approx3\).  Through
+Theorem 79.2 this would be the first VR-1 instance (CA-75 row (4)) and answer the referee
+boundary.  The next general lemma is Proposition 79.4's relative commutator bound for an
+interacting density.
+
+\textbf{What this does not claim.}  No instance of P, free or interacting; no
+selection of \(h\), \(v_N\), \(\varepsilon_N\), \(b_N\) from \(\Cc\); no periodic categorical
+representation or unital OAR map; no positivity, self-adjointness, integration or local-net
+identification; no fidelity.  The no-wrap filter of the note is not adopted.
+
+\begin{center}\footnotesize
+\begin{tabular}{p{3.6cm}p{10.4cm}}
+\toprule
+Instance & Role (calibration only) \\
+\midrule
+Source-modified free fermion & Fixed-core KS errors (PROOF.md:50--65); candidate first P instance; not verified. \\
+Ising / nonintegrable ANNNI & MV:115, :551--575: fixed-window KS selection rules, fitted \(1/N^2\) leakage; numerical. \\
+Fibonacci, \(c=14/5\) & LC-12 \S5: single-\(c\) case of Proposition 79.9. \\
+\(\mathrm{Vec}\), qubit sites & D4 check bundle: formal identities of Lemmas 79.1, 79.6, 79.7, Example 79.5. \\
+\bottomrule
+\end{tabular}
+\end{center}

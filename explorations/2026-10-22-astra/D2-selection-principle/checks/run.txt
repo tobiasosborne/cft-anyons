@@ -1,0 +1,80 @@
+UTC: 2026-10-22T09:58:52.195794+00:00
+Headline: 8 exact structural check groups pass; 2 mutations rejected.
+No chain simulation. Largest matrix 8x8. No network.
+
+baseline
+$ python3 explorations/2026-10-22-astra/D2-selection-principle/checks/exact_checks.py
+Python 3.12.3 SymPy 1.14.0
+PASS TL relations and scalar YBE residual
+PASS YBE tiles do not imply arbitrary brick commutativity
+PASS trigonometric TL addition law modulo sin(lambda)^2+cos(lambda)^2=1
+PASS uv and u^2 v free-word YBE jets; cubic Hamiltonian obstruction
+PASS braid relation leaves a quadratic spectralisation obstruction
+PASS commuting positive gate family violates additive YBE
+PASS normalized blocking Jacobian, including normalization projection
+PASS Gram transport and conservative squared norm bound
+ALL 8 EXACT CHECK GROUPS PASSED
+
+exit=0
+
+RED brick ordering
+$ python3 explorations/2026-10-22-astra/D2-selection-principle/checks/exact_checks.py --mutate-brick-order
+Python 3.12.3 SymPy 1.14.0
+PASS TL relations and scalar YBE residual
+Traceback (most recent call last):
+  File "/home/tobias/Projects/cft-anyons/explorations/2026-10-22-astra/D2-selection-principle/checks/exact_checks.py", line 47, in <module>
+    assert zero_matrix(residual-x*y*(y-x)*(f-e)), 'brick commutator oracle failed'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: brick commutator oracle failed
+exit=1
+
+RED Gram inversion
+$ python3 explorations/2026-10-22-astra/D2-selection-principle/checks/exact_checks.py --mutate-gram-inverse
+Python 3.12.3 SymPy 1.14.0
+PASS TL relations and scalar YBE residual
+PASS YBE tiles do not imply arbitrary brick commutativity
+PASS trigonometric TL addition law modulo sin(lambda)^2+cos(lambda)^2=1
+PASS uv and u^2 v free-word YBE jets; cubic Hamiltonian obstruction
+PASS braid relation leaves a quadratic spectralisation obstruction
+PASS commuting positive gate family violates additive YBE
+PASS normalized blocking Jacobian, including normalization projection
+Traceback (most recent call last):
+  File "/home/tobias/Projects/cft-anyons/explorations/2026-10-22-astra/D2-selection-principle/checks/exact_checks.py", line 122, in <module>
+    assert zero_matrix(physical.T*physical-oracle), 'Gram inverse oracle failed'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Gram inverse oracle failed
+exit=1
+
+restored
+$ python3 explorations/2026-10-22-astra/D2-selection-principle/checks/exact_checks.py
+Python 3.12.3 SymPy 1.14.0
+PASS TL relations and scalar YBE residual
+PASS YBE tiles do not imply arbitrary brick commutativity
+PASS trigonometric TL addition law modulo sin(lambda)^2+cos(lambda)^2=1
+PASS uv and u^2 v free-word YBE jets; cubic Hamiltonian obstruction
+PASS braid relation leaves a quadratic spectralisation obstruction
+PASS commuting positive gate family violates additive YBE
+PASS normalized blocking Jacobian, including normalization projection
+PASS Gram transport and conservative squared norm bound
+ALL 8 EXACT CHECK GROUPS PASSED
+
+exit=0
+
+SHA256 current local artifacts:
+c175835532d98b1e3d7738959bdb2afc499d756a3f8b0d4c461c6a9d6e06ff24  explorations/2026-10-22-astra/D2-selection-principle/checks/run_checks.py
+5a73bda2f60c10237b1d482b2ca18578cc2fa925d21ad57388aa7b98f5a3c066  explorations/2026-10-22-astra/D2-selection-principle/checks/exact_checks.py
+00bf8c36c8f300a9654928b6b25644b8dbf42be6baee86f656c29777a443d0b1  explorations/2026-10-22-astra/D2-selection-principle/NOTE.md
+305f6c151362f6e505ad46fccff48d66c5ed6523582c57be84f40a88a8d20918  references/text/PenneysUnitaryFusionCategories.md
+8b8242157b37297b0c9344b5c9df8cc5acf3289443a37389a6bb88ccffba17a2  references/cft/AasenFendleyMong2020/source/_Statistical_mechanics_from_fusion_categories.tex
+1b5a75090a4c8356195c23c048358bc6c15cf8399583d05da7c34f6a5234de69  references/cft/AasenFendleyMong2020/source/_Topological_defect_lines.tex
+e2107b315aa1774fe3431543b3a3036351c5265fd58802f7225a4e00a50ecb55  references/cft/AasenFendleyMong2020/source/_fusion_categories_and_diagrammatics.tex
+d87cf8c312ae8dad82394a1bd436db0474a6bb22cbd3d211dd67534eb88d36ce  references/lattice-symmetry/KooSaleur1993/source/9312156.tex
+c14de0d2c807df7b373b8043b2f266ee26362a55216a969522d2ff01fe039927  references/lattice-symmetry/ZhouBatchelor1997/source/9611156.tex
+99c66affd0476ac0e0ade0bf9356a18dff4cfc07a74a4c49dea005536b08b27c  references/lattice-symmetry/ChelkakGlazmanSmirnov2016/source/StressTensor.tex
+85f6ef511b02a712a721bb885e190e557aa120c51d28a1aab739d09a7d26b119  literature/md/1408.1282/1408.1282.md
+40246b5e3e3382cbfdbd49fbed5c5f8b7b9eed5948dd7ccc91071e07051fdd88  literature/md/1608.04927/1608.04927.md
+
+SHA256 local Git blobs, revision 1f402aaf96d2ffb9d8efb0684836d4771bbd5f60:
+1a2e9c35af5d98ee86e4fe37fb0a17b4aa02b804bb72b300e3696c1676ebe3b6  references/string-net/LevinWen2005/source/strnet.tex
+aeda27329a717386db936a37e6cf5a6a27f8e626156cbfb434dca301e97f4ec9  report/sections/86_spacetime_trotter_dictionary.tex
+5b5cc5006e3137a72c90bd0171513e5dd55b87ce49074bb3f48883011f5dab81  report/sections/87_dilute_fibonacci_is_blocked_golden.tex

@@ -684,6 +684,48 @@ single ~200-line source file it points to.
 - Summary: Names the two unwritten joins as open questions and merges CA-15, CA-67, CA-81 and LC-4 into one acceptance contract on a lattice tower; makes no new mathematical claim.
 - Keywords: integration map, pipeline, acceptance contract, lattice tower, refinement, Wilson triangle, Koo-Saleur, sewing, fidelity, model independence
 
+## `CA-76-CORNER-TO-WILSON-BRIDGE`
+
+- Source: `report/sections/76_corner_to_wilson_bridge.tex`
+- Title: Corner-to-Wilson Bridge: Refinement Meets Dynamics
+- Summary: For general unitary fusion C with pointed site object O, converts the CA-72 corner weight into WT-1 drift: a strict unital lift gives d_{k,n} <= p_n e_n + 2(1-p_n); a unique gapped fine vacuum with residual eps_n gives d_{k,n} <= 2 eps_n/Delta_{n+1} and non-collapse.
+- Summary: Proves isometry and the exactly local first tangent of the polar heat refinement, states Conjecture D3-C with its UV-only verdict, the unital-extension criterion (local braided lift only proposed), negative results, and the global-fidelity versus local-lift dichotomy that is CA-75 Link (b3).
+- Summary: Records confirmed corrections to CA-72 Cor. 72.8 (operator-norm softness) and CA-73 Lemma 73.1 (global corner pins, corner unit P).
+- Keywords: corner weight, Wilson triangle, WT-1, drift, unital lift, scalar augmentation, vacuum residual, spectral gap, polar refinement, imaginary time, local tangent, D3-C, non-collapse, Link (b3), corner unit, soft C*-system
+
+## `CA-77-POINTED-CARRIER-INVARIANTS`
+
+- Source: `report/sections/77_pointed_carrier_invariants.tex`
+- Title: Pointed Carriers: Occupation Grading, Dual-Pair Blocking, and Corner Qualifications
+- Summary: For a pointed site object O = 1 + X in any unitary fusion category, separates the unital and corner towers, proves the occupation Z-grading with its two-site dimension count and all-scale parity criterion, and makes dual-pair blocking O = Y x Ybar (Y not necessarily simple) a decidable integer test generalising Lemma 87.1.
+- Summary: Records that the Morita class of O x Obar is constant, the GNS, trace and operator-norm facts that qualify CA-71--CA-73, and the ordered-configuration Fock carrier of length-weighted dressing; the collision-sewing conjecture is kept conjectural with its contact-tuning caveat.
+- Keywords: pointed object, site object, variable-N carrier, occupation grading, parity, blocking, dual pair, Morita class, corner map, vacuum insertion, configuration space, Fock space, Thompson group, refinement
+
+## `CA-78-CATEGORICAL-SELECTION-EQUATIONS`
+
+- Source: `report/sections/78_categorical_selection_equations.tex`
+- Title: Finite Selection Equations for a Categorical Nearest-Neighbour Hamiltonian
+- Summary: For general unitary fusion C and site object O, compiles h in End_C(O x O) into finite coefficient equations: an exact gate ODE upgrading Lemma 86.1, blocking with leakage (lossless fixed-carrier blocking forces d_O = 1), and the cubic cokernel test [h12+h23,[h12,h23]] = K23-K12 for analytic additive YBE.
+- Summary: Proves YBE and brick-sweep commutativity imply neither the other (repaired converse), issues an erratum to CA-86 Prop. 86.3, bounds what braiding, defect symmetry and metric independence can select, and states the conditional WT-1 / VR-1 interface lemmas.
+- Summary: Records the sufficiency conjecture D2-C with its reviewer verdict (category-blind, no verified instance) and the attackable Ward-to-KS transfer lemma; no coupling is selected.
+- Keywords: selection principle, coefficient compiler, gate ODE, blocking, leakage, Yang-Baxter, cokernel test, Reshetikhin condition, Temperley-Lieb, brick transfer, erratum, Baxterisation, defect symmetry, collar bound, Ward identity, Koo-Saleur
+
+## `CA-79-KS-SHELL-AND-REFINEMENT-DEFECT`
+
+- Source: `report/sections/79_ks_shell_and_refinement_defect.tex`
+- Title: Koo--Saleur Tiles: Spectral-Shell Certificate and Refinement Defect
+- Summary: For any unitary fusion category C, writes the standard Koo-Saleur modes as Fourier sums of evaluated two- and three-site tiles and reduces VR-1 A1-A4 to a spectral-shell certificate P0-P3 for an exactly transported grading Q, with K = Q^p, p > 1 (conditional; the p = 1 counterexample shows the spare power is needed).
+- Summary: Splits the KS refinement defect under any isometry into leakage, compression and phase/geometry parts, proves bare dyadic insertion cannot carry two-site energy and that exact full-stage covariance leaves only the zero representation, and lifts the character-growth obstruction to the sharp threshold c > 1.
+- Keywords: Koo-Saleur, tile, spectral shell, graph norm, VR-1, Carpi-Weiner energy bound, refinement defect, leakage, vacuum insertion, exact covariance no-go, character growth, extended fields, inverse discretisation
+
+## `CA-80-LATTICE-SEWING-AND-FIDELITY-CERTIFICATE`
+
+- Source: `report/sections/80_lattice_sewing_and_fidelity_certificate.tex`
+- Title: Exact Lattice Cells, Temporal Reflection Positivity, and a Two-Sided Fidelity Certificate
+- Summary: For any unitary fusion category C, finite history-sum patches sew exactly along tile legs (inverse Gram, F^{-T} dual bases); temporal reflection positivity is blockwise positivity of the seam operator, forcing h self-adjoint but no sign rule on tile coefficients; Ward residuals obey an exact product rule.
+- Summary: Fusion operators alone never certify fidelity (D_a = d_a 1); a fully faithful endpoint functor plus an annular index bound mu <= Dim B forces braided equivalence onto the complete sector category, conditional on an index limit step that finite-dimensional Pimsner-Popa bounds do not currently supply.
+- Keywords: lattice sewing, history sum, reflection positivity, Gram contraction, dual basis, Ward residual, Duhamel, defect operators, fidelity, Pimsner-Popa index, four-interval inclusion, KLM, Verlinde, character growth, chiral versus full
+
 ## `CA-81-CFT-MACHINE-OAR-CONTRACT`
 
 - Source: `report/sections/81_cft_machine_oar_contract.tex`

@@ -1,0 +1,277 @@
+% SHARD-ID: CA-78-CATEGORICAL-SELECTION-EQUATIONS
+% SHARD-TITLE: Finite Selection Equations for a Categorical Nearest-Neighbour Hamiltonian
+% SHARD-SUMMARY: For general unitary fusion C and site object O, compiles h in End_C(O x O) into finite coefficient equations: an exact gate ODE upgrading Lemma 86.1, blocking with leakage (lossless fixed-carrier blocking forces d_O = 1), and the cubic cokernel test [h12+h23,[h12,h23]] = K23-K12 for analytic additive YBE.
+% SHARD-SUMMARY: Proves YBE and brick-sweep commutativity imply neither the other (repaired converse), issues an erratum to CA-86 Prop. 86.3, bounds what braiding, defect symmetry and metric independence can select, and states the conditional WT-1 / VR-1 interface lemmas.
+% SHARD-SUMMARY: Records the sufficiency conjecture D2-C with its reviewer verdict (category-blind, no verified instance) and the attackable Ward-to-KS transfer lemma; no coupling is selected.
+% SHARD-KEYWORDS: selection principle, coefficient compiler, gate ODE, blocking, leakage, Yang-Baxter, cokernel test, Reshetikhin condition, Temperley-Lieb, brick transfer, erratum, Baxterisation, defect symmetry, collar bound, Ward identity, Koo-Saleur
+
+\section{Finite Selection Equations for a Categorical Nearest-Neighbour Hamiltonian}
+\label{sec:categorical-selection-equations}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: mixed, labelled per statement} (derived 78.1--78.8, with exact SymPy checks;
+conditional 78.9--78.11; conjectural 78.12; proposals 78.13 and the ranking).  Origin: D2 in
+\path{explorations/2026-10-22-astra/D2-selection-principle/}: \(\mathrm{N}\) = \path{NOTE.md},
+reviewed in \(\mathrm{R}\) = \path{REVIEW.md}, \(\mathrm{I}\) = \path{INTEGRATION.md}; review grades
+carried unchanged.  No Julia or continuum run; porting the checks is open (I:67--68).  Dependencies:
+CA-65, CA-72, CA-75 row (2), CA-81 (WT-1, VR-1), CA-86, CA-87; CONVENTIONS (a), (b), (r), (af),
+(ak), (al), (ao).
+
+% Source: explorations/2026-10-22-astra/D2-selection-principle/NOTE.md:98--133, :136--245, :249--397,
+%   :468--515, :519--604, :606--723; REVIEW.md:57--70, :99--181, :198--218; INTEGRATION.md:104--125.
+% Run artifact: same dir, checks/exact_checks.py:23--124 + checks/run.txt:1--61 (8 groups pass,
+%   2 mutations RED); review_checks.py:14--33 (--mutate RED, REVIEW.md:222--227).
+% Source: references/text/PenneysUnitaryFusionCategories.md:1010--1019 (positive traces, dims);
+%   cft_machine/research/wilson_triangle.md:16--33; cft_machine/research/virasoro_routes.md:50--77.
+% Source: references/lattice-symmetry/KooSaleur1993/source/9312156.tex:603 (row-to-row brick tau),
+%   :716--718 (not commuting), :725 (tau_D), :729--738 (log tau_D); ZhouBatchelor1997/source/9611156.tex:430--455.
+% Source: literature/md/1408.1282/1408.1282.md:155--170, :217--235 (YBE; BMW Baxterisation);
+%   literature/md/1608.04927/1608.04927.md:453--458 (TL R(u)); ChelkakGlazmanSmirnov2016 StressTensor.tex:529--532.
+% Source: references/cft/AasenFendleyMong2020/source/ (AFM): _fusion_categories_and_diagrammatics.tex:175--184;
+%   _Topological_defect_lines.tex:58--60; _Statistical_mechanics_from_fusion_categories.tex:619--623, :775.
+% LOCAL SOURCE MISSING: the classical Reshetikhin integrability condition (REVIEW.md:63--66). Acquire.
+
+\subsection{Setting and the Coefficient Compiler}
+
+\(\Cc\) is unitary fusion with positive spherical trace \(\operatorname{tr}_\Cc\); \(O\neq0\) is the
+site object of (r); \(B_2=\operatorname{End}_\Cc(O^{\otimes2})\),
+\(B_3=\operatorname{End}_\Cc(O^{\otimes3})\).  As in (ak), \(H=-\sum_jh_j\), \(h=h^\dagger\in B_2\);
+the physical bond energy fed to the KS tier (af) is \(k_j:=-h_j\) (N:58--61).  \(e_j\) denotes only
+the cup-cap tile of (ak).  A spectral \(R(u)\) is a regular operator on \(O\otimes O\) with additive
+parameter, distinct from a braiding (N:66--70).
+
+\textbf{Proposition 78.1 [derived; compiler].}  For a basis \(\{D_\alpha\}\) of \(B_2\) and
+\(h=\sum_\alpha c_\alpha D_\alpha\), the Gram matrix \(\mathcal G_{\alpha\beta}=
+\operatorname{tr}_\Cc(D_\alpha^\dagger D_\beta)\) is positive definite, and
+\(\tau^\alpha(X)=\sum_\beta(\mathcal G^{-1})_{\alpha\beta}\operatorname{tr}_\Cc(D_\beta^\dagger X)\)
+satisfy \(X=\sum_\alpha\tau^\alpha(X)D_\alpha\).  Constants:
+\(M^\gamma_{\alpha\beta}=\tau^\gamma(D_\alpha D_\beta)\) and coordinates \(\sigma^\mu\) (same
+construction on \(B_3\)) of words in \(A_\alpha=D_\alpha\otimes1\), \(B_\alpha=F^\dagger(1\otimes
+D_\alpha)F\), \(F\) the associator.  \textbf{Proof.} \(B_2\cong\bigoplus_aM_{m_a}(\mathbb C)\) and
+\(\operatorname{tr}_\Cc\) is \(d_a\Tr\) on block \(a\), \(d_a>0\) (Penneys :1010--1019): faithful
+and positive.  \(\square\)  No self-duality, multiplicity-freeness or FS sign is used (contrast AFM
+:175--184).
+
+\textbf{Proposition 78.2 [derived; exact gate ODE, upgrading Lemma 86.1].}  Write
+\(e^{th}=\sum_\alpha w_\alpha(t)D_\alpha\).  Then
+\begin{equation}
+  w_\alpha(0)=\tau^\alpha(1),\qquad
+  \dot w_\gamma=\textstyle\sum_{\alpha\beta}c_\alpha w_\beta M^\gamma_{\alpha\beta},
+  \tag{78.1}
+\end{equation}
+and every finite ordered product of gates \(e^{\delta\tau h_j}\), in particular \(U(\delta\tau)^M\)
+of CA-86, equals \emph{exactly} \(\sum_\Gamma\prod_pw_{\alpha(p)}(\delta\tau)
+\operatorname{Ev}_\Cc(\Gamma)\), one basis tile per plaquette.  \textbf{Proof.}
+\(\tfrac{d}{dt}e^{th}=he^{th}\); expand, apply \(\tau^\gamma\).  Substitute per plaquette;
+multilinearity and composition in \(\Alg_L\) give \(\operatorname{Ev}_\Cc\) (CA-86:89--92).
+\(\square\)  Lemma 86.1's remainder disappears; only the Trotter comparison remains (R:101--103).
+
+\subsection{Blocking, Leakage, and Metric Response}
+
+Contracting a fixed \(2\times2\) patch \(P\) gives a degree-four map \(b_\beta(w)=\sum
+C^\beta_{\alpha_1\dots\alpha_4}w_{\alpha_1}\cdots w_{\alpha_4}\), \(C^\beta=\tau^\beta_{\rm
+new}(\operatorname{Ev}_\Cc(P[D_{\alpha_1},\dots,D_{\alpha_4}]))\), into tiles with \(O^{\otimes2}\)
+boundaries, not back into \(B_2\).  With a retained isometry \(I\), \(\pi=I^\dagger\): \(\mathcal
+B_P=Ib+L\), \(L=(1-I\pi)\mathcal B_P\); a closed fixed point solves \(b(w^*)=\lambda w^*\),
+\(\ell(w^*)=1\), \(L(w^*)=0\) (N:140--199).
+
+\textbf{Lemma 78.3 [derived; D2-L1, confirmed].}  \textsc{Assume} finite categorical spaces, fixed
+\(P\), the isometries above and \(V:B'\to B\otimes B\) isometric.  \textsc{Prove} (i) \(I\pi\) is
+the orthogonal projection onto retained tiles; (ii) if \(X=V(V^\dagger XV)V^\dagger\) for every
+boundary endomorphism \(X\), \(V\) is unitary; (iii) lossless retention of the same nonzero \(O\) on
+every boundary forces \(d_O=1\).\\ \(\langle1\rangle1\). \(I^\dagger I=1\) gives (i).
+\(\langle1\rangle2\). \(X=1\) gives \(VV^\dagger=1\); with \(V^\dagger V=1\), (ii).
+\(\langle1\rangle3\). Then \(O\otimes O\cong O\), \(d_O^2=d_O\), \(d_O>0\).  \(\langle1\rangle4\).
+QED.\\ So for \(d_O\neq1\) no fixed-carrier compression of \emph{all} boundary endomorphisms is
+lossless: blocking leaks.  Closure of special tensors is not excluded; \(\operatorname{Ev}_\Cc\) is
+compatible with blocking, the weights flow.
+
+\textbf{Lemma 78.4 [negative, derived; D2-L2, confirmed].}  \textsc{Assume} an unnormalised
+generating functional \(W(g)\), smooth and local in the metric, unchanged by every compactly
+supported metric variation for all fixed probes; stress is its metric derivative. \textsc{Prove} all
+separated stress insertions vanish. \(\langle1\rangle1\). Differentiate once: zero.
+\(\langle1\rangle2\). Differentiate at disjoint supports; locality excludes contact terms.
+\(\langle1\rangle3\). QED.\\ The target is Euclidean covariance with nontrivial metric response, not
+Levin--Wen isotopy (N:239--245).  The Levin--Wen principle selects a topological fixed point, so
+CA-86:57 is no selection precedent for a critical chain (R:166--170).
+
+\subsection{Additive Yang--Baxter as a Coefficient System}
+
+For \(R(u)=\sum_\alpha r_\alpha(u)D_\alpha\), additive YBE (precedent 1408.1282:159)
+\begin{equation}
+  R_{12}(u)R_{23}(u{+}v)R_{12}(v)=R_{23}(v)R_{12}(u{+}v)R_{23}(u)
+  \tag{78.2}
+\end{equation}
+reads \(\sum[\sigma^\mu(A_\alpha B_\beta A_\gamma)r_\alpha(u)r_\beta(u{+}v)r_\gamma(v)-
+\sigma^\mu(B_\alpha A_\beta B_\gamma)r_\alpha(v)r_\beta(u{+}v)r_\gamma(u)]=0\) for all \(\mu\):
+cubic \emph{functional} equations, finite only after a fixed ansatz (N:253--267).
+
+\textbf{Theorem 78.5 [derived and checked; D2-L3, confirmed; cubic cokernel test].} \textsc{Assume}
+\(R\) analytic near \(0\), \(R(0)=1\), \(R'(0)=h\), (78.2) for small \(u,v\). \textsc{Prove} there
+is \(K\in B_2\) with
+\begin{equation}
+  [h_{12}+h_{23},[h_{12},h_{23}]]=K_{23}-K_{12}.
+  \tag{78.3}
+\end{equation}
+\(\langle1\rangle1\). Write \(R=1+uh+u^2a+u^3b+\cdots\), \(A=h_{12}\), \(B=h_{23}\).  The \(uv\)
+coefficient is \(2(a_{23}-a_{12})+A^2-B^2\), so \(q_{12}=q_{23}\) for \(q=2a-h^2\).\\
+\(\langle1\rangle2\). \(q_{12}=q_{23}\) forces \(q\) scalar. \(\langle2\rangle1\). Left partial
+trace over factor 1, right over factor 3:
+\(d_Oq=\operatorname{tr}_1(q)\otimes1=1\otimes\operatorname{tr}_2(q)\). \(\langle2\rangle2\). The
+right partial trace of \(x\otimes1=1\otimes y\) gives \(d_Ox=\operatorname{tr}(y)1\); so \(x\),
+hence \(q\), is scalar.  \(\langle2\rangle3\). QED.\\ \(\langle1\rangle3\). Multiplying \(R\) by the
+scalar \(1-\kappa u^2/2\) (\(q=\kappa1\)) preserves (78.2) and \(h\), and makes \(a=h^2/2\).\\
+\(\langle1\rangle4\). With \(r_3=R'''(0)\), the \(u^2v\) coefficient is
+\((K_{23}-K_{12}-[A{+}B,[A,B]])/2\), \(K=r_3-h^3\) (free words, \path{exact_checks.py}:69--81).
+\(\langle1\rangle5\). QED.\\ Only pivotal structure and \(d_O\neq0\) are used (R:107--112).  With
+\(\mathcal D:K\mapsto K_{23}-K_{12}\), projecting (78.3) onto \(\operatorname{coker}\mathcal D\)
+gives finitely many cubic equations in \(c\) with constants from Prop.~78.1.  This \emph{rejection
+test} is necessary for analytic additive YBE, neither sufficient (higher jets) nor a criticality
+test.  The review identifies (78.3) as the classical Reshetikhin condition; \textbf{local source
+missing}, so no attribution is made.
+
+\textbf{Lemma 78.6 [derived as algebra; D2-L4, confirmed].}  \textsc{Assume} \(e_i^2=d\,e_i\),
+\(e_1e_2e_1=e_1\), \(e_2e_1e_2=e_2\), \(X_i(u)=1+x(u)e_i\).  \textsc{Prove} the residual \(X_1(u)X_2(u{+}v)X_1(v)-X_2(v)X_1(u{+}v)X_2(u)\) equals
+\((x+y+dxy+xyz-z)(e_1-e_2)\), where \(x=x(u)\), \(y=x(v)\), \(z=x(u{+}v)\).\\ \(\langle1\rangle1\).
+The left side is \(1+(x{+}y{+}dxy{+}xyz)e_1+ze_2+xz\,e_1e_2+yz\,e_2e_1\). \(\langle1\rangle2\). The
+right side swaps the \(e_1,e_2\) coefficients only; subtract.  QED.\\ For \(d=2\cos\lambda\),
+\(\sin\lambda\neq0\), \(x(u)=\sin u/\sin(\lambda-u)\) solves it (\path{exact_checks.py}:51--58;
+precedent 1608.04927:453--458).  \emph{Applicability} (R:113--117): a TL pair in \(B_2\) needs a
+cup/cap on \(O\otimes O\), i.e.\ a self-dual summand \(X\) of \(O\), whose FS indicator \(\kappa_X\)
+of (r) fixes the sign relating \(d\) to \(d_X\); the lemma does not supply the representation, and
+exhausts \(B_2\) only if \(B_2=\Span\{1,e\}\).  On-site solutions \(\exp(u(p\otimes1+1\otimes p))\)
+lie outside \(\Span\{1,e\}\) when \(\operatorname{End}_\Cc(O)\neq\mathbb C\): more solutions need
+not mean better dynamics (N:327--334).
+
+\textbf{Proposition 78.7 [negative, derived and checked; D2-L5 with repaired converse].} (i) With
+\(e_1,e_2\) as above and \(\mathsf B(x)=(1+xe_1)(1+xe_2)\), \([\mathsf B(x),\mathsf
+B(y)]=xy(y-x)(e_2-e_1)\): local YBE gates do not make an open brick sweep commute.  (ii) If
+\(\operatorname{End}_\Cc(O)\neq\mathbb C\), take a nontrivial projection \(p\),
+\(h=p\otimes1+1\otimes p\), \(g=p\otimes p\), \(X(u)=\exp(uh+u^2g)\).  All gates commute, so every
+brick or diagonal product commutes for all \(u\); yet no real-analytic \(\varphi\not\equiv0\),
+\(\varphi(0)=0\), makes \(\exp(\varphi h+\varphi^2g)\) satisfy (78.2).\\ \(\langle1\rangle1\). (i):
+\(\mathsf B(x)=1+x(e_1{+}e_2)+x^2e_1e_2\) and \([e_1{+}e_2,e_1e_2]=e_2-e_1\) (the \(d\,e_1e_2\)
+terms cancel); expand.  RED mutation: \path{run.txt}:20--29.\\ \(\langle1\rangle2\). (ii): one-site
+projections commute, so both sides are exponentials of commuting self-adjoint sums differing by
+\((a{+}b{-}c)(h_{12}-h_{23})+(a^2{+}b^2{-}c^2) (g_{12}-g_{23})\), \(a=\varphi(u)\),
+\(b=\varphi(v)\), \(c=\varphi(u{+}v)\).\\ \(\langle1\rangle3\). The differences are linearly
+independent and \(\exp\) is injective on commuting self-adjoints, so \(a+b=c\), \(a^2+b^2=c^2\),
+hence \(ab=0\); at \(u=v\), \(\varphi\equiv0\) (\path{review_checks.py}:21--31).
+\(\langle1\rangle4\). QED.\\ The original witness \(\exp((u+u^2)\,p\otimes p)\) was a
+reparametrisation artefact (graded \emph{overstated}, R:124--134); unused.  Simple \(O\): converse
+open.
+
+\textbf{Erratum to CA-86 Proposition 86.3.}  (a) Prop.~86.3 (CA-86:112--116) calls the brick sweep
+\(T(u)=\prod_{\rm odd}X_j\prod_{\rm even}X_j\) diagonal-to-diagonal and assumes it commutes ``as the sourced
+\(\hat\tau_D\) does''.  It is Koo--Saleur's \emph{row-to-row} \(\hat\tau\)
+(9312156.tex:603), which on the homogeneous self-dual line does \emph{not} commute (:716--718); the
+commuting family is the sequential diagonal product \(\hat\tau_D=\prod_jX_{2j}X_{2j+1}\) (:725). The
+attribution is wrong; by Prop.~78.7(i) YBE gates do not repair it.  The conditional implication
+(commuting family \(\Rightarrow[H,T(u)]=0\)) stands, and applied to the sourced commuting \(\hat\tau_D\) (:729--738) the Taylor argument of CA-86:124--126 gives \([\sum_je_j,\hat\tau_D(u)]=0\).  (b) ``The ground state is a
+common eigenvector'' (CA-86:120--122) needs a nondegenerate ground state: \([H,T]=0\) only preserves
+eigenspaces.  CA-86:146, :237--239 and CA-75 row (2) (:73) inherit both qualifications; whether a
+Trotter product equals a commuting transfer is open.
+
+\textbf{Proposition 78.8 [derived and checked; braided linear ansatz].}  \textsc{Assume} \(\Cc\)
+braided, \(\mathsf b=c_{O,O}\), \(b=\mathsf b_{12}\), \(b'=\mathsf b_{23}\), \(R(u)=1+x(u)\mathsf
+b\).  \textsc{Prove} the YBE residual is \((x{+}y{-}z)(b-b')+xy(b^2-b'^2)\); if it vanishes where
+\(xy\neq0\), then \(\mathsf b^2-\alpha\mathsf b=\beta1\); conversely that relation reduces (78.2) to
+\(z=x+y+\alpha xy\).\\ \(\langle1\rangle1\). Expand; the cubic words cancel by \(bb'b=b'bb'\)
+(\path{exact_checks.py}:84--89). \(\langle1\rangle2\). Vanishing gives \(b^2-\alpha b=b'^2-\alpha
+b'\), \(\alpha=-(x{+}y{-}z)/xy\); apply \(\langle1\rangle2\) of Theorem 78.5.  \(\langle1\rangle3\).
+Substitute.  QED.\\ A unitary braid with more than two eigenvalues has no \emph{linear}
+spectralisation.  This limits the ansatz only: a local source Baxterises through BMW with a
+three-eigenvalue braid, nonlinearly in \(G,G^{-1}\) (1408.1282:217--235).  Unbraided \(\Cc\)
+supplies no \(\mathsf b\). \textbf{Remark [derived].}  \(R\equiv1\) solves (78.2) with zero
+dynamics, so YBE implies neither criticality, nor a nonzero central charge, nor fidelity
+(N:391--397).
+
+\subsection{Defect Symmetry}
+
+Sliding a defect \(a\) past \(D_\alpha\) gives residuals \(Q_{a,\alpha}\) and equations
+\(\sum_\alpha c_\alpha Q_{a,\alpha}=0\).  If crossings are natural for \emph{every} endomorphism of
+\(O\) with coherent closure, \(Q\equiv0\): no equation on \(c\) (N:470--485); only a larger
+non-categorical ansatz is cut down.  Defect commutation is weaker than YBE (AFM :58--60).
+
+\textbf{Lemma 78.9 [conditional; D2-L7, conditional-ok].}  \textsc{Assume} a common limiting Hilbert
+system; defect and junction operators and adjoints converge strongly, uniformly bounded; finite
+products obey the categorical relations; junction reflected-norm Grams \(\ge\eta1\), \(\eta>0\).
+\textsc{Prove} the relations survive and independent junctions stay independent.
+\(\langle1\rangle1\). \(A_nB_nv-ABv=A_n(B_n-B)v+(A_n-A)Bv\to0\). \(\langle1\rangle2\). Induct over
+finite products and adjoints.  \(\langle1\rangle3\). The Gram bound keeps combinations nonzero.
+\(\langle1\rangle4\). QED.\\ Faithful, \emph{not full}: no fullness, distinct simple images or
+sector completeness.  Symmetry survives in gapped phases and beside neutral spectators: it
+constrains the search space, fixes no critical point.
+
+\subsection{Interfaces to WT-1 and VR-1}
+
+\textbf{Lemma 78.10 [conditional; D2-L8, conditional-ok].}  \textsc{Assume} \(F,G\) positive nonzero
+functionals on a unital C\(^*\)-algebra, \(z=F(1)\), \(w=G(1)\).  \textsc{Prove}
+\(\|F/z-G/w\|\le2\|F-G\|/\min(z,w)\).  \(\langle1\rangle1\). Split as \((F-G)/z+G(1/z-1/w)\).
+\(\langle1\rangle2\). \(\|G\|=w\), \(|z-w|\le\|F-G\|\).  \(\langle1\rangle3\). Triangle; QED.\\ If
+\(d_{n+1}\le\rho d_n+\ell_n\), \(0\le\rho<1\), \(\sum\ell_n<\infty\), and unnormalised row
+functionals obey relative bounds \(\le C_kd_n\), then \(\sum_nd_n\le(d_0+\sum\ell_n)/(1-\rho)\) and
+the normalised drift is \(\le2C_kd_n\): WT-1 A3, given unital injective \(*\)-maps (A1). With CA-72
+pullbacks of mass \(1-\varepsilon_n\) it feeds CA-75 Link (b2) given (b1) (R:171--175).
+
+\textbf{Lemma 78.11 [conditional; D2-L10, conditional-ok].}  \textsc{Assume} finite Hilbert spaces,
+output/input controls \(K\ge1\), a residual \(M\), \(s\in\mathbb N\), \(0\le\alpha<1\),
+\(\|K^sMe^{-tK}\|\le b\,t^{-s-\alpha}\) for \(0<t\le1\).  \textsc{Prove} \(\|K^sMK^{-(s+1)}\|\le
+C_{s,\alpha}b\), \(C_{s,\alpha}=\tfrac1{s!}\big(\tfrac1{1-\alpha}+\int_1^\infty
+t^se^{1-t}dt\big)\).\\ \(\langle1\rangle1\). \(K^{-(s+1)}=\tfrac1{s!}\int_0^\infty t^se^{-tK}dt\).
+\(\langle1\rangle2\). On \((0,1]\) the integral is \(\le b/(s!(1-\alpha))\). \(\langle1\rangle3\).
+For \(t\ge1\), \(e^{-tK}=e^{-K}e^{-(t-1)K}\) bounds the integrand by \(b\,t^se^{1-t}/s!\).
+\(\langle1\rangle4\). QED.\\ This is the shape of VR-1 A2 (two losses: A4).  \textbf{Counterexample
+[negative, derived]:} two-sided nuclear collar bounds do not suffice.  For
+\(E_n=\operatorname{diag}(0,\dots,n)\), \(X_n=e^{\sqrt n}(\ket{n}\bra{0}+\ket{0}\bra{n})\): \(\Tr
+e^{-tE_n}\le(1-e^{-t})^{-1}\) and \(\|e^{-tE_n}X_ne^{-tE_n}\|_1=2e^{\sqrt n-tn}\le2e^{1/(4t)}\)
+uniformly in \(n\), yet \(\|X_n(1+E_n)^{-p}\ket0\|=e^{\sqrt n}\) for every \(p\).
+
+\subsection{The Sufficiency Conjecture and Its Attackable Core}
+
+\textbf{Conjecture 78.12 [conjectural; D2-C].}  Let \(O\) tensor-generate \(\Cc\) and \(h\) carry a
+geometric stress certificate (N:606--693): C1 analytic local gate families whose metric derivatives
+have time and mixed responses \(k=-h\) and \(i[k_j,k_{j+1}]\) of (af), one positive velocity; C2 a
+blocking hierarchy in a fixed Banach space, \(d_{n+1}\le\rho d_n+\ell_n\), leakage kept; C3
+separating positive boundary probes, \(\sup_n\Tr e^{-tE_n}<\infty\), and the one-sided bounds of
+Lemma 78.11 for metric insertions; C4 discrete Ward contour identities with contact term and
+summable residuals; C5 coherent unital injective local \(*\)-refinements in one GNS system; C6 a
+nonzero separated connected stress two-point limit.  Then the scaling limit is a local unitary
+positive-energy 2D conformal net whose stress is the limit of the standard KS modes of \(k\) on a
+common core, generating projective unitary \(\mathrm{Diff}(S^1)\) actions, with \(c_{\rm conf}\) the
+Ward contact coefficient.
+
+\textbf{Reviewer verdict: needs reformulation.}  Sufficiency, not selection; category-blind (for
+\(\Cc=\Hilb\), \(O=\mathbb C^n\) every qudit chain is in scope); no instance of C1--C6 verified; the
+Ward-to-KS, domain, locality and integration steps are open (R:76--97, :198--202; N:695--701).
+Chiral-sector equality with \(\Cc\) is not part of it.  \textbf{Target 78.13 [proposal; Ward-to-KS
+transfer lemma].}  Under C1 and C3, the discrete contour identity of C4 with summable residuals
+implies VR-1 A3/A4 for the standard KS modes of \(k\) on the same GNS core (I:110--115).  First
+test: C3 on the in-repo free-fermion benchmark (I:117--121).
+
+\textbf{Ranked principles [proposal; N:705--723].}  (1) Geometric stress with controlled critical RG
+(C1--C6): strongest sufficiency candidate; (2) non-null holomorphic endpoint/stress equations with
+contact normalisation: best local selector (a finite rank-drop problem); (3) regular spectral YBE
+with a specified transfer and branch, starting from (78.3): neither necessary nor sufficient; (4)
+isotropy or normalised blocking alone: filters; (5) topological symmetry alone: no selector.  Output
+is a selected subset of coefficient space with all auxiliary choices, never a canonical \(h\).
+
+\textbf{What this does not claim.}  No selection theorem and no selected coupling for any \(\Cc\);
+no existence of a certificate; no attribution of (78.3) without a local source; the endpoint
+equations (N:399--466) and Gram amplification D2-L9 are only pointed to.  The examples below
+calibrate; no proof uses them.
+
+\begin{center}\footnotesize
+\begin{tabular}{p{3.4cm}p{11cm}}
+\toprule
+Instance & Calibration (source) \\
+\midrule
+Dense TL / ABF \(\mathcal A_{k+1}\) & two sign regimes, two central charges; lattice category \(\neq\) primary category (AFM :619--623) \\
+Dilute \(A_L\), branches 1--2 & branch and seam are extra data beyond the loop weight (ZB 9611156.tex:430--455) \\
+Tambara--Yamagami input & lattice category not even a subcategory of the CFT's MTC (AFM :775) \\
+\(\Hilb\), \(O=\mathbb C^2\) & witness for Prop.~78.7(ii) (\path{review_checks.py}:5--7) \\
+CGS loop \(O(n)\), \(n=1\) & lattice stress proved only at \(n=1\) (StressTensor.tex:529--532) \\
+\bottomrule
+\end{tabular}
+\end{center}

@@ -103,6 +103,13 @@ system with semion/Fibonacci illustrations. CONVENTIONS (ac)–(ai) and
 worklogs 016–018 record scope and the offline/local-commit direction.
 These notes have not been promoted to report shards or a general theorem.
 
+## Astra explorations and verification notes (2026-10-22)
+
+| Item | Record |
+|---|---|
+| `explorations/2026-10-22-astra/` | Six Codex explorations (model gpt-6-astra, reasoning xhigh), D1--D6, each with `NOTE.md` and a `checks/` bundle (Python producers, raw outputs, hashes, rejected mutations), plus six Opus sceptical reviews (`REVIEW.md`, with reviewer checks) and integration packages (`INTEGRATION.md`). Briefs in `briefs/`. All six headlines graded "needs reformulation"; surviving content promoted to CA-76--CA-80 with review grades carried. Checks are not yet ported to `scripts/` with run bundles. |
+| July testsets, standalone (verification note, no run bundle) | 2026-10-22: the five July testsets of `test/runtests.jl:1095-1937` (fibonacci anyonic word algebra 83, CA-71 67, CA-72 40, CA-73 262, CA-74 113) were extracted to a session-scratchpad script and run with `using CftAnyons` on Julia 1.12.5: 565/565 assertions pass in 26 s wall time. The script and log were not committed; re-run by extracting the same line range. Full `Pkg.test()` remains suspended (AGENTS.md platform note). |
+
 ## Report shards
 
 See `report/SHARD_CATALOG.md` for the searchable shard catalogue.

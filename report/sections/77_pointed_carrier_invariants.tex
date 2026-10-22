@@ -1,0 +1,276 @@
+% SHARD-ID: CA-77-POINTED-CARRIER-INVARIANTS
+% SHARD-TITLE: Pointed Carriers: Occupation Grading, Dual-Pair Blocking, and Corner Qualifications
+% SHARD-SUMMARY: For a pointed site object O = 1 + X in any unitary fusion category, separates the unital and corner towers, proves the occupation Z-grading with its two-site dimension count and all-scale parity criterion, and makes dual-pair blocking O = Y x Ybar (Y not necessarily simple) a decidable integer test generalising Lemma 87.1.
+% SHARD-SUMMARY: Records that the Morita class of O x Obar is constant, the GNS, trace and operator-norm facts that qualify CA-71--CA-73, and the ordered-configuration Fock carrier of length-weighted dressing; the collision-sewing conjecture is kept conjectural with its contact-tuning caveat.
+% SHARD-KEYWORDS: pointed object, site object, variable-N carrier, occupation grading, parity, blocking, dual pair, Morita class, corner map, vacuum insertion, configuration space, Fock space, Thompson group, refinement
+
+\section{Pointed Carriers: Occupation Grading, Dual-Pair Blocking, and Corner Qualifications}
+\label{sec:pointed-carrier-invariants}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: derived, with negative statements and one conjecture.}  The
+numbered statements are local derivations of
+\path{explorations/2026-10-22-astra/D1-carrier-theory/NOTE.md}, graded
+\emph{confirmed} by the sceptical review \path{REVIEW.md} in that directory
+(REVIEW.md:161--177) unless labelled otherwise; Proposition~77.2 is correct but
+near-tautological (REVIEW.md:165).  The collision-sewing statement is
+\textbf{conjectural} (conditional-ok, overstated framing; REVIEW.md:163), not
+promoted.  Finite evidence: \path{checks/carrier_checks.py} (4 groups GREEN, 4
+mutations RED; REVIEW.md:21--24) and \path{checks/review_contact_check.py}.  General
+\(\Cc\) throughout; models only in the closing table (AGENTS.md Rule 16).
+
+Dependencies: CA-65, CA-66, CA-68, CA-69, CA-71--CA-73, CA-75, CA-81, CA-87
+(Lemma~87.1); CONVENTIONS (a), (r), (t), (u); the pointed-object amendment (am)
+of (r), stated below.
+
+% Source: explorations/2026-10-22-astra/D1-carrier-theory/NOTE.md:64--112 conventions; :120--204 D1-T1, D1-T2, D1-N1;
+%   :208--247 D1-T3; :251--287 D1-T4; :289--313 D1-N2; :317--395 D1-T5, D1-N3, D1-T5b; :399--473 D1-T6, D1-N4; :9--62 D1-C.
+% Source: explorations/2026-10-22-astra/D1-carrier-theory/REVIEW.md:78--108 -- R1 contact tuning, R2 inert category, R3 Jones lead;
+%   :109--135 -- D1-N2 strengthened, D1-T2 near-tautology, D1-T4/T3/T5b/T6 re-derivations, CA-71/73 corrections; :161--177 grades.
+% Source: explorations/2026-10-22-astra/D1-carrier-theory/INTEGRATION.md:94--106 -- reformulation of the headline; :124--141 open hypotheses.
+% Source: explorations/2026-10-22-astra/D1-carrier-theory/checks/review_contact_output.txt:4--7 -- E0, E1 at L = 20, 40, 60; pi^2.
+% Source: references/text/PenneysUnitaryFusionCategories.md:219--237 orthogonal sums, unitary iso (:233); :358--362 Cauchy completion;
+%   :394--398 coherence; :427--430, :484--487 Frobenius reciprocity, (FR2)/(FR4) N^1_{a,bbar} = delta_ab; :1015--1019 positive dims.
+% Source: references/text/EtingofNikshychOstrikFusionCategories.txt:1700--1706 -- unitary => spherical d = FPdim.
+% Source: references/categorical-reconstruction/FuchsRunkelSchweigert2002/source/hep.tex:2272--2284 algebra object; :2331--2336 U x U^vee;
+%   :2913--2920 all U x U^vee Morita equivalent "for different (not necessarily simple) U" (stated; proof deferred by the authors).
+% Source: references/text/HollandsAnyonicChainsAlphaInduction.txt:1193--1204 basic construction; :1240--1271 cup Jones projections.
+% Source: references/refinement/BrothierStottmeister2019Gauge/source/main.tex:500--511 Jones F-action; :522--541 tensor functor, V extension.
+% Source: literature/md/2306.16063/2306.16063.md:568--575 -- eq. (29), operator-norm asymptotic homomorphism.
+% Source: report/sections/87_dilute_fibonacci_is_blocked_golden.tex:55--69 -- Lemma 87.1 (simple Y).
+% Source: report/sections/71_refinement_placement_category.tex:157--174; report/sections/72_gns_descent_corner_calculus.tex:184--193;
+%   report/sections/73_categorical_residual_set.tex:159--172; report/sections/68_variable_n_refinement_maps.tex:160--162.
+
+\subsection{Setting and the Two Towers}
+
+Let \((O,\eta)\) be a \emph{pointed} object: \(\eta:\one\to O\),
+\(\eta^\dagger\eta=1\), \(p_0=\eta\eta^\dagger\), and \(\iota:X\to O\) an
+orthogonal splitting of \(p_1=1-p_0\), so \(O\cong\one\oplus X\) (Penneys:219--237).
+\(O\) is \emph{connected} if \(\Hom(\one,X)=0\).  Put
+\(\Alg_L=\operatorname{End}_\Cc(O^{\otimes L})\), \(H_{L,c}=\Hom(c,O^{\otimes L})\),
+\(\alpha_L(a)=a\otimes\mathrm{id}_O\); for an order-preserving injection
+\(\varphi:[k]\to[l]\) (CONVENTIONS (t)) let \(V_\varphi:O^{\otimes k}\to O^{\otimes l}\)
+insert \(\eta\) outside the image, \(\theta_\varphi(a)=V_\varphi aV_\varphi^\dagger\),
+\(P_\varphi=V_\varphi V_\varphi^\dagger\).  \(d_O\) is the positive spherical
+dimension (Penneys:1015--1019; EGNO:1700--1706), \(\tau_L=\Tr_\Cc/d_O^{L}\).
+\textbf{Convention (amends (r); CONVENTIONS (am), 2026-10-22).}  The site is
+the pointed pair \((O,\eta)\); \(X\) may contain unit summands, and (r)'s
+species object is the connected case.  Configuration spaces are ordered, with
+no \(N!\) and fibres \(\Hom(c,X^{\otimes N})\) (NOTE.md:75--79, :86--90; REVIEW.md:51).
+
+\textbf{Proposition 77.1 [derived] (D1-T1, NOTE.md:120--151).}  \(\alpha\) is
+a unital injective \(*\)-map; \(V\) is a coherent isometric placement functor,
+\(V_\psi V_\varphi=V_{\psi\varphi}\); \(\theta_\varphi\) is an injective
+\(*\)-map onto the corner \(P_\varphi\Alg_lP_\varphi\) with
+\(\theta_\varphi(1)=P_\varphi\).  The unital tower has the fusion-graph
+incidence \(m_d(L{+}1)=\sum_cm_c(L)N^d_{c,O}\) (CA-65); the corner tower has
+block maps \(a_c\mapsto J_ca_cJ_c^\dagger\) and not that incidence.  A pointed
+unitary \(u\) (\(u\eta=\eta'\)) intertwines both towers via \(\mathrm{Ad}\,u^{\otimes L}\).
+\emph{Proof sketch.}  Compressing \(a\otimes\mathrm{id}_O\) with
+\(\mathrm{id}\otimes\eta\) returns \(a\); \(V_\varphi^\dagger V_\varphi=1\) by
+cancelling each \(\eta^\dagger\eta\), and composites by coherence
+(Penneys:394--398); \(B\mapsto V_\varphi^\dagger BV_\varphi\) inverts \(\theta_\varphi\) on the corner.
+
+\textbf{Proposition 77.2 [derived; near-tautological] (D1-T2, NOTE.md:153--182).}
+All \(\Alg_L\), \(\theta_\varphi\), concatenation and the partial isometries
+\(V_\varphi V_\psi^\dagger\) reconstruct the Cauchy completion (Penneys:358--362) of the
+subcategory generated by \(O\), hence \(\Cc\) if \(O\) tensor-generates it, up to pointed
+unitary monoidal equivalence.  Concatenation already carries the monoidal structure
+(REVIEW.md:113--116); the content is the negative lesson that algebras plus \(\theta\)
+do not suffice.  Braiding and twist must be marked separately.
+
+\textbf{Proposition 77.3 [negative] (D1-N1, NOTE.md:184--197).}  Along any
+nested placement schedule with lengths \(\to\infty\),
+\(\varinjlim(\Alg_L,\theta)=\bigoplus_cK(H_{\infty,c})\) over reachable charges:
+the unmarked corner limit retains only block Hilbert dimensions.
+
+\subsection{Occupation Grading and Parity}
+
+Let \(Q_{L,n}\) sum the occupation-pattern projections with \(n\) factors
+\(p_1\), and \(Z_{L,n}=\bigoplus_{|S|=n}X^{\otimes n}\).
+
+\textbf{Proposition 77.4 [derived] (D1-T3, NOTE.md:208--247; counts
+re-derived at REVIEW.md:123--125).}
+\begin{enumerate}
+\item \(\Alg_L=\bigoplus_{m,n}\Hom(Z_{L,n},Z_{L,m})\);
+\(\Alg_L^{(k)}=\bigoplus_{m-n=k}Q_{L,m}\Alg_LQ_{L,n}\) has
+\(\Alg_L^{(k)}\Alg_L^{(l)}\subseteq\Alg_L^{(k+l)}\), \((\Alg_L^{(k)})^\dagger=\Alg_L^{(-k)}\).
+Each block is an \((\operatorname{End}Z_m,\operatorname{End}Z_n)\)-bimodule, in charge \(c\)
+of size \(\binom Lm\dim\Hom(c,X^{\otimes m})\times\binom Ln\dim\Hom(c,X^{\otimes n})\);
+\(\hat N_lV_\varphi=V_\varphi\hat N_k\).
+\item With \(s=\dim\Hom(\one,X^{\otimes2})\), \(t=\dim\Hom(X,X^{\otimes2})\),
+\(z=\dim\Hom(\one,X)\): \(\dim\Alg_2^{(+2)}=s\),
+\(\dim\Alg_2^{(+1)}=2t+2z\), so the number-changing part of \(\Alg_2\) has
+dimension \(2s+4t+4z\), i.e.\ \(2s+4t\) for connected \(O\).  The
+number-preserving part is not an ideal and its complement is only a bimodule.
+\item \(\Alg_L^{(k)}=0\) for all odd \(k\) and all \(L\) (parity preservation) iff
+\(\Hom(X^{\otimes m},X^{\otimes n})=0\) for all \(m,n\ge0\) with \(m-n\) odd.
+\end{enumerate}
+\begin{description}
+\item[$\langle1\rangle1$.] Distribute \(O^{\otimes L}\) over \(\one\oplus X\) and
+insert \(1=\sum_nQ_{L,n}\) on both sides (Penneys:219).  For two sites
+\(Z_0=\one\), \(Z_1=X\oplus X\), \(Z_2=X^{\otimes2}\), giving item 2.
+\item[$\langle1\rangle2$.] Necessity in 3: a nonzero \(f:X^{\otimes n}\to X^{\otimes m}\)
+sits in the occupied corner of \(\Alg_{\max(m,n)}\) as an odd-degree element.
+Sufficiency: every block of $\langle1\rangle1$ is such a Hom space. QED.
+\end{description}
+Testing only \(t=0\) does not establish the all-scale condition; the CA-69
+parity-even diagram subalgebra can be proper for this structural reason
+(NOTE.md:243--247).
+
+\subsection{Dual-Pair Blocking Is Decidable}
+
+\textbf{Theorem 77.5 [derived] (D1-T4, NOTE.md:251--287; REVIEW.md:117--122).}
+Write \([O]=\sum_co_c[c]\) (\(Y\) is a blocking root as in CA-87).  There is \(Y\in\Cc\), not necessarily simple, with \(O\cong Y\otimes\bar Y\)
+iff the integer system
+\[
+  o_c=\sum_{a,b}y_ay_bN^c_{a,\bar b}\ \ (c\in\Irr\Cc),\qquad
+  \sum_ay_a^2=o_\one,\qquad y_a\in\mathbb Z_{\ge0}
+\]
+is solvable.  The search is finite.  If it succeeds, the unitary
+\(u:O\to Y\otimes\bar Y\) can be chosen with
+\(u\eta=d_Y^{-1/2}\mathrm{coev}_Y\), so the vacancy projector becomes the
+normalised cup projection \(u p_0u^\dagger=d_Y^{-1}\mathrm{coev}_Y\mathrm{coev}_Y^\dagger\).
+\textbf{Assume} the fusion coefficients and dagger. \textbf{Prove} criterion, finiteness, transport.
+\begin{description}
+\item[$\langle1\rangle1$.] For \(Y=\bigoplus_ay_aa\), the multiplicity of \(c\)
+in \(Y\otimes\bar Y\) is the first sum. \textsc{By} distributivity.
+\item[$\langle1\rangle2$.] \(N^\one_{a,\bar b}=\delta_{ab}\) gives the second
+equation; hence \(y_a\le\lfloor\sqrt{o_\one}\rfloor\) and exhaustive search
+terminates, with exact integer arithmetic. \textsc{By} Penneys:427--430, :484--487.
+\item[$\langle1\rangle3$.] Equal multiplicities give an isomorphism; polar
+decomposition makes it unitary. \textsc{By} semisimplicity, Penneys:233.
+\item[$\langle1\rangle4$.] \(U(o_\one)\) acts transitively on unit vectors of
+\(\Hom(\one,Y\bar Y)\), so \(u\) may be corrected on the unit-isotypic block to send
+\(\eta\) to \(d_Y^{-1/2}\mathrm{coev}_Y\), a unit vector since
+\(\mathrm{coev}_Y^\dagger\mathrm{coev}_Y=d_Y\) (CONVENTIONS (r)). QED.
+\end{description}
+\textbf{Remarks [derived].}  (i) For connected \(O\), \(o_\one=1\) forces \(Y\)
+simple, the hypothesis of Lemma~87.1; Theorem~77.5 strictly generalises it by the
+converse, decidability, non-simple \(Y\) with multiplicities, and transport of
+\(\eta\).  Self-duality of \(O\) and \(\mathrm{FPdim}\,O=(\mathrm{FPdim}\,Y)^2\)
+are necessary only.  (ii) After blocking, range \(k\) on \(O\)-sites is range
+\(2k\) on the alternating \(Y,\bar Y\) chain, vacancy insertion is insertion of a
+normalised cup pair, and occupation counts pairs outside that channel.  (iii)
+Failure excludes only dual-pair blocking inside \(\Cc\), not other words
+\(Y_1\otimes\cdots\otimes Y_k\), enlarging \(\Cc\), module-category dualities or
+equal universality classes; success selects no Hamiltonian (NOTE.md:281--287).
+
+\textbf{Question (REVIEW.md:99--108; unchecked).}  Over alternating \(O\bar O\) words the
+projections \(d_O^{-1}\mathrm{coev}\,\mathrm{coev}^\dagger\) match the cup Jones projections
+of Hollands:1240--1271, and after blocking \(p_0\) is one; is the unital tower a basic construction?
+
+\textbf{Proposition 77.6 [negative; strengthened] (D1-N2, NOTE.md:289--313;
+REVIEW.md:109--112).}  A bare \(O\) is not an algebra object (FRS:2272--2284).
+\(O\otimes\bar O\) carries the matrix algebra structure of FRS:2331--2336, and by
+FRS:2913--2920 all \(U\otimes U^\vee\), including \(U=\one\), are Morita
+equivalent [source-local; the authors defer the proof].  Hence the Morita class of
+\(O\otimes\bar O\) is \emph{the same for every nonzero} \(O\) and carries no
+information about the carrier.  Independently [derived], \(O\) and \(O\oplus O\)
+have equivalent module categories but \(\dim\operatorname{End}\) differing by four.
+
+\subsection{Vacuum Insertion, States, and Qualifications of CA-71--CA-73}
+
+\textbf{Proposition 77.7 [derived] (D1-T5, D1-T5b, NOTE.md:317--336, :377--395).}
+\begin{enumerate}
+\item For every \(T\), \(f\mapsto V_\varphi f\) is a bijection
+\(\Hom(T,O^{\otimes k})\to\{f:T\to O^{\otimes l}:P_\varphi f=f\}\), natural in \(T\).
+\item For a state \(\omega\) with \(p=\omega(P_\varphi)>0\), the normalised
+corner pullback has GNS vector \(\pi(P_\varphi)\Omega/\sqrt p\), at squared
+distance \(2(1-\sqrt p)\) from \(\Omega\), and \(1-p\le2(1-\sqrt p)\le2(1-p)\).
+\(\sum_n\sqrt{1-p_n}<\infty\) suffices for convergence of transported vacuum vectors.
+\item \(\tau_l(P_\varphi)=d_O^{k-l}\), invariant under unitary dressing; trace
+states cannot approach weight one under extensive insertion when \(d_O>1\).
+\item The CA-72 unital completion has multiplicativity defect
+\(\mathrm{cov}_\chi(S,T)(1-P_\varphi)\), of operator norm \(|\mathrm{cov}_\chi(S,T)|\)
+whenever \(P_\varphi\ne1\), independently of \(\omega(P_\varphi)\).
+\end{enumerate}
+\emph{Proofs.}  (2) norm one, overlap \(\sqrt p\); (3) the categorical trace of an
+isometry's range projection is its domain's dimension; (4) multiply out (REVIEW.md:126).
+
+\textbf{Qualifications [derived; REVIEW.md:127--130, :173].}
+(a) CA-72 Corollary~72.8 reads GNS-seminorm smallness as the soft-system
+condition, but eq.~(29) of 2306.16063:568--575 is an operator-norm condition;
+by 77.7(4) the seminorm is not that norm.
+(b) The right caret \(\mathrm{id}_O\otimes\iota_\one\) never inserts before the
+first strand, so it does not generate placements with \(\varphi(1)>1\); the
+CA-71:167--169 generation sentence is false as stated.
+(c) \(\bigoplus_c\Hom(c,O^{\otimes L})\) is not \(\Phi(1)^{\otimes L}\) in
+\(\Hilb\), so the Thompson-\(V\) extension of B--S:522--541 is unavailable
+(CA-71:173--174 ``indeed \(V\)'' unsupported); the \(F\)-action of B--S:500--511 survives.
+(d) \(\theta_\varphi\) pins \emph{every} inserted site and sends constants to
+\(P_\varphi\): \(\theta(F(a;1))=F(\theta(a);P_\varphi)\), qualifying CA-73:159--172.
+(e) The isometry deficit read at CA-68:160--162 arises for overlapping
+smearing under hard-core exclusion; box cells have none (Theorem~77.8).
+
+\subsection{The Configuration Carrier}
+
+For a cell split into children of lengths \(\ell,\ell'\) let \(R:O\to O^{\otimes2}\),
+\(R\eta=\eta\otimes\eta\),
+\(R\iota=\sqrt{\ell/(\ell{+}\ell')}\,(\iota\otimes\eta)+\sqrt{\ell'/(\ell{+}\ell')}\,(\eta\otimes\iota)\),
+i.e.\ \(R=U(\mathrm{id}_O\otimes\eta)\) with a real rotation \(U\) on \(X\eta\oplus\eta X\).
+With \(\Delta_N=\{0<x_1<\dots<x_N<1\}\), set
+\(\mathcal F_{\Cc,X}=\hoplus_{c,N}L^2\big(\Delta_N;\Hom(c,X^{\otimes N})\big)\).
+
+\textbf{Theorem 77.8 [derived] (D1-T6, NOTE.md:399--455; REVIEW.md:131--135).}
+Along nested partitions of \((0,1)\) with mesh \(\to0\), the \(R\) are exact
+charge- and number-preserving isometric refinements, coherent under all
+parenthesisations (amplitudes telescope to \(\sqrt{|J|/|I|}\)), and the box maps
+\(K_\pi(t\text{ at }j_1<\dots<j_N)=\prod_r|I_{j_r}|^{-1/2}\mathbf 1_{I_{j_r}}(x_r)\,t\)
+extend to a unitary from the Hilbert inductive limit onto \(\mathcal F_{\Cc,X}\).
+For adjacent intervals,
+\(\mathcal F_c(I\cup J)\cong\hoplus_{a,b}\mathcal F_a(I)\otimes\mathcal F_b(J)\otimes\Hom(c,a\otimes b)\):
+fusion fibres are retained, not replaced by onsite factors; no braiding is used.
+\textbf{Caveat:} \(\mathrm{Ad}\,R\) is again a corner map; this is a Hilbert
+carrier theorem, not a unital observable refinement.
+
+\textbf{Proposition 77.9 [negative] (D1-N4, NOTE.md:464--473).}  Bare dyadic
+insertion has an atomic limit: \(\ell^2\) of a countable position set with fusion
+fibres; moving a vector to a nearby point changes it by norm \(\sqrt2\), so the
+geometric translations are not strongly continuous.
+
+\subsection{Conjecture, with Caveat}
+
+D1-C (NOTE.md:9--62) conjectures that explicit nearest-neighbour \(H_\varepsilon\),
+built from \(D_{\mathrm{hop}}=\pi_{X0}-\pi_{0X}\) and declared reaction morphisms
+\(b_\alpha:X\to X\otimes X\), \(v_\beta:\one\to X\otimes X\) (NOTE.md:35--41), converge
+in projected-resolvent sense on \(\mathcal F_{\Cc,X}\) to a sector-coupling collision
+form, under declared closedness and core hypotheses.  \textbf{Status: conjectural;
+framing overstated} (REVIEW.md:163).  The reviewer found (REVIEW.md:78--91) that
+\(D_{\mathrm{hop}}^\dagger D_{\mathrm{hop}}\) equals standard hard-core hopping
+plus a contact attraction \(-2\varepsilon^{-2}n_jn_{j+1}\): it engineers Neumann
+collisions (two-particle \(E_0=0\), \(E_1=9.8673\) at \(L=60\)), whereas standard
+hopping gives Dirichlet collisions (\(E_0=9.8673\); \(\pi^2=9.8696\))
+(\path{checks/review_contact_output.txt}:4--7), under which all traces vanish
+and the number-changing coupling disappears.  The limit is thus non-universal,
+sees \(\Cc\) only through finite fibres and two linear maps (REVIEW.md:92--98), and is
+a nonrelativistic (\(z=2\)) benchmark with no conformal, Wilson or fidelity content.
+
+\textbf{Open problem [Question] (INTEGRATION.md:103--106, :133--136).}  On
+\(\mathcal F_{\Cc,X}\), construct coherent local \emph{unital} refinements of a
+number-changing field algebra (a categorical second quantisation), compatible
+with one state family satisfying WT-1 (CA-81).  Corner maps do not solve this.
+
+\subsection{What This Does Not Claim}
+
+No dynamics, critical point, unital OAR map, continuum CFT or fidelity
+statement is made.  Occupation \(\hat N\) is microscopic, not a CFT particle
+number; no argument identifies the empty configuration with a conformal vacuum
+(NOTE.md:475--479).  The Jones-tower identity is a Question.  D1-T7 (partial
+form convergence) and the D1-C analytic gap are left to a later shard.
+
+\subsection{Examples (calibration only)}
+
+\begin{center}\footnotesize
+\begin{tabular}{p{3.2cm}p{7.4cm}p{3.6cm}}
+\toprule
+Instance & Calibration & Local evidence \\
+\midrule
+Fibonacci, \(O=\one\oplus\tau\) & connected; \(\tau\otimes\tau=\one\oplus\tau\) solves Theorem~77.5 with \(Y=\tau\) & Penneys:610--631; CA-87:71--75 \\
+Haagerup \(H_3\), \(X=\rho\) & connected, so \(Y\) simple; dimension test fails: no dual-pair blocking & CA-87:78--81 \\
+\(\Hilb_{\mathrm{fd}}\), \(O=\mathbb C^2,\mathbb C^3\) & both matrix objects Morita trivial, \(\operatorname{End}\) differ; \(2\) not a square, so no root & FRS:2331--2336, :2913--2920 \\
+\(\mathrm{Vec}_G\), \(O=\bigoplus_gg\), \(|G|=r\) & \(m_g(L)=r^{L-1}\): \(C_4\), \(C_2\times C_2\) have identical unmarked towers & Penneys:277--288, :522 \\
+\bottomrule
+\end{tabular}
+\end{center}
