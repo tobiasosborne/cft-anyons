@@ -1,0 +1,2488 @@
+{
+  "status": "bounded CAR calibration; no D2 geometric Ward instance",
+  "headline": "Modified chiral energy fails two-loss A4 (neutral even UV witness ->1); conformal Q diagonal residuals admit O(1/M) full-Fock and O(M^-1/2) collar bounds.",
+  "python": "3.12.3",
+  "numpy": "2.4.6",
+  "input_cutoff": "all Q<=4 occupations; every generated output retained",
+  "controls": {
+    "Q": "sum |r| particle/hole excitation energies; exact padding transport",
+    "E_D": "Dirac-dispersion weights on same chiral sea proxy; not actual microscopic Dirac GNS",
+    "E_chiral": "actual normal-ordered modified chiral A_0; endpoint witness only"
+  },
+  "graph_norm": "||K_out^s R K_in^(-s-2) P_(Q<=4)||",
+  "collar": "||K_out^s R exp(-t K_in) P_(Q<=4)|| <= b t^(-s-1.5), 0<t<=1",
+  "tolerance": 1e-10,
+  "tests_passed": [
+    "nine existing Julia cocycles and independent Fermi-surface sums agree",
+    "independent Kronecker CAR oracle, all M=4 columns, Eq.(28)",
+    "all direct Fock columns match normal-ordered one-particle commutator plus Schwinger scalar",
+    "all M>=16 continuum cutoff residuals vanish with full output",
+    "diagonal full-Fock dynamic programming agrees with all M=8 occupations",
+    "uniform one-loss and O(M^-1/2) full-Fock diagonal collar envelopes dominate exact DP"
+  ],
+  "independent_CAR_oracle": {
+    "dimension": 16,
+    "car_and_normal_ordered_commutator_error": 1.3877787807814457e-17
+  },
+  "provenance_sha256": {
+    "cft_machine/benchmarks/fermion/FermionBenchmark.jl": "3080a64f5483d8f74ce134b83e1340217d24143d5c6dcdf28a53f36302d7df1d",
+    "cft_machine/benchmarks/fermion/runs/2026-09-22/results.toml": "a3f4121bbb107618b6df32b50a827ddc6d1483598dd3ac3cd11eb9d9007d90e9",
+    "references/text/CFTFromLatticeFermions.txt": "139c2477e4287f714d5d3cb371a3f6a29d5a24c0b0ea15079d8ecc166504ff25"
+  },
+  "rows": [
+    {
+      "M": 8,
+      "m": 1,
+      "n": -1,
+      "central": 0.0,
+      "finite_schwinger": 0.0,
+      "Q_input_cutoff": 4,
+      "continuum_compressed_residual_norm": 16.0,
+      "cutoff_norms": {
+        "Q": {
+          "0": {
+            "norm": 0.25641555082613776,
+            "frobenius_or_schur_upper": 0.25641555082613776,
+            "collar_b_upper": 0.8108895603695095,
+            "collar_to_two_loss_constant": 4.0,
+            "collar_implied_upper": 3.243558241478038,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 5.0
+          },
+          "1": {
+            "norm": 0.25641555082613776,
+            "frobenius_or_schur_upper": 0.25641555082613776,
+            "collar_b_upper": 1.6014786179810563,
+            "collar_to_two_loss_constant": 3.5,
+            "collar_implied_upper": 5.605175162933697,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 5.0
+          },
+          "2": {
+            "norm": 0.2564155508261377,
+            "frobenius_or_schur_upper": 0.2564155508261377,
+            "collar_b_upper": 4.682193559138494,
+            "collar_to_two_loss_constant": 3.0,
+            "collar_implied_upper": 14.046580677415484,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 5.0
+          }
+        },
+        "E_D": {
+          "0": {
+            "norm": 0.31928211204669404,
+            "frobenius_or_schur_upper": 0.31928211204669404,
+            "collar_b_upper": 0.9195119899981977,
+            "collar_to_two_loss_constant": 4.0,
+            "collar_implied_upper": 3.678047959992791,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 4.8230828133773525
+          },
+          "1": {
+            "norm": 0.31928211204669404,
+            "frobenius_or_schur_upper": 0.31928211204669404,
+            "collar_b_upper": 1.8165617688895757,
+            "collar_to_two_loss_constant": 3.5,
+            "collar_implied_upper": 6.357966191113515,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 4.8230828133773525
+          },
+          "2": {
+            "norm": 0.3192821120466941,
+            "frobenius_or_schur_upper": 0.3192821120466941,
+            "collar_b_upper": 5.294589332887259,
+            "collar_to_two_loss_constant": 3.0,
+            "collar_implied_upper": 15.883767998661778,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 4.8230828133773525
+          }
+        }
+      },
+      "one_particle_norms": {
+        "Q": {
+          "0": 0.25641555082613765,
+          "1": 0.2564155508261377,
+          "2": 0.25641555082613765
+        },
+        "E_D": {
+          "0": 0.319282112046694,
+          "1": 0.31928211204669404,
+          "2": 0.319282112046694
+        }
+      },
+      "outputs_above_input_cutoff": 0,
+      "full_finite_Fock_Q": {
+        "norm": 0.25641555082613765,
+        "maximizing_Q": 1.5,
+        "energy_bins": 33,
+        "fock_dimension": 256,
+        "scalar_error": 0.0,
+        "analytic_full_Fock_bound": {
+          "C_m": 4.057890510886816,
+          "B_m": 0.0,
+          "value": 3.1870597545184385,
+          "formula": "C_m*(2*pi/M)+B_m*(2*pi/M)^2",
+          "scope": "all M>=8, m=1,2,3, n=-m; K=1+Q; all graph orders s (diagonal)"
+        },
+        "collar_bounds": {
+          "one_loss_uniform_H_n": 4.0,
+          "one_loss_exact": 1.0456177381020495,
+          "two_loss_q_upper": 3.1870597545184385,
+          "A_constants_by_s": {
+            "0": {
+              "A_s_plus_1": 0.36787944117144233,
+              "A_s_plus_2": 0.5413411329464508
+            },
+            "1": {
+              "A_s_plus_1": 0.5413411329464508,
+              "A_s_plus_2": 1.3442508459323266
+            },
+            "2": {
+              "A_s_plus_1": 1.3442508459323266,
+              "A_s_plus_2": 4.688803555515951
+            }
+          },
+          "analytic_b_upper_by_s": {
+            "0": 1.5933580232486468,
+            "1": 3.0457957177442263,
+            "2": 8.963885012528944
+          },
+          "exact_b_by_s": {
+            "0": 0.1942363253902653,
+            "1": 0.384369664439567,
+            "2": 1.147737987999068
+          },
+          "formula": "sqrt(A_(s+1)*A_(s+2)*q*H_n)",
+          "scope": "full finite Fock, K=1+Q, n=-m, m=1,2,3, all M>=8, all s>=0",
+          "collar": "||K^s R exp(-tK)||<=b*t^(-s-1.5), all t>0",
+          "rate": "O(M^-1/2) for each fixed mode and graph order",
+          "exact_spectral_supremum_interval": "0<t<=1"
+        },
+        "collar_b_by_s": {
+          "0": 0.1942363253902653,
+          "1": 0.384369664439567,
+          "2": 1.147737987999068
+        },
+        "brute_force_all_256_occupations_agrees": true
+      },
+      "E_chiral_endpoint_witness": {
+        "energy": 0.48724767920221634,
+        "residual_diagonal": -1.7245380764706844,
+        "full_Fock_two_loss_norm_lower_bound": 0.7796616773530883,
+        "limiting_lower_bound": 0.8888888888888888,
+        "limiting_residual": -2.0,
+        "status": "analytic limit via sin(x)/x ->1; delta ->0 by finite Fermi sum",
+        "neutral_even_pair": {
+          "energy": 0.9744953584044327,
+          "residual_diagonal": -3.4490761529413687,
+          "full_Fock_two_loss_norm_lower_bound": 0.8846888404438823,
+          "limiting_lower_bound": 1.0
+        }
+      }
+    },
+    {
+      "M": 8,
+      "m": 2,
+      "n": -2,
+      "central": 0.5,
+      "finite_schwinger": 0.34593215934736465,
+      "Q_input_cutoff": 4,
+      "continuum_compressed_residual_norm": 20.25,
+      "cutoff_norms": {
+        "Q": {
+          "0": {
+            "norm": 0.6438709682167105,
+            "frobenius_or_schur_upper": 0.6438709682167105,
+            "collar_b_upper": 1.9646346300046083,
+            "collar_to_two_loss_constant": 4.0,
+            "collar_implied_upper": 7.858538520018433,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 5.0
+          },
+          "1": {
+            "norm": 0.6438709682167105,
+            "frobenius_or_schur_upper": 0.6438709682167105,
+            "collar_b_upper": 3.845480515343662,
+            "collar_to_two_loss_constant": 3.5,
+            "collar_implied_upper": 13.459181803702817,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 5.0
+          },
+          "2": {
+            "norm": 0.6438709682167105,
+            "frobenius_or_schur_upper": 0.6438709682167105,
+            "collar_b_upper": 11.04545310378383,
+            "collar_to_two_loss_constant": 3.0,
+            "collar_implied_upper": 33.13635931135149,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 5.0
+          }
+        },
+        "E_D": {
+          "0": {
+            "norm": 0.6901368821460375,
+            "frobenius_or_schur_upper": 0.6901368821460375,
+            "collar_b_upper": 2.177216700911459,
+            "collar_to_two_loss_constant": 4.0,
+            "collar_implied_upper": 8.708866803645837,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 4.8230828133773525
+          },
+          "1": {
+            "norm": 0.6901368821460376,
+            "frobenius_or_schur_upper": 0.6901368821460376,
+            "collar_b_upper": 4.269196956146852,
+            "collar_to_two_loss_constant": 3.5,
+            "collar_implied_upper": 14.942189346513983,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 4.8230828133773525
+          },
+          "2": {
+            "norm": 0.6901368821460376,
+            "frobenius_or_schur_upper": 0.6901368821460376,
+            "collar_b_upper": 12.250834450515036,
+            "collar_to_two_loss_constant": 3.0,
+            "collar_implied_upper": 36.75250335154511,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 4.8230828133773525
+          }
+        }
+      },
+      "one_particle_norms": {
+        "Q": {
+          "0": 0.6192201137122886,
+          "1": 0.6192201137122886,
+          "2": 0.6192201137122887
+        },
+        "E_D": {
+          "0": 0.6637147188404987,
+          "1": 0.6637147188404988,
+          "2": 0.6637147188404988
+        }
+      },
+      "outputs_above_input_cutoff": 0,
+      "full_finite_Fock_Q": {
+        "norm": 0.6438709682167102,
+        "maximizing_Q": 1.5,
+        "energy_bins": 33,
+        "fock_dimension": 256,
+        "scalar_error": -0.15406784065263535,
+        "analytic_full_Fock_bound": {
+          "C_m": 13.664497747345179,
+          "B_m": 0.2916666666666667,
+          "value": 10.911986098074996,
+          "formula": "C_m*(2*pi/M)+B_m*(2*pi/M)^2",
+          "scope": "all M>=8, m=1,2,3, n=-m; K=1+Q; all graph orders s (diagonal)"
+        },
+        "collar_bounds": {
+          "one_loss_uniform_H_n": 8.679914663561524,
+          "one_loss_exact": 2.1548792497939786,
+          "two_loss_q_upper": 10.911986098074996,
+          "A_constants_by_s": {
+            "0": {
+              "A_s_plus_1": 0.36787944117144233,
+              "A_s_plus_2": 0.5413411329464508
+            },
+            "1": {
+              "A_s_plus_1": 0.5413411329464508,
+              "A_s_plus_2": 1.3442508459323266
+            },
+            "2": {
+              "A_s_plus_1": 1.3442508459323266,
+              "A_s_plus_2": 4.688803555515951
+            }
+          },
+          "analytic_b_upper_by_s": {
+            "0": 4.3430807335340065,
+            "1": 8.302049198613195,
+            "2": 24.433225758109142
+          },
+          "exact_b_by_s": {
+            "0": 0.4173150174865306,
+            "1": 0.8258148053130789,
+            "2": 2.390188583622596
+          },
+          "formula": "sqrt(A_(s+1)*A_(s+2)*q*H_n)",
+          "scope": "full finite Fock, K=1+Q, n=-m, m=1,2,3, all M>=8, all s>=0",
+          "collar": "||K^s R exp(-tK)||<=b*t^(-s-1.5), all t>0",
+          "rate": "O(M^-1/2) for each fixed mode and graph order",
+          "exact_spectral_supremum_interval": "0<t<=1"
+        },
+        "collar_b_by_s": {
+          "0": 0.4173150174865306,
+          "1": 0.8258148053130789,
+          "2": 2.390188583622596
+        },
+        "brute_force_all_256_occupations_agrees": true
+      },
+      "E_chiral_endpoint_witness": {
+        "energy": 0.48724767920221634,
+        "residual_diagonal": -3.1111787478926027,
+        "full_Fock_two_loss_norm_lower_bound": 1.4065603272103004,
+        "limiting_lower_bound": 1.8888888888888888,
+        "limiting_residual": -4.25,
+        "status": "analytic limit via sin(x)/x ->1; delta ->0 by finite Fermi sum",
+        "neutral_even_pair": {
+          "energy": 0.9744953584044327,
+          "residual_diagonal": -6.0682896551325705,
+          "full_Fock_two_loss_norm_lower_bound": 1.5565177167510633,
+          "limiting_lower_bound": 2.125
+        }
+      }
+    },
+    {
+      "M": 8,
+      "m": 3,
+      "n": -3,
+      "central": 2.0,
+      "finite_schwinger": 0.7748288164116848,
+      "Q_input_cutoff": 4,
+      "continuum_compressed_residual_norm": 25.0,
+      "cutoff_norms": {
+        "Q": {
+          "0": {
+            "norm": 1.6716634891536755,
+            "frobenius_or_schur_upper": 1.6716634891536755,
+            "collar_b_upper": 3.8616664593890127,
+            "collar_to_two_loss_constant": 4.0,
+            "collar_implied_upper": 15.44666583755605,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 5.0
+          },
+          "1": {
+            "norm": 1.6716634891536755,
+            "frobenius_or_schur_upper": 1.6716634891536755,
+            "collar_b_upper": 7.423001074895195,
+            "collar_to_two_loss_constant": 3.5,
+            "collar_implied_upper": 25.980503762133182,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 5.0
+          },
+          "2": {
+            "norm": 1.6716634891536757,
+            "frobenius_or_schur_upper": 1.6716634891536757,
+            "collar_b_upper": 20.763851570430685,
+            "collar_to_two_loss_constant": 3.0,
+            "collar_implied_upper": 62.29155471129205,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 5.0
+          }
+        },
+        "E_D": {
+          "0": {
+            "norm": 1.6788335568375854,
+            "frobenius_or_schur_upper": 1.6788335568375854,
+            "collar_b_upper": 4.189834409213696,
+            "collar_to_two_loss_constant": 4.0,
+            "collar_implied_upper": 16.759337636854784,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 4.8230828133773525
+          },
+          "1": {
+            "norm": 1.6788335568375856,
+            "frobenius_or_schur_upper": 1.6788335568375856,
+            "collar_b_upper": 8.086232623640548,
+            "collar_to_two_loss_constant": 3.5,
+            "collar_implied_upper": 28.301814182741918,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 4.8230828133773525
+          },
+          "2": {
+            "norm": 1.6788335568375854,
+            "frobenius_or_schur_upper": 1.6788335568375854,
+            "collar_b_upper": 22.64626991467607,
+            "collar_to_two_loss_constant": 3.0,
+            "collar_implied_upper": 67.9388097440282,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 4.8230828133773525
+          }
+        }
+      },
+      "one_particle_norms": {
+        "Q": {
+          "0": 1.1292671571502135,
+          "1": 1.1292671571502135,
+          "2": 1.1292671571502135
+        },
+        "E_D": {
+          "0": 1.2104116405559986,
+          "1": 1.2104116405559984,
+          "2": 1.2104116405559984
+        }
+      },
+      "outputs_above_input_cutoff": 0,
+      "full_finite_Fock_Q": {
+        "norm": 1.671663489153676,
+        "maximizing_Q": 0.5,
+        "energy_bins": 33,
+        "fock_dimension": 256,
+        "scalar_error": -1.2251711835883152,
+        "analytic_full_Fock_bound": {
+          "C_m": 34.730704349893514,
+          "B_m": 2.9166666666666665,
+          "value": 29.076578045521384,
+          "formula": "C_m*(2*pi/M)+B_m*(2*pi/M)^2",
+          "scope": "all M>=8, m=1,2,3, n=-m; K=1+Q; all graph orders s (diagonal)"
+        },
+        "collar_bounds": {
+          "one_loss_uniform_H_n": 15.799146635615248,
+          "one_loss_exact": 4.082630796396179,
+          "two_loss_q_upper": 29.076578045521384,
+          "A_constants_by_s": {
+            "0": {
+              "A_s_plus_1": 0.36787944117144233,
+              "A_s_plus_2": 0.5413411329464508
+            },
+            "1": {
+              "A_s_plus_1": 0.5413411329464508,
+              "A_s_plus_2": 1.3442508459323266
+            },
+            "2": {
+              "A_s_plus_1": 1.3442508459323266,
+              "A_s_plus_2": 4.688803555515951
+            }
+          },
+          "analytic_b_upper_by_s": {
+            "0": 9.56481853183453,
+            "1": 18.283702030674146,
+            "2": 53.80958468471656
+          },
+          "exact_b_by_s": {
+            "0": 0.9126527290725615,
+            "1": 1.7044976877397313,
+            "2": 4.940340834364175
+          },
+          "formula": "sqrt(A_(s+1)*A_(s+2)*q*H_n)",
+          "scope": "full finite Fock, K=1+Q, n=-m, m=1,2,3, all M>=8, all s>=0",
+          "collar": "||K^s R exp(-tK)||<=b*t^(-s-1.5), all t>0",
+          "rate": "O(M^-1/2) for each fixed mode and graph order",
+          "exact_spectral_supremum_interval": "0<t<=1"
+        },
+        "collar_b_by_s": {
+          "0": 0.9126527290725615,
+          "1": 1.7044976877397313,
+          "2": 4.940340834364175
+        },
+        "brute_force_all_256_occupations_agrees": true
+      },
+      "E_chiral_endpoint_witness": {
+        "energy": 0.48724767920221634,
+        "residual_diagonal": -4.9234860752133,
+        "full_Fock_two_loss_norm_lower_bound": 2.225902381744616,
+        "limiting_lower_bound": 3.111111111111111,
+        "limiting_residual": -7.0,
+        "status": "analytic limit via sin(x)/x ->1; delta ->0 by finite Fermi sum",
+        "neutral_even_pair": {
+          "energy": 0.9744953584044327,
+          "residual_diagonal": -8.621800966838286,
+          "full_Fock_two_loss_norm_lower_bound": 2.2114939658219166,
+          "limiting_lower_bound": 3.5
+        }
+      }
+    },
+    {
+      "M": 8,
+      "m": 2,
+      "n": 1,
+      "central": 0.0,
+      "finite_schwinger": 0.0,
+      "Q_input_cutoff": 4,
+      "continuum_compressed_residual_norm": 0.0,
+      "cutoff_norms": {
+        "Q": {
+          "0": {
+            "norm": 0.049794098169536026,
+            "frobenius_or_schur_upper": 0.05532677574392892,
+            "collar_b_upper": 0.07109772328430891,
+            "collar_to_two_loss_constant": 4.0,
+            "collar_implied_upper": 0.28439089313723565,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 5.0
+          },
+          "1": {
+            "norm": 0.019917639267814414,
+            "frobenius_or_schur_upper": 0.020202482072653027,
+            "collar_b_upper": 0.05084724944763399,
+            "collar_to_two_loss_constant": 3.5,
+            "collar_implied_upper": 0.17796537306671897,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 5.0
+          },
+          "2": {
+            "norm": 0.007967055707125765,
+            "frobenius_or_schur_upper": 0.007967055707125765,
+            "collar_b_upper": 0.0558859581615035,
+            "collar_to_two_loss_constant": 3.0,
+            "collar_implied_upper": 0.1676578744845105,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 5.0
+          }
+        },
+        "E_D": {
+          "0": {
+            "norm": 0.07802382701125617,
+            "frobenius_or_schur_upper": 0.08910636566736554,
+            "collar_b_upper": 0.10161085219414347,
+            "collar_to_two_loss_constant": 4.0,
+            "collar_implied_upper": 0.40644340877657387,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 4.8230828133773525
+          },
+          "1": {
+            "norm": 0.038941896047109306,
+            "frobenius_or_schur_upper": 0.041181548217703395,
+            "collar_b_upper": 0.09170567656907197,
+            "collar_to_two_loss_constant": 3.5,
+            "collar_implied_upper": 0.32096986799175187,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 4.8230828133773525
+          },
+          "2": {
+            "norm": 0.019436002126954028,
+            "frobenius_or_schur_upper": 0.019436002126954028,
+            "collar_b_upper": 0.12663705564292457,
+            "collar_to_two_loss_constant": 3.0,
+            "collar_implied_upper": 0.3799111669287737,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 4.8230828133773525
+          }
+        }
+      },
+      "one_particle_norms": {
+        "Q": {
+          "0": 0.39121938309719534,
+          "1": 1.1736581492915859,
+          "2": 3.5209744478747584
+        },
+        "E_D": {
+          "0": 0.3928973939374539,
+          "1": 0.918081243168332,
+          "2": 2.1452755402895045
+        }
+      },
+      "outputs_above_input_cutoff": 0
+    },
+    {
+      "M": 8,
+      "m": 2,
+      "n": -1,
+      "central": 0.0,
+      "finite_schwinger": 0.0,
+      "Q_input_cutoff": 4,
+      "continuum_compressed_residual_norm": 14.0,
+      "cutoff_norms": {
+        "Q": {
+          "0": {
+            "norm": 0.29994606123673084,
+            "frobenius_or_schur_upper": 0.3074646432970064,
+            "collar_b_upper": 0.7462627500886347,
+            "collar_to_two_loss_constant": 4.0,
+            "collar_implied_upper": 2.985051000354539,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 5.0
+          },
+          "1": {
+            "norm": 0.2142471865976649,
+            "frobenius_or_schur_upper": 0.22504107586698247,
+            "collar_b_upper": 1.103954737083368,
+            "collar_to_two_loss_constant": 3.5,
+            "collar_implied_upper": 3.8638415797917878,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 5.0
+          },
+          "2": {
+            "norm": 0.15303370471261776,
+            "frobenius_or_schur_upper": 0.16967511511255023,
+            "collar_b_upper": 2.473438406583692,
+            "collar_to_two_loss_constant": 3.0,
+            "collar_implied_upper": 7.4203152197510756,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 5.0
+          }
+        },
+        "E_D": {
+          "0": {
+            "norm": 0.37810853913190523,
+            "frobenius_or_schur_upper": 0.37810853913190523,
+            "collar_b_upper": 0.9101433452456019,
+            "collar_to_two_loss_constant": 4.0,
+            "collar_implied_upper": 3.6405733809824077,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 4.8230828133773525
+          },
+          "1": {
+            "norm": 0.2928915982321203,
+            "frobenius_or_schur_upper": 0.29756665837577523,
+            "collar_b_upper": 1.4824849196591379,
+            "collar_to_two_loss_constant": 3.5,
+            "collar_implied_upper": 5.188697218806983,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 4.8230828133773525
+          },
+          "2": {
+            "norm": 0.24858056984321733,
+            "frobenius_or_schur_upper": 0.2519921440421865,
+            "collar_b_upper": 3.670897323570061,
+            "collar_to_two_loss_constant": 3.0,
+            "collar_implied_upper": 11.012691970710183,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 4.8230828133773525
+          }
+        }
+      },
+      "one_particle_norms": {
+        "Q": {
+          "0": 0.6081812363518257,
+          "1": 1.0136353939197096,
+          "2": 1.689392323199516
+        },
+        "E_D": {
+          "0": 0.630137939859233,
+          "1": 0.9853754686097034,
+          "2": 1.589687249299357
+        }
+      },
+      "outputs_above_input_cutoff": 0
+    },
+    {
+      "M": 8,
+      "m": -2,
+      "n": -1,
+      "central": 0.0,
+      "finite_schwinger": 0.0,
+      "Q_input_cutoff": 4,
+      "continuum_compressed_residual_norm": 0.0,
+      "cutoff_norms": {
+        "Q": {
+          "0": {
+            "norm": 0.39443265659907933,
+            "frobenius_or_schur_upper": 0.4155830216243537,
+            "collar_b_upper": 0.41003118073458034,
+            "collar_to_two_loss_constant": 4.0,
+            "collar_implied_upper": 1.6401247229383213,
+            "input_dimension": 34,
+            "output_dimension": 80,
+            "input_K_max": 5.0
+          },
+          "1": {
+            "norm": 1.183297969797238,
+            "frobenius_or_schur_upper": 1.2467490648730608,
+            "collar_b_upper": 1.7530261250050443,
+            "collar_to_two_loss_constant": 3.5,
+            "collar_implied_upper": 6.135591437517655,
+            "input_dimension": 34,
+            "output_dimension": 80,
+            "input_K_max": 5.0
+          },
+          "2": {
+            "norm": 3.549893909391715,
+            "frobenius_or_schur_upper": 3.7402471946191835,
+            "collar_b_upper": 8.505753594214712,
+            "collar_to_two_loss_constant": 3.0,
+            "collar_implied_upper": 25.517260782644136,
+            "input_dimension": 34,
+            "output_dimension": 80,
+            "input_K_max": 5.0
+          }
+        },
+        "E_D": {
+          "0": {
+            "norm": 0.3961244497517739,
+            "frobenius_or_schur_upper": 0.4173655325260178,
+            "collar_b_upper": 0.42356300808840375,
+            "collar_to_two_loss_constant": 4.0,
+            "collar_implied_upper": 1.694252032353615,
+            "input_dimension": 34,
+            "output_dimension": 80,
+            "input_K_max": 4.8230828133773525
+          },
+          "1": {
+            "norm": 0.928482426502017,
+            "frobenius_or_schur_upper": 0.9849404016069364,
+            "collar_b_upper": 1.454285606751182,
+            "collar_to_two_loss_constant": 3.5,
+            "collar_implied_upper": 5.089999623629137,
+            "input_dimension": 34,
+            "output_dimension": 80,
+            "input_K_max": 4.8230828133773525
+          },
+          "2": {
+            "norm": 2.178780359060106,
+            "frobenius_or_schur_upper": 2.517062835351802,
+            "collar_b_upper": 5.819170030977034,
+            "collar_to_two_loss_constant": 3.0,
+            "collar_implied_upper": 17.457510092931102,
+            "input_dimension": 34,
+            "output_dimension": 80,
+            "input_K_max": 4.8230828133773525
+          }
+        }
+      },
+      "one_particle_norms": {
+        "Q": {
+          "0": 0.39121938309719534,
+          "1": 1.1736581492915859,
+          "2": 3.5209744478747584
+        },
+        "E_D": {
+          "0": 0.3928973939374539,
+          "1": 0.918081243168332,
+          "2": 2.1452755402895045
+        }
+      },
+      "outputs_above_input_cutoff": 46
+    },
+    {
+      "M": 8,
+      "m": -2,
+      "n": 1,
+      "central": 0.0,
+      "finite_schwinger": 0.0,
+      "Q_input_cutoff": 4,
+      "continuum_compressed_residual_norm": 14.0,
+      "cutoff_norms": {
+        "Q": {
+          "0": {
+            "norm": 0.6081812363518257,
+            "frobenius_or_schur_upper": 0.6450736146221916,
+            "collar_b_upper": 1.3128412633649404,
+            "collar_to_two_loss_constant": 4.0,
+            "collar_implied_upper": 5.251365053459762,
+            "input_dimension": 34,
+            "output_dimension": 49,
+            "input_K_max": 5.0
+          },
+          "1": {
+            "norm": 1.0136353939197096,
+            "frobenius_or_schur_upper": 1.0199509403419114,
+            "collar_b_upper": 3.379694457273507,
+            "collar_to_two_loss_constant": 3.5,
+            "collar_implied_upper": 11.828930600457273,
+            "input_dimension": 34,
+            "output_dimension": 49,
+            "input_K_max": 5.0
+          },
+          "2": {
+            "norm": 1.689392323199516,
+            "frobenius_or_schur_upper": 1.689392323199516,
+            "collar_b_upper": 12.033822584532908,
+            "collar_to_two_loss_constant": 3.0,
+            "collar_implied_upper": 36.101467753598726,
+            "input_dimension": 34,
+            "output_dimension": 49,
+            "input_K_max": 5.0
+          }
+        },
+        "E_D": {
+          "0": {
+            "norm": 0.630137939859233,
+            "frobenius_or_schur_upper": 0.658726931039122,
+            "collar_b_upper": 1.4168127804495714,
+            "collar_to_two_loss_constant": 4.0,
+            "collar_implied_upper": 5.6672511217982855,
+            "input_dimension": 34,
+            "output_dimension": 49,
+            "input_K_max": 4.8230828133773525
+          },
+          "1": {
+            "norm": 0.9853754686097034,
+            "frobenius_or_schur_upper": 0.9954796423146336,
+            "collar_b_upper": 3.380398248289531,
+            "collar_to_two_loss_constant": 3.5,
+            "collar_implied_upper": 11.83139386901336,
+            "input_dimension": 34,
+            "output_dimension": 49,
+            "input_K_max": 4.8230828133773525
+          },
+          "2": {
+            "norm": 1.5896872492993568,
+            "frobenius_or_schur_upper": 1.589687249299357,
+            "collar_b_upper": 11.081334074702676,
+            "collar_to_two_loss_constant": 3.0,
+            "collar_implied_upper": 33.24400222410803,
+            "input_dimension": 34,
+            "output_dimension": 49,
+            "input_K_max": 4.8230828133773525
+          }
+        }
+      },
+      "one_particle_norms": {
+        "Q": {
+          "0": 0.6081812363518257,
+          "1": 1.0136353939197096,
+          "2": 1.689392323199516
+        },
+        "E_D": {
+          "0": 0.630137939859233,
+          "1": 0.9853754686097034,
+          "2": 1.589687249299357
+        }
+      },
+      "outputs_above_input_cutoff": 15
+    },
+    {
+      "M": 16,
+      "m": 1,
+      "n": -1,
+      "central": 0.0,
+      "finite_schwinger": 0.0,
+      "Q_input_cutoff": 4,
+      "continuum_compressed_residual_norm": 0.0,
+      "cutoff_norms": {
+        "Q": {
+          "0": {
+            "norm": 0.20067242707799812,
+            "frobenius_or_schur_upper": 0.20067242707799812,
+            "collar_b_upper": 0.559146750340821,
+            "collar_to_two_loss_constant": 4.0,
+            "collar_implied_upper": 2.236587001363284,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 5.0
+          },
+          "1": {
+            "norm": 0.20067242707799812,
+            "frobenius_or_schur_upper": 0.20067242707799812,
+            "collar_b_upper": 1.106130419381901,
+            "collar_to_two_loss_constant": 3.5,
+            "collar_implied_upper": 3.8714564678366536,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 5.0
+          },
+          "2": {
+            "norm": 0.2006724270779981,
+            "frobenius_or_schur_upper": 0.2006724270779981,
+            "collar_b_upper": 3.285579502863609,
+            "collar_to_two_loss_constant": 3.0,
+            "collar_implied_upper": 9.856738508590826,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 5.0
+          }
+        },
+        "E_D": {
+          "0": {
+            "norm": 0.22700703324404833,
+            "frobenius_or_schur_upper": 0.22700703324404833,
+            "collar_b_upper": 0.5937617465004739,
+            "collar_to_two_loss_constant": 4.0,
+            "collar_implied_upper": 2.3750469860018955,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 4.9552098355241405
+          },
+          "1": {
+            "norm": 0.22700703324404833,
+            "frobenius_or_schur_upper": 0.22700703324404833,
+            "collar_b_upper": 1.174646043920754,
+            "collar_to_two_loss_constant": 3.5,
+            "collar_implied_upper": 4.111261153722639,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 4.9552098355241405
+          },
+          "2": {
+            "norm": 0.22700703324404833,
+            "frobenius_or_schur_upper": 0.22700703324404833,
+            "collar_b_upper": 3.4895050865826787,
+            "collar_to_two_loss_constant": 3.0,
+            "collar_implied_upper": 10.468515259748036,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 4.9552098355241405
+          }
+        }
+      },
+      "one_particle_norms": {
+        "Q": {
+          "0": 0.2006724270779979,
+          "1": 0.2006724270779979,
+          "2": 0.2006724270779979
+        },
+        "E_D": {
+          "0": 0.24316090999875425,
+          "1": 0.24316090999875428,
+          "2": 0.24316090999875425
+        }
+      },
+      "outputs_above_input_cutoff": 0,
+      "full_finite_Fock_Q": {
+        "norm": 0.2006724270779979,
+        "maximizing_Q": 3.5,
+        "energy_bins": 129,
+        "fock_dimension": 65536,
+        "scalar_error": 0.0,
+        "analytic_full_Fock_bound": {
+          "C_m": 4.057890510886816,
+          "B_m": 0.0,
+          "value": 1.5935298772592192,
+          "formula": "C_m*(2*pi/M)+B_m*(2*pi/M)^2",
+          "scope": "all M>=8, m=1,2,3, n=-m; K=1+Q; all graph orders s (diagonal)"
+        },
+        "collar_bounds": {
+          "one_loss_uniform_H_n": 4.0,
+          "one_loss_exact": 1.1853160365798014,
+          "two_loss_q_upper": 1.5935298772592192,
+          "A_constants_by_s": {
+            "0": {
+              "A_s_plus_1": 0.36787944117144233,
+              "A_s_plus_2": 0.5413411329464508
+            },
+            "1": {
+              "A_s_plus_1": 0.5413411329464508,
+              "A_s_plus_2": 1.3442508459323266
+            },
+            "2": {
+              "A_s_plus_1": 1.3442508459323266,
+              "A_s_plus_2": 4.688803555515951
+            }
+          },
+          "analytic_b_upper_by_s": {
+            "0": 1.1266742630971107,
+            "1": 2.15370280612589,
+            "2": 6.338423878135677
+          },
+          "exact_b_by_s": {
+            "0": 0.18834552064728877,
+            "1": 0.3727124904388361,
+            "2": 1.1129293579973696
+          },
+          "formula": "sqrt(A_(s+1)*A_(s+2)*q*H_n)",
+          "scope": "full finite Fock, K=1+Q, n=-m, m=1,2,3, all M>=8, all s>=0",
+          "collar": "||K^s R exp(-tK)||<=b*t^(-s-1.5), all t>0",
+          "rate": "O(M^-1/2) for each fixed mode and graph order",
+          "exact_spectral_supremum_interval": "0<t<=1"
+        },
+        "collar_b_by_s": {
+          "0": 0.18834552064728877,
+          "1": 0.3727124904388361,
+          "2": 1.1129293579973696
+        }
+      },
+      "E_chiral_endpoint_witness": {
+        "energy": 0.4967934255721029,
+        "residual_diagonal": -1.9250686184289898,
+        "full_Fock_two_loss_norm_lower_bound": 0.8592558162846726,
+        "limiting_lower_bound": 0.8888888888888888,
+        "limiting_residual": -2.0,
+        "status": "analytic limit via sin(x)/x ->1; delta ->0 by finite Fermi sum",
+        "neutral_even_pair": {
+          "energy": 0.9935868511442058,
+          "residual_diagonal": -3.850137236857976,
+          "full_Fock_two_loss_norm_lower_bound": 0.9687370031481085,
+          "limiting_lower_bound": 1.0
+        }
+      }
+    },
+    {
+      "M": 16,
+      "m": 2,
+      "n": -2,
+      "central": 0.5,
+      "finite_schwinger": 0.4567488186856652,
+      "Q_input_cutoff": 4,
+      "continuum_compressed_residual_norm": 0.0,
+      "cutoff_norms": {
+        "Q": {
+          "0": {
+            "norm": 0.4152971474913963,
+            "frobenius_or_schur_upper": 0.4152971474913963,
+            "collar_b_upper": 1.3386099971793803,
+            "collar_to_two_loss_constant": 4.0,
+            "collar_implied_upper": 5.354439988717521,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 5.0
+          },
+          "1": {
+            "norm": 0.4152971474913963,
+            "frobenius_or_schur_upper": 0.4152971474913963,
+            "collar_b_upper": 2.6426100178337553,
+            "collar_to_two_loss_constant": 3.5,
+            "collar_implied_upper": 9.249135062418144,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 5.0
+          },
+          "2": {
+            "norm": 0.4152971474913963,
+            "frobenius_or_schur_upper": 0.4152971474913963,
+            "collar_b_upper": 7.796535542245622,
+            "collar_to_two_loss_constant": 3.0,
+            "collar_implied_upper": 23.389606626736867,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 5.0
+          }
+        },
+        "E_D": {
+          "0": {
+            "norm": 0.4697973445554358,
+            "frobenius_or_schur_upper": 0.4697973445554358,
+            "collar_b_upper": 1.409852976348758,
+            "collar_to_two_loss_constant": 4.0,
+            "collar_implied_upper": 5.639411905395032,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 4.9552098355241405
+          },
+          "1": {
+            "norm": 0.46979734455543576,
+            "frobenius_or_schur_upper": 0.46979734455543576,
+            "collar_b_upper": 2.7838789142260514,
+            "collar_to_two_loss_constant": 3.5,
+            "collar_implied_upper": 9.74357619979118,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 4.9552098355241405
+          },
+          "2": {
+            "norm": 0.4697973445554358,
+            "frobenius_or_schur_upper": 0.4697973445554358,
+            "collar_b_upper": 8.216940074984812,
+            "collar_to_two_loss_constant": 3.0,
+            "collar_implied_upper": 24.650820224954437,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 4.9552098355241405
+          }
+        }
+      },
+      "one_particle_norms": {
+        "Q": {
+          "0": 0.41316128668574964,
+          "1": 0.41316128668574964,
+          "2": 0.41316128668574964
+        },
+        "E_D": {
+          "0": 0.47650431790294745,
+          "1": 0.47650431790294745,
+          "2": 0.47650431790294745
+        }
+      },
+      "outputs_above_input_cutoff": 0,
+      "full_finite_Fock_Q": {
+        "norm": 0.41529714749139585,
+        "maximizing_Q": 3.5,
+        "energy_bins": 129,
+        "fock_dimension": 65536,
+        "scalar_error": -0.04325118131433481,
+        "analytic_full_Fock_bound": {
+          "C_m": 13.664497747345179,
+          "B_m": 0.2916666666666667,
+          "value": 5.411014383147117,
+          "formula": "C_m*(2*pi/M)+B_m*(2*pi/M)^2",
+          "scope": "all M>=8, m=1,2,3, n=-m; K=1+Q; all graph orders s (diagonal)"
+        },
+        "collar_bounds": {
+          "one_loss_uniform_H_n": 8.679914663561524,
+          "one_loss_exact": 2.3531787356604816,
+          "two_loss_q_upper": 5.411014383147117,
+          "A_constants_by_s": {
+            "0": {
+              "A_s_plus_1": 0.36787944117144233,
+              "A_s_plus_2": 0.5413411329464508
+            },
+            "1": {
+              "A_s_plus_1": 0.5413411329464508,
+              "A_s_plus_2": 1.3442508459323266
+            },
+            "2": {
+              "A_s_plus_1": 1.3442508459323266,
+              "A_s_plus_2": 4.688803555515951
+            }
+          },
+          "analytic_b_upper_by_s": {
+            "0": 3.058337040953032,
+            "1": 5.8461875654042235,
+            "2": 17.205537716354726
+          },
+          "exact_b_by_s": {
+            "0": 0.37046119737586514,
+            "1": 0.733096890281152,
+            "2": 2.1890467112863266
+          },
+          "formula": "sqrt(A_(s+1)*A_(s+2)*q*H_n)",
+          "scope": "full finite Fock, K=1+Q, n=-m, m=1,2,3, all M>=8, all s>=0",
+          "collar": "||K^s R exp(-tK)||<=b*t^(-s-1.5), all t>0",
+          "rate": "O(M^-1/2) for each fixed mode and graph order",
+          "exact_spectral_supremum_interval": "0<t<=1"
+        },
+        "collar_b_by_s": {
+          "0": 0.37046119737586514,
+          "1": 0.733096890281152,
+          "2": 2.1890467112863266
+        }
+      },
+      "E_chiral_endpoint_witness": {
+        "energy": 0.4967934255721029,
+        "residual_diagonal": -3.8824800687876246,
+        "full_Fock_two_loss_norm_lower_bound": 1.7329478797683384,
+        "limiting_lower_bound": 1.8888888888888888,
+        "limiting_residual": -4.25,
+        "status": "analytic limit via sin(x)/x ->1; delta ->0 by finite Fermi sum",
+        "neutral_even_pair": {
+          "energy": 0.9935868511442058,
+          "residual_diagonal": -7.7217089562609065,
+          "full_Fock_two_loss_norm_lower_bound": 1.9428671585677384,
+          "limiting_lower_bound": 2.125
+        }
+      }
+    },
+    {
+      "M": 16,
+      "m": 3,
+      "n": -3,
+      "central": 2.0,
+      "finite_schwinger": 1.5926816948301894,
+      "Q_input_cutoff": 4,
+      "continuum_compressed_residual_norm": 0.0,
+      "cutoff_norms": {
+        "Q": {
+          "0": {
+            "norm": 0.6914141711920728,
+            "frobenius_or_schur_upper": 0.6914141711920728,
+            "collar_b_upper": 2.6364778191729528,
+            "collar_to_two_loss_constant": 4.0,
+            "collar_implied_upper": 10.545911276691811,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 5.0
+          },
+          "1": {
+            "norm": 0.6914141711920728,
+            "frobenius_or_schur_upper": 0.6914141711920728,
+            "collar_b_upper": 5.171153445383163,
+            "collar_to_two_loss_constant": 3.5,
+            "collar_implied_upper": 18.09903705884107,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 5.0
+          },
+          "2": {
+            "norm": 0.6914141711920728,
+            "frobenius_or_schur_upper": 0.6914141711920728,
+            "collar_b_upper": 15.060595754343385,
+            "collar_to_two_loss_constant": 3.0,
+            "collar_implied_upper": 45.18178726303016,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 5.0
+          }
+        },
+        "E_D": {
+          "0": {
+            "norm": 0.7524829256420007,
+            "frobenius_or_schur_upper": 0.7524829256420007,
+            "collar_b_upper": 2.749849181875619,
+            "collar_to_two_loss_constant": 4.0,
+            "collar_implied_upper": 10.999396727502477,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 4.9552098355241405
+          },
+          "1": {
+            "norm": 0.7524829256420007,
+            "frobenius_or_schur_upper": 0.7524829256420007,
+            "collar_b_upper": 5.397242652580017,
+            "collar_to_two_loss_constant": 3.5,
+            "collar_implied_upper": 18.89034928403006,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 4.9552098355241405
+          },
+          "2": {
+            "norm": 0.7524829256420008,
+            "frobenius_or_schur_upper": 0.7524829256420008,
+            "collar_b_upper": 15.734035520506357,
+            "collar_to_two_loss_constant": 3.0,
+            "collar_implied_upper": 47.202106561519074,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 4.9552098355241405
+          }
+        }
+      },
+      "one_particle_norms": {
+        "Q": {
+          "0": 0.6581636973006592,
+          "1": 0.6581636973006592,
+          "2": 0.6581636973006592
+        },
+        "E_D": {
+          "0": 0.7297287812320924,
+          "1": 0.7297287812320924,
+          "2": 0.7297287812320925
+        }
+      },
+      "outputs_above_input_cutoff": 0,
+      "full_finite_Fock_Q": {
+        "norm": 0.6914141711920724,
+        "maximizing_Q": 2.5,
+        "energy_bins": 129,
+        "fock_dimension": 65536,
+        "scalar_error": -0.4073183051698106,
+        "analytic_full_Fock_bound": {
+          "C_m": 34.730704349893514,
+          "B_m": 2.9166666666666665,
+          "value": 14.088502363856879,
+          "formula": "C_m*(2*pi/M)+B_m*(2*pi/M)^2",
+          "scope": "all M>=8, m=1,2,3, n=-m; K=1+Q; all graph orders s (diagonal)"
+        },
+        "collar_bounds": {
+          "one_loss_uniform_H_n": 15.799146635615248,
+          "one_loss_exact": 3.549911723090623,
+          "two_loss_q_upper": 14.088502363856879,
+          "A_constants_by_s": {
+            "0": {
+              "A_s_plus_1": 0.36787944117144233,
+              "A_s_plus_2": 0.5413411329464508
+            },
+            "1": {
+              "A_s_plus_1": 0.5413411329464508,
+              "A_s_plus_2": 1.3442508459323266
+            },
+            "2": {
+              "A_s_plus_1": 1.3442508459323266,
+              "A_s_plus_2": 4.688803555515951
+            }
+          },
+          "analytic_b_upper_by_s": {
+            "0": 6.657903594632255,
+            "1": 12.726966545999117,
+            "2": 37.455914725998376
+          },
+          "exact_b_by_s": {
+            "0": 0.5784242111951744,
+            "1": 1.1446299733795988,
+            "2": 3.4178953861138557
+          },
+          "formula": "sqrt(A_(s+1)*A_(s+2)*q*H_n)",
+          "scope": "full finite Fock, K=1+Q, n=-m, m=1,2,3, all M>=8, all s>=0",
+          "collar": "||K^s R exp(-tK)||<=b*t^(-s-1.5), all t>0",
+          "rate": "O(M^-1/2) for each fixed mode and graph order",
+          "exact_spectral_supremum_interval": "0<t<=1"
+        },
+        "collar_b_by_s": {
+          "0": 0.5784242111951744,
+          "1": 1.1446299733795988,
+          "2": 3.4178953861138557
+        }
+      },
+      "E_chiral_endpoint_witness": {
+        "energy": 0.4967934255721029,
+        "residual_diagonal": -6.106956580118746,
+        "full_Fock_two_loss_norm_lower_bound": 2.725844632773306,
+        "limiting_lower_bound": 3.111111111111111,
+        "limiting_residual": -7.0,
+        "status": "analytic limit via sin(x)/x ->1; delta ->0 by finite Fermi sum",
+        "neutral_even_pair": {
+          "energy": 0.9935868511442058,
+          "residual_diagonal": -11.80659485506767,
+          "full_Fock_two_loss_norm_lower_bound": 2.9706695147874904,
+          "limiting_lower_bound": 3.5
+        }
+      }
+    },
+    {
+      "M": 16,
+      "m": 2,
+      "n": 1,
+      "central": 0.0,
+      "finite_schwinger": 0.0,
+      "Q_input_cutoff": 4,
+      "continuum_compressed_residual_norm": 0.0,
+      "cutoff_norms": {
+        "Q": {
+          "0": {
+            "norm": 0.02509767225894909,
+            "frobenius_or_schur_upper": 0.027886302509943433,
+            "collar_b_upper": 0.03563084798180933,
+            "collar_to_two_loss_constant": 4.0,
+            "collar_implied_upper": 0.14252339192723731,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 5.0
+          },
+          "1": {
+            "norm": 0.010039068903579635,
+            "frobenius_or_schur_upper": 0.010182637953405965,
+            "collar_b_upper": 0.025536160832909507,
+            "collar_to_two_loss_constant": 3.5,
+            "collar_implied_upper": 0.08937656291518328,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 5.0
+          },
+          "2": {
+            "norm": 0.004015627561431853,
+            "frobenius_or_schur_upper": 0.004015627561431853,
+            "collar_b_upper": 0.028101155588154392,
+            "collar_to_two_loss_constant": 3.0,
+            "collar_implied_upper": 0.08430346676446318,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 5.0
+          }
+        },
+        "E_D": {
+          "0": {
+            "norm": 0.028043115400192185,
+            "frobenius_or_schur_upper": 0.03135184813275073,
+            "collar_b_upper": 0.03890985177932133,
+            "collar_to_two_loss_constant": 4.0,
+            "collar_implied_upper": 0.15563940711728533,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 4.9552098355241405
+          },
+          "1": {
+            "norm": 0.0118476949893853,
+            "frobenius_or_schur_upper": 0.012130479715056262,
+            "collar_b_upper": 0.029522500948450933,
+            "collar_to_two_loss_constant": 3.5,
+            "collar_implied_upper": 0.10332875331957826,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 4.9552098355241405
+          },
+          "2": {
+            "norm": 0.0050054309073143686,
+            "frobenius_or_schur_upper": 0.0050054309073143686,
+            "collar_b_upper": 0.03435763007481356,
+            "collar_to_two_loss_constant": 3.0,
+            "collar_implied_upper": 0.10307289022444067,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 4.9552098355241405
+          }
+        }
+      },
+      "one_particle_norms": {
+        "Q": {
+          "0": 0.2083464621040644,
+          "1": 0.5915578082100131,
+          "2": 1.7746734246300395
+        },
+        "E_D": {
+          "0": 0.21199257039462688,
+          "1": 0.5570816834181621,
+          "2": 1.5721603056173021
+        }
+      },
+      "outputs_above_input_cutoff": 0
+    },
+    {
+      "M": 16,
+      "m": 2,
+      "n": -1,
+      "central": 0.0,
+      "finite_schwinger": 0.0,
+      "Q_input_cutoff": 4,
+      "continuum_compressed_residual_norm": 0.0,
+      "cutoff_norms": {
+        "Q": {
+          "0": {
+            "norm": 0.2253416930220004,
+            "frobenius_or_schur_upper": 0.2253416930220004,
+            "collar_b_upper": 0.5387512671780362,
+            "collar_to_two_loss_constant": 4.0,
+            "collar_implied_upper": 2.155005068712145,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 5.0
+          },
+          "1": {
+            "norm": 0.17526576123933363,
+            "frobenius_or_schur_upper": 0.17526576123933366,
+            "collar_b_upper": 0.8251824020675825,
+            "collar_to_two_loss_constant": 3.5,
+            "collar_implied_upper": 2.888138407236539,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 5.0
+          },
+          "2": {
+            "norm": 0.1363178142972595,
+            "frobenius_or_schur_upper": 0.1363178142972595,
+            "collar_b_upper": 1.9126535395200859,
+            "collar_to_two_loss_constant": 3.0,
+            "collar_implied_upper": 5.737960618560257,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 5.0
+          }
+        },
+        "E_D": {
+          "0": {
+            "norm": 0.2549136916514823,
+            "frobenius_or_schur_upper": 0.2549136916514823,
+            "collar_b_upper": 0.5777735377089253,
+            "collar_to_two_loss_constant": 4.0,
+            "collar_implied_upper": 2.311094150835701,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 4.9552098355241405
+          },
+          "1": {
+            "norm": 0.20489815091222305,
+            "frobenius_or_schur_upper": 0.20489815091222305,
+            "collar_b_upper": 0.9104175434249576,
+            "collar_to_two_loss_constant": 3.5,
+            "collar_implied_upper": 3.186461401987352,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 4.9552098355241405
+          },
+          "2": {
+            "norm": 0.16469594855912084,
+            "frobenius_or_schur_upper": 0.16469594855912084,
+            "collar_b_upper": 2.172063376884123,
+            "collar_to_two_loss_constant": 3.0,
+            "collar_implied_upper": 6.516190130652369,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 4.9552098355241405
+          }
+        }
+      },
+      "one_particle_norms": {
+        "Q": {
+          "0": 0.3736317257242549,
+          "1": 0.47893321927999505,
+          "2": 0.6157712819314222
+        },
+        "E_D": {
+          "0": 0.4226640940040561,
+          "1": 0.4931895303591923,
+          "2": 0.6106799419476195
+        }
+      },
+      "outputs_above_input_cutoff": 0
+    },
+    {
+      "M": 16,
+      "m": -2,
+      "n": -1,
+      "central": 0.0,
+      "finite_schwinger": 0.0,
+      "Q_input_cutoff": 4,
+      "continuum_compressed_residual_norm": 0.0,
+      "cutoff_norms": {
+        "Q": {
+          "0": {
+            "norm": 0.2085444453552441,
+            "frobenius_or_schur_upper": 0.2149845719498764,
+            "collar_b_upper": 0.6324193809168607,
+            "collar_to_two_loss_constant": 4.0,
+            "collar_implied_upper": 2.5296775236674427,
+            "input_dimension": 34,
+            "output_dimension": 118,
+            "input_K_max": 5.0
+          },
+          "1": {
+            "norm": 0.5939751871900886,
+            "frobenius_or_schur_upper": 0.617745141318922,
+            "collar_b_upper": 2.302416671124768,
+            "collar_to_two_loss_constant": 3.5,
+            "collar_implied_upper": 8.05845834893669,
+            "input_dimension": 34,
+            "output_dimension": 118,
+            "input_K_max": 5.0
+          },
+          "2": {
+            "norm": 1.781925561570266,
+            "frobenius_or_schur_upper": 1.8532354239567659,
+            "collar_b_upper": 12.014694932579738,
+            "collar_to_two_loss_constant": 3.0,
+            "collar_implied_upper": 36.04408479773922,
+            "input_dimension": 34,
+            "output_dimension": 118,
+            "input_K_max": 5.0
+          }
+        },
+        "E_D": {
+          "0": {
+            "norm": 0.21219401839565755,
+            "frobenius_or_schur_upper": 0.21843128613475638,
+            "collar_b_upper": 0.6571311088944222,
+            "collar_to_two_loss_constant": 4.0,
+            "collar_implied_upper": 2.6285244355776887,
+            "input_dimension": 34,
+            "output_dimension": 118,
+            "input_K_max": 4.9552098355241405
+          },
+          "1": {
+            "norm": 0.5595424386068071,
+            "frobenius_or_schur_upper": 0.5827019803488774,
+            "collar_b_upper": 2.1283824169144614,
+            "collar_to_two_loss_constant": 3.5,
+            "collar_implied_upper": 7.449338459200614,
+            "input_dimension": 34,
+            "output_dimension": 118,
+            "input_K_max": 4.9552098355241405
+          },
+          "2": {
+            "norm": 1.5796668933178997,
+            "frobenius_or_schur_upper": 1.6472741043703065,
+            "collar_b_upper": 9.936819447954457,
+            "collar_to_two_loss_constant": 3.0,
+            "collar_implied_upper": 29.810458343863374,
+            "input_dimension": 34,
+            "output_dimension": 118,
+            "input_K_max": 4.9552098355241405
+          }
+        }
+      },
+      "one_particle_norms": {
+        "Q": {
+          "0": 0.2083464621040644,
+          "1": 0.5915578082100131,
+          "2": 1.7746734246300395
+        },
+        "E_D": {
+          "0": 0.21199257039462688,
+          "1": 0.5570816834181621,
+          "2": 1.5721603056173021
+        }
+      },
+      "outputs_above_input_cutoff": 84
+    },
+    {
+      "M": 16,
+      "m": -2,
+      "n": 1,
+      "central": 0.0,
+      "finite_schwinger": 0.0,
+      "Q_input_cutoff": 4,
+      "continuum_compressed_residual_norm": 0.0,
+      "cutoff_norms": {
+        "Q": {
+          "0": {
+            "norm": 0.3736317257242549,
+            "frobenius_or_schur_upper": 0.3736317257242549,
+            "collar_b_upper": 1.1814799863686136,
+            "collar_to_two_loss_constant": 4.0,
+            "collar_implied_upper": 4.7259199454744545,
+            "input_dimension": 34,
+            "output_dimension": 55,
+            "input_K_max": 5.0
+          },
+          "1": {
+            "norm": 0.47893321927999505,
+            "frobenius_or_schur_upper": 0.47893321927999505,
+            "collar_b_upper": 2.9214036636180896,
+            "collar_to_two_loss_constant": 3.5,
+            "collar_implied_upper": 10.224912822663313,
+            "input_dimension": 34,
+            "output_dimension": 55,
+            "input_K_max": 5.0
+          },
+          "2": {
+            "norm": 0.6157712819314222,
+            "frobenius_or_schur_upper": 0.6157712819314222,
+            "collar_b_upper": 10.68215625481053,
+            "collar_to_two_loss_constant": 3.0,
+            "collar_implied_upper": 32.046468764431594,
+            "input_dimension": 34,
+            "output_dimension": 55,
+            "input_K_max": 5.0
+          }
+        },
+        "E_D": {
+          "0": {
+            "norm": 0.4226640940040561,
+            "frobenius_or_schur_upper": 0.4226640940040561,
+            "collar_b_upper": 1.2443072813615668,
+            "collar_to_two_loss_constant": 4.0,
+            "collar_implied_upper": 4.977229125446267,
+            "input_dimension": 34,
+            "output_dimension": 55,
+            "input_K_max": 4.9552098355241405
+          },
+          "1": {
+            "norm": 0.4931895303591923,
+            "frobenius_or_schur_upper": 0.4931895303591923,
+            "collar_b_upper": 2.9745205867289854,
+            "collar_to_two_loss_constant": 3.5,
+            "collar_implied_upper": 10.410822053551449,
+            "input_dimension": 34,
+            "output_dimension": 55,
+            "input_K_max": 4.9552098355241405
+          },
+          "2": {
+            "norm": 0.6106799419476195,
+            "frobenius_or_schur_upper": 0.6106799419476195,
+            "collar_b_upper": 10.52257403394633,
+            "collar_to_two_loss_constant": 3.0,
+            "collar_implied_upper": 31.567722101838992,
+            "input_dimension": 34,
+            "output_dimension": 55,
+            "input_K_max": 4.9552098355241405
+          }
+        }
+      },
+      "one_particle_norms": {
+        "Q": {
+          "0": 0.3736317257242549,
+          "1": 0.47893321927999505,
+          "2": 0.6157712819314222
+        },
+        "E_D": {
+          "0": 0.4226640940040561,
+          "1": 0.4931895303591923,
+          "2": 0.6106799419476195
+        }
+      },
+      "outputs_above_input_cutoff": 21
+    },
+    {
+      "M": 32,
+      "m": 1,
+      "n": -1,
+      "central": 0.0,
+      "finite_schwinger": 0.0,
+      "Q_input_cutoff": 4,
+      "continuum_compressed_residual_norm": 0.0,
+      "cutoff_norms": {
+        "Q": {
+          "0": {
+            "norm": 0.07519420075633115,
+            "frobenius_or_schur_upper": 0.07519420075633115,
+            "collar_b_upper": 0.1887977579654833,
+            "collar_to_two_loss_constant": 4.0,
+            "collar_implied_upper": 0.7551910318619331,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 5.0
+          },
+          "1": {
+            "norm": 0.07519420075633115,
+            "frobenius_or_schur_upper": 0.07519420075633115,
+            "collar_b_upper": 0.37353888029290866,
+            "collar_to_two_loss_constant": 3.5,
+            "collar_implied_upper": 1.3073860810251803,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 5.0
+          },
+          "2": {
+            "norm": 0.07519420075633115,
+            "frobenius_or_schur_upper": 0.07519420075633115,
+            "collar_b_upper": 1.1116061661034573,
+            "collar_to_two_loss_constant": 3.0,
+            "collar_implied_upper": 3.334818498310372,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 5.0
+          }
+        },
+        "E_D": {
+          "0": {
+            "norm": 0.07753568382865295,
+            "frobenius_or_schur_upper": 0.07753568382865295,
+            "collar_b_upper": 0.19191680454930468,
+            "collar_to_two_loss_constant": 4.0,
+            "collar_implied_upper": 0.7676672181972187,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 4.988767133058786
+          },
+          "1": {
+            "norm": 0.07753568382865295,
+            "frobenius_or_schur_upper": 0.07753568382865295,
+            "collar_b_upper": 0.37971209933878763,
+            "collar_to_two_loss_constant": 3.5,
+            "collar_implied_upper": 1.3289923476857568,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 4.988767133058786
+          },
+          "2": {
+            "norm": 0.07753568382865293,
+            "frobenius_or_schur_upper": 0.07753568382865293,
+            "collar_b_upper": 1.130025170635588,
+            "collar_to_two_loss_constant": 3.0,
+            "collar_implied_upper": 3.3900755119067636,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 4.988767133058786
+          }
+        }
+      },
+      "one_particle_norms": {
+        "Q": {
+          "0": 0.12670451961797055,
+          "1": 0.12670451961797055,
+          "2": 0.12670451961797055
+        },
+        "E_D": {
+          "0": 0.15220340379135444,
+          "1": 0.15220340379135447,
+          "2": 0.15220340379135444
+        }
+      },
+      "outputs_above_input_cutoff": 0,
+      "full_finite_Fock_Q": {
+        "norm": 0.12670451961797055,
+        "maximizing_Q": 7.5,
+        "energy_bins": 513,
+        "fock_dimension": 4294967296,
+        "scalar_error": 0.0,
+        "analytic_full_Fock_bound": {
+          "C_m": 4.057890510886816,
+          "B_m": 0.0,
+          "value": 0.7967649386296096,
+          "formula": "C_m*(2*pi/M)+B_m*(2*pi/M)^2",
+          "scope": "all M>=8, m=1,2,3, n=-m; K=1+Q; all graph orders s (diagonal)"
+        },
+        "collar_bounds": {
+          "one_loss_uniform_H_n": 4.0,
+          "one_loss_exact": 1.2791609898023482,
+          "two_loss_q_upper": 0.7967649386296096,
+          "A_constants_by_s": {
+            "0": {
+              "A_s_plus_1": 0.36787944117144233,
+              "A_s_plus_2": 0.5413411329464508
+            },
+            "1": {
+              "A_s_plus_1": 0.5413411329464508,
+              "A_s_plus_2": 1.3442508459323266
+            },
+            "2": {
+              "A_s_plus_1": 1.3442508459323266,
+              "A_s_plus_2": 4.688803555515951
+            }
+          },
+          "analytic_b_upper_by_s": {
+            "0": 0.7966790116243234,
+            "1": 1.5228978588721132,
+            "2": 4.481942506264472
+          },
+          "exact_b_by_s": {
+            "0": 0.15566414175091242,
+            "1": 0.3080400836962603,
+            "2": 0.9198158403059863
+          },
+          "formula": "sqrt(A_(s+1)*A_(s+2)*q*H_n)",
+          "scope": "full finite Fock, K=1+Q, n=-m, m=1,2,3, all M>=8, all s>=0",
+          "collar": "||K^s R exp(-tK)||<=b*t^(-s-1.5), all t>0",
+          "rate": "O(M^-1/2) for each fixed mode and graph order",
+          "exact_spectral_supremum_interval": "0<t<=1"
+        },
+        "collar_b_by_s": {
+          "0": 0.15566414175091242,
+          "1": 0.3080400836962603,
+          "2": 0.9198158403059863
+        }
+      },
+      "E_chiral_endpoint_witness": {
+        "energy": 0.4991971965178092,
+        "residual_diagonal": -1.980861237161216,
+        "full_Fock_two_loss_norm_lower_bound": 0.8813258949532027,
+        "limiting_lower_bound": 0.8888888888888888,
+        "limiting_residual": -2.0,
+        "status": "analytic limit via sin(x)/x ->1; delta ->0 by finite Fermi sum",
+        "neutral_even_pair": {
+          "energy": 0.9983943930356184,
+          "residual_diagonal": -3.9617224743224178,
+          "full_Fock_two_loss_norm_lower_bound": 0.9920227779094771,
+          "limiting_lower_bound": 1.0
+        }
+      }
+    },
+    {
+      "M": 32,
+      "m": 2,
+      "n": -2,
+      "central": 0.5,
+      "finite_schwinger": 0.4888651513445907,
+      "Q_input_cutoff": 4,
+      "continuum_compressed_residual_norm": 0.0,
+      "cutoff_norms": {
+        "Q": {
+          "0": {
+            "norm": 0.167192724295585,
+            "frobenius_or_schur_upper": 0.167192724295585,
+            "collar_b_upper": 0.4650566733560572,
+            "collar_to_two_loss_constant": 4.0,
+            "collar_implied_upper": 1.8602266934242289,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 5.0
+          },
+          "1": {
+            "norm": 0.167192724295585,
+            "frobenius_or_schur_upper": 0.167192724295585,
+            "collar_b_upper": 0.9189950830275769,
+            "collar_to_two_loss_constant": 3.5,
+            "collar_implied_upper": 3.2164827905965194,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 5.0
+          },
+          "2": {
+            "norm": 0.167192724295585,
+            "frobenius_or_schur_upper": 0.167192724295585,
+            "collar_b_upper": 2.7226567209837094,
+            "collar_to_two_loss_constant": 3.0,
+            "collar_implied_upper": 8.167970162951129,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 5.0
+          }
+        },
+        "E_D": {
+          "0": {
+            "norm": 0.17239896267322363,
+            "frobenius_or_schur_upper": 0.17239896267322363,
+            "collar_b_upper": 0.47193529526204137,
+            "collar_to_two_loss_constant": 4.0,
+            "collar_implied_upper": 1.8877411810481655,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 4.988767133058786
+          },
+          "1": {
+            "norm": 0.17239896267322363,
+            "frobenius_or_schur_upper": 0.17239896267322363,
+            "collar_b_upper": 0.9326245218245254,
+            "collar_to_two_loss_constant": 3.5,
+            "collar_implied_upper": 3.2641858263858388,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 4.988767133058786
+          },
+          "2": {
+            "norm": 0.17239896267322358,
+            "frobenius_or_schur_upper": 0.17239896267322358,
+            "collar_b_upper": 2.763337784022484,
+            "collar_to_two_loss_constant": 3.0,
+            "collar_implied_upper": 8.290013352067453,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 4.988767133058786
+          }
+        }
+      },
+      "one_particle_norms": {
+        "Q": {
+          "0": 0.2543152335659001,
+          "1": 0.25431523356590013,
+          "2": 0.2543152335659001
+        },
+        "E_D": {
+          "0": 0.303510608008918,
+          "1": 0.30351060800891805,
+          "2": 0.303510608008918
+        }
+      },
+      "outputs_above_input_cutoff": 0,
+      "full_finite_Fock_Q": {
+        "norm": 0.2544693491182241,
+        "maximizing_Q": 7.5,
+        "energy_bins": 513,
+        "fock_dimension": 4294967296,
+        "scalar_error": -0.011134848655409313,
+        "analytic_full_Fock_bound": {
+          "C_m": 13.664497747345179,
+          "B_m": 0.2916666666666667,
+          "value": 2.6942625251009633,
+          "formula": "C_m*(2*pi/M)+B_m*(2*pi/M)^2",
+          "scope": "all M>=8, m=1,2,3, n=-m; K=1+Q; all graph orders s (diagonal)"
+        },
+        "collar_bounds": {
+          "one_loss_uniform_H_n": 8.679914663561524,
+          "one_loss_exact": 2.5450054857520583,
+          "two_loss_q_upper": 2.6942625251009633,
+          "A_constants_by_s": {
+            "0": {
+              "A_s_plus_1": 0.36787944117144233,
+              "A_s_plus_2": 0.5413411329464508
+            },
+            "1": {
+              "A_s_plus_1": 0.5413411329464508,
+              "A_s_plus_2": 1.3442508459323266
+            },
+            "2": {
+              "A_s_plus_1": 1.3442508459323266,
+              "A_s_plus_2": 4.688803555515951
+            }
+          },
+          "analytic_b_upper_by_s": {
+            "0": 2.1580721280345854,
+            "1": 4.125279284532257,
+            "2": 12.140843502958834
+          },
+          "exact_b_by_s": {
+            "0": 0.310567587833848,
+            "1": 0.6145748447498409,
+            "2": 1.835136747371812
+          },
+          "formula": "sqrt(A_(s+1)*A_(s+2)*q*H_n)",
+          "scope": "full finite Fock, K=1+Q, n=-m, m=1,2,3, all M>=8, all s>=0",
+          "collar": "||K^s R exp(-tK)||<=b*t^(-s-1.5), all t>0",
+          "rate": "O(M^-1/2) for each fixed mode and graph order",
+          "exact_spectral_supremum_interval": "0<t<=1"
+        },
+        "collar_b_by_s": {
+          "0": 0.310567587833848,
+          "1": 0.6145748447498409,
+          "2": 1.835136747371812
+        }
+      },
+      "E_chiral_endpoint_witness": {
+        "energy": 0.4991971965178092,
+        "residual_diagonal": -4.1518173583105895,
+        "full_Fock_two_loss_norm_lower_bound": 1.847228912530595,
+        "limiting_lower_bound": 1.8888888888888888,
+        "limiting_residual": -4.25,
+        "status": "analytic limit via sin(x)/x ->1; delta ->0 by finite Fermi sum",
+        "neutral_even_pair": {
+          "energy": 0.9983943930356184,
+          "residual_diagonal": -8.292499867965741,
+          "full_Fock_two_loss_norm_lower_bound": 2.076457603517601,
+          "limiting_lower_bound": 2.125
+        }
+      }
+    },
+    {
+      "M": 32,
+      "m": 3,
+      "n": -3,
+      "central": 2.0,
+      "finite_schwinger": 1.8903265978178738,
+      "Q_input_cutoff": 4,
+      "continuum_compressed_residual_norm": 0.0,
+      "cutoff_norms": {
+        "Q": {
+          "0": {
+            "norm": 0.29450521121309237,
+            "frobenius_or_schur_upper": 0.29450521121309237,
+            "collar_b_upper": 0.9480548696032359,
+            "collar_to_two_loss_constant": 4.0,
+            "collar_implied_upper": 3.7922194784129437,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 5.0
+          },
+          "1": {
+            "norm": 0.29450521121309237,
+            "frobenius_or_schur_upper": 0.29450521121309237,
+            "collar_b_upper": 1.8660098959212699,
+            "collar_to_two_loss_constant": 3.5,
+            "collar_implied_upper": 6.531034635724445,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 5.0
+          },
+          "2": {
+            "norm": 0.29450521121309237,
+            "frobenius_or_schur_upper": 0.29450521121309237,
+            "collar_b_upper": 5.480158495233794,
+            "collar_to_two_loss_constant": 3.0,
+            "collar_implied_upper": 16.44047548570138,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 5.0
+          }
+        },
+        "E_D": {
+          "0": {
+            "norm": 0.30367585149957677,
+            "frobenius_or_schur_upper": 0.30367585149957677,
+            "collar_b_upper": 0.9600049426499457,
+            "collar_to_two_loss_constant": 4.0,
+            "collar_implied_upper": 3.840019770599783,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 4.988767133058786
+          },
+          "1": {
+            "norm": 0.30367585149957677,
+            "frobenius_or_schur_upper": 0.30367585149957677,
+            "collar_b_upper": 1.8897747547334358,
+            "collar_to_two_loss_constant": 3.5,
+            "collar_implied_upper": 6.614211641567025,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 4.988767133058786
+          },
+          "2": {
+            "norm": 0.30367585149957677,
+            "frobenius_or_schur_upper": 0.30367585149957677,
+            "collar_b_upper": 5.551202493098161,
+            "collar_to_two_loss_constant": 3.0,
+            "collar_implied_upper": 16.653607479294486,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 4.988767133058786
+          }
+        }
+      },
+      "one_particle_norms": {
+        "Q": {
+          "0": 0.3836540872965719,
+          "1": 0.3836540872965719,
+          "2": 0.3836540872965719
+        },
+        "E_D": {
+          "0": 0.45310873274370195,
+          "1": 0.453108732743702,
+          "2": 0.45310873274370195
+        }
+      },
+      "outputs_above_input_cutoff": 0,
+      "full_finite_Fock_Q": {
+        "norm": 0.3855394720046779,
+        "maximizing_Q": 6.5,
+        "energy_bins": 513,
+        "fock_dimension": 4294967296,
+        "scalar_error": -0.10967340218212618,
+        "analytic_full_Fock_bound": {
+          "C_m": 34.730704349893514,
+          "B_m": 2.9166666666666665,
+          "value": 6.931804517202487,
+          "formula": "C_m*(2*pi/M)+B_m*(2*pi/M)^2",
+          "scope": "all M>=8, m=1,2,3, n=-m; K=1+Q; all graph orders s (diagonal)"
+        },
+        "collar_bounds": {
+          "one_loss_uniform_H_n": 15.799146635615248,
+          "one_loss_exact": 3.787243385431529,
+          "two_loss_q_upper": 6.931804517202487,
+          "A_constants_by_s": {
+            "0": {
+              "A_s_plus_1": 0.36787944117144233,
+              "A_s_plus_2": 0.5413411329464508
+            },
+            "1": {
+              "A_s_plus_1": 0.5413411329464508,
+              "A_s_plus_2": 1.3442508459323266
+            },
+            "2": {
+              "A_s_plus_1": 1.3442508459323266,
+              "A_s_plus_2": 4.688803555515951
+            }
+          },
+          "analytic_b_upper_by_s": {
+            "0": 4.670122162556046,
+            "1": 8.92720774396596,
+            "2": 26.27308956857256
+          },
+          "exact_b_by_s": {
+            "0": 0.46494669446275266,
+            "1": 0.9200720028751671,
+            "2": 2.7473593446400817
+          },
+          "formula": "sqrt(A_(s+1)*A_(s+2)*q*H_n)",
+          "scope": "full finite Fock, K=1+Q, n=-m, m=1,2,3, all M>=8, all s>=0",
+          "collar": "||K^s R exp(-tK)||<=b*t^(-s-1.5), all t>0",
+          "rate": "O(M^-1/2) for each fixed mode and graph order",
+          "exact_spectral_supremum_interval": "0<t<=1"
+        },
+        "collar_b_by_s": {
+          "0": 0.46494669446275266,
+          "1": 0.9200720028751671,
+          "2": 2.7473593446400817
+        }
+      },
+      "E_chiral_endpoint_witness": {
+        "energy": 0.4991971965178092,
+        "residual_diagonal": -6.741617232592507,
+        "full_Fock_two_loss_norm_lower_bound": 2.9994841281570093,
+        "limiting_lower_bound": 3.111111111111111,
+        "limiting_residual": -7.0,
+        "status": "analytic limit via sin(x)/x ->1; delta ->0 by finite Fermi sum",
+        "neutral_even_pair": {
+          "energy": 0.9983943930356184,
+          "residual_diagonal": -13.373561063002844,
+          "full_Fock_two_loss_norm_lower_bound": 3.348764907751688,
+          "limiting_lower_bound": 3.5
+        }
+      }
+    },
+    {
+      "M": 32,
+      "m": 2,
+      "n": 1,
+      "central": 0.0,
+      "finite_schwinger": 0.0,
+      "Q_input_cutoff": 4,
+      "continuum_compressed_residual_norm": 0.0,
+      "cutoff_norms": {
+        "Q": {
+          "0": {
+            "norm": 0.0074017688837004795,
+            "frobenius_or_schur_upper": 0.008224187648556088,
+            "collar_b_upper": 0.010499384946524165,
+            "collar_to_two_loss_constant": 4.0,
+            "collar_implied_upper": 0.04199753978609666,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 5.0
+          },
+          "1": {
+            "norm": 0.0029607075534801917,
+            "frobenius_or_schur_upper": 0.0030030487281796927,
+            "collar_b_upper": 0.007527112652458405,
+            "collar_to_two_loss_constant": 3.5,
+            "collar_implied_upper": 0.02634489428360442,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 5.0
+          },
+          "2": {
+            "norm": 0.0011842830213920769,
+            "frobenius_or_schur_upper": 0.0011842830213920769,
+            "collar_b_upper": 0.008284669998077799,
+            "collar_to_two_loss_constant": 3.0,
+            "collar_implied_upper": 0.024854009994233397,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 5.0
+          }
+        },
+        "E_D": {
+          "0": {
+            "norm": 0.0076093437553214315,
+            "frobenius_or_schur_upper": 0.008467544539278116,
+            "collar_b_upper": 0.01073212240001981,
+            "collar_to_two_loss_constant": 4.0,
+            "collar_implied_upper": 0.04292848960007924,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 4.988767133058786
+          },
+          "1": {
+            "norm": 0.003085502009367763,
+            "frobenius_or_schur_upper": 0.003136797107090972,
+            "collar_b_upper": 0.00780391036718869,
+            "collar_to_two_loss_constant": 3.5,
+            "collar_implied_upper": 0.027313686285160413,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 4.988767133058786
+          },
+          "2": {
+            "norm": 0.0012511358345658483,
+            "frobenius_or_schur_upper": 0.0012511358345658483,
+            "collar_b_upper": 0.008709769788328037,
+            "collar_to_two_loss_constant": 3.0,
+            "collar_implied_upper": 0.026129309364984112,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 4.988767133058786
+          }
+        }
+      },
+      "one_particle_norms": {
+        "Q": {
+          "0": 0.09348074998928105,
+          "1": 0.17446136568133971,
+          "2": 0.5233840970440191
+        },
+        "E_D": {
+          "0": 0.10094520383741924,
+          "1": 0.17187591851505687,
+          "2": 0.5078503821220446
+        }
+      },
+      "outputs_above_input_cutoff": 0
+    },
+    {
+      "M": 32,
+      "m": 2,
+      "n": -1,
+      "central": 0.0,
+      "finite_schwinger": 0.0,
+      "Q_input_cutoff": 4,
+      "continuum_compressed_residual_norm": 0.0,
+      "cutoff_norms": {
+        "Q": {
+          "0": {
+            "norm": 0.07877273831712803,
+            "frobenius_or_schur_upper": 0.07877273831712803,
+            "collar_b_upper": 0.17873144196298482,
+            "collar_to_two_loss_constant": 4.0,
+            "collar_implied_upper": 0.7149257678519393,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 5.0
+          },
+          "1": {
+            "norm": 0.06126768535776624,
+            "frobenius_or_schur_upper": 0.06126768535776624,
+            "collar_b_upper": 0.2751170615309774,
+            "collar_to_two_loss_constant": 3.5,
+            "collar_implied_upper": 0.962909715358421,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 5.0
+          },
+          "2": {
+            "norm": 0.04765264416715152,
+            "frobenius_or_schur_upper": 0.04765264416715152,
+            "collar_b_upper": 0.6405650530813334,
+            "collar_to_two_loss_constant": 3.0,
+            "collar_implied_upper": 1.9216951592440001,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 5.0
+          }
+        },
+        "E_D": {
+          "0": {
+            "norm": 0.08122565398715008,
+            "frobenius_or_schur_upper": 0.08122565398715008,
+            "collar_b_upper": 0.1820198190506048,
+            "collar_to_two_loss_constant": 4.0,
+            "collar_implied_upper": 0.7280792762024192,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 4.988767133058786
+          },
+          "1": {
+            "norm": 0.0636929146484756,
+            "frobenius_or_schur_upper": 0.0636929146484756,
+            "collar_b_upper": 0.2821957121301653,
+            "collar_to_two_loss_constant": 3.5,
+            "collar_implied_upper": 0.9876849924555786,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 4.988767133058786
+          },
+          "2": {
+            "norm": 0.04994465636509104,
+            "frobenius_or_schur_upper": 0.04994465636509104,
+            "collar_b_upper": 0.6618444590799403,
+            "collar_to_two_loss_constant": 3.0,
+            "collar_implied_upper": 1.985533377239821,
+            "input_dimension": 34,
+            "output_dimension": 34,
+            "input_K_max": 4.988767133058786
+          }
+        }
+      },
+      "one_particle_norms": {
+        "Q": {
+          "0": 0.2151531835083321,
+          "1": 0.24384027464277636,
+          "2": 0.2779806542578052
+        },
+        "E_D": {
+          "0": 0.24794950114394987,
+          "1": 0.270302366161871,
+          "2": 0.29814564992499515
+        }
+      },
+      "outputs_above_input_cutoff": 0
+    },
+    {
+      "M": 32,
+      "m": -2,
+      "n": -1,
+      "central": 0.0,
+      "finite_schwinger": 0.0,
+      "Q_input_cutoff": 4,
+      "continuum_compressed_residual_norm": 0.0,
+      "cutoff_norms": {
+        "Q": {
+          "0": {
+            "norm": 0.09001676191421051,
+            "frobenius_or_schur_upper": 0.0905517374133121,
+            "collar_b_upper": 0.27720708648942205,
+            "collar_to_two_loss_constant": 4.0,
+            "collar_implied_upper": 1.1088283459576882,
+            "input_dimension": 34,
+            "output_dimension": 118,
+            "input_K_max": 5.0
+          },
+          "1": {
+            "norm": 0.175069169476278,
+            "frobenius_or_schur_upper": 0.18160295826801753,
+            "collar_b_upper": 0.9688831638323842,
+            "collar_to_two_loss_constant": 3.5,
+            "collar_implied_upper": 3.3910910734133446,
+            "input_dimension": 34,
+            "output_dimension": 118,
+            "input_K_max": 5.0
+          },
+          "2": {
+            "norm": 0.525207508428834,
+            "frobenius_or_schur_upper": 0.5448088748040526,
+            "collar_b_upper": 4.991065391478275,
+            "collar_to_two_loss_constant": 3.0,
+            "collar_implied_upper": 14.973196174434825,
+            "input_dimension": 34,
+            "output_dimension": 118,
+            "input_K_max": 5.0
+          }
+        },
+        "E_D": {
+          "0": {
+            "norm": 0.09281980616830236,
+            "frobenius_or_schur_upper": 0.09337144103659645,
+            "collar_b_upper": 0.28079370636390716,
+            "collar_to_two_loss_constant": 4.0,
+            "collar_implied_upper": 1.1231748254556286,
+            "input_dimension": 34,
+            "output_dimension": 118,
+            "input_K_max": 4.988767133058786
+          },
+          "1": {
+            "norm": 0.172486382629691,
+            "frobenius_or_schur_upper": 0.17897865592937937,
+            "collar_b_upper": 0.949493443861754,
+            "collar_to_two_loss_constant": 3.5,
+            "collar_implied_upper": 3.3232270535161392,
+            "input_dimension": 34,
+            "output_dimension": 118,
+            "input_K_max": 4.988767133058786
+          },
+          "2": {
+            "norm": 0.5096892967747124,
+            "frobenius_or_schur_upper": 0.5290369533249144,
+            "collar_b_upper": 4.738589652129451,
+            "collar_to_two_loss_constant": 3.0,
+            "collar_implied_upper": 14.215768956388352,
+            "input_dimension": 34,
+            "output_dimension": 118,
+            "input_K_max": 4.988767133058786
+          }
+        }
+      },
+      "one_particle_norms": {
+        "Q": {
+          "0": 0.09348074998928105,
+          "1": 0.17446136568133971,
+          "2": 0.5233840970440191
+        },
+        "E_D": {
+          "0": 0.10094520383741924,
+          "1": 0.17187591851505687,
+          "2": 0.5078503821220446
+        }
+      },
+      "outputs_above_input_cutoff": 84
+    },
+    {
+      "M": 32,
+      "m": -2,
+      "n": 1,
+      "central": 0.0,
+      "finite_schwinger": 0.0,
+      "Q_input_cutoff": 4,
+      "continuum_compressed_residual_norm": 0.0,
+      "cutoff_norms": {
+        "Q": {
+          "0": {
+            "norm": 0.1648695238847195,
+            "frobenius_or_schur_upper": 0.1648695238847195,
+            "collar_b_upper": 0.4443341259465281,
+            "collar_to_two_loss_constant": 4.0,
+            "collar_implied_upper": 1.7773365037861124,
+            "input_dimension": 34,
+            "output_dimension": 55,
+            "input_K_max": 5.0
+          },
+          "1": {
+            "norm": 0.20150719585910165,
+            "frobenius_or_schur_upper": 0.20150719585910165,
+            "collar_b_upper": 1.0885761899850346,
+            "collar_to_two_loss_constant": 3.5,
+            "collar_implied_upper": 3.810016664947621,
+            "input_dimension": 34,
+            "output_dimension": 55,
+            "input_K_max": 5.0
+          },
+          "2": {
+            "norm": 0.24628657271667978,
+            "frobenius_or_schur_upper": 0.24628657271667978,
+            "collar_b_upper": 3.9774908421887014,
+            "collar_to_two_loss_constant": 3.0,
+            "collar_implied_upper": 11.932472526566105,
+            "input_dimension": 34,
+            "output_dimension": 55,
+            "input_K_max": 5.0
+          }
+        },
+        "E_D": {
+          "0": {
+            "norm": 0.17000341978938896,
+            "frobenius_or_schur_upper": 0.170003419789389,
+            "collar_b_upper": 0.45104005237291367,
+            "collar_to_two_loss_constant": 4.0,
+            "collar_implied_upper": 1.8041602094916547,
+            "input_dimension": 34,
+            "output_dimension": 55,
+            "input_K_max": 4.988767133058786
+          },
+          "1": {
+            "norm": 0.2054312620425049,
+            "frobenius_or_schur_upper": 0.2054312620425049,
+            "collar_b_upper": 1.095063104473123,
+            "collar_to_two_loss_constant": 3.5,
+            "collar_implied_upper": 3.83272086565593,
+            "input_dimension": 34,
+            "output_dimension": 55,
+            "input_K_max": 4.988767133058786
+          },
+          "2": {
+            "norm": 0.2482420852278079,
+            "frobenius_or_schur_upper": 0.2482420852278079,
+            "collar_b_upper": 3.9659147632313934,
+            "collar_to_two_loss_constant": 3.0,
+            "collar_implied_upper": 11.897744289694181,
+            "input_dimension": 34,
+            "output_dimension": 55,
+            "input_K_max": 4.988767133058786
+          }
+        }
+      },
+      "one_particle_norms": {
+        "Q": {
+          "0": 0.2151531835083321,
+          "1": 0.24384027464277636,
+          "2": 0.2779806542578052
+        },
+        "E_D": {
+          "0": 0.24794950114394987,
+          "1": 0.270302366161871,
+          "2": 0.29814564992499515
+        }
+      },
+      "outputs_above_input_cutoff": 21
+    }
+  ]
+}
