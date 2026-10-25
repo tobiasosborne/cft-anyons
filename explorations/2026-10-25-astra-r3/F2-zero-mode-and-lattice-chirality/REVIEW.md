@@ -280,6 +280,13 @@ R3, R4 or R5, and none certifies a nontrivial local categorical instance.
 Run from the repository root; `P` below abbreviates
 `explorations/2026-10-25-astra-r3/F2-zero-mode-and-lattice-chirality/checks`.
 All actual executions used the full path and `python3 -B` (no bytecode files).
+The interpreter and package versions are recorded in
+`checks/review_environment.txt` (Python 3.12.3, NumPy 2.4.6, SymPy 1.14.0).
+For example, the independent baseline command is:
+
+```bash
+OPENBLAS_NUM_THREADS=1 python3 -B explorations/2026-10-25-astra-r3/F2-zero-mode-and-lattice-chirality/checks/review_f2.py
+```
 
 | Command after the path abbreviation | Raw output in checks/ | Exit / asserted result |
 |---|---|---|
@@ -313,13 +320,12 @@ were left untouched.
 **Fixed-coarse-vector KS zero-mode lemma** (full; category-free, L0 for finite
 categorical ingredients; conditional R2 target): under the original F2(a)
 nearest-neighbour KS/common A1–A4/complex-linear parity hypotheses, with
-the prescribed translation covariance and `[U_r,K_r]=0`, prove, for every
-fixed stage a and v in H_a,
+the prescribed translation covariance and `[U_r,K_r]=0`, put
+`Hcal_r=sum_j k_(r,j)` and prove, for every fixed stage a and v in H_a,
 
-    lim_(r->infinity) || (N_r^2/(8 pi^2)) [H_r,Qcal_r] J_(r<-a) v || = 0.
+    lim_(r->infinity) || (N_r^2/(8 pi^2)) [Hcal_r,Qcal_r] J_(r<-a) v || = 0.
 
-Here H_r in the displayed commutator denotes the Hamiltonian sum, not the
-Hilbert space. This is only an unweighted, fixed-coarse-vector assertion.
+This is only an unweighted, fixed-coarse-vector assertion.
 Mixed-word convergence identifies its limit with `[L_0,S_0]i_a v`;
 density of the coarse union in the graph spaces and A2 extend zero to D.
 F2-G then supplies all uniform `(s,2)` ZC bounds. Alternatively exhibit an
@@ -340,7 +346,7 @@ does not claim to have re-proved the source papers.
   `worklog/022_2026-10-25_round3_sprint.md:1-53`: rules and current map.
 - `explorations/2026-10-25-astra-r3/briefs/F2-zero-mode-and-lattice-chirality.md:1-107`:
   task and conjectures; reviewed note `NOTE.md:1-890` in this directory.
-- `CONVENTIONS.md:44-104,444-471,704-738,801-869,1505-1543,1577-1593`:
+- `CONVENTIONS.md:44-104,444-471,704-738,801-869,1196-1217,1397-1457,1505-1543,1577-1593`:
   unit/dagger/gauge, separate central constants, graph norms, AP modes,
   normalized KS modes, layer tags and linear parity.
 - `report/sections/91_parity_and_chiral_delineation.tex:50-163,176-207,223-246`:

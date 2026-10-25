@@ -1,0 +1,3 @@
+Completed [REVIEW.md](/home/tobias/Projects/cft-anyons/explorations/2026-10-25-astra-r3/F5-contact-trichotomy/REVIEW.md) and [INTEGRATION.md](/home/tobias/Projects/cft-anyons/explorations/2026-10-25-astra-r3/F5-contact-trichotomy/INTEGRATION.md).
+
+Grade: **COUNTEREXAMPLE to F5**; the exact-family \(N\le2\) replacement is proof-complete. All 66 numbered steps audited. Original checks and two independent checks passed, including mutation tests. Full-Fock signed reacting dynamics remain open.
