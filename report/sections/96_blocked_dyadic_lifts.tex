@@ -1,0 +1,275 @@
+% SHARD-ID: CA-96-BLOCKED-DYADIC-LIFTS
+% SHARD-TITLE: Blocked Dyadic Lifts: Finite-Power Transport and the Failure of Single-Site Centrality
+% SHARD-SUMMARY: Pointed transport on a fixed tensor power O^b over full <O> gives local unital dyadic lifts on the original algebras and exact vacancy insertion, with slack 2b-1.
+% SHARD-SUMMARY: Noncentral group-graded sites and twisted abelian p-group families reach R0^u at bare L0; single-site centrality is neither necessary for lifts nor sufficient for transport. General characterization and higher rungs remain open.
+% SHARD-KEYWORDS: blocked transport, dyadic lift, relative half-braiding, pointed object, vacancy swap, interval locality, Bratteli inclusion matrix, associator obstruction, finite abelian p-group, naturality, R0^u, Target 90.T, F1
+\section{Blocked Dyadic Lifts: Finite-Power Transport and the Failure of Single-Site Centrality}\label{sec:blocked-dyadic-lifts}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: COUNTEREXAMPLE to the brief's F1 equivalence; accepted replacement results.}
+96.1, 96.2, 96.4, 96.5, 96.7, 96.8 are \emph{derived}; 96.3 and 96.6 are \emph{negative}, with derived
+\(\mathsf R0^u\) witnesses; 96.9 is \emph{conditional}; 96.10 is \emph{conjectural}.
+REVIEW:\allowbreak 1--9 accepts all 35 numbered proof steps. Periodic, symmetry-preserving and canonically selected variants
+are \emph{open/conjectural}, not conditional theorems (REVIEW:\allowbreak 99--115 corrects NOTE:\allowbreak 579).
+\par\textbf{Grid movement} (INTEGRATION:49--68): \((\mathrm{any};\mathsf L0+\text{blocked H};\mathsf R0^u)\) gains a
+sufficient certificate on \(O^b\); bare \(\mathsf L0/\mathsf R0^u\) gains the two stated classes.
+General existence/classification stays open. \(\mathsf L1/\mathsf R0^u\) retains CA-90's sharper \(r=0\);
+\(\mathsf R0^c\), periodic-seam lifts, the D1-C occupation-compatible target and \(\mathsf R1\)--\(\mathsf R5\) do not move.
+Setting \emph{any} means target-chirality independence; all constructions here use an \emph{open ordered chain}.
+NOTE, REVIEW and INTEGRATION denote the files in
+\path{explorations/2026-10-25-astra-r3/F1-dyadic-lift-characterisation/}; \path{checks/} is its existing run bundle.
+Dependencies: CA-68 (literal insertion), CA-75 (Link (b1)), CA-76 (76.1, 76.4, 76.12), CA-77 (pointed carrier),
+CA-88 (grid), CA-90 (90.H, 90.0--90.2, 90.T); CONVENTIONS (a), (b), (r), (t), (am), (an), (aq), (as).
+New notation is fixed below and proposed for registration in the accompanying \path{SHARD_META.md}.
+Existing exact evidence: four baseline/mutation pairs and the independent multiblock check; commands, cutoffs,
+raw outputs and hashes are in \path{checks/README.md}:9--39 and REVIEW:\allowbreak 168--209. These calibrate the proofs, not their quantifiers.
+
+% Source: explorations/2026-10-25-astra-r3/F1-dyadic-lift-characterisation/NOTE.md:23-53,59-176,178-276,278-450,452-517,600-641,648-656.
+% Source: explorations/2026-10-25-astra-r3/F1-dyadic-lift-characterisation/REVIEW.md:1-9,48-95,99-166,187-222.
+% Source: explorations/2026-10-25-astra-r3/F1-dyadic-lift-characterisation/INTEGRATION.md:17-47,49-111,113-155.
+% Source: explorations/2026-10-25-astra-r3/briefs/F1-dyadic-lift-characterisation.md:77-101.
+% Source: references/text/PenneysUnitaryFusionCategories.md:195-237,277-288,319-348,395-398 -- splittings, dagger, associator, tensorators.
+% Source: references/text/EtingofNikshychOstrikFusionCategories.md:39-51 -- graded fusion categories and pentagon.
+% Source: references/lattice-symmetry/BubbleAlgebra2003/source/twocolour.tex:897-920 -- finite restriction multiplicities only.
+% Source: report/sections/68_variable_n_refinement_maps.tex:51-93; report/sections/75_integration_map.tex:149-159.
+% Source: report/sections/76_corner_to_wilson_bridge.tex:90-149,236-249; report/sections/77_pointed_carrier_invariants.tex:44-82,253-256.
+% Source: report/sections/88_layered_targets.tex:99-125,149,167-176,235-243,255-260.
+% Source: report/sections/90_local_unital_lift.tex:57-141,154-164,170-211,245-250.
+% Source: CONVENTIONS.md:631-688,740-771,1450-1484,1524-1543,1564-1575.
+% Source: explorations/2026-10-25-astra-r3/F1-dyadic-lift-characterisation/checks/README.md:9-39.
+% Source: explorations/2026-10-25-astra-r3/F1-dyadic-lift-characterisation/checks/review_r3_rerun_output.txt:1-9.
+% Source: explorations/2026-10-25-astra-r3/F1-dyadic-lift-characterisation/checks/review_r3_multiblock.py:2-10,90-136.
+% Source: explorations/2026-10-25-astra-r3/F1-dyadic-lift-characterisation/checks/review_r3_multiblock_output.txt:1-8.
+% Source: explorations/2026-10-25-astra-r3/F1-dyadic-lift-characterisation/checks/review_r3_multiblock_red.txt:1-9.
+% Canonical discovery alias; the four-line opening retains the brief's literal keyword key.
+% SHARD-KEYWORDS: blocked transport, dyadic lift, relative half-braiding, pointed object, vacancy swap, interval locality, Bratteli inclusion matrix, associator obstruction, finite abelian p-group, naturality, R0^u, Target 90.T, F1
+
+\subsection{Setting and the Refuted Equivalence}
+
+\(\Cc\) is unitary fusion, \(\eta:\one\to O\) is an isometry, \(p_0=\eta\eta^\dagger\), \(p_1=1-p_0\),
+\(W_L=O^{\otimes L}\), \(W_0=\one\), \(\Alg_L=\operatorname{End}_\Cc(W_L)\), \(\mathcal D=\langle O\rangle\) full.
+Use (r)'s left bracketing and fixed unitary associators/unitors. \(V_L\) inserts \(\eta\) at even fine sites.
+Support means \(\Alg_{[j,k]}=1_{W_{j-1}}\otimes\operatorname{End}_\Cc(W_{k-j+1})\otimes1_{W_{L-k}}\),
+not merely commutation outside it; single-site algebras need not generate it. No charge-sector Hilbert factorization is assumed.
+The brief's labels mean (a) all-\(L\) unital injective \(*\)-lifts of \(V_L\) with one finite interval slack;
+(b) \([O]\) central in \(K(\mathcal D)\); (c) pointed unitary relative transport on \(O\).
+The point in (c), and the isometry \(\eta\) itself, repair omissions in the brief (REVIEW:\allowbreak 149--166).
+By CA-90, pointed (c) implies (a) with \(r=0\) and (b); 96.3/96.6 refute the other claimed implications,
+except general (b)\(\Rightarrow\)(a), which remains open.
+
+\subsection{Vacancy Shuffle and the General Block Construction}
+
+\textbf{Lemma 96.1 [derived; any; \(\mathsf L0\), pointed object; finite \(\to\mathsf R0^u\)] (NOTE:\allowbreak 59--89; REVIEW:\allowbreak 48--50).}
+For any pointed object in a unitary monoidal category, put
+\(T=(\eta\otimes1_O)p_1(1_O\otimes\eta^\dagger)\),
+\(S=p_0\otimes p_0+p_1\otimes p_1+T+T^\dagger\). Then \(S=S^\dagger=S^{-1}\) exchanges
+\(1_O\otimes\eta\) and \(\eta\otimes1_O\); a fixed adjacent schedule gives
+\(U_s(1_{W_s}\otimes\eta^{\otimes s})=V_s\), with \(U_s\) supported on \(2s\) sites.
+\par\(\langle1\rangle1\). By \(\eta^\dagger\eta=1\), \(p_1\eta=0\) and tensor interchange,
+\(T^\dagger T=p_1\otimes p_0\), \(TT^\dagger=p_0\otimes p_1\); the four orthogonal corners give \(S^2=1\).
+\par\(\langle1\rangle2\). Separate \(1=p_0+p_1\) to check both insertion identities. Move each new vacancy left
+past later old sites in the stable interleaving schedule; every crossing meets \(\eta\), proving the \(U_s\) identity.
+QED. No braid relation for \(S\) away from the inserted subobject is asserted.
+
+\textbf{Theorem 96.2 [derived; any; \(\mathsf L0\)+declared blocked H; \(\mathsf R0^u\)] (NOTE:\allowbreak 91--176; REVIEW:\allowbreak 51--57,84--95).}
+\textbf{Assume} a fixed \(b\ge1\), \(P=W_b\), \(\xi=\eta^{\otimes b}\), and unitary
+\(t_Y:Y\otimes P\to P\otimes Y\) for \emph{every} \(Y\in\mathcal D\), satisfying blocked H:
+\[
+ t_\one=1_P,\quad t_Z(f\otimes1_P)=(1_P\otimes f)t_Y,\quad
+ t_{Y\otimes Z}=(t_Y\otimes1_Z)(1_Y\otimes t_Z),\quad t_Y(1_Y\otimes\xi)=\xi\otimes1_Y.
+\]
+Here \(f:Y\to Z\) is arbitrary; fixed associators are understood. \textbf{Prove} unital injective \(*\)-maps
+\(\alpha_L:\Alg_L\to\Alg_{2L}\) for all \(L\ge1\), with coherent dyadic composites and
+\begin{equation}\label{eq:96-lift}
+ \alpha_L(a)V_L=V_La,\qquad
+ \alpha_L(\Alg_{[j,k]})\subset\Alg_{[2j-1-r,\,2k-1+r]},\qquad r=2b-1,
+\end{equation}
+endpoints clipped to \([1,2L]\); the original \(O\)-site algebras and \(V_L\) are unchanged.
+\par\(\langle1\rangle1\). In a heterogeneous word \(JR\), insert \(P\) by
+\(a\mapsto(1_J\otimes t_R)(a\otimes1_P)(1_J\otimes t_R^\dagger)\).
+CA-90 Lemma 90.0 applies: compression by the point proves injectivity, and H proves intertwining.
+For an interval \(a=1_A\otimes a_{JR}\otimes1_{C'}\) straddling the cut, the exact image is
+\[
+ 1_A\otimes[(1_J\otimes t_R)(a_{JR}\otimes1_P)(1_J\otimes t_R^\dagger)]\otimes1_{C'}.
+\]
+Indeed factor \(t_{R\otimes C'}\) by H and cancel the exterior factor. Naturality handles intervals wholly to
+the right; interchange handles those to the left. Endpoints shift by \(b\) precisely when after the cut.
+\par\(\langle1\rangle2\). Fix the block origin at old site 1; write \(L=mb+q\), \(0\le q<b\), \(Q=W_q\).
+Starting from \(P^{\otimes m}Q\), insert a new \(P\) after old block \(i\), prefix length \((2i-1)b\),
+using the \emph{entire} suffix, including \(Q\). Append a new \(Q\) by tensoring \(1_Q\). The resulting map
+\(\gamma_L\) intertwines the insertion \(v_{\rm block}\) in order old \(P\), new \(P\), \(\ldots\), old \(Q\), new \(Q\).
+This also covers \(m=0\) (only the tail) and \(q=0\) (no tail).
+\par\(\langle1\rangle3\). Let \(U_L\) be the tensor product of the \(m\) copies of \(U_b\) and the final \(U_q\),
+omitted for \(q=0\). By 96.1, \(U_Lv_{\rm block}=V_L\); hence \(\alpha_L=\mathrm{Ad}_{U_L}\gamma_L\) has all algebra-map
+properties and \(\alpha_L(a)V_L=V_La\).
+\par\(\langle1\rangle4\). Before this conjugation, an interval has endpoints \(f(j),f(k)\),
+\(f(s)=s+b\lfloor(s-1)/b\rfloor\). Appending \(Q\) changes neither. Set \(i(s)=\lfloor(s-1)/b\rfloor\),
+\(a(s)=s-bi(s)\). Cell conjugation enlarges support only to the intersecting cells, so its endpoints obey
+\[
+ (2j-1)-(2bi(j)+1)=2a(j)-2\le2b-2,\qquad
+ 2b(i(k)+1)-(2k-1)=2b-2a(k)+1\le2b-1.
+\]
+The shorter final cell only improves the bound. Exterior cell unitaries cancel, proving interval \emph{membership}.
+\par\(\langle1\rangle5\). Compose adjacent dyadic maps: associativity gives WT-1 A1. QED.
+The bound is sufficient, not optimal; at \(b=1\) CA-90 gives \(r=0\). Naturality is 96.8; arbitrary spatial
+boundary-extension or placement coherence is not part of this conclusion.
+
+\subsection{Two Obstructions to the Proposed Characterization}
+
+\textbf{Negative 96.3 [negative; any; bare \(\mathsf L0\), stated family; \(\mathsf R0^u\) witness] (NOTE:\allowbreak 178--225; REVIEW:\allowbreak 58--61).}
+The implications (a)\(\Rightarrow\)(b),(c) fail. For any finite nonabelian \(G\), noncentral \(g\) of order \(b\),
+take \(R=\bigoplus_{h\in G}h\), \(O=R\oplus g\) in untwisted unitary \(\mathrm{Vec}_G\), with \(\eta\) in \(R\)'s unit summand.
+Then \(\mathcal D=\Cc\); the following construction supplies (a) with \(r=2b-1\).
+\par\(\langle1\rangle1\). Choose \(x\) with \(gx\ne xg\). The graded tensor rule gives
+\([O][x]-[x][O]=[gx]-[xg]\ne0\); hence (b),(c) fail (CA-90, 90.6).
+\par\(\langle1\rangle2\). With \(N=|G|\), \(R^2=NR\), \(Rh=hR=R\), so
+\[
+ [O]^b=[\one]+K[R],\qquad K=\sum_{k=1}^b\binom bk N^{k-1}=\frac{(N+1)^b-1}{N}.
+\]
+\par\(\langle1\rangle3\). In \(P=O^{\otimes b}\), choose orthonormal grade bases \(e_{h,a}\) with \(e_{1,1}=\xi\).
+Set \(\rho(k)e_{h,a}=e_{khk^{-1},a}\) and \(t_Y(y_k\otimes p_h)=\rho(k)p_h\otimes y_k\).
+Multiplicities are \(K+1\) at 1 and \(K\) otherwise; conjugation preserves them. The grade identity
+\((khk^{-1})k=kh\), \(\rho(kl)=\rho(k)\rho(l)\), and the fixed unit-grade space prove all of pointed H;
+naturality is identity action on \(Y\)'s multiplicities. Apply 96.2. QED.
+For an involution, \(b=2\), \(P\cong\one\oplus(N+2)R\), \(r=3\). Noncommuting simple grades exclude a braiding of \(\Cc\).
+
+\textbf{Proposition 96.4 [derived; any; \(\mathsf L0\); finite \(\to\mathsf R0^u\)] (NOTE:\allowbreak 227--276; REVIEW:\allowbreak 62--64).}
+CA-90's one-gap obstruction retains its unchanged-side scope. For insertion of \(P\) between pointed words
+\(J,R'\), its finite restriction equation concerns \(P\), not its tensor root \(O\):
+\[
+ \sum_cN_{ij}^c\Lambda_{cc'}=\dim\Hom(c',i\otimes P\otimes j),\qquad
+ \Lambda_{xc'}=\dim\Hom(c',x\otimes P)=\dim\Hom(c',P\otimes x).
+\]
+The second equality applies to simples \(x\) occurring in \emph{both} \(J\) and \(R'\).
+\par\(\langle1\rangle1\). CA-90:197--204 fixes both side algebras pointwise; restriction along
+\(\operatorname{End}(J)\otimes\operatorname{End}(R')\) yields the first equation, and the two unit rows the second.
+\par\(\langle1\rangle2\). In 96.3, \(N_{ij}^c=\delta_{c,ij}\) and \(\Lambda_{cc'}=K+\delta_{cc'}\), giving
+\(\sum_cN_{ij}^c\Lambda_{cc'}=K+\delta_{ij,c'}=\dim\Hom(c',i\otimes P\otimes j)\). QED.
+General dyadic side images are refined algebras with unknown inclusion matrices; interval containment does not
+give unchanged sides. This is precisely the failed cut extrapolation, refuted by 96.3, not a defect in 90.2(b).
+
+\textbf{Theorem 96.5 [derived; any; \(\mathsf L0\), abelian graded; finite \(\to\mathsf R0^u\)] (NOTE:\allowbreak 278--325; REVIEW:\allowbreak 65--68).}
+\textbf{Assume} finite abelian \(A\), normalized unitary 3-cocycle \(\omega\), and
+\(O=\bigoplus_g M_g\otimes g\) in \(\mathrm{Vec}_A^\omega\), \(m_g=\dim M_g\), \(\eta\in M_0\).
+Here additive grade 0 is the unit simple; the associator \((g\otimes x)\otimes y\to g\otimes(x\otimes y)\)
+is \(\omega(g,x,y)\), and products act right first. \textbf{Prove} pointed unitary half-braidings
+\(z_x:O\otimes x\to x\otimes O\), inverse to \(t_x\), on the \emph{entire ambient category} are exactly
+\[
+ \rho_g(0)=1,\quad \rho_g(y)\rho_g(x)=\beta_g(x,y)\rho_g(x+y),\quad
+ \beta_g(x,y)=\frac{\omega(g,x,y)\omega(x,y,g)}{\omega(x,g,y)},\quad \rho_0(x)\eta=\eta,
+\]
+with \(\rho_g(x)\in U(M_g)\). If \(\kappa=\beta_g(x,y)/\beta_g(y,x)\) has finite order \(d\), then \(d\mid m_g\) for \(m_g>0\).
+\par\(\langle1\rangle1\). Grade preservation forces each simple crossing to preserve \(M_g\).
+\par\(\langle1\rangle2\). From \((g\otimes x)\otimes y\) to \(x\otimes(y\otimes g)\), the path via the
+\((g,x,y)\) associator, \(z_{x+y}\), then the \((x,y,g)\) associator has matrix
+\(\omega(g,x,y)\omega(x,y,g)\rho_g(x+y)\). Crossing \(z_x\), reassociating by \(\omega(x,g,y)\), then crossing
+\(z_y\) gives \(\omega(x,g,y)\rho_g(y)\rho_g(x)\). Equality yields the displayed orientation.
+\par\(\langle1\rangle3\). Orthogonal sums, acting identically on external multiplicities, extend these blocks
+naturally to all objects; the same equation gives tensoriality, and the last equation gives the point. This proves sufficiency.
+\par\(\langle1\rangle4\). Swapping \(x,y\) gives \(\rho_g(y)\rho_g(x)=\kappa\rho_g(x)\rho_g(y)\);
+determinants give \(\kappa^{m_g}=1\). QED. Divisibility is necessary only, and obstructs even invertible nonunitary transport.
+
+\textbf{Negative 96.6 [negative; any; bare \(\mathsf L0\), stated family; \(\mathsf R0^u\) witness via 96.7] (NOTE:\allowbreak 327--365,447--450; REVIEW:\allowbreak 69--71,136--147).}
+For every prime \(p\), take \(A=(\mathbb F_p)^3\), \(\zeta=e^{2\pi i/p}\),
+\(\omega(a,b,c)=\zeta^{a_1b_2c_3}\), \(O=0\oplus e_1\oplus e_2\oplus e_3\), with the canonical grade-0 point.
+Then (b) holds, (c) fails, and (a) holds by 96.7 with \(b=p^3\), \(r=2p^3-1\).
+\par\(\langle1\rangle1\). For \(F(a,b,c)=a_1b_2c_3\), expand
+\(F(b,c,d)-F(a+b,c,d)+F(a,b+c,d)-F(a,b,c+d)+F(a,b,c)=0\).
+Normalization is immediate; the sourced twisted construction is unitary fusion. The basis grades generate \(A\),
+so \(\mathcal D=\Cc\), and its fusion ring is commutative.
+\par\(\langle1\rangle2\). In 96.5, \(\beta_g(x,y)=\zeta^{g_1x_2y_3+g_3x_1y_2-g_2x_1y_3}\).
+At \((g,x,y)=(e_1,e_2,e_3)\), \(\kappa=\zeta\) has order \(p\), while \(m_{e_1}=1\); the required \(p\mid1\) fails.
+QED. Failure of single-site transport therefore does not obstruct a finite-slack algebra lift.
+
+\subsection{Bare Fusion-Data Existence and Naturality}
+
+\textbf{Theorem 96.7 [derived; any; bare \(\mathsf L0\), abelian \(p\)-group graded; \(\mathsf R0^u\)] (NOTE:\allowbreak 367--445; REVIEW:\allowbreak 72--77).}
+\textbf{Assume} \(|A|=p^d>1\), exponent \(p^e\), any normalized unitary \(\omega\), and any pointed
+\(O\in\mathrm{Vec}_A^\omega\). \textbf{Prove} \(b=p^{e+d-1}\) supplies pointed transport on \(P=O^{\otimes b}\)
+over the entire ambient category, hence 96.2 gives a lift. No braiding is supplied or required.
+\par\(\langle1\rangle1\). Put
+\(Q(a,b,c,d)=\omega(b,c,d)\omega(a+b,c,d)^{-1}\omega(a,b+c,d)\omega(a,b,c+d)^{-1}\omega(a,b,c)=1\).
+Direct cancellation, using abelianness, gives the normalized 2-cocycle identity
+\[
+ \frac{\beta_g(y,z)\beta_g(x,y+z)}{\beta_g(x+y,z)\beta_g(x,y)}
+ =Q(g,x,y,z)^{-1}Q(x,g,y,z)Q(x,y,g,z)^{-1}Q(x,y,z,g)=1.
+\]
+\par\(\langle1\rangle2\). \(c_g(x,y)=\beta_g(y,x)\) is also a 2-cocycle. On the \(|A|\)-dimensional basis
+\(v_t\), set \(R_g(x)v_t=c_g(x,t)v_{x+t}\). These phased permutations are unitary; the cocycle equation gives
+\(R_g(x)R_g(y)=c_g(x,y)R_g(x+y)\), hence exactly the reversed product law of 96.5.
+\par\(\langle1\rangle3\). In \(\mathbb Z[A]\), set \(s=\sum_gm_g[g]\), \(n=\sum_gm_g\).
+Frobenius modulo \(p\) and \(p^eg=0\) give \(s^{p^e}\equiv n[0]\pmod p\). Inductively,
+\(s^{p^{e+k-1}}\equiv n^{p^{k-1}}[0]\pmod{p^k}\): raise \(C[0]+p^{k-1}T\) to \(p\);
+for \(k\ge2\), nonconstant binomial terms have divisibility at least \(1+j(k-1)\ge k\) for \(j<p\),
+and \(p(k-1)\ge k\) for \(j=p\). At \(k=d\), every nonzero-grade multiplicity of \(P\) is divisible by \(|A|\).
+\par\(\langle1\rangle4\). Fill those multiplicity spaces with copies of \(R_g\). Since \(\beta_0=1\), use the
+identity on the whole grade-zero space, fixing the actual \(\xi=\eta^{\otimes b}\). Apply 96.5 and 96.2. QED.
+For trivial \(A\), the flip gives \(b=1,r=0\). Multiplicity-space identifications are choices, not canonical selections.
+
+\textbf{Proposition 96.8 [derived; any; \(\mathsf L0\)+transported blocked H; \(\mathsf R0^u\)] (NOTE:\allowbreak 452--517; REVIEW:\allowbreak 78--82,104--106).}
+Let \(F:\Cc\to\Cc'\) be a linear dagger-preserving strong monoidal equivalence with unitary tensorators
+\(T_{Y,Z}:F(Y)\otimes F(Z)\to F(Y\otimes Z)\), \(T_0:\one'\to F(\one)\), and unitary
+\(u:F(O)\to O'\) with \(\eta'=uF(\eta)T_0\). Transport \(b,t\) and the fixed swap schedule.
+Then \(F_{2L}\alpha_L=\alpha'_LF_L\), compatibly with composition and pointed unitary monoidal natural isomorphisms.
+\par\(\langle1\rangle1\). Put \(J_0=T_0^\dagger\), \(J_1=u\),
+\(J_{L+1}=(J_L\otimes u)T_{W_L,O}^\dagger\), \(F_L(a)=J_LF(a)J_L^\dagger\).
+Tensorator associativity inductively gives compatibility with contiguous splittings and interval algebras.
+\par\(\langle1\rangle2\). On image objects the transported datum is
+\[
+ t'_{F(Y)}=(J_b\otimes1)T_{P,Y}^\dagger F(t_Y)T_{Y,P}(1\otimes J_b^\dagger).
+\]
+Every object of \(\mathcal D'=\langle O'\rangle\) is unitarily isomorphic to an image from \(\mathcal D\);
+full faithfulness and naturality make extension independent of this presentation. H and \(\xi\) transport by the tensorator axioms.
+\par\(\langle1\rangle3\). The formulas for \(S,\gamma_L,U_L\) transport termwise; substitution gives the stated square
+and \(J_{2L}F(V_L)J_L^\dagger=V'_L\). For a second equivalence \(G\), recursion gives
+\(J_L^{GF}=J_L^G G(J_L^F)\), hence \((GF)_L=G_LF_L\); identity point identification gives identity transport.
+\par\(\langle1\rangle4\). For unitary monoidal \(\lambda:F\Rightarrow G\) with \(u_G\lambda_O=u_F\), induction gives
+\(J_L^G\lambda_{W_L}=J_L^F\); naturality on \(a,t\) identifies both transported lifts. QED. This is not \(\mathsf R5\).
+
+\textbf{Proposition 96.9 [conditional; any; \(\mathsf L0\)+blocked H+declared states; \(\to\mathsf R1\)] (NOTE:\allowbreak 600--605; REVIEW:\allowbreak 111--115).}
+Along \(L_n=2^nL_0\), supply states \(\omega_n\) and put \(P_n=V_{L_n}V_{L_n}^\dagger\), \(p_n=\omega_{n+1}(P_n)\),
+\(e_n=\|\omega_{n+1}\mathrm{Ad}_{V_{L_n}}/p_n-\omega_n\|\) when \(p_n>0\). For the dyadic composites,
+\(d_{k,n}:=\|\omega_{n+1}\alpha^k_{n+1}-\omega_n\alpha^k_n\|\le p_ne_n+2(1-p_n)\), with \(p_ne_n:=0\) at \(p_n=0\).
+\par\(\langle1\rangle1\). Theorem 96.2 supplies exactly Proposition 76.1(iii)--(iv)'s intertwining hypothesis.
+\par\(\langle1\rangle2\). \emph{If} these bounds are summable, they supply the WT-1 drift hypothesis. QED by
+CA-76 and (an),(x). No nontrivial state estimate is supplied; the compatible vacancy state is only CA-90's inherited observation.
+
+\subsection{Effect on other shards}
+\emph{Amendment (2026-10-25, round 3):} CA-90 Target 90.T's centrality deduction is refuted by 96.3;
+Proposition 90.2(b) keeps its unchanged-side one-gap scope (96.4), and (90.5) still characterizes one-site transport.
+CA-88's \(\mathsf R0^u\) certificate broadens as stated above; its round-2 next-target pointer becomes 96.10.
+CA-75 Link (b1), CA-76 Proposal 76.5 and CA-68's unital-completion pointer gain blocked H and the bare-\(\mathsf L0\)
+families, with the literal \(V_L\) retained. Proposition 76.1 applies unchanged; Link (b3) and Question 76.12's
+state/witness conditions remain open. CA-77's field-algebra/state-compatible problem is not solved.
+These are pointers (INTEGRATION:70--111); CA-91--CA-94 receive no mathematical amendment.
+
+\subsection{What This Does Not Claim}
+General (b)\(\Rightarrow\)(a), necessity of finite-power transport and classification of all local lifts remain
+\emph{conjectural/open} (any; \(\mathsf L0\); \(\to\mathsf R0^u\)). The \(p\)-group theorem is not a theorem for all
+finite abelian groups or fusion categories. Periodic seams, occupation-degree preservation, translation/reflection,
+spatial boundary-extension consistency and canonical selection are \emph{open/conjectural}, not conditional results
+(REVIEW:\allowbreak 99--115). No higher-rung state, mode, conformal or fidelity certificate follows. The original
+three-summand \(\mathrm{Vec}_{S_3}\) carrier remains undecided; the different carriers below do not decide it.
+
+\subsection{Examples (Instances Only)}
+First three rows: derived instances (any; bare \(\mathsf L0\); \(\mathsf R0^u\)). Last: a finite check of 96.2
+(derived; any; \(\mathsf L0\)+declared H; \(\to\mathsf R0^u\)); it does not prove an all-\(L\) statement.
+\begin{center}\footnotesize
+\begin{tabular}{p{3.3cm}p{7.0cm}p{3.3cm}}
+\toprule Instance & Exact datum or finite check & Evidence \\ \midrule
+\(S_3\), \(O=R\oplus(12)\) & \(O^2\cong\one\oplus8R\), \(b=2,r=3\); noncentral site. & NOTE:\allowbreak 652; 96.3 \\
+\((\mathbb F_p)^3\), trilinear \(\omega\) & \(O=0\oplus e_1\oplus e_2\oplus e_3\); (a),(b), not (c); \(b=p^3\). & NOTE:\allowbreak 653; 96.6--96.7 \\
+\(\mathbb Z/4\), \(\mathbb Z/4\times\mathbb Z/2\) & Any normalized unitary \(\omega\), pointed \(O\); \(b=8,16\), respectively. & NOTE:\allowbreak 655; 96.7 \\
+\(\mathrm{Vec}_{\mathbb Z/2}\), signed H & \(b=3,L\le7\): 832 interval units, 803076 entries; all intervals for \(L\le4\), lengths \(\le3\) otherwise. Tail mutation fails locality despite exact \(V\). & REVIEW:\allowbreak 196--205 \\
+\bottomrule
+\end{tabular}\end{center}
+
+\subsection{Next Target: Finite-Power Transport Extraction}
+
+\textbf{Target 96.10 [conjectural; any; \(\mathsf L0\); \(\to\mathsf R0^u\)] (NOTE:\allowbreak 626--628; REVIEW:\allowbreak 211--222).}
+Assume exactly (a) for arbitrary unitary fusion \(\Cc\) and pointed \(O\): all \(L\), exact \(V_L\), and one finite
+slack in \eqref{eq:96-lift}. Prove or refute the existence of a finite \(b\) and pointed unitary transport on
+\((O^{\otimes b},\eta^{\otimes b})\) over full \(\langle O\rangle\). No unchanged-side, occupation or translation
+hypothesis may be added. Together with 96.2 a positive answer would give a replacement characterization;
+the unknown side inclusions and associator coherence must be reconstructed (INTEGRATION:145--155).

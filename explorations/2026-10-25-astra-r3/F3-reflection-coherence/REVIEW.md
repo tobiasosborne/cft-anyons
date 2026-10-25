@@ -4,7 +4,7 @@ GRADE: WEAKER-RESULT-PROVED
 
 2026-10-25. Review started 05:33 UTC; skeleton saved 05:37 UTC.
 The canonical **individual algebraic seam** is proved. F3(b), and the
-unitary-crossing clause of F3(c), have verified counterexamples. The
+unitary-conjugacy interpretation of F3(c), have verified counterexamples. The
 unconditional whole-history RP assertion is still unproved. This grade
 accepts the note's finite replacements without promoting the missing
 reflection certificate. One small proof gap in the post-OS version of §I
@@ -43,6 +43,7 @@ interchangeable. N keeps that distinction in its proved statements.
   it still needs a positive compatible translated form.
 - §I refutes universal unitary conjugacy even with `h=0`, hence even when
   all one-tile Schur conditions hold. Equality of closed contractions survives.
+  It does not exclude a unitary reshuffling on a space of matrix entries.
 
 ## 2. Per-step verdicts
 
@@ -90,11 +91,18 @@ assumptions for the categorical history.
 | H <1>3 (442–454) | VALID | Divide by a finite norm bound; a whole-space logarithm still requires injectivity. No uniform bound or zero-energy vacuum follows. |
 | I <1>1 (468–471) | VALID | Identity strands enforce constancy in time, independently at each site; temporal transfer is identity. |
 | I <1>2 (473–486) | VALID | For the specified symmetric column convention, weights factor and `T_x=vv^dagger`, `v^dagger v=d`. This specifies more than equality of a single partition sum. |
-| I <1>3, raw transfers (488–490) | VALID | Rank rules out a unitary, also when N=M. Nonzero scalar normalization cannot change rank. |
+| I <1>3, raw transfers (488–490) | VALID | Rank rules out unitary conjugacy/intertwining on cut carriers, also when N=M. Nonzero scalar normalization cannot change rank. It does not rule out a unitary superoperator. |
 | I <1>3, OS addendum (491–494) | GAP in N | “Natural spatial OS support quotient” is not defined by a q0 in this proof. Transfer rank alone does not determine an OS radical. The explicit even-torus repair below validates the needed counterexample. |
 
 No numbered proof is merely an unlabelled sketch. G is openly conditional.
 The original brief's automatic coherence is **not** proved by this ledger.
+
+**Crossing-scope defect:** N's unqualified “unitary crossing is false” needs
+the preceding carrier-intertwiner qualification. CA-92:158's realignment
+permutes orthonormal matrix units, so is a Hilbert–Schmidt unitary while
+taking `I_4` to a rank-one kernel. The independent duality check verifies
+this too. A crossing between vectorized tensor spaces is not refuted by
+operator rank; the brief must specify which typed equation it wants.
 
 **Non-numbered assertions.** The FS audit (N:121–128) is VALID with the
 identified oriented cups and cited ribbon convention. [P]:933's
@@ -153,7 +161,7 @@ For any unitary fusion C with its specified unitary spherical dual functor:
    shift-closed finite insertion space yield a positive quotient transfer,
    normalizable to a contraction. This is no existence theorem for those data.
 6. **(S:full finite torus; L0, already symmetric L1; negative)** Universal
-   unitary directional crossing fails for identity histories, including the
+   unitary conjugacy of directional transfers fails for identity histories, including the
    explicit all-insertion OS quotients just defined.
 
 There is no R0 tower, R1 state limit, R2 mode representation, R3 conformal
@@ -171,8 +179,9 @@ general construction. No Fibonacci-specific fact is used.
 - Its functor `(dual then dagger)` is covariant on morphisms. For the
   canonical flip seam the pulled-back adjoint is anti-multiplicative.
   The stronger braided witness can have neither variance.
-- It asks for unitary crossing from local positivity. Identity histories
-  already have incompatible directional transfer ranks.
+- It asks for an unspecified unitary crossing from local positivity.
+  Identity histories exclude a cut-carrier intertwiner, not arbitrary
+  unitary reshuffling of tensor entries; these interpretations must be separated.
 - A nonzero H^3 class on Z3 is not a braided calibration. With
   `x=r(1,1)`, `q=zeta^p`, the two hexagons give
   `r(1,2)=r(2,1)=x^2`, then `1=q x^3` and `1=x^3/q`.
@@ -202,12 +211,13 @@ composition obstruction. Neither change alone is asserted to prove the lemma.
 
 Run from the repository root with `PYTHONDONTWRITEBYTECODE=1 python3 -B`:
 
-- `checks/review_rerun.py`: three author checks pass; all three author
+- `checks/review_rerun.py`: runs the full six-normal/five-mutation review suite.
+  Three author checks pass; all three author
   mutations fail at the required assertions. All six raw outputs are
   byte-identical to the author's retained files. Raw files are
   `checks/review_{core_output,pointed_output,nonpointed_output,mutation_dagger,mutation_cup,mutation_fs}.txt`.
 - `checks/review_duality.py`: complex independent dual gauges, both snakes,
-  A4, C2/D2, E1, both inverse bends and F1, plus the non-symmetric braided
+  A4, C2/D2, E1, both inverse bends, F1, Hilbert–Schmidt unitarity and the braided
   composition witness. Raw: `checks/review_duality_output.txt`.
   `--mutate-dual` remains unitary but fails the **cup equation**; raw:
   `checks/review_duality_mutation.txt`.
@@ -267,5 +277,5 @@ these finite computations proves a universal categorical or continuum claim.
   `references/category-theory/SOURCES.md:27–147`, `references/cft/SOURCES.md:74–122`.
 
 No unsupported external citation was found in the finite seam/defect proofs.
-The primary defect is the missing universal graph-reflection theorem; the
-post-OS sentence additionally needs the explicit form repair above.
+The universal graph-reflection theorem is missing. The post-OS sentence needs
+the explicit form repair; the crossing no-go needs its carrier-level scope.

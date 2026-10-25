@@ -842,3 +842,19 @@ single ~200-line source file it points to.
 - Summary: For any unitary fusion C and pointed O = 1 + X, a fixed pure-hop density has no full-Fock projected-resolvent limit after any scalar subtraction (N1), the repaired limit is not a chamber-Laplacian extension (N2), and the grading condition G_r forces every range-r limit to conserve occupation (N3).
 - Summary: The tuned positive-square D1-C family (hop eps^-2, contact eps^-1, fusion cross eps^-1/2, pair cross eps^0) converges in projected-resolvent sense on the whole Fock carrier, with no subsequence or N-uniform estimate, to a closed collision form with lower-sector sources; its coefficient image is a finite PSD block cone. z = 2, below R1.
 - Keywords: number-changing dynamics, pointed carrier, configuration Fock space, collision trace, Mosco lower bound, projected resolvent, closed quadratic form, interior-boundary condition, moment cone, grading obstruction, contact tuning, Robin collision, D1-C, E6
+
+## `CA-95-PROBE-WORD-WARD-LIFTING`
+
+- Source: `report/sections/95_probe_word_ward_lifting.tex`
+- Title: Probe-Word Ward Lifting: Uniform Bounds, the Geometric Gap, and a False Converse
+- Summary: Uniform physical probe bounds give an explicit two-loss estimate; contour-to-W2 and KS transfer remain conditional on endpoint, cylinder-contact and accumulated-error data.
+- Summary: A local KS counterexample refutes the subcritical-collar converse; modified-fermion diagonal bounds are calibrations only. No general target rung advances.
+- Keywords: Ward identity, probe words, positive quotient, Gram correction, two-loss norm, subcritical collar, endpoint realization, Koo-Saleur, VR-1, fermion calibration, F4
+
+## `CA-96-BLOCKED-DYADIC-LIFTS`
+
+- Source: `report/sections/96_blocked_dyadic_lifts.tex`
+- Title: Blocked Dyadic Lifts: Finite-Power Transport and the Failure of Single-Site Centrality
+- Summary: Pointed transport on a fixed tensor power O^b over full <O> gives local unital dyadic lifts on the original algebras and exact vacancy insertion, with slack 2b-1.
+- Summary: Noncentral group-graded sites and twisted abelian p-group families reach R0^u at bare L0; single-site centrality is neither necessary for lifts nor sufficient for transport. General characterization and higher rungs remain open.
+- Keywords: blocked transport, dyadic lift, relative half-braiding, pointed object, vacancy swap, interval locality, Bratteli inclusion matrix, associator obstruction, finite abelian p-group, naturality, R0^u, Target 90.T, F1

@@ -1,0 +1,261 @@
+% SHARD-ID: CA-95-PROBE-WORD-WARD-LIFTING
+% SHARD-TITLE: Probe-Word Ward Lifting: Uniform Bounds, the Geometric Gap, and a False Converse
+% SHARD-SUMMARY: Uniform physical probe bounds give an explicit two-loss estimate; contour-to-W2 and KS transfer remain conditional on endpoint, cylinder-contact and accumulated-error data.
+% SHARD-SUMMARY: A local KS counterexample refutes the subcritical-collar converse; modified-fermion diagonal bounds are calibrations only. No general target rung advances.
+% SHARD-KEYWORDS: Ward identity, probe words, positive quotient, Gram correction, two-loss norm, subcritical collar, endpoint realization, Koo-Saleur, VR-1, fermion calibration, F4
+\section{Probe-Word Ward Lifting: Uniform Bounds, the Geometric Gap, and a False Converse}
+\label{sec:probe-word-ward-lifting}
+% SHARD-KEYWORDS: Ward identity, probe words, positive quotient, Gram correction, two-loss norm, subcritical collar, endpoint realization, Koo-Saleur, VR-1, fermion calibration, F4
+
+\subsection{Status, Sources, and Dependencies}
+\textbf{Status: WEAKER-RESULT-PROVED (REVIEW:1--42).} Statements 95.1, 95.6, 95.8, 95.10, 95.11 are
+\emph{derived}; 95.2, 95.3, 95.7 are \emph{conditional}; 95.4, 95.5, 95.9 are \emph{negative}; 95.12 is
+\emph{conjectural}. The analytic implication is proved; G1--G2 are unverified geometric hypotheses.
+\textbf{CA-88 placement (INTEGRATION:44--65):} only annotations change in the \(\mathsf R2\) certificate column,
+CA-89 row and D2-C first-lemma pointer (optional CA-78/79 pointers); none becomes a general \(\mathsf R2\) certificate.
+\(\mathsf R0^c,\mathsf R0^u,\mathsf R1,\mathsf R3\)--\(\mathsf R5\), WT-1/VR-1 and D2-C selection remain unchanged.
+The counterexample has only the trivial zero representation; the AP calibration does not move the open/chiral cell.
+NOTE, REVIEW and INTEGRATION mean the files in
+\path{explorations/2026-10-25-astra-r3/F4-ward-to-residual/}; check paths below are relative to that directory.
+Dependencies: CA-78 (78.1--78.2, 78.11, 78.13), CA-79 (prescribed modes), CA-81 (VR-1), CA-88 (grid and same-system
+rule), CA-89 (89.1, 89.5, 89.L); CONVENTIONS (v), (w), (al), (ao)--(ar). Supplementary notation is declared below;
+the proposed registration is in \path{SHARD_META.md}. No new categorical data are inferred.
+% Source: explorations/2026-10-25-astra-r3/F4-ward-to-residual/NOTE.md:49-183,185-388,390-627,658-745.
+% Source: explorations/2026-10-25-astra-r3/F4-ward-to-residual/REVIEW.md:1-42,49-102,112-159,161-225.
+% Source: explorations/2026-10-25-astra-r3/F4-ward-to-residual/INTEGRATION.md:9-65,67-147,149-172.
+% Source: explorations/2026-10-25-astra-r3/briefs/F4-ward-to-residual.md:85-108 -- original claims, not established.
+% Source: report/sections/78_categorical_selection_equations.tex:37-68,218-253.
+% Source: report/sections/79_ks_shell_and_refinement_defect.tex:51-107,249-261.
+% Source: report/sections/81_cft_machine_oar_contract.tex:95-120.
+% Source: report/sections/88_layered_targets.tex:58-80,96-125,137-148,179-188,240-243.
+% Source: report/sections/89_ward_ks_transfer.tex:51-61,73-84,103-142,201-231.
+% Source: CONVENTIONS.md:801-810,830-869,1431-1448,1486-1562 -- includes the corrected (ar) locator.
+% Source: references/cft-machine/fermion/SOURCES.md:1-37 -- local provenance; no acquisition.
+% Source: references/text/CFTFromLatticeFermions.txt:881-892,2813-2823,2887-2897,3383-3414,3482-3498.
+% Source: cft_machine/benchmarks/fermion/PROOF.md:12-17,78-142 -- modified modes and finite Schwinger sums.
+
+\subsection{Physical Probe Bounds and the Conditional Geometric Interface}
+\textbf{Lemma 95.1 [derived; any; category-free; \(\to\mathsf R2\)] (NOTE:49--111; REVIEW:51--58).}
+\textbf{Assume} finite positive quotients \(H_r\), \(K_r\ge1\), dense linear spans \(D_r\) of reflected probes;
+\(\rho_r(u,v)=\langle u,R_rv\rangle\) descends through both null spaces. Pairings are linear in the second slot (al).
+Write \(|R|_{s,2}=\|K^sRK^{-s-2}\|\) as in (ar). For each integer \(s\ge0\), fix \(0\le\alpha_s<1\) independently of \(r\).
+Require, uniformly for \emph{all linear combinations} \(u,v\in D_r\),
+\begin{equation}\label{eq:95-probe}
+ |\rho_r(K_r^su,e^{-tK_r}v)|\le b_{r,s}t^{-s-1-\alpha_s}\|u\|\|v\|,\qquad 0<t\le1.
+\end{equation}
+\textbf{Prove} \(|R_r|_{s,2}\le C_{s,\alpha_s}b_{r,s}\), where
+\(C_{s,\alpha}=((s+1)!(1-\alpha))^{-1}+\sum_{j=0}^{s+1}1/j!\).
+\par\(\langle1\rangle1\). Finite dimensionality gives \(D_r=H_r\); the dual norm identity turns
+\eqref{eq:95-probe} into \(\|K_r^sR_re^{-tK_r}\|\le b_{r,s}t^{-s-1-\alpha_s}\).
+\par\(\langle1\rangle2\). Spectral diagonalisation and integration by parts give
+\(K^{-s-2}=((s+1)!)^{-1}\int_0^\infty t^{s+1}e^{-tK}\,dt\). On \((0,1]\) the bound integrates to
+\(b/((s+1)!(1-\alpha))\); on \([1,\infty)\), factor \(e^{-tK}=e^{-K}e^{-(t-1)K}\), giving
+\(b\int_1^\infty t^{s+1}e^{1-t}dt/(s+1)!=b\sum_{j=0}^{s+1}1/j!\). Triangle inequality proves the claim.
+\par\(\langle1\rangle3\). For an independent probe basis with Gram \(G\) and \emph{form} matrix \(B\), physical
+unit vectors have coordinates \(G^{-1/2}x\); the form norm is \(\|G^{-1/2}BG^{-1/2}\|\).
+Quotient null coordinates first. This is not D2-L9's operator-coordinate transformation. No ambient-state faithfulness is needed.
+
+\textbf{Theorem 95.2 [conditional; full per family; category-free; \(\to\mathsf R2\)] (NOTE:115--166, 175--183; REVIEW:59--64).}
+\textbf{Assume} 95.1's quotient, \(N=N_r\to\infty\), geometric modes
+\(S_{r,m}=N^{-1}\sum_j f_m(j)Q_{r,j}+b_r\delta_{m0}\), \(f_m(j)=e^{2\pi imj/N}\), as in (ar).
+Put \(\ell_N=2\pi/N\), \(d_N(m)=\sin(m\ell_N)/\ell_N\), \(\beta_N=2d_N(m)-d_N(m+n)\), \(N>|m+n|\).
+Declare a finite sewn-diagram sequence \(F_0,\ldots,F_L\) on the \emph{same} quotient, with:
+\textbf{G1} \(F_L-F_0=\langle u,[S_m,S_n]v\rangle+\rho_{\rm end}(u,v)\), representing both orderings;
+\textbf{G2} each step is its Ward contact plus residual, and the transported contact sum is
+\(\langle u,(\beta_NS_{m+n}+z^{(r)}_{mn}I)v\rangle+\rho_{\rm chart}(u,v)\), where
+\[
+ z^{(r)}_{mn}=\delta_{m+n,0}\{\kappa_{3,r}d_N(m)^3+(\kappa_{1,r}-2b_r)d_N(m)\}.
+\]
+\textbf{G3} all errors obey \eqref{eq:95-probe} with the same \(\alpha_s\), after quotient, port transport,
+Fourier factors and insertion counts; \(B_{r,m,n,s}:=b_{\rm end}+b_{\rm chart}+\sum_i|a_i|b_i\to0\).
+A directly proved smaller bound on the assembled form may replace this absolute sum.
+\textbf{Prove} W2: \(|\mathcal R_{r,m,n}|_{s,2}\le C_{s,\alpha_s}B_{r,m,n,s}\to0\), with
+\(\mathcal R_{r,m,n}=[S_{r,m},S_{r,n}]-\beta_NS_{r,m+n}-z^{(r)}_{mn}I\).
+\par\(\langle1\rangle1\). Sum successive diagram differences: internal diagrams cancel.
+G1--G2 give \(\langle u,\mathcal R_{r,m,n}v\rangle=\sum_i a_i\rho_i+\rho_{\rm chart}-\rho_{\rm end}\).
+\par\(\langle1\rangle2\). G3 and the triangle inequality give \eqref{eq:95-probe} with constant \(B\).
+Apply 95.1. This identifies the actual residual; it does not derive G1 or G2 from density or D2's plane identity.
+
+\textbf{Proposition 95.3 [conditional; full per family; category-free; \(\to\mathsf R2\)] (NOTE:168--183; REVIEW:63--64,131--139).}
+In addition to 95.2, assume A2 for \(S\): \(|S_{r,n}|_{s,1}\le M_{n,s}\), real \(\kappa_{i,r}\to\kappa_i\), \(b_r\to b\),
+and \(|T_{r,n}-S_{r,n}|_{s,1}\to0\) for the \emph{prescribed} KS modes at all required orders. Then \(T\) has A4,
+\(c^*=12\kappa_3\), \(c=24b-12\kappa_1\). BY Lemma 89.5, the correction is bounded by
+\(C_{s,\alpha_s}B+\ell_N^2(2|m|^3+|m+n|^3)M_{m+n,s}/6+|z^{(r)}_{mn}-z_{mn}|\to0\);
+Theorem 89.1(i) transfers to \(T\). A3 and mixed brackets remain separate; certificates must share CA-88's state/refinement system.
+
+\subsection{Two Obstructions and the Precise Analytic Converse}
+\textbf{Negative 95.4 [negative; any; category-free; \(\to\mathsf R2\)] (NOTE:185--201; REVIEW:65--67).}
+Fixed-word decay cannot replace \eqref{eq:95-probe}: take \(H_r=\Span(e_0,\ldots,e_r)\), \(K_r=I\),
+\(\Omega=e_0\), inclusion refinements and \(R_r=\ket{e_r}\bra{e_r}\). Finite matrix-unit probes acting on \(\Omega\)
+span all finite-support vectors. Each fixed probe pair has eventually zero residual, also after heat collaring;
+yet \(R_re_r=e_r\), so \(|R_r|_{s,2}=1\). This refutes only word-dependent constants, not a uniform bound.
+
+\textbf{Negative 95.5 [negative; full, both KS families; category-free; trivial \(\mathsf R2\)]\newline (NOTE:205--340; REVIEW:68--82).}
+A1--A4, including dense cyclic probes, do not imply vanishing subcritical collar constants for the same residual.
+\textbf{Construct} \(N_r=8\cdot2^r\), \(a_r=e^{N_r^2}\), \(\lambda_r=a_r^2N_r^3\),
+\(H_r=(\mathbb C\ket0\oplus\mathbb C^2)^{\otimes N_r}\), with active projection \(P\).
+On the active block \(X=\left(\begin{smallmatrix}0&1\\1&0\end{smallmatrix}\right)\),
+\(Y=\left(\begin{smallmatrix}0&-i\\i&0\end{smallmatrix}\right)\), \(Z=\operatorname{diag}(1,-1)\); all vanish on \(\ket0\).
+Set \(k_j=a_r(P_jP_{j+1}+X_jZ_{j+1})\), \(h_j=-k_j\), \(v_r=1\), \(\varepsilon_r=b_r=0\).
+With \(z=e^{2\pi i/N}\), use exactly
+\(T_n=\frac N{4\pi}\sum_jz^{nj}(k_j-\mathcal J_j)\),
+\(\bar T_n=\frac N{4\pi}\sum_jz^{-nj}(k_j+\mathcal J_j)\), \(\mathcal J_j=i[k_j,k_{j+1}]\).
+Let \(U\) shift one site; \(J_r\) inserts vacancies at odd \emph{zero-based} fine sites, retaining old sites at even ones.
+\par\(\langle1\rangle1\). The active density is \(a(I+X\otimes Z)\ge0\), with eigenvalues \(0,2a\); other occupation
+blocks vanish. The vacancy vacuum has energy zero and is cyclic for product matrix units, giving dense probes.
+\par\(\langle1\rangle2\). Set \(K_0=1\) on the vacuum and \(\lambda_0\) off it. At the next scale let
+\(F_+=\Ran J_r\), \(F_-=U_{r+1}\Ran J_r\): their intersection is the vacuum line and their nonvacuum parts are orthogonal.
+Transport \(K_r\) by \(J_r\) on \(F_+\), by \(U_{r+1}J_r\) on \(F_-\); set \(K_{r+1}=\lambda_{r+1}I\) on
+\((F_++F_-)^\perp\). The prescriptions agree at the vacuum. Since \(U_{r+1}^2J_r=J_rU_r\), induction gives
+\(K\ge1\), \(\min\operatorname{spec}K=1\), \([K,U]=0\), \(K_{r+1}J_r=J_rK_r\).
+\par\(\langle1\rangle3\). Every density kills \(F_++F_-\); self-adjointness makes the complement invariant.
+All mode support therefore has \(K_r=\lambda_r I\). Direct multiplication gives
+\(\mathcal J_j=-2a^2X_jY_{j+1}Z_{j+2}\) and \(\sup_n\|T_n\|,\sup_n\|\bar T_n\|\le L_N:=N^2a^2/\pi\).
+Thus adjoint pairing holds, A2 is bounded by \(1/(\pi N)\), and, with \(B_{mn}=2|m|+|m+n|\),
+\[
+ |[T_m,T_n]-\beta_NT_{m+n}|_{s,2}
+ \le\frac{2L_N^2+B_{mn}L_N}{\lambda_N^2}
+ \le\frac2{\pi^2N^2}+\frac{B_{mn}}{\pi a_N^2N^4}\longrightarrow0.
+\]
+Replacing \(\beta_N\) by \(m-n\) proves A4 with \(c=c^*=0\), also for the barred family;
+the mixed bracket is at most \(2L_N^2/\lambda_N^2\). Since \(T_{r+1,n}J_r=0\), the A3 defect is
+\(-J_rT_{r,n}\), bounded by \(1/(\pi N_r)\), summable in \(r\). Every limiting mode is zero.
+\par\(\langle1\rangle4\). On the all-active block, the coefficient of \(X_jY_{j+1}Y_{j+2}Y_{j+3}Z_{j+4}\)
+in \(E=[T_1,T_{-1}]-\beta_NT_0\) is \(c_N=N^2a_N^4\sin(4\pi/N)/\pi^2\).
+Only distance-two current pairs contribute: their commutator is \(8ia^4XYYYZ\), multiplied by
+\((N/(4\pi))^2(z^{-2}-z^2)\). Normalized Pauli trace gives \(\|E\|\ge|c_N|\ge8Na_N^4/\pi^2\).
+\par\(\langle1\rangle5\). Fix \(s\ge0\), \(0\le\alpha<1\), \(p=s+1+\alpha\).
+For \emph{sufficiently large} \(N\), \(t=p/\lambda_N\le1\); a proposed collar bound forces
+\[
+ b_N\ge p^pe^{-p}|c_N|\lambda_N^{-1-\alpha}
+ \ge\frac{8p^pe^{-p}}{\pi^2}e^{2(1-\alpha)N^2}N^{-2-3\alpha}\longrightarrow\infty.
+\]
+This control is nonphysical and stress collapses: physical-energy comparison, noncollapse and the full D2 certificate are not refuted.
+
+\textbf{Proposition 95.6 [derived; any; category-free; \(\to\mathsf R2\)] (NOTE:344--365, 383--388; REVIEW:83--84, 86).}
+For finite \(R_r\), \(K_r\ge1\), \(q_{r,s}=|R_r|_{s,2}\to0\), W2 is equivalent to the uniform assembled pairing bound
+\[
+ |\langle u,R_rv\rangle|\le q_{r,s}\|K_r^{-s}u\|\|K_r^{s+2}v\|,
+ \qquad \|K_r^sR_re^{-tK_r}\|\le A_{s+2}q_{r,s}t^{-s-2},\quad A_p=(p/e)^p.
+\]
+\par\(\langle1\rangle1\). Factor the pairing through \(K^sRK^{-s-2}\); uniform duality proves the converse.
+\par\(\langle1\rangle2\). Factor the heat operator similarly and maximize \(x^pe^{-x}\) at \(x=p\).
+The heat exponent is critical (\(\alpha=1\)); its gamma-integral majorant diverges logarithmically at zero.
+Finite fixed Fourier sums obey \(|\sum f_mg_nR_{r,m,n}|_{s,2}\le\sum|f_mg_n|q_{r,m,n,s}\to0\);
+growing support, shrinking contours and spatial Ward identities do not follow.
+
+\textbf{Lemma 95.7 [conditional; any; category-free; \(\to\mathsf R2\)] (NOTE:367--381; REVIEW:85).}
+Assume additionally \(\|K_r^sR_re^{-tK_r}\|\le B_st^{-s-1-\alpha_0}\), \(0<t\le1\),
+\(0\le\alpha_0<1\), \(B_s\) independent of \(r\). For \(\alpha_0<\alpha<1\),
+\(\theta=(\alpha-\alpha_0)/(1-\alpha_0)\), the collar constant
+\((A_{s+2}q_{r,s})^\theta B_s^{1-\theta}\to0\) works with exponent \(s+1+\alpha\).
+BY taking the minimum of this uniform envelope and 95.6's critical bound, then
+\(\min(x,y)\le x^\theta y^{1-\theta}\). The extra regularity repairs the analytic converse only; G1--G2 remain separate.
+
+\subsection{Spectral Calibration and the First Categorical Input}
+\textbf{Proposition 95.8 [derived; AP chiral CAR; category-free; \(\to\mathsf R2\)]\newline (NOTE:390--504; REVIEW:87--94, 153--159).}
+Here \emph{AP chiral CAR} means one chiral family on an antiperiodic circle, not an open-chain realization.
+For even \(M\ge8\), \(\epsilon=2\pi/M\), \(r=-M/2+1/2,\ldots,M/2-1/2\), use (w)'s
+\(A_ne_r=\cos^2(\epsilon n/4)\sin(\epsilon(r-n/2))e_{r-n}/\epsilon\), deleting transitions outside the window.
+Let \(L_n={:}d\Gamma(A_n){:}\) in the complex sea \(1_{r<0}\), \(Q=\sum_{\rm exc}|r|\), \(K=1+Q\).
+For \(n=1,2,3\), put \(R_{n,-n}=[L_n,L_{-n}]-2nL_0-(n^3-n)I/12\),
+\(C_n=[A_n,A_{-n}]-2nA_0\), \(\delta_n=c_S(A_n,A_{-n})-(n^3-n)/12\). Then, for every integer \(s\ge0\),
+\begin{gather*}
+ |R_{n,-n}|_{s,2}\le U_n(\epsilon):=C_n^{\rm bd}\epsilon+B_n^{\rm bd}\epsilon^2,\qquad
+ C_n^{\rm bd}=\pi(n+7n^3/24)+\frac{(n-1)^2}{\pi(4.5-n)^2},\\
+ B_n^{\rm bd}=\sum_{r=1/2,3/2,\ldots,n-1/2}\left[\frac{(r-n/2)^4}{3}+\frac{n^2(r-n/2)^2}{8}\right],
+ \quad(B_1^{\rm bd},B_2^{\rm bd},B_3^{\rm bd})=(0,7/24,35/12),\\
+ \|K^sR_{n,-n}e^{-tK}\|\le\sqrt{A_{s+2}U_n(\epsilon)H_nA_{s+1}}\,t^{-s-3/2},\quad
+ H_n=4n+(n-1)^2/2+B_n^{\rm bd}\pi^2/16,\quad0<t\le1.
+\end{gather*}
+\par\(\langle1\rangle1\). The sourced CAR identity gives \(R={:}d\Gamma(C_n){:}+\delta_nI\); \(C_n\) is diagonal,
+so \([R,Q]=0\). At interior labels,
+\(C_n(r)=2n\sin(\epsilon r)[\cos(\epsilon r)\cos^4(\epsilon n/4)\operatorname{sinc}(\epsilon n)-1]/\epsilon\),
+where \(\operatorname{sinc}(x)=\sin(x)/x\), continuously extended at zero.
+\par\(\langle1\rangle2\). Elementary sine bounds give \(|C_n(r)|\le n\epsilon^2|r|^3+(7n^3/12)\epsilon^2|r|\)
+in the interior. A deleted edge square is at most \((n-1)^2/4\); its label satisfies
+\(\epsilon r^2\ge\pi(4.5-n)^2/4\). Hence \(|C_n(r)|\le C_n^{\rm bd}\epsilon r^2\) everywhere.
+The \(n\) Fermi-crossing terms give \(|\delta_n|\le B_n^{\rm bd}\epsilon^2\); summing excitation contributions
+and using \(\sum_{\rm exc}r^2\le Q^2\) proves the full finite-Fock graph bound, independently of \(s\).
+\par\(\langle1\rangle3\). Also \(|C_n(r)|\le[4n+(n-1)^2/2]|r|\), so \(|R|\le H_nK\).
+This supplies 95.7 with \(\alpha_0=0\), \(B_s=H_nA_{s+1}\); choose \(\alpha=1/2\).
+The all-size majorants are \(O(M^{-1})\) and \(O(M^{-1/2})\), only for these three diagonal pairs.
+
+\textbf{Negative 95.9 [negative; AP chiral CAR; category-free; \(\to\mathsf R2\)] (NOTE:506--524; REVIEW:95--97).}
+Replace \(Q\) by \(E_{\rm chiral}={:}d\Gamma(A_0){:}\), the excitation sum \(\sum_{\rm exc}|\sin(\epsilon r)|/\epsilon\).
+Then \(\liminf_M|R_{1,-1}|_{s,2;K=1+E_{\rm chiral}}\ge1\).
+\par\(\langle1\rangle1\). Add a particle at \(r_+=M/2-1/2\) and a hole at \(r_-=-r_+\): a neutral even unit vector
+with energy \(2e_M\), \(e_M=\sin(\epsilon/2)/\epsilon\). The two absent outward shifts give residual
+\(-2u_M^2-4e_M\), \(u_M=\cos^2(\epsilon/4)\sin(\epsilon)/\epsilon\); the \(n=1\) Schwinger term is zero.
+\par\(\langle1\rangle2\). Diagonality gives the lower bound \((2u_M^2+4e_M)/(1+2e_M)^2\to1\).
+This moving ultraviolet vector does not refute the source's fixed-core strong convergence.
+The third control \(E_D=\sum_{\rm exc}2|\sin(\epsilon r/2)|/\epsilon\) on this sea is only a dispersion proxy,
+not the finite two-component Dirac GNS system (NOTE:412--428; REVIEW:114--118).
+
+\textbf{Proposition 95.10 [derived; AP chiral CAR; category-free; \(\to\mathsf R2\)] (NOTE:568--586; REVIEW:112--127).}
+With \(a_n=c_S(A_n,A_{-n})\), \(a_1=0\) and the inherited finite crossing sum gives
+\(a_n\to(n^3-n)/12\). Thus the two-mode estimators \(c_M^*=2(a_2-2a_1)\), \(c_M=2a_2-16a_1\)
+both tend to \(1\); at finite \(M\) they need not fit \(a_3\). The separate self-dual prescription halves the
+cocycle, giving \(c^*=c=1/2\) (source Eq.~(28), (w)); it supplies no Majorana full-Fock graph estimate.
+These are spectral cocycles, not measured \(\kappa_1,\kappa_3\) or a lattice chart-change theorem.
+
+\textbf{Proposition 95.11 [derived; any locally, full with declared closure; \(\mathsf L0\); \(\to\mathsf R2\)]\newline (NOTE:595--627; REVIEW:98).}
+For any unitary fusion \(\Cc\), pointed \(O\), complete dagger-stable basis \(\{D_\alpha\}\) of
+\(\operatorname{End}_{\Cc}(O\otimes O)\), \(h=\sum_\alpha c_\alpha D_\alpha=h^\dagger\), the insertion to match is
+\[
+ k_j-\varepsilon_N I-\mathcal J_j=-\sum_\alpha\frac{c_\alpha}{v_N}D_\alpha^{(j)}-\varepsilon_N I
+ -\frac{i}{v_N^2}\sum_{\alpha,\beta}c_\alpha c_\beta[D_\alpha^{(j)},D_\beta^{(j+1)}].
+\]
+BY CA-79's fixed prescription \(k=-h/v_N\), \(\mathcal J_j=i[k_j,k_{j+1}]\). CA-78 supplies positive Grams,
+associator recoupling and exact gate coefficients. Retain all charge/multiplicity matrix units, including available
+vacancy, hop, cup/cap and split/merge terms; no universal nine-tile basis or Ward-forcing subset follows.
+The next layer needs metric gate families, positive boundary quotient, coordinate/port transports and G1--G3;
+periodic closure/translation is declared (possibly relative half-braiding data). No \(h\), conformal target or fidelity is selected.
+
+\subsection{Effect on other shards}
+\emph{Amendment (2026-10-25, round 3):} CA-89 Lemma 89.L remains conditional: 95.1--95.3 isolate G1--G3;
+95.5 refutes the arbitrary-control collar converse, and 95.10 supplies no geometric contacts. CA-78 Lemma 78.11
+gains the explicit two-loss/probe constant (95.1); Target 78.13 points to 95.12. CA-79's calibration gains only
+95.8--95.9, not all P0--P3. CA-81's graph, collar and geometric requirements remain distinct.
+CA-88 changes only the annotations listed above; its round-2 verdict/date remain intact (INTEGRATION:67--108).
+
+\subsection{What This Does Not Claim}
+Literal F4(a) and F4(c) remain unproved: density supplies neither quotient descent nor G1--G2 or a uniform
+accumulated bound. F4(b) is false under VR-1's auxiliary-control convention. No nontrivial common-system VR-1
+certificate, all-bracket fermion estimate, standard local KS identification, Wilson state, local conformal theory,
+category fidelity or functoriality is constructed (REVIEW:21--42,148--178). The general construction remains the target.
+
+\subsection{Examples (Instances Only)}
+\begin{center}\footnotesize
+\begin{tabular}{p{3.0cm}p{10.7cm}}
+\toprule Instance & Result, with grade and tags inherited from the indicated statement \\
+\midrule
+Any \(\Cc\), declared periodic realization & 95.1--95.3, 95.11: analytic lifting applies; geometric/state data remain to be constructed. \\
+\(\mathrm{Vec}\), \(O=\one\oplus\mathbb C^2\) & 95.5: local prescribed KS, zero limiting stress, divergent subcritical collars. \\
+Complex CAR, \(K=1+Q\) & 95.8: at \(M=8,16,32\), full-Fock \(q_1:=|R_{1,-1}|_{0,2}\) is \(0.256416\), \(0.200672\), \(0.126705\); no geometric Ward certificate. \\
+Same CAR, \(K=1+E_{\rm chiral}\) & 95.9: neutral even ultraviolet witness gives limiting lower bound \(1\). \\
+\bottomrule\end{tabular}
+\end{center}
+% Source: explorations/2026-10-25-astra-r3/F4-ward-to-residual/checks/fermion_check.py:23-86,160-194 -- producer.
+% Source: explorations/2026-10-25-astra-r3/F4-ward-to-residual/checks/fermion_green.txt:1-24 -- full-Fock q_1 column.
+% Source: explorations/2026-10-25-astra-r3/F4-ward-to-residual/checks/review_rerun_output.txt:1-7 -- three GREEN, three RED.
+% Source: explorations/2026-10-25-astra-r3/F4-ward-to-residual/checks/review_independent.py:1-134 -- independent oracle.
+% Source: explorations/2026-10-25-astra-r3/F4-ward-to-residual/checks/review_independent_green.txt:1-4 -- Gram, current, heat tests.
+Checks use Float64, not intervals: CAR tolerance \(10^{-10}\), independent review \(10^{-9}\)
+(INTEGRATION: 124--132).
+Off-diagonal checks restrict input to \(Q\le4\) but retain all generated outputs; the three sizes prove no decay exponent.
+The checks bundle records independent CAR/Gram/current invariants and rejected mutations (REVIEW:180--211).
+
+\subsection{Single Next Target}
+\textbf{Target 95.12 [conjectural; full per family; category-free; \(\to\mathsf R2\)]\newline (NOTE:713--724; REVIEW:213--225).}
+\emph{Quantitative two-ordering endpoint realization} (INTEGRATION: 149--172). For specified metric-dependent
+local gates, their positive reflected quotient, coherent port transports and actual insertion modes \(S\), construct
+a finite contour sweep whose endpoint forms equal the pairings with \(S_mS_n\), \(S_nS_m\), up to descending errors
+\(e_r^+,e_r^-\) satisfying, for fixed \(m,n,s\), fixed \(0\le\alpha_s<1\), and \(0<t\le1\),
+\[
+ |e_r^+(K^su,e^{-tK}v)|+|e_r^-(K^su,e^{-tK}v)|
+ \le b_{r,m,n,s}t^{-s-1-\alpha_s}\|u\|\|v\|,\qquad b_{r,m,n,s}\longrightarrow0.
+\]
+Compute the endpoint forms from the finite gate/Gram data, never define them by the desired products.
+The estimate includes every count and transport and is uniform on physical probe spans. This would discharge G1;
+G2's cylinder comparison and G3's Ward-error accumulation remain. Use the same fields that must match prescribed KS.

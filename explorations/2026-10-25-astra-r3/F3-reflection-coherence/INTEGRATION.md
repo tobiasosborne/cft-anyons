@@ -2,7 +2,7 @@
 
 Basis: `NOTE.md`, independently audited in `REVIEW.md`.
 **Overall grade: WEAKER-RESULT-PROVED.** Verified counterexamples refute
-F3(b) and universal unitary directional crossing. Whole-history RP remains
+F3(b) and universal unitary conjugacy of directional transfers. Whole-history RP remains
 conditional. This file proposes integration; it changes no report source,
 root convention, index or worklog. Statement grades below are not upgrades
 of the original conjecture.
@@ -30,10 +30,13 @@ Proof locations: N §A/A4 (S1), §C (S2), §D (S3), §E (S4), §F (S5/S6),
 §B and examples (S6), §G (S7), §H (S8), §I plus REVIEW §3 (S9).
 The exact repair of S9 must be lifted with its **defined q0 forms**, not
 by identifying transfer kernel with OS radical without an argument.
+The crossing no-go is for intertwiners on cut carriers: a unitary reshuffling
+on Hilbert–Schmidt matrix space can change operator rank (REVIEW §2), so
+that distinct interpretation of the brief is not refuted by S9.
 
 Do not lift as a theorem: “canonical seam gives a reflection of the whole
 history”; “any unitary psi squares to an FS sign”; “D(h)=h iff K_s_can(h)
-is Hermitian”; “two positive directional transfers are unitarily related.”
+is Hermitian”; “two positive directional transfers are unitarily conjugate.”
 The first is still conditional; the other unrestricted assertions are false.
 
 A compact integration can use two roughly 200-line shards: one for S1–S6

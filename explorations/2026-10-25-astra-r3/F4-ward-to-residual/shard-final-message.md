@@ -1,0 +1,3 @@
+Created [CA-95](/home/tobias/Projects/cft-anyons/report/sections/95_probe_word_ward_lifting.tex) and [SHARD_META.md](/home/tobias/Projects/cft-anyons/explorations/2026-10-25-astra-r3/F4-ward-to-residual/SHARD_META.md).
+
+The shard is 260 lines and compiles cleanly. Independent invariant checks pass. Review grades and geometric gaps remain explicit. Only the requested files and temporary wrapper artifacts were written; no commits or network access.

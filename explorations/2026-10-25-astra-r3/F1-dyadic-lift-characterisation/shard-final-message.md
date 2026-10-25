@@ -1,0 +1,3 @@
+Created [CA-96 shard](/home/tobias/Projects/cft-anyons/report/sections/96_blocked_dyadic_lifts.tex) and [registration package](/home/tobias/Projects/cft-anyons/explorations/2026-10-25-astra-r3/F1-dyadic-lift-characterisation/SHARD_META.md).
+
+The shard is 274 lines and compiles cleanly in the temporary wrapper. Reviewed grades, metadata and all seven amendment anchors are verified. No canonical-file edits, commits or network actions.

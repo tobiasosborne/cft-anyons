@@ -1,4 +1,4 @@
-# Astra round 3 SHARD brief — KEY -> CAID
+# Astra round 3 SHARD brief — @@KEY@@ -> CAID
 
 You are the integrator for one reviewed proof note in the repository at the
 current directory (`/home/tobias/Projects/cft-anyons`). Read `AGENTS.md`
@@ -10,10 +10,10 @@ Lamport steps condensed, tags (S; L; R) on every statement),
 `report/sections/88_layered_targets.tex` (the grid and the tag vocabulary),
 `CONVENTIONS.md` entries (aq)-(aw), the preamble of `report.tex` (the macros
 you may use: use ONLY macros defined there), and the package
-`explorations/2026-10-25-astra-r3/KEY/`: `NOTE.md` (the proof), `REVIEW.md`
+`explorations/2026-10-25-astra-r3/@@KEY@@/`: `NOTE.md` (the proof), `REVIEW.md`
 (the sceptical review; its GRADE and per-step verdicts are binding),
 `INTEGRATION.md` (what is safe to lift, grid cells, amendments, conventions,
-next lemma), and the brief `explorations/2026-10-25-astra-r3/briefs/KEY.md`.
+next lemma), and the brief `explorations/2026-10-25-astra-r3/briefs/@@KEY@@.md`.
 
 ## Deliverable 1: the shard
 
@@ -23,8 +23,9 @@ comment header
 
     % SHARD-ID: CAID
     % SHARD-TITLE: <title>
-    % SHARD-SUMMARY: <1-3 lines; may be repeated on 2 lines as in CA-88/CA-94>
-    % SHARD-KEYWORDS: <comma list>
+    % SHARD-SUMMARY: <line 1>
+    % SHARD-SUMMARY: <line 2>   (the guard REQUIRES 2 or 3 SHARD-SUMMARY lines, each one sentence or two, as in CA-88/CA-94)
+    % SHARD-KEYWORDS: <comma list>   (write the literal word KEYWORDS here)
 
 followed by `\section{...}\label{sec:...}`, a "Status, Sources, and
 Dependencies" subsection (status sentence with every grade; `% Source:
@@ -50,7 +51,7 @@ is fine (they are warnings in the wrapper). Keep the line count under 280.
 
 ## Deliverable 2: the registration package
 
-Write `explorations/2026-10-25-astra-r3/KEY/SHARD_META.md` containing, ready
+Write `explorations/2026-10-25-astra-r3/@@KEY@@/SHARD_META.md` containing, ready
 to paste: (1) the `report/SHARD_CATALOG.md` entry in the exact format of the
 `## \`CA-89-WARD-KS-TRANSFER\`` entry there (ID, file, title, summary
 mirrored verbatim from the header, keywords); (2) the `report/README.md`
@@ -74,7 +75,7 @@ make sure the file compiles and is under 280 lines.
 ## Rules of engagement
 
 Write ONLY `report/sections/FILE` and
-`explorations/2026-10-25-astra-r3/KEY/SHARD_META.md` (plus the wrapper in
+`explorations/2026-10-25-astra-r3/@@KEY@@/SHARD_META.md` (plus the wrapper in
 `$TMPDIR`). No edits to report.tex, catalog, README, CONVENTIONS, other
 shards, NOTE/REVIEW/INTEGRATION; no commits; no network. Every claim carries
 its grade and its tags; every source is cited path:line; nothing from memory.

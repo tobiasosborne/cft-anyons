@@ -79,13 +79,13 @@ for include in "${includes[@]}"; do
 
   if [[ -z "$id" ]]; then
     fail "$file is missing SHARD-ID header"
-  elif [[ ! "$id" =~ ^CA-[0-9]{2}[A-Z]?-[A-Z0-9-]+$ ]]; then
+  elif [[ ! "$id" =~ ^CA-[0-9]{2,3}[A-Z]?-[A-Z0-9-]+$ ]]; then
     fail "$file has invalid SHARD-ID '$id'"
   elif [[ -n "${seen_ids[$id]+x}" ]]; then
     fail "duplicate SHARD-ID $id"
   else
     seen_ids["$id"]=1
-    file_prefix="$(basename "$file" | cut -c1-2)"
+    file_prefix="$(basename "$file" | sed -E 's/^([0-9]+)_.*/\1/')"
     if [[ "$id" != CA-"$file_prefix"-* ]]; then
       fail "$file has SHARD-ID $id, expected prefix CA-$file_prefix-"
     fi

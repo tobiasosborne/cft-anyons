@@ -112,6 +112,8 @@ before treating report edits as complete.
 | 92 | `CA-92-SPATIAL-SEAMS-AND-REFLECTION-POSITIVITY` | `report/sections/92_spatial_seams_and_reflection_positivity.tex` | Spatial Seams, Reflection Pairings and a Finite Osterwalder-Schrader Lemma |
 | 93 | `CA-93-NORMAL-LIMIT-EXPECTATIONS-AND-FIDELITY` | `report/sections/93_normal_limit_expectations_and_fidelity.tex` | Normal Limit Expectations and the Repaired Two-Sided Fidelity Certificate |
 | 94 | `CA-94-NUMBER-CHANGING-COLLISION-DYNAMICS` | `report/sections/94_number_changing_collision_dynamics.tex` | Number-Changing Collision Dynamics on the Pointed Carrier: a Tuned Continuum Theorem and Three Obstructions |
+| 95 | `CA-95-PROBE-WORD-WARD-LIFTING` | `report/sections/95_probe_word_ward_lifting.tex` | Probe-Word Ward Lifting: Uniform Bounds, the Geometric Gap, and a False Converse |
+| 96 | `CA-96-BLOCKED-DYADIC-LIFTS` | `report/sections/96_blocked_dyadic_lifts.tex` | Blocked Dyadic Lifts: Finite-Power Transport and the Failure of Single-Site Centrality |
 
 ## Adding a shard
 

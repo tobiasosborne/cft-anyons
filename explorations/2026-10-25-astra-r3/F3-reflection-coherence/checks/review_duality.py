@@ -70,6 +70,7 @@ def main():
             assert eq(D2(a), j*a*j.H), ('double dual', row, col)
             assert eq(rho(rho(a)), z*a*z.H), ('square defect', row, col)
     check(True, 'C2 and D2 on all four site matrix units with complex gauges')
+    super_columns = []
     for row in range(n*n):
         for col in range(n*n):
             a = S.zeros(n*n); a[row, col] = 1
@@ -77,8 +78,12 @@ def main():
             assert eq(bend(unbend(a)), a), ('inverse other direction', row, col)
             assert eq(K(sharp(a)), K(a).H), ('adjoint', row, col)
             assert eq(sharp(sharp(a)), a), ('involution', row, col)
+            super_columns.append(S.Matrix(list(K(a))))
     check(True, 'F2 both inverse identities and F1 on all 16 tile matrix units')
     check(eq(K(S.eye(4)), u*u.H), 'rank-one identity kernel in complex gauge')
+    super_matrix = S.Matrix.hstack(*super_columns)
+    check(eq(super_matrix.H*super_matrix, S.eye(16)),
+          'bending is Hilbert-Schmidt unitary despite changing operator rank')
     # Independent homogeneous Z3 example: evaluate the mixed seam by cup
     # contraction and transport the adjoint back with the inverse bend.
     w = (-1+S.sqrt(3)*S.I)/2

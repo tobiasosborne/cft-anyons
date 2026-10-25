@@ -1,4 +1,4 @@
-"""Rerun the author's six cases without overwriting any author artifact.
+"""Rerun six author cases and five independent cases, preserving author files.
 Run: PYTHONDONTWRITEBYTECODE=1 python3 <this file>
 Only writes review_* alongside this file; 120-second cap per child.
 """
