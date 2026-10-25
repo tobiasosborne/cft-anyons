@@ -70,11 +70,11 @@ periodic, grading-preserving or canonically selected interpretation.
 | F1.4T `<1>2`; 352–354 | VALID | The basis grades generate all A; its group ring is commutative independently of omega. |
 | F1.4T `<1>3`; 356–365 | VALID | Substitution gives kappa=zeta of exact order p at (e1,e2,e3), while the relevant multiplicity is one. This excludes even an invertible nonunitary half-braiding. |
 | F1.5 `<1>1`; 376–393 | VALID | The four pentagon quotients expand to exactly the twelve beta-defect factors. Abelianness is used in the cancellations and is explicitly assumed. |
-| F1.5 `<1>2`; 395–410 | VALID | Reversing arguments gives a cocycle on the abelian group. The regular matrices are signed/phased permutations of dimension |A|, with the required opposite product law. |
+| F1.5 `<1>2`; 395–410 | VALID | Reversing arguments gives a cocycle on the abelian group. The regular matrices are phased permutations whose dimension is the group order, with the required opposite product law. |
 | F1.5 `<1>3`; 412–419 | VALID | Frobenius is used in the commutative group ring modulo p; the exponent p^e kills every grade. Coefficients reduce to their original values modulo p. |
 | F1.5.3 `<2>1`; 421–428 | VALID | For k≥2, every nonconstant term in `(C+p^(k−1)T)^p` is divisible by p^k. The endpoint p=2,k=2 also works. The scalar exponent advances from n^(p^(k−2)) to n^(p^(k−1)). |
-| F1.5.3 `<2>2`; 430–432 | VALID | Taking k=d gives divisibility by |A| of each nonzero-grade coefficient. Zero multiplicity causes no problem; the grade-zero coefficient need not be divisible. |
-| F1.5 `<1>4`; 434–438 | VALID | Copies of the |A|-dimensional regular representation fill every nonzero-grade space exactly. beta_0=1 permits the identity action on the whole zero-grade space, fixing the actual xi. |
+| F1.5.3 `<2>2`; 430–432 | VALID | Taking k=d gives divisibility by the group order of each nonzero-grade coefficient. Zero multiplicity causes no problem; the grade-zero coefficient need not be divisible. |
+| F1.5 `<1>4`; 434–438 | VALID | Copies of the regular representation fill every nonzero-grade space exactly. beta_0=1 permits the identity action on the whole zero-grade space, fixing the actual xi. |
 | F1.6 `<1>1`; 463–472 | VALID | J has the correct direction F(W_L)→W'_L. Induction using tensorator associativity gives comparison for contiguous splittings and hence interval-algebra transport. |
 | F1.6 `<1>2`; 474–485 | VALID | F1.6a has domain F(Y)⊗P' and codomain P'⊗F(Y). Full faithfulness and unitary presentations make extension independent of choices. Here target objects mean those of D'=⟨O'⟩; F restricts to an equivalence D→D' because u identifies their generators. |
 | F1.6 `<1>3`; 487–497 | VALID | The defining sum for S and each fixed circuit factor transport termwise. Substitution yields both alpha and V covariance squares. |

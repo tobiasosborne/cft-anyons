@@ -51,7 +51,7 @@ displayed assumptions, not that those assumptions have been constructed.
 | F4.1, 1.1 | VALID | :74–76: a finite-dimensional dense linear span equals the whole quotient. No infinite-dimensional completion theorem is being smuggled in. |
 | F4.1, 1.2 | VALID | :78–82: self-adjoint K moves from the first slot to the output; the uniform two-vector supremum is the operator norm. |
 | F4.1, 1.3 | VALID | :84–100: precisely D2-L10's two-loss variant, not its one-loss formula with an unchanged exponent. |
-| F4.1, 1.3/2.1 | VALID | :88–90: spectral gamma integral gives K^(-s-2)/(normalization 1), with factorial (s+1)!. |
+| F4.1, 1.3/2.1 | VALID | :88–90: the spectral gamma integral gives K^(-s-2), with factorial (s+1)!. |
 | F4.1, 1.3/2.2 | VALID | :92–93: the small-t integrand is t^(-alpha); alpha<1 is essential. |
 | F4.1, 1.3/2.3 | VALID | :95–100: factor the input heat operator at t=1; K>=1 bounds the tail. The tail constant is sum_(j=0)^(s+1)1/j!. |
 | F4.1, 1.4 | VALID | :102–103: adding the two integrals gives exactly F2, uniformly in scale at fixed s,alpha. |
@@ -248,7 +248,7 @@ reaudited every theorem in the cited books or shards.
 - `references/text/CFTFromLatticeFermions.txt:881–892,2813–2823,2887–2897,3383–3414,3482–3498` — CAR, central normalizations, actual no-wrap modification, fixed-core theorem.
 - `references/cft-machine/fermion/SOURCES.md:1–37`; `references/cft/SOURCES.md:9–31`; `references/lattice-symmetry/SOURCES.md:9–38,966–997,1732–1757` — local provenance.
 - `cft_machine/benchmarks/fermion/PROOF.md:12–17,50–74,78–142`; `cft_machine/benchmarks/fermion/runs/2026-09-22/results.toml:1` (whole file) — definitions, earlier derivations and nine cocycle oracles.
-- Relative to this directory: `checks/fermion_core.py:18–157`, `checks/fermion_check.py:23–194`, `checks/fermion_collar.py:1–53`, `checks/ks_converse_check.py:1–230`, `checks/reviewer_qutrit.py:1–111`; associated original JSON/results/manifests and new `review_*` raw outputs — implementations and reproducibility evidence.
+- Relative to this directory: `checks/fermion_core.py:18–157`, `checks/fermion_check.py:23–194`, `checks/fermion_collar.py:1–53`, `checks/ks_converse_check.py:1–230`, `checks/reviewer_qutrit.py:1–122`; associated original JSON/results/manifests and new `review_*` raw outputs — implementations and reproducibility evidence.
 
 No edits outside the permitted directory; NOTE.md and original check
 artifacts were preserved. No commits, pushes, report build or Julia suite.

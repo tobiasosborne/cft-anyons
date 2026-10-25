@@ -3,7 +3,7 @@
 
 Sources: CA-79:73-77; NOTE.md F2-B/F2-Aalg/F2-N; CONVENTIONS (m),(ap),(at).
 Run from repo root: python3 explorations/2026-10-25-astra-r3/
-F2-zero-mode-and-lattice-chirality/checks/check_f2.py [--mutate central|shift]
+F2-zero-mode-and-lattice-chirality/checks/check_f2.py [--mutate central|shift|cubic]
 """
 import argparse
 import sympy as sp

@@ -1123,7 +1123,7 @@ structured computations in this NOTE, not attributed to an absent theorem.
 - `explorations/2026-10-22-astra-r2/E6-number-changing-continuum/NOTE.md:18-66,123-188,192-398,465-598,602-761,828-834`: exact prior conventions and source gap, real/nonreal resolvent bridge, trace/core/liminf proofs, coefficients and grading/range boundaries. This is the `E6/NOTE.md` abbreviation used above.
 - `explorations/2026-10-22-astra-r2/E6-number-changing-continuum/REVIEW.md:58-65,85-88,90-176,178-242`: scale and proof audits, lack of N-uniform constants, non-connected-carrier omission, layer qualifications.
 - `explorations/2026-10-22-astra-r2/E6-number-changing-continuum/INTEGRATION.md:61-117`: prior integration status and the proposed trichotomy.
-- `explorations/2026-10-22-astra-r2/E6-number-changing-continuum/checks/review_tuned_convergence.py:1-74`: original Galerkin check, faithfully expanded and independently verified here.
+- `explorations/2026-10-22-astra-r2/E6-number-changing-continuum/checks/review_tuned_convergence.py:1-69`: original Galerkin check, faithfully expanded and independently verified here.
 - `explorations/2026-10-22-astra/D1-carrier-theory/NOTE.md:483-543`: already-proved smooth recovery and source bounds; reused, not re-derived.
 - `literature/md/girardeau_jmp_1_516_1960/girardeau_jmp_1_516_1960.md:65,88`: point-core discussion inspected during search, not used as a Mosco/extension theorem.
 - `checks/source_search.txt`: exact local search command and 13 matches for point/delta interaction, Mosco, and strong resolvent. No applicable contact-classification proof was identified. No source was fetched and no network was used.

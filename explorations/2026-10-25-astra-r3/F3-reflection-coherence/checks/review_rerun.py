@@ -22,6 +22,13 @@ CASES = [
      'first oriented snake'),
     ('check_nonpointed.py', ['--mutate-fs'], 'review_mutation_fs.txt',
      'FS-correct identified zigzag'),
+    ('review_duality.py', [], 'review_duality_output.txt', None),
+    ('review_duality.py', ['--mutate-dual'], 'review_duality_mutation.txt',
+     'E1 cup equation needs conjugate dual'),
+    ('review_history.py', [], 'review_history_output.txt', None),
+    ('review_history.py', ['--mutate-history'], 'review_history_mutation.txt',
+     'temporal OS form from exact contraction'),
+    ('review_hexagons.py', [], 'review_hexagons_output.txt', None),
 ]
 SOURCES = [
     'AGENTS.md', 'CONVENTIONS.md',
@@ -33,6 +40,8 @@ SOURCES = [
     'report/sections/86_spacetime_trotter_dictionary.tex',
     'report/sections/88_layered_targets.tex',
     'report/sections/92_spatial_seams_and_reflection_positivity.tex',
+    'report/sections/75_integration_map.tex',
+    'report/sections/91_parity_and_chiral_delineation.tex',
 ]
 
 
@@ -63,11 +72,15 @@ def main():
         print('PASS', script, args, 'exit', p.returncode, flush=True)
     after = {str(p.relative_to(ROOT)): digest(p) for p in protected}
     assert before == after, 'author files changed during rerun'
+    artifacts = sorted(p for p in HERE.glob('review_*') if p.is_file()
+                       and p.name not in {'review_rerun_manifest.json', 'review_rerun_output.txt'})
+    artifacts += [HERE.parent/'REVIEW.md', HERE.parent/'INTEGRATION.md']
     record = dict(utc=datetime.now(timezone.utc).isoformat(), python=sys.version,
                   runs=runs, protected_sha256=before,
-                  source_sha256={p: digest(ROOT/p) for p in SOURCES})
+                  source_sha256={p: digest(ROOT/p) for p in SOURCES},
+                  review_sha256={str(p.relative_to(ROOT)): digest(p) for p in artifacts})
     (HERE/'review_rerun_manifest.json').write_text(json.dumps(record, indent=2)+'\n')
-    print('PASS original artifacts and NOTE unchanged; manifest written')
+    print('PASS six normal cases, five expected mutations; author artifacts unchanged; manifest written')
 
 
 if __name__ == '__main__':

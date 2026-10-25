@@ -1,9 +1,12 @@
 # F5 analytic supplement: global triangular-grid traces
 
-Research collaborator draft, 2026-10-25. All conventions here are local to F5,
+Reviewed supporting derivation, 2026-10-25. All conventions here are local to F5,
 as authorised by its write restriction. No claim about a conformal limit is
 made. The setting is the open interval, general unitary fusion input plus the
 declared reactions, and an off-ladder nonrelativistic resolvent limit.
+The complete proofs are incorporated in the authoritative `../NOTE.md`.
+Its T3/T4 strengthen section D below from bounded-below sequences to the
+full exact-family N<=2 classification, including either divergent sign.
 
 Dependencies: CA-94 Lemma 94.3 (`report/sections/94_number_changing_collision_dynamics.tex:108-111`)
 supplies the proved continuous simplex trace inequality and smooth H1 density;

@@ -1,0 +1,3 @@
+Completed [REVIEW.md](/home/tobias/Projects/cft-anyons/explorations/2026-10-25-astra-r3/F4-ward-to-residual/REVIEW.md) and [INTEGRATION.md](/home/tobias/Projects/cft-anyons/explorations/2026-10-25-astra-r3/F4-ward-to-residual/INTEGRATION.md).
+
+**GRADE: WEAKER-RESULT-PROVED.** The geometric Ward implication remains open; the stated converse is refuted. All checks passed, and five deliberate mutations were rejected. Independent checks and raw outputs are saved. NOTE.md remains unchanged.

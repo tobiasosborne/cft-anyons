@@ -140,6 +140,11 @@ The separating hypothesis is an actual estimate on `D_r-p_r`, or an
 alternative commutator estimate. No choice of logarithm branch repairs
 this example. Conversely, its nonzero translation sectors carry zero
 stress, so it says nothing against direct proofs of ZC.
+In general, covariance only gives blocks
+`H=direct-sum_theta H_theta`, `Qcal=direct-sum_theta Q_theta` and
+`p=direct-sum_theta p_theta I`. The exact equalities `[p,H]=[p,Qcal]=0`
+leave `[H,Qcal]=direct-sum_theta[H_theta,Q_theta]` undetermined.
+The missing estimate concerns these internal phase-sector blocks.
 
 ## Theorem F2-B: parity-free balance given the zero-mode equation
 
@@ -722,7 +727,7 @@ spectral fit was substituted for proof. The complete F2(a) remains open.
 - F2-Aalg, formal Jacobi/dagger/parity/Fourier grading force X_0=0 — **negative**: explicit formal *-Lie algebra; no positive-Hilbert/KS realization asserted.
 - F2-R(i)-(ii), finite-range cut-current and Fourier identities — **proven**: exact for fixed rho and N>2rho.
 - F2-R(iii), finite-range parity-free balance — **conditional**: component graph bounds suffice; not derived from finite range alone.
-- F2-Spec, inverse spectral cutoff with unequal left/right ledgers — **proven** from a declared positive-energy target and (S1); an R2 construction outside the local KS class.
+- F2-Spec, inverse spectral cutoff with unequal left/right ledgers for a nonzero target ledger — **proven** from a declared positive-energy target and (S1); an R2 construction outside the local KS class.
 - F2-Kernel, spectral derivative has non-summable 1/r spatial tail — **proven**: exact finite formula and fixed-separation asymptotic.
 - General finite-range, finite-site physical lattice chirality no-go — **conjectural** in this record: not equivalent to the proved KS-specific implication.
 - F2(c), sharpness under dropping only range or only site dimension while retaining every other hypothesis — **conjectural**: the proved spectral mechanism also changes the stress prescription; no infinite-site-only example supplied.
@@ -834,9 +839,11 @@ Thus F2-Spec certifies these cutoffs, not just convergence on sampled vectors.
 The spatial Hamiltonian matrix is (S4), or its circulant phase conjugate.
 Second quantizing the one-particle phases `z^(r+1/2)` gives U_N^N=I and
 the required opposite Fourier covariance (the right family is zero);
-it commutes with the energy control. In a qubit presentation even
-fermion hopping has strings over unbounded intervals, so no claim of
-spin-local finite range is made. This is a concrete finite-site,
+it commutes with the energy control. In the ordered occupation basis,
+moving a fermion between two sites contributes the exterior-algebra sign
+`(-1)^(sum of intermediate occupations)`, an operator on the intervening
+interval. Thus the qubit presentation also has unbounded-range strings;
+no claim of spin-local finite range is made. This is a concrete finite-site,
 nonlocal, target-first mechanism; its spectral modes have deliberately
 changed the KS-prescription hypothesis. Unit multiplicities allow the
 same finite matrices in any C, but this ignores C and supplies no R4.
@@ -848,7 +855,7 @@ same finite matrices in any C, but this ignores C and supplies no R4.
   hypotheses, mixed-bracket reduction, spectral-log gap and named next lemma.
 - `report/sections/89_ward_ks_transfer.tex:49-61,86-99,187-205`:
   graph calculus, control warning and two central coefficients.
-- `report/sections/81_cft_machine_oar_contract.tex:103-129` and
+- `report/sections/81_cft_machine_oar_contract.tex:91-120` and
   `cft_machine/research/virasoro_routes.md:55-177`: VR-1 and its boundaries.
 - `report/sections/88_layered_targets.tex:53-125`: settings and target grid.
 - `explorations/2026-10-22-astra-r2/E2-parity-and-chirality/NOTE.md:292-420,794-817`;
@@ -866,13 +873,13 @@ same finite matrices in any C, but this ignores C and supplies no R4.
 - `references/text/CFTFromLatticeFermions.txt:879-892,1843-1889,2790-2823,3480-3499`:
   complex normal ordering, momentum-cutoff maps/nonlocality, c=1 sea target,
   source common-core construction; not an assertion that (S2) is its finite sine KS prescription.
-- `references/cft-machine/fermion/SOURCES.md:1-66`:
+- `references/cft-machine/fermion/SOURCES.md:1-37`:
   source registration and anchors; `CONVENTIONS.md:830-869`: AP/Fourier/CAR conventions.
 - `cft_machine/benchmarks/fermion/PROOF.md:12-17,78-115`:
   existing continuum-shift and Schwinger-sum derivations used only in the example.
 - `references/lattice-symmetry/LiLinMcGreevyShiKim2024/source/revised-emergence-of-virasoro.tex:738-746,1046`:
   nearby anomaly assertion and its limitation; registration in
-  `references/lattice-symmetry/SOURCES.md:1882-1956`.
+  `references/lattice-symmetry/SOURCES.md:1895-1956`.
 - `references/lattice-symmetry/Jones2017NoGo/source/nogo.tex:586-622` and
   `literature/md/1903.12334/1903.12334.md:195-197`: scope of the other nearby no-go passages.
 - `references/lattice-symmetry/ZiniWang2018/source/main.tex:125-129,449-462`:
