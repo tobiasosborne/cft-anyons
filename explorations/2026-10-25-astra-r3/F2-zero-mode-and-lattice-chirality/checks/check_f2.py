@@ -9,7 +9,7 @@ import argparse
 import sympy as sp
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--mutate", choices=("central", "shift"))
+parser.add_argument("--mutate", choices=("central", "shift", "cubic"))
 args = parser.parse_args()
 t, p, q, n, m = sp.symbols("t p q n m", real=True)
 
@@ -85,6 +85,16 @@ for index in range(-6, 7):
              "B4/B5 double Jacobi")
 assert sp.solve([gamma(1), gamma(2)], [dc, dcstar]) == {dc: 0, dcstar: 0}
 print("PASS: central-term bookkeeping in parity-free proof and both ledger equations")
+
+# Independent integer paths in C3: cubic balance does NOT set X_0=0.
+f1 = sp.Symbol("F1")
+f2 = 2*f1-gamma(1)
+f3 = f1+f2-gamma(1)-gamma(2)
+f4_22 = 2*f2-(3 if args.mutate == "cubic" else 4)*gamma(2)
+f4_13 = f1+f3-sp.Rational(3, 2)*(gamma(1)+gamma(3))
+zero(f4_22-f4_13-sp.Rational(3, 2)*dcstar, "C3 two F4 paths")
+assert sp.diff(f4_22-f4_13, dc) == 0
+print("PASS: double-Jacobi consistency detects cubic difference, cancels linear difference")
 
 # Small Vec/unit-multiplicity instance tests the GENERAL exact KS identity.
 # An asymmetric density is intentional: no parity hypothesis is used.

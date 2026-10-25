@@ -29,6 +29,7 @@ def main():
     cup=vec(U)
     cap=cup.H if '--mutate-fs' in sys.argv else -cup.H
     check(S.kronecker_product(I,cap)*S.kronecker_product(cup,I)==I,'FS-correct identified zigzag')
+    check(S.kronecker_product(cap,I)*S.kronecker_product(I,cup)==I,'second FS-correct identified zigzag')
     check(cup.H*cup==S.Matrix([[2]]) and swap(2)*cup==-cup,'positive raw cup norm with negative FS symmetry')
     # Source and target self-duality factors cancel on Hom(V,V), a 1-d cut.
     J=lambda f:U.H*f.conjugate()*U

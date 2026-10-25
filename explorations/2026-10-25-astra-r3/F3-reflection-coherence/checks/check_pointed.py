@@ -1,5 +1,5 @@
 """Exact pointed calibrations, with associator direction explicitly fixed.
-Source: references/text/PenneysUnitaryFusionCategories.md:259-287,319,400-430.
+Source: references/text/PenneysUnitaryFusionCategories.md:259-288,319,400-430.
 Penneys alpha:a(bc)->(ab)c is omega(a,b,c). Thus coev_a=1 and
  ev_a=omega(a,-a,a), NOT its inverse. The second snake is ev_a*omega(-a,a,-a)=1.
 Earlier E3 numerical code used the inverse associator convention; its output
@@ -66,6 +66,10 @@ def test_category(omega, braid, name):
     # R: ((a b)(c d))->a((b c)d), derived as alpha^-1_(a,b,c+d) then alpha_(b,c,d).
     R=S.diag(*[1/phi(neg(a),b,c,neg(d)) for a,b,c,d in it.product(grades,repeat=4)])
     B=S.kronecker_product(v,S.eye(4));E=S.kronecker_product(S.eye(4),u.H)
+    Ri=S.diag(*[1/phi(a,b,neg(c),d) for a,b,c,d in it.product(grades,repeat=4)])
+    Ro=S.diag(*[1/phi(a,neg(b),c,d) for a,b,c,d in it.product(grades,repeat=4)])
+    def unbend(r):
+        return clean(S.kronecker_product(u.H,S.eye(4))*Ro.H*S.kronecker_product(S.eye(2),r,S.eye(2))*Ri*S.kronecker_product(S.eye(4),v))
     def bend(T):
         return clean(seam.H*E*R.H*S.kronecker_product(S.eye(2),T,S.eye(2))*R*B)
     def indexed(T):
@@ -81,6 +85,7 @@ def test_category(omega, braid, name):
         e=S.zeros(4);e[i,j]=1;mats.append(e)
         k=bend(e)
         assert k==indexed(e)
+        assert unbend(seam*k)==e, "explicit inverse-bend formula F2"
         assert all(k[x,y]==0 for x in range(4) for y in range(4) if (x,y) not in kids)
         cols.append(S.Matrix([k[x,y] for x,y in kids]))
     Q=clean(S.Matrix.hstack(*cols));Qi=clean(Q.inv())
@@ -91,11 +96,18 @@ def test_category(omega, braid, name):
     for m in mats:
         assert sharp(sharp(m))==m
         assert bend(sharp(m))==bend(m).H
-    check(bend(S.eye(4))==u*u.H,name+': K(1)=uu†, all six matrix units match two bend implementations')
+    check(bend(S.eye(4))==u*u.H,name+': K(1)=uu†; six matrix units match both bends and explicit inverse F2')
     hp=inverse(S.eye(4))
     check(sharp(hp)==hp and bend(hp)==S.eye(4),name+': intrinsic sharp involution and Hermiticity criterion')
     check(bend(S.eye(4)+hp/5)==u*u.H+S.eye(4)/5,name+': Schur-positive linear tile, exact Gram certificate')
     print('  s =',seam,'; det(bend on Hom blocks) =',S.simplify(Q.det()))
+    if braid:
+        a=S.zeros(4);a[1,2]=1;b=a.T
+        p10=S.zeros(4);p10[2,2]=1
+        check(sharp(a)==a and clean(sharp(b)-phase(2)*b)==S.zeros(4) and sharp(a*b)==p10,name+': explicit sharp composition witness')
+        check(sharp(a*b)!=sharp(a)*sharp(b) and sharp(a*b)!=sharp(b)*sharp(a),name+': neither composition variance survives')
+        print('  sharp(E01,10)=',sharp(a),'; sharp(E10,01)=',sharp(b))
+        print('  multiplicative?',sharp(a*b)==sharp(a)*sharp(b),'; anti-multiplicative?',sharp(a*b)==sharp(b)*sharp(a))
 
 
 def main():
@@ -113,6 +125,7 @@ def main():
     check(not eq(omega(1,1,1),1),'nonconstant braided cocycle explicitly a coboundary')
     braid=lambda a,b:phase(b*a*a-a*b*b+a*b)
     test_category(omega,braid,'Z3 nonconstant coboundary, canonical braided seam')
+    test_category(lambda a,b,c:S.Integer(1),lambda a,b:phase(a*b),'Z3 trivial associator nontrivial braiding')
     check(1!=(-1)%3,'g has no self-duality: no +/- F-S sign; dual charge is g^2')
 
 

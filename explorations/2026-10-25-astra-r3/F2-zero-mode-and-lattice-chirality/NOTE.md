@@ -1,7 +1,13 @@
 # F2 — Zero modes and lattice chirality without parity
 
 2026-10-25. Initial all-open research ledger written within ten minutes
-of the 05:04 UTC start; updated after each proved result. Work in progress.
+of the 05:04 UTC start; updated after each proved result.
+**Verdict: substantial partial proof, not a proof of F2(a).** The cubic
+ledgers balance without parity or current conservation. Commuting limiting
+zero modes additionally force both ledgers to agree and all mixed brackets
+to vanish. Automatic zero-mode commutation remains unresolved. The proposed
+spectral-log identification is false under the stated assumptions, but
+that counterexample has ZC=0 and does not refute F2(a).
 All paths are repository-relative. No network, commits, root-file changes,
 or Julia suite. The task-specific write restriction overrides the repository's
 usual convention/worklog/commit workflow; declarations here are note-local.
@@ -265,6 +271,92 @@ ZC, or simply the limiting zero-mode equation. The assertion for every
 finite-range density needs a correct longer-range current/Fourier identity;
 it is not a consequence of calling the adjacent-current formula “standard”.
 
+## Theorem F2-Cubic: cubic anomaly balance without parity or ZC
+
+**Status: proven implication. Tags: (full; category-free; R2 conditional).**
+This result removes current conservation as well as parity for the cubic
+coefficient. It does not assert equality of the independent linear ledger
+coefficients without the additional hypothesis in F2-B.
+
+**ASSUME** the common two-family VR-1 hypotheses and the nearest-neighbour
+standard KS prescription. Do not assume `[L_0,S_0]=0` or equal ledgers.
+
+**PROVE** `c_L*=c_R*`. Consequently, if each family is separately in the
+physical normalization `c_L=c_L*`, `c_R=c_R*`, then `c_L=c_R` as well.
+
+**<1>1.** Equations (B1)-(B3) hold without using X_0=0: that hypothesis
+was first used in F2-B <1>3. Thus
+
+    C_mn=X_(m+n)+(1/2)delta_(m+n,0)gamma_m I,
+    X_q=C_q0=C_0q,  X_0=[L_0,S_0].
+
+**BY** F2-B <1>1-<1>2, with their assumption dependencies made explicit.
+
+**<1>2.** Set `A_q=[L_0,X_q]`, `B'_q=[S_0,X_q]`. Before the q=0
+specialization used in F2-B, Jacobi gives
+
+    [L_p,X_q]=pX_(p+q)+A_(p+q)+(p/2)delta_(p+q,0)gamma_p I,
+    [S_p,X_q]=-pX_(p+q)+B'_(p+q)+(p/2)delta_(p+q,0)gamma_p I.           (C1)
+
+**BY** <1>1 and exactly the two unreduced Jacobi computations in
+F2-B <1>3. No action of X_0 is set to zero.
+
+**<1>3.** Double Jacobi determines a consistency identity among the X's.
+For u=m+n+q, first compute
+
+    [L_m,B'_(n+q)]=[X_m,X_(n+q)]+m B'_u+[S_0,A_u],
+    [S_n,A_(m+q)]=-[X_n,X_(m+q)]-n A_u+[L_0,B'_u],
+    [S_0,A_u]-[L_0,B'_u]=-[X_0,X_u].
+
+**BY** Jacobi, (C1), and `[L_m,S_0]=X_m`, `[S_n,L_0]=-X_n`.
+Now substitute (C1) into
+`[[L_m,S_n],X_q]=[L_m,[S_n,X_q]]-[S_n,[L_m,X_q]]`.
+The A_u and B'_u terms cancel, leaving
+
+    [X_(m+n),X_q]=[X_m,X_(n+q)]+[X_n,X_(m+q)]-[X_0,X_u]
+       -(mn/2)delta_(u,0)(gamma_m+gamma_n)I.             (C2)
+
+The two scalar terms come from `-n[L_m,X_(n+q)]` and
+`-m[S_n,X_(m+q)]`; scalar terms already inside inner commutators commute
+and disappear. **BY** the displayed substitutions. All four-letter words
+are defined on the same invariant D by VR-1.
+
+**<1>4.** Put `F_n=[X_n,X_-n]` (this note-local F is not an A4 residual)
+and q=-m-n in (C2). The term `[X_0,X_0]` is zero by antisymmetry, without
+assuming X_0=0. Hence
+
+    F_(m+n)=F_m+F_n-(mn/2)(gamma_m+gamma_n)I.            (C3)
+
+In particular, suppressing I on scalars,
+
+    F_2=2F_1-gamma_1,
+    F_3=3F_1-2gamma_1-gamma_2,
+    F_4=4F_1-2gamma_1-4gamma_2                   [m=n=2],
+    F_4=4F_1-(7/2)gamma_1-gamma_2-(3/2)gamma_3   [m=1,n=3].
+
+Equality of the last two expressions gives
+`(3/2)(gamma_1-2gamma_2+gamma_3)I=0`.
+**BY** (C3), using only the indicated integer indices.
+
+**<1>5.** Directly from the defined cubic-minus-linear ledger,
+
+    gamma_1-2gamma_2+gamma_3
+      =[(1-16+27)(c_R*-c_L*)-(1-4+3)(c_R-c_L)]/12
+      =c_R*-c_L*.
+
+The common Hilbert space is nonzero, so this difference vanishes.
+The final assertion follows by the two stated normalization equalities.
+**QED.**
+
+**Corollary F2-absent [proven implication; full; category-free; R2].**
+If the limiting right stress is `S_n=t delta_(n,0)I`, its own two ledger
+equations give `c_R*=0`, `c_R=24t` (CA-91:179-184). F2-Cubic therefore
+excludes any nonzero left cubic anomaly even without parity. Moreover
+X_0=0 automatically, so F2-B gives the equal linear ledger too. This
+does not prove that the remaining left stress is scalar: that stronger
+part of CA-91 Corollary 91.10 uses parity. No positive-energy conclusion
+is smuggled into the present R2 statement.
+
 ## Proposition F2-Aalg: a formal obstruction to a Jacobi-only proof of (a)
 
 **Status: negative, proven at the formal algebra layer only.
@@ -425,7 +517,9 @@ Their difference from (B1) is
 `sum_d r^d_(N,m,n) B_(m+n)^(d)-F^L_mn-F^R_(-m,-n)`.
 Its (s,2) norm tends to zero by (R4), the finitely many component bounds,
 A4 and `|A|_(s,2)<=|A|_(s,1)`. Thus (B1) holds in the limit.
-Apply F2-B <1>2-<1>5 unchanged. **QED.**
+Apply F2-B <1>2-<1>5 unchanged. Without the zero-mode assumption,
+F2-Cubic still applies and gives equality of the cubic coefficients.
+**QED.**
 
 Exact conservation `[H,Qcut]=0` supplies the zero-mode equation because
 `[L_0,S_0]=2a_N^2[H,Qcut]`. F2-G supplies loss-two finite mixed bounds.
@@ -436,43 +530,316 @@ No general implication from finite range alone to these component bounds
 is proved here. This is a concrete sufficient extension, not the universal
 finite-range theorem as phrased in the brief.
 
+## Part (c): an inverse spectral mechanism, and its exact boundary
+
+### Proposition F2-Spec: arbitrary declared chiral targets admit nonlocal R2 cutoffs
+
+**Status: proven implication from declared target data.
+Tags: (chiral target, two-family algebra with right family zero; L4; R2).**
+This is a general target-first construction. It supplies no local R0 tower
+and reads no fusion/modular data. It is not a category-to-CFT algorithm.
+
+**ASSUME** a declared nonzero positive-energy Virasoro representation
+`(H,E=L_0,L_n)` with finite-dimensional energy eigenspaces, discrete
+nonnegative spectrum, adjoint pairing, a common smooth domain containing
+the finite-energy eigenspaces, and
+
+    [E,L_n]=-nL_n,
+    ||L_n v||<=a_n||(1+E)v||.                          (S1)
+
+The fixed-mode bound (S1) is sourced, for the positive-energy Virasoro
+representations under discussion, at
+`references/cft-machine/coset-symmetry/CarpiWeiner2004/source.tex:714-747`.
+Let nested finite-rank orthogonal P_r commute with E, tend strongly to I,
+and contain the full spectral subspace E<=Lambda_r, where
+`Lambda_r>=a 2^r` for some a>0. Use H_r=P_rH, inclusion isometries,
+`K_r=(1+E|_(H_r))^p` for an integer p>1, and
+
+    T_(r,n)=P_r L_n P_r|_(H_r),    Tbar_(r,n)=0.         (S2)
+
+**PROVE** common VR-1 holds, with the left target ledger and zero right
+ledger. Fixed-mode errors satisfy `e_(r,n,s)=O(Lambda_r^(1-p))` and
+`q_(r,m,n,s)=O(Lambda_r^(2-2p))`. Thus a target with nonzero central
+charge gives unequal ledgers outside the standard local KS class.
+
+**<1>1.** A1 and finite adjoints hold because the P_r are nested spectral
+commuting projections and the K's are restrictions of one (1+E)^p.
+**BY** functional calculus and the target adjoints.
+
+**<1>2.** On an energy-e eigenspace a mode has output energy e-n and norm
+at most a_n(1+e). Consequently, for fixed n,s,
+
+    ||K^s L_n K^(-s-1)|| <= a_n(1+|n|)^(ps),
+
+since the remaining energy power is `(1+e)^(1-p)<=1`.
+Different input energies give orthogonal output energies, so this bound
+holds on their Hilbert direct sum. Compression by P_r is contractive in
+every graph norm. **BY** (S1) and p>1. This is A2.
+
+**<1>3.** The refinement defect is
+`(P_(r+1)-P_r)L_nP_r`. It vanishes on input energies
+`e<=Lambda_r-|n|`, since the output then belongs to P_rH. The preceding
+bound on its remaining energy support is
+`C_(n,s)(1+Lambda_r-|n|)^(1-p)` once Lambda_r>|n|.
+This is summable in r; the finitely many earlier scales are harmless.
+**BY** (S1), nesting, spectral containment and <1>2. This is A3.
+
+**<1>4.** The finite residual is exactly
+
+    -P_r L_m(1-P_r)L_nP_r+P_r L_n(1-P_r)L_mP_r.         (S3)
+
+It vanishes below energy `Lambda_r-|m|-|n|`. Each two-mode product has
+norm at most `C_(m,n)(1+e)^2` on energy e, and graph weights contribute
+`(1+e)^(-2p)` up to a fixed shift ratio. Hence (S3) has (s,2) norm
+`O(Lambda_r^(2-2p))`. **BY** expanding the compressed commutator,
+the exact target bracket, and two applications of (S1). This is A4.
+
+**<1>5.** VR-1 applies. On every fixed finite-energy vector the cutoff
+operators eventually equal the target operators, so the limit is the
+declared target, not an inferred CFT. The right family is identically zero.
+**QED.**
+
+This proof is a direct application of the compression/leakage mechanism in
+CA-79:164-175 and VR-1, with an explicitly supplied target energy bound.
+It proves no spatial locality of P_r or of (S2). In particular F2-Cubic
+implies that nonzero-charge (S2) cannot also satisfy the vanishing KS
+Fourier remainder used in (B1).
+
+### Lemma F2-Kernel: the non-summable spatial cost of a spectral derivative
+
+**Status: proven finite identity and fixed-separation limit.
+Tags: (periodic Fourier discretization; category-free; finite ingredient).**
+Use the AP grid of CONVENTIONS (w), even N, epsilon=2pi/N, and define
+the spectral derivative matrix in position coordinates by
+
+    D_(xy)=(1/N)sum_(r=-N/2+1/2)^(N/2-1/2) r exp(2pi i r(x-y)/N).
+
+**PROVE** for integer d=x-y with 0<|d|<N,
+
+    D_(xy)=-i(-1)^d/[2 sin(pi d/N)],   D_(xx)=0,
+    epsilon D_(x,x-d) -> -i(-1)^d/d   (fixed d!=0).       (S4)
+
+**<1>1.** The finite geometric series is
+`sum_r exp(ir theta)=sin(N theta/2)/sin(theta/2)`.
+Differentiate and evaluate at theta=2pi d/N. Multiplication by 1/(iN)
+gives (S4); symmetry of the r-grid gives D_xx=0.
+**BY** finite summation/differentiation, with no limiting interchange.
+
+**<1>2.** Use `sin(pi d/N)/(pi d/N)->1` for the fixed-d limit.
+Every separation has a nonzero coefficient, and the limiting absolute
+coefficients 1/|d| are not summable: each dyadic block from 2^j to
+2^(j+1)-1 contributes at least 1/2. **QED.**
+
+Thus “decaying kernel” is accurate here; “quasi-local” must not be read as
+an absolutely summable interaction. A position phase exp(pi i x/N)
+changes the AP matrix into a circulant matrix using integer Fourier labels
+r+1/2; this preserves coefficient magnitudes and the failure of finite range.
+
+The table below gives the sourced fermion instance of F2-Spec, with finite
+site dimension and the kernel (S4). Its modes are target spectral
+compressions, **not certified to equal the KS modes of a chosen nonlocal
+density/current prescription**. It therefore proves an outside-KS escape
+mechanism, not sharpness of F2(b) while every other hypothesis is retained.
+
+Dropping finite site dimension alone supplies no loophole in F2-B or
+F2-Cubic once their common-domain identities exist: neither proof uses it.
+An infinite-site-dimension example must identify which analytic/domain or
+KS Fourier-identity assumption changes. None is constructed here; the
+infinite-dimensional finite-stage version of VR-1 would itself need stated
+domains. The unrestricted sharpness assertion F2(c) remains unproved.
+
+## Local source audit of the broader chirality claim
+
+**Status: source-local scope audit; tags: (full versus chiral; category-free;
+no new R3 theorem).** Searches of local `references/` and `literature/md/`
+included “chiral central charge”, “gravitational anomaly”, “thermal Hall”,
+“Kitaev” and “Kapustin”; no network or source acquisition was used.
+
+- `references/lattice-symmetry/LiLinMcGreevyShiKim2024/source/revised-emergence-of-virasoro.tex:738-746`
+  explicitly states a standalone one-dimensional tensor-product obstruction
+  and cites Witten/Hellerman. It does not give the needed theorem with
+  precise microscopic hypotheses there. Its `:1046` explains the thickened
+  edge and separately says its proposed density has no proved stress OPE.
+  The cited Hellerman 2101.03320 source was not found by filename/identifier
+  search in the local ground-truth trees. This is a concrete acquisition
+  gap, not permission to import the theorem from memory.
+- `literature/md/1903.12334/1903.12334.md:195-197` presents a boundary-bulk
+  consistency principle with “should satisfy”, rather than the requested
+  microscopic theorem.
+- `references/lattice-symmetry/Jones2017NoGo/source/nogo.tex:586-622`
+  proves a specified refinement/rotation-discontinuity obstruction; its
+  restricted family is explicit at `:594-599`. It is not a general
+  finite-range Hamiltonian no-go.
+- `references/lattice-symmetry/ZiniWang2018/source/main.tex:125-129,449-462`
+  treats a chiral scaling-limit construction with boundary geometry and
+  separately describes the general case as conjectural. It cannot be
+  substituted for the present periodic two-family assumptions.
+
+The broad claim in F2(b) introduced by “equivalently” is not established as
+an equivalence: a physical lattice continuum limit need not come equipped
+with both *standard* KS VR-1 certificates on the same retained system,
+and arbitrary finite range needs the explicit estimate in F2-R. Conversely
+R2 by itself gives neither positive energy nor local conformal algebras
+(`virasoro_routes.md:154-177`). No inference of nonlocality from a fusion
+constraint is made; F2-B and F2-Cubic use only the stated local commutator
+identities and apply to constrained fusion spaces satisfying them.
+
+## Verification and rejected routes
+
+Two research collaborators and an independent skeptical reviewer checked
+the substantive new arguments using the requested GPT-6.1, xhigh setting.
+The reviewer independently checked F2-G, F2-N, F2-B, F2-Cubic, F2-Aalg,
+F2-Spec and F2-Kernel; the second collaborator also checked every sign
+and the range qualification in F2-R. Their reports were checked against
+the equations and local sources before incorporation. No reviewer wrote
+outside this directory, or any files at all.
+
+`checks/check_f2.py` checks exact polynomial Jacobi/dagger/parity identities,
+central bookkeeping, the cubic consistency calculation, an independent
+16-by-16 nearest-neighbour KS matrix identity, and genuine cyclic shifts.
+`checks/check_range_and_kernel.py` checks the range-two continuity/Fourier
+identities and spectral kernel with absolute tolerance 1e-10 and matrices
+of dimension at most 128. Run commands, versions, raw outputs and three
+rejected mutations are in `checks/README.md`; both unmutated scripts pass.
+These are finite invariant checks, not numerical evidence for an unknown
+continuum limit.
+
+Rejected routes: a branch choice cannot fix F2-N; a nonzero formal X_0 is
+not a positive-Hilbert lattice counterexample; a moving high-energy defect
+cannot violate ZC while its limiting commutator vanishes under full A3
+(F2-G); a scalar-field heuristic for the formal cocycle lacked a common
+operator domain and was discarded. No large chain search or unverified
+spectral fit was substituted for proof. The complete F2(a) remains open.
+
 ## Results ledger
 
-- F2(a), loss-two zero-mode certificate from the stated assumptions — open.
-- Current–momentum identification from F2(a)'s hypotheses — negative (F2-N); all branches fail even with genuine site translation, while ZC remains true in that example.
-- Equivalence of finite (s,2) ZC and limiting zero-mode commutation under A1-A3 — proven (F2-G), with explicit summable-tail bound.
-- Limiting zero-mode commutation from the KS algebra alone — open.
-- Formal Jacobi/*/parity/Fourier-grade identities alone force the zero mode — negative (F2-Aalg); not a positive-Hilbert or KS counterexample.
-- F2(b), parity-free equality of both ledgers for standard nearest-neighbour KS and commuting limiting zero modes — proven (F2-B); applies in particular to conserved total current.
-- Finite-range cut-current identities and extension under component graph bounds — proven / conditional respectively (F2-R); component bounds remain extra when rho>1.
-- General finite-range finite-site lattice chirality obstruction — open.
-- F2(c), certified escape mechanisms and exact hypothesis separation — open.
-- Local gravitational-anomaly source audit — open.
+- F2(a), automatic loss-two ZC under its full stated hypotheses — **conjectural**: neither proved nor refuted; no actual nearest-neighbour KS counterexample constructed.
+- F2-N, automatic current–spectral-log identification — **negative**: all logarithm branches fail in an exact genuine-translation tower; its ZC nevertheless holds.
+- F2-G, finite (s,2) ZC iff limiting zero-mode commutation under common A1-A3 — **proven**: explicit summable word-tail bound; strengthens CA-91's sufficiency-only statement.
+- F2-B, parity-free equality of both ledgers and all mixed commutation given limiting C_00=0 — **proven**: settles standard nearest-neighbour F2(b), since conserved total current supplies C_00=0.
+- F2-Cubic, cubic ledger balance without parity or current conservation — **proven**: also gives c_L=c_R if each family's c=c* normalization is assumed.
+- F2-absent, absent right stress excludes nonzero left cubic anomaly without parity — **proven**: scalarity of the remaining left stress is not concluded at R2.
+- F2-Aalg, formal Jacobi/dagger/parity/Fourier grading force X_0=0 — **negative**: explicit formal *-Lie algebra; no positive-Hilbert/KS realization asserted.
+- F2-R(i)-(ii), finite-range cut-current and Fourier identities — **proven**: exact for fixed rho and N>2rho.
+- F2-R(iii), finite-range parity-free balance — **conditional**: component graph bounds suffice; not derived from finite range alone.
+- F2-Spec, inverse spectral cutoff with unequal left/right ledgers — **proven** from a declared positive-energy target and (S1); an R2 construction outside the local KS class.
+- F2-Kernel, spectral derivative has non-summable 1/r spatial tail — **proven**: exact finite formula and fixed-separation asymptotic.
+- General finite-range, finite-site physical lattice chirality no-go — **conjectural** in this record: not equivalent to the proved KS-specific implication.
+- F2(c), sharpness under dropping only range or only site dimension while retaining every other hypothesis — **conjectural**: the proved spectral mechanism also changes the stress prescription; no infinite-site-only example supplied.
+- Local source audit — **proven** as an audit of the displayed passages: a nearby anomaly assertion is local, but its applicable primary microscopic theorem remains a source gap.
 
 ## Layer tags
 
-| Setting | Data layer | Rung reached | Rung claimed |
+| Statements / setting | Data layer | Rung reached | Rung claimed |
 |---|---|---|---|
-| full/periodic, both standard KS families | category-free plus supplied common VR-1 system | none newly reached | R2 implications |
-| categorical finite ingredients | L0 plus declared local representation and density | none newly reached | ->R0 / ->R2 |
-| general chirality obstruction | hypotheses to be audited | none | R3-level interpretation only if separately justified |
+| F2-G; any common two-family system | category-free | R2 implication from A1-A3 | same |
+| F2-B, F2-Cubic, F2-absent; full periodic KS | category-free plus supplied certificates | conditional R2 restrictions; no new categorical instance | R2, not R3 |
+| F2-N; full zero-density tower | L0 unit multiplicities | trivial R2 counterexample to the logarithm inference | no nonzero CFT |
+| F2-Aalg; full Fourier grading | category-free | formal algebra only, no Hilbert R2 | diagnostic ->R2 |
+| F2-R; full finite-range representation | category-free; L0 for a categorical realisation | finite identities, conditional ->R2 | no universal finite-range theorem |
+| F2-Spec; declared chiral target with zero right copy | L4, not bare L0/L2 | inverse R2 cutoff; no local R0 supplied | no category-derived R3/R4/R5 |
+| F2-Kernel; periodic spectral matrix | category-free | finite ingredient | explicit failure of finite range |
+| Original F2(a), general physical no-go, sharp F2(c) | declared microscopic data; analytic gaps remain | none newly certified | conditional R2 / broader R3 interpretation |
 
 ## What this gives the integration
 
-Pending. Target cell: CA-88 (full; category-free; R2 conditional), CA-91's
-zero-mode and parity hypotheses. No promotion of a categorical instance.
-Definition 88.1's S_ch source gap is currently untouched.
+The **(full; category-free; R2 conditional)** cell is sharpened at the same
+rung. CA-91's cubic ledger equality needs neither parity nor current
+conservation. Its equal-ledger hypothesis can be removed entirely from
+the mixed-bracket reduction: with two standard KS certificates, all
+mixed brackets vanish iff the limiting zero modes commute, and in that
+case both ledgers agree. F2-G makes this equivalent to finite ZC and
+provides loss-two bounds on every mixed bracket in terms of A3 tails.
+
+CA-79 and LC-4 may therefore request **one zero-mode certificate** for
+mixed commutation, without a separate parity/equal-ledger certificate.
+Under physical c=c* normalization the central-charge balance already
+follows from the two certificates and the KS Fourier identity alone.
+CA-89's common-system transfer can use these conditional conclusions;
+none supplies its missing Ward-to-operator estimate or any chain's A2-A4.
+F2-R provides a precise finite-range current and the extra estimate needed
+to transfer this conclusion beyond adjacent densities.
+
+**Definition 88.1's S_ch source gap is narrowed, not closed.** A nonzero
+net cubic anomaly is now excluded in the certified standard-KS setting
+without parity. A local source discussing the broader anomaly obstruction
+has been identified, but its primary theorem and the bridge to arbitrary
+fusion-space lattice limits have not been imported/proved. Chiral subnets,
+boundary/open-chain targets and changed stress/retention prescriptions are
+not excluded. No cell moves up a rung, no category-faithful construction
+is obtained, and R1/R3/R4/R5 still need their own compatible certificates.
 
 ## Open problems
 
-All proof-plan obligations are currently open; update after each proved step.
+1. **Automatic zero-mode lemma (original F2(a)).** For the full stated
+   nearest-neighbour KS tower prove `[L_0,S_0]=0` on D, or construct a
+   positive-Hilbert nearest-neighbour tower violating it. F2-G then settles
+   the requested (s,2) norm statement in either direction. A proof must use
+   positive-Hilbert realizability or further microscopic information:
+   F2-Aalg rules out a purely formal Jacobi/star/grade/parity proof.
+2. **A usable current–momentum hypothesis.** Supply a justified retained
+   carrier/control for which CA-91(12) holds, or give a genuinely weaker
+   commutator estimate. F2-N proves that no branch-selection lemma alone
+   can establish (12) on all towers in F2(a).
+3. **Linear ledger without ZC.** After F2-Cubic, determine whether the
+   remaining linear difference is forced to vanish by the full microscopic
+   hypotheses. Do not identify c with c* unless normalization is declared.
+4. **Finite-range analytic estimate.** For the currents (R1), prove that
+   the coefficient-weighted remainder in F2-R <1>4 tends to zero on the
+   common core. Uniform component graph bounds suffice; they remain an
+   additional obligation for rho>1.
+5. **Sharp long-range and infinite-site cases.** Identify the actual
+   density/current stress for a nonlocal chiral regulator and compare it
+   to (S2), or construct an infinite-site-dimension example with all domain
+   hypotheses. The present inverse cutoff does not settle either stronger
+   claim with the other assumptions unchanged.
+6. **Primary anomaly theorem and physical completion.** Acquire and check
+   the cited Hellerman source or another applicable theorem when network
+   acquisition is permitted. State its locality/factorization/scaling-limit
+   assumptions, then verify them for the proposed tower. Positive energy,
+   integrated symmetry, local conformal algebras and fidelity remain
+   distinct from the R2 commutator statement.
 
 ## Examples table
 
-| Instance | Role | Status |
+| Instance | Tags and established fact | Exact limitation |
 |---|---|---|
-| General C, any declared periodic local representation | Main scope | No example-specific assumption |
-| Small exact matrices, if used | Falsify algebraic inference, not certify CFT | Pending |
+| Any C, O=1 direct-sum 1, zero densities | (full; L0; trivial R2): F2-N, every log has norm >=N/2 | ZC=0; not a counterexample to F2(a) |
+| Unit-multiplicity matrices, arbitrary asymmetric density, N=4 | (full; L0; finite): exact unequal-ledger Fourier identity | No VR-1/continuum assertion |
+| Unit-multiplicity matrices, density commutation range two, N=7 | (full; L0; finite): cut continuity/Fourier checks, max error 6.98e-15 | Finite oracle only; no graph bounds inferred |
+| Polynomial module F2-Aalg | (formal full grading; category-free; no R2): X_0!=0 with dagger/parity | No positive Hilbert or microscopic KS realization |
+| Declared complex chiral fermion sea, N Fourier modes | (chiral target; L4; inverse R2): F2-Spec gives c_L=c_L*=1, right ledger 0; N two-state sites with kernel (S4) | Infinite range and target-compressed stress; no standard-KS density/current match or faithfulness to arbitrary C |
+
+**Verification of the last row [example only].** Use the continuum
+half-integer shifts `B_n e_r=(r-n/2)e_(r-n)` and the negative sea of
+CONVENTIONS (w). Their normal-ordered complex CAR representation has
+c=c*=1, h=0 (`references/text/CFTFromLatticeFermions.txt:879-892,2790-2823`;
+the finite Schwinger sum is already proved in
+`cft_machine/benchmarks/fermion/PROOF.md:78-115`, not re-derived here).
+
+Let P_N retain exactly the states with no particle/hole excitation outside
+the N-mode window. Its space is the full exterior Fock space on N modes,
+of dimension 2^N; choosing an ordered occupation basis identifies it with
+N two-state sites. The Fourier transform changes the CAR site basis but
+not this dimension. Negative occupied modes have their sea energy
+subtracted, so `E_N=sum_r r(a_r^dagger a_r-1_(r<0))` is the sum of the
+positive costs |r| of particles and holes. An excitation outside the
+window costs at least N/2+1/2; hence P_N contains every E<=N/2 state,
+commutes with E, and is nested under filled-sea embeddings. Along dyadic
+N, these are exactly F2-Spec's projection hypotheses. The source's
+positive-energy mode bound applies sectorwise with the same c=1 constant
+(Carpi-Weiner:729-745); the direct-sum bound follows by orthogonality.
+Thus F2-Spec certifies these cutoffs, not just convergence on sampled vectors.
+
+The spatial Hamiltonian matrix is (S4), or its circulant phase conjugate.
+Second quantizing the one-particle phases `z^(r+1/2)` gives U_N^N=I and
+the required opposite Fourier covariance (the right family is zero);
+it commutes with the energy control. In a qubit presentation even
+fermion hopping has strings over unbounded intervals, so no claim of
+spin-local finite range is made. This is a concrete finite-site,
+nonlocal, target-first mechanism; its spectral modes have deliberately
+changed the KS-prescription hypothesis. Unit multiplicities allow the
+same finite matrices in any C, but this ignores C and supplies no R4.
 
 ## Sources used
 
@@ -488,3 +855,29 @@ All proof-plan obligations are currently open; update after each proved step.
   `REVIEW.md:89-101,179-212,214-252`; `INTEGRATION.md:123-131`: prior proof and gaps.
 - `references/lattice-symmetry/GransSamuelssonEtAl2020/source/Linnea11.5.tex:791-822`:
   energy/current KS prescription, not a general current–translation theorem.
+- `report/sections/79_ks_shell_and_refinement_defect.tex:52-81,164-175`:
+  finite KS identity and compression/leakage formula.
+- `references/text/PenneysUnitaryFusionCategories.md:219-237,442`:
+  orthogonal sums and the simple unit for the general-C multiplicity test.
+- `references/cft-machine/coset-symmetry/CarpiWeiner2004/source.tex:714-747`:
+  representation scope and energy bound (uniform in lowest weight at fixed c).
+- `references/cft-machine/coset-symmetry/SOURCES.md:3-36`:
+  provenance and representation-scope caution for that source.
+- `references/text/CFTFromLatticeFermions.txt:879-892,1843-1889,2790-2823,3480-3499`:
+  complex normal ordering, momentum-cutoff maps/nonlocality, c=1 sea target,
+  source common-core construction; not an assertion that (S2) is its finite sine KS prescription.
+- `references/cft-machine/fermion/SOURCES.md:1-66`:
+  source registration and anchors; `CONVENTIONS.md:830-869`: AP/Fourier/CAR conventions.
+- `cft_machine/benchmarks/fermion/PROOF.md:12-17,78-115`:
+  existing continuum-shift and Schwinger-sum derivations used only in the example.
+- `references/lattice-symmetry/LiLinMcGreevyShiKim2024/source/revised-emergence-of-virasoro.tex:738-746,1046`:
+  nearby anomaly assertion and its limitation; registration in
+  `references/lattice-symmetry/SOURCES.md:1882-1956`.
+- `references/lattice-symmetry/Jones2017NoGo/source/nogo.tex:586-622` and
+  `literature/md/1903.12334/1903.12334.md:195-197`: scope of the other nearby no-go passages.
+- `references/lattice-symmetry/ZiniWang2018/source/main.tex:125-129,449-462`:
+  boundary/chiral scaling-limit scope, not a periodic two-family no-go.
+- `references/lattice-symmetry/SOURCES.md:9-36,277-306,966-1044`:
+  Koo-Saleur, Zini-Wang and Grans-Samuelsson source registration.
+- `references/lattice-symmetry/KooSaleur1993/source/9312156.tex:428-450`:
+  background stress/metric discussion read for scope; not used as a general anomaly theorem.

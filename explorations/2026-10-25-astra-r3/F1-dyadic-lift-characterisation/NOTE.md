@@ -170,7 +170,10 @@ unital tower on the original algebras, not just isolated maps. QED.
 The bound is sufficient, not optimal; at b=1 use CA-90 directly for r=0.
 No preservation of the original occupation grading, one-site translation
 covariance, arbitrary-placement coherence or periodic seam is asserted.
-These are not hypotheses of F1(a).
+These are not hypotheses of F1(a). Only dyadic composition coherence is
+claimed, not compatibility of alpha_L with every embedding that adds
+boundary sites. Such an additional net-consistency condition would be a
+stronger problem than the displayed definition of (a).
 
 ## F1.2. Noncentral sites with local lifts [negative to (a) => (b),(c); any, L0, R0^u]
 
@@ -223,9 +226,11 @@ cannot be attributed to hidden L1 input.
 
 ## F1.3. Why the proposed Bratteli extraction fails [proven scope diagnosis; any, L0, ->R0^u]
 
-**ASSUME** the conventions and hypotheses of CA-90 Proposition 90.2(b).
-**PROVE** its unchanged-side hypothesis is absent in F1(a), and the
-counterexample satisfies the corresponding block-insertion arithmetic.
+**ASSUME** the pointed fusion setting and supplied blocked transport of
+F1.1b. Use CA-90 Proposition 90.2(b) only for comparison with its explicitly
+stated one-gap class. **PROVE** that class has an unchanged-side hypothesis
+absent from F1(a), while our counterexample satisfies the block-insertion
+arithmetic. No one-gap lift with ancillary O is assumed in the counterexample.
 
 `<1>1.` The decisive prior step is **equality** on both sides of one gap:
 `beta(a tensor 1)=a tensor 1_O tensor 1` and its right-side analogue.
@@ -253,7 +258,14 @@ group case the two rows in (F1.3a) are `n_(x^−1 c')` and `n_(c' x^−1)`.
 They agree because these grades are conjugate and n is a class function.
 The analogous two rows for O need not agree, by F1.2 `<1>1`.
 Thus the integer system for **block** transport is consistent; no
-cancellation recovers single-site centrality. QED.
+cancellation recovers single-site centrality. More explicitly, in F1.2 one may take
+`Lambda_(c,c')=K+delta_(c,c')`; since `N_ij^c=delta_(c,ij)`,
+
+    sum_c N_ij^c Lambda_(c,c') = K+delta_(ij,c')
+      = n_(i^−1 c' j^−1).
+
+This verifies the entire block-insertion matrix identity in this family,
+not only its unit rows. QED.
 
 No assertion about an arbitrary lift's unknown side-inclusion matrices is
 made. A proof that *all* such matrices force single-site centrality would
@@ -468,8 +480,7 @@ Applying F to the unit, point, naturality and tensor diagrams for t,
 and conjugating by the indicated tensorators, gives exactly those
 diagrams for t'. BY the two tensorator axioms and dagger preservation.
 Every target object is unitarily isomorphic to an image (Penneys:233);
-two such unitary presentations
-differ by an image morphism, by full faithfulness, so naturality makes
+two such unitary presentations differ by an image morphism, by full faithfulness, so naturality makes
 the extension independent of that presentation. Also
 `J_b F(xi)T_0=eta'^b`. Thus the transported datum is pointed and unitary.
 

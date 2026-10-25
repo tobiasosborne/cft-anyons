@@ -16,3 +16,8 @@ and its Codex session is persisted; resume with
 | F6-what-the-tower-remembers | 01a17171-cf50-7fc3-9a2c-caf49fdbacb8 | /tmp/claude-1000/-home-tobias-Projects-cft-anyons/1e7bf440-570e-43d2-b8fb-e585fb4611e2/scratchpad/F6-what-the-tower-remembers.log |
 
 Reviewer runs (Astra) are appended below when launched.
+
+| REVIEW F4-ward-to-residual | 01a17184-0075-7bf3-8f8e-186945356159 | /tmp/claude-1000/-home-tobias-Projects-cft-anyons/1e7bf440-570e-43d2-b8fb-e585fb4611e2/scratchpad/REVIEW-F4-ward-to-residual.log | launched 06:24 |
+| REVIEW F1-dyadic-lift-characterisation | 01a17185-536d-70d0-94fa-535084b00288 | /tmp/claude-1000/-home-tobias-Projects-cft-anyons/1e7bf440-570e-43d2-b8fb-e585fb4611e2/scratchpad/REVIEW-F1-dyadic-lift-characterisation.log | launched 06:25 |
+| REVIEW F6-what-the-tower-remembers | 01a17187-f82e-7fb1-a009-01d22136084c | /tmp/claude-1000/-home-tobias-Projects-cft-anyons/1e7bf440-570e-43d2-b8fb-e585fb4611e2/scratchpad/REVIEW-F6-what-the-tower-remembers.log | launched 06:28 |
+| REVIEW F3-reflection-coherence | 01a1718d-035b-7032-bbdb-a12454ab1f70 | /tmp/claude-1000/-home-tobias-Projects-cft-anyons/1e7bf440-570e-43d2-b8fb-e585fb4611e2/scratchpad/REVIEW-F3-reflection-coherence.log | launched 06:34 |

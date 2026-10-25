@@ -1,0 +1,23 @@
+COMMAND: OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 python3 explorations/2026-10-25-astra-r3/F5-contact-trichotomy/checks/graph_core_vectors.py
+VERSIONS Python=3.12.3 NumPy=2.4.6 SciPy=1.17.0
+SHA256 graph_core_vectors.py cc8f4adefdbaa75dd8cb9e30e277a13be862b393cf91e410763ea732dc0f7024
+SHA256 contact_fibres.py 27851d5e197116d11783ccae08a941befc694769ff2fdd2ccbabdf67e08c6ece
+GREEN independent Laplacian stencil, zero trace and unit diagonal normal derivative
+GREEN exact affine-collar normal/contact/source row cancels, including -eps G correction
+FRICTION original radius-.1 probe: exact source norm=6.0198718597; sampled L24/48/96=3.64432433,6.02377613,6.01986503; deep residuals=1.05773206,2.35879426,1.22061744. First-to-last decrease check failed from L24 underresolution; widen radial support to .3.
+SOURCE exact polynomial quadrature norm=4.4191852182e+00; radius-.3 bump resolved on requested grids; acceptance uses first-to-last decrease
+slow negative -sqrtL     L= 24 alpha=-4.89897949e+00 residual=1.43014710e+01 correction_norm=1.99898442e-01 source_norm=4.41916457e+00 sector_residuals=[ 0.370908  0.145575 14.295919] seconds=0.211
+slow negative -sqrtL     L= 48 alpha=-6.92820323e+00 residual=9.39450294e+00 correction_norm=1.42980185e-01 source_norm=4.41918517e+00 sector_residuals=[0.27626  0.116868 9.389713] seconds=0.501
+slow negative -sqrtL     L= 96 alpha=-9.79795897e+00 residual=6.37358619e+00 correction_norm=1.01731891e-01 source_norm=4.41918522e+00 sector_residuals=[0.201572 0.093803 6.369707] seconds=1.928
+slow positive +sqrtL     L= 24 alpha=+4.89897949e+00 residual=1.24430602e+01 correction_norm=1.97643800e-01 source_norm=4.41916457e+00 sector_residuals=[ 0.455408  0.412048 12.427895] seconds=0.100
+slow positive +sqrtL     L= 48 alpha=+6.92820323e+00 residual=8.35449223e+00 correction_norm=1.41728776e-01 source_norm=4.41918517e+00 sector_residuals=[0.31851  0.259739 8.344377] seconds=0.519
+slow positive +sqrtL     L= 96 alpha=+9.79795897e+00 residual=5.81432563e+00 correction_norm=1.01071217e-01 source_norm=4.41918522e+00 sector_residuals=[0.222697 0.167472 5.807645] seconds=1.939
+deep negative -L^5       L= 24 alpha=-7.96262400e+06 residual=1.14582876e+00 correction_norm=3.03985280e-03 source_norm=4.41916457e+00 sector_residuals=[0.04225  0.193189 1.128635] seconds=0.100
+deep negative -L^5       L= 48 alpha=-2.54803968e+08 residual=5.99316010e-01 correction_norm=1.66099757e-03 source_norm=4.41918517e+00 sector_residuals=[0.021125 0.105339 0.589608] seconds=0.479
+deep negative -L^5       L= 96 alpha=-8.15372698e+09 residual=3.04723619e-01 correction_norm=8.63612940e-04 source_norm=4.41918522e+00 sector_residuals=[0.010562 0.059959 0.29858 ] seconds=2.105
+sign-alternating deep    L= 24 alpha=+7.96262400e+06 residual=1.14581542e+00 correction_norm=3.03976209e-03 source_norm=4.41916457e+00 sector_residuals=[0.04225  0.193189 1.128621] seconds=0.166
+sign-alternating deep    L= 49 alpha=-2.82475249e+08 residual=5.87495814e-01 correction_norm=1.62979819e-03 source_norm=4.41918515e+00 sector_residuals=[0.020694 0.103515 0.577934] seconds=0.501
+sign-alternating deep    L= 96 alpha=+8.15372698e+09 residual=3.04723606e-01 correction_norm=8.63612846e-04 source_norm=4.41918522e+00 sector_residuals=[0.010563 0.059959 0.29858 ] seconds=2.035
+RED CAUGHT wrong normal sign: residuals=[np.float64(7.00630521676742), np.float64(9.039848598564484), np.float64(12.45619782580878)]; exact leading normal/contact/source cancellation failed
+RED CAUGHT omit -eps G: residuals=[np.float64(3.593077886912467), np.float64(5.875296410057665), np.float64(8.626995292629221)]; exact leading normal/contact/source cancellation failed
+ALL GREEN manufactured graph-core checks total_seconds=16.203

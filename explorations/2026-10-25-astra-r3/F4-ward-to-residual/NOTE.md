@@ -233,7 +233,11 @@ vacuum has ground energy zero. **BY** on the active-active block the
 density is a_r(I+X tensor Z), with eigenvalues 0 and 2a_r; on the other
 occupation blocks it is zero. Each summand is positive, so their sum is
 positive and kills the vacuum. Ordinary tensor locality gives disjoint
-commutativity. U translates k_j, and U^N=I.
+commutativity. U translates k_j, and U^N=I. The vector state of the
+vacancy vacuum is positive and cyclic for the full tensor-product matrix
+algebra: local matrix units create every product-basis vector. Their span
+is therefore dense in every finite-scale graph norm. No density failure
+explains the converse counterexample.
 
 `<1>2.` Construct an exactly transported, translation-invariant K.
 
@@ -635,7 +639,7 @@ Acceptance: all three commands were independently rerun by the primary
 agent and exited 0. `fermion_check.py --mutate-wrap` rejects an ultraviolet
 wrap through the independent Fermi-surface invariant;
 `--mutate-collar` rejects a collar constant divided by 1000;
-`ks_converse_check.py --mutate-current` rejects the wrong current factor
+`ks_converse_check.py --mutate-current-factor` rejects the wrong current factor
 at the five-site coefficient. Raw failure/restored outputs and source
 SHA256 records are in `checks/`. The wrong-current mutation is a real
 regression in the quantity detecting F4(b)'s failure. One early check run
@@ -681,12 +685,12 @@ convention-file edits, and commits were omitted as explicitly requested.
 |---|---|---|---|---|
 | F4.1, F4.3, F4.5 | Any | Category-free | Finite analytic implication/obstruction, ->R2 | No higher rung |
 | F4.2, F4.2a | Periodic/full, per family | Category-free plus G1–G3; A2 and matching for KS | Conditional W2/A4, ->R2 | R2 only with remaining VR-1 and mixed hypotheses |
-| F4.4 | Periodic/full | Category-free analytic counterexample | Explicit A1–A4 with zero-mode representation (trivial R2); negative converse | No nontrivial conformal theory |
+| F4.4 | Periodic/full | Category-free analytic counterexample | Explicit A1–A4 with all limiting modes zero (trivial R2); negative converse | No nontrivial conformal theory |
 | F4.6–F4.7 | Source-modified chiral CAR on AP circle | Category-free declared representation/control | Diagonal analytic bounds, finite checks, ->R2 | No full Ward or standard-KS certificate |
 | F4.8 | Any locally; full after closure | L0 plus declared h, metric/state data; periodic transport additional | Existing tile compiler feeding ->R2 | No selected h, R3, R4, or R5 |
 
 No assertion obtains L1/L2 information from fusion data, or identifies an
-R4 target from a Virasoro cocycle. A limiting theory's existence, conformity,
+R4 target from a Virasoro cocycle. Existence of a limit, conformal symmetry,
 and fidelity remain distinct rungs on the same state/refinement system.
 
 ## What this gives the integration

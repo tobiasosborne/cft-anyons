@@ -706,53 +706,268 @@ exhaustion and expectation hypotheses are additional. BY CA-93:56–64,
 certificates; L3 supplies conformal enrichment; R5 coherence of CFT
 synthesis remains untouched. QED BY `<1>1`–`<1>4` and CA-88.
 
+## 7. Checks, skeptical audit, and limits of the evidence
+
+The exact standard-library check is `checks/check_f6.py`. Run from the
+repository root:
+
+```bash
+python3 -I explorations/2026-10-25-astra-r3/F6-what-the-tower-remembers/checks/check_f6.py
+```
+
+`checks/output.txt` records six passing invariant groups: cocycle pentagons
+and the normalized coboundary obstruction; distinct based group rings with
+the same regular-object matrix; exact trace and dimension-group quotient
+identities; periodic root support; extraction (10) and square (7) on all
+eight matrix units in the small two-site test algebra; and the mixed-H
+counterexample. The infinite-group descriptions and classification are
+proved above; checking finitely many integer vectors is only corroboration.
+
+Before the restored run, three deliberate mutations were run separately:
+wrong trace exponent, all-vertex support, and phase-free crossing. All exited
+1 at the intended assertions, respectively `red_trace.txt:9`,
+`red_support.txt:10`, `red_crossing.txt:11`; the unmutated run exited 0.
+Commands, interpretation and file hashes are in `checks/README.md`.
+All arithmetic is integer/Fraction; matrices are represented sparsely on at
+most six binary sites. Runtime is seconds, with no Julia or network access.
+
+A GPT-6.1 xhigh skeptical collaborator checked the root-order-ideal proof,
+positive-power/dual-closure argument, primitive trace argument, finite-stage
+classification proof, and the distinction among the refinement records.
+The collaborator supplied the typed compression (10) and the shuffle
+compatibility argument; both were checked here and tested in the exact small
+instance. Corrections made during audit: specify label-preserving finite
+block isomorphisms, retain noninjective stage K_0 maps in the lifting proof,
+prove pointedness implies primitivity, and avoid claiming the tower
+isomorphism preserves named vacuum placements. No proof-assistant verification
+or classification of the intermediate marked record is claimed.
+The final read-only skeptical audit found no material defect, including in
+the explicit cocycle/half-braiding witness and the conditional layer tags.
+
 ## Results ledger
 
 - F6-A — **proven:** AF existence, rooted incidence, supported ordered K_0 formula (1).
-- F6-A' — **proven:** order-ideal formula (2); **negative:** unqualified full stationary formula for arbitrary O.
+- F6-A' — **proven:** order-ideal formula (2), positive-power exhaustion and pointed primitivity.
+- Unqualified full stationary formula — **negative:** an invertible generating site gives Z, not Z^q.
 - F6-T — **proven:** compatible dimension trace (3), block normalization, primitive uniqueness by contraction.
 - F6-B0/B1 — **proven:** finite-map multiplicity classification and same-ring isomorphism of trailing towers.
 - F6-B2 — **proven:** scaled ordered K_0 classification (4), by a finite-stage intertwining proof.
-- F6-N1 — **negative:** AF recovery of the fusion ring or [O], even with primitive pointed tensor-generating input; (5) is proven.
+- F6-N1 formula (5) — **proven:** the regular pointed tower has ordered group (Z[1/q],positive cone,1) and the matrix-tower limit displayed there.
+- Fusion-ring/[O] recovery — **negative:** fails even with primitive pointed tensor-generating input.
 - F6-N2 — **proven:** explicit inequivalent associators give identical trailing towers and canonical trace states.
 - F6-C1 — **proven:** the fixed-H shuffle descends to one AF endomorphism; its ordered K_0 action is the identity.
 - F6-C2 — **proven:** the abstract dyadic diagram forgets H and, when the datum exists, does not add F to the rooted incidence invariant.
 - F6-C3 — **proven:** marked alpha_2 and named vacuum-placement compressions recover t_O and H exactly by (10).
-- Intermediate simultaneous interval-filtered (A_∞,δ) reconstruction — **conjectural/open:** neither recovery nor forgetting of F/H proved for that weaker marking.
+- Intermediate simultaneous interval-filtered (A_∞,δ) reconstruction — **conjectural:** neither recovery nor forgetting of F/H proved for that weaker marking; sharp alternatives below.
 - Automatic descent from lengthwise finite axioms — **negative:** mixed half-braiding choices violate (7).
-- F6-D — **proven:** unmarked-R0 decoding obstruction; **conditional:** R4 only under the separately stated CA-93 hypotheses.
+- F6-D obstruction — **proven:** no universal categorical decoding through the unmarked AF/trace/trailing-stage record.
+- F6-D R4 implication — **conditional:** the separately stated CA-93 net, endpoint and normal-expectation certificates are required.
+- Exact finite calibrations — **proven:** six finite invariant groups and three rejected mutations; no finite check is used as an infinite-limit proof.
 
 ## Layer tags
 
-Setting: **any**, microscopic geometry an ordered open chain.
-Data layer: **L0**, with declared nonzero O; F6-C adds the pointed object and
-relative half-braiding H of CA-90 (L1 suffices).
-Rung reached: none yet in this initial ledger.
-Rung claimed: **R0^u** for the trailing tower and its information loss;
-an obstruction relevant to **R4**, not R4 attainment. No R2, R3, or R5 claim.
+| Statements | Setting | Data layer / declarations | Rung reached | Rung claimed |
+|---|---|---|---|---|
+| F6-A,A',B1,N1,N2 and decoding obstruction | any; ordered open geometry | L0; nonzero O; numerical invariant uses only the based ring and [O] | R0^u for the trailing system | Complete classification of this unmarked R0 output; obstruction to R4, not R4 attainment |
+| F6-B0,B2 | any | category-free finite/AF algebra | Ingredient applied at R0 | Scaled ordered K_0 classification for sequential unital AF algebras |
+| F6-T | any | L0; for dyadic compatibility add pointed O and H | R0 trace; zero-drift R1 instance on the declared compatible schedule | No conformality or faithful state selection |
+| F6-C1,C2 | any; open geometry | L0 + pointed relative half-braiding H, L1 suffices | R0^u | Dilation compatibility, trivial K_0 action, and abstract-diagram information loss |
+| F6-C3 | any; open geometry | L0+H, named point/placements/compressions and tensor record | R0^u | Recovery of that supplied H; no extraction from arbitrary local lifts |
+| Intermediate marked-record question | any | L0+H; explicit interval/dilation marks | No new recovery theorem | Conjectural reconstruction or counterexample |
+| F6-D conditional sector conclusion | chiral, or a named chiral subnet | L0+L4; L1+L4 for braided conclusion; CA-93 hypotheses | No new R3/R4 instance | R4 conditional on R3, endpoint fullness and normal-expectation certificate |
+
+No periodic seam is constructed. No R2, R3 or R5 result is added. The
+L0 label includes F and dagger in the input; the theorem says that this
+particular output factors through strictly less data, not that L0 means
+fusion coefficients alone.
 
 ## What this gives the integration
 
-Pending proof: a precise description of the information discarded by the
-unmarked R0 limit, complementing CA-80 Proposition 80.8. The CA-88 R1–R5
-existence/fidelity cells are not to be promoted from an AF calculation.
+At CA-88's (any; L0; R0) cell, the **trailing** unital tower now has a
+precise classification and information-loss statement. Its invariant is
+the rooted scaled ordered group, not the fusion ring; pointedness repairs
+the stationary formula, while primitivity does not repair reconstruction.
+The dyadic local R0^u existence result still uses CA-90's H and is not
+promoted to arbitrary bare-L0 dyadic lifts.
+
+The R0 input row of the R4 fidelity programme can therefore be made exact:
+unmarked AF, even with its canonical trace and trailing stages, cannot be
+the sole categorical certificate. This sharpens CA-80 Proposition 80.8:
+information is lost by the whole bare algebraic output, not merely by a
+particular scalar representation of fusion operators. It does not supersede
+CA-80's separate endpoint/fullness requirement.
+
+For the richer R0 record, equation (10) is a concrete extraction result:
+a named finite transport map already contains its half-braiding when the
+named point/corner identifications are retained. Concatenation and the
+CA-77 reconstruction marks can retain F before any state is chosen.
+R1 gains no critical-state construction; CA-88 R2/R3/R4/R5 attainment cells
+remain unchanged. In particular CA-93 is a conditional fidelity certificate
+on one represented conformal system, not a rule for decoding F from an AF
+trace. No report or convention file was modified in this exploration.
 
 ## Open problems
 
-Complete the proof obligations above; separate missing literature from
-statements that can be derived here from finite-dimensional algebra.
+1. **Intermediate-record reconstruction lemma.** Fix precisely the record
+   `(A_∞, {A_[j,k]}_(1≤j≤k<∞), δ)`, with geometry-preserving *-isomorphisms
+   carrying each named interval algebra onto the corresponding interval
+   and intertwining δ. No η, h or corner-identification marks are included.
+   Prove these marks can be extracted up to pointed tensor gauge, enough
+   to apply (10), or construct inequivalent H with isomorphic such records.
+   Equation (9) alone does not preserve these simultaneous constraints.
+2. **Associator discrimination lemma for that record.** For two categories
+   with the same based ring, produce compatible finite block isomorphisms
+   preserving both trailing inclusions, all interval inclusions and δ, or
+   an invariant obstructing them. In particular decide the E-F pair for
+   its displayed H. This is the missing hypothesis between bare AF
+   forgetting and fully marked CA-77 reconstruction.
+3. **Arbitrary-lift transport lemma.** For local unital maps not assumed
+   to arise from H, specify conditions making the compression (10) unitary
+   and satisfying CA-90 (90.5) on every fusion embedding. C3 reconstructs
+   supplied H; it does not prove those coherence equations from locality.
+4. **Fidelity passage lemma.** Construct on one chosen scaling/GNS system
+   the endpoint fullness, bounded annular exhaustions and common normal
+   auxiliary state required in F6-D `<1>4`. Nothing in the ordered group
+   proves these analytic hypotheses or the existence of the R3 net.
+
+**Source gap, not a conditional mathematical step:** no local primary AF
+classification source was found. F6-B2 proves the precise sequential unital
+case needed here, so (4) has no remaining Elliott assumption. Acquiring a
+source for attribution/general variants is future bibliographic work,
+outside this no-network task.
 
 ## Examples table
 
-Pending; models will appear only as instances of general results or checks.
+| ID / instance | Exact result or counterexample | General statement tested |
+|---|---|---|
+| E-P: Hilb_fd(C_3), O=g an invertible generator | A_L=C; rooted K_0=Z. Full stationary permutation system gives Z³ with u on one axis. | F6-A' support/order-unit correction |
+| E-R: Hilb_fd(C_4) versus Hilb_fd(C_2×C_2), regular O | Both N=J_4 and m_L=4^(L−1)1. Based rings differ: C_4 has an element of order 4, while every nonunit Klein element has order 2. | F6-N1; even the rooted fusion graph does not recover the based ring |
+| E-V: either E-R input versus Vec, O'=4·1 | Same AF limit and trace; fusion-ring ranks 4 versus 1. | F6-N1; primitive, pointed and generating hypotheses do not restore recovery |
+| E-O: Vec with O=2·1 versus O'=4·1 | Same limit by even-stage telescoping; different [O]. | F6-N1 `<1>5` |
+| E-F: Hilb_fd(C_2,ω_+) versus Hilb_fd(C_2,ω_−), O=1⊕g | ω_+=1, ω_−(a,b,c)=(-1)^(abc); inequivalent associators, same J_2 tower and (Z[1/2],≥0,1). Both admit the H displayed below. | F6-N2; F6-C2 actual F-forgetting pair |
+| E-H: untwisted Hilb_fd(C_2), O=1⊕g, t^±_(a,b)=(±1)^(ab) swap | Distinct pointed H, same abstract dyadic diagram; marked extraction recovers their different signs. Mixing t^+ at length 2 with t^− at length 3 breaks (7). | F6-C1/C2/C3 and fixed-H hypothesis |
+| E-0: any C, O=1 | A_∞=C and D=Vec; no information about the ambient complement C\D is present. | Domain is <O>, not arbitrary ambient C |
+
+The following are **small exact instance proofs**, not model assumptions
+in the preceding general theorems.
+
+**E-F [proven; any; L0, with declared H; R0].** **ASSUME** C_2 is
+written additively with elements a,b,c,d∈{0,1}. **PROVE** the E-F row.
+
+`<1>1.` For ω_−, the pentagon exponents are
+bcd+a(b+c)d+abc and (a+b)cd+ab(c+d), both equal to
+bcd+abd+acd+abc modulo 2. If any input is 0, ω=1. Thus it is a
+normalized unitary cocycle. BY this computation and the graded fusion
+construction ENO.md:45–51, Penneys:284–288,321. For an explicit dual
+check, the g coevaluation has scalar 1 and evaluation −1: both snakes
+have scalar (−1)(−1)=1, by the associator and Penneys:400–419.
+For ω_+ these scalars are both 1. These scalars witness rigidity only;
+they do not replace the canonical positive spherical trace of (3).
+
+`<1>2.` C_2 has no nonidentity automorphism. For every normalized
+2-cochain β, (6) in additive notation gives
+(∂β)(1,1,1)=β(1,0)/β(0,1)=1, but ω_−/ω_+=−1 there.
+Hence there is no monoidal equivalence. BY F6-N2 `<1>1`.
+
+`<1>3.` For ω_− define the crossing on the ancillary summand g^b by
+r(a,b)=1 except r(1,1)=i. Inserting the three associators into H's
+tensor identity gives exactly
+
+\[
+ r(a+c,b)=\omega(a,c,b)\omega(a,b,c)^{-1}\omega(b,a,c)
+                  r(a,b)r(c,b)=(-1)^{abc}r(a,b)r(c,b).
+\]
+
+Only a=b=c=1 is nontrivial; it reads 1=−i². All other equations have
+a zero label. Grade-preserving morphisms commute with these scalars,
+so naturality holds; direct sums extend the family. All coefficients
+are unitary and the b=0 summand makes η central. For ω_+, take r=1.
+Thus both inputs admit H. BY the displayed equation and CA-90 H.
+
+`<1>4.` Apply F6-N1/N2 and C2 to obtain the claimed AF, trace and
+abstract dyadic diagram identifications. QED. No equivalence preserving
+all simultaneous interval or corner marks is inferred.
+
+**E-H [proven; any; L0+H; R0].** **ASSUME** the untwisted order-two
+graded category, and O=1⊕g. **PROVE** the E-H row.
+
+`<1>1.` The tensor identity for t^− is
+(−1)^((a+c)b)=(−1)^(ab)(−1)^(cb); t^+ is trivial. Unit, point,
+naturality and unitarity follow as in E-F `<1>3`. A pointed unitary
+on O is block-scalar, so its scalar on g cancels in the half-braiding
+intertwining equation. It cannot change the g,g crossing from +1
+to −1. BY the one-dimensional simple blocks. F6-C2 therefore gives
+two non-gauge-equivalent H with isomorphic abstract dyadic diagrams.
+
+`<1>2.` With h of F6-C3, alpha_2^+(h) sends the fine word
+(g,g,1,1) to (1,g,g,1). The minus formula has coefficient −1:
+the inverse shuffle crosses g with vacancy, and after the hop the
+forward shuffle crosses g with g. BY direct application of t^±.
+Formula (10) recovers this same sign in t_O.
+
+`<1>3.` Choose alpha_2^+ and alpha_3^−. Tensor the input/output in
+`<1>2` with two vacancies. The uniform-minus square is valid by C1,
+so alpha_3^−(h⊗1) has coefficient −1 where alpha_2^+(h)⊗1²
+has +1. The mixed square fails, despite each finite map satisfying
+CA-90 and all dyadic composites defining a directed system. QED.
+`checks/check_f6.py` verifies these exact coefficients and all eight
+matrix-unit squares for each **uniform** crossing.
 
 ## Sources used
 
-- `references/text/PenneysUnitaryFusionCategories.md:219–237,277–288,319–338,394–398,474–487`:
-  orthogonal splitting, graded categories, monoidal structure, fusion graph.
-- `references/text/EtingofNikshychOstrikFusionCategories.txt:1459–1487,1700–1706`:
-  positive dimension character and positive spherical structure.
-- `report/sections/77_pointed_carrier_invariants.tex:53–91`: trailing tower,
-  incidence, and distinction from a fully marked categorical reconstruction.
-- `report/sections/90_local_unital_lift.tex:60–141`: H and the dyadic construction.
-- `report/sections/88_layered_targets.tex:84–131`: data and target ladders.
+All locators are repository-relative. Primary-source facts and prior local
+derivations are distinguished; equations (1)–(10) have local proofs above.
+
+- `references/text/PenneysUnitaryFusionCategories.md:219–237`: orthogonal
+  splitting and finite polar decomposition; `:277–288,319–338`: graded
+  cocycles, unitary tensor structure and tensorators; `:394–419`: coherence
+  and duality; `:470–487`: fusion graph, reciprocity and dual labels;
+  `:1010–1019`: positive canonical spherical trace. Manifest:
+  `references/manifest/SOURCES.md:34–35,55–57`.
+- `references/text/EtingofNikshychOstrikFusionCategories.txt:1435–1450`:
+  local Perron statement, consulted but no spectral-gap conclusion imported;
+  `:1459–1487`: positive dimension character and uniqueness;
+  `:1700–1706`: unitary categories and positive spherical dimensions.
+  `references/text/EtingofNikshychOstrikFusionCategories.md:39–51`:
+  fusion-category definition and twisted graded examples. Same manifest.
+- `literature/md/2010.11121/2010.11121.md:166–180`: strict norm inductive
+  limits, compatible states and their GNS systems.
+- `literature/md/2306.16063/2306.16063.md:49` and
+  `literature/md/2102.04562/2102.04562.md:184–192,391`: local AF/Bratteli
+  mentions found in the search; **not** sources for an Elliott theorem.
+- `CONVENTIONS.md:631–667,1450–1468,1524–1543,1564–1576`:
+  site/tensor/dagger/trace, pointed objects, layer tags and CA-90 crossings.
+  Entries (ar)–(aw) were checked for scope; (ar) is not tower notation.
+- `report/sections/71_refinement_placement_category.tex:53–123`,
+  `report/sections/72_gns_descent_corner_calculus.tex:44–110`, and
+  `report/sections/73_categorical_residual_set.tex:159–172` with its
+  closing qualification: placement/corner conventions; not trailing
+  Bratteli incidence. CA-74's model-specific kernel result is not used.
+- `report/sections/77_pointed_carrier_invariants.tex:47–86`:
+  the two towers, trailing incidence, fully marked reconstruction, and
+  distinct corner limit; `:170–193`: trace/corner qualifications.
+- `report/sections/90_local_unital_lift.tex:60–141,175–210,213–230`:
+  H, local dyadic construction, associator-dependent equations, converse
+  boundary, and commutation-only shuffle. The formula numbered (90.5)
+  is a finite half-braiding equation, not an AF classification statement.
+- `explorations/2026-10-22-astra-r2/E1-local-unital-lift/NOTE.md:11–26,30–117,151–191`,
+  `REVIEW.md:23–120,148–168`, `INTEGRATION.md:6–31,55–91`:
+  checked hypotheses, multiplicity argument and unresolved converse.
+- `report/sections/80_lattice_sewing_and_fidelity_certificate.tex:153–159,168–214`:
+  fusion-operator insufficiency, fidelity certificate and vacuum exclusion.
+- `report/sections/93_normal_limit_expectations_and_fidelity.tex:56–114,160–189,208–237`:
+  auxiliary-state normal limit, conditional tensor/braided fidelity,
+  and explicit unconstructed lattice hypotheses.
+- `explorations/2026-10-22-astra-r2/E5-two-sided-fidelity/NOTE.md:35–66,103–191,342–389`,
+  `REVIEW.md:125–156,190–217`, `INTEGRATION.md:84–123`:
+  auxiliary-state distinction, lowered layers and conditional integration.
+- `report/sections/94_number_changing_collision_dynamics.tex:212–234`:
+  finite-input naturality and where categorical data enter, explicitly not R5;
+  `explorations/2026-10-22-astra-r2/E6-number-changing-continuum/NOTE.md:689–719`,
+  `REVIEW.md:170–176,224–228`, `INTEGRATION.md:71–117`: scope cross-check.
+- `report/sections/88_layered_targets.tex:84–144` and
+  `worklog/021_2026-10-22_round2_proofs.md:56–100`: current layer ladder
+  and integration state; neither is used as a substitute for a proof.
+- `checks/check_f6.py`, `checks/output.txt:1–7`,
+  `checks/red_trace.txt:9`, `checks/red_support.txt:10`,
+  `checks/red_crossing.txt:11`: exact local calibration and mutation record.

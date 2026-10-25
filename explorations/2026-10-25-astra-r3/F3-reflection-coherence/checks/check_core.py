@@ -48,6 +48,9 @@ def main():
     check(z==S.Matrix([[-7,24],[-24,-7]])/25,'arbitrary self-duality square computed exactly')
     check(z*Z*z.H!=Z,'square acts nontrivially on categorical observable Z')
     print('z =',z, '; z Z z.H - Z =',z*Z*z.H-Z)
+    U3=S.diag(1,U);eta=S.Matrix([1,0,0]);Z3=S.diag(0,Z)
+    z3=U3.H*U3.T
+    check(U3*eta==eta and z3*Z3*z3.H!=Z3,'same obstruction with a vacuum-preserving pointed self-duality')
     u=vec(I); s=S.kronecker_product(U,U.conjugate())
     check(s.H*s==S.eye(4) and s*u==u,'arbitrary psi supplies cup-normalized unitary s_psi')
     # Mirror Gram identity for a genuinely complex, nonorthonormal basis.
