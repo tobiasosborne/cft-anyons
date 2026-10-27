@@ -88,8 +88,12 @@ priority (a typical misdirection, 2026-10-27).
 New proofs use Lamport's structured notation with explicit assumptions, hierarchical
 numbered steps, and dependencies. Tobias requests research collaborators
 and skeptical reviewer subagents to referee substantial new material.
-His latest explicit model preference (2026-10-21) is **GPT-6.1 at xhigh**
-for delegated work, superseding the earlier Astra preference.
+Delegation preference (Tobias, 2026-10-27, superseding the 2026-10-21 GPT-6.1
+and 2026-10-25 Astra preferences): **Claude models only from now on; no
+further Codex/Astra launches.** Opus proves and reviews (prover and sceptical
+reviewer are different agents); Sonnet reads and summarises; Haiku does
+mechanical busywork. Results must be stated in generality and only checked in
+examples (the generality rule above).
 
 **Locality clarification (Tobias, 2026-09-22):** global admissibility
 constraints may be fusion constraints built into the Hilbert space. Pursue
