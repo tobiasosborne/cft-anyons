@@ -28,3 +28,4 @@ Quota at launch (quota CLI 14:08): Claude 5-hour 16%, Claude weekly 92%, Fable
 weekly 93% (reset 16:59); Codex weekly 15%, today's allowance 13% -> 30%.
 
 | SHARD-G1 -> CA-101 (`briefs/SHARD-G1-transport-extraction.md`) | 01a17d8e-8f2e-7222-a0c4-5544b1ffae70 | scratchpad/SHARD-G1.log | launched 14:31 after the Opus G1 review (GRADE: COUNTEREXAMPLE to 96.10 as stated) |
+| SHARD-G6 -> CA-102 (`briefs/SHARD-G6-record-faithfulness.md`) | 01a17d92-0a40-78d1-bf36-349d168b19bb | scratchpad/SHARD-G6.log | launched 14:45 after the Opus G6 review (GRADE: COUNTEREXAMPLE to positive 97.16; the record forgets the point) |

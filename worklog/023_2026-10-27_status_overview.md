@@ -176,12 +176,16 @@ negative. That is the honest headline.
    fermion benchmark reaches R2 by Osborne-Stottmeister, not by VR-1. The
    three chains satisfying A1-A4 are degenerate (§1). A non-collapse
    condition is missing from the contract itself.
-4. **Fidelity cannot be recovered; it must be carried.** 97.9-97.10 and G6-B
-   show the algebraic record of the tower (even with intervals and dilation)
-   forgets the input. The pointed tensor marks of CA-77/97.13 do retain H.
-   So the pipeline must transport categorical marks along the tower as
-   declared structure, and fidelity at R4 is an identification of carried
-   marks with limit sectors (93.8), never a reconstruction from the limit.
+4. **Fidelity cannot be recovered; it must be carried.** 97.9-97.10: the bare
+   AF limit (even with trace and stages) forgets F and [O]. G6-B (Opus
+   review 2026-10-27, COUNTEREXAMPLE to the positive 97.16): the interval/
+   dilation record forgets **the point** (the vacancy projections and what is
+   built from them), not F or H, which are untouched; proved for every C with
+   a suitable invertible object translating the site. The pointed tensor
+   marks of CA-77/97.13 retain H. So the pipeline must transport the vacancy
+   point and the categorical marks along the tower as declared structure
+   (pillar P1), and fidelity at R4 is an identification of carried marks with
+   limit sectors (93.8), never a reconstruction from the limit.
 5. **The sewing equations have continuum unknowns.** LC-1..5, 9, 10 are a
    correct general formulation, but the unknowns (graded carriers V_i, a
    vertex algebra with conformal vector, analytic blocks) are the chiral CFT
