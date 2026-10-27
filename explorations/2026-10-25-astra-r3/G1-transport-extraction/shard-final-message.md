@@ -1,0 +1,3 @@
+Created the [CA-101 shard](/home/tobias/Projects/cft-anyons/report/sections/101_ancilla_transport_lifts.tex) and [registration package](/home/tobias/Projects/cft-anyons/explorations/2026-10-25-astra-r3/G1-transport-extraction/SHARD_META.md).
+
+The shard is 260 lines and compiles cleanly. Reviewer checks and mutation outcomes verified; grades, conditional gap, and occupation caveat preserved. No commits or network access.

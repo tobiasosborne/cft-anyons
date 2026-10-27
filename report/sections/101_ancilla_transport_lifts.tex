@@ -1,0 +1,260 @@
+% SHARD-ID: CA-101-ANCILLA-TRANSPORT-LIFTS
+% SHARD-TITLE: Ancilla Transport Lifts and the Failure of Finite-Power Extraction
+% SHARD-SUMMARY: For any unitary fusion C, a declared pointed ancilla transport datum gives local unital vacancy refinements; inclusion matrices classify global point-fixing gauge and distinguish these lifts from site-power transport lifts.
+% SHARD-SUMMARY: Local lifts need not imply transport on any tensor power, refuting G1 and Target 96.10; fixed-power feasibility remains distinct from decidability, occupation-compatible extraction stays open, and blocked-ancilla extraction under uniformity is the next target.
+% SHARD-KEYWORDS: ancilla transport, local unital lift, indefinite particle number, inclusion matrix, relative half-braiding, finite-power extraction, occupation degree, blocked ancilla, Target 96.10, G1, P1, P4
+\section{Ancilla Transport Lifts and the Failure of Finite-Power Extraction}\label{sec:ancilla-transport-lifts}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: COUNTEREXAMPLE to G1 as posed and to Target 96.10 exactly as stated.}
+101.1, 101.2, 101.4 and 101.6 are \emph{derived}; 101.3, 101.7 and 101.8 are \emph{negative},
+with derived witnesses/arguments; the remark-level gap 101.5 is \emph{conditional}; 101.9 is \emph{conjectural}.
+\textbf{Pillar P1:} local unital refinement of the indefinite-particle, vacancy-carrying tower;
+this feeds \textbf{P4} through WT-1 A1, without a state or drift estimate (REVIEW:\allowbreak 172--182).
+\textbf{Grid (INTEGRATION:\allowbreak 44--59):} \((\mathrm{any};\mathsf L0+\text{declared ancilla datum};\mathsf R0^u)\)
+gains a derived certificate, and bare \(\mathsf L0/\mathsf R0^u\) gains witnesses without any transportable site power.
+CA-88's minimal-data wording must become sufficiency: transport on \(O\) or \(O^b\) is not necessary.
+General existence remains open; the rung of CA-90, \(\mathsf L1/\mathsf R0^u\), \(\mathsf R0^c\), \(\mathsf R1\)--\(\mathsf R5\),
+the full/periodic entries and D1-C's occupation-compatible target do not move.
+Setting \emph{any} means no chirality target is selected; the microscopic presentation is an open ordered chain.
+NOTE, REVIEW, INTEGRATION and \path{checks/} denote the files in
+\path{explorations/2026-10-25-astra-r3/G1-transport-extraction/}.
+Dependencies: CA-75 (Link (b1)), CA-76 (76.1--76.4, 76.12), CA-77 (pointed carrier), CA-88 (grid),
+CA-90 (90.H, 90.0--90.2), CA-96 (96.2, 96.4, 96.8, 96.10), CA-97 (97.11--97.13);
+CONVENTIONS (r), (t), (am), (aq), (as), (ax). New notation is shard-local, proposed in \path{SHARD_META.md}.
+
+% Source: explorations/2026-10-25-astra-r3/G1-transport-extraction/NOTE.md:10-19,21-89,91-169,171-287,295-408.
+% Source: explorations/2026-10-25-astra-r3/G1-transport-extraction/REVIEW.md:1-42,48-76,78-103,119-170,172-208.
+% Source: explorations/2026-10-25-astra-r3/G1-transport-extraction/INTEGRATION.md:17-27,44-59,61-119,121-137.
+% Source: explorations/2026-10-25-astra-r3/briefs/G1-transport-extraction.md:82-114 -- refuted conjecture.
+% Source: report/sections/75_integration_map.tex:149-155; report/sections/76_corner_to_wilson_bridge.tex:90-149,236-249.
+% Source: report/sections/88_layered_targets.tex:96-125,149,167-176,245-263 -- grid and unchanged targets.
+% Source: report/sections/90_local_unital_lift.tex:57-141,175-211,245-250 -- H, membership, finite equations, one-gap boundary.
+% Source: report/sections/96_blocked_dyadic_lifts.tex:48-116,137-150,210-228,247-275 -- blocked lifts and extraction target.
+% Source: report/sections/97_what_the_tower_remembers.tex:178-223 -- fixed-H descent and compression marks.
+% Source: CONVENTIONS.md:631-644,740-757,1450-1470,1524-1543,1564-1575,1644-1665.
+% Source: references/text/PenneysUnitaryFusionCategories.md:195-237,277-288,319-348,395-398 -- splitting, dagger, coherence.
+% Source: references/text/EtingofNikshychOstrikFusionCategories.md:39-51,1221-1225 -- graded tensor rule, centrality.
+% Source: references/lattice-symmetry/BubbleAlgebra2003/source/twocolour.tex:897-913 -- restriction multiplicities.
+% Source: literature/md/1704.04221/1704.04221.md:298-307 -- half-braiding orientation; pointed unitarity is declared here.
+% Source: explorations/2026-10-25-astra-r3/G1-transport-extraction/checks/review_g1_independent.py:1-19,320-367,368-448.
+% Source: explorations/2026-10-25-astra-r3/G1-transport-extraction/checks/review_g1_independent_output.txt:1-15.
+% Source: explorations/2026-10-25-astra-r3/G1-transport-extraction/checks/review_g1_red_K.txt:1-16.
+% Source: explorations/2026-10-25-astra-r3/G1-transport-extraction/checks/review_g1_red_u.txt:1-16.
+% Source: explorations/2026-10-25-astra-r3/G1-transport-extraction/checks/review_g1_red_transport.txt:1-17.
+% Source: explorations/2026-10-25-astra-r3/G1-transport-extraction/checks/review_g1_red_point.txt:1-17.
+% Source: explorations/2026-10-25-astra-r3/G1-transport-extraction/checks/review_g1_red_dress.txt:1-17.
+% Source: explorations/2026-10-25-astra-r3/G1-transport-extraction/checks/review_g1_red_centralO.txt:1-16.
+% Source: explorations/2026-10-25-astra-r3/G1-transport-extraction/checks/review_g1_green_authorpoint.txt:1-12.
+
+\subsection{Setting and Ancilla Transport}
+
+Throughout, \(\Cc\) is arbitrary unitary fusion, \(\eta:\one\to O\) is an isometry, \(O\cong\one\oplus X\),
+\(\mathcal D=\langle O\rangle\) full, \(W_L=O^{\otimes L}\), \(W_0=\one\), and \(\Alg_L=\operatorname{End}_\Cc(W_L)\).
+Use left bracketing and fixed unitary associators/unitors; \(V_L\) inserts \(\eta\) at even sites.
+The occupation operator is \(N_L=\sum_j(1-\eta\eta^\dagger)^{(j)}\), as in (am),(as).
+\(\Alg_{[j,k]}=1_{W_{j-1}}\otimes\operatorname{End}_\Cc(W_{k-j+1})\otimes1_{W_{L-k}}\): support is membership.
+A lift means unital injective \(*\)-homomorphisms \(\alpha_L:\Alg_L\to\Alg_{2L}\) with \(\alpha_L(a)V_L=V_La\), all \(L\), and
+\(\alpha_L(\Alg_{[j,k]})\subset\Alg_{[2j-1-r,2k-1+r]}\) for one finite slack \(r\), endpoints clipped.
+Write \(m_c(L)=\dim\Hom(c,W_L)\). \(\Lambda_{c,d}(L)\) counts input-block \(c\) copies in output charge block \(d\),
+not projection ranks; only occurring blocks are used. A point-fixing gauge is \(\operatorname{Ad}_U\),
+\(U\in\Alg_{2L}\) unitary, \(UV_L=V_L\); without a support bound it is global (NOTE:\allowbreak 21--35).
+
+\textbf{Theorem 101.1 [derived; any; \(\mathsf L0+(K,\kappa,t,u)\); \(\mathsf R0^u\)] (NOTE:\allowbreak 37--89; REVIEW:\allowbreak 51--54,128--132).}
+\textbf{Assume} a pointed ancilla \(\kappa:\one\to K\), \(\kappa^\dagger\kappa=1\), unitaries
+\(t_Y:Y\otimes K\to K\otimes Y\) for all \(Y\in\mathcal D\), and a unitary \(u:O\otimes K\to O\otimes O\), with
+\[\begin{gathered}
+ t_\one=1_K,\quad t_Z(f\otimes1_K)=(1_K\otimes f)t_Y,\quad t_{Y\otimes Z}=(t_Y\otimes1_Z)(1_Y\otimes t_Z),\\
+ t_Y(1_Y\otimes\kappa)=\kappa\otimes1_Y,\qquad u(1_O\otimes\kappa)=1_O\otimes\eta .
+\end{gathered}\]
+Here \(f:Y\to Z\) is arbitrary; \(K\in\mathcal D\) follows since \(K\subset O\otimes K\cong O^2\).
+\textbf{Prove} the following all-\(L\) lifts, with exact \(V_L\), slack one and coherent dyadic composites:
+\begin{equation}\label{eq:101-ancilla}
+ \alpha_L(a)=T_L(a\otimes1_{K^{\otimes L}})T_L^\dagger,\quad
+ T_L=u^{\otimes L}B_L^K,\quad
+ \Lambda^K_{c,d}(L)=\dim\Hom(d,c\otimes K^{\otimes L}).
+\end{equation}
+\par\(\langle1\rangle1\). Insert \(K_i\) after old site \(i\), crossing only the old suffix: CA-90 Lemma 90.0's
+heterogeneous argument gives \(B_L^K:W_L\otimes K^{\otimes L}\to(O\otimes K)^{\otimes L}\).
+Naturality and the tensor axiom give interval membership from old \(2j-1\) to old \(2k-1\); no \(K\)-\(K\) crossing occurs.
+\par\(\langle1\rangle2\). Pointedness gives \(T_L(1_{W_L}\otimes\kappa^{\otimes L})=V_L\).
+Conjugation gives a unital \(*\)-map; compression gives intertwining and injectivity.
+\par\(\langle1\rangle3\). Exterior \(u\)-cells cancel, so \(\alpha_L(\Alg_{[j,k]})\subset\Alg_{[2j-1,2k]}\).
+Composition gives the dyadic cocycle, not coherence across arbitrary placements.
+\par\(\langle1\rangle4\). Orthogonal semisimplicity decomposes \(\Hom(d,W_L\otimes K^{\otimes L})\) as
+\(\bigoplus_c\Hom(c,W_L)\otimes\Hom(d,c\otimes K^{\otimes L})\); restriction multiplicities give the formula. QED.
+CA-90 is \(K=O,u=1\), with its sharper slack zero. Existence of the datum is an assumption.
+
+\subsection{Gauge Invariants and Extraction Boundaries}
+
+\textbf{Proposition 101.2 [derived; any; \(\mathsf L0\); finite \(\to\mathsf R0^u\)] (NOTE:\allowbreak 130--161,295--327; REVIEW:\allowbreak 57--60,134--139).}
+For any two lifts of the same \(V_L\), equality of \(\Lambda\) is equivalent to global point-fixing unitary conjugacy.
+It is invariant under any output unitary, and under input/output \(*\)-automorphisms up to block relabelling.
+Every CA-96 transport lift, regardless of its block size, has
+\(\Lambda^{\rm tr}_{c,d}(L)=\dim\Hom(d,c\otimes O^{\otimes L})\).
+Thus a mismatch with \eqref{eq:101-ancilla} excludes every such transport lift up to output unitary gauge.
+\par\(\langle1\rangle1\). Conjugation preserves representation multiplicities; automorphisms only relabel blocks.
+CA-96's inserted blocks and tail total \(O^{\otimes L}\), so its map is \(Q_L(a\otimes1_{W_L})Q_L^\dagger\).
+\par\(\langle1\rangle2\). \(P=V_LV_L^\dagger\) reduces both lifts (76.1); on \(P\) both equal \(V_LaV_L^\dagger\).
+Equal \(\Lambda\) gives equal complement multiplicities \(\Lambda_{c,d}-\delta_{c,d}\). Choose blockwise unitary
+intertwiners \(W\) on \(1-P\); \(U=P+W\) conjugates the lifts and fixes \(V_L\). QED. No locality bound on \(U\) follows.
+
+\textbf{Negative 101.3 [negative; any; bare \(\mathsf L0\); \(\mathsf R0^u\) witnesses] (NOTE:\allowbreak 171--287; REVIEW:\allowbreak 14--42,61--66,141--143).}
+For general \(\Cc\), a local lift family need not come from transport on any \(O^{\otimes b}\), even as an existence
+criterion. G1(a)--(c)'s extraction/dichotomy and the positive answer to Target 96.10 are false exactly as posed.
+\par\(\langle1\rangle1\). Any relative half-braiding on \(O^{\otimes n}\) gives \(O^{\otimes n}\otimes Y\cong Y\otimes O^{\otimes n}\);
+thus \([O]^n\) must be central in \(K(\mathcal D)\), even without pointedness or unitarity (90.6).
+\par\(\langle1\rangle2\). The table supplies exact data satisfying 101.1, but with \([O]^n\) noncentral for every \(n\ge1\).
+Hence all-\(L\) slack-one lifts and no transportable power coexist. QED.
+The general mechanism is \([O]([K]-[O])=0\) with \([K]\) central: cancellation is unavailable.
+The invariant 101.2 separately obstructs recovery of a given lift even when site transport exists (first table row).
+Occupation-degree covariance fails in the table's finite checks; the occupation-compatible variant of 96.10 remains open.
+
+\textbf{Lemma 101.4 [derived; any; \(\mathsf L0\); finite \(\to\mathsf R0^u\)] (NOTE:\allowbreak 295--338; REVIEW:\allowbreak 67--69,145).}
+An arbitrary fixed-volume lift extracts nonnegative integers \(\Lambda_{c,d}\), a distinguished vacuum copy, and
+\[
+ m_d(2L)=\sum_c m_c(L)\Lambda_{c,d},\qquad \Lambda_{c,c}\ge1,\qquad
+ \sum_cN_{ij}^c\Lambda_{c,d}=T^\alpha_{(ij),d}\quad(L=s+t).
+\]
+Here \(T^\alpha\) is the multiplicity of block \((i,j)\) under the \emph{actual} restriction to
+\(\operatorname{End}(W_s)\otimes\operatorname{End}(W_t)\), with \(i,j\) occurring in the two sides.
+\par\(\langle1\rangle1\). Unitality gives the dimension sum; the reducing vacuum corner supplies the diagonal copy.
+\par\(\langle1\rangle2\). Restriction through \(\Alg_L\) multiplies inclusion matrices; its first multiplicities are
+\(N_{ij}^c\). This proves the identity, with no locality or hexagon input. QED. The global classification is 101.2.
+
+\textbf{Proposition 101.5 [conditional; any; \(\mathsf L0\); finite \(\to\mathsf R0^u\)] (NOTE:\allowbreak 340--347; REVIEW:\allowbreak 70).}
+For a gap object \(P_{\rm gap}\in\mathcal D\), the proposed deduction requires an independently justified identification
+\(T^\alpha_{(ij),d}=\dim\Hom(d,i\otimes P_{\rm gap}\otimes j)\); only then do the two unit rows identify
+\(\dim\Hom(d,P_{\rm gap}\otimes x)=\dim\Hom(d,x\otimes P_{\rm gap})\), for \(x\) in both sides (90.2(b)).
+Dyadic interval containment supplies no such identification: the side maps are refined.
+\emph{Review GAP, NOTE \(\langle1\rangle4\):} the claim that an actual lift directly witnesses failure of this
+particular formula remains conditional on computing its \(T^\alpha\) with the comparison correctly typed.
+The note supplies no such calculation; its one-gap/dyadic comparison is not used in 101.3 or 101.4.
+
+\subsection{Finite Equations and Further Obstructions}
+
+\textbf{Proposition 101.6 [derived; any; \(\mathsf L0\)+finite associator/dagger data; finite \(\to\mathsf R0^u\)] (NOTE:\allowbreak 361--408; REVIEW:\allowbreak 71--73,147--149).}
+Fix \(b\ge1\), \(P=O^{\otimes b}\), \(\xi=\eta^{\otimes b}\). For simples \(s_i\) of full \(\mathcal D\), choose complete
+orthonormal embeddings \(f_{ij;k,\mu}:s_k\to s_i\otimes s_j\). Pointed transport is equivalent to the finite system
+\[
+ z_i:P\otimes s_i\to s_i\otimes P,\quad z_i^\dagger z_i=1,\quad z_i z_i^\dagger=1,\quad
+ z_\one=1_P,\quad z_i(\xi\otimes1_i)=1_i\otimes\xi,
+\]
+\[
+ (f_{ij;k,\mu}\otimes1_P)z_k=(1_i\otimes z_j)(z_i\otimes1_j)(1_P\otimes f_{ij;k,\mu}),
+\]
+with fixed associators inserted; \(z_Y=t_Y^{-1}\), consistently with (90.5).
+\par\(\langle1\rangle1\). Necessity and sufficiency follow from 90.2(a): extend over orthogonal simple summands;
+Schur gives naturality, and summing against \(f^\dagger\) gives the tensor axiom. Real/imaginary coordinates are polynomial.
+\par\(\langle1\rangle2\). A pointed unitary tensor equivalence and its quasi-inverse transport solutions at the same \(b\)
+(96.8). Changing \(\eta\) conjugates by a unitary on the unit multiplicity space of \(O\), tensored \(b\) times.
+Thus the admissible set and its minimum (\(\infty\) if empty) are invariant. QED.
+This minimum can be \(\infty\) with slack-one lifts (101.3); it is no lift criterion or bound from \(r\).
+Finite equations at each fixed \(b\) imply no decision procedure for some \(b\): no terminating bound or general exact
+encoding of complex input is supplied. No decidability or undecidability claim is made.
+
+\textbf{Negative 101.7 [negative; any; \(\mathsf L0\); \(\to\mathsf R0^u\)] (NOTE:\allowbreak 10--19; REVIEW:\allowbreak 119--124,151--152).}
+G1's hypotheses impose no relation between different lengths. Choosing two available lift constructions at different
+lengths preserves exact \(V_L\) and a common slack bound; composition still defines dyadic maps.
+The first table row alternates inequivalent inclusion matrices at even/odd lengths, refuting recovery by one
+site-power transport datum. This is the reviewer's derived R1 argument; extraction needs a separate uniformity hypothesis.
+
+\textbf{Negative 101.8 [negative; any; \(\mathsf L0\); \(\to\mathsf R0^u\)] (NOTE:\allowbreak 87--89; REVIEW:\allowbreak 154--165).}
+Existence of a blocked ancilla datum is not universal either. For arbitrary \(\Cc\), such a datum at block size \(b\)
+necessarily supplies a positive integral class \(k=[K]\) central in \(K(\mathcal D)\), with \([O]^b k=[O]^{2b}\).
+\par\(\langle1\rangle1\). \(K\subset O^b\otimes K\cong O^{2b}\) lies in \(\mathcal D\); transport gives centrality and
+the unitary gives the class equation. \(K=O^b\) includes CA-96's construction.
+\par\(\langle1\rangle2\). The final table row rules out every integral central solution for every \(b\ge1\).
+QED for the negative to these constructions (reviewer R2). This is not a no-go for arbitrary local lifts.
+
+\subsection{Effect on other shards}
+
+\emph{Amendment (2026-10-27, round 4):} CA-96's status, necessity clause and Target 96.10 must point to 101.3
+(refuted) and 101.9 (replacement); its unresolved carrier is outside all blocked/ancilla constructions by 101.8.
+CA-90's Boundary and 90.T gain 101.1 and the failure of site-power necessity; 90.2(b) retains its one-gap scope.
+CA-97's ``supplied H'' qualification is sharp: the counterexample has no site-power H; its compression mark fails
+unitarity in the finite check below. CA-88's entries change only as stated in Status. CA-75 Link (b1) and CA-76's
+local-unital pointer gain 101.1; Link (b3) and 76.12's state hypotheses remain open (INTEGRATION:\allowbreak 61--95).
+
+\subsection{What This Does Not Claim}
+
+No universal existence or classification of local lifts, no extraction of site-power transport, no local-gauge
+bound from equal inclusion matrices, and no decision procedure for some block size. No occupation-preserving
+counterexample to 96.10: preservation means \([N_{2L},\alpha_L(a)]=\alpha_L([N_L,a])\) as in (am),(as).
+Trailing descent is only finitely checked for the negative witnesses; no all-\(L\) proof is lifted (REVIEW:\allowbreak 167--170).
+No state estimate, Wilson limit, modes, seam, conformal limit or fidelity is supplied; all higher rungs stay open here.
+
+\subsection{Examples (Instances Only)}
+
+These instantiate 101.1--101.3, 101.7--101.8; grades and tags are those statements' tags, with bare \(\mathsf L0\).
+All group categories below are untwisted unitary \(\mathrm{Vec}_G\), with orthonormal homogeneous bases.
+\begin{center}\footnotesize
+\begin{tabular}{p{2.2cm}p{12.5cm}}
+\toprule Instance & Exact data and check of the general statement \\ \midrule
+Finite \(G\ne\{1\}\), \(N=|G|\) &
+\(O=\bigoplus_{g\in G}g\), \(\eta=e_1\), \(K=N\one\), \(\kappa=k_1\);
+\(t_Y(y\otimes k_h)=k_h\otimes y\), \(u(e_g\otimes k_h)=e_{gh^{-1}}\otimes e_h\).
+This grade-preserving bijection fixes the point and gives the cellwise \(T_L=u^{\otimes L}B_L^K\).
+\(\Lambda^K_{c,d}=N^L\delta_{c,d}\), whereas \(\Lambda^{\rm tr}_{c,d}=N^{L-1}\), by choosing the first \(L-1\) letters freely.
+At \(L=1\) images of minimal projections are central for the former, noncentral for the latter.
+\(O\) itself transports by conjugation of grades: classification fails, not transport existence.
+Taking the former lifts at even \(L\), the latter at odd \(L\), gives R1 (NOTE:\allowbreak 91--169; REVIEW:\allowbreak 119--124). \\
+\midrule
+{\raggedright Dihedral family, every \(m\ge3\)\par} &
+\(G=\langle a,b\mid a^2=b^2=1,(ab)^m=1\rangle\), \(\rho_0=ab\),
+\(O=\one\oplus a\oplus b\oplus\rho_0\), \(K=\one\oplus\one\oplus\rho_0\oplus\rho_0^{-1}\), \(\eta=e_1,\kappa=E_0\).
+The unit-grade vectors are \(E_0,E_1\); \(R_\pm\) have grades \(\rho_0^{\pm1}\).
+Let \(\rho(x)\) fix \(E_0,E_1\) and permute \(R_\pm\) by grade conjugation;
+\(t_Y(y_x\otimes v)=\rho(x)v\otimes y_x\). This satisfies H since \((xhx^{-1})x=xh\) and \(\rho(xy)=\rho(x)\rho(y)\).
+Set \(u(g,E_0)=(g,1)\); the other twelve values (outputs mean \(e_x\otimes e_y\)) are
+\(\begin{array}{c|ccc}g&E_1&R_+&R_-\\\hline
+1&(a,a)&(1,\rho_0)&(b,a)\\
+a&(1,a)&(1,b)&(\rho_0,a)\\
+b&(a,\rho_0)&(b,\rho_0)&(\rho_0,b)\\
+\rho_0&(a,b)&(\rho_0,\rho_0)&(b,b)\end{array}\).
+Every pair occurs once and each product grade is preserved, using only \(a^2=b^2=1\).
+For \(x_i=g_{i+1}\cdots g_L\), \(x_L=1\), the exact lift is implemented by
+\(T_L(g_1,\ldots,g_L;h_1,\ldots,h_L)=\bigotimes_i u(g_i,\rho(x_i)h_i)\), \(h_i\in\{E_0,E_1,R_+,R_-\}\).
+Thus 101.1 gives literal \(V_L\) and support \([2j-1,2k]\), every \(L\).
+\par For the no-power proof put \(\theta=2\pi/m\), \(A=\operatorname{diag}(1,-1)\),
+\(R=\left(\begin{smallmatrix}\cos\theta&-\sin\theta\\\sin\theta&\cos\theta\end{smallmatrix}\right)\), \(B=AR\).
+These represent \(a,\rho_0,b\). With \(s=[O]=(1+a)(1+b)\), \(\lambda=2(1+\cos\theta)>0\),
+\(M=(I+A)(I+B)=\left(\begin{smallmatrix}\lambda&-2\sin\theta\\0&0\end{smallmatrix}\right)\),
+\(M^n=\lambda^{n-1}M\) and \([M^n,A]_{12}=4\lambda^{n-1}\sin\theta\ne0\).
+Hence \(s^n\) is never central, and no relative half-braiding exists on any \(O^n\).
+Also \(s(2+\rho_0+\rho_0^{-1})=s^2\); singular \(M\) explains noncancellation (NOTE:\allowbreak 171--287).
+\par Finite evidence only: \(m=3,4\), \(L=1,2\) trailing descent passes on 92 matrix units;
+occupation degree fails on 276/244 entries of \(\alpha_2\). At \(m=3\), the CA-97 mark
+\(j^\dagger\alpha_2(h)i\) has rank \(8/16\) and unitarity defect \(1\)
+(\path{checks/review_g1_independent_output.txt}:7--14). \\
+\midrule
+Open carrier in \(\mathrm{Vec}_{S_3}\) &
+\(O=\one\oplus g\oplus h\), \(g=(12),h=(23)\), \(\eta=e_1\), \(\mathcal D=\Cc\).
+Any central integral \(k\) is \(\alpha+\beta C_3+\gamma C_2\), where \(C_3\) sums the two 3-cycles and \(C_2\) the three transpositions.
+Applying trivial/sign representations to \([O]^b k=[O]^{2b}\), and cancelling the nonzero scalars \(3^b,(-1)^b\), gives
+\(\alpha+2\beta+3\gamma=3^b\), \(\alpha+2\beta-3\gamma=(-1)^b\).
+Thus \(6\gamma=3^b-(-1)^b\not\equiv0\pmod3\), impossible for integral \(\gamma\), every \(b\ge1\).
+No blocked or ancilla datum exists; arbitrary local-lift existence remains open (REVIEW:\allowbreak 154--165).
+Exact enumeration through \(b=5\) agrees (\path{checks/review_g1_independent_output.txt}:5--6). \\
+\bottomrule
+\end{tabular}\end{center}
+Reproduce from the package: \texttt{python3 -B checks/review\_g1\_independent.py}; output and headline are in
+\path{checks/review_g1_independent_output.txt}:1--15. Six mutations \texttt{K}, \texttt{u}, \texttt{transport}, \texttt{point}, \texttt{dress}, \texttt{centralO}
+are RED; see \path{checks/review_g1_red_*.txt} and REVIEW:\allowbreak 96--103. The \texttt{authorpoint} control stays GREEN:
+it changes to another fixed point. Exact combinatorics and symbolic identities, with tolerance \(10^{-9}\) only for
+dense random tests, calibrate the proofs; finite checks do not establish their all-\(L\), all-\(m\) quantifiers.
+
+\subsection{Single Next Target}
+
+\textbf{Target 101.9 [conjectural; any; \(\mathsf L0\); \(\to\mathsf R0^u\)] (NOTE:\allowbreak 349--359; REVIEW:\allowbreak 196--208; INTEGRATION:\allowbreak 121--137).}
+\emph{Blocked-ancilla extraction under uniformity.} For arbitrary \(\Cc,(O,\eta)\), assume the lift hypotheses above
+and one fixed \(b\ge1\) with \(\alpha_{L+b}(a\otimes1_{W_b})=\alpha_L(a)\otimes1_{W_{2b}}\) for every \(L,a\).
+Prove or refute existence of \(b'\ge1\), pointed \((K,\kappa)\), pointed unitary transport on full \(\mathcal D\), and
+unitary \(u:O^{\otimes b'}\otimes K\to O^{\otimes2b'}\), \(u(1\otimes\kappa)=V_{b'}\), whose blocked construction
+reproduces \(\alpha_L\) up to \(V_L\)-fixing unitaries of uniformly bounded support.
+No occupation, translation or unchanged-side assumption may be added. First establish sufficiency of the blocked
+form by 101.1 and 96.2's block/tail argument; its necessary class equation is
+\([O]^{b'}([K]-[O]^{b'})=0\) with \([K]\) central (101.8).
+The last table row calibrates this target: a positive answer excludes lifts satisfying its uniformity hypothesis
+there; an arbitrary-lift no-go would additionally require that uniformity, which is not part of 96.10.

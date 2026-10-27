@@ -890,3 +890,19 @@ single ~200-line source file it points to.
 - Summary: On a nonzero common standard-KS VR-1 system the cubic ledgers agree without parity or current conservation; finite loss-two ZC, limiting zero-mode commutation and all mixed commutation are equivalent, and imply equal linear ledgers with explicit A3-tail bounds.
 - Summary: Automatic ZC remains open; exact logarithm, formal-algebra and spatial-support counterexamples delimit the inference, while corrected cut currents and inverse target cutoffs give conditional extensions without a general lattice-chirality theorem or a new local categorical realization.
 - Keywords: zero mode, lattice chirality, Koo-Saleur, VR-1, parity-free ledger balance, cubic anomaly, mixed commutator, graph norm, transport tail, spectral logarithm, cut current, spatial support, inverse spectral cutoff, F2
+
+## `CA-101-ANCILLA-TRANSPORT-LIFTS`
+
+- Source: `report/sections/101_ancilla_transport_lifts.tex`
+- Title: Ancilla Transport Lifts and the Failure of Finite-Power Extraction
+- Summary: For any unitary fusion C, a declared pointed ancilla transport datum gives local unital vacancy refinements; inclusion matrices classify global point-fixing gauge and distinguish these lifts from site-power transport lifts.
+- Summary: Local lifts need not imply transport on any tensor power, refuting G1 and Target 96.10; fixed-power feasibility remains distinct from decidability, occupation-compatible extraction stays open, and blocked-ancilla extraction under uniformity is the next target.
+- Keywords: ancilla transport, local unital lift, indefinite particle number, inclusion matrix, relative half-braiding, finite-power extraction, occupation degree, blocked ancilla, Target 96.10, G1, P1, P4
+
+## `CA-102-RECORD-FORGETS-THE-POINT`
+
+- Source: `report/sections/102_record_forgets_the_point.tex`
+- Title: The Interval/Dilation Record Forgets the Point
+- Summary: The interval/dilation record does not determine the pointed input: charge translation in an abelian graded family preserves every interval and the fixed-H refinement while changing the site class, refuting the positive form of Target 97.16.
+- Summary: Cut commutants are intrinsic, but vacancy projections must be carried; even named points do not make placement maps natural. Pointed records separate the tested counterexamples, while general pointed-record faithfulness remains open.
+- Keywords: vacancy, pointed record, interval algebra, dyadic refinement, relative commutant, charge translation, half-braiding, naturality, fidelity, P1, G6

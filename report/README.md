@@ -118,6 +118,8 @@ before treating report edits as complete.
 | 98 | `CA-98-CANONICAL-SEAMS-REFLECTION-COHERENCE` | `report/sections/98_canonical_seams_reflection_coherence.tex` | Canonical Seams, Reflection Defects, and Conditional Spatial Positivity |
 | 99 | `CA-99-CONTACT-CLASSIFICATION` | `report/sections/99_contact_classification.tex` | Signed Contact Classification on the Pointed Carrier: Robin Limits, Dirichlet Limits and Full-Fock Boundaries |
 | 100 | `CA-100-ZERO-MODE-LATTICE-CHIRALITY` | `report/sections/100_zero_mode_lattice_chirality.tex` | Zero Modes and Lattice Chirality: Parity-Free KS Ledger Balance |
+| 101 | `CA-101-ANCILLA-TRANSPORT-LIFTS` | `report/sections/101_ancilla_transport_lifts.tex` | Ancilla Transport Lifts and the Failure of Finite-Power Extraction |
+| 102 | `CA-102-RECORD-FORGETS-THE-POINT` | `report/sections/102_record_forgets_the_point.tex` | The Interval/Dilation Record Forgets the Point |
 
 ## Adding a shard
 

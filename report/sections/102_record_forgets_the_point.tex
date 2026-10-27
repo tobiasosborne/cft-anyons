@@ -1,0 +1,246 @@
+% SHARD-ID: CA-102-RECORD-FORGETS-THE-POINT
+% SHARD-TITLE: The Interval/Dilation Record Forgets the Point
+% SHARD-SUMMARY: The interval/dilation record does not determine the pointed input: charge translation in an abelian graded family preserves every interval and the fixed-H refinement while changing the site class, refuting the positive form of Target 97.16.
+% SHARD-SUMMARY: Cut commutants are intrinsic, but vacancy projections must be carried; even named points do not make placement maps natural. Pointed records separate the tested counterexamples, while general pointed-record faithfulness remains open.
+% SHARD-KEYWORDS: vacancy, pointed record, interval algebra, dyadic refinement, relative commutant, charge translation, half-braiding, naturality, fidelity, P1, G6
+\section{The Interval/Dilation Record Forgets the Point}\label{sec:record-forgets-the-point}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: COUNTEREXAMPLE} to the positive form of CA-97 Target 97.16, exactly as stated.
+Statements 102.1, 102.3, 102.5--102.7 are \emph{derived}; 102.2 and 102.4 are \emph{negative};
+102.8 is \emph{conditional}, an unproved extension with a Law-1 gap; 102.9 is \emph{conjectural}.
+NOTE, REVIEW and INTEGRATION mean the files in
+\path{explorations/2026-10-25-astra-r3/G6-record-faithfulness/}.
+\textbf{Pillar P1:} the vacancy in \(O\cong\one\oplus X\), and hence the indefinite-number interpretation,
+must be carried along the tower as declared structure. \textbf{P4 interface:} this sharpens the
+\(\mathsf R4\) insufficiency annotation; it supplies no continuum certificate.
+\textbf{CA-88 cells (INTEGRATION:36--46):} (any/open; \(\mathsf L0+H\); \(\mathsf R0^u\)), dyadic geometry,
+gains a negative information annotation, not an existence or attainment change. The \(\mathsf R4\)
+insufficiency annotation extends to the full interval/dilation record: the first missing mark proved here
+is the point. Trailing \((\mathrm{any};\mathsf L0;\mathsf R0^u)\), \(\mathsf R0^c\), \(\mathsf R1\)--\(\mathsf R5\)
+attainment, full/periodic and \(\mathsf L3\) cells do not move; CA-93's fidelity hypotheses remain required.
+All settings below are \emph{any, ordered open geometry}; no chiral/full continuum target is selected.
+Dependencies: CA-77 (77.2), CA-88 (grid), CA-90 (90.H, 90.1), CA-97 (97.11, 97.13, 97.16);
+CONVENTIONS (a), (b), (r), (am), (aq), (as), (ax). Additional notation is scoped here;
+its proposed registration is in the package's \path{SHARD_META.md}.
+
+% Source: explorations/2026-10-25-astra-r3/G6-record-faithfulness/NOTE.md:17-35,43-99,101-200,202-296 -- record and proofs.
+% Source: explorations/2026-10-25-astra-r3/G6-record-faithfulness/REVIEW.md:3-19,23-91,99-177,179-224 -- grades, corrections, R-1--R-3, target.
+% Source: explorations/2026-10-25-astra-r3/G6-record-faithfulness/INTEGRATION.md:12-46,48-88,90-128 -- lift, cells, amendments, notation, target.
+% Source: explorations/2026-10-25-astra-r3/briefs/G6-record-faithfulness.md:83-118 -- positive conjecture and requested tests.
+% Source: report/sections/77_pointed_carrier_invariants.tex:47-81 -- point and sufficient marked reconstruction.
+% Source: report/sections/90_local_unital_lift.tex:59-77,110-141 -- H and local dyadic shuffle.
+% Source: report/sections/97_what_the_tower_remembers.tex:178-218,265-272 -- fixed-H descent, typed extraction, exact target.
+% Source: report/sections/88_layered_targets.tex:96-125,149-154 -- cells and fidelity boundary.
+% Source: report/sections/93_normal_limit_expectations_and_fidelity.tex:158-177 -- fidelity requires a conformal net and certificates.
+% Source: references/text/PenneysUnitaryFusionCategories.md:219-237,277-288,319-348,394-398,470-478 -- splitting, graded categories, tensor functors, coherence.
+% Source: references/text/EtingofNikshychOstrikFusionCategories.txt:1459-1487,1700-1706 -- positive dimensions, unitary bridge.
+% Source: references/manifest/SOURCES.md:34-35,55-57 -- local source registration.
+% Source: CONVENTIONS.md:1450-1470,1524-1543,1564-1575,1644-1665 -- point, tags, crossing, deferred registration.
+% Source: explorations/2026-10-25-astra-r3/G6-record-faithfulness/checks/check_translation.py:1-137 -- exact matrix-unit calibration.
+% Source: explorations/2026-10-25-astra-r3/G6-record-faithfulness/checks/translation_output.txt:1-11 -- exact calibration output.
+% Source: explorations/2026-10-25-astra-r3/G6-record-faithfulness/checks/review_g6_checks.py:1-31,186-268 -- phase-sensitive and point-block checks.
+% Source: explorations/2026-10-25-astra-r3/G6-record-faithfulness/checks/review_g6_output.txt:1-13 -- GREEN phase and point-block checks.
+% Source: explorations/2026-10-25-astra-r3/G6-record-faithfulness/checks/review_g6_mutations.txt:1-12 -- rejected mutations.
+% Source: worklog/023_2026-10-27_status_overview.md:179-188 -- current P1/fidelity diagnosis; scope correction below.
+Checks: the exact matrix-unit script and independent NumPy reviewer script reproduce their stored outputs;
+the latter checks crossing phases and point-block sizes. Their finite checks do not prove the all-length statements.
+
+\subsection{The General Record and Cut Information}
+
+Fix arbitrary unitary fusion \(\Cc\), pointed \((O,\eta)\), and \(\mathcal D=\langle O\rangle\subset\Cc\).
+Let \(H=(t_Y)\) be one fixed pointed unitary relative half-braiding on \(\mathcal D\) (90.H):
+\(t_Y:Y\otimes O\to O\otimes Y\) is natural, tensorial and unital, with
+\(t_Y(1_Y\otimes\eta)=\eta\otimes1_Y\). Put \(W_L=O^{\otimes L}\), \(W_0=\one\),
+\(A_L=\operatorname{End}_{\Cc}(W_L)\), and let \(\kappa_L:A_L\to A_\infty\) be the norm-limit maps
+for trailing inclusion \(a\mapsto a\otimes1_O\). Bracketing is left-associated; fixed coherent associators are retained.
+The shuffle \(B_L\) crosses old \(j\) with new \(i\) exactly when \(i<j\), and
+\(\alpha_L(a)=B_L(a\otimes1_{W_L})B_L^\dagger\), \(\delta\kappa_L=\kappa_{2L}\alpha_L\) (97.11).
+The record and its proposed pointed augmentation are
+\[
+ \mathcal R=(A_\infty,\{A_{[j,k]}\},\delta),\quad
+ A_{[j,k]}=\kappa_k(1_{W_{j-1}}\otimes A_{k-j+1}),\qquad
+ \mathcal R^p=(\mathcal R,\{p_j\}),\quad p_j=\kappa_j(1_{W_{j-1}}\otimes\eta\eta^\dagger).
+\]
+An isomorphism preserves exactly the listed marks, every interval label, and \(\delta\).
+The \(p_j\) are placed copies of (am)'s \(p_0\), not its occupation projection \(p_1\).
+``Natural recovery'' means transport by \emph{every} record isomorphism; recovery up to a coherent choice is weaker.
+
+\textbf{Lemma 102.1 [derived; any/open; \(\mathsf L0+H\); \(\mathsf R0\) finite information]\newline (NOTE:43--99; REVIEW:70--73).}
+For any cut \(m|n\), put \(V_m^x=\Hom(x,W_m)\), \(F_{xy}^z=\Hom(z,x\otimes y)\); omit zero summands.
+Under orthogonal simple splittings,
+\begin{equation}\label{eq:102-cut}
+\begin{split}
+ A_{m+n}&\cong\bigoplus_z\operatorname{End}\Big(\bigoplus_{x,y}V_m^x\otimes V_n^y\otimes F_{xy}^z\Big),\\
+ (A_{[1,m]}\vee A_{[m+1,m+n]})'\cap A_{m+n}
+ &\cong\bigoplus_{z,x,y}1_{V_m^x\otimes V_n^y}\otimes\operatorname{End}(F_{xy}^z).
+\end{split}
+\end{equation}
+The record preserves these commutants, their inclusion diagrams, and intersections involving \(\delta^r(A_I)\).
+\par\(\langle1\rangle1\). Compose orthonormal isometric splittings of \(W_m,W_n,x\otimes y\)
+(Penneys:219--237,319,470--478); the two interval algebras act on the two \(V\) factors.
+Their product embedding is faithful: \(d_xd_y>0\), so \(x\otimes y\ne0\)
+(ENO:1459--1487,1700--1706, including the reviewer's missing unitary bridge).
+\par\(\langle1\rangle2\). Within each \(z\)-block, the two central projections force preservation of \((x,y)\).
+Commuting with matrix units kills off-diagonal entries on \(V_m^x\otimes V_n^y\) and equalises diagonal entries;
+the remaining operator is \(1\otimes c\). Conversely every such operator commutes.
+\par\(\langle1\rangle3\). Isomorphisms preserve multiplication, commutation and intersections; intertwining
+\(\delta\) gives the moved-cut assertion. QED. The formula alone uses \(\mathsf L0\); the last assertion needs \(H\).
+The displayed simple labels are choices, not intrinsically named charges.
+
+\subsection{An Exact Counterexample Family}
+
+\textbf{Negative 102.2 [negative; any/open; \(\mathsf L0+H\); \(\mathsf R0^u\) information]\newline (NOTE:101--184; REVIEW:74--79,170).}
+The universal claim that \(\mathcal R\) determines the pointed input for arbitrary \(\Cc\) is false. The mechanism is
+proved for the subclass \(\mathcal D=\Hilb_{\mathrm{fd}}(G,1)\), finite abelian \(G\), with trivial associator.
+Write \(O=\bigoplus_{a\in G}\mathbb C^{m(a)}\otimes a\). Choose \(s\in G\) with \(m(e),m(s^{-1})>0\);
+both \(\operatorname{supp}m\) and its translate must generate \(G\). Let \(O'=sO\) retain multiplicity spaces
+but replace grade \(a\) by \(sa\); choose unit points in \(O_e,O'_e\), and initially take flip \(H\) on both.
+Then \(\mathcal R(O)\cong\mathcal R(O')\), even preserving translations and endomorphism concatenation.
+If no group automorphism matches the two multiplicity functions, no tensor equivalence carries \(O\) to \(O'\).
+\par\(\langle1\rangle1\). The flip is grade-preserving since \(G\) is abelian, natural on graded maps,
+unitary and pointed; its tensor identity sends \(y\otimes z\otimes v\) to \(v\otimes y\otimes z\)
+in either order. This verifies 90.H in the sourced graded construction (Penneys:277--288,319--321).
+\par\(\langle1\rangle2\). The underlying Hilbert unitary \(U:O\to O'\) preserves multiplicity bases and
+has degree \(s\); it is \emph{not} a categorical morphism for \(s\ne e\). Put \(U_L=U^{\otimes L}\),
+\(\phi_L=\operatorname{Ad}U_L\), \(\phi_0=\mathrm{id}\). A word of total charge \(x\) acquires charge \(s^Lx\).
+Thus \(\phi_L\) maps all categorical matrix units bijectively and is an isometric unital \(*\)-isomorphism.
+\par\(\langle1\rangle3\). Factorwise conjugation gives simultaneously, for \(b\in A_{k-j+1}\),
+\[
+ \phi_{L+1}(a\otimes1)=\phi_L(a)\otimes1,\qquad
+ \phi_L(1^{\otimes(j-1)}\otimes b\otimes1^{\otimes(L-k)})
+ =1^{\otimes(j-1)}\otimes\phi_{k-j+1}(b)\otimes1^{\otimes(L-k)}.
+\]
+These are onto on every interval; also \(\phi_{L+M}(a\otimes b)=\phi_L(a)\otimes\phi_M(b)\).
+\par\(\langle1\rangle4\). The flip shuffle is a tensor permutation, hence
+\begin{equation}\label{eq:102-intertwiner}
+ U_{2L}B_L=B'_L(U_L\otimes U_L),\qquad
+ \phi_{2L}\alpha_L=\alpha'_L\phi_L,\qquad \Phi\delta=\delta'\Phi.
+\end{equation}
+For the last identity extend the compatible \(\phi_L\) and their inverses to the norm completions and use
+\(\Phi\delta\kappa_L=\kappa'_{2L}\phi_{2L}\alpha_L=\delta'\Phi\kappa_L\), then density (97.11).
+\par\(\langle1\rangle5\). A tensor equivalence permutes invertible simples by a group automorphism
+and preserves multiplicities (Penneys:325--348); the stated mismatch forbids it. QED.
+In \eqref{eq:102-cut}, \(F_{xy}^z\) has dimension one exactly when \(z=xy\); the relabelling
+\((x,y,z)\mapsto(s^mx,s^ny,s^{m+n}z)\) preserves every cut diagram, including \(\delta\)-moved cuts.
+This demonstrates insufficiency for this family, not a reconstruction obstruction for every \(\Cc\).
+
+\textbf{Proposition 102.3 [derived; any/open; \(\mathsf L0+H\); \(\mathsf R0^u\) information]\newline (NOTE:154--177; REVIEW:106--121).}
+Reviewer R-1 extends 102.2 to \(t_Y(y_a\otimes v_b)=\chi(a,b)v_b\otimes y_a\), with unitary
+bicharacter \(\chi\), provided \(\chi(a,s)=\chi(s,a)=1\) for every \(a\in G\).
+\par\(\langle1\rangle1\). Bicharacter identities give 90.H, including \(\chi(a,e)=1\) at the point.
+\par\(\langle1\rangle2\). Transparency gives \(\chi(sa,sb)=\chi(a,b)\) at each crossing, proving
+\eqref{eq:102-intertwiner} with the same phases. The other steps are unchanged. QED.
+Failure of this particular \(\Phi\) for a nontransparent \(s\) excludes no other possible record isomorphism.
+
+\textbf{Negative 102.4 [negative; any/open; \(\mathsf L0+H\); \(\mathsf R0\) information]\newline (NOTE:186--200; REVIEW:47--63,80--81).}
+With flip \(H\), let \(R_G=\bigoplus_{a\in G}a\).
+\emph{B1:} for every nontrivial finite abelian \(G\) and \(s\ne e\), take
+\(O=R_G\oplus\one\), \(O'=R_G\oplus s\). Both supports generate; translation gives 102.2, but
+\(\dim\Hom(\one,O)=2\ne1=\dim\Hom(\one,O')\), invariant under every tensor equivalence.
+\emph{B2:} take nonunit \(a,b\) in distinct automorphism orbits, \(s=ba^{-1}\),
+\(O=R_G\oplus a\), \(O'=R_G\oplus b\). Both are connected; an equivalence would carry the uniquely
+doubled simple \(a\) to \(b\). Different orders suffice; this order-based witness requires such elements in \(G\).
+Thus the positive form of 97.16 is false, including for connected sites. For \(s\ne e\),
+\(\phi_1(\eta\eta^\dagger)\) lies in grade \(s\), whereas the target point lies in grade \(e\).
+The record forgets the point and the marks built from it; \(\mathcal D\) and the supplied transport rule are unchanged.
+
+\subsection{Named Points and the Remaining Marks}
+
+\textbf{Proposition 102.5 [derived; any/open; \(\mathsf L0+H\) and (G6.5); \(\mathsf R0\) marks]\newline (NOTE:202--269; REVIEW:82--85).}
+For arbitrary \(\Cc\) in the general setting, assume a noncentral unitary \(u\in\operatorname{End}(O)\) with
+\[
+ u\eta=\eta,\qquad t_Y(1_Y\otimes u)=(u\otimes1_Y)t_Y\quad(Y\in\mathcal D). \tag{G6.5}
+\]
+Then \(\mathcal R^p\) has an automorphism moving the standard translation, concatenation,
+left-insertion corner and hop \(h\), although their relevant range projections stay fixed.
+\par\(\langle1\rangle1\). Put \(C_0=C_1=1\), \(C_L=1_O\otimes u^{\otimes(L-1)}\),
+\(\gamma_L=\operatorname{Ad}C_L\). Since \(C_{L+1}=C_L\otimes u\) for \(L\ge1\), these maps
+respect trailing inclusion and map every interval algebra onto itself; extend to \(\gamma\) by norm density.
+\par\(\langle1\rangle2\). Naturality transports \(u\) on old strands, (G6.5) on ancillary strands;
+old strand 1 never crosses. Thus \(B_L(C_L\otimes u^{\otimes L})=C_{2L}B_L\).
+Conjugate \(a\otimes1\): ancillary factors cancel, so \(\gamma_{2L}\alpha_L=\alpha_L\gamma_L\)
+and \(\gamma\delta=\delta\gamma\). Also \(\gamma(p_j)=p_j\) since \(u\eta=\eta\).
+\par\(\langle1\rangle3\). Choose \(b\) with \(ubu^\dagger\ne b\). For \(T(b)=1\otimes b\),
+\(\gamma_2T(b)=1\otimes ubu^\dagger\ne T\gamma_1(b)\); the same inequality moves concatenation
+\((a,b)\mapsto a\otimes b\), and \(\theta(b)=p_0\otimes b\), \(p_0=\eta\eta^\dagger\).
+The latter range \(p_0\otimes1\) is fixed, and compression by \(\eta\) proves the inequality persists.
+\par\(\langle1\rangle4\). For \(r=\eta\otimes1,l=1\otimes\eta:O\to W_2\), \(h=rl^\dagger\),
+\(C_2r=ru\), \(C_2l=l\), hence \(\gamma_2(h)=rul^\dagger\ne h\), with both support projections fixed.
+\par\(\langle1\rangle5\). Every input admits such an instance after replacing \(O\) by \(O\oplus\one\)
+and extending \(H\) by the unit transport. Set \(u=+1\) on the chosen point, \(-1\) on the new unit copy,
+and identity elsewhere. Pointedness and unitarity split off the old unit transport; (G6.5) holds blockwise,
+while a matrix unit between the two unit copies witnesses noncentrality. Generation is unchanged. QED.
+This proves \emph{non-naturality}, not failure of reconstruction up to a coherent choice.
+
+\textbf{Proposition 102.6 [derived; any/open; \(\mathsf L0+H\); \(\mathsf R0\) information]\newline (NOTE:281; REVIEW:146--158).}\par
+For arbitrary inputs, an \(\mathcal R^p\)-isomorphism preserves the matrix-block size containing
+\(p_1\cdots p_L\) for each \(L\). Consequently it separates the three tested B1/B2 pairs in the table below
+(reviewer R-3, derived for these instances only).
+\par\(\langle1\rangle1\). The product is the rank-one projection onto \(\eta^{\otimes L}\)
+in the unit block of \(A_L\), of size \(m_L(\one)=\dim\Hom(\one,W_L)\).
+\par\(\langle1\rangle2\). A \(*\)-isomorphism carries its minimal central support to the central support
+of the image and preserves that full matrix algebra's size. The displayed unequal sizes prohibit every
+point-preserving isomorphism. QED. No general sufficiency theorem for \(\mathcal R^p\) follows.
+
+\textbf{Proposition 102.7 [derived; any/open; \(\mathsf L0+H\); \(\mathsf R0\) inventory]\newline (NOTE:271--296; REVIEW:85--88,173--174).}
+The record intrinsically retains named stages, inclusions, centres, block sizes, commutants and products of
+\emph{already embedded} observables (definition and 102.1). The corrected refinement entry is only
+\(\delta:A_{[j,k]}\hookrightarrow A_{[2j-1,2k-1]}\) (90.1(ii)); the reviewed GAP was its upgrade to an identification.
+Given \(p_j\), insertion-range projections are products over omitted sites; their domain identifications are
+extra natural marks (102.5). The point itself is extra (102.4); concatenation alone cannot repair its loss (102.2).
+CA-77 Proposition 77.2's coherent placements and partial isometries are a sufficient richer record;
+97.13 additionally recovers supplied \(H\) from typed compressions. No minimal sufficient list is proved.
+
+\textbf{Proposition 102.8 [conditional; any/open; \(\mathsf L0+H\); \(\mathsf R0\) information]\newline (NOTE:40--41; REVIEW:123--136).}
+Reviewer R-2 is an \emph{unproved conjectural sketch}, kept conditional here: for arbitrary unitary fusion
+\(\mathcal E\) with pointed generating \((O_{\mathcal E},\eta_{\mathcal E},H_{\mathcal E})\), a proposed
+\(\mathcal E\boxtimes\Hilb_{\mathrm{fd}}(G)\) realisation would use
+\(O=O_{\mathcal E}\boxtimes O_G\) and \(\mathrm{id}\otimes\operatorname{Ad}U_L\).
+It requires a sourced construction and compatible factorisation of endomorphisms, intervals and shuffles;
+no local source for that product/graded-object construction was supplied. This is not a proved extension
+to every \(\Cc\) possessing an invertible object, and is not used in 102.2--102.7.
+
+\subsection{Effect on other shards}
+\emph{Amendment pointers (2026-10-27, round 4; INTEGRATION:48--88).} CA-97's status, summary and
+97.16 must record the negative 102.4 and the replacement 102.9 (97.16\('\)); after 97.13, name the point as
+a necessary carried mark. CA-77's placements remain part of its sufficient record (102.2, 102.5);
+the converse to CA-90 90.1(iv) fails for \(\mathcal R\) (102.4). CA-88 gains only the information annotations above.
+Worklog 023 \S4.4 must limit G6-B's proved mechanism to the abelian graded family with trivial associator
+and compatible \(H\): the same category occurs on both sides, and pointed-record recovery of \(F,H\) remains open.
+The pipeline must carry named vacancy projections, or richer coherent placement data determining them.
+Exact append-after anchors and dated amendment text are supplied in \path{SHARD_META.md}; these files are not edited here.
+
+\subsection{What This Does Not Claim}
+There is no proof that \(\mathcal R\) forgets \(F\) or \(H\) once points are named, and no general charge-translation
+classification. G6-D's different-associator and different-transport tests remain open (REVIEW:87--89);
+the nonexistent G6-D citation is discarded. Non-natural marks may still admit coherent choices (102.5).
+No state, Wilson limit, symmetry generators, conformal limit or \(\mathsf R4\) certificate is constructed.
+
+\subsection{Examples (Instances Only)}
+All rows instantiate the statements above with (any/open; \(\mathsf L0+H\); \(\mathsf R0\) information).
+Grades are additive, unit \(0\); displayed site lists include multiplicities. Points are unit basis vectors
+(the first unit copy when repeated); \(\chi=1\) unless specified. Block sizes and failures are the checked
+data in \path{checks/review_g6_output.txt}:1--13, not claims for arbitrary \(\Cc\).
+\begin{center}\footnotesize
+\begin{tabular}{p{2.1cm}p{12.0cm}}\toprule
+Instance & Exact data and verdict \\\midrule
+B1, \(\mathbb Z_2\) & \(O=(0,0,1)\), \(O'=(0,1,1)\), \(s=1\): 102.4 [negative]; point-block sizes \((2,1)\) at \(L=1\), 102.6 [derived]. \\
+B2, \(\mathbb Z_4\) & \(O=(0,1,1,2,3)\), \(O'=(0,1,2,2,3)\), \(s=1\); doubled orders \(4,2\): 102.4 [negative]; point-block sizes \((6,7)\) at \(L=2\) [derived]. \\
+B2, \(\mathbb Z_6\) & \(O=(0,1,1,2,3,4,5)\), \(O'=(0,1,2,2,3,4,5)\), \(s=1\); doubled orders \(6,3\): 102.4 [negative]; point-block sizes \((57,58)\) at \(L=3\) [derived]. \\
+R-1, \(\mathbb Z_4\) & \(O=(0,0,1,2,3)\), \(O'=(0,1,2,2,3)\), \(s=2\), \(\chi(a,b)=(-1)^{ab}\): transparent, 102.3 [derived]. Plain \(\Phi\) fails dilation at \(L=2\) for this site and \(\chi=i^{ab}\); also for the B2 site, \(s=1\), \(\chi=(-1)^{ab}\) or \(i^{ab}\). \\
+C1, \(\mathbb Z_2\) & \(O=(0,1,0)\), \(\eta=(1,0,0)\), \(u=\operatorname{diag}(1,1,-1)\): 102.5 [derived], \(\gamma\) fixes points and moves \(T,h\). \\\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Single Next Target: Pointed-Record Faithfulness}
+
+\textbf{Target 102.9 [conjectural; any/open; \(\mathsf L0+H\); \(\mathsf R0\) information only]\newline (NOTE:319--323; REVIEW:208--224).}
+This is the reviewer's 97.16\('\) (INTEGRATION:117--128). For arbitrary pointed tensor-generating
+\((\mathcal D,O,\eta,H)\) in a unitary fusion \(\Cc\), does \(\mathcal R^p\cong\mathcal R'^p\) force
+a unitary tensor equivalence \(\mathcal D\simeq\mathcal D'\) transporting \(O,\eta,H\)? A positive route must correct the isomorphism by
+a point-preserving automorphism so that coherent placements, \(h\) and typed compressions \(i,j\) are
+transported up to unitary gauge; then \(t_O=j^\dagger\alpha_2(h)i\) (97.13) and 77.2 apply.
+A negative route requires one simultaneous point-, interval- and dilation-preserving counterexample.
+Neither the unpointed intertwiner 102.2 nor the non-naturality result 102.5 settles this question.
