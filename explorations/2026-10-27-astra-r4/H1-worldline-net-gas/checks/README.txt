@@ -4,12 +4,17 @@ Pillars P2 (tile-to-worldline expansion, sewing, sign interpretation) and P1
 (vacancy/pair reactions). Setting any; finite L0 dagger-linear algebra with
 the declared conventions below; ingredients only, no continuum rung reached.
 
-Run from repository root (both commands exited 0):
+Run from repository root (all commands exited 0):
 python3 explorations/2026-10-27-astra-r4/H1-worldline-net-gas/checks/check_patch.py > explorations/2026-10-27-astra-r4/H1-worldline-net-gas/checks/check_patch_output.txt 2>&1
 python3 explorations/2026-10-27-astra-r4/H1-worldline-net-gas/checks/check_signs.py > explorations/2026-10-27-astra-r4/H1-worldline-net-gas/checks/check_signs_output.txt 2>&1
+python3 explorations/2026-10-27-astra-r4/H1-worldline-net-gas/checks/check_fs_instance.py > explorations/2026-10-27-astra-r4/H1-worldline-net-gas/checks/fs_instance_output.txt 2>&1
+python3 explorations/2026-10-27-astra-r4/H1-worldline-net-gas/checks/check_anisotropy.py > explorations/2026-10-27-astra-r4/H1-worldline-net-gas/checks/anisotropy_output.txt 2>&1
+python3 explorations/2026-10-27-astra-r4/H1-worldline-net-gas/checks/source_audit.py > explorations/2026-10-27-astra-r4/H1-worldline-net-gas/checks/source_audit_output.txt 2>&1
 
-Raw outputs give UTC run time, exact command, Python/SymPy versions, script
-SHA256, every asserted invariant, mutation witnesses, and elapsed seconds.
+Patch/sign raw outputs give UTC run time, exact command, Python/SymPy versions,
+script SHA256, every asserted invariant, mutation witnesses and elapsed seconds.
+The FS instance also records UTC/command/hash. Anisotropy output records
+versions and invariant witnesses; source-audit output records the search.
 Python 3.12.3 and SymPy 1.12 were used. No numerical tolerance, network,
 Julia suite, or repository-global changes are involved.
 
@@ -18,6 +23,9 @@ contraction, with nonorthogonal Gram sewing and the complex F^-T dual;
 all five patch mutations fail the production equality invariant. D2 has
 negative cup/cap coefficients but nonnegative closed-path weights; changing
 only one cup sign makes a closed path negative and the positivity test fails.
+The source-backed four-site FS example confirms an actual categorical
+negative loop history, and sourced face weights pass a separate calibration.
+Eight intentional mutations are rejected across the four invariant scripts.
 
 check_patch.py
 --------------
@@ -81,6 +89,37 @@ Additional exact algebraic calibrations:
   finite seam positivity test from CA-80 does not imply positive weights
   in this fixed history presentation. No spatial-reflection or full-row
   positivity theorem is inferred from this seam-block calibration.
+
+check_fs_instance.py
+--------------------
+This separate sourced categorical example closes the realizability caveat
+on the synthetic raw FS tensors. Penneys:595-608,917-931,1032-1047 gives
+Hilb_fd(Z/2,omega), omega(a,b,c)=(-1)^(abc), with pseudoreal simple g.
+The script checks every four-group-element cocycle/pentagon and all unit
+normalizations. It then embeds the six raw elementary events of NOTE (D4)
+on four O=1_vac+g sites, restoring left-tree associators. The middle
+annihilation has phase -1; all other phases are +1. Thus Ev=-1 and exact
+geometric coefficients 3/4 give weight -729/4096. Correct oriented duality
+still has snake +1. Erasing the FS phase is detected as a wrong evaluation.
+This is a 16-path-space witness for a general theorem, not a target model.
+
+check_anisotropy.py
+------------------
+The nine weights are copied from ZhouBatchelor1997/source/9611156.tex:120-145.
+SymPy checks regularity at u=0, the u=lambda normalized ratios and the
+branch identity sqrt(2-n)=2*abs(cos(2*lambda)). All denominator-zero values
+are excluded. Reversing rho9's sign is invisible at u=lambda, so the
+mutation is correctly tested on its derivative at u=0. No identification
+of finite-u face weights with exp(t h), no row commutativity, and no
+conformal-limit theorem are asserted. CA-86:273-279's erratum applies.
+
+source_audit.py
+---------------
+Offline rg audit of references/ and literature/md/ text/TeX/Markdown.
+Queries: Markov, loop model, O(n), CLE, Schramm, domain Markov, SLE.
+Full matches include duplicate source/extraction and bibliography hits;
+the NOTE distinguishes them from usable results. Search failure is not a
+proof of absence. No source was acquired over the network.
 
 Sources and dependencies
 ------------------------

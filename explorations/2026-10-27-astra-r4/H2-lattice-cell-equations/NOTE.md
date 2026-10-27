@@ -5,11 +5,23 @@ Scope: this note and `checks/` only; no network, commits, or repository-wide cha
 
 ## Statement under investigation
 
-For an arbitrary unitary fusion category C and pointed site `(O,eta)`, investigate
-whether exact brick-wall cells with declared tiles, boundary module category,
-seam and refinement carry finite C0–C7 equations whose linearisation extends
-to an explicit cochain complex. Prove the strongest valid replacement if
-the proposed identification of coordinate changes or obstruction groups fails.
+**Verdict: H2 as an automatic full-system assertion is false; an explicit
+finite equality complex and corrected Ward calculus are proved below.**
+For arbitrary unitary fusion C and pointed `(O,eta)`, fixed-network cells sew
+exactly, and genuine differential Ward errors obey the product rule. Dyadic
+comparison instead obeys a twisted rule. The literal same-cut anisotropy
+commutator equation forces h=0. A nontrivial linear two-site system requires
+a separately declared response and frozen generator; actual KS currents
+need the associator-sensitive three-site placement algebra.
+
+For every declared finite lattice equality presentation with the compatible
+operations below and an exact solution, (C.1)–(C.6) supply explicit off-shell
+identities. They prove `D_2 D_1=0` and the formal deformation/obstruction
+interpretations of H1/H2. Reflection positivity remains a cone constraint;
+canonical-seam whole-history coherence and geometric Ward-to-KS matching
+are not inferred. Section D proves the conditional implication into
+CA-89/95 and identifies every additional estimate. No nontrivial conformal
+tile solution or continuum theorem is obtained.
 
 **Layer tags:** finite cell statements: any setting, L0 plus the microscopic
 declarations below, finite `->R2, ->R3`, no continuum rung claimed. Canonical
@@ -357,7 +369,18 @@ Consequently a bulk chiral KS density includes a quadratic, three-site
 operator; it cannot in general be an element of A_2. Its coefficients
 require the marked embeddings into A_3, hence generally the associator,
 in addition to the abstract multiplication of A_2. The commutator of this
-KS generator with h can be cubic in c. F-symbol gauge changes transport
+KS generator with h can be cubic in c. Explicitly, write
+`H_A=sum c_alpha A_alpha`, `H_C=sum c_beta C_beta`. For the single standard
+local density `B=k_1-J_1=-H_A/v-(i/v^2)[H_A,H_C]`, embedded with the tile,
+
+    partial_q e^(t H_A)-[B,e^(t H_A)]
+      =t{L(H_A)+(i/v^2)[[H_A,H_C],H_A]}+O(t^2).             (B.6)
+
+This is an A_3 polynomial with cubic coefficients; multiplying B by its
+declared Fourier/mode factor multiplies that commutator term accordingly.
+It exhibits why the nontrivial KS equation is not the frozen linear map
+(B.4). The actual mode sums retain the remaining neighboring insertions.
+F-symbol gauge changes transport
 all marked maps together; a genuine change of associator is a different
 input. **QED.** (B.3) is a literal negative, (B.4) is the strongest frozen
 linear repair, and (B.5) states the actual finite nonlinear C7 interface.
@@ -616,6 +639,14 @@ to zero. These feasible first derivatives need not form a vector space;
 at K0=0 they are exactly the PSD matrices, since `K(t)=tH` realizes each.
 **BY** positivity. Hence they cannot be the kernel of a linear equation
 operator in the original tangent variables, except after extra restrictions.
+This is not confined to abstract matrices: in every C the allowed pointed
+unit-multiplicity site admits `h=a Z tensor Z`, `Z=diag(1,-1)`, and the flip
+seam. At any fixed tile time t>0 its exact bent gate is
+`cosh(t a)|vec I><vec I|+sinh(t a)|vec Z><vec Z|`. The two vectors are
+orthogonal, so its RP condition is exactly a>=0, while the temporal gate
+is positive for either sign. **BY** `(Z tensor Z)^2=I`, expansion of the
+exponential and CA-92:157–160's bending formula. Thus local RP already
+gives a genuine one-sided cone of tile directions at h=0.
 
 <1>2. Even a two-sided feasible derivative need not preserve RP along its
 straight line. On any two-dimensional multiplicity subspace take

@@ -166,6 +166,48 @@ The exact identity (H5.4) is an equivalent rewriting on a vector; the
 absolute-row bound (H5.5) is a stronger sufficient condition, potentially
 losing cancellations. Neither is advertised as automatic decay.
 
+## H5-PHASE — the precise remaining little-o estimate
+
+**Status: proven reduction and bound; periodic/full; category-free, L0 for
+categorical realizations; finite ingredient ->R2.** No logarithm is chosen.
+Let Pi_(r,omega) be the orthogonal spectral projections of U_r, and set
+
+    Phi_r(Y)=N_r^-1 sum_(j=0)^(N_r-1) U_r^j Y U_r^(-j).
+
+**ASSUME** H5-LOCAL, translated densities and U_r^N_r=I.
+**PROVE**, for psi_r=J_(r<-a)v,
+
+    Z_r = i N_r^3/(8 pi^2) Phi_r(R_(r,0)),
+    ||Z_r psi_r||^2
+      = N_r^6/(64 pi^4) sum_omega
+          ||Pi_omega R_(r,0) Pi_omega psi_r||^2.         (H5.10)
+
+**<1>1.** R_j=U^j R_0 U^-j by its polynomial definition. Apply (H5.1).
+For two distinct eigenphases omega,nu, the finite geometric sum
+N^-1 sum_j(omega/nu)^j is zero; for equal phases it is one. Hence
+Phi(Y)=sum_omega Pi_omega Y Pi_omega. **BY** translation and the geometric sum.
+
+**<1>2.** The output vectors in distinct Pi_omega ranges are orthogonal,
+so taking the squared norm proves (H5.10). **BY** the spectral theorem
+for the finite unitary U and Pythagoras. **QED.**
+
+**Additional bound under A1–A2.** Let
+
+    M=C^L_(0,0) C^S_(0,1)+C^S_(0,0) C^L_(0,1).
+
+The graph product bound of CA-89 Lemma 89.2 and exact K transport give
+||Z_r psi_r|| <= M ||K_a^2 v||. Thus (H5.10) proves
+
+    (sum_omega ||Pi_omega R_(r,0) Pi_omega psi_r||^2)^(1/2)
+       <= 8 pi^2 M ||K_a^2 v|| / N_r^3.                (H5.11)
+
+H5 is exactly the upgrade of this O(N^-3) bound to o(N^-3) for every
+transported coarse vector. The projection is onto *equal phase blocks*,
+including all their degeneracies; parity does not make those blocks scalar.
+Replacing R_0 by any remainder delta_0 from (H5.2) leaves Phi unchanged,
+since Phi(U a_0 U^*-a_0)=0. These facts identify where a local equation
+or additional physical control must improve the existing bound.
+
 ## H5-SYMBOL — a positive-Hilbert rigidity theorem with an extra symbol hypothesis
 
 **Status: proven conditional theorem; periodic/full; category-free, L0 for
@@ -311,6 +353,7 @@ or local categorical tower satisfying (DS) is asserted here.
 - H5-AUDIT — proven: no implicit locality, physical-energy or gap hypothesis.
 - H5-LOCAL — proven: exact three-site total-current defect (H5.1).
 - H5-BOUND — proven implications: local equation, remainder and correlation tests; applicability is conditional.
+- H5-PHASE — proven: exact zero-transfer block formula and O(N^-3) bound; the required little-o improvement remains open.
 - H5-SYMBOL — conditional: (DS) plus both standard-KS certificates implies all mixed commutation; (DS) remains extra data.
 - H5-TARGET — open.
 - H5-CHECK — open.

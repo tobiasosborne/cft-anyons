@@ -1,10 +1,14 @@
 # H3 — Non-collapse and a uniform graph-norm certificate
 
-Initial proof ledger written 2026-10-27, 13:12 UTC (session began 13:10 UTC).
-This is a working research note; all entries below start **open**. Statements
-will be promoted only after a displayed proof and source audit.
+Initial all-open ledger written within the first ten minutes on 2026-10-27
+(session began 13:10 UTC); updated as the proofs below were established.
+**Outcome:** non-collapse and a whole-carrier VR-1 certificate are proved,
+with a common Wilson/GNS realization. The positivity-only central-charge
+clause remains conditional on a precisely stated domain lemma. No general-C
+cell advances. Proofs are structured mathematical proofs, not proof-assistant
+certificates; independent skeptical reviews and finite checks are in `checks/`.
 
-## Scope and proposed statements
+## Scope and statements addressed
 
 **Pillar P4:** strengthen the category-free VR-1 OAR contract by a detectable
 non-collapse witness, and test the whole-Hilbert graph estimates on the
@@ -17,20 +21,20 @@ categorical densities, states, refinements and controls; conditional R2,
 with no R3–R5 conclusion. A one-family circle calculation does not assert a
 full two-family theory. CA-88's same-system requirement remains explicit.
 
-**A. Proposed non-collapse theorem.** Under VR-1 A1–A4, a uniform positive
+**A. Non-collapse theorem.** Under VR-1 A1–A4, a uniform positive
 lower bound on a fixed transported coarse-vector matrix element of a weighted
 nonzero mode implies nonzero limiting stress. Determine an eventual converse,
 show precisely why the CA-95/100 collapsing families fail the witness, and
 audit the extra hypotheses needed for a positive genuine central charge.
 
-**B. Proposed graph certificate.** Formulate uniform finite-window quadratic
+**B. Graph certificate.** Formulate uniform finite-window quadratic
 estimates on the entire excitation Fock space, with compatible control
 K=(1+E)^p. Determine the threshold in p for the one-loss refinement defect,
 all-bracket two-loss residuals, and a non-collapse witness. The specific
 source-modified complex CAR specialization belongs in `checks/` and the
 examples table; it is a check of the contract, not a categorical result.
 
-**C. Proposed same-system identification.** Compare the Wilson row limit,
+**C. Same-system identification.** Compare the Wilson row limit,
 its GNS refinements, and the representation carrying the quadratic modes.
 Prove the identification or isolate it as a sharp missing lemma.
 
@@ -41,7 +45,7 @@ Ward and periodic KS data still needed for a general C-chain at R2.
 
 Existing conventions (s), (v), (w), (af), (ap), (aq), (ar) are retained.
 Inner products are linear in the second slot, as in (al). Any additional
-notation will be declared here before use: the user restricts edits to this
+notation is declared here or in its scoped supplemental proof before use: the user restricts edits to this
 directory, so no global convention or report file is modified. In particular,
 the two central coefficients c,c* are not silently identified.
 
@@ -110,7 +114,8 @@ nontrivial. No assertion about positivity or group integration is used.
 For j≠0,2k, the bracket `[T_k,T_(j−k)]=(2k−j)T_j` gives T_j=0.
 In particular T_(3k)=T_(-k)=0, and their bracket gives 4k T_(2k)=0.
 BY VR-1 `:78–80`; all these brackets avoid the central term. This contradicts
-<1>2. Thus all nonzero-index modes are nonzero. QED BY <1>1–<1>5.
+<1>2. Thus all nonzero-index modes are nonzero. Also T_0 cannot be scalar,
+since `[T_0,T_n]=−nT_n`. QED BY <1>1–<1>5.
 
 **Corollary A.1 [proven; same tags].** A fixed exponent σ≥1 may replace
 the inverse K in A5 by K^(-σ); the scalar tail is at most
@@ -348,7 +353,7 @@ are unchanged. Thus the limiting operators and their common domain belong
 to this same GNS system. BY <1>1–<1>2 and unitary invariance of all norms.
 QED. The underlying construction is the local OAR source
 `literature/md/2010.11121/2010.11121.md:148–180` and WT-1,
-`report/sections/81_cft_machine_oar_contract.tex:77–80`.
+`report/sections/81_cft_machine_oar_contract.tex:80–83`.
 
 The explicit calibration identification is proved in `checks/same_system.md`:
 it supplies the fixed spinor basis change, the full spectator carrier and

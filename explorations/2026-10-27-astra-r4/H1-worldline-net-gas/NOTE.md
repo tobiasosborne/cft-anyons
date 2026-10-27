@@ -651,13 +651,89 @@ particular weak convergence alone does not justify passing conditional
 probabilities through a limit. Each missing implication is listed below
 as an independent lemma obligation.
 
+## Offline source audit and acceptance
+
+The reproducible search is `checks/source_audit.py`; raw matches, including
+duplicate extractions and bibliography-only hits, are in
+`checks/source_audit_output.txt`. Searches cover `references/` and
+`literature/md/`, with the required terms Markov, loop model, O(n), CLE and
+Schramm, plus domain Markov and SLE. A failed text search is not treated as
+a proof that a result does not exist.
+
+The brief's blanket absence claim needs correction. AFM-S:71–89,128–139
+already explicitly writes the local-weight times categorical-evaluation
+geometric ensemble, includes dilute distinguished objects, and describes
+arrows and multiplicity indices. CA-78:56–68 already removes the tile
+truncation. H1-A consolidates those facts with the complete pointed-site
+dictionary, rather than claiming the exact expansion was previously absent.
+
+CGS:527–532,572–615,784–796 discusses CLE/SLE and explicitly distinguishes
+its conjectures from a special proved case (listed below). Schottenloher:
+7335–7349 gives an SLE overview and pointers. HKV13:1234–1239 uses a
+domain Markov property for a different field model; it does not establish
+H1-C for signed categorical nets. HKV22:202–216 also discusses SLE/CFT.
+BR24:2214 references SLE loop measures and anomalies. The Markov-trace
+search contains algebraic traces, which are distinct from probabilistic
+domain Markov laws. Two of the four case-insensitive “CLE” matches are
+line-break/OCR fragments, not references to conformal loop ensembles.
+
+**Source gaps retained, without network acquisition:** (SG1) a primary
+construction/characterization source giving the exact SLE and CLE Markov
+axioms and the applicable configuration topology; (SG2) a theorem passing
+discrete explorations and conditional laws to their limits; (SG3) a
+general labelled *branching-net* analogue, with categorical boundary
+tensors; (SG4) a general-C conformal-limit and stress/Ward theorem. None
+was located with the needed scope. Schramm's original scaling-limit paper
+and Lawler's *Conformally Invariant Processes in the Plane* are specific
+acquisition leads listed locally at Schottenloher:7373–7374, not imported
+theorems. A primary CLE characterization/exploration source still needs
+identification and registration. The local CGS source is usable now as
+motivation with its stated scope; it is not a general-C proof. The OCR
+Loewner formula in Schottenloher:7343 is visibly unreliable and is not used.
+
+**Checks completed.** Commands and conventions are in `checks/README.txt`.
+All are finite exact calculations, with no Julia suite or large matrices.
+
+- `check_patch.py` / `check_patch_output.txt`: sixteen rescaled tile
+  products equal an independent indexed contraction in a symbolic unitary
+  F block; complex inverse-Gram sewing and F^−T duality hold. Five actual
+  mutated equalities fail. The arbitrary F block tests the algebra required
+  of any category; it is not asserted to solve categorical pentagons.
+- `check_signs.py` / `check_signs_output.txt`: formula (D2) holds for
+  arbitrary d>0; 1,098 compatible decorated closed paths per sign through
+  length six are positive. A one-cup mutation gives −9/16 and is caught.
+  That mutation intentionally breaks adjoint pairing. The script also
+  verifies the raw FS contraction and the exact positive-seam/negative-cycle
+  matrix witness. The all-length proof is the occupation argument, not
+  the finite enumeration.
+- `check_fs_instance.py` / `fs_instance_output.txt`: an independently
+  sourced category satisfies all sixteen cocycle pentagons; the actual
+  four-site history in (D4) has evaluation −1 and weight −729/4096 with
+  positive exact geometric coefficients. Instance details are below.
+- `check_anisotropy.py` / `anisotropy_output.txt`: the sourced face weights
+  pass regularity, the special spectral-parameter reduction and branch
+  arithmetic; the wrong cup-cap sign is detected by its Hamiltonian tangent.
+
+**Review and friction.** Two independent skeptical collaborators checked
+the general statements. Their concrete corrections are incorporated:
+conditional independence only needs factorization on attainable tensors;
+E versus D matrix-unit norms cancel in the negative triangle; cycle tests
+include parallel-edge two-cycles; the scaling aspect ratio is η_*, not the
+velocity v_*; annuli must be resolved by the mesh; continuum boundary kernels
+need their own state-space/convergence lemma. A third collaborator wrote
+and ran the patch/sign checks, which were read against the displayed proofs.
+No reviewer claim substitutes for those proofs or source anchors. The
+main dead end was the requested universal positive-measure conclusion:
+its two sign counterexamples require reformulation, not an extra estimate.
+
 ## Results ledger
 
 - H1-A, complete tile-to-net dictionary and exact patch expansion — proven.
 - H1-B, normalized bubble/F/contractible-loop rules and precise Markov trace — proven.
 - H1-B2, ordinary Gibbs trace requires the boundary factor J_L — proven.
 - Unrestricted loop decoupling, and exact Gibbs equality at finite Trotter step — negative.
-- H1-C, exact sewing and conditional boundary-tensor domain Markov formula — proven (probabilistic conclusion assumes nonnegative scalar weights).
+- H1-C-algebra, inverse-Gram sewing and exterior-boundary functional — proven.
+- H1-C-probability, boundary-tensor domain Markov law — conditional on nonnegative scalar weights and positive conditioning denominator; the implication is proved.
 - H1-C-labels, endpoint labels alone suffice; inverse Gram is stochastic — negative.
 - H1-D1, corrected loop positivity and phase criterion — proven.
 - H1-D1-original, coefficient nonnegativity iff closed-weight positivity — negative in both directions without the stated extra hypotheses.
@@ -665,46 +741,164 @@ as an independent lemma obligation.
 - H1-D2-original, Hom(X,X⊗X)≠0 universally forces intrinsic F signs — negative for the allowed general X.
 - H1-D2-gas, fixed-presentation positivity criterion and finite-volume path-gauge cycle criterion — proven; unrestricted positive re-encoding is not classified.
 - H1-D3, temporal reflection positivity does not imply positive net weights (and converse cone separation) — proven.
-- H1-E-finite, exact weight ODE and declared time/space-response identity — proven; physical metric/velocity identification is conditional on extra data.
+- H1-E-finite, exact weight ODE and declared time/space-response identity — proven.
+- H1-E-metric, interpretation of the declared ratio as physical conformal anisotropy — conditional on additional velocity/metric identification, not supplied.
 - H1-E-scaling, conformally covariant critical marked-net scaling law — conjectural.
-- H1-checks, symbolic patch / inverse-Gram / sign mutations — open.
-- H1-source-audit, Markov / loop model / O(n) / CLE / Schramm gaps — open.
+- H1-E-Markov, common limiting boundary space and convergence of conditional kernels — conjectural.
+- H1-checks, symbolic patch, inverse-Gram, sign, FS and face-weight invariants with eight rejected mutations — proven by the recorded exact runs, within their declared scope.
+- H1-source-audit, recorded local evidence and qualified source gaps SG1–SG4 — proven as a reproducible search record, not as a literature completeness claim.
 
 ## Layer tags
 
-Setting any; L0 plus the declarations above; finite ingredients for R1–R3.
-No R1, R2, R3, R4 or R5 conclusion is claimed by finite sewing.
+| Statements | Setting | Input layer and microscopic declarations | Rung reached | Rung claimed |
+|---|---|---|---|---|
+| A–C algebra, B trace | any | L0; pointed O, h, oriented decorated tiles, full cuts, declared closure/charge weights | finite, on the existing R0 carrier | →R1/→R3 ingredient |
+| C probability, D1 | any | L0; additionally nonnegative scalar weights, nonzero normalization, oriented or κ=+ loop convention as specified | conditional finite law | →R3 ingredient |
+| D-F | any | L0; generated subcategory and simple-object unitary fusion bases | finite categorical obstruction/classification | no continuum rung |
+| D2 gas/path tests, D3 | any | L0; additionally specified representation, h placements, temporal dagger seam, spanning probes | finite tests and counterexamples | →R3 ingredient |
+| E1 | any | L0; h, tile structure constants, a_x,t,v_* declared | finite response | →R3 ingredient, no KS matching proved |
+| E2 and E-Markov | any; chirality unchosen | L0 plus selected positive critical family, geometry, topology, boundary-limit data | finite ingredients only | conformal marked-net law, itself →R3 |
+
+The inherited R0^c and trailing R0^u facts are CA-77, not new claims.
+No OAR R1, Virasoro R2, local conformal theory R3, faithful R4 or functorial
+R5 conclusion follows here. L1–L4 must be added where a later target
+requires braiding, modular fidelity, enrichment or a specified theory.
 
 ## Pillar served
 
-P2: formulate the exact weighted spacetime net object. P1: retain the
-indefinite occupation carrier and all creation/annihilation channels.
+**P2 first:** the exact C-evaluated spacetime net gas is the finite object
+on which geometric response and scaling questions can be posed. Its
+probability interpretation is precisely separated from its always-defined
+amplitudes. **P1 inseparably:** the pointed occupancy flags and all allowed
+number-changing matrix elements are retained, including occupied unit
+copies; reaction histories cannot be restricted to one N. E1 exposes an
+interface to P3, but no discrete conformal equation is solved. P4 is not
+proved; the finite Gibbs/Trotter comparison is not an OAR construction.
 
 ## What this gives the integration
 
-Pending proofs: develop the finite (any, L0, →R3) CA-80/CA-86 ingredient,
-opening CA-75 Link (a); do not promote a CA-88 continuum cell.
+The **finite (any,L0,→R3) ingredient cell** occupied by CA-78/80/86 gains
+the explicit general pointed net dictionary, the trace declaration, and
+the exact probabilistic obstruction/conditional-law statement. This is the
+P2 object itself, not a new rung. No CA-88 R1–R5 existence cell moves.
+
+It opens **CA-75 Link (a)** concretely: (a2) has exact leg-cut sewing and
+full boundary conditioning; a straight seam cutting plaquettes still needs
+the CA-92/98 machinery and its hypotheses. (a3) now has the exact local
+weight response (E1) to feed metric/Ward equations; identifying it with KS
+and proving vanishing total residual are open. (a1)'s module-category
+boundary identification and (a4)'s conformal/anomaly-line limit are not
+solved. Boundary choices remain declared data, not a new research priority.
 
 ## Open problems
 
-All propositions remain open in this initial checkpoint. In particular,
-sewing alone must not be assumed to define a conditional probability.
+Each item is a sharp missing implication; none is smuggled into “proven”.
+
+1. **Positive local net realization.** Given (C,O,h) and an explicitly
+   bounded local class of gauge changes/auxiliary variables/regroupings,
+   decide whether all closed decorated weights admit a nonnegative
+   representation retaining the categorical geometry. D-F classifies only
+   complete recoupling positivity; D5 and the path-cycle criterion are
+   narrower tests. A global spectral sum would be positive but would not
+   solve this local geometric problem.
+2. **Critical selection/noncollapse.** Construct λ_* and boundary states
+   meeting E's connection bounds for a general declared categorical input,
+   with number-changing reactions active where permitted. No special
+   category's critical weights are a substitute for this lemma.
+3. **Metric/anisotropy identification.** Prove a finite positive physical
+   conversion v_* and Euclidean bulk isotropy, and identify the derivative
+   of E1 with a renormalized geometric stress insertion. The identity
+   h↦q h rules out a category-only numerical conversion.
+4. **Tightness and marked topology.** Produce N(D), control macroscopic
+   components/junctions, and prove tightness without losing labels or
+   connectivity. Uniform crossing estimates alone are not used as a
+   tightness theorem here.
+5. **Continuum kernel lemma.** Prove E-Markov, including compatibility of
+   changing cut spaces and continuity under a random revealed slit.
+   Determine when the boundary state reduces to ordinary SLE/CLE data;
+   otherwise formulate the required richer marked-net specification.
+6. **Conformal identification/uniqueness.** Prove E2 from a sourced
+   observable or local conformal-equation certificate, including domain
+   approximation and boundary convergence. No universal d_a→κ relation
+   for arbitrary C has been derived.
+7. **P3/P4 join.** Prove the discrete Ward insertion is the KS stress on
+   the same refinement/state system, with the analytic bounds needed by
+   CA-81/89/95. Then prove local reconstruction and, separately, categorical
+   fidelity at the declared target layer. A conformal random geometry alone
+   is not a proof of those steps.
+8. **Source and convention integration.** Acquire/register SG1–SG4 as
+   needed; propose the vertex/trace/closure conventions above to the global
+   record only in a later authorized integration. This task deliberately
+   changes neither CONVENTIONS nor the worklog/report/index.
 
 ## Examples table
 
-No examples have been used; any instance will be confined to this table or
-checks/ and will only test a general statement.
+| Instance (checks only) | What it checks; what it does not establish |
+|---|---|
+| Synthetic 2-channel unitary F(r,z), z*=z^−1 | Sixteen-term exact patch identity, rescaled vertices, Gram and dual conventions. No pentagon or categorical realizability claim; `checks/check_patch.py`. |
+| Abstract raw pair block, any d>0 | Exact exp(±t(b+b†)), sign-coboundary invariant and one-cup mutation. The enumeration tests the block, not all spatial nets; `checks/check_signs.py`. |
+| Hilb_fd(Z/2,ω), ω(a,b,c)=(−1)^(abc), O=1_v⊕g | Local Penneys:595–603,931 gives a pseudoreal simple g. All sixteen cocycle pentagons pass; the four-site FS history has Ev=−1 and negative weight despite positive coefficients. `checks/check_fs_instance.py`; a witness for D-FS, not the general subject. |
+| A three-dimensional unit-copy block in any C | exp(log(2)S) has eigenvalues 2,2,1/4 but the closed triangle weighs −343/1728. Checks the category-independent multiplicity obstruction of D3. |
+| Dilute TL-type face weights of Zhou–Batchelor | At u=0, four projector coefficients are 1. At u=λ, ρ_9=0, ρ_(2,3)/ρ_1=x and ρ_(4,…,8)/ρ_1=x², x=1/(2cosλ), n=−2cos4λ. sqrt(2−n)=2|cos2λ| gives the two branch identities of CA-86. `checks/check_anisotropy.py`; no general-C spectral parameter or conformal proof. |
+| Ising parameter n=1 in CGS | Source-local stress/correlation convergence, CGS:527–532 and theorem labels at :876,:909,:927. It does not prove E2 for general C or general n; no run of that theorem here. |
 
 ## Sources used
 
-- report/sections/66_anyonic_states_variable_n_fock.tex:54–106,128–152.
-- report/sections/77_pointed_carrier_invariants.tex:47–60,90–116,207–214.
-- report/sections/80_lattice_sewing_and_fidelity_certificate.tex:52–135.
-- report/sections/86_spacetime_trotter_dictionary.tex:61–110,273–279.
-- report/sections/88_layered_targets.tex:54–56,82–130,141–151.
-- report/sections/92_spatial_seams_and_reflection_positivity.tex:53–121.
-- report/sections/75_integration_map.tex:125–138.
-- references/text/PenneysUnitaryFusionCategories.md:219–237,394–430,
-  528–568,1015–1047.
-- references/string-net/LevinWen2005/source/strnet.tex:497–524.
-- references/cft/AasenFendleyMong2020/source/_fusion_categories_and_diagrammatics.tex:30–88.
+The short names used above expand to the following exact local anchors.
+External works cited by these sources are **not** thereby treated as read.
+
+- **Penneys:** `references/text/PenneysUnitaryFusionCategories.md:219–237`
+  (orthogonal sums), `:284–288` (cocycle), `:394–430` (graphical calculus,
+  oriented duals), `:528–568` (vertex norms and F), `:589–608` (gauges and
+  pointed data), `:907–961` (pivotal/spherical traces and self-duality),
+  `:1010–1047` (positive spherical trace; raw FS signs).
+- **ENO:** `references/text/EtingofNikshychOstrikFusionCategories.txt:134–144`
+  (associator cocycles), `:1970–1971` (pointed categories).
+- **Levin–Wen:** `references/string-net/LevinWen2005/source/strnet.tex:497–524`
+  (local graphical rules); their coefficients/normalizations are translated
+  via the explicit u/V dual-basis convention rather than silently copied.
+- **AFM-F:** `references/cft/AasenFendleyMong2020/source/_fusion_categories_and_diagrammatics.tex:30–88`
+  (fusion and dimension identities), `:175–184` (restrictions in that paper),
+  `:353–380` (FS and bending phases).
+- **AFM-S:** `references/cft/AasenFendleyMong2020/source/_Statistical_mechanics_from_fusion_categories.tex:17–21`
+  (integrability requires extra tuning), `:39–89` (geometric ensembles),
+  `:128–139` (dilute, oriented, multiplicity extensions), `:536–553`
+  (weights and Hamiltonian limit), `:785–788` (multiplicities).
+- **Zhou–Batchelor:** `references/lattice-symmetry/ZhouBatchelor1997/source/9611156.tex:104–145`
+  (loop ensemble and exact spectral face weights; calibration only).
+- **CGS:** `references/lattice-symmetry/ChelkakGlazmanSmirnov2016/source/StressTensor.tex:527–532`
+  (proved/conjectured scope), `:558–615` (critical-loop/SLE/CLE discussion),
+  `:784–796` (Conjecture T), `:876,:909,:927` (special-case theorem labels).
+- **Schottenloher:** `references/cft/Schottenloher2008/Schottenloher2008.md:7335–7349`
+  (SLE overview, not its OCR formula), `:7373–7374` (acquisition leads).
+- **HKV13:** `references/lattice-symmetry/HonglerJohanssonKytola2013/source/vir_20130715.tex:1234–1239`
+  (located field-model Markov statement, not a net theorem).
+- **HKV22:** `references/lattice-symmetry/HonglerKytolaViklund2022/source/lattice-virasoro-updates-final.tex:202–216`
+  (located SLE/CFT discussion).
+- **BR24:** `references/categorical-reconstruction/BrehmRunkel2024/source/main.tex:2214`
+  (SLE-loop anomaly reference; no theorem imported).
+- **CA-66:** `report/sections/66_anyonic_states_variable_n_fock.tex:54–106,128–152`.
+- **CA-77:** `report/sections/77_pointed_carrier_invariants.tex:47–60,90–116,207–226`.
+- **CA-78:** `report/sections/78_categorical_selection_equations.tex:44–68`
+  (compiler and exact gate ODE), `:90–97` (topological versus conformal response).
+- **CA-80:** `report/sections/80_lattice_sewing_and_fidelity_certificate.tex:52–140`
+  (exact patches, Gram sewing, temporal RP, Duhamel and limits of coverage).
+- **CA-86:** `report/sections/86_spacetime_trotter_dictionary.tex:61–110,154–217,273–279`
+  (first-order dictionary, calibration and erratum).
+- **CA-87/77 boundary:** `report/sections/87_dilute_fibonacci_is_blocked_golden.tex:54–69`
+  and CA-77:124–158 (blocking is conditional, not an input restriction here).
+- **CA-88:** `report/sections/88_layered_targets.tex:54–56,82–130,141–151`.
+- **CA-92:** `report/sections/92_spatial_seams_and_reflection_positivity.tex:53–121`.
+- **CA-75:** `report/sections/75_integration_map.tex:115–138` (Link (a)).
+- **Conventions/status:** `CONVENTIONS.md:631–694,1397–1464,1486–1543,1595–1608`;
+  `worklog/023_2026-10-27_status_overview.md:18–89,158–195` (read as status,
+  not as proof; the source-gap wording is qualified by this audit).
+- **Registration manifests:** `references/manifest/SOURCES.md:15,35,57`;
+  `references/category-theory/SOURCES.md:134–147`;
+  `references/string-net/SOURCES.md:19–85`;
+  `references/cft/SOURCES.md:9–28,73–116`;
+  `references/lattice-symmetry/SOURCES.md:104–143,1164–1195,1731–1782`;
+  `references/categorical-reconstruction/SOURCES.md:33–51`.
+- **Reproducible evidence:** this directory's `checks/README.txt`, all five
+  scripts, and their corresponding raw output files. Source audit is a
+  search index; the other four scripts assert exact finite invariants.
