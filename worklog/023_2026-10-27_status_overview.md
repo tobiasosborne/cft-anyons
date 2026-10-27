@@ -15,6 +15,57 @@
   rung R0 tower (R0^c corner, R0^u unital), R1 limit state, R2 Virasoro
   modes, R3 local conformal theory, R4 faithful, R5 functorial.
 
+## 0. Correction (Tobias, 2026-10-27): rank by the four pillars, not the grid
+
+The first version of this chunk (commit ac0f80b) ranked results by CA-88 grid
+cells and named the UMTC realisation problem as a caveat. Tobias corrected
+both: the realisation problem **is** the goal (building blocks for lattice
+models capable of realising UMTCs), and four ideas are the substance, which
+"very often get glossed over, lost, and pushed aside in favour of busywork".
+Now AGENTS.md north-star paragraph *The four pillars* and Rule 18. Status of
+each pillar, from the audits:
+
+- **P1 Indefinite particle number (the only possible approach).** Carrier
+  exists for general C (CA-66, CA-77 Thm 77.8: `(+)_N Hom(c,O^N)`, O = 1+X,
+  occupation grading); refinement is local and unital (CA-90/96); the
+  number-changing dynamics has a provable continuum (CA-94 Thm 94.6, CA-99),
+  but only in the tuned, z = 2 non-relativistic regime. **Gap:** the critical
+  (relativistic) point of the number-changing dynamics, where worldlines form
+  a critical loop/net gas, has no general-C statement. AGENTS.md:58 had
+  demoted P1 to "one mechanism under investigation"; this is where the drift
+  came from. Fixed today.
+- **P2 Spacetime / stat-phys representation (Levin-Wen analogy).** CA-86
+  Lemma 86.1: the Trotter history sum equals Ev_C(Gamma) times plaquette
+  weights for any C; CA-87 and worklog 019: net gas, Nienhuis critical point
+  for the blocked case; LC-4 periodic tier. **Gap:** SLE/CLE appears once in
+  the repo (worklog 019:98, as a plan item). No shard connects conformal
+  invariance of the worldline ensemble to the Virasoro generators, and no
+  source on CLE/loop-ensemble conformal invariance is registered. This is the
+  largest missing piece relative to the programme's stated content.
+- **P3 Local discrete-conformal equations up to cohomology.** LC-1..LC-5
+  (cells, Ward, Taylor recurrences; HH^1, CE H^2, binary H^3, mixed complex)
+  are a correct general formulation on continuum carriers; the finite-cutoff
+  lattice version (CA-75 Link (a)) is unwritten, and the equations have never
+  been posed on the P2 history sum. **Gap:** the join P2 -> P3.
+- **P4 OAR limit.** WT-1/VR-1 contracts (CA-81), drift bound 76.1, Ward-to-KS
+  transfer (89/95), chirality (100). **Gap:** no categorical instance of any
+  certificate; the only R1/R2 instances are free-fermion.
+
+**Re-ranked next steps (pillar each serves).** (i) P2+P1: write the spacetime
+worldline (net-gas) representation of the indefinite-N chain for general C
+from CA-86, with the quantum dimensions as loop weights and the vacancy as the
+empty edge, and state the criticality condition as conformal invariance of
+that ensemble (CLE-type); acquire and register SLE/CLE sources (Law 1).
+(ii) P3 on P2: pose LC-1's cell/Ward equations at finite cutoff on the CA-86
+rectangles (Link (a)), so discrete conformal invariance becomes finite
+residual equations in the weights and tiles for arbitrary C. (iii) P4:
+the first genuine VR-1 instance and a non-collapse clause. (iv) Review G1/G6,
+launch G2 (P1/P4). The "periodic seam" item of section 6 is demoted: boundary
+conditions are module categories over C (LC-1 §1 already types them so);
+PBC vs OBC is boundary data, not a research question. CA-88's setting axis
+(open <-> chiral, periodic <-> full) should be re-read in that light in its
+successor shard.
+
 ## 1. Where we stand on the ladder (general unitary fusion C, pointed O)
 
 | Rung | Reached for general C? | By what | Instances / caveats |
@@ -209,18 +260,15 @@ Not recommended: more four-port instances (E), more qubit/Gaussian scans
 
 - Fixed now: CA-88:117-118 and :263 still called Target 90.T open after
   round 3 superseded it (now points to 96.10).
-- Open (cheap): CA-71:150-178 "forest image / Thompson V action" refuted by
-  CA-77 (b),(c), no inline erratum; CA-65:240 stray Markdown fence; CA-65/66
-  say the spherical structure is unsourced though (r) closed it; CA-66 "no
-  Julia test" though runtests.jl:1095 exists; CA-64 says its bundle is
-  unregistered; CA-86 Prop. 86.4 cites "worklog 016" (now 019) and has no
-  committed script; CA-87 bundle has no README/hashes and exceeded the L=4
-  cap without recorded sign-off; CA-100 cites no checks (F2 bundle has
-  check_f2.py with mutations); 99.13 is an open target graded "conditional";
-  CA-95..100 are not rows in the CA-88 grid table; CA-88 uses "open" as a
-  setting tag outside the (aq) vocabulary; 88:154 tags LC-2/5 as L2-L3 though
-  they are category-free; amendment pointers not appended into CA-77/90/91/
-  92/94; round-3 conventions unregistered ((ax)); AGENTS.md:310 memory path.
+- Open (cheap): stale status text in CA-64/65/66/71/86/87 (refuted claims
+  without inline errata, missing tests or bundles cited as missing, renumbered
+  worklog pointer, CA-87 bundle over the L=4 cap with no README); CA-100 cites
+  no checks though the F2 bundle has mutations; 99.13 open but graded
+  "conditional"; CA-95..100 absent from the CA-88 grid table; "open" used as
+  a setting tag outside (aq); 88:154 tags LC-2/5 as L2-L3 though category-
+  free; amendment pointers not appended into CA-77/90/91/92/94; round-3
+  conventions unregistered ((ax)); AGENTS.md memory path. Details in audits
+  C, F, G.
 - Open (structural): exploration checks of rounds 1-3 not ported to
   `scripts/` with run bundles; SURVEY.md and references.bib are stale
   (no Koo-Saleur, Jones, Zini-Wang, Haegeman entries); CA-88 at the line cap.

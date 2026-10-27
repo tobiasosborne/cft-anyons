@@ -55,9 +55,37 @@ hypothesis until a local source, a local derivation, or a reproducible run
 supports it. The specific sub-question in flight is recorded in the worklog, not
 fixed here.
 
-Indeterminate-number anyon Hilbert spaces are one mechanism under investigation,
-not a restriction on the algorithm. Investigate other mechanisms. New proofs
-use Lamport's structured notation with explicit assumptions, hierarchical
+**The four pillars (Tobias, 2026-10-27).** The goal *is* the UMTC realisation
+(reconstruction) problem: supply the building blocks for microscopic lattice
+models capable of realising unitary modular tensor categories. Four ideas are
+the substance of the programme; everything else is scaffolding. They are the
+ideas that get glossed over, lost and pushed aside in favour of busywork, so
+they are written here and every brief, shard and worklog entry names which of
+them the work serves (Rule 18):
+(1) **Indefinite particle number.** The anyonic Hilbert space with
+indeterminate anyon number (vacancies `1` in the site object `O = 1 (+) X`;
+carrier `(+)_N Hom(c, O^{(x)N})`; CA-66, CA-77) is *not* one mechanism among
+several. It is the only possible approach to building a CFT from a lattice
+plus an MTC. Every LLM tries to argue it away as unimportant; do not.
+(2) **Spacetime / statistical-physics representation (Levin-Wen analogy).**
+The Gibbs state of the lattice model is a sum over spacetime worldline
+diagrams: a string-net on the spacetime lattice evaluated by `C` (CA-86).
+These diagrams *require* the indefinite-number space, since worldlines are
+created and annihilated. Conformal invariance of the continuum is the
+conformal invariance of this random-curve ensemble: SLE/CLE-type
+argumentation, tightly coupled to pillar (1).
+(3) **Local equations for discrete conformal invariance**, up to cohomology
+or similar: a local system of equations on the spacetime weights whose
+solutions are discretely conformally invariant, with obstructions and
+anomalies classified cohomologically (`reconstruction/`, LC-1--LC-5).
+(4) **Continuum limit via OAR.** Operator-algebraic renormalisation and
+Wilson's triangle carry the lattice model and its symmetry generators to the
+rigorous CFT (CA-81, `cft_machine/`).
+Boundary conditions are module categories over `C`. PBC versus OBC is a
+choice of boundary data, not a research question; it must not consume
+priority (a typical misdirection, 2026-10-27).
+
+New proofs use Lamport's structured notation with explicit assumptions, hierarchical
 numbered steps, and dependencies. Tobias requests research collaborators
 and skeptical reviewer subagents to referee substantial new material.
 His latest explicit model preference (2026-10-21) is **GPT-6.1 at xhigh**
@@ -260,6 +288,15 @@ Numbered, non-negotiable. Re-read after compaction.
     rung of the target ladder (limit exists / conformal / faithful to a
     declared theory) it reaches. See the north-star paragraph *Layering
     principle*.
+
+18. **Pillars first.** Every brief, shard and worklog entry states which of
+    the four pillars (indefinite particle number; spacetime / stat-phys
+    representation; local discrete-conformal equations up to cohomology; OAR
+    limit) the work serves and how. Work that serves none is busywork: stop
+    or drop it. Status overviews rank results by the pillars, not by
+    bookkeeping (grid cells, shard counts). Boundary conditions are module
+    categories; do not spend priority on PBC versus OBC. See the north-star
+    paragraph *The four pillars*.
 
 ---
 
