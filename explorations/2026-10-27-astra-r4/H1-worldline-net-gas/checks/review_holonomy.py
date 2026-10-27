@@ -122,9 +122,9 @@ def holonomy(hs):
     return worst, witness
 
 
-L = 4
-print('\n(P1) Z_2, X = g, h = b + b^dag + hop, L =', L)
-for p in (0, 1):
+for L, p in product((4, 5), (0, 1)):
+    if p == 0:
+        print('\n(P1) Z_2, X = g, h = b + b^dag + hop, L =', L)
     om = make_omega(2, p)
     _, _, hs = chain(2, om, [1], {1: 1.0}, L)
     worst, wit = holonomy(hs)
@@ -133,12 +133,13 @@ for p in (0, 1):
     print(f'  p={p}: omega(g,g,g)={om(1,1,1).real:+.0f}; frustrated={frustrated}',
           '' if wit is None else f'; residual holonomy {complex(wit[2]):.3f}')
 om = make_omega(2, 1)
-_, _, hs_noassoc = chain(2, om, [1], {1: 1.0}, L, assoc=False)
+_, _, hs_noassoc = chain(2, om, [1], {1: 1.0}, 5, assoc=False)
 assert holonomy(hs_noassoc)[0] < 1e-9
 print('  MUTATION DETECTED: dropping associators erases the FS frustration (p=1 -> unfrustrated).')
 
-print('\n(P2) Z_4, X = g (+) g^3, two oriented cups, L =', L)
-for p in range(4):
+for L, p in product((4, 5), range(4)):
+    if p == 0:
+        print('\n(P2) Z_4, X = g (+) g^3, two oriented cups, L =', L)
     om = make_omega(4, p)
     w = om(1, 3, 1)
     # snake on g: (b_+^dag (x) 1) alpha^{-1}_{g,g^3,g} (1 (x) b_-) = conj(th+) th- / w
@@ -157,6 +158,7 @@ for p in range(4):
 print('  MUTATION DETECTED: naive raw cups (theta_-=theta_+) frustrated for p=1,2,3.')
 
 print('\n(P3) NOTE D4 history from full matrices exp(t h_j), t = log 2')
+L = 4
 om = make_omega(2, 1)
 states, index, hs = chain(2, om, [1], {1: 1.0}, L)
 t = np.log(2.0)

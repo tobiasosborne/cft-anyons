@@ -1,29 +1,37 @@
 # H6 — Discrete holomorphicity as a categorical selection equation
 
-Started 2026-10-27 13:10 UTC. Initial ledger written within ten minutes.
+Started 2026-10-27 13:10 UTC; initial all-open ledger written at 13:12 UTC.
+Proofs and ledger updated incrementally; final verification recorded below.
 This exploration serves **P3 on P2**, on the pointed, indefinite-number carrier of P1.
 All conventions below are proposed **note-local** registrations: the brief prohibits
 editing `CONVENTIONS.md`, worklog, report, or other files. No network or commits.
 
-## Statement under investigation
+## Outcome and precise replacement
 
-For arbitrary unitary fusion C and pointed O = 1 ⊕ X, use the exact tiles
-T = Σα wα Dα of CA-78.2/CA-80.1. H6 proposes that a centre object
-(Y, γ), a twist/spin, and a winding-weighted open defect strand define a scalar
-observable F(e); that face contours Σe Δz_e F(e) = 0 are finite linear
-selection equations on w; and that they propagate to finite-region contours.
-A calibration and a conditional scaling implication are requested separately.
+**H6 requires reformulation.** The literal endpoint sum lacks scalarization,
+path-counting and spin/framing data; its unit-reduction and harmonicity claims
+are false without repairs. The proved replacement is a finite categorical
+endpoint compiler (B5–B8), a globally consistent charged-edge realization
+(B9–B12), a finite phase-cohomology obstruction, and exact lattice Stokes.
+It applies to arbitrary unitary fusion C with pointed O=1⊕X. Neither a critical
+Hamiltonian nor a continuum rung is selected.
 
-**Tags:** any local bulk patch (periodic/full or open with declared module
-boundary); L0 + chosen Z(C) datum, plus microscopic O, tiles, boundary
-contractions, embedded faces, endpoint and winding conventions; finite →R2/R3,
-**no new rung reached or claimed by a finite identity**. A chosen centre object
-does not assert that all of C is braided; L1 is a sufficient special input.
+More precisely: given a centre object (Y,γ), an endpoint q:Y⊗O→O, specified
+geometry and scalar edge phases, the local contour is the explicitly computed
+matrix A^q w. Its vanishing is equivalent to a local Hom-space identity and
+suffices for every boundary contraction of the charged-edge field. Necessity
+requires separating exterior tests. The spin-zero identity-gate obstruction
+B4 shows why even a nonzero finite kernel need not give a regular Hamiltonian
+family. A separate exact scalar-loop calibration passes; equality with H6's
+centre-strand observable remains unproved.
 
-**Research target, not yet a result:** determine whether H6 needs a local endpoint
-insertion/extension rule in addition to a transportable topological defect.
-If it does, prove the strongest finite matrix compilation and contour theorem
-with that rule declared, and identify every extra hypothesis.
+**Tags:** any local bulk patch, including patches in a periodic/full system or
+an open system with declared module boundary; L0 + chosen Z(C) datum, O,
+endpoint/closure, geometry, framing and real winding exponent; finite →R2/R3,
+**no new rung reached**. A chosen centre object does not assert that C itself
+is braided. L1 supplies centre choices via a specified braiding, but still
+supplies neither an endpoint field nor a physical conformal-weight lift.
+All primary-source aliases below are resolved to path:line in “Sources used”.
 
 ## Proposed convention block (before derivations)
 
@@ -710,56 +718,182 @@ case open in that source. No arbitrary-category compactness, conformal-limit,
 endpoint-identification, or SLE/CLE theorem has been located or assumed.
 No network acquisition was attempted, as the brief prohibits it.
 
+## Verification and session record
+
+The three substantial proof blocks and the scalar-loop calibration were checked
+by a skeptical research reviewer; repairs clarified the central unit, supplied
+a genuine global charged-edge field, made the nonlinear contour witness literal,
+and strengthened B4 from exponentials to all continuous regular families.
+The primary agent independently read the cited definitions and reran the checks.
+This is an exploration result; no report shard, conventions file, worklog, git
+commit or remote state was changed.
+
+Run commands from the repository root (all output files stay in this directory):
+
+```bash
+python3 explorations/2026-10-27-astra-r4/H6-discrete-holomorphicity-selection/checks/tl_calibration_runner.py
+python3 explorations/2026-10-27-astra-r4/H6-discrete-holomorphicity-selection/checks/finite_identities_runner.py
+python3 explorations/2026-10-27-astra-r4/H6-discrete-holomorphicity-selection/checks/half_braiding_witness.py > explorations/2026-10-27-astra-r4/H6-discrete-holomorphicity-selection/checks/half_braiding_witness.txt
+python3 explorations/2026-10-27-astra-r4/H6-discrete-holomorphicity-selection/checks/phase_compatibility.py > explorations/2026-10-27-astra-r4/H6-discrete-holomorphicity-selection/checks/phase_compatibility.txt
+```
+
+- `checks/tl_calibration.txt`: exact weights and both connectivity contours pass;
+  weight, spin and loop-sign mutations fail, restored baseline passes.
+- `checks/finite_identities.txt`: number-changing cut transport, all four endpoint
+  lifts, the common exterior, identity obstruction and Stokes pass; omitted
+  half-braiding and reversed shared-edge mutations fail, restored baseline passes.
+- `checks/half_braiding_witness.txt`: changing only the half-braiding, at fixed
+  twist and real spin, changes the kernel, even on Hermitian positive projections.
+- `checks/phase_compatibility.txt`: spanning-tree reconstruction satisfies all
+  incidences; one sign mutation produces holonomy −1 and is rejected.
+- `checks/source_search.txt`: recorded local searches for holomorph/parafermion/
+  Cauchy/contour/spin and targeted filenames/metadata; scope is recorded rather
+  than an unsupported claim of exhaustive absence.
+
+Python 3.12.3 and SymPy 1.12; exact arithmetic, no numerical tolerances; largest
+matrices 64×64. The first phase-check run caught Python integer division
+introducing floats; explicitly converting the input scalars to SymPy exact
+numbers fixed the convention error. No Julia suite, network, or report build
+was run: only this note and its checks were changed.
+
 ## Results ledger
 
-- H6-A0 — literal scalar/unit/spin claim: **negative**, general obstructions proved above.
-- H6-A1 — declared decorated finite evaluation and transparent vacancies: **proven**; automatic endpoint existence is not asserted.
-- H6-A2 — central transport and the unit contour select no weights: **negative**, proved.
-- H6-B0 — global multiaffinity and polynomial obstruction: **proven**; unconditional local-linear equivalence is rejected.
-- H6-B1 — explicit endpoint matrix and all-exteriors equivalence: **proven**; global propagation is **conditional** on LG.
-- H6-B2 — data dependence, gauge covariance and h-family qualifications: **proven**; strict universal F/γ sensitivity is **negative**.
-- H6-B3 — a cut-independent charged-edge field realizing LG with declared scalar phases: **proven**; original winding interpretation is conditional on phase compatibility.
-- H6-B4 — identity-gate obstruction for nonvacuum spin-zero endpoints: **negative**, proved.
-- H6-B5 — exact finite cycle-product test for consistent edge phases: **proven**.
-- H6-C — scalar-loop weight/contour calibration: **proven** in checks; identification with the H6 centre endpoint: **conjectural**.
-- H6-D1 — Stokes and primitive/period criterion: **proven**; automatic harmonic-conjugate claim: **negative**.
-- H6-D2 — C¹/local-uniform holomorphic-limit implication and separating-observable ensemble implication: **conditional**, with proofs of both implications; hypotheses not verified.
-- H6-I — integration and sharp remaining selection lemma: **open**.
+- H6-A0 — **negative**: arbitrary centre data alone do not define the stated scalar/unit-normalized/spin observable.
+- H6-A1 — **proven**: declared finite defect evaluation, allowed-move invariance, unit reduction and vacancy/number-change transparency.
+- H6-A2 — **negative**: central transport and the unit contour impose no weight selection.
+- H6-B0 — **proven**: global multiaffinity, homogeneous-polynomial specialization and an explicit nonlinear averaged-contour witness.
+- H6-B1 — **proven**: explicit endpoint matrix; equivalence to the local tensor identity; necessity for individually tested separating exteriors.
+- H6-B1-G — **conditional**: arbitrary decorated ensembles inherit face contours if their common-exterior hypothesis LG holds.
+- H6-B2 — **proven**: module/geometry/endpoint dependence, gauge covariance, direct-sum resolution and exact-weight versus h-family distinctions.
+- H6-B2-U — **negative**: obligatory nontrivial F/γ sensitivity for every Y; the central-unit sector is a universal exception.
+- H6-B3 — **proven**: a cut-independent charged-edge field that realizes LG with fixed scalar edge phases.
+- H6-B3-W — **conditional**: identification with prescribed geometric winding requires the explicit phase compatibility and an actual route interpretation.
+- H6-B4 — **negative**: a nonvacuum spin-zero endpoint cannot admit a continuous identity-normalized family at fixed nondegenerate geometry in this ansatz.
+- H6-B5 — **proven**: edge-phase consistency iff finite incidence-cycle products equal one; uniqueness up to componentwise phase.
+- H6-C1 — **proven**: exact scalar-loop weight and contour calibration, branch identification and dimension restriction in checks only.
+- H6-C2 — **conjectural**: identification of that scalar connectivity observable with the proposed categorical endpoint field.
+- H6-D1 — **proven**: lattice Stokes, the primitive/period criterion and the cohomological obstruction to a global primitive.
+- H6-D1-H — **negative**: contour closure alone does not imply discrete harmonic conjugacy.
+- H6-D2-A — **conditional**: local-uniform edge convergence to a C¹ function implies holomorphicity, with a full proof of the implication.
+- H6-D2-B — **conditional**: covariant limiting expectations of a separating test family imply conformal invariance of the ensemble law.
+- H6-selection — **conjectural**: a physical nonzero categorical endpoint construction selecting a critical h for arbitrary input C.
 
 ## Layer tags
 
-Setting any local bulk patch; input L0 + specified centre object, or L1 with chosen
-braided object; all geometric and microscopic declarations stated above; rung
-reached none; rung fed →R2/R3 only conditionally. Continuum claims remain open.
+| Statements | Setting | Input layer and additional declarations | Rung reached / rung claimed |
+|---|---|---|---|
+| A0–A2, B0–B4 | Any bulk patch; B3 uses a chronological brick rectangle | L0 + chosen centre object (or a specified L1 braiding); pointed O, exact tiles, endpoint q, boundary closure, geometry and phases; A1 additionally fixes paths/framing | finite only; →R2/R3 ingredients, no rung claimed |
+| B5, D1 | Any cell/incidence complex | Category-free phases/cochains; source/period exclusions | finite only; no rung |
+| D2-A | Any bulk chart away from sources | Category-free convergence, normalization and C¹-limit hypotheses; categorical microscopic data if supplying the approximants | holomorphic observable only; no R2/R3 |
+| D2-B | Full bulk ensemble with declared boundaries | Positive limiting laws, integrability, separating observable family and covariant expectation identification | conditional ensemble invariance; no OAR/Virasoro/net rung |
+| C1/C2 | Only the checks and examples below | C1 declares scalar connectivity weights and winding; C2 also needs a verified categorical endpoint dictionary | C1 finite; C2 unproved; no rung |
+
+The real exponent s here is a microscopic winding convention. Identifying it
+with a chosen theory's conformal weight is additional L3/L4 information.
+The L0 carrier and R0 results are reused, not reproved or promoted. B3 sews only
+along legs, as CA-80.1 does; bent spatial seams use the separate CA-92/98 data.
+CA-98.2's conjugate-dual mirror changes both charge and word labels and is not
+an unmentioned linear endpoint identification. No reflection positivity is
+inferred from a contour equation.
 
 ## Pillar served
 
-P3 on P2: formulate and test finite contour equations on categorical worldline
-sums. P1 supplies the pointed variable-number space; no alternative carrier is
-introduced. No OAR certificate (P4) is asserted.
+**P3 on P2:** a general-C finite local equation, an actual charged-edge
+realization, and two precise cohomological questions—edge-phase compatibility
+and closed-cochain periods. **P1:** vacancy transparency and number-changing
+morphism slides preserve the pointed indefinite-number carrier throughout.
+**P4:** the output is a candidate finite input, not a WT-1 or VR-1 certificate.
 
 ## What this gives the integration
 
-Open: CA-75 row (2), the missing selection principle, and Link (a), the join from
-histories to local equations. No CA-88 rung changes at the initial ledger.
+CA-88 gains an ingredient at **(any; L0 + centre/endpoint/geometry declarations;
+finite →R2/R3)**: one can compile and test endpoint contour equations on exact
+P2 tiles, with B3 giving a consistent finite field and B4 a necessary rejection
+test for regular families. The half-braiding can enter the kernel nontrivially,
+as the end-table witness checks. No R0–R5 cell moves up a rung.
+
+CA-75 row (2) gains a concrete **endpoint-dependent selection test on tile
+weights**, not a category-only prescription for h. Link (a) gains a finite
+local identity and its propagation over leg-sewn patches. It does not obtain
+(a1)'s full module/continuum channel dictionary, (a2)'s spatial anomaly seam,
+or (a3)'s geometric-stress-to-KS identification and vanishing residual bounds.
+CA-78's distinction between defect symmetry and criticality remains intact;
+CA-81's same-system analytic contract remains wholly to be verified.
 
 ## Open problems
 
-Resolve the endpoint definition, distinguish local and averaged contour relations,
-check the calibration, and state the analytic hypotheses without importing missing
-parafermionic/SLE/CLE theorems.
+1. **Endpoint identification lemma.** Construct nonzero endpoint tensors for a
+   chosen centre sector from declared categorical microscopic data, and prove
+   that the intended random-interface observable equals an explicitly typed
+   field such as B3. A zero Q space or a vanishing contracted field must be
+   detected, not called holomorphic progress.
+2. **Geometric phase lemma.** For a specified framed local route grammar, compute
+   its incidence phases and pass B5's exact cycle tests; then prove the resulting
+   shared-edge phases equal actual path winding with the required twist rule.
+   B5 solves the scalar compatibility test, not the geometric identification.
+3. **Feasibility lemma.** Determine when ker A contains a normalized nonzero tile
+   with the required positivity/reflection constraints and a nonzero endpoint
+   observable. The endpoint grammar and normalization are part of this lemma;
+   a kernel dimension by itself is insufficient.
+4. **Regular-family lemma.** Produce a differentiable/analytic solution family
+   T(u), with a controlled regular limit and self-adjoint derivative h, and
+   prove how it relates to the exact e^{th} tiles. At spin zero with fixed
+   nondegenerate geometry, B4 forbids this for Hom(Y,1)=0 and nonzero q; at least
+   one stated hypothesis must change. A reparametrization alone is ineffective.
+5. **Calibration dictionary lemma.** Identify the scalar loop connectivity field
+   with a specified centre endpoint, including all branch-dependent spin lifts,
+   endpoint tensors and multiplicities. Matching a fugacity or twist alone does
+   not prove it; the example below gives an explicit branch mismatch.
+6. **Analytic non-collapse lemma.** Establish a normalization, nonzero limiting
+   correlators and compactness/regularity strong enough for D2-A, then covariant
+   boundary-value uniqueness for a measure-determining family as in D2-B.
+7. **Stress/OAR transfer lemma.** Identify a stress insertion and its Ward
+   contacts, and prove the same-system graph-norm and refinement estimates of
+   CA-81/CA-89. A closed endpoint cochain supplies none of these estimates.
 
 ## Examples table
 
-No instance is yet claimed. Examples will appear only here or in `checks/`.
+| Instance (checks only) | Exact finding | What it does not establish |
+|---|---|---|
+| Every C, Y=the central unit, s=0 | F=Z after the declared repair; A=0 for every weight | A nontrivial selection principle |
+| Scalar TL-type loop calibration, u=λ | `rho/rho1=(1,x,x,x²,x²,x²,x²,x²,0)`, `x=(2cosλ)^−1`, `n=−2cos4λ`, `σ=1−3λ/π`; both exterior classes cancel | Equality to H6's extra centre-strand observable; categorical criticality |
+| Same scalar calibration, two branches | `cos2λ≥0` gives `x^−2=2+sqrt(2−n)`; `cos2λ<0` gives `2−sqrt(2−n)`; singular original weights excluded | A universal choice between branches |
+| Standard braided Ising, X=σ | Full two-site dimension nine; branch-one scalar spin 7/16 differs from categorical spin 1/16, leaving residual `1−tan(3π/16)>0`; branch two has spin 1/16 | Automatic endpoint identification on either branch |
+| Same braided category, centre object 1⊕ψ | Twist diag(1,−1), explicitly witnessing A0's nonscalar-twist obstruction | A single scalar spin for arbitrary centre objects |
+| CGS fermionic construction, proposed Y=ψ, s=1/2 | The half-spin winding factor agrees; CGS uses endpoint-modified paths, projection equations and derivatives of two-point functions for stress | Identification with an external central strand or with a single stress insertion |
+| Explicit bit-pair graded category, fixed O,Y,q,s=0 | Two half-braidings with the same twist give different B5 kernels; a fixed swap and positive projection pass only one (`half_braiding_witness.*`) | A continuous identity-normalized physical family; B4 obstructs it here |
+| Same finite graded check with pair creation/annihilation | Cut transport and all four lifts hold exactly; omitting a prefix crossing fails | A scaling limit or a restriction to conserved particle number |
+| Square-grid cochain G(m,n)=m² | Closed contours but Δ₅ Re G=2 | Discrete harmonic conjugacy from closure alone |
 
 ## Sources used
 
-- `report/sections/78_categorical_selection_equations.tex:44–68,192–205`.
-- `report/sections/80_lattice_sewing_and_fidelity_certificate.tex:52–83,127–140`.
-- `report/sections/86_spacetime_trotter_dictionary.tex:61–110,196–217,268–278`.
-- `report/sections/88_layered_targets.tex:82–125`.
-- `report/sections/92_spatial_seams_and_reflection_positivity.tex:53–109`.
-- `report/sections/98_canonical_seams_reflection_coherence.tex:53–96`.
-- `CONVENTIONS.md:631–694,1397–1642`.
-- `worklog/023_2026-10-27_status_overview.md` §§0,1,4.
+Primary aliases, all local (line numbers refer to these exact local files):
+
+- **Penneys:** `references/text/PenneysUnitaryFusionCategories.md:118–131,219–237,394–430,682–715,1010–1030` — finite Hom spaces, orthogonal sums, coherent typed diagrams, duality and positive spherical trace.
+- **ENO:** `references/text/EtingofNikshychOstrikFusionCategories.md:127–132` and `references/text/EtingofNikshychOstrikFusionCategories.txt:1700–1706` — centre/context and unitary spherical structure; no missing half-braiding axiom is inferred from these paragraphs.
+- **Wolf:** `literature/md/rwolfthesis/tex/3_Subfactors.tex:1165–1196,1260–1269` — complete centre definition and hexagon; crossing inverted for the convention in A1.
+- `literature/md/1704.04221/1704.04221.md:298–307` — centre objects and crossing orientation; its phrase “natural conditions” is supplemented by Wolf, not silently expanded from memory.
+- **FRS:** `references/categorical-reconstruction/FuchsRunkelSchweigert2002/source/hep.tex:1023–1029,1086–1096` — ribbon consistency and twist naturality.
+- **AFM-D:** `references/cft/AasenFendleyMong2020/source/_Topological_defect_lines.tex:41–68,80–94,163–188` — fixed-path defect sums, pulling-through independent of integrability, identity defect and transfer commutation.
+- **Levin–Wen:** `references/string-net/LevinWen2005/source/strnet.tex:497–529,548–577` — local diagram relations and their fixed-point motivation; no critical-chain theorem imported.
+- **CGS:** `references/lattice-symmetry/ChelkakGlazmanSmirnov2016/source/StressTensor.tex:589–624,681–696,1409–1423,1461–1479,1510,1517–1545,2229–2236` — scalar path observables/branches, source convergence boundary, s-holomorphic structure, closed-loop turning and stress/derivative distinctions.
+- **Zhou–Batchelor:** `references/lattice-symmetry/ZhouBatchelor1997/source/9611156.tex:120–145,270–276` — weights and branch calibration, used only in checks and the examples table.
+- **RSW:** `references/category-theory/RowellStongWang2009Classification/source/RSWfinal3.tex:2447–2452` — the example's fusion, dimensions and twists.
+- Provenance read: `references/manifest/SOURCES.md:25–35`; `references/category-theory/SOURCES.md:122–147`; `references/string-net/SOURCES.md:19–48`; `references/cft/SOURCES.md:74–117`; `references/lattice-symmetry/SOURCES.md:1163–1194,1731–1776`.
+
+Prior lab-book results and declarations, reused by number:
+
+- **CA-75:** `report/sections/75_integration_map.tex:64–97,115–135` — row (2) and Link (a).
+- **CA-78:** `report/sections/78_categorical_selection_equations.tex:44–68,79–97,165–174,192–229` — exact compiler/gates, blocking boundary, transfer erratum, defect symmetry and analytic interfaces.
+- **CA-80:** `report/sections/80_lattice_sewing_and_fidelity_certificate.tex:52–83,87–115,127–140` — external labels, exact leg sewing, separate positivity and Ward residual bookkeeping.
+- **CA-81:** `report/sections/81_cft_machine_oar_contract.tex:95–114` — VR-1 and the same-state/system boundary.
+- **CA-86:** `report/sections/86_spacetime_trotter_dictionary.tex:61–110,154–217,268–278` — histories, calibration, original endpoint proposal and transfer qualification.
+- **CA-87:** `report/sections/87_dilute_fibonacci_is_blocked_golden.tex:55–71,83–86` — existing general blocking and the calibration's full-algebra/subalgebra distinction; not rederived.
+- **CA-88:** `report/sections/88_layered_targets.tex:82–125,142–151` — data layers, rung distinctions and finite ingredients.
+- **CA-92:** `report/sections/92_spatial_seams_and_reflection_positivity.tex:53–109` — declared seam and bent-kernel hypotheses, separate from the endpoint equations.
+- **CA-98:** `report/sections/98_canonical_seams_reflection_coherence.tex:53–96` — algebraic seam, typed twist and conjugate-dual mirror.
+- `CONVENTIONS.md:631–694,1397–1642`; `worklog/023_2026-10-27_status_overview.md` §§0,1,4 — pointed indefinite-number setting, exact weights, layer tags, four pillars and missing selection principle.
+
+New displayed derivations are contained in this note. Their finite independent
+instances and mutation output are the adjacent `checks/` files listed above.
+No absent parafermionic or SLE/CLE theorem is used as a premise.

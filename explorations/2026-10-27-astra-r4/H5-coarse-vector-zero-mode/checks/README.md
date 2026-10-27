@@ -72,7 +72,7 @@ The binary indices are big-endian and zero-based. Thus
 ||[H,Q]v||^2=409/8 exactly, independently of N>=6. The script asserts these
 entries, independently assembles the translated ring matrices, and verifies
 the three-site identity, both Fourier covariance laws, adjoints, parity,
-the Gram formula (H5.4), and spectral-projection formula (H5.10).
+the Gram formula (H5.4), and spectral-projection formula (H5.6).
 
 ## Why the unscaled instance is not a counterexample
 

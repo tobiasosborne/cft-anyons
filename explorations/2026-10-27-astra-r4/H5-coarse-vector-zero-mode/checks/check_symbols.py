@@ -2,7 +2,7 @@
 """Exact checks for NOTE H5-SYMBOL; no numerical continuum inference.
 
 Run: python3 -B <this path> [--mutate omit-matrix-commutator]
-Conventions and derivations: ../NOTE.md, (H5.6)--(H5.9).
+Conventions and derivations: ../NOTE.md, (H5.9)--(H5.12).
 Local polynomials test the product rule; the bundle check is periodic.
 """
 import argparse
