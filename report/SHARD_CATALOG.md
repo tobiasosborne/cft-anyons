@@ -858,3 +858,35 @@ single ~200-line source file it points to.
 - Summary: Pointed transport on a fixed tensor power O^b over full <O> gives local unital dyadic lifts on the original algebras and exact vacancy insertion, with slack 2b-1.
 - Summary: Noncentral group-graded sites and twisted abelian p-group families reach R0^u at bare L0; single-site centrality is neither necessary for lifts nor sufficient for transport. General characterization and higher rungs remain open.
 - Keywords: blocked transport, dyadic lift, relative half-braiding, pointed object, vacancy swap, interval locality, Bratteli inclusion matrix, associator obstruction, finite abelian p-group, naturality, R0^u, Target 90.T, F1
+
+## `CA-97-WHAT-THE-TOWER-REMEMBERS`
+
+- Source: `report/sections/97_what_the_tower_remembers.tex`
+- Title: What the Tower Remembers: Rooted AF Invariants and Marked Refinements
+- Summary: The trailing unital AF limit is classified by its rooted scaled ordered K_0, which can forget the fusion ring, site class and associator even with its canonical trace and stages.
+- Summary: Fixed-H dyadic shuffles descend with identity K_0 action; abstract diagrams forget H, named finite compressions recover it, and interval/dilation reconstruction remains open.
+- Keywords: AF algebra, rooted Bratteli diagram, scaled ordered K0, fusion ring, trace, half-braiding, dyadic refinement, marked reconstruction, fidelity, F6
+
+## `CA-98-CANONICAL-SEAMS-REFLECTION-COHERENCE`
+
+- Source: `report/sections/98_canonical_seams_reflection_coherence.tex`
+- Title: Canonical Seams, Reflection Defects, and Conditional Spatial Positivity
+- Summary: A canonical natural algebraic seam is derived at L1, with exact dual-oriented sewing, self-duality defects and a separate L0 self-duality seam.
+- Summary: Reflection coherence remains conditional, finite positive translated forms admit scalar normalization, and identity histories refute unitary conjugacy of directional transfers, including explicitly defined even-torus OS quotients.
+- Keywords: canonical seam, reflection coherence, conjugate duality, Frobenius-Schur sign, pivotal twist, bent kernel, spatial reflection positivity, Osterwalder-Schrader quotient, directional transfer, F3
+
+## `CA-99-CONTACT-CLASSIFICATION`
+
+- Source: `report/sections/99_contact_classification.tex`
+- Title: Signed Contact Classification on the Pointed Carrier: Robin Limits, Dirichlet Limits and Full-Fock Boundaries
+- Summary: For any unitary fusion category with nonzero pointed complement X, the exact scalar-contact D1 moment deformation on the N<=2 Galerkin carrier has a self-adjoint projected strong-resolvent limit iff the total contact parameter converges finitely or diverges in absolute value. Finite contacts give coupled Robin dynamics; either infinite sign, including sign oscillation, gives Dirichlet collisions with retained lower potentials.
+- Summary: The proposed no-limit attractive branch is refuted, even for fixed bounded contact; positive full-Fock extensions and nonreacting deep-contact limits are derived. Negative total contact has no common Fock lower bound, arbitrary internal diagonals defeat scalar classification, and signed reacting full-Fock realization remains conditional; no conformal rung advances.
+- Keywords: contact classification, signed contact, Galerkin compression, Robin collision, Dirichlet collision, strong resolvent, global trace compactness, graph core, spectral diving, retained potentials, full Fock space, internal bands, grading obstruction, D1-C, F5, Target 94.16
+
+## `CA-100-ZERO-MODE-LATTICE-CHIRALITY`
+
+- Source: `report/sections/100_zero_mode_lattice_chirality.tex`
+- Title: Zero Modes and Lattice Chirality: Parity-Free KS Ledger Balance
+- Summary: On a nonzero common standard-KS VR-1 system the cubic ledgers agree without parity or current conservation; finite loss-two ZC, limiting zero-mode commutation and all mixed commutation are equivalent, and imply equal linear ledgers with explicit A3-tail bounds.
+- Summary: Automatic ZC remains open; exact logarithm, formal-algebra and spatial-support counterexamples delimit the inference, while corrected cut currents and inverse target cutoffs give conditional extensions without a general lattice-chirality theorem or a new local categorical realization.
+- Keywords: zero mode, lattice chirality, Koo-Saleur, VR-1, parity-free ledger balance, cubic anomaly, mixed commutator, graph norm, transport tail, spectral logarithm, cut current, spatial support, inverse spectral cutoff, F2

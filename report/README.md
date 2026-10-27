@@ -114,6 +114,10 @@ before treating report edits as complete.
 | 94 | `CA-94-NUMBER-CHANGING-COLLISION-DYNAMICS` | `report/sections/94_number_changing_collision_dynamics.tex` | Number-Changing Collision Dynamics on the Pointed Carrier: a Tuned Continuum Theorem and Three Obstructions |
 | 95 | `CA-95-PROBE-WORD-WARD-LIFTING` | `report/sections/95_probe_word_ward_lifting.tex` | Probe-Word Ward Lifting: Uniform Bounds, the Geometric Gap, and a False Converse |
 | 96 | `CA-96-BLOCKED-DYADIC-LIFTS` | `report/sections/96_blocked_dyadic_lifts.tex` | Blocked Dyadic Lifts: Finite-Power Transport and the Failure of Single-Site Centrality |
+| 97 | `CA-97-WHAT-THE-TOWER-REMEMBERS` | `report/sections/97_what_the_tower_remembers.tex` | What the Tower Remembers: Rooted AF Invariants and Marked Refinements |
+| 98 | `CA-98-CANONICAL-SEAMS-REFLECTION-COHERENCE` | `report/sections/98_canonical_seams_reflection_coherence.tex` | Canonical Seams, Reflection Defects, and Conditional Spatial Positivity |
+| 99 | `CA-99-CONTACT-CLASSIFICATION` | `report/sections/99_contact_classification.tex` | Signed Contact Classification on the Pointed Carrier: Robin Limits, Dirichlet Limits and Full-Fock Boundaries |
+| 100 | `CA-100-ZERO-MODE-LATTICE-CHIRALITY` | `report/sections/100_zero_mode_lattice_chirality.tex` | Zero Modes and Lattice Chirality: Parity-Free KS Ledger Balance |
 
 ## Adding a shard
 

@@ -1,0 +1,276 @@
+% SHARD-ID: CA-98-CANONICAL-SEAMS-REFLECTION-COHERENCE
+% SHARD-TITLE: Canonical Seams, Reflection Defects, and Conditional Spatial Positivity
+% SHARD-SUMMARY: A canonical natural algebraic seam is derived at L1, with exact dual-oriented sewing, self-duality defects and a separate L0 self-duality seam.
+% SHARD-SUMMARY: Reflection coherence remains conditional, finite positive translated forms admit scalar normalization, and identity histories refute unitary conjugacy of directional transfers, including explicitly defined even-torus OS quotients.
+% SHARD-KEYWORDS: canonical seam, reflection coherence, conjugate duality, Frobenius-Schur sign, pivotal twist, bent kernel, spatial reflection positivity, Osterwalder-Schrader quotient, directional transfer, F3
+
+\section{Canonical Seams, Reflection Defects, and Conditional Spatial Positivity}
+\label{sec:canonical-seams-reflection-coherence}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: WEAKER-RESULT-PROVED; grades carried per statement.}
+Statements 98.1--98.5 and 98.8 are \emph{derived}; 98.6 and 98.9 are \emph{negative};
+98.7 and the categorical application of 98.8 are \emph{conditional}; Target 98.10 is \emph{conjectural}.
+The explicit OS forms in 98.9 carry the reviewer's \emph{derived} repair; the unrestricted post-OS
+claim has a GAP and is not lifted. NOTE, REVIEW and INTEGRATION below mean the files in
+\path{explorations/2026-10-25-astra-r3/F3-reflection-coherence/}.
+\textbf{CA-88 cell change (INTEGRATION:47--65):} split the CA-92 data/comment cell:
+the individual algebraic seam and bent-kernel/Schur construction are now
+\emph{(any; \(\mathsf L1\); finite \(\to\mathsf R3\))}, with \(s_{\mathrm{can}}\) determined;
+98.4 also supplies an \(\mathsf L0+\psi\) branch. Whole-history RP remains
+\emph{(full; \(\mathsf L0\)+coherent reflected pairing; finite \(\to\mathsf R3\)) [conditional]},
+including at \(\mathsf L1\). Finite OS normalization is category-free. No cell moves up a target rung;
+\(\mathsf R0\)--\(\mathsf R2\), \(\mathsf R4\)--\(\mathsf R5\), CA-90 and CA-80's temporal conclusions are unchanged.
+Dependencies: CA-80 (80.1--80.5), CA-86 (linear history), CA-88 (tags/grid), CA-91 (linear parity distinction),
+CA-92 (92.1--92.9); CONVENTIONS (b), (r), (ak), (al), (am), (aq), (at), (au).
+Checks in the exploration's \path{checks/}: \path{check_core.py}, \path{check_pointed.py},
+\path{check_nonpointed.py}, \path{review_duality.py}, \path{review_history.py}, \path{review_hexagons.py};
+six normal cases reproduce retained outputs, five targeted mutations fail. These verify finite identities,
+not automatic coherence or a continuum limit (REVIEW:\allowbreak 210--238).
+
+% Source: explorations/2026-10-25-astra-r3/F3-reflection-coherence/NOTE.md:50-152,215-363 -- seams, mirror, defects, inverse bend.
+% Source: explorations/2026-10-25-astra-r3/F3-reflection-coherence/NOTE.md:154-212,365-502,641-650 -- negatives, RP, OS, instances.
+% Source: explorations/2026-10-25-astra-r3/F3-reflection-coherence/REVIEW.md:1-10,56-114,116-170,172-208 -- grades, repairs, next target.
+% Source: explorations/2026-10-25-astra-r3/F3-reflection-coherence/INTEGRATION.md:18-40,47-101,107-160 -- safe lift, cells, conventions.
+% Source: explorations/2026-10-25-astra-r3/briefs/F3-reflection-coherence.md:84-110 -- conjecture as posed, not a result.
+% Source: references/text/PenneysUnitaryFusionCategories.md:118-148,219-237,398-430,682-715,917-941,992-1047 -- [P] below.
+% Source: literature/md/2201.00192/2201.00192.md:264-268 -- typed Drinfeld morphism.
+% Source: references/category-theory/RowellStongWang2009Classification/source/RSWfinal3.tex:2311-2314 -- self-dual ribbon sign.
+% Source: report/sections/80_lattice_sewing_and_fidelity_certificate.tex:70-125 -- inverse-Gram sewing, temporal positivity.
+% Source: report/sections/86_spacetime_trotter_dictionary.tex:61-110 -- finite linear histories.
+% Source: report/sections/92_spatial_seams_and_reflection_positivity.tex:53-149,157-205,226-241 -- seam, Schur, OS, old target.
+% Source: report/sections/88_layered_targets.tex:82-120,151,239 -- layers and cells; CONVENTIONS.md:1524-1543,1577-1605.
+% Source: explorations/2026-10-25-astra-r3/F3-reflection-coherence/checks/core_output.txt:2-35 -- square, Hermiticity, OS, identity history.
+% Source: explorations/2026-10-25-astra-r3/F3-reflection-coherence/checks/pointed_output.txt:2-41 -- cocycles, seams, composition witnesses.
+% Source: explorations/2026-10-25-astra-r3/F3-reflection-coherence/checks/nonpointed_output.txt:2-18 -- Q8 membership and FS signs.
+% Source: explorations/2026-10-25-astra-r3/F3-reflection-coherence/checks/review_duality_output.txt:2-20 -- complex gauges, twist, composition.
+% Source: explorations/2026-10-25-astra-r3/F3-reflection-coherence/checks/review_history_output.txt:2-20 -- explicit OS forms and ranks.
+% Source: explorations/2026-10-25-astra-r3/F3-reflection-coherence/checks/review_hexagons_output.txt:2-7 -- unrestricted hexagon elimination.
+
+\subsection{Algebraic Seams and Oriented Cut Spaces}
+
+Work with any unitary fusion \(\Cc\), nonzero \(O\), specified unitary spherical duals and all charge multiplicities.
+Write \(D(X)=X^\vee\), \(D(f)=(f^\vee)^\dagger\), \(j_X:X\to D^2X\); its unitary tensorator reverses word order.
+The supplied braiding is \(c_{X,Y}:X\otimes Y\to Y\otimes X\). These are shard-local declarations,
+proposed in \path{SHARD_META.md}; (au)'s seam convention is distinct from (at)'s linear parity.
+Put \(u=\mathrm{coev}_O\), \(v=\mathrm{ev}_O^\dagger\), \(W_+=O\otimes DO\), \(W_-=DO\otimes O\).
+An \emph{algebraic seam} is a unitary \(s:W_+\to W_-\) with \(su=v\), fixed before \(h\); it does not include (RH).
+Keep coherent associators in every displayed composition; [P] denotes Penneys at the anchors above.
+
+\textbf{Theorem 98.1 [derived; any; \(\mathsf L1\); finite \(\to\mathsf R3\)] (NOTE:\allowbreak 50--152; REVIEW:\allowbreak 56--65).}
+For isotypic projections \(p_a\) of \(O\), the following determines a unitary algebraic seam, natural under
+unitary braided equivalences with their unitary spherical-dual comparisons:
+\begin{equation}\label{eq:98-canonical}
+ \lambda_a=d_a^{-1}\mathrm{ev}_a c_{a,Da}\mathrm{coev}_a,\qquad
+ t_O=\sum_a\lambda_a^{-1}p_a,\qquad s_{\mathrm{can}}=c_{O,DO}(t_O\otimes1_{DO}).
+\end{equation}
+\par\(\langle1\rangle1\). Rigidity gives \(\dim\Hom(\one,Da\otimes a)=1\); both \(c\,\mathrm{coev}_a\) and
+\(\mathrm{ev}_a^\dagger\) have norm \(\sqrt{d_a}\). Hence \(c\,\mathrm{coev}_a=\lambda_a\mathrm{ev}_a^\dagger\),
+\(|\lambda_a|=1\); applying \(\mathrm{ev}_a\) gives the formula. BY [P]:425--430,1012--1030.
+\par\(\langle1\rangle2\). \(t_O\) is central unitary and natural in categorical morphisms. For orthogonal simple-copy
+inclusions \(i_{a\mu}\), put \(k_{a\mu}=(i_{a\mu}^\vee)^\dagger\). Direct-sum duality gives
+\(u=\sum(i_{a\mu}\otimes k_{a\mu})\mathrm{coev}_a\),
+\(v=\sum(k_{a\mu}\otimes i_{a\mu})\mathrm{ev}_a^\dagger\). Braiding naturality and step 1 give \(s_{\mathrm{can}}u=v\).
+BY [P]:219--237,1029--1030; products of unitaries give unitarity.
+\par\(\langle1\rangle3\). Currying \(f\mapsto(f\otimes1)u\) is an isomorphism by the snakes, so the cup equation
+uniquely determines \(t_O\) \emph{within this construction}, not all seams. Transporting \(d_a,\lambda_a,p_a\) under
+a unitary braided equivalence proves naturality. BY steps 1--2 and [P]:1017--1030.
+\par\(\langle1\rangle4\). Inverting currying gives
+\(t_O=(1_O\otimes\mathrm{ev}_O)(c_{O,DO}^{-1}\otimes1_O)(v\otimes1_O)\).
+The pivotal cup identity is \(\mathrm{coev}_{DO}=(1_{DO}\otimes j_O)v\) ([P]:1004). Thus the typed Drinfeld map
+\(u_O=(\mathrm{ev}_O\otimes1_{D^2O})(c_{O,DO}\otimes1_{D^2O})(1_O\otimes\mathrm{coev}_{DO})\)
+equals \(j_Ot_O^\dagger\), giving \(t_O=u_O^{-1}j_O\). QED.
+For simple self-dual \(a\), keep the oriented cup sign: \(\lambda_a=\nu_aR_1^{aa}\),
+\(t_a=\nu_a(R_1^{aa})^{-1}=\theta_a\) in RSW:2311--2314's ribbon convention, \emph{not} \(\theta_a^{-1}\).
+
+\textbf{Theorem 98.2 [derived; any; \(\mathsf L0\); finite \(\to\mathsf R3\)] (NOTE:\allowbreak 215--259; REVIEW:\allowbreak 71--74).}
+\(D\) gives antiunitaries \(\Hom(a,W)\to\Hom(Da,DW)\), respects inverse-Gram leg sewing, and
+\(D^2(f)=j_Wfj_a^\dagger\). Both labels change; this is a mirror between oriented cuts.
+\par\(\langle1\rangle1\). Dual and dagger each reverse composition, so \(D(gf)=D(g)D(f)\),
+\(D(f^\dagger)=D(f)^\dagger\); only dagger conjugates scalars. BY [P]:682--708,992--1008.
+\par\(\langle1\rangle2\). For simple \(a\),
+\(D(f)^\dagger D(g)=D(f^\dagger g)=\overline{\langle f,g\rangle}1_{Da}\); dual equivalence gives surjectivity.
+\par\(\langle1\rangle3\). The cut Gram \(G\) and its inverse become \(\overline G,\overline{G^{-1}}\).
+Apply \(D\) to CA-80's identity resolution and compositions: leg sewing is preserved. Pivotal naturality gives
+the displayed double-dual formula; compare both labels back by \(j\). QED. Braiding supplies no \(O\cong DO\).
+
+\textbf{Proposition 98.3 [derived; any; \(\mathsf L0\)+identifications/algebra; finite] (NOTE:\allowbreak 261--308; REVIEW:\allowbreak 75--78).}
+Declare unitary \(r_X:X\to DX\), \(\rho_X(A)=r_X^\dagger D(A)r_X\),
+\(z_X=r_X^\dagger D(r_X^\dagger)j_X\). Then \(\rho_X^2=\operatorname{Ad}_{z_X}\), identity on
+\(\operatorname{End}_\Cc(X)\) iff \(z_X\) is central; for a smaller named algebra use its commutant.
+On identified self-dual simple-charge cuts, \(J_{a,W}(f)=r_W^\dagger D(f)r_a\) has
+\(J_{a,W}^2(f)=z_Wfz_a^\dagger\).
+\par\(\langle1\rangle1\). Substitute 98.2's \(D^2\) into \(\rho_X^2\) and \(J^2\); all factors of \(z_X\)
+are unitary. Commutation with every observable is precisely the stated iff.
+\par\(\langle1\rangle2\). For simple self-dual \(X\), \(r_X^\vee j_X=\nu_Xr_X\), \(\nu_X=\pm1\)
+([P]:917--933), so \(z_X=\nu_X1\). Where both defects are scalar signs, the cut square is the
+\emph{ratio} \(\nu_W/\nu_a\); even a pseudoreal \(a\) gives \(J^2=+1\) on \(\Hom(a,a)\). QED.
+Every admitted word \(W\) needs its own defect check. Non-self-dual external charges require paired comparisons,
+not an invented \(r_a\); centrality alone supplies no seam-Hermiticity identity.
+
+\textbf{Proposition 98.4 [derived; any; \(\mathsf L0+\psi\); finite \(\to\mathsf R3\)] (NOTE:\allowbreak 310--329; REVIEW:\allowbreak 79--81).}
+Any declared unitary \(\psi:O\to DO\) gives the algebraic seam
+\(s_\psi=\psi\otimes[j_O^\dagger D(\psi)]\).
+\par\(\langle1\rangle1\). Each factor is unitary.
+\par\(\langle1\rangle2\). The dual-mate identity gives
+\((\psi\otimes(\psi^\vee)^{-1})u=\mathrm{coev}_{DO}\); unitarity gives \((\psi^\vee)^{-1}=D(\psi)\).
+Apply \(1\otimes j_O^\dagger\) and 98.1's pivotal cup identity to obtain \(s_\psi u=v\). QED.
+On the unit-multiplicity corner \(s_\psi=U\otimes\overline U\); \(\psi=1\) gives the factorwise identity,
+while \(s_{\mathrm{can}}\) is the flip. Neither seam identity asserts a central square defect.
+
+\textbf{Lemma 98.5 [derived; any; \(\mathsf L0+s\), \(\mathsf L1\) for \(s_{\mathrm{can}}\); finite \(\to\mathsf R3\)] (NOTE:\allowbreak 331--363; REVIEW:\allowbreak 82--83).}
+With \(K_s(T)=s^\dagger\operatorname{rot}(T)\), the map
+\(\sharp_s=K_s^{-1}\circ\dagger\circ K_s\) is a conjugate-linear involution and
+\(K_s(h)=K_s(h)^\dagger\) iff \(\sharp_s(h)=h\). The inverse is of the \emph{linear map}, not a kernel matrix.
+\par\(\langle1\rangle1\). The typed bend and inverse are
+\[
+\begin{aligned}
+ \operatorname{rot}(T)&=(1_{DO}\otimes1_O\otimes u^\dagger)(1_{DO}\otimes T\otimes1_{DO})(v\otimes1_O\otimes1_{DO}),\\
+ \operatorname{rot}^{-1}(r)&=(u^\dagger\otimes1_O\otimes1_O)(1_O\otimes r\otimes1_O)(1_O\otimes1_O\otimes v).
+\end{aligned}
+\]
+Both inverse composites cancel by the dagger snakes ([P]:398--430); hence \(K_s\) is a linear bijection.
+\par\(\langle1\rangle2\). Transport dagger across that bijection. QED. No multiplicative variance or geometric
+reflection follows: even in the same multiplicity corner the identity and flip seams give different operations.
+
+\subsection{Reflection Obstructions}
+
+\textbf{Negative 98.6 [negative; any; \(\mathsf L0\), \(\mathsf L1\) for the braided witness; finite] (NOTE:\allowbreak 154--212,365--384,648--649; REVIEW:\allowbreak 66--70,84--86).}
+Arbitrary unitary self-duality need not give an observable involution; conjugate-dual invariance is not
+canonical-seam Hermiticity. A same-tile-algebra reflection with the Hermiticity iff for \emph{all complex tiles}
+need not exist with either ordinary composition variance.
+\par\(\langle1\rangle1\). In every \(\Cc\), take \(O=\one\oplus\one\), standard duality, coordinate conjugation \(K_0\),
+\[
+ \psi=\frac15\begin{pmatrix}3&-4\\4&3\end{pmatrix},\qquad
+ J=\psi^\dagger K_0,\qquad J^2=\frac1{25}\begin{pmatrix}-7&24\\-24&-7\end{pmatrix}.
+\]
+The square does not commute with \(Z=\operatorname{diag}(1,-1)\). The pointed variant
+\(O=\one^{\oplus3}\), \(\psi'=1\oplus\psi\), fixes the first vacuum inclusion and retains this defect.
+\par\(\langle1\rangle2\). With \(\psi=1\), factor swap \(P\) and \(Y=\left(\begin{smallmatrix}0&-i\\i&0\end{smallmatrix}\right)\),
+\(D_2(h)=P\overline hP\), whereas \(\sharp_{\mathrm{flip}}(h)=Ph^\dagger P\) (92.7).
+For \(h=Y\otimes Z-Z\otimes Y=h^\dagger\), both conjugation and swap negate \(h\), so \(D_2(h)=h\), but
+\(K_{\mathrm{flip}}(h)=\ket{\mathrm{vec}Y}\bra{\mathrm{vec}Z}-\ket{\mathrm{vec}Z}\bra{\mathrm{vec}Y}\)
+is nonzero anti-Hermitian. Conversely \(g=Y\otimes1+1\otimes Y=g^\dagger\) has Hermitian kernel but \(D_2(g)=-g\).
+\par\(\langle1\rangle3\). If a conjugate-linear involution \(R\) has exactly the fixed tiles of \(\sharp_s\), write
+\(h=x+iy\), \(x=(h+\sharp_s h)/2\), \(y=(h-\sharp_s h)/(2i)\). Then \(R(h)=x-iy=\sharp_s h\).
+The braided instance in the table has \(\sharp(AB)\ne\sharp(A)\sharp(B),\sharp(B)\sharp(A)\); neither variance works.
+QED. This does not exclude graph-dependent port/composition changes or a restricted tile grammar.
+
+\subsection{Conditional Histories and Finite Transfer Operators}
+
+\textbf{Proposition 98.7 [conditional; full (chiral only with supplied twist); \(\mathsf L0\)+G1--G3; finite \(\to\mathsf R3\)] (NOTE:\allowbreak 386--422; REVIEW:\allowbreak 87--88).}
+\textbf{Assume} a reflection-symmetric CA-86 linear brick patch with disjoint crossing tiles and declared boundary/flux data.
+G1: reflected half-amplitudes, read on the cut, are the original adjoints (RH).
+G2: crossing identifications tensor/reassociate to that \emph{same} cut identification; charge restriction uses
+CA-80's inverse-Gram resolution, and the reverse identification is adjoint.
+G3: crossing tiles \(1+th\) use fixed \(h\), independent of \(N,M\), or a family with a common step bound;
+extra seam insertions lie inside a positive reflected factorization; bulk and outer boundary obey G1.
+The local certificate, with \(e=u/\sqrt{d_O}\), \(Q=1-\ket e\bra e\), \(A=K_s(h)\),
+\(a=\langle e,Ae\rangle\), \(b=QAe\), \(C=QAQ|_{Q\mathcal H(W_+)}\), is
+\[
+ A=A^\dagger,\qquad C\ge0,\qquad b\in\Ran C,\qquad
+ d_O+t(a-b^\dagger C^+b)\ge0,
+\]
+where \(C^+\) is the inverse on its range and \(t>0\). \textbf{Prove} all-insertion spatial RP for every
+admissible patch, with this same step interval independent of its brick count.
+\par\(\langle1\rangle1\). Theorem 92.5 gives positive crossing kernels from the certificate.
+\par\(\langle1\rangle2\). Proposition 92.4 gives the reflected compression
+\(V^\dagger(\bigotimes_iK_{s,i})V\ge0\). QED. This is its conditional application.
+Neither 98.1 nor 98.2 proves G1/G2 for the canonical seam; the automatic-coherence GAP remains at \(\mathsf L1\).
+
+\textbf{Lemma 98.8 [derived; any; category-free; finite \(\to\mathsf R3\)] (NOTE:\allowbreak 424--454; REVIEW:\allowbreak 89--91).}
+\textbf{Assume} finite \(V\), nonzero PSD Hermitian \(q_0\), a shift \(\tau:V\to V\), and PSD
+\(q_1(f,g)=q_0(f,\tau g)\). \textbf{Prove} \(T[f]=[\tau f]\) is positive on \(V/\operatorname{rad}q_0\)
+and \(T/\varrho\) is contractive for \(\varrho\ge\max(1,\|T\|)\), without assuming \(q_1\le q_0\).
+\par\(\langle1\rangle1\). If \(z\in\operatorname{rad}q_0\), then \(q_1(z,f)=0\). Hermiticity gives
+\(q_1(f,z)=q_0(f,\tau z)=0\), so \(\tau z\) is null.
+\par\(\langle1\rangle2\). On the quotient \(\langle[f],T[g]\rangle=q_1(f,g)\), so \(T=T^\dagger\ge0\).
+Divide by \(\varrho\): \(0\le q_1/\varrho\le q_0\), and Lemma 92.8 applies. QED.
+A logarithm on the whole quotient requires injectivity; otherwise restrict to positive spectral support,
+which does not preserve arbitrary zero-time probes. No uniform normalization or zero-energy vacuum follows.
+The categorical application remains \emph{conditional}: shift closure and a positive compatible translated
+form must still be constructed from the same history.
+
+\textbf{Negative 98.9 [negative; full finite torus; \(\mathsf L0\), already symmetric \(\mathsf L1\); finite] (NOTE:\allowbreak 456--502; REVIEW:\allowbreak 92--140).}
+For every \(\Cc\), \(O=\one^{\oplus d}\), \(d\ge2\), and \(h=0\), universal unitary conjugacy of the complete
+temporal/spatial transfers fails, including the explicit even-torus OS forms below.
+\par\(\langle1\rangle1\). On \(N,M\ge2\) periodic sites/slices, identity strands give \(T_t=1\) on
+\((\mathbb C^d)^{\otimes N}\). For a column \(\sigma=(\sigma_1,\ldots,\sigma_M)\), let
+\(w(\sigma)=\prod_r\delta_{\sigma_r,\sigma_{r+1}}\), \(\sigma_{M+1}=\sigma_1\), and \(v_\sigma=w(\sigma)\).
+The symmetric column transfer is \(T_x=vv^\dagger\), \(v^\dagger v=d\);
+\(\Tr T_t^M=\Tr T_x^N=d^N\). Their ranks are \(d^N\) and 1, even when \(N=M\) makes dimensions equal.
+\par\(\langle1\rangle2\). \emph{Reviewer repair [derived, same tags; REVIEW:\allowbreak 116--140].}
+Take even \(N,M\), unnormalised torus weight
+\(w(\sigma)=\prod_{x,r}\delta_{\sigma_{x,r},\sigma_{x,r+1}}\), all indicator functions of half histories,
+and reflections \(x\mapsto N-1-x\), \(r\mapsto M-1-r\).
+For spatial half histories \(a,b\), let \(c(a)=1\) iff each column is constant in time, else 0.
+Direct contraction gives \(q_{0,x}(a,b)=c(a)c(b)\), rank 1. Reading the second temporal half in reflected
+time order gives \(q_{0,t}(a,b)=\delta_{ab}c_t(a)\), where \(c_t\) enforces constant columns in that half;
+exactly \(d^N\) survive. Both forms are PSD, so their OS quotient dimensions are 1 and \(d^N\). QED.
+This uses the displayed forms, not an inference from transfer rank to OS radical; other forms are not covered.
+At \(d=N=M=2\), \(T_t=I_4\), \(T_x=vv^\dagger\), \(v=(1,0,0,1)^T\), spectra
+\(\{1,1,1,1\}\), \(\{2,0,0,0\}\), contraction 4. All local Schur data vanish.
+The obstruction concerns cut-carrier intertwiners, including nonzero scalar normalizations;
+Hilbert--Schmidt unitary reshuffling of matrix entries is not refuted (REVIEW:\allowbreak 100--108).
+
+\subsection{Effect on other shards}
+
+\emph{Amendment pointers (2026-10-25, round 3; INTEGRATION:67--101).}
+CA-92's 92.2 gap closes only for the individual seam (98.1); 92.7 and its coherence proposal require the
+distinctions in 98.2--98.6 and Target 98.10. Lemma 92.8 gains finite normalization (98.8); 92.9 gains
+the carrier-level whole-history obstruction with explicit OS forms (98.9).
+CA-80's coverage paragraph and CA-75 Link (a2) gain an algebraic seam and dual-oriented leg comparison,
+not a general spatial-sewing or anomaly-line limit. CA-91's linear parity is not replaced by this mirror.
+CA-88 receives the split stated above, preserving E3's historical grade; CA-86's theorems need no alteration.
+
+\subsection{What This Does Not Claim}
+
+No automatic G1/G2, positive translated strip form, uniform OS normalization or exact-exponential RP is proved.
+The general post-OS claim without specified forms remains conditional; 98.9 proves only the reviewer repair.
+No new tower, Wilson state, KS modes, conformal limit, fidelity or functorial pipeline reaches
+\(\mathsf R0\)--\(\mathsf R5\); seam naturality alone is not \(\mathsf R5\) (NOTE:\allowbreak 576--619; REVIEW:\allowbreak 142--170).
+The chiral variant requires its own twisted cuts, boundary comparisons and translated forms.
+
+\subsection{Examples (Instances Only)}
+
+All rows are \emph{derived finite calibrations}; tags and exact inputs are local to the row (NOTE:\allowbreak 641--650;
+REVIEW:\allowbreak 109--114,172--190). Pointed labels are \(0,1,2\) modulo 3, \(\zeta=e^{2\pi i/3}\), \(O=\one\oplus g\);
+the associator arrow is \(a(bc)\to(ab)c=\omega(a,b,c)\), not its inverse.
+\begin{center}\footnotesize
+\begin{tabular}{p{2.4cm}p{10.2cm}p{1.7cm}}
+\toprule
+Instance / tags & Exact calibration or falsifier & Check output \\
+\midrule
+\(\mathrm{Vec}_{\mathbb Z_3}^{\omega_p}\); any; \(\mathsf L0\); finite &
+\(\omega_p(a,b,c)=\zeta^{pa\lfloor(b+c)/3\rfloor}\), \(p=1,2\). With \(x=r(1,1)\), the hexagons give
+\(1=\zeta^p x^3=x^3/\zeta^p\), impossible. These nonzero classes are not braided tests; no FS sign for \(g\). &
+\raggedright pointed:2--17; hexagons:2--7 \tabularnewline
+Braided \(\mathbb Z_3\); any; \(\mathsf L1\); finite &
+\(\omega=\zeta^{abc}\), \(\beta(a,b)=\zeta^{ab^2}\), \(r(a,b)=\zeta^{ba^2-ab^2+ab}\) give the nonconstant coboundary test.
+Also for \(\omega=1,r=\zeta^{ab}\), in basis \((00,01,10,11)\):
+\(A=E_{01,10}\), \(B=E_{10,01}\), \(AB=P_{01}\);
+\(\sharp(A)=A\), \(\sharp(B)=\zeta^2B\), \(\sharp(AB)=P_{10}\), violating both variances. &
+\raggedright pointed:18--40; duality:13--20 \tabularnewline
+\(\Rep^\dagger(Q_8)\); any; symmetric \(\mathsf L1\); finite &
+\(Q_8=\langle i\,\operatorname{diag}(1,-1),U\rangle\), \(U=\left(\begin{smallmatrix}0&1\\-1&0\end{smallmatrix}\right)\);
+its irreducible \(V=\mathbb C^2\) has \(\psi=U,\nu_V=-1\), yet \(J^2=1\) on \(\Hom(V,V)\).
+On connected \(O=\one\oplus V\), \(b=\ket{00}\), \(v=\ket{12}-\ket{21}\),
+\(h=i(bv^\dagger-vb^\dagger)\) is categorical, self-adjoint, \(D_2\)-fixed, and \(K_{s_{\mathrm{can}}}(h)\) nonzero anti-Hermitian. &
+\raggedright nonpointed:\allowbreak 2--18 \tabularnewline
+\bottomrule
+\end{tabular}
+\end{center}
+Output abbreviations mean the corresponding \path{checks/*_output.txt} files anchored above;
+\emph{hexagons} and \emph{duality} mean \path{review_hexagons} and \path{review_duality}.
+
+\subsection{Next Target: Real-Self-Duality Two-Tile Reflection}
+
+\textbf{Target 98.10 [conjectural; any algebraically/full for RP; \(\mathsf L0\)+declared real self-duality; finite \(\to\mathsf R3\)] (NOTE:\allowbreak 623--632; REVIEW:\allowbreak 192--208).}
+Assume unitary \(\psi\) with \(\psi^\vee j_O=\psi\), use \(s_\psi\) from 98.4, and construct word identifications
+using \(\psi\) and the unitary anti-monoidal tensorator, displaying associators and external-charge comparisons.
+First prove \(K_{s_\psi}(\rho_2(h))=K_{s_\psi}(h)^\dagger\) for every categorical two-site \(h\).
+Then prove equality of the induced cut identification for the two sewing orders of adjacent bricks, using
+the actual inverse Gram and reflected boundary maps. State the remaining generating moves needed for induction.
+The real-structure assumption and changed seam avoid the known obstructions; neither proves this target.
+Positive translated forms and continuum reconstruction remain later tasks (INTEGRATION:145--160).

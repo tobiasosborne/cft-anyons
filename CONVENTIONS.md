@@ -1640,3 +1640,26 @@ positive-square factors, not the (ak) tiles `D_alpha`.
 **Source:** `explorations/2026-10-22-astra-r2/E6-number-changing-continuum/NOTE.md:18-56`, `:135-148`,
 `:528-544`, `:605`; `explorations/2026-10-22-astra/D1-carrier-theory/NOTE.md:91-104`.
 **Sweep status:** CA-94 only.
+
+## (ax) Round-3 shard-scoped notation and deferred registration (2026-10-27)
+**Scope:** CA-95--CA-100 (Astra round 3, 2026-10-25) and any later shard citing their notation.
+**Choice:** The notation introduced in CA-95--CA-100 is *shard-scoped*: each shard defines its symbols
+in its own "Status, Sources, and Dependencies" block and reuses (am), (ap), (aq), (ar), (as), (at),
+(au), (av), (aw) without redefinition. Paste-ready global registrations were drafted by the Astra
+shard writers as proposed entries, all provisionally lettered (ax)-(bd) *independently* per package:
+`explorations/2026-10-25-astra-r3/F4-ward-to-residual/SHARD_META.md` §4 (CA-95: probe forms,
+auxiliary-control KS counterexample, modified-CAR calibration);
+`.../F1-dyadic-lift-characterisation/SHARD_META.md` §4 (CA-96: blocked pointed transport, twisted
+abelian coordinates, transported block choices); `.../F6-what-the-tower-remembers/SHARD_META.md` §4
+(CA-97: rooted trailing AF invariant, AF trace weights, fixed-H dilation, retained records, scoped
+witnesses); `.../F3-reflection-coherence/SHARD_META.md` §4 (CA-98: conjugate-dual mirrors, canonical
+cup correction, self-duality defects, seam-Hermiticity involution, whole-history certificate, finite
+OS normalization, identity-history OS conventions). CA-99 and CA-100 have no SHARD_META; their
+notation is defined inline (99 §1, 100 §1). **None of these proposals is registered yet.** Until they
+are, a shard citing a round-3 symbol cites the defining shard and section, not a CONVENTIONS letter.
+When registering, re-letter sequentially from (ay) and resolve the cross-package clashes the packages
+themselves flag (each reuses `t_O`, `D`, `h`, `i`, `j`, `r`, `rho`, `delta` with different meanings).
+**Known clash:** the provisional letters (ax)-(bd) inside the four SHARD_META files collide with each
+other and with this entry; they are proposals, not registered conventions.
+**Source:** the four SHARD_META files above; `worklog/022_2026-10-25_round3_sprint.md`.
+**Sweep status:** registration deferred; recorded as an open thread in worklog 022.

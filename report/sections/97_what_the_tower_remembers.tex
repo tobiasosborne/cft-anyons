@@ -1,0 +1,272 @@
+% SHARD-ID: CA-97-WHAT-THE-TOWER-REMEMBERS
+% SHARD-TITLE: What the Tower Remembers: Rooted AF Invariants and Marked Refinements
+% SHARD-SUMMARY: The trailing unital AF limit is classified by its rooted scaled ordered K_0, which can forget the fusion ring, site class and associator even with its canonical trace and stages.
+% SHARD-SUMMARY: Fixed-H dyadic shuffles descend with identity K_0 action; abstract diagrams forget H, named finite compressions recover it, and interval/dilation reconstruction remains open.
+% SHARD-KEYWORDS: AF algebra, rooted Bratteli diagram, scaled ordered K0, fusion ring, trace, half-braiding, dyadic refinement, marked reconstruction, fidelity, F6
+\section{What the Tower Remembers: Rooted AF Invariants and Marked Refinements}\label{sec:what-the-tower-remembers}
+% SHARD-KEYWORDS: AF algebra, rooted Bratteli diagram, scaled ordered K0, fusion ring, trace, half-braiding, dyadic refinement, marked reconstruction, fidelity, F6
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: WEAKER-RESULT-PROVED} (REVIEW:3--12). Statements 97.1--97.2, 97.4--97.8 and 97.11--97.13 are
+\emph{derived}; 97.3, 97.9--97.10 and 97.14 are \emph{negative}; 97.15 is \emph{conditional}; 97.16 is
+\emph{conjectural}, an open alternative. No reviewed GAP is promoted. NOTE, REVIEW and INTEGRATION denote files in
+\path{explorations/2026-10-25-astra-r3/F6-what-the-tower-remembers/}; all statement locators refer there.
+\textbf{CA-88 cells (INTEGRATION:43--62):} (any; \(\mathsf L0\); \(\mathsf R0^u\)) gains classification in
+\emph{trailing geometry}; (any; \(\mathsf L0+H\); \(\mathsf R0^u\)) gains fixed-\(H\) dyadic compatibility and marked
+extraction; (any; \(\mathsf L0+H\); \(\mathsf R1\)) gains only the canonical tracial zero-drift instance on that schedule.
+The \(\mathsf R4\) insufficiency annotation strengthens; no \(\mathsf R2\)--\(\mathsf R5\) attainment, \(\mathsf R0^c\),
+\(\mathsf L3\) fidelity or full/periodic cell moves. Bare-\(\mathsf L0\) dyadic existence is not proved.
+Dependencies: CA-77 (77.1--77.3), CA-80 (80.8--80.10), CA-88 (grid), CA-90 (90.H, 90.1, 90.3), CA-93 (93.2, 93.8);
+CA-71--CA-73 and CA-94 supply boundary comparisons only. CONVENTIONS (a), (b), (r), (am), (aq), (as), (av) apply;
+the additional scoped notation below is proposed in SHARD\_META.md. Convention (ar) is unrelated Ward notation.
+
+% Source: explorations/2026-10-25-astra-r3/F6-what-the-tower-remembers/NOTE.md:20-63,67-287,302-508,520-707,811-914 -- definitions and proofs.
+% Source: explorations/2026-10-25-astra-r3/F6-what-the-tower-remembers/REVIEW.md:3-12,29-96,100-163,196-214,259-265,291-293 -- binding verdicts and corrections.
+% Source: explorations/2026-10-25-astra-r3/F6-what-the-tower-remembers/INTEGRATION.md:18-62,64-114,122-173 -- grades, cells, amendments, conventions, target.
+% Source: explorations/2026-10-25-astra-r3/briefs/F6-what-the-tower-remembers.md:82-110 -- original conjecture, corrected here.
+% Source: references/text/PenneysUnitaryFusionCategories.md:219-237,277-288,319-338,394-419,470-487,1010-1019 -- splitting, graded categories, coherence, dimensions.
+% Source: references/text/EtingofNikshychOstrikFusionCategories.txt:1459-1487,1700-1706 -- unique positive dimension character and unitary spherical dimensions.
+% Source: references/text/EtingofNikshychOstrikFusionCategories.md:39-51 -- twisted graded fusion categories.
+% Source: references/manifest/SOURCES.md:34-35,55-57 -- primary-source registration.
+% Source: literature/md/2010.11121/2010.11121.md:166-180 -- strict norm limits and compatible states.
+% Source: report/sections/77_pointed_carrier_invariants.tex:47-86 -- trailing versus corner and fully marked reconstruction.
+% Source: report/sections/90_local_unital_lift.tex:59-141,175-211,215-230 -- H, shuffle, finite coherence and converse boundary.
+% Source: report/sections/80_lattice_sewing_and_fidelity_certificate.tex:153-159,168-214 -- insufficiency and auxiliary-state distinction.
+% Source: report/sections/93_normal_limit_expectations_and_fidelity.tex:57-114,156-198 -- represented expectations and conditional fidelity.
+% Source: report/sections/88_layered_targets.tex:84-154 -- target grid; CONVENTIONS.md:631-667,1450-1468,1524-1543,1564-1576,1607-1620.
+% Source: report/sections/94_number_changing_collision_dynamics.tex:212-234 -- named reaction data and naturality, not R5.
+% Source: explorations/2026-10-25-astra-r3/F6-what-the-tower-remembers/checks/check_f6.py:1-132 -- author invariants.
+% Source: explorations/2026-10-25-astra-r3/F6-what-the-tower-remembers/checks/output.txt:1-7 -- author GREEN record.
+% Source: explorations/2026-10-25-astra-r3/F6-what-the-tower-remembers/checks/README.md:1-29 -- mutation commands and scope.
+% Source: explorations/2026-10-25-astra-r3/F6-what-the-tower-remembers/checks/review_run_output.txt:1-9 -- restored runs and intended failures.
+% Source: explorations/2026-10-25-astra-r3/F6-what-the-tower-remembers/checks/review_twisted_refinement.py:1-146 -- independent exact check.
+The checks bundle records six exact author groups, two restored review runs and five intended assertion failures
+(REVIEW:165--194). These test finite identities, not classification or infinite reconstruction. No local primary AF
+classification source was found (NOTE:291--300; REVIEW:241--245); 97.8 uses the reviewed finite-stage proof.
+
+\subsection{Setting and Rooted Invariant}
+
+\(\Cc\) is unitary fusion, \(O\ne0\), \(\mathcal D=\langle O\rangle\), \(I=\Irr\mathcal D\), \(W_0=\one\),
+\(W_L=O^{\otimes L}\) left-associated, \(A_L=\operatorname{End}_\Cc(W_L)\), \(i_L(a)=a\otimes1_O\).
+Use column incidence \(N[y,x]=\dim\Hom(y,x\otimes O)\), \(m_0=e_\one\), \(m_L=N^Le_\one\),
+\(S_L=\{x:m_L[x]>0\}\); absent blocks are omitted. Let \(\kappa_L:A_L\to A_\infty\) be the trailing limit maps.
+An AF algebra is the norm completion of an increasing finite-dimensional union. \(K_0\) is the group completion
+of stable Murray--von Neumann projection classes; its cone comes from projections and its scale is \([1]\).
+\(\Tr\) below is ordinary unnormalised matrix trace, rank-one value one; \(d_x\) is the canonical positive dimension.
+No point is needed until stated; then \(\eta:\one\to O\), \(\eta^\dagger\eta=1\), as in (am).
+
+\textbf{Theorem 97.1 [derived; any; \(\mathsf L0\); \(\mathsf R0^u\), trailing] (NOTE:67--153; REVIEW:29--37).}
+\textbf{Assume} the setting above. \textbf{Prove} the maps \(i_L\) form a local unital injective tower, with
+\[
+ A_L\cong\bigoplus_{x\in S_L}M_{m_L[x]}(\mathbb C),\qquad
+ (K_0(A_\infty),K_0(A_\infty)^+,[1])=\varinjlim_L(\mathbb Z^{S_L},\mathbb Z_+^{S_L},m_L;N|_{S_{L+1}\times S_L}).
+\]
+Its Bratteli diagram is the \emph{rooted reachable unfolding}: vertices \(S_L\), edges \(N[y,x]\).
+\par\(\langle1\rangle1\). Orthogonal splitting gives
+\(\Hom(y,W_L\otimes O)=\bigoplus_x\Hom(x,W_L)\otimes\Hom(y,x\otimes O)\); \(i_L(a)\) acts as \(a_x\otimes1\).
+Thus multiplicities are \(N[y,x]\), and \(\sum_yN[y,x]d_y=d_xd_O>0\) prevents any source block disappearing.
+Tensor dagger/interchange gives unitality and locality; the maximum block norm proves isometry and the AF completion.
+\par\(\langle1\rangle2\). Stable projection classes in a finite sum of matrices are nonnegative block ranks;
+the unit has rank vector \(m_L\), and inclusions act by \(N\).
+\par\(\langle1\rangle3\). Continuity uses only finite-dimensional stages. Approximate a limit projection \(p\)
+by self-adjoint finite-stage \(b\), \(\|b-p\|<\epsilon<1/4\); \(q=1_{[1/2,\infty)}(b)\) has \(\|q-p\|<2\epsilon<1\).
+For \(z=qp+(1-q)(1-p)\), \(z-1=(q-p)(2p-1)\), so \(z(z^*z)^{-1/2}\) conjugates \(p\) to \(q\).
+Conversely, approximate a limit partial isometry \(v\) between finite projections \(p,q\) by finite \(w\).
+For \(x=qwp\), both \(x^*x\) and \(xx^*\) are invertible in their corners; \(x(x^*x)^{-1/2}\) witnesses equivalence there.
+\par\(\langle1\rangle4\). Every class and relation is therefore witnessed at a finite stage; group completion gives
+the displayed cone and unit. Common-stage coordinate order also proves directedness, unperforation and interpolation. QED.
+
+\textbf{Proposition 97.2 [derived; any; \(\mathsf L0\); \(\mathsf R0^u\), trailing] (NOTE:155--210; REVIEW:38--41).}
+Put \(G_N=\varinjlim(\mathbb Z^I,\mathbb Z_+^I;N)\), \(u=[e_\one,0]\). Then
+\(K_0(A_\infty)\cong I_u:=\{g\in G_N:-nu\le g\le nu\text{ for some }n\in\mathbb N\}\), with inherited cone and unit \(u\).
+If \(N\) is primitive, \(I_u=G_N\); a pointed \(O\) makes \(N\) primitive on \(I\).
+\par\(\langle1\rangle1\). Extend supported vectors by zero. Eventual equality and positivity show an order embedding.
+Every supported \(v\) is bounded by \(\pm nm_L\); conversely such bounds, witnessed at one later level, force support in \(S_L\).
+\par\(\langle1\rangle2\). All simples of \(\mathcal D\) occur in nonnegative powers. Indeed their union \(S\) is
+tensor/summand closed. For \(x\in S\), \(P[z,y]=N_{xy}^z d_z/(d_xd_y)\) is column-stochastic with strictly positive
+stationary weights proportional to \(d_y^2\), by reciprocity. No edge exits \(S\); stationarity forbids entry, so the
+edge \(x^*\to\one\) forces \(x^*\in S\). Thus \(S=I\).
+\par\(\langle1\rangle3\). A point makes \(S_L\) increasing, hence eventually full. If \(O^K\) contains every simple,
+for each \(x,y\) choose \(z\subset x^*\otimes y\); reciprocity gives \(N_{xz}^y>0\), so \((N^K)[y,x]>0\).
+Conversely \(N^p>0\) gives a full supported tail (no zero rows); the limits then share that tail. QED.
+
+\textbf{Negative 97.3 [negative; any; \(\mathsf L0\); \(\mathsf R0\)] (NOTE:212--222; REVIEW:42--43).}
+For an invertible generator \(O=g\) of a cyclic group of order \(q>1\), \(A_L=\mathbb C\), \(i_L=\mathrm{id}\),
+so rooted \(K_0=\mathbb Z\). But \(N\) is a cyclic permutation and \(G_N=\mathbb Z^q\) with coordinate cone;
+under \(N^{-L}\), \(u\) lies on one axis and is not an order unit of \(G_N\). Tensor generation alone is insufficient.
+Also \(O=0\) kills \(A_0=\mathbb C\) at the first map and has \(d_O=0\); the nonzero hypothesis is essential (NOTE:38--39).
+
+\subsection{Trace and Classification}
+
+\textbf{Theorem 97.4 [derived; any; \(\mathsf L0\); \(\mathsf R0\) with trace] (NOTE:226--278; REVIEW:44--48).}
+With \(\lambda=d_O\), \(\tau_L(a)=\lambda^{-L}\sum_{x\in S_L}d_x\Tr(a_x)\) is a compatible tracial state,
+unique if \(N\) is primitive. Rank-one weights are \(d_x/\lambda^L\); block-identity weights are \(m_L[x]d_x/\lambda^L\).
+\par\(\langle1\rangle1\). \(d^TN=\lambda d^T\), \(d^Tm_L=\lambda^L\) prove normalization, positivity and compatibility.
+\par\(\langle1\rangle2\). Any trace has nonnegative rank-one weights \(w_L=N^Tw_{L+1}\), \(m_L^Tw_L=1\).
+If \(N^p>0\), then \(m_{L+p}[y]/\lambda^{L+p}\ge c_y:=\min_x(N^p)[y,x]/(\lambda^pd_x)>0\).
+Consequently \(r_L[y]=\lambda^Lw_L[y]/d_y\le1/(c_yd_y)\) eventually.
+\par\(\langle1\rangle3\). \(P[x,y]=N[y,x]d_y/(\lambda d_x)\) is row-stochastic, \(r_L=Pr_{L+1}\).
+For \(s=|I|\), \(\delta_0=\min(P^p)>0\), subtracting \(\delta_0\) from each entry gives
+\(\operatorname{osc}(P^pv)\le(1-s\delta_0)\operatorname{osc}(v)\). Iteration and the bound force \(r_L\) constant;
+normalization makes it one. Compatibility fixes earlier levels; norm continuity extends the state. QED.
+
+\textbf{Proposition 97.5 [derived; any, open; \(\mathsf L0+H\); \(\mathsf R1\), tracial only] (NOTE:280--287; REVIEW:111--114).}
+On the fixed pointed-\(H\) schedule of 97.11, \(\tau_{2L}\alpha_L=\tau_L\): spherical trace is invariant under the
+shuffle conjugation and trailing insertion \(L\) times preserves \(\tau\). Thus every Wilson drift is zero, giving
+the compatible limit state on this declared schedule. This selects neither a critical state nor a conformal vacuum.
+
+\textbf{Lemma 97.6 [derived; any; category-free; \(\to\mathsf R0\)] (NOTE:302--319; REVIEW:49--50).}
+For \(B=\bigoplus_iM_{b_i}\), \(C=\bigoplus_jM_{c_j}\), all sizes positive, unital \(*\)-maps \(B\to C\) modulo target-unitary
+conjugacy correspond exactly to nonnegative integer matrices \(T\) with \(Tb=c\); the induced \(K_0\) map is \(T\).
+\par\(\langle1\rangle1\). In each target block, matrix units split the source's central summands into equivalent
+orthogonal ranges of dimensions \(T[j,i]\), giving \(a_i\mapsto a_i\otimes1_{T[j,i]}\).
+\par\(\langle1\rangle2\). Dimension counting gives \(Tb=c\); these blocks construct every such map. Matching bases
+give target-unitary conjugacy, and minimal projection ranks give \(T\). QED.
+
+\textbf{Proposition 97.7 [derived; any; \(\mathsf L0\); \(\mathsf R0^u\), trailing] (NOTE:321--342; REVIEW:51--53).}
+A unit-preserving based-ring isomorphism carrying \([O]\) to \([O']\) gives a stage-filtered trailing-tower isomorphism.
+\par\(\langle1\rangle1\). It matches \(N,m_L,S_L\). Inductively choose a block-label-preserving isomorphism at the next
+stage; its two maps from the preceding stage have equal multiplicities. Conjugate the new target using 97.6.
+\par\(\langle1\rangle2\). The resulting commuting isometries extend to the completions. No interval, concatenation,
+placement or dyadic mark is promised. Canonical positive dimensions already depend only on the based ring. QED.
+
+\textbf{Theorem 97.8 [derived; any; category-free; \(\to\mathsf R0\)] (NOTE:344--413; REVIEW:54--61).}
+For sequential unital AF limits \(A=\varinjlim A_n\), \(B=\varinjlim B_m\) of \emph{finite-dimensional} algebras with
+injective connecting maps, \(A\cong_*B\) iff \((K_0(A),K_0(A)^+,[1_A])\cong(K_0(B),K_0(B)^+,[1_B])\).
+\par\(\langle1\rangle1\). A \(*\)-isomorphism preserves all projection data. Conversely, lift the finitely many positive
+columns of a unit-preserving stage-to-limit group map to one finite stage, by 97.1's continuity proof. Its unit
+discrepancy vanishes at a later stage; there \(Tb=c\) exactly. Lemma 97.6 realises this lift as a unital \(*\)-map.
+\par\(\langle1\rangle2\). Equality of two stage group maps into a limit is equality of finitely many columns at
+some later stage; 97.6 upgrades this to target-unitary conjugacy of their algebra maps.
+\par\(\langle1\rangle3\). Alternately lift the group isomorphism and its inverse along increasing cofinal stages.
+Using step 2, conjugate each new target to impose exact triangles
+\(\psi_k\phi_k=i_{n_k,n_{k+1}}\), \(\phi_{k+1}\psi_k=i'_{m_k,m_{k+1}}\), leaving earlier triangles unchanged.
+No stage \(K_0\) map is assumed injective. Each algebra map is injective because its completed triangle is.
+\par\(\langle1\rangle4\). The triangles give compatible isometric maps and inverse maps on dense unions, hence
+inverse maps on the completions. QED. This classifies the \emph{unmarked limit}, not its filtration or endomorphisms.
+
+\subsection{Information Loss}
+
+\textbf{Negative 97.9 [negative; any; \(\mathsf L0\); \(\mathsf R0\)] (NOTE:422--475; REVIEW:62--66).}
+For any finite group \(G\), \(|G|=q\), normalized unitary cocycle \(\omega\), and regular site
+\(O=\bigoplus_{g\in G}g\) in \(\Hilb_{\mathrm{fd}}(G,\omega)\), put \(J_q=(1)_{x,y}\). Then
+\[\begin{gathered}
+ N=J_q,\quad m_L=q^{L-1}\mathbf1\ (L\ge1),\quad (K_0,K_0^+,[1])=(\mathbb Z[1/q],\mathbb Z[1/q]_{\ge0},1),\\
+ A_\infty\cong\varinjlim(M_{q^L},b\mapsto b\otimes1_q).
+\end{gathered}\]
+\par\(\langle1\rangle1\). Exactly one \(g=x^{-1}y\) gives each edge; \([v,L]\mapsto q^{-L}\sum_xv_x\) gives the
+ordered group: zero-sum vectors die under \(J_q\), and positive sums become positive vectors; the unit maps to one.
+\par\(\langle1\rangle2\). For \(B_L=\bigoplus_gM_{q^{L-1}}\), block-diagonal inclusion into \(M_{q^L}\) and replication
+into \(B_{L+1}\) give exact interleaving triangles. This is also the limit for \(\mathrm{Vec},O'=q\one\), with fusion-ring
+rank one versus \(q>1\). Both inputs are pointed, generating and primitive. For fixed \(\mathrm{Vec}\), \(q\one\) and
+\(q^k\one\), \(q,k\ge2\), have identical limits by cofinal blocking, but different site classes. QED.
+
+\textbf{Negative 97.10 [negative; any; \(\mathsf L0\); \(\mathsf R0\), obstruction to decoding] (NOTE:477--508,668--686; REVIEW:67--69,79--81).}
+If two normalized cocycles on \(G\) are unrelated by automorphism and coboundary, their regular-site categories are
+monoidally inequivalent but have isomorphic stage-filtered trailing towers with matching canonical trace.
+\par\(\langle1\rangle1\). Any tensor equivalence permutes invertible simples by a group isomorphism; normalized
+tensorator scalars \(\beta\) force the cocycle ratio, after relabelling, to be
+\[(\partial\beta)(a,b,c)=\frac{\beta(b,c)\beta(a,bc)}{\beta(ab,c)\beta(a,b)}.\] The assumed obstruction forbids it.
+\par\(\langle1\rangle2\). Apply 97.7 and the identical dimension weights of 97.4. The explicit E-F instance below
+realises the obstruction. A decoder depending only on this output record would assign one record two inequivalent
+inputs, impossible. QED. No Morita-inequivalence claim is made. Fully marked CA-77 reconstruction can already retain
+\(F\) at \(\mathsf R0\); a compatible trace need not restore it. Thus ``\(F,R\) first enter at \(\mathsf R1\)'' is false.
+
+\subsection{What the Refinement Record Adds}
+
+Here \(O\) is pointed and \(H=(t_Y)\) is CA-90's unitary relative half-braiding on the full \(\mathcal D\):
+\(t_Y:Y\otimes O\to O\otimes Y\), natural, \(t_\one=1\), \(t_{Y\otimes Z}=(t_Y\otimes1_Z)(1_Y\otimes t_Z)\),
+\(t_Y(1_Y\otimes\eta)=\eta\otimes1_Y\). Coherent associators are understood. \(\mathsf L1\) supplies such \(H\);
+\(H\) need not supply a braiding on \(\mathcal D\). Set \(\alpha_L=\operatorname{Ad}_{B_L}(\cdot\otimes1_{W_L})\),
+where \(B_L\) interleaves old/new strands, crossing old \(j\) with new \(i\) exactly when \(i<j\) (CA-90).
+\textbf{Proposition 97.11 [derived; any, open; \(\mathsf L0+H\); \(\mathsf R0^u\)] (NOTE:520--558; REVIEW:70--72,259--265).}
+For \emph{one fixed} \(H\) at every length,
+\begin{equation}\label{eq:97-square}
+ \alpha_{L+1}(a\otimes1_O)=\alpha_L(a)\otimes1_O^{\otimes2},\qquad
+ \delta\kappa_L=\kappa_{2L}\alpha_L,\qquad \delta_*=\mathrm{id},\quad\tau\delta=\tau .
+\end{equation}
+Here \(\delta\) is an injective unital AF endomorphism; its powers form a discrete semigroup.
+\par\(\langle1\rangle1\). If \(\Sigma_L:O\otimes W_L\to W_L\otimes O\) moves the last old strand across the first \(L\) new ones,
+\(B_{L+1}=(B_L\otimes1_O^{\otimes2})(1_{W_L}\otimes\Sigma_L\otimes1_O)\). Only disjoint crossings are reordered.
+\par\(\langle1\rangle2\). The right factor commutes with \(a\) on the first \(L\) factors, proving the square;
+the isometric maps therefore define \(\delta\) on the union and its completion.
+\par\(\langle1\rangle3\). Inner conjugation fixes projection classes, so \(\delta_*[v,L]=[N^Lv,2L]=[v,L]\).
+The trace assertion is 97.5's conjugation calculation. QED; no continuous flow is constructed.
+Reviewer correction: \(H\) already implies \(t_{12}t_{23}t_{12}=t_{23}t_{12}t_{23}\), by tensoriality and naturality
+for \(t_O\); step 1 needs no extra braid axiom (REVIEW:259--265).
+
+\textbf{Proposition 97.12 [derived; any, open; \(\mathsf L0+H\); \(\mathsf R0^u\)] (NOTE:560--588; REVIEW:73--75).}
+The \emph{abstract} dyadic diagram at \(L_n=2^nL_0\), \(L_0\ge1\), is isomorphic to the trailing cofinal diagram.
+\par\(\langle1\rangle1\). Put \(j_n(a)=a\otimes1_{W_{L_n}}\), \(U_0=1\), \(U_{n+1}=j_n(U_n)B_{L_n}^\dagger\).
+Direct multiplication gives \(\operatorname{Ad}_{U_{n+1}}\alpha_{L_n}=j_n\operatorname{Ad}_{U_n}\). QED.
+Its negative consequence is loss of \(H\) and \(F\) discrimination (E-H, E-F); comparison requires \(H\) on both inputs.
+These conjugacies need not also preserve trailing maps, interval inclusions or named junctions.
+
+\textbf{Theorem 97.13 [derived; any, open; \(\mathsf L0+H\) and named marks; \(\mathsf R0^u\)] (NOTE:590--634; REVIEW:76--78).}
+Retain the pointed tensor record and the following typed placements, adjoints and compression identifications:
+\[\begin{gathered}
+ r=\eta\otimes1_O,\ l=1_O\otimes\eta:O\to W_2,\quad h=rl^\dagger\in A_2,\\
+ i=1_O\otimes1_O\otimes\eta\otimes\eta,\ j=\eta\otimes1_O\otimes1_O\otimes\eta:W_2\to W_4.
+\end{gathered}\]
+For the supplied-\(H\) formula, \(t_O=j^\dagger\alpha_2(h)i\); the tensor marks determine all of \(H\).
+\par\(\langle1\rangle1\). Naturality for \(\eta\) gives \(t_O(\eta\otimes1)=1\otimes\eta\). With \(B=1\otimes t_O\otimes1\),
+\(B^\dagger i=1\otimes\eta\otimes1\otimes\eta\), \((h\otimes1\otimes1)B^\dagger i=j\), and \(Bj=jt_O\).
+Thus \(j^\dagger B(h\otimes1\otimes1)B^\dagger i=t_O\), since \(j^\dagger j=1\).
+\par\(\langle1\rangle2\). Tensoriality fixes \(t_{W_n}\); for each isometric summand \(v:Y\to W_n\),
+\(t_Y=(1_O\otimes v^\dagger)t_{W_n}(v\otimes1_O)\). Proposition 97.2 exhausts simples; naturality makes this
+independent of splitting, and direct sums finish. QED. This recovers supplied \(H\), not \(H\) from arbitrary local lifts.
+
+\textbf{Negative 97.14 [negative; any, open; \(\mathsf L0\) and lengthwise data; \(\mathsf R0\)] (NOTE:646--651,891--914; REVIEW:88--90).}
+Lengthwise finite CA-90 axioms and dyadic composability do not imply \eqref{eq:97-square}. In E-H below,
+\(\alpha_2^+(h)\otimes1^{\otimes2}\) has coefficient \(+1\) where \(\alpha_3^-(h\otimes1)\) has \(-1\).
+Both maps separately obey the finite axioms. This refutes automatic descent, not the fixed-\(H\) construction.
+
+\textbf{Theorem 97.15 [conditional; chiral/named chiral subnet; \(\mathsf L0+L4\) / \(\mathsf L1+L4\); \(\mathsf R4\) given \(\mathsf R3\)] (NOTE:688--707; REVIEW:82--83,131--137).}
+\textbf{Assume} a declared completely rational chiral net \(\Alg\) on a separable Hilbert space and a fully faithful
+unitary tensor functor \(\Phi:\Cc\to\mathrm{DHR}_{\mathrm{fin}}(\Alg)\). On its actual four-interval inclusion
+\(\mathcal N=\Alg(I_1)\vee\Alg(I_3)\subset\mathcal M=(\Alg(I_2)\vee\Alg(I_4))'\), assume increasing represented
+\(\mathcal N_k\subset\mathcal M_k\) boundedly exhaust both algebras, normal expectations \(E_k:\mathcal M_k\to\mathcal N_k\),
+and one normal state \(\psi\) on \(\mathcal M\), faithful on \(\mathcal N\), preserved by every \(E_k\). Require
+\(b:=\liminf K(E_k)\le\operatorname{Dim}\Cc=\sum_xd_x^2\), with cost \(K\) as in (av).
+\textbf{Prove} \(\mu_\Alg=\operatorname{Dim}\Cc\) and \(\Phi\) is onto all finite sectors up to equivalence; if \(\Phi\) is
+braided at \(\mathsf L1\), the equivalence is braided and \(\Cc\) modular. BY CA-93 Lemma 93.2 and Theorem 93.8.
+This is a conditional restatement, not an application: an AF trace supplies none of these represented certificates.
+The full setting needs an identified chiral subnet or CA-93's specified doubled net, not the diagonal extension's DHR category.
+
+\subsection{Effect on other shards}
+\emph{Amendment pointers (2026-10-25, round 3; INTEGRATION:64--114).} CA-77 keeps its corner and fully marked
+reconstructions distinct from 97.8; CA-71--CA-73 keep their corner qualifications. CA-90 gains 97.11--97.14,
+without resolving its converse; 97.11 records the reviewer's correction to 90.3's self-Yang--Baxter parenthetical.
+CA-80's insufficiency warning extends by 97.10; CA-93 gains only the boundary in 97.15; CA-88 gains exactly the
+cells listed above. CA-94 retains its reaction/tensor marks and its distinction from \(\mathsf R5\). CA-74 is unaffected.
+
+\subsection{What This Does Not Claim}
+No classification of interval nets or AF endomorphisms by \(K_0\), no effective dimension-group decision algorithm,
+no universal loss of \(F\) at \(\mathsf R0\), and no recovery from arbitrary lifts. No periodic seam, parity covariance,
+critical-state selection, modes, conformal limit, central-charge lift, characters or coherent CFT synthesis is constructed.
+
+\subsection{Examples (Instances Only)}
+All entries have (any; \(\mathsf L0\) plus the displayed declarations; \(\mathsf R0\)); their negative conclusions are
+97.3, 97.9, 97.10, 97.14. Exact data: NOTE:839--914; REVIEW:84--90. These are tests of the general statements.
+\begin{center}\footnotesize
+\begin{tabular}{p{2.4cm}p{11.7cm}}\toprule
+Instance & Exact calibration / counterexample \\\midrule
+\raggedright E-P: \(\Hilb_{\mathrm{fd}}(C_3),O=g\) & \(A_L=\mathbb C\); rooted \(K_0=\mathbb Z\), full stationary \(G_N=\mathbb Z^3\), \(u\) on one axis. \\
+E-R / E-V & Regular sites of \(C_4\) and \(C_2\times C_2\): \(N=J_4\), \(m_L=4^{L-1}\mathbf1\); only the former has a basis element of order four. Both limits equal that for \(\mathrm{Vec},O'=4\one\), of ring rank one. \\
+E-O / E-0 & \(\mathrm{Vec},O=2\one,4\one\): same limit by even-stage blocking, different \([O]\). Any \(\Cc,O=\one\): \(A_\infty=\mathbb C\), \(\mathcal D=\mathrm{Vec}\); the ambient complement is invisible. \\
+E-F: twisted \(C_2\), \(O=\one\oplus g\) & Labels \(a,b,c,d\in\{0,1\}\), \(\omega_+=1\), \(\omega_-(a,b,c)=(-1)^{abc}\). Pentagon exponents both reduce to \(bcd+abd+acd+abc\) mod 2; normalized \(\partial\beta(1,1,1)=1\), whereas \(\omega_-(1,1,1)=-1\), with no nontrivial automorphism. Both give the same traced \(J_2\) tower. Both admit \(H\): crossing scalar \(r_+=1\); \(r_-=1\) except \(r_-(1,1)=i\), whose only nontrivial tensor identity is \(1=-i^2\). \\
+\raggedright E-H: untwisted \(C_2\), \(O=\one\oplus g\) & \(t^\pm(a,b)=(\pm1)^{ab}\,\mathrm{swap}\). Bilinearity gives \(H\); a pointed block-scalar gauge cannot change the \(g,g\) sign. The \((g,g,\one,\one)\to(\one,g,g,\one)\) entry of \(\alpha_2^\pm(h)\) is \(\pm1\). Appending two vacancies gives the same \(+1/-1\) mismatch for \(\alpha_2^+\otimes1^2\) versus \(\alpha_3^-\) in 97.14. \\\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Single Next Target: Intermediate-Record Faithfulness}
+
+\textbf{Target 97.16 [conjectural; any, open; \(\mathsf L0+H\); \(\mathsf R0\) information only] (NOTE:636--644,811--827; REVIEW:196--214).}
+For arbitrary pointed tensor-generating inputs \((\mathcal D,O,\eta,H)\), retain exactly
+\(\mathcal R=(A_\infty,\{A_{[j,k]}\}_{1\le j\le k},\delta)\), where
+\(A_{[j,k]}=\kappa_k(1_{W_{j-1}}\otimes\operatorname{End}_\Cc(W_{k-j+1}))\), extending (as).
+Record isomorphisms must carry each named interval algebra onto its counterpart and intertwine \(\delta\);
+no point, corner, \(h,i,j\) or concatenation marks remain. Prove that record isomorphism forces a unitary tensor
+equivalence transporting \(\eta,H\), by recovering 97.13's missing marks up to that gauge, or give an explicit
+counterexample preserving \emph{all} these constraints simultaneously. Neither 97.12 nor 97.13 answers this question.

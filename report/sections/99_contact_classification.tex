@@ -1,0 +1,275 @@
+% SHARD-ID: CA-99-CONTACT-CLASSIFICATION
+% SHARD-TITLE: Signed Contact Classification on the Pointed Carrier: Robin Limits, Dirichlet Limits and Full-Fock Boundaries
+% SHARD-SUMMARY: For any unitary fusion category with nonzero pointed complement X, the exact scalar-contact D1 moment deformation on the N<=2 Galerkin carrier has a self-adjoint projected strong-resolvent limit iff the total contact parameter converges finitely or diverges in absolute value. Finite contacts give coupled Robin dynamics; either infinite sign, including sign oscillation, gives Dirichlet collisions with retained lower potentials.
+% SHARD-SUMMARY: The proposed no-limit attractive branch is refuted, even for fixed bounded contact; positive full-Fock extensions and nonreacting deep-contact limits are derived. Negative total contact has no common Fock lower bound, arbitrary internal diagonals defeat scalar classification, and signed reacting full-Fock realization remains conditional; no conformal rung advances.
+% SHARD-KEYWORDS: contact classification, signed contact, Galerkin compression, Robin collision, Dirichlet collision, strong resolvent, global trace compactness, graph core, spectral diving, retained potentials, full Fock space, internal bands, grading obstruction, D1-C, F5, Target 94.16
+
+\section{Signed Contact Classification on the Pointed Carrier: Robin Limits, Dirichlet Limits and Full-Fock Boundaries}
+\label{sec:contact-classification}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: COUNTEREXAMPLE to F5 as posed; PROOF-COMPLETE exact-family replacement}
+(REVIEW:1--9). Statements 99.1--99.6, 99.8--99.9 are \emph{derived};
+99.7, 99.10--99.11 are \emph{negative}; 99.12 and the open Target 99.13 are \emph{conditional}.
+Global \(H^2\) regularity is \emph{conditional}; independent renormalized triple-cluster dynamics is \emph{conjectural}.
+\textbf{CA-88 cells (INTEGRATION:72--91):} the CA-94 row's comment and D1-C collision-sewing discussion gain
+the restricted classification. Their setting \emph{any (open)}, data \(\mathsf L0\) plus declarations, and rung
+\(\mathsf R0^c\) plus off-ladder \(z=2\) stay unchanged. Neither the restated \(\mathsf R0^u+\mathsf R1\) target,
+its dressed-refinement lemma, nor any \(\mathsf R1\)--\(\mathsf R5\) certificate advances. No chiral/full target is selected.
+
+NOTE, REVIEW and INTEGRATION below mean the files in
+\path{explorations/2026-10-25-astra-r3/F5-contact-trichotomy/}; their line anchors are part of each statement.
+Dependencies: CA-77 (77.8 carrier), CA-88 (grid), CA-94 (94.2--94.6, 94.10--94.14); CONVENTIONS (am), (aq), (aw).
+New local notation is proposed for (ax) in the accompanying \path{SHARD_META.md}; existing collision conventions are retained.
+No applicable contact-classification theorem was identified in the recorded local search (REVIEW:268--270);
+the analytic claims below use the reviewed local derivations, without a novelty claim.
+
+% Source: explorations/2026-10-25-astra-r3/F5-contact-trichotomy/NOTE.md:31-128 -- exact family, compression, coefficients.
+% Source: explorations/2026-10-25-astra-r3/F5-contact-trichotomy/NOTE.md:139-300 -- N1/N2 counterexamples; :302-800 -- L1, T1-T4, B1.
+% Source: explorations/2026-10-25-astra-r3/F5-contact-trichotomy/NOTE.md:804-959 -- C1/C2/D1; :1080-1107 -- next lemmas and instances.
+% Source: explorations/2026-10-25-astra-r3/F5-contact-trichotomy/REVIEW.md:1-9,32-167 -- grades, step audit, tags; :169-223 -- corrections, checks, next lemma.
+% Source: explorations/2026-10-25-astra-r3/F5-contact-trichotomy/INTEGRATION.md:9-62 -- liftable grades/hypotheses; :72-185 -- cells, amendments, notation, target.
+% Source: explorations/2026-10-25-astra-r3/briefs/F5-contact-trichotomy.md:60-109 -- original conjecture, not evidence for it.
+% Source: report/sections/77_pointed_carrier_invariants.tex:207-226,233-256 -- carrier, caveat, open unital target.
+% Source: report/sections/88_layered_targets.tex:54-108,153,167-177,237 -- declarations, grid and historical target.
+% Source: report/sections/94_number_changing_collision_dynamics.tex:50-60,77-97,108-167,177-248 -- collision conventions and reused lemmas.
+% Source: CONVENTIONS.md:1450-1467,1524-1543,1621-1642 -- pointed carrier, tags, collision forms.
+% Source: references/text/PenneysUnitaryFusionCategories.md:195-237,319,394-398,427-430,484-487,528-530 -- sums, coherence, rigidity, fibre inner product.
+
+\subsection{Exact Family and Classification}
+
+Fix unitary fusion \(\Cc\), pointed \(O=\one\oplus X\), \(X\ne0\), and \(t,\mu>0\). Write
+\(E_{c,n}=\Hom(c,X^{\otimes n})\), \(\Delta_n=\{0<x_1<\cdots<x_n<1\}\),
+\(\mathcal F=\hoplus_{c,n}L^2(\Delta_n;E_{c,n})\), with isometry inner products, no factorial and \(\Delta_0\) a point.
+Use CA-77's isometric box maps \(K_\varepsilon\), \(\varepsilon=1/L\); smooth samples have amplitudes
+\(\varepsilon^{n/2}u(x_{j_1},\ldots,x_{j_n})\), \(x_j=(j-\tfrac12)\varepsilon\).
+Declare finite fixed lists \(b_\rho:X\to X^{\otimes2}\), \(v_\sigma:\one\to X^{\otimes2}\),
+\(\lambda_\rho,\kappa_\sigma\ge0\), and moments
+\(a=\sum\lambda_\rho+\sum\kappa_\sigma\), \(\beta=\sum\lambda_\rho b_\rho\), \(\nu=\sum\kappa_\sigma v_\sigma\),
+\(Q_b=\sum\lambda_\rho b_\rho^\dagger b_\rho\), \(\gamma=\sum\kappa_\sigma v_\sigma^\dagger v_\sigma\).
+With \(\pi_{00},\pi_{X0},\pi_{0X},\pi_{XX}\) the summand coisometries of \(O^{\otimes2}\) (\(0\) denotes \(\one\)), set
+\(D_h=\pi_{X0}-\pi_{0X}\), \(D_b=\pi_{XX}-\sqrt\varepsilon b\pi_{X0}\),
+\(D_v=\pi_{XX}-\varepsilon v\pi_{00}\), \(P_{XX}=\pi_{XX}^\dagger\pi_{XX}\). The \emph{exact family} is
+\begin{equation}\label{eq:99-family}
+ H_\varepsilon=\sum_{j=1}^{L-1}\!\left[t\varepsilon^{-2}D_h^\dagger D_h+
+ \sum_\rho\lambda_\rho\varepsilon^{-1}D_{b_\rho}^\dagger D_{b_\rho}+
+ \sum_\sigma\kappa_\sigma\varepsilon^{-1}D_{v_\sigma}^\dagger D_{v_\sigma}
+ +(\alpha_\varepsilon-a)\varepsilon^{-1}P_{XX}\right]_j+\mu\hat N .
+\end{equation}
+Here \(\alpha_\varepsilon=(c_\varepsilon+2t)/\varepsilon\) is the \emph{total} contact; the added excess is \(\alpha_\varepsilon-a\).
+Kinetic/contact action is fibre-scalar, with the displayed open endpoint completion and no outer penalty.
+Use \(H_\varepsilon^{[2]}=P_{\le2}H_\varepsilon P_{\le2}|_{\Ran P_{\le2}}\) on \(\mathcal F_{\le2}=P_{\le2}\mathcal F\).
+
+\textbf{Theorem 99.1 [derived; any (open); \(\mathsf L0\)+declared family; \(\mathsf R0^c\)+off-ladder \(z=2\)]
+(NOTE:746--800; REVIEW:126--129,147--163).}
+For \eqref{eq:99-family}, \(K_\varepsilon(H_\varepsilon^{[2]}-i)^{-1}K_\varepsilon^*\) converges strongly to a
+self-adjoint resolvent on the entire \(\mathcal F_{\le2}\) iff either \(\alpha_\varepsilon\to\alpha\in\mathbb R\),
+giving \(H_\alpha\) below, or \(|\alpha_\varepsilon|\to\infty\), giving \(H_D^W\) below. Arbitrary sign oscillation is allowed.
+\par\(\langle1\rangle1\). Sufficiency: 99.4 and 99.6. Necessity: rigidity gives \(X^2\ne0\), since the unit summand of
+\(X^*\otimes X\) would otherwise give \(X=0\). Thus finite-contact forms differ by
+\((\alpha-\alpha')\|Tu_2\|^2\ne0\) on a suitable smooth vector, and the Dirichlet form has a proper smaller domain.
+\par\(\langle1\rangle2\). A sufficiently shifted resolvent \(R=(H+z)^{-1}\) recovers its form, including its domain, by
+\(q(u)+z\|u\|^2=\sup_f\{2\operatorname{Re}\langle u,f\rangle-\langle f,Rf\rangle\}\), with value \(+\infty\) off-domain
+(complete the square on the form-dense range of \(R\); NOTE:774--788). The limiting operators are distinct.
+\par\(\langle1\rangle3\). Two finite clusterpoints, or a finite and an absolute-divergent subsequence, contradict uniqueness
+of the strong limit. No finite clusterpoint means \(|\alpha_\varepsilon|\to\infty\); otherwise the unique finite clusterpoint
+is the limit. QED. The contact-invisible case \(X=0\) is excluded only from necessity.
+
+\textbf{Proposition 99.2 [derived; any (open); \(\mathsf L0\)+declared family; finite, \(\to z=2\)]
+(NOTE:66--128; REVIEW:42--45,177--180).}
+Compression retains lower squares whose reaction outputs have \(n>2\). Put
+\(\mathcal V=\bigoplus_{c,n\le2}H^1(\Delta_n;E_{c,n})\), with \(H^1(\Delta_0)=E_{c,0}\), and
+\(S_c(u)(y)=B_{\beta,1,1}u_{c,1}(y)+V_{\nu,0,0}u_{c,0}\), with the insertions of (aw), abbreviated \(B_\beta,V_\nu\).
+Then the smooth-sample limit for finite \(\alpha\) is
+\begin{equation}\label{eq:99-form}
+\begin{split}
+q_\alpha(u)&=t\sum_{c,n\le2}\|\nabla u_{c,n}\|^2+\sum_{c,n\le2}\langle u_{c,n},W_nu_{c,n}\rangle
+ +\alpha\sum_c\|Tu_{c,2}\|^2-2\operatorname{Re}\sum_c\langle Tu_{c,2},S_c(u)\rangle,\\
+W_0&=\gamma,\qquad W_1=(\mu+\gamma)I+Q_b,\qquad W_2=(2\mu+\gamma)I+(Q_b)_1+(Q_b)_2 .
+\end{split}
+\end{equation}
+All trace pairings use \(dy=dS/\sqrt2\); \(D=\partial_1-\partial_2\). Endomorphisms act by coherent
+postcomposition on Hom fibres, without a tensor-product factorization of the physical fibre.
+\par\(\langle1\rangle1\). Expand the squares (94.2, 94.10): upper coefficient \(a\) becomes \(\alpha_\varepsilon\), cross maps
+are \(\beta,\nu\), lower diagonals \(Q_b,\varepsilon\gamma\). At fixed \(n\), empty bonds number \(L+O(n)\);
+missing \(Q_b\) insertions occupy only adjacent/outer strips. Smooth recovery gives \eqref{eq:99-form}.
+\par\(\langle1\rangle2\). Compression of the resolvent is different: for \(H=\left(\begin{smallmatrix}0&g\\g&0\end{smallmatrix}\right)\),
+\(g\in\mathbb R\setminus\{0\}\), and first-coordinate \(P\), \(P(H-z)^{-1}P=-z/(z^2-g^2)\), whereas
+\((PHP-z)^{-1}=-1/z\). Direct inversion proves the distinction. QED.
+
+\subsection{Finite Contacts and the Weak Generator}
+
+\textbf{Lemma 99.3 [derived; any; category-free, fixed finite fibre; \(\to\) off-ladder \(z=2\)]
+(NOTE:302--452; REVIEW:66--81).}
+For rescaled arrays \(f_{jk}\in E\), \(j<k\), let \(N_\varepsilon=\varepsilon^2\sum\|f_{jk}\|^2\),
+\(E_\varepsilon=\sum_{p\sim q}\|f_p-f_q\|^2\) over unordered legal one-step edges, and
+\(C_\varepsilon=\varepsilon\sum_{j<L}\|f_{j,j+1}\|^2\). For every \(\eta>0\),
+\(C_\varepsilon\le\eta E_\varepsilon+C_0(1+\eta^{-1})N_\varepsilon\), with \(C_0\) mesh/fibre independent.
+Bounded \(N_\varepsilon+E_\varepsilon\) gives a subsequence with strongly convergent bulk box steps and full
+collision steps \(A_\varepsilon\to Tu\) in \(L^2\), for \(u\in H^1(\Delta_2;E)\). The fibre \(E\) is fixed.
+\par\(\langle1\rangle1\). Reflect to a square array, filling \(g_{jj}=f_{j,j+1}\), \(g_{LL}=f_{L-1,L}\).
+Two-edge routes give square mass \(\le4N_\varepsilon\), energy \(\le6E_\varepsilon\). Clamped affine interpolation
+\(P_\varepsilon\) has mass \(\le8N_\varepsilon\), gradient energy \(\le6E_\varepsilon\), and square-step error \(\le72\varepsilon^2E_\varepsilon\).
+\par\(\langle1\rangle2\). Its diagonal trace differs from the filled diagonal step by squared norm
+\((\varepsilon/12)\sum\|g_{j+1,j+1}-g_{jj}\|^2\le\varepsilon E_\varepsilon/6\). Apply 94.3's adjustable trace bound;
+for coarse meshes use \(C_\varepsilon\le\varepsilon^{-1}N_\varepsilon\). This proves the displayed inequality.
+\par\(\langle1\rangle3\). Cell-average approximations give bulk compactness. Apply the trace bound to differences,
+first taking the bulk limit, then shrinking the collar: strong full traces follow. Absolute continuity removes
+the last cell; omitted diagonal half-box mass is \(\le\varepsilon C_\varepsilon\). QED, including both collision corners.
+
+\textbf{Theorem 99.4 [derived; any (open); \(\mathsf L0\)+declared family; \(\mathsf R0^c\)+off-ladder \(z=2\)]
+(NOTE:455--517; REVIEW:87--92).}
+If \(\alpha_\varepsilon\to\alpha\in\mathbb R\), \eqref{eq:99-form} on \(\mathcal V\) is closed and semibounded, with
+self-adjoint operator \(H_\alpha\), and the projected nonreal resolvents of \(H_\varepsilon^{[2]}\) converge to its resolvent.
+\par\(\langle1\rangle1\). Bounded sources and 99.3 absorb signed traces: \(q_\varepsilon\ge(t/2)E_\varepsilon-C\|u\|^2\).
+The continuous counterpart gives a complete shifted \(H^1\) form norm and the variational operator (94.4).
+\par\(\langle1\rangle2\). Bounded shifted energies give strong bulk and full traces by 99.3, so signed and mixed terms converge.
+Missing \(Q_b\) strips vanish by its outer-row corollary (NOTE:441--452); the \(\gamma\) error is \(O_n(\varepsilon)\).
+The interior difference-quotient proof of 94.5 gives kinetic liminf with coefficient \(t\), not the interpolation factor six.
+\par\(\langle1\rangle3\). Smooth recovery and density give recovery on \(\mathcal V\). The shifted minimizer argument of 94.6
+gives strong resolvent convergence; its bounded rational transform gives the nonreal version (NOTE:511--517). QED.
+
+\textbf{Proposition 99.5 [derived; any (open); \(\mathsf L0\)+declared moments; off-ladder \(z=2\)]
+(NOTE:519--569; REVIEW:93--101).}
+Exactly \(D(H_\alpha)=\{u\in\mathcal V:\exists f\in\mathcal F_{\le2},\ q_\alpha(v,u)=\langle v,f\rangle\ \forall v\in\mathcal V\}\).
+For sufficiently regular vectors (charge sums implicit),
+\[
+ (H_\alpha u)_2=-t\Delta u_2+W_2u_2,\quad (H_\alpha u)_1=-tu_1''+W_1u_1-B_\beta^*Tu_2,\quad
+ (H_\alpha u)_0=\gamma u_0-\int_0^1V_\nu^*Tu_2(y)\,dy .
+\]
+The collision equation is \(tDu_2+\alpha Tu_2-B_\beta u_1-V_\nu u_0=0\); outer fluxes are zero.
+\par\(\langle1\rangle1\). Polarize \eqref{eq:99-form} (second-slot-linear convention), then integrate by parts:
+\(\partial_\nu=D/\sqrt2\) and \(dS=\sqrt2dy\) cancel. Without regularity these equations mean the variational boundary functional.
+\par\(\langle1\rangle2\). The homogeneous coefficient is \(\alpha I_{E_{c,2}}\); reactions and \(W_n\) need not be scalar.
+Robin coefficients are \(\alpha/t\) for \(D\), \(\alpha/(\sqrt2t)\) for unit normal. Total \(c_\varepsilon=-2t+\kappa\varepsilon+o(\varepsilon)\)
+gives \(\alpha=\kappa\); an external coefficient \(-2t+\delta\varepsilon+o(\varepsilon)\) before adding squares gives \(\alpha=\delta+a\).
+Occupation is conserved iff \(\beta=\nu=0\), by the mixed-form argument of 94.7; individual reactions can cancel. QED.
+
+\subsection{Both Divergent Signs and the Refuted Branch}
+
+\textbf{Theorem 99.6 [derived; any (open); \(\mathsf L0\)+declared family; \(\mathsf R0^c\)+off-ladder \(z=2\)]
+(NOTE:571--738; REVIEW:107--120).}
+For \(|\alpha_\varepsilon|\to\infty\), the limit is \(H_D^W\), associated with
+\(q_D=t\sum\|\nabla u_n\|^2+\sum\langle u_n,W_nu_n\rangle\) on \(\mathcal V_D=\{u\in\mathcal V:Tu_2=0\}\).
+Sectors decouple, with all \(W_n\) retained. No common lower bound or restriction on sign/rate is assumed.
+\par\(\langle1\rangle1\). An operator core uses arbitrary \(u_0\), finite Neumann cosine sums \(u_1\), and smooth spatially
+odd \(u_2\), outer-Neumann and zero near the diagonal corners. Cosine determinants are complete; they vanish
+as \(O(\rho^2)\) at these corners. Radial cutoffs cost \(O(d)\) in the Laplacian norm, proving graph-core density.
+\par\(\langle1\rangle2\). For a fixed core vector set \(s=(x+y)/2\), \(r=y-x\), \(g(s)=\partial_ru_2(s,0)\),
+\(G(x,y)=g(s)\chi(r)\), with \(\chi\) smooth/even, one near zero and supported so \(G\) avoids the outer walls.
+Put \(\overline S(x,y)=B_\beta[u_1(x)+u_1(y)]/2+V_\nu u_0\). Sample
+\(F_\varepsilon=u_2+(2t/\alpha_\varepsilon-\varepsilon)G+\overline S/\alpha_\varepsilon\), but overwrite each adjacent rescaled
+sample by \(a_j=[2tg(j\varepsilon)+S(u)(j\varepsilon)]/\alpha_\varepsilon\). The overwrite error is \(O(\varepsilon^3+\varepsilon^2/|\alpha_\varepsilon|)\).
+\par\(\langle1\rangle3\). On interior adjacent rows, \(2a_j-F_{\rm left}-F_{\rm right}=-2\varepsilon g+O(\varepsilon^3+\varepsilon^2/|\alpha_\varepsilon|)\).
+Thus kinetic/contact/source action is \([S(u)(s)-S_\varepsilon(s)]/\varepsilon+O(\varepsilon+|\alpha_\varepsilon|^{-1})=O(1)\),
+where \(S_\varepsilon(s)=B_\beta u_1(s-\varepsilon/2)+V_\nu u_0\). Exact overwriting cancels every growing contact term.
+\par\(\langle1\rangle4\). Degree-one endpoint rows use \(u_2=g=0\) and \(u_1'(0)=u_1'(1)=0\). Other rows have
+Neumann difference consistency. Feedback \(-B_\beta^*a_j\), \(-\varepsilon\sum V_\nu^*a_j\) is \(O(|\alpha_\varepsilon|^{-1})\).
+Counting strip area gives \(\|K_\varepsilon v_\varepsilon-u\|+\|K_\varepsilon H_\varepsilon^{[2]}v_\varepsilon-H_D^Wu\|
+\le C_u(\sqrt\varepsilon+|\alpha_\varepsilon|^{-1})\to0\).
+\par\(\langle1\rangle5\). For \(f=(H_D^W-i)u\), the resolvent norm \(\le1\) bounds the convergence error by this graph error.
+Such \(f\) are dense by the operator core; the same bound extends convergence to every input. QED.
+
+\textbf{Negative 99.7 [negative; any (open); \(\mathsf L0\)+declared contact; off-ladder \(z=2\)]
+(NOTE:740--744; REVIEW:171--174).}
+Take \(c_\varepsilon=-6t\), so \(\alpha_\varepsilon=-4t/\varepsilon\). Theorem 99.6 gives Dirichlet even with reactions.
+Without reactions, the endpoint adjacent-pair basis vector has energy \(-3t\varepsilon^{-2}+2\mu\to-\infty\).
+This refutes F5(a)/Target 94.16: spectral diving and failure of a self-adjoint resolvent limit are different assertions.
+
+\subsection{Full-Fock Results and General-Density Boundaries}
+
+\textbf{Theorem 99.8 [derived; any (open); \(\mathsf L0\)+nonreacting data; \(\mathsf R0^c\)+off-ladder \(z=2\)]
+(NOTE:139--261,852--859; REVIEW:46--57,165--167).}
+With no reactions, \(H_\varepsilon=t\varepsilon^{-2}\sum D_h^\dagger D_h+s_L\varepsilon^{-6}\sum n_jn_{j+1}\),
+\(s_L\in\{-1,1\}\) arbitrary, converges on all \(\mathcal F\) to collision-Dirichlet, outer-Neumann chamber Laplacians.
+Here \(c_\varepsilon=-2t+s_L\varepsilon^{-4}\), \(\alpha_\varepsilon=s_L\varepsilon^{-5}\); \(s_L=-1\) gives Rayleigh quotient
+\(t\varepsilon^{-2}-\varepsilon^{-6}\) at \((1,2)\), while \(s_L=(-1)^L\) gives no signed contact limit.
+\par\(\langle1\rangle1\). At fixed \(n\), the exclusion kinetic matrix has norm \(\le4nt\varepsilon^{-2}\).
+Split off adjacent configurations \(B\), with adjacency count \(A\ge1\). Its block resolvent has norm \(\le2\varepsilon^6\);
+Schur elimination changes the complementary resolvent by \(\le32n^2t^2\varepsilon^2\), with cross blocks \(O_n(\varepsilon^4)\).
+\par\(\langle1\rangle2\). On the complement, \(l_i=j_i-(i-1)\), \(m=L-n+1\), identify the principal kinetic matrix
+with the exterior-power Neumann path sum. Cosine determinants have eigenvalues
+\(\sum_a4t\varepsilon^{-2}\sin^2(\pi p_a/(2m))\to t\pi^2\sum_ap_a^2\), \(0\le p_1<\cdots<p_n<m\).
+Their original-box limits form a complete chamber basis. This spatial computation imposes no categorical statistics.
+\par\(\langle1\rangle3\). Fixed-sector convergence and resolvent norm \(\le1\) control Fock tails by density. QED.
+More generally \(|\alpha_\varepsilon|\varepsilon^3\to\infty\) suffices, with Schur error
+\(32n^2t^2/(|\alpha_\varepsilon|\varepsilon^3)\); adding \(\mu\hat N\) adds \(\mu n\) sectorwise. No \(n\)-uniform estimate is used.
+
+\textbf{Theorem 99.9 [derived; any (open); \(\mathsf L0\)+positive family; \(\mathsf R0^c\)+off-ladder \(z=2\)]
+(NOTE:804--850; REVIEW:130--132).}
+For uncompressed \eqref{eq:99-family}, eventual \(\alpha_\varepsilon\ge a\) and either \(\alpha_\varepsilon\to\alpha\in[a,\infty)\)
+or \(\alpha_\varepsilon\to+\infty\) give full-Fock projected-resolvent convergence.
+\par\(\langle1\rangle1\). The finite limit is 94.6's form, kinetic coefficient \(t\), plus
+\((\alpha-a)\sum\|T_{n,i}u_n\|^2\). Positive finite exhaustion, closedness and the smooth core give liminf/recovery.
+\par\(\langle1\rangle2\). Infinite contact forces every collision trace to zero, retaining
+\(\mu nI+\sum_i(Q_b)_i+\gamma I\). At fixed \(n\), zero all adjacent samples: the graph-energy cost is \(O_n(\varepsilon)\),
+independently of contact growth. Finite-sector thresholds and diagonal recovery prove the claim (94.6). QED.
+
+\textbf{Negative 99.10 [negative; any (open); \(\mathsf L0\)+negative total contact; off-ladder stability obstruction]
+(NOTE:861--896; REVIEW:133--135).}
+For fixed total \(\alpha<0\), the formal full-Fock form has no common lower bound, even with fixed reactions.
+\par\(\langle1\rangle1\). Choose real normalized \(h\in C_c^\infty(-1/2,1/2)\), \(A=\int|h'|^2\), \(B=\int|h|^4\),
+\(h_\ell(x)=\sqrt\ell h(\ell(x-1/2))\), and a unit fibre vector \(e_n\). The normalized pure-sector trial
+\(u_n=\sqrt{n!}\prod_i h_\ell(x_i)e_n\) has kinetic energy \(tn\ell^2A\) and total trace norm squared \(n(n-1)\ell B\).
+\par\(\langle1\rangle2\). Mixed sources vanish; \(\ell=|\alpha|(n-1)B/(2tA)\) gives
+\(q_\alpha(u_n)\le-\alpha^2B^2n(n-1)^2/(4tA)+n(\mu+\|Q_b\|)+\gamma\to-\infty\). QED.
+This concerns negative \emph{total} contact, not merely negative excess; it is not a no-resolvent theorem.
+
+\textbf{Negative 99.11 [negative; any (open); \(\mathsf L0\)+internal diagonals; off-ladder classification obstruction]
+(NOTE:263--300,907--959; REVIEW:58--60,136--138).}
+Arbitrary diagonals and \((G_r)\) alone give neither the scalar classification nor aligned internal bands.
+\par\(\langle1\rangle1\). For any \(Y\ne0\), let \(X=Y\oplus Y\), \(p\) project onto its second copy, and \(a_O=0\oplus p\)
+on \(O\). Add \(\varepsilon^{-2}(a_O\otimes I_O+I_O\otimes a_O)/2\) to scalar hopping with critical contact, no reactions.
+A scalar band-bottom subtraction leaves internal gap \(\varepsilon^{-2}\). A higher-band packet
+\(u_\varepsilon(j)=\sqrt\varepsilon f(x_j)e\), \(0\ne f\in C_c^\infty(0,1)\), satisfies
+\(H_\varepsilon u_\varepsilon=\varepsilon^{-2}u_\varepsilon+w_\varepsilon\), \(\sup\|w_\varepsilon\|<\infty\).
+Its resolvent response tends to zero on the nonzero limit \(fe\), contradicting resolvent injectivity.
+\par\(\langle1\rangle2\). Instead project \(p\) onto one of the four \(Y^2\) summands of \(X^2\). Add
+\(w\varepsilon^{-2}\pi_{XX}^\dagger p\pi_{XX}\), \(w>0\), to a nonreacting finite-contact family.
+The \(p\) channel has contact \(\alpha_\varepsilon+w/\varepsilon\), hence Dirichlet; its complement stays Robin inside each relevant fibre.
+\par\(\langle1\rangle3\). If \(Y\) satisfies \((G_r)\), so does \(Y\oplus Y\) by matrix amplification of Hom spaces.
+The preceding diagonals remain allowed. \((G_r)\) forces occupation conservation (94.11), not these missing restrictions. QED.
+
+\textbf{Proposition 99.12 [conditional; any (open); \(\mathsf L0\)+range data; \(\to\) off-ladder \(z=2\)]
+(NOTE:938--948; REVIEW:138--142).}
+The positive range-\(r\) argument extends only with nearest-neighbour graph control, bounded-length contact paths with
+bounded edge multiplicity, codimension-one traces, bounded sources, a closed core and smooth recovery (94.13).
+Then \(\|A_\varepsilon-A'_\varepsilon\|^2\le C_{n,r}\varepsilon E_{\varepsilon,n}\to0\).
+An either-sign range classification additionally needs a boundary-row consistency argument like 99.6; none is proved here.
+
+\subsection{Effect on other shards}
+\emph{Amendment (2026-10-25, round 3):} CA-94 Target 94.16 is refuted and replaced by 99.1; its full-Fock boundary is
+99.8--99.10. CA-77's caveat and CA-88's D1-C discussion must distinguish a finite Robin window from existence of any limit.
+CA-88 gains only the restricted comment-column classification stated above; its round-2 E6 next-target pointer is superseded.
+CA-89--CA-93 receive no mathematical amendment (INTEGRATION:93--131); exact append-only text is in \path{SHARD_META.md}.
+
+\subsection{What This Does Not Claim}
+No arbitrary-density or signed reacting full-Fock classification, no unital refinement, WT-1 state, KS/Ward modes,
+conformality or fidelity follows. Global \(H^2\) boundary regularity remains \emph{conditional}; independent renormalized
+triple-cluster dynamics remains \emph{conjectural} (both: any/open; \(\mathsf L0\)+decl.; off-ladder \(z=2\);
+REVIEW:140--142, INTEGRATION:23,32--33). Reaching \(n=3\) forces no three-body counterterm: 94.14 concerns a separately added tile.
+Finite checks calibrate identities, not infinite convergence: the four reviewer outputs and \path{checks/review_manifest.json}
+record the independent trace and complex-source checks, and caught mutations (REVIEW:188--210). CA-94.5 uses no \(n\)-uniform constants.
+
+\subsection{Examples (Instances Only)}
+\begin{center}\footnotesize
+\begin{tabular}{p{3.2cm}p{10.5cm}}\toprule
+Instance & Calibration of the general statements (grades/tags inherited) \\\midrule
+Any \(\Cc\), \(X=0\) & Vacuum only; contact invisible, excluded from 99.1's necessity (NOTE:799--800). \\
+Any \(\Cc\), no reactions & \(c=-6t\): 99.7 [negative]; \(\alpha=(-1)^L\varepsilon^{-5}\): 99.8 [derived]. \\
+Any \(Y\ne0\), \(X=Y\oplus Y\) & Unaligned internal bands or mixed Dirichlet/Robin channels: 99.11 [negative]. \\
+\(\Hilb_{\rm fd}\), \(X=\mathbb C^2\) & At \(L=4\), the \(33\times33\) compression agrees with an independent \(81\times81\) chain oracle
+([derived; any; \(\mathsf L0\)+decl.; finite], NOTE:970--977; REVIEW:196). \\\bottomrule
+\end{tabular}\end{center}
+
+\subsection{Single Next Target}
+
+\textbf{Target 99.13 [conditional; any (open); \(\mathsf L0\)+signed reacting data; \(\to\) off-ladder \(z=2\)]
+(NOTE:1082--1083; REVIEW:214--223).}
+\emph{Signed reacting full-Fock realization and graph-core lemma (open).} For \eqref{eq:99-family}, \(X\ne0\), finite total
+\(\alpha<0\), and \(\beta\ne0\) or \(\nu\ne0\), construct a self-adjoint full-Fock operator satisfying CA-94's local source
+equations, with a dense operator core \(\mathcal D\) and approximants for every \(u\in\mathcal D\) obeying
+\(K_\varepsilon u_\varepsilon\to u\), \(K_\varepsilon H_\varepsilon u_\varepsilon\to H_\alpha u\); alternatively exhibit a fixed nonzero
+source obstructing such a resolvent limit. Control occupation tails and feedback: the truncated corrections feed sectors
+three and four before compression. A finite-sector form core is not automatically an operator core; 99.10 rules out a common lower-bound proof.

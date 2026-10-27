@@ -1,0 +1,277 @@
+% SHARD-ID: CA-100-ZERO-MODE-LATTICE-CHIRALITY
+% SHARD-TITLE: Zero Modes and Lattice Chirality: Parity-Free KS Ledger Balance
+% SHARD-SUMMARY: On a nonzero common standard-KS VR-1 system the cubic ledgers agree without parity or current conservation; finite loss-two ZC, limiting zero-mode commutation and all mixed commutation are equivalent, and imply equal linear ledgers with explicit A3-tail bounds.
+% SHARD-SUMMARY: Automatic ZC remains open; exact logarithm, formal-algebra and spatial-support counterexamples delimit the inference, while corrected cut currents and inverse target cutoffs give conditional extensions without a general lattice-chirality theorem or a new local categorical realization.
+% SHARD-KEYWORDS: zero mode, lattice chirality, Koo-Saleur, VR-1, parity-free ledger balance, cubic anomaly, mixed commutator, graph norm, transport tail, spectral logarithm, cut current, spatial support, inverse spectral cutoff, F2
+\section{Zero Modes and Lattice Chirality: Parity-Free KS Ledger Balance}
+\label{sec:zero-mode-lattice-chirality}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status: WEAKER-RESULT-PROVED (REVIEW:1--11).} Grades are \emph{derived} for 100.1, 100.7, 100.11; \emph{conditional} for 100.2--100.4, 100.8, 100.10; \emph{negative} (derived counterexamples) for 100.5, 100.6, 100.9;
+and \emph{conjectural} for Target 100.12. Automatic ZC, the unrestricted physical no-go and sharp F2(c) remain open.
+NOTE, REVIEW and INTEGRATION below mean the files in \path{explorations/2026-10-25-astra-r3/F2-zero-mode-and-lattice-chirality/}.
+\textbf{CA-88 placement (INTEGRATION:62--94):} the (full; category-free; conditional \(\mathsf R2\)) cell gains
+parity-free cubic balance and the single-ZC reduction; the (any; category-free; \(\to\mathsf R2\)) interface gains
+the transport tail. No cell moves up a rung: no new local \(\mathsf R0\), Wilson state \(\mathsf R1\), or \(\mathsf R3\)--\(\mathsf R5\) certificate. Definition 88.1's general chirality source gap is narrowed, not closed.
+Dependencies: CA-79 (79.1, compression/leakage), CA-81 (VR-1), CA-88 (grid), CA-89 (graph calculus),
+CA-91 (91.5--91.7, 91.10), LC-4; CONVENTIONS (m), (s), (v), (w), (ap), (aq), (at).
+New notation is shard-scoped here, with proposed registration in the accompanying \path{SHARD_META.md}.
+
+% Source: explorations/2026-10-25-astra-r3/F2-zero-mode-and-lattice-chirality/NOTE.md:63-363 -- G, N, B, Cubic, absent.
+% Source: explorations/2026-10-25-astra-r3/F2-zero-mode-and-lattice-chirality/NOTE.md:365-654 -- formal algebra, cut current, inverse cutoff, kernel.
+% Source: explorations/2026-10-25-astra-r3/F2-zero-mode-and-lattice-chirality/NOTE.md:656-690,818-849 -- source audit and subordinate fermion instance.
+% Source: explorations/2026-10-25-astra-r3/F2-zero-mode-and-lattice-chirality/REVIEW.md:23-81,89-255 -- binding repairs D1-D4 and step verdicts.
+% Source: explorations/2026-10-25-astra-r3/F2-zero-mode-and-lattice-chirality/REVIEW.md:257-336 -- brief corrections, checks, next target.
+% Source: explorations/2026-10-25-astra-r3/F2-zero-mode-and-lattice-chirality/INTEGRATION.md:9-54,62-153,160-222 -- grades, grid, amendments, notation, target.
+% Source: explorations/2026-10-25-astra-r3/briefs/F2-zero-mode-and-lattice-chirality.md:63-107 -- original conjecture, not a result.
+% Source: cft_machine/research/virasoro_routes.md:55-177 -- A1-A4, mixed-word telescope, domain and exclusions.
+% Source: report/sections/79_ks_shell_and_refinement_defect.tex:52-96,163-175 -- Fourier identity and leakage.
+% Source: report/sections/91_parity_and_chiral_delineation.tex:64-163,176-188 -- KS conventions, original ZC reduction, scalar stress.
+% Source: references/lattice-symmetry/GransSamuelssonEtAl2020/source/Linnea11.5.tex:791-822 -- energy/current prescription.
+% Source: references/text/PenneysUnitaryFusionCategories.md:219-237,442 -- orthogonal sums and simple unit.
+% Source: references/cft-machine/coset-symmetry/CarpiWeiner2004/source.tex:701-747 -- positive-energy Diff representation scope and mode bound.
+% Source: references/text/CFTFromLatticeFermions.txt:879-892,1843-1894,2790-2823 -- normal ordering, nonlocal cutoff, c=1 vacuum.
+% Source: cft_machine/benchmarks/fermion/PROOF.md:78-115 -- continuum Schwinger-sum derivation.
+% Source: references/lattice-symmetry/LiLinMcGreevyShiKim2024/source/revised-emergence-of-virasoro.tex:738-746,1046 -- nearby anomaly assertion, no stress-OPE proof.
+
+\subsection{Common-System Hypotheses and Transport}
+
+At scale \(r\), \(N=N_r\to\infty\); declare a periodic representation of translated self-adjoint two-site
+densities \(k_j=-h_j/v_r\), \(v_r>0\), with nonadjacent densities commuting. Indices are cyclic,
+\(a_N=N/(4\pi)\), \(z=e^{2\pi i/N}\), \(\mathcal H_r=\sum_jk_j\), \(\mathcal J_j=i[k_j,k_{j+1}]\), \(\mathcal Q_r=\sum_j\mathcal J_j\). Reuse (ap), (at):
+\[
+ E_{r,n}=a_N\sum_jz^{nj}(k_j-\varepsilon_N)+b_N\delta_{n0},\quad
+ B_{r,n}=a_N\sum_jz^{nj}\mathcal J_j,\quad L_{r,n}=E_{r,n}-B_{r,n},\quad S_{r,n}=\bar T_{r,-n}=E_{r,n}+B_{r,n}.
+\]
+\(\varepsilon_N,b_N\) are real; \(D_r=L_{r,0}-S_{r,0}=-2B_{r,0}\). No categorical identity enters;
+for any unitary fusion \(\Cc\), a categorical realization needs \(\mathsf L0\) and the declared periodic action.
+\textbf{Common A1--A4} means finite Hilbert carriers \(H_r\), isometries \(J_r\), \(K_r\ge1\),
+\(K_{r+1}J_r=J_rK_r\); for \(A=L,S\), adjoints \(A_{r,n}^*=A_{r,-n}\), uniform bounds
+\(|A_{r,n}|_{s,1}\le C^A_{n,s}\), summable defects
+\(|A_{r+1,n}J_r-J_rA_{r,n}|_{s,1}\le e^A_{r,n,s}\), and vanishing loss-two internal residuals.
+Here \(|Y|_{s,d}^{t\leftarrow r}=\|K_t^sYK_r^{-s-d}\|\), \(s\in\mathbb Z_{\ge0}\); within a scale omit \(t,r\).
+VR-1 supplies the common smooth invariant domain \(\mathcal D\), embeddings \(i_r\), and all mixed-word limits.
+The limiting brackets are \([L_m,L_n]=(m-n)L_{m+n}+z^L_{mn}I\), \([S_m,S_n]=(n-m)S_{m+n}-z^R_{mn}I\), with
+\(z^A_{mn}=\delta_{m+n,0}(m^3c_A^*-mc_A)/12\); the two coefficients remain independent.
+
+\textbf{Lemma 100.1 [derived; any; category-free; \(\to\mathsf R2\)] (NOTE:63--100; REVIEW:89--100).}
+\textbf{Assume} only common A1--A3 for two families. For each fixed \(m,n\),
+\([L_m,S_n]=0\) on \(\mathcal D\) iff \(|[L_{r,m},S_{r,n}]|_{s,2}\to0\) for every \(s\).
+When the limit is zero, the explicit bound is
+\begin{equation}\label{eq:100-tail}
+\begin{split}
+ |[L_{r,m},S_{r,n}]|_{s,2}\le t_{r,m,n,s}:=\sum_{k\ge r}\big(&e^L_{k,m,s}C^S_{n,s+1}+C^L_{m,s}e^S_{k,n,s+1}\\
+ &+e^S_{k,n,s}C^L_{m,s+1}+C^S_{n,s}e^L_{k,m,s+1}\big)\longrightarrow0.
+\end{split}
+\end{equation}
+\par\(\langle1\rangle1\). Telescope the words \(LS\), \(SL\), replacing one letter at a time; A1 transports each
+graph norm exactly. Their combined error on \(i_rv\) is at most \(t_{r,m,n,s}\|K_r^{s+2}v\|\).
+\par\(\langle1\rangle2\). If the limit bracket is zero, the remaining vector has norm
+\(\|K_r^s[L_{r,m},S_{r,n}]v\|\); take the supremum over \(\|K_r^{s+2}v\|=1\). A3 makes the tail vanish.
+\par\(\langle1\rangle3\). Conversely use mixed-word convergence and graph density of the coarse union to pass
+vanishing finite bounds to \(\mathcal D\). QED. A4 is unused; fixed-vector convergence alone cannot replace A3.
+
+\subsection{Parity-Free Balance on the Common Domain}
+
+\textbf{Lemma 100.2 [conditional; full; category-free; \(\mathsf R2\) restriction] (NOTE:149--219; REVIEW:117--125).}
+\textbf{Assume} common A1--A4 for the standard KS families. Put \(C_{mn}=[L_m,S_n]\), \(X_q=C_{q0}\),
+\(\gamma_m=[m^3(c_R^*-c_L^*)-m(c_R-c_L)]/12\). Then on \(\mathcal D\),
+\begin{equation}\label{eq:100-mixed}
+ C_{mn}-C_{nm}=\delta_{m+n,0}\gamma_m I,\qquad
+ C_{mn}=X_{m+n}+\tfrac12\delta_{m+n,0}\gamma_m I. 
+\end{equation}
+\par\(\langle1\rangle1\). At finite scale \([E_m,E_n]=\kappa_{mn}B_{m+n}\),
+\(\kappa_{mn}=-ia_N(z^n-z^m)\) (79.1). Subtract the internal brackets from \([L_m+S_m,L_n+S_n]\):
+\(C^{(r)}_{mn}-C^{(r)}_{nm}=(4\kappa_{mn}-2(n-m))B_{r,m+n}-F^L_{r,mn}-F^R_{r,-m,-n}
++\delta_{m+n,0}\gamma_m I\), where \(F^L,F^R\) are the unbarred/barred A4 residuals.
+The coefficient has modulus \(\le2\pi(m^2+n^2)/N\); A2 for \(B=(S-L)/2\), A4 and word convergence give the first identity.
+\par\(\langle1\rangle2\). L-Jacobi and cyclic summation give
+\((m-n)C_{m+n,k}+(n-k)C_{n+k,m}+(k-m)C_{k+m,n}=0\): the leftover commutators have scalar arguments.
+Set \(k=0\); for \(m\ne n\), this is
+\((m-n)(X_{m+n}-C_{mn})-n\delta_{m+n,0}\gamma_m I=0\), giving the second identity off the diagonal.
+\par\(\langle1\rangle3\). For \(n\ne0\), the triple \((p,n-p,n)\), \(p\notin\{0,n,n/2\}\), gives
+\((2p-n)(C_{nn}-X_{2n})=0\). At \(n=0\) use the definition of \(X_0\). QED; no ZC or parity was used.
+
+\textbf{Theorem 100.3 [conditional; full; category-free; \(\mathsf R2\) restriction] (NOTE:279--354; REVIEW:136--148).}
+\textbf{Assume} two opposite internal brackets as above and the first identity of \eqref{eq:100-mixed}
+on a common invariant domain with \(I\ne0\). Then \(c_L^*=c_R^*\).
+Thus a \emph{nonzero} common standard-KS VR-1 system has cubic balance without parity or ZC (100.2).
+\par\(\langle1\rangle1\). The algebraic steps of 100.2 give its second identity. Set
+\(A_q=[L_0,X_q]\), \(B'_q=[S_0,X_q]\). Unreduced Jacobi gives
+\[
+ [L_p,X_q]=pX_{p+q}+A_{p+q}+\tfrac p2\delta_{p+q,0}\gamma_pI,\qquad
+ [S_p,X_q]=-pX_{p+q}+B'_{p+q}+\tfrac p2\delta_{p+q,0}\gamma_pI.
+\]
+\par\(\langle1\rangle2\). Write \(u=m+n+q\). Jacobi gives
+\([L_m,B'_{n+q}]=[X_m,X_{n+q}]+mB'_u+[S_0,A_u]\),
+\([S_n,A_{m+q}]=-[X_n,X_{m+q}]-nA_u+[L_0,B'_u]\), and
+\([S_0,A_u]-[L_0,B'_u]=-[X_0,X_u]\). Substitute these in \([[L_m,S_n],X_q]\); the \(A,B'\) terms cancel:
+\[
+ [X_{m+n},X_q]=[X_m,X_{n+q}]+[X_n,X_{m+q}]-[X_0,X_u]
+ -\tfrac{mn}{2}\delta_{u,0}(\gamma_m+\gamma_n)I.
+\]
+\par\(\langle1\rangle3\). Set \(q=-m-n\), \(F_n=[X_n,X_{-n}]\):
+\(F_{m+n}=F_m+F_n-\tfrac{mn}{2}(\gamma_m+\gamma_n)I\). Only \([X_0,X_0]=0\) was used, not \(X_0=0\).
+The paths \((2,2)\), \((1,3)\) yield respectively
+\(F_4=4F_1-(2\gamma_1+4\gamma_2)I\) and
+\(F_4=4F_1-(\tfrac72\gamma_1+\gamma_2+\tfrac32\gamma_3)I\).
+\par\(\langle1\rangle4\). Their difference forces
+\(\tfrac32(\gamma_1-2\gamma_2+\gamma_3)I=\tfrac32(c_R^*-c_L^*)I=0\); use \(I\ne0\). QED.
+If each \(c_A=c_A^*\) is separately declared, also \(c_L=c_R\); that normalization is not a VR-1 conclusion.
+
+\textbf{Theorem 100.4 [conditional; full; category-free; \(\mathsf R2\) restriction] (NOTE:221--277,356--363; REVIEW:126--134,204--210).}
+Under 100.3's algebraic assumptions, \(X_0=0\) implies \(C_{mn}=0\) for every \(m,n\) and both ledgers agree.
+For a nonzero common standard-KS VR-1 tower this is equivalent to finite ZC, by 100.1; every finite mixed
+commutator then obeys \eqref{eq:100-tail}. Equal ledgers are an output, not an extra input.
+\par\(\langle1\rangle1\). Set \(q=0\) in 100.3's unreduced actions: \(A_p=-pX_p\), \(B'_p=pX_p\). Hence
+\([L_p,X_q]=-qX_{p+q}+\tfrac p2\delta_{p+q,0}\gamma_pI\),
+\([S_p,X_q]=qX_{p+q}+\tfrac p2\delta_{p+q,0}\gamma_pI\).
+\par\(\langle1\rangle2\). For \(q\ne0\), double Jacobi gives
+\([[L_1,S_{-1}],X_q]=2qX_q\); but \([L_1,S_{-1}]=\gamma_1I/2\), so every \(X_q=0\).
+\par\(\langle1\rangle3\). Put \(q=-p\ne0\) in the L action: \(0=p\gamma_pI/2\).
+Since \(I\ne0\), \(\gamma_1=\gamma_2=0\) kills both ledger differences; \eqref{eq:100-mixed} kills all mixed brackets.
+The converse to \(X_0=0\) is immediate. QED.
+\par\(\langle1\rangle4\). At finite scale,
+\([L_{r,0},S_{r,0}]=N_r^2[\mathcal H_r,\mathcal Q_r]/(8\pi^2)\); exact total-current conservation therefore supplies ZC.
+If instead the limiting right stress is \(S_n=t\delta_{n0}I\), its internal \((1,-1),(2,-2)\) equations give
+\(c_R^*=0\), \(c_R=24t\), and \(X_0=0\). Thus \(c_L^*=0\), \(c_L=24t\); scalarity of the left stress is not proved.
+
+\subsection{Two Exact Obstructions to Automatic Zero-Mode Arguments}
+
+\textbf{Negative 100.5 [negative; full; \(\mathsf L0\); trivial \(\mathsf R2\)] (NOTE:102--147; REVIEW:102--115).}
+For every unitary fusion \(\Cc\), take \(O=\one\oplus\one\), \(H_r=(\mathbb C^2)^{\otimes N_r}\), increasing even
+\(N_r\), append-vacuum isometries, \(K_r=I\), \(k_j=\varepsilon_N=b_N=0\), genuine cyclic shift \(U_r\),
+and complex-linear bond-centred reflection \(P_r\). All F2(a) hypotheses hold and ZC is identically zero,
+but every self-adjoint logarithm \(e^{2\pi ip_r/N_r}=U_r\) satisfies \(|D_r-p_r|_{s,1}\ge N_r/2\).
+\par\(\langle1\rangle1\). Unit multiplicities give the carrier for any \(\Cc\) (Penneys:219--237,442);
+all modes, ledgers and defects are zero. A1 is exact; \(U,P\) commute with \(K=I\).
+\par\(\langle1\rangle2\). The one-excitation basis obeys \(Ue_j=e_{j+1}\); its Fourier vectors include phase \(-1\).
+Every logarithm has an eigenvalue in \(N(1/2+\mathbb Z)\) on that block. Since \(D=0,K=I\), the bound follows. QED.
+This refutes automatic current--logarithm identification, not ZC. Only a \emph{spectral function} \(p(U)\) automatically commutes with every operator commuting with \(U\); arbitrary logarithms on degenerate blocks need not.
+
+\textbf{Negative 100.6 [negative; full Fourier grading; category-free; formal, no Hilbert \(\mathsf R2\)] (NOTE:365--453; REVIEW:150--161).}
+There is a formal \(*\)-Lie algebra satisfying Jacobi, dagger, linear parity and spatial grading with \(X_0\ne0\).
+Its vector space is \(\Span\{L_n,S_n:n\in\mathbb Z\}\oplus V\), \(V=\bigoplus_q\mathbb C[t]X_q\), finite sums only; \(V\) is abelian. Define zero-central internal brackets as above and
+\[
+ [L_m,S_n]=X_{m+n},\quad [L_p,f(t)X_q]=(t+p)f(t+p)X_{q+p},\quad
+ [S_p,f(t)X_q]=(t+q)f(t)X_{q+p}.
+\]
+\(L_n^\dagger=L_{-n}\), \(S_n^\dagger=S_{-n}\), \((f(t)X_q)^\dagger=-\overline f(-t)X_{-q}\), where the bar
+conjugates coefficients; \(RL_n=S_{-n}\), \(RS_n=L_{-n}\), \(R(f(t)X_q)=-f(t-q)X_{-q}\), with \(R\) linear.
+\par\(\langle1\rangle1\). On \(fX_q\), the L-action commutator has coefficient
+\((m-n)(t+m+n)f(t+m+n)\); the S-action gives \((n-m)(t+q)f(t)\); both mixed compositions give
+\((t+m)(t+m+q)f(t+m)\). Thus these are commuting opposite-Witt module actions.
+\par\(\langle1\rangle2\). The LLS and SSL cocycle equations reduce to
+\((t+m)-(t+n)=m-n\), \((t+k+n)-(t+k+m)=n-m\). Pure triples are Witt; two V entries give zero.
+\par\(\langle1\rangle3\). Substitution verifies dagger reverses brackets, \(R\) preserves them, and both commute
+and square to one. Degrees \(-n,-q\) give a derivation \(P\): \([P,L_n]=-nL_n\), \([P,S_n]=-nS_n\),
+\([P,fX_q]=-qfX_q\), \(P^\dagger=P\), \(RP=-P\). The basis vector \([L_0,S_0]=X_0\) is nonzero. QED.
+No positive Hilbert representation, implemented translation, microscopic KS realization or VR-1 certificate is asserted.
+
+\subsection{Commutation Range, Cut Current and Spatial Support}
+
+\textbf{Proposition 100.7 [derived; periodic; category-free; finite] (NOTE:455--504; REVIEW:163--175).}
+Assume translated self-adjoint densities commute beyond cyclic density-label distance \(\rho\), fixed, \(N>2\rho\).
+Set \(C_{j,d}=i[k_j,k_{j+d}]\), \(h_d(w)=\sum_{\ell=0}^{d-1}w^\ell\), \(B_n^{(d)}=a_N\sum_jz^{nj}C_{j,d}\). Then
+\[
+ \mathcal J_j^{\mathrm{cut}}=\sum_{d=1}^{\rho}\sum_{\ell=0}^{d-1}C_{j-\ell,d},\quad
+ B_n^{\mathrm{cut}}=\sum_dh_d(z^n)B_n^{(d)},\quad
+ \mathcal Q^{\mathrm{cut}}=\sum_j\mathcal J_j^{\mathrm{cut}}=\sum_{j,d}dC_{j,d}.
+\]
+\(i[\mathcal H,k_j]=\mathcal J_{j-1}^{\mathrm{cut}}-\mathcal J_j^{\mathrm{cut}}\) and
+\([E_m,E_n]=\sum_d\kappa^d_{mn}B_{m+n}^{(d)}\), \(\kappa^d_{mn}=-ia_N(z^{nd}-z^{md})\).
+\par\(\langle1\rangle1\). The cut difference telescopes to \(\sum_d(C_{j-d,d}-C_{j,d})\); summing cuts counts each term \(d\) times.
+\par\(\langle1\rangle2\). Pair \((j,j+d)\) in the energy bracket contributes
+\(a_N^2z^{(m+n)j}(z^{nd}-z^{md})[k_j,k_{j+d}]\); Fourier-shifting \(j-\ell\) gives \(h_d\). QED.
+
+\textbf{Proposition 100.8 [conditional; full; category-free; \(\to\mathsf R2\)] (NOTE:506--536; REVIEW:25--31,169--175).}
+Use corrected modes \(L=E-B^{\mathrm{cut}}\), \(S=E+B^{\mathrm{cut}}\). Assume their common VR-1 certificates,
+a nonzero system, and component bounds \(|B_n^{(d)}|_{s,1}\le M_{d,n,s}\) independent of scale.
+Then 100.3 holds, and ZC implies 100.4 and \eqref{eq:100-tail}.
+\par\(\langle1\rangle1\). The Fourier remainder is \(\sum_dr^d_{N,m,n}B_{m+n}^{(d)}\), where
+\[
+ r^d_{N,m,n}=4\kappa^d_{mn}-2(n-m)h_d(z^{m+n}),\qquad
+ |r^d_{N,m,n}|\le\frac{2\pi}{N}\big((m^2+n^2)d^2+|n-m||m+n|d(d-1)\big).
+\]
+\par\(\langle1\rangle2\). Taylor's exponential remainder and \(\sum_{\ell<d}\ell=d(d-1)/2\) give this bound;
+fixed \(\rho\), the component bounds and A4 give \eqref{eq:100-mixed}. Apply 100.3--100.4. QED.
+For \(\rho=1\), A2 supplies the component bound; for \(\rho>1\), a bound on their sum is insufficient.
+\emph{Spatial claim [conditional, same setting/data; finite]:} if the densities also have uniformly bounded spatial
+supports at their translated locations, the finite union of paired supports bounds each cut current's support (REVIEW D1).
+
+\textbf{Negative 100.9 [negative; periodic; category-free; finite support diagnostic] (NOTE:463--475; REVIEW:25--52).}
+Commutation range alone does not imply bounded spatial support. At each of \(N\ge5\) sites put two qubits;
+\(G=\prod_\ell Z'_\ell\), \(h_j=X_jX_{j+1}+Z_j\), \(k_j=h_j(I+G)\). These translated self-adjoint densities
+commute at nonadjacent labels, yet \(i[k_j,k_{j+1}]=4X_jY_{j+1}(I+G)\) fails to commute with every \(X'_\ell\).
+BY \([G,h_j]=0\), \((I+G)^2=2(I+G)\), and the Pauli product \(XY=iZ\). Thus the current has global support.
+This finite witness has an \(\mathsf L0\) realization with \(O=\one^{\oplus4}\) for any \(\Cc\); no VR-1 conclusion.
+
+\subsection{A Supplied-Target Construction Outside the KS Class}
+
+\textbf{Proposition 100.10 [conditional; declared chiral target, no local spatial tower; \(\mathsf L4\); abstract mode \(\mathsf R2\)] (NOTE:540--611; REVIEW:177--189).}
+Supply a nonzero positive-energy target \((H,E=L_0,L_n)\) with discrete nonnegative energy spectrum,
+finite-dimensional eigenspaces, adjoint pairing and a common smooth domain containing finite-energy vectors.
+Assume \([E,L_n]=-nL_n\) and \(\|L_nv\|\le a_n\|(1+E)v\|\); Carpi--Weiner:701--747 supplies such bounds
+in its positive-energy Diff-representation setting, not existence from formal brackets.
+Let finite-rank orthogonal \(P_r\uparrow I\) commute with \(E\) and contain every energy \(\le\Lambda_r\ge a2^r\), \(a>0\).
+Take inclusion refinements, \(H_r=P_rH\), \(K_r=(1+E|_{H_r})^p\), integer \(p>1\),
+\(T_{r,n}=P_rL_nP_r|_{H_r}\), \(\bar T_{r,n}=0\). These satisfy VR-1 with the target left ledger and zero right ledger.
+\par\(\langle1\rangle1\). A1 is exact. Each mode shifts energy \(e\) to \(e-n\); orthogonal energy blocks and the
+assumed bound give A2 with a spare factor \((1+e)^{1-p}\).
+\par\(\langle1\rangle2\). Leakage \((P_{r+1}-P_r)L_nP_r\) vanishes below \(\Lambda_r-|n|\), so
+\(e_{r,n,s}=O(\Lambda_r^{1-p})\), summable. The bracket residual is exactly
+\(-P_rL_m(1-P_r)L_nP_r+P_rL_n(1-P_r)L_mP_r\); it vanishes below \(\Lambda_r-|m|-|n|\) and has
+\(q_{r,m,n,s}=O(\Lambda_r^{2-2p})\). Fixed finite-energy vectors eventually see the target modes exactly. QED.
+No local observable tower is supplied; nonzero cubic charge rules out the vanishing standard-KS Fourier remainder by 100.3.
+
+\textbf{Lemma 100.11 [derived; periodic Fourier regulator; category-free; finite/asymptotic] (NOTE:613--641; REVIEW:191--200).}
+For even \(N\), AP momenta \(r=-N/2+1/2,\ldots,N/2-1/2\), integer sites \(x,y\), and \(\epsilon=2\pi/N\),
+\[
+ D_{xy}=\frac1N\sum_r r e^{2\pi ir(x-y)/N},\quad D_{xx}=0,\quad
+ D_{x,x-d}=\frac{-i(-1)^d}{2\sin(\pi d/N)},\quad
+ \epsilon D_{x,x-d}\longrightarrow\frac{-i(-1)^d}{d}\quad(d\ne0\text{ fixed}).
+\]
+For the finite formula require \(0<|d|<N\). Differentiate \(\sum_re^{ir\theta}=\sin(N\theta/2)/\sin(\theta/2)\); then use \(\sin u/u\to1\).
+Each dyadic block of the absolute limiting \(1/|d|\) tail has sum at least \(1/2\); it is not summable. This is a fixed-separation limit, not an infinite-kernel operator-norm theorem.
+
+\subsection{Effect on other shards}
+
+\emph{Amendment (2026-10-25, round 3):} CA-91's equal-ledger input to 91.5 is removed by 100.4;
+100.1 makes ZC necessary as well as sufficient and supplies loss-two mixed tails. The loss-four MW certificate
+91.6 remains valid. Proposition 91.7's logarithm estimate is additional data (100.5), and 91.10's scalar-left conclusion still uses parity although its cubic exclusion does not (100.3--100.4). Range extensions use 100.7--100.9.
+\emph{Amendment (2026-10-25, round 3):} CA-79, CA-89 and LC-4 may use one ZC certificate once both
+standard-KS families satisfy VR-1 on the same system; CA-81 gains 100.1's tail. CA-88 gains only the within-cell strengthenings stated above (INTEGRATION:96--153). Exact insertion anchors are in \path{SHARD_META.md}.
+
+\subsection{What This Does Not Claim}
+
+Automatic ZC (F2(a)), a general finite-range finite-site physical no-go, and sharp F2(c) remain
+\emph{conjectural} (full; category-free plus declared microscopic data; \(\to\mathsf R2\), or broader \(\mathsf R3\) target).
+The spectral construction changes the stress prescription as well as locality; no infinite-site-only example is supplied. No positive energy, integrated projective-unitary symmetry, local net or category fidelity follows from the KS algebra.
+\emph{Source audit [derived; any; category-free; no new rung]} (NOTE:656--690; REVIEW:221--224): the local
+Li--Lin--McGreevy--Shi--Kim passage at :738--746 states the anomaly objection but does not prove the required microscopic
+theorem there; :1046 also leaves the stress OPE unproved. The primary theorem/bridge remains a gap in this evidence chain.
+
+\subsection{Examples (Instances Only)}
+
+\begin{center}\footnotesize
+\begin{tabular}{p{3.2cm}p{10.7cm}}\toprule
+Instance & Grade, tags and exact scope \\\midrule
+Any \(\Cc\), \(O=\one\oplus\one\) & Negative; full; \(\mathsf L0\); trivial \(\mathsf R2\): 100.5 has every logarithm distance \(\ge N/2\), but ZC=0. \\
+Any \(\Cc\), \(O=\one^{\oplus4}\) & Negative; periodic; \(\mathsf L0\); finite: 100.9 separates commutation range from support. \\
+Declared complex fermion sea & Conditional; periodic nonlocal regulator, chiral target; \(\mathsf L4\); abstract \(\mathsf R2\): \(c_L=c_L^*=1\), right ledger zero; \(N\) two-state sites, kernel 100.11 and target-compressed stresses (NOTE:818--849; REVIEW:214--220). Not CA-88's open-chain \(\mathsf S_{\mathrm{ch}}\) construction. \\
+\bottomrule\end{tabular}
+\end{center}
+
+\subsection{Single Next Target}
+
+\textbf{Target 100.12 [conjectural; full; category-free; \(\to\mathsf R2\)] (NOTE:779--784; REVIEW:318--336).}
+Under original F2(a): a nonzero common standard nearest-neighbour KS A1--A4 tower, complex-linear unitary
+\(P_rk_jP_r^*=k_{-j}\), \([P_r,K_r]=0\), genuine translation \(U_r^N=I\), \(U_rk_jU_r^*=k_{j+1}\),
+\(U_rT_{r,n}U_r^*=z^{-n}T_{r,n}\), \(U_r\bar T_{r,n}U_r^*=z^n\bar T_{r,n}\), \([U_r,K_r]=0\), prove for fixed \(a,v\in H_a\)
+\[
+ \left\|\frac{N_r^2}{8\pi^2}[\mathcal H_r,\mathcal Q_r]J_{r\leftarrow a}v\right\|\longrightarrow0.
+\]
+Here \(a\) is a fixed stage, \(v\in H_a\), and \(J_{r\leftarrow a}\) is ordered refinement. Mixed-word convergence,
+graph density and A2 would give \(X_0=0\), then 100.1 all uniform ZC bounds and 100.4 all mixed brackets.
+Alternatively give a genuine tower and coarse vector with nonzero limiting bracket. Do not assume current conservation or logarithm identification: the missing argument is positive-Hilbert/microscopic (INTEGRATION:197--222).
