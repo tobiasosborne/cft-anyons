@@ -91,7 +91,7 @@ separate construction from the independent path sum of step 3.
 **Additional note-local conventions (proposed registration).**
 Fix a finite embedded patch, exact tiles and a finite list of decorated
 histories. For each history choose one oriented defect route, or a specified
-finite weighted route list. Declare endpoint tensors (possibly in a module
+finite weighted route list with scalar route weights independent of w. Declare endpoint tensors (possibly in a module
 category), all boundary contractions, and a linear closure ℓ to C. In the
 unit sector the total route weight must be one and endpoints erase to the
 ordinary boundary tensors if the unit reduction is wanted. Declare framed
@@ -376,10 +376,11 @@ h=T'(0); keep H=−Σ_j h_j as in (ak). For a varying matrix A(u), differentiati
 A(u)w(u)=0 gives A(0)c=−A'(0)w(0), c the coefficients of h. This is necessary,
 not sufficient, for a full family. BY the product rule and CA-78.2.
 For a fixed matrix A and exact gates T(t)=e^{th}, the all-t condition is
-R_q(h^k)=0 for every k≥0, by the power series. It reduces to finitely many k
-once a faithful finite-dimensional matrix realization and its characteristic
-polynomial are fixed. A one-parameter spectral family is not automatically
-an exponential semigroup. BY finite-dimensional polynomial reduction and
+R_q(h^k)=0 for every k≥0, by the power series. It reduces to finitely many k: choose the first linear dependence
+h^r=Σ_(k<r) b_k h^k, which exists because B₂ is finite dimensional; multiplying
+by h and inducting reduces every later power to the first r. A one-parameter
+spectral family is not automatically an exponential semigroup. BY this displayed
+finite-dimensional reduction and
 CA-78:165–174's transfer-family qualification.
 
 <1>6. QED. A useful selection needs a nonzero matrix, a nonzero admissible
@@ -647,7 +648,7 @@ uniform graph-norm estimates on the same refinement/state system (CA-81).
 The entire model-specific calculation is in `checks/tl_calibration.md` and its
 exact SymPy run. It defines the scalar loop/path observable from CGS, proves
 its two exterior-connectivity cancellations and checks the nine specialized
-weights. It does **not** identify that observable with (A3) or prove LG for B3.
+weights. It does **not** identify that observable with (A3) or with the chosen B3 field.
 The precise equality needed for H6(c) is an open endpoint-identification lemma.
 
 For the requested CGS comparison, the discrepancies are source-local:

@@ -120,7 +120,8 @@ until an additional tile-move equation identifies them (LC-1:89–99).
 For example a swap of overlapping gates would require `[h_12,h_23]=0`
 at order `t^2`, since
 `e^(t h_12)e^(t h_23)-e^(t h_23)e^(t h_12)=t^2[h_12,h_23]+O(t^3)`.
-Associator coherence does not impose this dynamical equation.
+**BY** multiplication of the second-order Taylor expansions. Associator
+coherence does not impose this dynamical equation.
 
 **C1 boundary.** Identity maps and dagger reflection are literal finite
 ones. Temporal RP and positive palindromic transfers are CA-80:87–115.
@@ -726,8 +727,11 @@ periodic microscopic realisation and positive quotient, all port transports,
 coordinate/contact rules, states, controls and refinements; category-free
 estimate once these are supplied; finite `->R2`, no rung reached here.
 
-**ASSUME** finite positive quotients H_r with controls K_r>=1. All forms
-descend through nulls and all comparisons use the same system. Use (ar)
+**ASSUME** finite positive quotients H_r with controls K_r>=1, and likewise
+declared positive controls K_gamma>=1 on every intermediate cut appearing
+below. All forms descend through nulls and all comparisons use the same
+system. Assume N_r tends to infinity, so eventually N_r>|m+n| for each fixed
+mode pair. Use (ar)
 
     |X|_(s,d)^(b<-a) = ||K_b^s X K_a^(-s-d)||.
 
@@ -796,7 +800,7 @@ normalisation. A bound for each fixed word with word-dependent constants
 does not suffice (CA-95 Negative 95.4).
 
 <1>5. Assume in addition A2 for S, `|S_(r,n)|_(s,1)<=M_(n,s)`, convergent
-contacts `kappa_(i,r)->kappa_i`, `b_r->b`, and the standard KS discrepancy
+real contacts `kappa_(i,r)->kappa_i` and real shifts `b_r->b`, and the standard KS discrepancy
 `d_(r,n,s)=|T_(r,n)-S_(r,n)|_(s,1)->0` at all required orders. Then
 
     q^S_(r,m,n,s) <= q_r
@@ -805,14 +809,16 @@ contacts `kappa_(i,r)->kappa_i`, `b_r->b`, and the standard KS discrepancy
     z_mn=delta_(m+n,0){kappa_3 m^3+(kappa_1-2b)m}.
 
 **BY** CA-89 Lemma 89.5 (finite Fourier summation and sine bound), or
-CA-95 Proposition 95.3. CA-89 Theorem 89.1(i) transfers A2/A4 to the
+CA-95 Proposition 95.3. The algebraic transfer estimate (89-transfer),
+CA-89:103–110, transfers A2/A4 to the
 **prescribed** KS modes, with `c*=12 kappa_3`, `c=24b-12 kappa_1`.
 The product terms in that transfer are controlled at consecutive graph
 orders s and s+1; mere unweighted insertion matching is not substituted.
 
 <1>6. To get A3 additionally assume A1, a common coordinate-resolved
 holomorphic family `mathcal B_(r,n)(eta)` with derivative S_(r,n) at zero,
-eta-independent J_r,K_r, and
+eta-independent J_r,K_r, with both adjacent-scale families holomorphic on
+a neighbourhood of the same closed disk `|eta|<=rho_(r,n)`, and
 
     sup_(|eta|=rho_(r,n))
       |mathcal B_(r+1,n)(eta) J_r-J_r mathcal B_(r,n)(eta)|_(s,1)
@@ -865,8 +871,8 @@ gate cone in C3 supplies the corresponding microscopic one-sided witness.
 No missing source was replaced by memory or by an internet acquisition.
 
 **Acceptance.** Three exact SymPy scripts and raw outputs are kept in
-`checks/`. They run in seconds, use at most 64-dimensional variable spaces
-and 64-column Jacobians (physical matrices at most 8x8), and require no Julia
+`checks/`. They run in seconds; the largest deformation Jacobian is 56x64
+(physical matrices at most 8x8), and they require no Julia
 or report build. The independent reruns passed; mutations produced the
 expected failures before restoration. Numerical ranks below are exact
 integer/rational calculations, not tolerance-based observations.
@@ -1000,7 +1006,7 @@ Instances below only check general formulas; none is a construction target.
 |---|---|---|
 | Formal rank-two rule `x²=1+m x`, pointed `O=1+x` | Symbolic ring associativity; `O²=2·1+(m+2)x`; matrix-unit Ward systems on blocks (2,2), (2,3), (2,4), dimensions 8,13,20; direct, structure-constant and Kronecker computations agree | No categorifiability asserted for generic m; `checks/rank_two_ward_output.txt` |
 | Pointed `Hilb_fd(Z2,omega)`, `omega(1,1,1)=zeta`, `zeta²=1` (labels 0=unit, 1=nonunit) | All 16 cocycle identities and unitarity hold; `J[001,100]=i(a² zeta-b²)` for pair/hop coefficients a,b; changing valid zeta changes current but not A2 | Genuine symbolic associator test; no cap identification or braiding used; same artifact |
-| Universal matrix multiplicities on `O=1+1` in every C | Shared-connection Ward product, pairing derivative, twisted refinement, all 16 bend inverse checks and transported seam associativity; ordinary same-product/reflection shortcuts fail | `checks/cell_seam_identities_output.txt`; does not assert arbitrary-network RP |
+| Universal matrix multiplicities on `O=1+1` in every C | Shared-connection Ward product, pairing derivative, twisted refinement, all 16 bend inverse checks, transported seam associativity and exact gate RP cone; ordinary same-product/reflection shortcuts fail | `checks/cell_seam_identities_output.txt`; does not assert arbitrary-network RP |
 | Four-object path presentation with 2x2 amplitude jets | D0 shape 64x32 rank 28, D1 56x64 rank 36, D2 24x56 rank 20; D1D0=D2D1=0; wrong Ward sign produces entry -2 | Independent-B algebraic fragment only; `checks/equality_complex_output.txt` |
 | Singular 2x2 PSD seam / scalar germ | Straight PSD pencil fails at order two; corrected path PSD. For `E(x)=x²`, a Jacobian left-null row need not annihilate quadratic forcing | Same artifact; tests the need for off-shell identities and RP handling |
 
@@ -1022,7 +1028,7 @@ checks validate identities and witnesses, not the unproved geometric estimates.
 - `references/lattice-symmetry/GransSamuelssonEtAl2020/source/Linnea11.5.tex:791–820`: energy/current and KS prescription; not a general convergence theorem.
 - `references/cft/Schottenloher2008/Schottenloher2008.md:2200–2264`: central CE cocycle and splitting/counterterm criterion.
 - `references/categorical-reconstruction/BrehmRunkel2024/source/main.tex:598–607,680–692,799–809`: supplied-CFT carriers, Weyl anomaly and cutting; no category-to-CFT existence imported.
-- `references/categorical-reconstruction/SOURCES.md:1–150`, `references/category-theory/SOURCES.md:1–100`, `references/lattice-symmetry/SOURCES.md:1–100`: local provenance/import boundaries consulted.
+- `references/categorical-reconstruction/SOURCES.md:1–136`, `references/category-theory/SOURCES.md:1–100`, `references/lattice-symmetry/SOURCES.md:1–100`: local provenance/import boundaries consulted.
 - `CONVENTIONS.md:631–703,1196–1237,1397–1665`: pointed sites, signs, exact weights, algebra and placement constants, KS, layers, graph norms, seams and scoped round-3 notation.
 - `reconstruction/01_cells.md:17–53,57–162,164–228`: module channels, C0–C7, differential Ward propagation and analytic/finite-presentation boundary.
 - `reconstruction/02_obstructions.md:38–115,144–230`: innerness, central CE versus geometry, curvature, gauges and finite-matrix coboundary obstruction.
@@ -1044,6 +1050,6 @@ checks validate identities and witnesses, not the unproved geometric estimates.
 - `cft_machine/research/virasoro_routes.md:50–82,151–177`: VR-1 A1–A4 and excluded analytic/fidelity conclusions.
 - `explorations/2026-10-22-astra/D2-selection-principle/REVIEW.md:76–87`: the precise category-blindness warning, not an F-independence theorem for placements.
 - `worklog/023_2026-10-27_status_overview.md:16–87,171–206`: four-pillars priority, current ladder and structural diagnosis.
-- `checks/rank_two_ward.py:1–230`, `checks/rank_two_ward_output.txt:1–52`: local exact producer, coefficient and symbolic associator checks, mutation transcript.
-- `checks/equality_complex.py:1–160`, `checks/equality_complex_output.txt:1–15`: actual finite differential matrices, off-shell expansions and mutation/PSD witnesses.
-- `checks/cell_seam_identities.py:1–148`, `checks/cell_seam_identities_output.txt:1–24`: exact seam, connection and refinement checks with rejected shortcuts.
+- `checks/rank_two_ward.py:1–230`, `checks/rank_two_ward_output.txt:1–35`: local exact producer, coefficient and symbolic associator checks, mutation transcript.
+- `checks/equality_complex.py:1–159`, `checks/equality_complex_output.txt:1–13`: actual finite differential matrices, off-shell expansions and mutation/PSD witnesses.
+- `checks/cell_seam_identities.py:1–163`, `checks/cell_seam_identities_output.txt:1–20`: exact seam, connection and refinement checks with rejected shortcuts.

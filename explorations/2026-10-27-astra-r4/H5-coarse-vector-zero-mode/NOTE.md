@@ -208,6 +208,96 @@ Replacing R_0 by any remainder delta_0 from (H5.2) leaves Phi unchanged,
 since Phi(U a_0 U^*-a_0)=0. These facts identify where a local equation
 or additional physical control must improve the existing bound.
 
+## H5-CORE — a common annihilation core supplies ZC
+
+**Status: proven conditional theorem; periodic/full; category-free, L0 for
+any categorical realization; R2 implication conditional on both certificates
+and (AC) below.** This is the most general new sufficient theorem here.
+It requires neither parity, positive energy, joint zero-mode eigenvectors,
+a current conservation law nor a prescribed continuum category.
+
+**Additional hypothesis (AC).** In the common smooth domain D, let
+
+    W = {w in D : L_n w=0 for all n>0,
+                  S_n w=0 for all n<0}.
+
+The linear span E of all finite mixed mode words applied to W is dense
+in D for the H_2 graph norm ||K^2 . || of VR-1. This explicitly includes
+the mode-number orientation S_n=Tbar_-n. Hilbert-norm cyclicity alone is
+not substituted for the graph-density requirement.
+
+**ASSUME** a nonzero common standard-KS A1–A4 tower and (AC).
+**PROVE** [L_m,S_n]=0 on D for every m,n, equal ledgers and finite ZC.
+
+**<1>1. Use the already proved mixed algebra before assuming ZC.**
+CA-100 Lemma 100.2 and Theorem 100.3 <1>1 give on D
+
+    C_mn=[L_m,S_n]=X_(m+n)+delta_(m+n,0) gamma_m I/2,
+    gamma_m=(m^3(c_R*-c_L*)-m(c_R-c_L))/12,
+    [L_p,X_q]=p X_(p+q)+[L_0,X_(p+q)]
+                +(p/2)delta_(p+q,0)gamma_p I,
+    [S_p,X_q]=-p X_(p+q)+[S_0,X_(p+q)]
+                +(p/2)delta_(p+q,0)gamma_p I.           (H5.12)
+
+These are inherited identities, not new derivations. The last two are the
+*unreduced* actions, valid when X_0 has not yet been set to zero.
+
+**<1>2. Every X_q annihilates W, and the ledgers agree.**
+
+**<2>1.** There exists nonzero w in W: otherwise E=0 contradicts (AC)
+and the nonzero tower. For every m>0 both L_m and S_-m annihilate w,
+so C_(m,-m)w=0 and X_0 w=-gamma_m w/2. Therefore gamma_m is constant
+for positive m. Write gamma_m=u m^3+v m. Equality at m=1,2,3 gives
+7u+v=0 and 26u+2v=0, hence u=v=0. Thus both ledgers agree and gamma=0.
+**BY** (H5.12), w!=0 and the displayed scalar computation.
+
+**<2>2.** For any integer q choose m>max(q,0) and n=q-m<0.
+For every w in W, both operators in C_mn annihilate w. With gamma=0,
+C_mn w=X_q w=0. **BY** the definition of W and <2>1.
+
+**<1>3. W is invariant under both zero modes.** For n>0,
+L_n L_0 w=L_0 L_n w+nL_n w=0. For n<0,
+S_n L_0 w=L_0 S_n w-X_n w=0. Similarly
+L_n S_0 w=S_0 L_n w+X_n w=0 for n>0, and
+S_n S_0 w=S_0 S_n w-nS_n w=0 for n<0.
+**BY** the internal zero-mode brackets and <1>2. There is no
+simultaneous diagonalization or eigenvector assumption.
+
+**<1>4. Propagate along all mixed words.** Define E_0=W and
+
+    E_(k+1)=E_k+span{L_p v, S_p v : p!=0, v in E_k}.
+
+Induct simultaneously that E_k is zero-mode invariant and X_q E_k=0
+for every q. The base is <1>2–<1>3. If true at k, then
+[L_0,X_t]v=[S_0,X_t]v=0 for v in E_k, because X_t kills E_k and the
+zero modes preserve E_k. Equation (H5.12) gives [L_p,X_q]v=[S_p,X_q]v=0,
+so X_q kills E_(k+1). Commuting either zero mode past L_p or S_p gives
+its internal multiple of that mode, or a term X_p v=0; hence E_(k+1)
+is zero-mode invariant as well. Thus E=union_k E_k and all X_q vanish
+on E. **BY** this simultaneous induction and <1>3.
+
+**<1>5. Extend to the actual graph domain.** For each m,n, A2 and the
+graph product bound give
+
+    ||C_mn v|| <= (C^L_(m,0)C^S_(n,1)
+                  +C^S_(n,0)C^L_(m,1)) ||K^2 v||.
+
+Since C_mn=X_(m+n) vanishes on E and E is H_2-dense in D, it vanishes
+on D. CA-100 Lemma 100.1 supplies all finite loss-two tails, including
+ZC; mixed-word convergence gives H5-TARGET. **BY** (AC), A2, <1>4 and
+the cited transport theorem. **QED.**
+
+**Missing microscopic lemma.** A1–A4 do not currently provide (AC).
+Even an assumed lower bound on total E=L_0+S_0 cannot be used in the
+usual independent-ladder argument without further work:
+
+    [E,L_n]=-nL_n-X_n,     [E,S_n]=nS_n+X_n.
+
+The unknown mixed terms are exactly what that argument would need to
+control. A spectral lower bound also does not itself assert an attained
+vacuum or graph-dense generation. These observations diagnose the gap;
+they are not counterexamples to a more subtle positive-energy theorem.
+
 ## H5-SYMBOL — a positive-Hilbert rigidity theorem with an extra symbol hypothesis
 
 **Status: proven conditional theorem; periodic/full; category-free, L0 for
@@ -354,6 +444,7 @@ or local categorical tower satisfying (DS) is asserted here.
 - H5-LOCAL — proven: exact three-site total-current defect (H5.1).
 - H5-BOUND — proven implications: local equation, remainder and correlation tests; applicability is conditional.
 - H5-PHASE — proven: exact zero-transfer block formula and O(N^-3) bound; the required little-o improvement remains open.
+- H5-CORE — conditional: the common annihilation graph-core hypothesis (AC) supplies all mixed commutation; (AC) remains extra data.
 - H5-SYMBOL — conditional: (DS) plus both standard-KS certificates implies all mixed commutation; (DS) remains extra data.
 - H5-TARGET — open.
 - H5-CHECK — open.

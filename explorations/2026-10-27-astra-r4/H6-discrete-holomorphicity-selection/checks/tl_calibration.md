@@ -28,6 +28,7 @@ the positive real branch interpretation below.
 * `references/lattice-symmetry/ChelkakGlazmanSmirnov2016/source/StressTensor.tex:589–603`:
   the scalar observable with one open path and its winding exponent on
   both branches; `:643–654` defines the loop configurations and weights.
+  `:1510` records the full turn ±2π of a closed-loop configuration.
   `:681–696` even records rhombic integrable weights and attributes partial
   Cauchy–Riemann relations to Ikhlef–Cardy. Thus the original papers are not
   local, but a useful statement of the mechanism is local in CGS.
@@ -116,11 +117,14 @@ and relative weights `xn,x,x`. The p completion closes one loop. The
 q/r completions instead continue the source path along the exterior arc.
 Their relative winding increments are `0,-4pi/3,+4pi/3`.
 BY joining the exterior q–r arc to the two radial half-edges. This is a
-simple closed curve; the source boundary lies outside it, as does the
-exterior path arriving at p. For the q completion, the local p-to-r turn
-is +pi/3 and the exterior r-to-q rotation is -5pi/3, giving -4pi/3;
-the r completion has the opposite signs. Wiggling the exterior arc
-preserves this total by the full turning of that simple closed curve.
+simple closed honeycomb curve. The boundary source is outside it and its
+disjoint path to p cannot cross it, so that path stays outside. Orient the
+loop v→r→(exterior arc)→q→v: its interior is on the right near v. Its full
+turn is −2pi, the closed-loop turning fact also used locally in CGS:1510.
+The closing turn at v is −pi/3, so the exterior r-to-q arc turns −5pi/3.
+For the q completion, the local p-to-r turn is +pi/3, giving −4pi/3;
+the r completion reverses these signs. This fixes the winding for every
+exterior arc in this class, not just the shortest drawn representative.
 
 <1>6. After removing the common exterior weight, phase and local x, the
 second class contributes

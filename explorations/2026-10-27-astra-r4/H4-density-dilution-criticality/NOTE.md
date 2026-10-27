@@ -1,6 +1,6 @@
 # H4 — Density, dilution and criticality
 
-2026-10-27. Working proof record; initial skeleton written before minute 10.
+2026-10-27. Proof record; initial all-open skeleton saved at minute 2.9.
 Scope: only this directory; local sources only; no commits or Julia suite.
 Pillars: **P1** occupation in the indefinite-number carrier and **P4** the
 state/refinement interface; **P2** only for the occupation/worldline identity.
@@ -12,9 +12,21 @@ For an arbitrary unitary fusion category C and pointed O = 1 ⊕ X, test H4:
 dispersion; (b) nonzero conformal central charge forces positive microscopic
 occupation density; (c) a bare dyadic unital tower necessarily dilutes states;
 (d) a dressing must refill the inserted sites to sustain a critical state.
-False universal assertions will be replaced by explicitly delimited theorems.
+**Verdict.** H4(a) and H4(c) are false as stated. The strongest positive
+result here is B4: for one fixed local energy density, a ground-state family
+with uniformly controlled standard KS mode moments and vanishing Virasoro
+closure expectations has **positive liminf occupation density if its cubic
+central charge is nonzero**. The proof is general in C and the pointed O;
+it does not infer conformal invariance from a few-particle dispersion.
 
-Every result will distinguish the isometry V, its corner map Ad V, the unital
+Vacancy **state pushforward** halves density exactly (C1); unital pullback
+does not (C2). Stronger state-fidelity assumptions force dilution (C3).
+A dressing transporting a positive-density family must add an extensive
+mean number of particles (D1). Every nonzero X admits an exact finite-range
+neutral refill circuit and elementary compatible positive-density states
+(D2); no critical ground-state selection is obtained.
+
+Every result distinguishes the isometry V, its corner map Ad V, the unital
 lift α, and the state pushforward σ ↦ [b ↦ σ(V†bV)]. The source convention
 CONVENTIONS.md:1571 explicitly distinguishes degree from absolute number.
 
@@ -33,6 +45,12 @@ coefficient dependence on L, positivity of history weights, or Gibbs-to-ground
 comparison is additional declared data, never inferred from C.
 Time-integrated occupation means vertical worldline length, not a claim
 about Euclidean arclength or fractal dimension.
+The finite carrier is the faithful all-charge sum
+H_L=⊕_(c simple) Hom_C(c,O^L); local morphisms act by postcomposition.
+The two real ledger coefficients c,c* follow CA-100/VR-1: c* multiplies the
+cubic term, and c multiplies the linear term. A usual Virasoro central
+charge requires c=c*. Numerical tolerances and basis declarations are in
+checks/README.md, with scripts and saved raw outputs beside it.
 
 ## A. Spectral claims and the actual few-particle regime
 
@@ -63,7 +81,8 @@ A bound <N>≤N0 gives only Prob(N>M)≤N0/(M+1), not finite-sector support.
 
 **Tags:** any (declared periodic seam/translation); L0 + pointed O, fixed
 nearest-neighbour k=k† with [k,n_1+n_2]=0, fixed-number sector ground state;
-finite spectral bound, conditional obstruction to a nonzero L^(-1) sector gap.
+finite spectral bound; a first-positive-gap obstruction additionally needs
+uniformly bounded sector ground multiplicity.
 
 **ASSUME** the cyclic translation carries n_j,k_j to n_(j+1),k_(j+1).
 Let ψ_L be a normalized translation eigenvector minimizing H in occupation
@@ -111,6 +130,9 @@ interaction or F-symbol choice entered. Contact interactions preserving
 local occupation are included. The theorem allows degeneracy, flat bands
 and faster closing gaps. It does **not** cover the empty n=0 ground state,
 number-changing vertices, or unrestricted low-energy sectors.
+If the sector ground multiplicity is uniformly at most D, choose R=D in
+A1: the first positive sector gap is then O(L^(-2)). Without that extra
+hypothesis the fixed-index bounds may all lie inside a growing ground space.
 
 ### A2. Positive finite-band thresholds have no linear cusp — proven
 
@@ -180,14 +202,17 @@ L-dependent coefficients; they are not fixed-h consequences of A0's
 hypothesis. Signed-contact CA-99 cases may lack this occupation bound,
 and CA-99.1 is explicitly a Galerkin N≤2 theorem.
 
-More generally, a normalized vector sequence converging **strongly** under
-CA-77's number-preserving box maps to a normalized Fock vector has ρ_L→0,
-even if that vector has infinite mean number. **Proof:** for every M,
-N_L/L≤M/L+Q_(N>M); strong convergence gives convergence of each bounded
-tail projection, and a fixed Fock vector's tail tends to zero as M→∞.
-Thus positive microscopic filling cannot be represented by such a strongly
-convergent normal Fock-vector family. This concerns the declared carrier,
-not an exclusion of a different continuum representation.
+**Corollary (same tags, normal Fock carrier). ASSUME** normalized vectors
+converge strongly under CA-77's number-preserving box maps to a normalized
+Fock vector. **PROVE** ρ_L→0, even if the limit has infinite mean number.
+<1>1. N_L/L≤M/L+Q_(N>M) for every fixed M. **BY** its spectral values.
+<1>2. Strong vector convergence gives convergence of each bounded tail
+projection expectation. The fixed Fock vector has tail probability tending
+to zero as M→∞. **BY** its square-summable orthogonal sector decomposition.
+<1>3. First take limsup_L, then M→∞ in <1>1. QED.
+Positive microscopic filling therefore cannot be represented by such a
+strongly convergent normal Fock-vector family. This concerns the declared
+carrier, not an exclusion of a different continuum representation.
 
 ## B. Worldline length and a quantitative KS density obstruction
 
@@ -389,7 +414,7 @@ a telescopic density improvement. Subtracting it preserves H but changes
 the standard KS density. B4 below removes this remainder using stronger
 ground-state and mode-moment assumptions, without changing the chosen density.
 
-### B4. Fixed-density ground states: arbitrary pointed-site exclusion — proven
+### B4. Fixed microscopic energy: arbitrary pointed-site exclusion — proven
 
 **Tags:** any (declared periodic standard KS system); L0 + arbitrary pointed
 O, one fixed velocity-normalized k=k†, translated uniformly bounded local
@@ -402,6 +427,11 @@ sup_L ω_L(T_m†T_m)<∞. Also assume (R) of B2 for m=1,2.
 **PROVE** c*≠0 implies liminf_L ρ_L>0. In particular bounded expected
 occupation is impossible. One-family VR-1 with uniform ||K_L²ψ_L||
 for the chosen ground vectors supplies both extra assumptions by A2/A4.
+
+Work without loss of generality with translation-averaged ω_L: besides
+H_L and N_L, each T_m†T_m and every operator in (R) is translation
+invariant. Thus averaging preserves all the hypotheses and all densities.
+Throughout this proof t_j=k_j−J_j, J_j=i[k_j,k_(j+1)].
 
 <1>1. Suppose a subsequence has ρ_L→0. B3<1>1–<1>3, without connectedness,
 give kη²=eη²+u⊗η−η⊗u. Here u:1→X is understood as its occupied-site
@@ -551,7 +581,7 @@ splittings, Penneys:219–237, and direct compression. No model is selected.
 
 <1>3. The actual unital sector identity is
 α_L(Q_(L,m))=1_{\{m\}}(N_o), not Q_(2L,m). For m=1 the state supported
-on any nonzero charge summand of X⊗X has old occupation 1 and total
+on any simple summand of X⊗X has old occupation 1 and total
 occupation 2. **BY** polynomial functional calculus and d_(X²)=d_X²>0.
 
 <1>4. Let τ_L=Tr_C/d_O^L. CA-97 Proposition 97.5:114–117 gives
@@ -662,8 +692,8 @@ Thus if ρ_L,ρ_(2L)→ρ>0, the necessary **mean**, not operator, relation is
 In particular [N_(2L),U_L]=0 is impossible on this state-tracking route.
 Noncommutation alone is insufficient: the signed expectation must be
 positive and extensive. If U(s) is generated by a Hermitian local G(s)
-with ∂_sU=iG(s)U, then
-|g_L|≤∫Σ_Z||[N_Z,G_Z(s)]|| ds, by differentiating U†NU. Hence O(1)
+with ∂_sU=iG(s)U, U(0)=1 and U(T)=U_L, then
+|g_L|≤∫_0^T Σ_Z||[N_Z,G_Z(s)]|| ds, by differentiating U†NU. Hence O(1)
 total number-changing strength cannot supply D2.
 
 For dressed corner weights q_L→0 and normalized mismatch e_L→0,
@@ -706,8 +736,11 @@ range-2r circuit U_L such that, with L=mr+q, 0≤q<r, s=sin²θ,
  (U_LV_L)^\dagger N_{2L}(U_LV_L)=N_L+mr s\,1. \tag{D4}
 \]
 
-<1>1. Choose a simple x⊂X. Positive tensor powers of x contain x*,
-by CA-97:86–89's dual-closure argument. Hence 1⊂x^r⊂X^r for some finite
+<1>1. Choose a simple x⊂X. Apply CA-97:86–89's dual-closure argument
+to the tensor/summand-closed set of simples in nonnegative powers of x.
+It contains x*: no stochastic edge leaves this set, positive stationary
+weights forbid an entering edge, and x*→1 is an edge. Hence
+1⊂x^r⊂X^r for some finite
 r≥1. Choose an isometry v:1→X^r. **BY** rigidity and orthogonal splitting
 (Penneys:235–237,485–487). No self-duality of X is assumed.
 
@@ -738,15 +771,20 @@ circuit of them does too; the neutral word must then be used as an
 additional range-r tile. CA-80's exact-tile expansion gives a finite
 morphism-basis description, not an automatic two-site synthesis theorem.
 
-**Locality and state consequence.** Supply a local unital α_L intertwining
-V_L (CA-90 H or CA-96 blocked H), and set α_L^U=Ad_(U_L)α_L.
-It intertwines W_L=U_LV_L. Conjugation can add only the intersecting
-2r-site blocks to an observable's support, hence enlarges each endpoint
-by at most 2r−1; disjoint exterior gates cancel. Thus the dyadic composites
-remain a local unital directed system.
+**Corollary (same tags, supplied lift). ASSUME** a local unital α_L
+intertwining V_L (CA-90 H or CA-96 blocked H), and set
+α_L^U=Ad_(U_L)α_L. **PROVE** locality, exact state compatibility and D5.
 
-Starting with any state and defining ω_(n+1)=W_*ω_n gives p_n=1,e_n=0
-and ω_(n+1)α_n^U=ω_n exactly. WT-1 gives its R1 limit state. D4 yields
+<1>1. α_L^U intertwines W_L=U_LV_L. Conjugation adds only the intersecting
+2r-site blocks to an observable's support, hence enlarges each endpoint
+by at most 2r−1. **BY** the intertwining identity and cancellation of disjoint
+exterior gates. The dyadic composites form a local unital directed system.
+
+<1>2. Start with any state and define ω_(n+1)=W_*ω_n. Then p_n=1,e_n=0
+and ω_(n+1)α_n^U=ω_n. **BY** <1>1 and W†W=1. WT-1 therefore gives
+its R1 limit state with zero drift on every row.
+
+<1>3. D4 yields
 ρ_(n+1)=(ρ_n+s)/2−s q_n^(tail)/(2L_n), with q_n^(tail)<r. Multiplying
 by L_(n+1) and iterating gives
 
@@ -755,9 +793,43 @@ by L_(n+1) and iterating gives
  \frac{|L_0(\rho_0-s)|+srn}{L_n}\longrightarrow0. \tag{D5}
 \]
 
-These elementary positive-density compatible states show refill is
+**BY** L_(n+1)(ρ_(n+1)−s)=L_n(ρ_n−s)−s q_n^(tail). QED.
+
+For s>0 these elementary positive-density compatible states show refill is
 algebraically attainable for general C with declared gates. They are not
 claimed to be ground states of a fixed local Hamiltonian or to be conformal.
+
+## Checks and adversarial review
+
+Reproduce from the repository root:
+
+```bash
+OPENBLAS_NUM_THREADS=1 python3 explorations/2026-10-27-astra-r4/H4-density-dilution-criticality/checks/run_checks.py
+```
+
+**Headline:** all three check programs pass; all eight intentional mutations
+fail at the intended invariant. The largest dense matrix is 256×256.
+The run bundle is checks/manifest.json plus the eleven named raw-output
+files. Algebra checks use exact rational SymPy matrices; spectral checks
+compare diagonalization with an exact path-Laplacian formula, a symbolic
+quartic Taylor coefficient, and the interacting twist identity; KS checks
+verify the Fourier commutator, the current improvement and both B4 probe
+polynomials. These are finite checks of displayed identities, not evidence
+for a conformal limit. checks/README.md records tolerances and scope.
+
+Three independent GPT-6.1/xhigh research reviewers examined the spectral,
+tower and worldline/KS arguments, then reread the finished proofs. Repairs
+incorporated here: distinguish state pushforward from unital pullback;
+specify the positive-gap degeneracy hypothesis; define the Toeplitz symbol
+off the periodic grids; start the generator path at the identity; require
+s>0 for positive filling. No reviewer supplied or certified a critical
+Hamiltonian. The requested future skeptical Opus review remains independent.
+
+The principal dead end was the proposed implication “WT-1 ⇒ bounded
+number ⇒ quadratic dynamics.” Neither implication follows from WT-1.
+The replacement uses the actual density and two KS commutators directly,
+with ground stability to remove a telescopic energy-density ambiguity.
+All conclusions below are final for this round; no placeholder claims remain.
 
 ## Results ledger
 
@@ -772,7 +844,8 @@ claimed to be ground states of a fixed local Hamiltonian or to be conformal.
 - B1 — occupation/vertical-worldline-length identity: **proven**; a positive
   history interpretation and ground-to-Gibbs comparison are conditional.
 - B2 — quantitative cubic-KS density bound: **proven** under (V),(R) and
-  uniform stress bounds; H4's unrestricted version remains unproved.
+  uniform stress bounds; B4 removes (V) for fixed k under its additional
+  ground-state and mode-moment bounds.
 - B3 — connected-site stationary zero-density families force local vacuum
   preservation: **proven**; with controlled KS closure, c*=0 follows.
 - B4 — arbitrary pointed, fixed-k ground states with uniform KS second
@@ -783,6 +856,8 @@ claimed to be ground states of a fixed local Hamiltonian or to be conformal.
   general-C counterexample, including positive-density zero-drift trace.
 - C3 — quantitative dilution with additional state-fidelity assumptions:
   **proven**; its application to selected physical states is conditional.
+- C3 counterexample — summable dilution/fidelity errors imply bounded
+  expected occupation: **negative**, despite zero limiting density.
 - D1 — necessary extensive mean refill under state tracking, and exact
   grading criterion after dressing: **proven**.
 - D2 — finite-range neutral refill for any nonzero X: **proven**; supplied
@@ -790,30 +865,118 @@ claimed to be ground states of a fixed local Hamiltonian or to be conformal.
 
 ## Layer tags
 
-Setting any, with open ordered chains for V/α and a declared periodic tier
-only where Fourier modes or a Gibbs cylinder are used. Input L0 + pointed O;
-α adds CA-90 H (L1 suffices), dynamics adds declared k and states. Reached:
-no new rung at initialization. Claimed: finite ingredients/obstructions for
-R1 and R2; no R3–R5 assertion.
+Microscopic declarations are not additional categorical data layers
+(CA-88:54–56). All statements are general at L0 unless the row says otherwise.
+No braiding, modular data, central-charge lift or declared target is inferred.
+The periodic stress tests apply to either stress family separately; they do
+not choose chiral versus full continuum content.
+
+| Statements | Setting | Data layer and essential microscopic declarations | Rung reached / claimed |
+|---|---|---|---|
+| A0 | any; periodic witness | L0, pointed O≠1, fixed H=N | finite negative; no R2 exclusion by itself |
+| A1–A2 | any; declared translation/Fourier tier | L0, pointed O, number-preserving k and fixed nonempty sector, or positive finite-band symbol | finite spectral bound →R2 obstruction under stated extra hypotheses |
+| A3 | any; open | L0, CA-94 squares or positive CA-99 contact, μ>0, declared box embeddings | finite occupation bound; inherited R0^c + off-ladder z=2, no upgrade |
+| B1 | any; Gibbs cylinder | L0, pointed O, cyclic trace, chemical-potential coupling; positive histories and Gibbs comparison when used | finite P2 identity →R1; no conformal rung |
+| B2–B4 | any; periodic standard KS, each chirality | L0, pointed O, declared fixed velocity normalization and local representations; (V),(R), or fixed-k ground states and KS moment control | finite necessary condition →R2; no R2 existence |
+| C1,C3,D1 | any; open refinement | L0, V, states; fidelity hypothesis; categorical U for D1 | R0^c identities →R1 restrictions |
+| C2 | any; open | L0 + pointed relative half-braiding H (L1 sufficient); blocked alternative as declared | existing R0^u/R1 trace witness refutes blanket obstruction |
+| D2 | any; open | L0, pointed O, chosen neutral word, angle, range-2r gates; supplied CA-90/96 local lift for state corollary | R0^c; R0^u + elementary R1 with supplied lift; no R2 |
+
+No statement reaches or claims R3, R4 or R5. In particular no R2 conclusion
+is imported into a separately chosen R1 representation.
 
 ## Pillar served
 
-P1: distinguish bounded number, zero filling fraction and positive filling.
-P4: determine exactly which refinement/state conditions dilute and which
-require replenishment. P2: identify the precise spacetime observable.
+**P1:** the indefinite-number carrier remains the general microscopic
+carrier throughout. B4 ties its microscopic filling to a nonzero KS cubic
+charge, with explicit hypotheses; D2 supplies general neutral births.
+**P4:** C1–D2 distinguish algebra compatibility from state transport and
+quantify the extensive refill required by a positive-density fidelity route.
+**P2:** B1 identifies vertical occupied length and the extra positivity and
+thermal hypotheses needed for a random-history interpretation.
+No result on **P3**'s local conformal equations is claimed.
 
 ## What this gives the integration
 
-Pending. CA-88 cells and CA-75 Link (b3) will be updated only to the extent
-supported by the proved statements; no blanket negative R1 claim is assumed.
+For CA-88's L0+(declared lift) / R1 cell, the proposed blanket negative
+entry is **incorrect**: C2 reuses CA-97's positive-density zero-drift trace.
+The valid negative is narrower: a **bare V family satisfying the global
+state-fidelity assumptions of C3** cannot transport a positive-density
+state family. Coupled to B4 on that same physical system, it cannot
+transport the stated fixed-k, controlled, nonzero-c* ground states.
+This conditional obstruction needs no claim that zero density is bounded N.
+
+D2 adds an explicit family of local dressed refinements with elementary
+positive-density R1 states when the local unital lift is supplied. It does
+not solve the critical R1 instance: no fixed Hamiltonian has been selected
+whose ground states are these recursively produced states. The R0^u
+existence cells are unchanged. At the R2 interface B2/B4 add a necessary
+density test; every R2 existence and R3–R5 fidelity/integration gap remains.
+
+**CA-75 Link (b3), CA-76 Question 76.12, sharpened:** given a fixed
+categorical local Hamiltonian and ground states satisfying B4 with c*≠0,
+find local W=UV with summable global fidelity errors **and**
+ω(V†U†[N,U]V)=ρL+o(L) when the density converges to ρ>0; verify the same
+system's mode regularity and refinement bounds. D2 meets the mean-number
+requirement algebraically but supplies neither this ground-state fidelity
+nor the KS bounds. Alternatively pursue CA-76's local-witness route:
+WT-1 alone need not control the bare corner, and D1 must not be imposed
+on that route without its state-tracking hypothesis. This preserves the
+actual global-fidelity/local-witness dichotomy rather than declaring the
+entire bare unital tower impossible.
+
+For the P1–P2 interface, B1 makes “worldlines fill spacetime” precise only
+as positive **mean vertical occupation per spacetime area**. It does not
+establish the random-curve conformal invariance needed by CA-75 Link (a).
 
 ## Open problems
 
-All statements in the initial ledger remain open in this working version.
+1. **KS ground-control lemma.** For a selected general-C microscopic family,
+   prove sup_L||K_L²Ω_L||<∞ (or directly the four mode second moments and
+   two residual expectations of B4). VR-1 alone contains no such claim
+   about independently chosen physical ground states.
+2. **Running-density lemma.** Extend B4 to k_L and cutoff-dependent velocity
+   normalization under explicit compactness/rate hypotheses. Its exact
+   fixed-polynomial and local-stability argument does not automatically
+   survive arbitrary running coefficients, including CA-94's scaling.
+3. **Positive-history/thermal lemma.** Construct a nonnegative categorical
+   history measure with the B1 insertion rule and prove
+   |ω_(β_L)(N/L)−ω_(gs,L)(N/L)|→0 at β_L proportional to L for a declared
+   critical family. Positivity of transfer operators is not this lemma.
+   SLE/CLE or conformal-curve convergence requires further local sources
+   and proofs; none was acquired under the no-network constraint.
+4. **Critical refill lemma.** Select neutral tiles and scale-dependent
+   dressings satisfying D2's occupancy demand, locality, summable
+   ground-state fidelity or local-witness drift, and KS graph-norm bounds
+   on one system. The finite neutral circuit only proves the first two.
+5. **Gate-range obstruction/classification.** Determine when the neutral
+   word gate can be synthesized from the allowed microscopic tiles.
+   CA-94.11 gives an exact obstruction if every allowed two-site gate
+   preserves N. No universal two-site synthesis assertion is possible
+   without enlarging that generating set.
+6. **Beyond the conditional spectral statements.** Classify gapless,
+   fixed-k, number-changing few-particle problems with a specified reducing
+   space or controlled effective operator. A finite fusion fibre alone
+   does not justify a fixed finite-band reduction for interacting N≥2.
+   A0 disproves the universal quadratic claim; it does not furnish a
+   zero-density z=1 CFT, and no such CFT is asserted here.
 
 ## Examples table
 
-Pending; examples are checks of the general statements only.
+Instances below check the general statements; none is the research target.
+
+| Check instance | Invariant checked | Saved output |
+|---|---|---|
+| Two occupation flags, grade addition in Vec_(Z/2), all charges; L=2→4 | V-sector preservation, halving, false unital identity, trace compatibility; charge-preserving neutral refill 32/25 | checks/algebra_checks_green.txt |
+| X=y⊕y for arbitrary simple y, E=Hom(y,y⊕y), positive two-channel hopping | gap=4λ_min(T) sin²(π/(2L)); L² gap→π²λ_min(T); symbolic orthogonal basis invariance | checks/spectral_checks_green.txt |
+| Unit multiplicity X=1⊕1, available in every C | positive nearest-neighbour symbol with λ_-(k)=k⁴/4+O(k⁶) | checks/spectral_checks_green.txt |
+| Two-particle interacting scalar channel, L=8, dimension 28 | exact twist second difference and variational bounds | checks/spectral_checks_green.txt |
+| Unit multiplicity X=1, available in every C; L=6,7,8 | B2 Fourier identity/bound; B4 current improvement and both probe polynomials | checks/ks_checks_green.txt |
+
+The two-channel test uses Hom(y,y⊕y), not a purported universal category
+with exactly two simple objects. The symbolic F in that script is only an
+orthogonal fibre-basis change satisfying F†F=1; no unsourced categorical
+F-symbol entries or pentagon claim are introduced.
 
 ## Sources used
 
@@ -823,13 +986,43 @@ Pending; examples are checks of the general statements only.
 - worklog/023_2026-10-27_status_overview.md:18–84,161–215.
 - report/sections/66_anyonic_states_variable_n_fock.tex:54–106.
 - report/sections/68_variable_n_refinement_maps.tex:51–119,140–150.
+- report/sections/75_integration_map.tex:115–163 (links), 168–196 (one system).
 - report/sections/76_corner_to_wilson_bridge.tex:90–112,153–180,236–249.
 - report/sections/77_pointed_carrier_invariants.tex:47–60,90–116,175–231.
+- report/sections/79_ks_shell_and_refinement_defect.tex:52–80 (KS).
+- report/sections/80_lattice_sewing_and_fidelity_certificate.tex:52–66,97–115
+  (exact tiles; operator versus coefficient positivity).
 - report/sections/81_cft_machine_oar_contract.tex:49–85,97–114.
 - report/sections/86_spacetime_trotter_dictionary.tex:61–110,196–217.
 - report/sections/87_dilute_fibonacci_is_blocked_golden.tex:178–187.
 - report/sections/88_layered_targets.tex:82–125.
 - report/sections/90_local_unital_lift.tex:110–168.
-- references/text/PenneysUnitaryFusionCategories.md:219–237,1010–1019.
+- report/sections/91_parity_and_chiral_delineation.tex:46–98 (two-family ledger).
+- report/sections/94_number_changing_collision_dynamics.tex:77–95,123–162,
+  177–195,214–238 (positive squares, tuned limit, coefficient image, channels).
+- report/sections/96_blocked_dyadic_lifts.tex:63–105 (vacancy shuffle/lift).
+- report/sections/97_what_the_tower_remembers.tex:86–89,102–117
+  (dual closure, normalized trace and its dyadic compatibility).
+- report/sections/99_contact_classification.tex:46–99 (family and Galerkin scope).
+- report/sections/100_zero_mode_lattice_chirality.tex:48–75,129–138
+  (ledger and scalar-zero-mode example).
+- cft_machine/research/virasoro_routes.md:55–82,139–149 (VR-1 assumptions).
+- references/text/PenneysUnitaryFusionCategories.md:195–237,319–321,
+  394–398,470–487,528–538,1010–1019 (finite semisimplicity, orthogonal
+  splittings, graded-vector calibration, rigidity and trace).
 - references/text/EtingofNikshychOstrikFusionCategories.txt:1700–1706.
 - references/cft-machine/proofs/lamport1993.tex:152–175.
+- references/string-net/LevinWen2005/source/strnet.tex:490–525
+  (local string-net partition-function precedent, not an H4 density theorem).
+- references/refinement/HaegemanEtAl2018Wavelet/source/latticefermions.tex:
+  470–491 (local/global accuracy and overlap caveat used by CA-76).
+- references/lattice-symmetry/GransSamuelssonEtAl2020/source/Linnea11.5.tex:
+  791–822 (standard lattice Virasoro density/current conventions).
+- literature/md/2010.11121/2010.11121.md:126–180
+  (OAR state/refinement setting; not a density theorem).
+
+All new mathematical claims are proved above by finite identities,
+variational arguments, local state convergence or an explicitly given
+counterexample. The preceding papers and shards are not cited as proving
+H4. The immutable local source files were read; no source was fetched and
+no root conventions, report, worklog, index, or Git state was edited.

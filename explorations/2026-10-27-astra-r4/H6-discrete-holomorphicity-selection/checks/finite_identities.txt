@@ -1,0 +1,57 @@
+COMMAND: python3 finite_identities.py 
+Python 3.12.3; SymPy 1.12
+Mutations: {'mutate_prefix': False, 'mutate_shared_edge': False}
+Pair tile is charge-preserving and Hermitian, with nonzero occupation commutator
+Cut moves across a pair-birth tile: prefix naturality and disjoint interchange PASS
+All four local insertions equal their global lifts at both adjacent positions
+A nontrivial exterior gives exactly the single common-exterior face residual
+Spin-zero identity tile fails for this nonvacuum endpoint, as B4 predicts
+Stokes for two cells holds for seven algebraically independent edge values
+Closed cochain from G=m^2: horizontal F=2m+1, vertical F=0; Laplacian(G)=2
+PASS: charged-edge gluing, number-changing cut move, identity obstruction and Stokes
+
+
+EXIT 0; EXPECTED 0
+COMMAND: python3 finite_identities.py --mutate-prefix
+Python 3.12.3; SymPy 1.12
+Mutations: {'mutate_prefix': True, 'mutate_shared_edge': False}
+Pair tile is charge-preserving and Hermitian, with nonzero occupation commutator
+
+Traceback (most recent call last):
+  File "/home/tobias/Projects/cft-anyons/explorations/2026-10-27-astra-r4/H6-discrete-holomorphicity-selection/checks/finite_identities.py", line 75, in <module>
+    assert Q[2]*T0 == T0*Q[2], 'missing prefix half-braiding breaks cut independence'
+           ^^^^^^^^^^^^^^^^^^
+AssertionError: missing prefix half-braiding breaks cut independence
+
+EXIT 1; EXPECTED 1
+COMMAND: python3 finite_identities.py --mutate-shared-edge
+Python 3.12.3; SymPy 1.12
+Mutations: {'mutate_prefix': False, 'mutate_shared_edge': True}
+Pair tile is charge-preserving and Hermitian, with nonzero occupation commutator
+Cut moves across a pair-birth tile: prefix naturality and disjoint interchange PASS
+All four local insertions equal their global lifts at both adjacent positions
+A nontrivial exterior gives exactly the single common-exterior face residual
+Spin-zero identity tile fails for this nonvacuum endpoint, as B4 predicts
+
+Traceback (most recent call last):
+  File "/home/tobias/Projects/cft-anyons/explorations/2026-10-27-astra-r4/H6-discrete-holomorphicity-selection/checks/finite_identities.py", line 105, in <module>
+    assert s.expand(left+right-outer) == 0, 'shared edge did not cancel'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: shared edge did not cancel
+
+EXIT 1; EXPECTED 1
+COMMAND: python3 finite_identities.py 
+Python 3.12.3; SymPy 1.12
+Mutations: {'mutate_prefix': False, 'mutate_shared_edge': False}
+Pair tile is charge-preserving and Hermitian, with nonzero occupation commutator
+Cut moves across a pair-birth tile: prefix naturality and disjoint interchange PASS
+All four local insertions equal their global lifts at both adjacent positions
+A nontrivial exterior gives exactly the single common-exterior face residual
+Spin-zero identity tile fails for this nonvacuum endpoint, as B4 predicts
+Stokes for two cells holds for seven algebraically independent edge values
+Closed cochain from G=m^2: horizontal F=2m+1, vertical F=0; Laplacian(G)=2
+PASS: charged-edge gluing, number-changing cut move, identity obstruction and Stokes
+
+
+EXIT 0; EXPECTED 0
+PASS: baseline GREEN; both mutations RED; restored baseline GREEN

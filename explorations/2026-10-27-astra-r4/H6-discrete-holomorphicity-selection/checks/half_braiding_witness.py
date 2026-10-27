@@ -27,10 +27,14 @@ assert all(add(add(g,h),k) == add(g,add(h,k))
 assert all(add(g,zero) == g and add(g,g) == zero for g in G)
 for j, chi in enumerate(chars):
     assert chi(zero) == 1 and chi(a) == 1
+    # CA-98:79-85: cups, caps and pivotal j are 1; u_Y=chi(a).
+    theta_Y = s.Integer(1)/chi(a)
+    assert theta_Y == 1  # Same real spin lift 0 is valid for both centre objects.
     assert all(chi(add(g,h)) == chi(g)*chi(h) for g,h in V)
     gamma = s.diag(*[chi(g) for g in G])
     assert gamma.H*gamma == s.eye(4)
     print(f"chi_{j}: {[chi(g) for g in G]}; unit, character, dagger, chi(a)=1 checked")
+print("Both canonical twists equal 1; real spin lift s=0 is fixed")
 print("Associator is identity; group associativity checked; pentagon scalars are all 1")
 
 def port_matrix(kind, chi):

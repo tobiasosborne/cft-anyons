@@ -36,10 +36,12 @@ Two centre choices on this same Y have half-braiding
 These maps are unitary, natural (on every simple block they are scalar),
 equal 1 at the unit, and obey the half-braiding tensor equation because
 `chi(g+h)=chi(g)chi(h)`. These are direct axiom checks, not an appeal to a
-classification theorem. Both `chi_j(a)=1`; fix the same real exponent
-`s=0` for both. A categorical twist formula is not needed: the fixed data
-are the declared real exponent s=0 and the checked self-half-braiding
-`chi_j(a)=1`; no additional twist identification is claimed.
+classification theorem. Both `chi_j(a)=1`; the canonical pivotal map on a simple grade is 1.
+CA-98:79–85 gives the typed Drinfeld formula `theta_Y=u_Y^(-1)j_Y`.
+Here each cup/cap has coefficient 1 and its single crossing has coefficient
+`chi_j(a)=1`, hence `u_Y=1` and both twists are 1. Fix the same real lift
+`s=0` for both. This computation is insensitive to taking the opposite
+crossing, because this particular self-crossing coefficient is 1.
 
 Use the square geometry `a_geom=1`, `b_geom=i`; since s=0 the winding
 increments do not enter B1. Then
@@ -72,7 +74,10 @@ BY expanding the four terms in the residual. In particular,
 `R_chi1(S)|b,0>=-2|a,b> != 0`. Thus the two kernels differ. QED.
 
 There is also a positive semidefinite witness: let
-`P=(I+Q_L Q_R^chi0)/2`, using the same fixed matrix for both tests.
+`P|g,h>=(|g,h>+|g+a,h+a>)/2`, using the same fixed matrix for both tests.
+The shorthand `P=(I+Q_L Q_R^chi0)/2` is an ordinary underlying-matrix product;
+it is not a categorical composition of the two maps U→V. P itself is a
+grade-preserving endomorphism of V, as checked below.
 The two translation permutations commute and square to I, so P is a
 Hermitian projection of rank eight. It preserves total grade since the
 two shifts add a+a=0. On its range `Q_R^chi0 P=Q_L P`; hence
@@ -94,3 +99,5 @@ Suggested examples-table row:
 Sources: the chosen compiler is `../NOTE.md`, H6-B1 (B1)–(B5). The category,
 characters, endpoint maps and witnesses above are explicit local
 definitions and checked derivations, requiring no external source.
+
+Additional source: `report/sections/98_canonical_seams_reflection_coherence.tex:79–85` (typed Drinfeld map and pivotal twist).
