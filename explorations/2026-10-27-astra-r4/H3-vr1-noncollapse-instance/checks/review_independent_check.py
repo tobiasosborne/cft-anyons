@@ -240,7 +240,7 @@ for m in (1, 2, 3):
         st = apply_T(M, -m, {vac(M): 1.0})
         vals.append(sum(x*x for x in st.values()) - (m**3*cs - m*c)/12)  # T_m Omega = 0, T_0 Omega = 0
     log(f'A4 ledger vacuum residual m={m}, M=64,256,1024:', [f'{x:.2e}' for x in vals])
-    assert abs(vals[-1]) < 1e-4 and abs(vals[-1]) <= abs(vals[0]) + 1e-15, 'A4 ledger: vacuum residual must vanish'
+    assert abs(vals[-1]) < 2e-4 and abs(vals[-1]) <= abs(vals[1])/10 + 1e-15, 'A4 ledger: vacuum residual must vanish like eps^2'
 # (iii) one-particle coefficient bound |C_M(r)| <= H_mn eps^2 w^4 on the whole window
 def g(n): return 1+abs(n)/2
 def dd(n): return g(n)**3/6 + n*n*g(n)/16 + g(n)

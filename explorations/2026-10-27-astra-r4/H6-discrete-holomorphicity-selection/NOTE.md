@@ -1,7 +1,8 @@
 # H6 — Discrete holomorphicity as a categorical selection equation
 
 Started 2026-10-27 13:10 UTC; initial all-open ledger written at 13:12 UTC.
-Proofs and ledger updated incrementally; final verification recorded below.
+Proofs and ledger updated incrementally; completed within the 70-minute budget.
+Final verification and the exact remaining gaps are recorded below.
 This exploration serves **P3 on P2**, on the pointed, indefinite-number carrier of P1.
 All conventions below are proposed **note-local** registrations: the brief prohibits
 editing `CONVENTIONS.md`, worklog, report, or other files. No network or commits.
@@ -11,8 +12,8 @@ editing `CONVENTIONS.md`, worklog, report, or other files. No network or commits
 **H6 requires reformulation.** The literal endpoint sum lacks scalarization,
 path-counting and spin/framing data; its unit-reduction and harmonicity claims
 are false without repairs. The proved replacement is a finite categorical
-endpoint compiler (B5–B8), a globally consistent charged-edge realization
-(B9–B12), a finite phase-cohomology obstruction, and exact lattice Stokes.
+endpoint compiler (equations (B5)–(B8)), a globally consistent charged-edge
+realization (B9)–(B12), a finite phase-cohomology obstruction, and exact lattice Stokes.
 It applies to arbitrary unitary fusion C with pointed O=1⊕X. Neither a critical
 Hamiltonian nor a continuum rung is selected.
 
@@ -38,7 +39,8 @@ All primary-source aliases below are resolved to path:line in “Sources used”
 Use complex-linear scalar contractions on fully typed boundary morphisms; otherwise
 retain the observable as a vector in a specified finite Hom space. Write γ_A:
 Y⊗A → A⊗Y, keeping the chosen left-associated fusion trees, dagger, and spherical
-duals. Use exact tile weights w, never identify them with coefficients of h.
+duals. F(e) is the observable; “F-matrix” means a categorical recoupling matrix.
+Use exact tile weights w, never identify them with coefficients of h.
 Faces will have positively oriented polygonal boundaries, edge displacement Δz_e,
 and one common edge value F(e)=F(reverse e); the oriented 1-cochain is
 ω(e)=Δz_e F(e). Winding will mean total signed turn of a framed oriented path,
@@ -387,7 +389,8 @@ h=T'(0); keep H=−Σ_j h_j as in (ak). For a varying matrix A(u), differentiati
 A(u)w(u)=0 gives A(0)c=−A'(0)w(0), c the coefficients of h. This is necessary,
 not sufficient, for a full family. BY the product rule and CA-78.2.
 For a fixed matrix A and exact gates T(t)=e^{th}, the all-t condition is
-R_q(h^k)=0 for every k≥0, by the power series. It reduces to finitely many k: choose the first linear dependence
+R_q(h^k)=0 for every k≥0, by the power series. It reduces to finitely many k:
+choose the first linear dependence
 h^r=Σ_(k<r) b_k h^k, which exists because B₂ is finite dimensional; multiplying
 by h and inducting reduces every later power to the first r. A one-parameter
 spectral family is not automatically an exponential semigroup. BY this displayed
@@ -485,8 +488,8 @@ Q_L=Q_R. This forces q=f⊗1_O for f:Y→1 satisfying
 
     (1_O⊗f) γ_O = f⊗1_O.                                  (B13)
 
-In particular, if Hom_C(Y,1)=0, no nonzero q in this ansatz admits any continuous regular family T(u)→1
-satisfying the fixed-geometry equation down to u=0 (including e^{th}).
+In particular, if Hom_C(Y,1)=0, no nonzero q in this ansatz admits any
+continuous regular family T(u)→1 satisfying the fixed-geometry equation down to u=0 (including e^{th}).
 
 <1>1. At s=0, (B1)–(B3) give
 R_q(1)=(a+b)(Q_R−Q_L). A nondegenerate parallelogram has a+b≠0.
@@ -503,8 +506,8 @@ last factor cancels it. Conversely (B13) and q=f⊗1_O imply Q_L=Q_R.
 BY the displayed compositions. These are precisely vacuum-valued endpoint
 maps transparent to the O strands, not an arbitrary nonvacuum charge.
 
-<1>4. If Hom(Y,1)=0, then f=0 and q=0. If T(u) solved the equation with T(u)→1, continuity would give
-R_q(1)=0 and the same conclusion. BY steps 1–3 and linearity of R_q. QED.
+<1>4. If Hom(Y,1)=0, then f=0 and q=0. If T(u) solved the equation with
+T(u)→1, continuity would give R_q(1)=0 and the same conclusion. BY steps 1–3 and linearity of R_q. QED.
 
 This explains why a finite nonzero kernel—even one containing a positive
 semidefinite tile—is insufficient to select an exact Hamiltonian family.
@@ -603,9 +606,12 @@ five-point Laplacian gives
     Im G=0.                                                 (D3)
 
 Hence the resulting real/imaginary primitives are not a harmonic conjugate
-pair for that explicitly named Laplacian. BY direct computation. Calling the
-edge field itself harmonic would additionally require a declared edge Laplacian
-and constraints tying its directional components together. Those are absent.
+pair for that explicitly named Laplacian. The field itself also fails the
+unweighted degree-four medial-graph test: join each horizontal-edge midpoint
+to the four adjacent perpendicular-edge midpoints. Those four F values are
+zero, so Δ_med Re F=−4(2m+1) at a horizontal midpoint. BY direct computation.
+A different harmonicity theorem would need its own Laplacian and additional
+constraints tying directional components together; none was imposed by D1.
 
 <1>4. QED. The exact general conclusion is **closed cochain with controlled
 periods**, not harmonicity. This is the finite P3 cohomological content.
@@ -774,7 +780,7 @@ was run: only this note and its checks were changed.
 - H6-B2-U — **negative**: obligatory nontrivial F/γ sensitivity for every Y; the central-unit sector is a universal exception.
 - H6-B3 — **proven**: a cut-independent charged-edge field that realizes LG with fixed scalar edge phases.
 - H6-B3-W — **conditional**: identification with prescribed geometric winding requires the explicit phase compatibility and an actual route interpretation.
-- H6-B4 — **negative**: a nonvacuum spin-zero endpoint cannot admit a continuous identity-normalized family at fixed nondegenerate geometry in this ansatz.
+- H6-B4 — **negative**: if Hom_C(Y,1)=0 and q≠0, the spin-zero ansatz admits no continuous identity-normalized family at fixed nondegenerate geometry.
 - H6-B5 — **proven**: edge-phase consistency iff finite incidence-cycle products equal one; uniqueness up to componentwise phase.
 - H6-C1 — **proven**: exact scalar-loop weight and contour calibration, branch identification and dimension restriction in checks only.
 - H6-C2 — **conjectural**: identification of that scalar connectivity observable with the proposed categorical endpoint field.
