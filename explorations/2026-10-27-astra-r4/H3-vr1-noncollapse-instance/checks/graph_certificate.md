@@ -268,5 +268,5 @@ representations, and the displayed chiral system is one factor. The full
 same-system statement needs the corresponding explicit two-component
 carrier and diagonalized mode embedding; the parent NOTE supplies that
 identification. Sharp momentum refinement is spatially nonlocal
-(source :1881--1889). This certificate does not certify standard local KS,
+(source :1892--1894). This certificate does not certify standard local KS,
 a categorical local tower, or R3 by replacing these maps.

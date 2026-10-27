@@ -127,7 +127,7 @@ certificate, with a second independent excitation factor included.
 
 WS-1 uses the actual P_Q at every microscopic fine scale. Its horizontal
 limit produces P_(M,infty), whose compatible GNS maps are the VR-1 maps.
-Those are precisely the GNS maps WT-1 constructs (CA-81:77–80), so R1 and
+Those are precisely the GNS maps WT-1 constructs (CA-81:80–83), so R1 and
 R2 are now certificates on one state/refinement/representation system.
 No intertwining of the **finite Dirac ground-state vectors** is claimed:
 P_Q varies with Q and does not factorize in the fixed chiral basis
@@ -135,7 +135,7 @@ P_Q varies with Q and does not factorize in the fixed chiral basis
 declared limiting row sea, not a silently substituted finite Dirac vacuum.
 
 The identified system uses sharp momentum algebra refinements, spatially
-nonlocal by source `:1881–1889`. The no-wrap stress is the source-modified
+nonlocal by source `:1892–1894`. The no-wrap stress is the source-modified
 prescription. This is neither a proof of standard fixed-support KS on a
 categorical local tower nor an R3 local-net theorem. The missing general-C
 identification is a state-preserving, refinement-compatible microscopic

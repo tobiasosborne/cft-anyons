@@ -846,53 +846,204 @@ summable differentiated refinement separately. Naming a residual W2
 without these steps would merely rename the commutator residual (CA-89
 Remark F1). They remain explicit open obligations here.
 
+## Verification and scoped research record
+
+**Context / choices.** The initial NOTE and all-open ledger were written
+within the first ten minutes. Work serves P3 on the existing P2 cells,
+not a search within a chosen model. Root conventions, worklog and index
+are untouched by the explicit scope restriction; this section records
+the scoped conventions, run commands and acceptance evidence instead.
+
+**Friction / corrections.** Literal collar differentiation, finite dilation
+and genuine coordinate changes initially share notation in the brief but
+obey different laws. The repair keeps their types and sources separate.
+Read-only skeptical review checked the proofs and prompted explicit
+contraction compatibility (A.1), the formal-dual boundary orientation,
+the bulk-only alpha domain and the gauge restriction for selected KS.
+The two-sided RP matrix example illustrates a tangent issue; the exact
+gate cone in C3 supplies the corresponding microscopic one-sided witness.
+No missing source was replaced by memory or by an internet acquisition.
+
+**Acceptance.** Three exact SymPy scripts and raw outputs are kept in
+`checks/`. They run in seconds, use at most 64-dimensional variable spaces
+and 64-column Jacobians (physical matrices at most 8x8), and require no Julia
+or report build. The independent reruns passed; mutations produced the
+expected failures before restoration. Numerical ranks below are exact
+integer/rational calculations, not tolerance-based observations.
+
+From the repository root:
+
+```bash
+python3 explorations/2026-10-27-astra-r4/H2-lattice-cell-equations/checks/rank_two_ward.py
+python3 explorations/2026-10-27-astra-r4/H2-lattice-cell-equations/checks/equality_complex.py
+python3 explorations/2026-10-27-astra-r4/H2-lattice-cell-equations/checks/cell_seam_identities.py
+python3 explorations/2026-10-27-astra-r4/H2-lattice-cell-equations/checks/rank_two_ward.py --mutate-f
+```
+
+The last command **must exit nonzero**; its traceback is saved in
+`rank_two_ward_output.txt`. Each other script includes caught deliberate
+mutations and exits zero only when the correct invariants also pass.
+The equality-matrix calibration treats B as independent and complexifies
+its gauge variables; its larger gauge space is not asserted to preserve
+the selected KS formula. The general proof restricts that space explicitly.
+
 ## Results ledger
 
-- A1 — typed finite cuts and exact fixed-network temporal sewing: proven.
-- A2 — spatial recutting with retained transports: proven; automatic canonical reflected coherence: conditional.
-- B1 — derivative Ward propagation, including the pairing-defect correction: proven.
-- B2 — ordinary finite-dilation Leibniz rule: negative; the twisted replacement (B.1): proven.
-- B3 — literal same-cut anisotropy equation selects only h=0: negative; jets, frozen linear repair and three-site KS dependence: proven.
-- C1 — finite equality D1 and explicit temporal/spatial/refinement identity D2, D2 D1=0 at a solution: proven.
-- C2 — H1 of formal equality deformations and H2 obstruction at each formal order for this presentation: proven.
-- C3 — unrestricted RP encoded by that vector complex / H2 identified with central CE H2: negative; strict-positive and CE compatibility statements: proven.
-- D1 — (D.1) geometric identification plus (D.2) accumulated two-loss decay implies W2/A4 with KS matching: conditional; implication proven.
-- D2 — A3 under summable coordinate-resolved derivative matching: conditional; R3 from Ward decay alone: negative (not implied by the cited contract).
-- CHECK — symbolic two-simple-object algebra, genuine associator mutation, equality matrices and sign/F regression mutations: proven as finite checks only.
+- A1 / typed bulk and module cuts, C0: **proven**.
+- A1 / exact temporal sewing and C3 for one fixed weighted graph: **proven** (application of CA-80).
+- A2 / exact spatial recutting with the interface and inverse transports retained: **proven**.
+- A2 / full-span contraction/coherence equations (A.1) as the exact criterion for the declared grammar: **proven**.
+- A2 / canonical seam alone supplies geometric whole-history reflection coherence: **conjectural**; CA-98 G1/G2 remain unproved.
+- A2 / bending preserves unchanged ordinary matrix multiplication in general: **negative** (rank-one image of the identity).
+- B1 / differential residual product law and required pairing correction: **proven**.
+- B2 / ordinary differential Leibniz law for finite dyadic defects: **negative** (universal scalar witness).
+- B2 / twisted finite comparison law (B.1), with correct bulk/J types: **proven**.
+- B3 / nonzero h solves the literal same-cut anisotropy commutator Ward equation: **negative** (R(0)=h).
+- B3 / first tile jet (B.2), frozen linear system (B.4), and its exact Duhamel equivalence: **proven**.
+- B3 / invariant two-site algebra blindness with B,L fixed versus marked three-site KS/F dependence: **proven**; categorical variation checked separately.
+- C1 / explicit equality D1,D2 with D2 D1=0 around a solution of the retained finite system: **proven**.
+- C2 / H1 formal equality deformations modulo preserving infinitesimal gauge: **proven**.
+- C2 / H2 formal extension obstruction at each order for this equality presentation: **proven**.
+- C3 / unrestricted RP tangent feasibility represented by a vector-space kernel: **negative** (PSD cone / exact gate cone).
+- C3 / local strict-positive-seam regime and explicit CE compatibility row: **proven**.
+- C3 / exact finite-matrix scalar CE defect is a coboundary: **proven** (LC-2 P5); no identification with sewing H2 asserted.
+- D1 / geometric identification plus accumulated two-loss estimates and KS matching gives W2/A4: **conditional**, with the implication proved.
+- D1 / coordinate-resolved summable derivative matching additionally gives A3: **conditional**, with the implication proved.
+- Whole H2 / nontrivial selected KS cell solution, C6 reconstruction and C-limit to R3: **conjectural**; not established by this note.
+- Checks / algebra, symbolic associator, seam, equality matrices and rejection mutations: **proven finite check results**.
 
 ## Layer tags
 
-As above; no R1–R5 certificate or automatic full/chiral identification claimed.
+| Statements | Setting | Data layer and all additional classes of declarations | Rung reached here | Rung fed / claimed |
+|---|---|---|---|---|
+| A1, B1 | Any; fixed boundary module for open ports | L0, pointed O, duals/module coherence, exact h/weights, oriented graphs, Gram bases; differentiable cut connections for B1 | Finite only | `->R3`, B1 also `->R2` |
+| A2 | Any oriented finite graph; reflection only with its own identification | L0 + s, port transports, contraction grammar; canonical s at L1; RH/G1/G2 and PSD separately | Finite only | `->R3` |
+| B2 | Bulk endomorphism cuts; typed module cuts only with J or a supplied extension | L0 + actual CA-90/96 transport, chosen refined cells and cut comparisons; periodic extension if applying periodic KS | Uses existing R0^u, no new rung | `->R2` |
+| B3 | Any local algebra; standard periodic mode normalisation only after declaring it | L0, marked A2/A3 bases, h, v and placements; B,L frozen for the linear fragment; actual prescribed KS for (B.5)/(B.6) | Finite only | `->R2` |
+| C0–C3 | Any, same declared cell grammar | L0 plus the above microscopic data, finite overlap/jet presentation, exact solution, preserving gauge group, RP strata; declared Lie lift only in the CE subproblem | Finite only | `->R2, ->R3`; no automatic higher complex or CFT |
+| D1 | Periodic/full, per chiral family | L0 + quotient/state/refinement/translation/controls, geometric insertion and contact identification, accumulated bounds, prescribed KS matching and differentiated refinement; no L4 target assumed | No certified rung | Conditional R2 implication; R3 needs further analytic hypotheses |
+
+No statement reaches R1, R2, R3, R4 or R5 for an arbitrary categorical input.
+Boundary choices are data; no open-versus-periodic construction question
+is substituted for these equations. The same-system clause of CA-88:122–125
+applies to every conditional combination.
 
 ## Pillar served
 
-P3 on P2, retaining P1 and preparing the quantitative P4 interface.
+**P3 on P2:** exact finite C-evaluated cells now carry a specified residual
+presentation and six explicit identities among equality residuals. They
+separate categorical recoupling from conformal dynamics and identify the
+precise conditions under which H1/H2 have deformation meaning.
+**P1 retained:** O remains pointed and all occupation/charge multiplicities
+are retained; the current check includes pair creation/annihilation, not a
+fixed-number replacement. **P4 interface:** (D.2) is the accumulated graph-norm
+estimate needed after the separate geometric contour identification.
 
 ## What this gives the integration
 
-Target: CA-75 Link (a1)–(a3), with (a4) only as an explicit conditional
-implication. CA-88 finite ingredients only until proof and estimates exist.
+- **CA-75 (a1):** finite module-cut channel typing with the required dual
+  orientation is supplied; identification with continuum channel carriers
+  remains open.
+- **CA-75 (a2):** temporal sewing is reused; spatial cutting now includes
+  the actual interface strip and explicit transported contractions. Exact
+  recutting of a fixed graph is settled at this level. Automatic canonical
+  reflected coherence and any anomaly-line limit remain open.
+- **CA-75 (a3):** the finite residual grammar, tile jets, correct refinement
+  law and actual equality compatibility maps are explicit. The nontrivial
+  geometry-to-KS response/selection problem remains open; merely setting
+  the collar derivative equal to a same-cut commutator kills h.
+- **CA-75 (a4):** only the exact conditional path (D.1)/(D.2) to W2 and
+  standard-KS A4, with a separate A3 clause, is supplied. No convergence is proved.
+- **CA-88:** the L0/any finite `->R3` CA-80/92 row and the L0 finite-cell
+  counterpart to the LC rows gain an explicit presentation-level complex.
+  The periodic/full `->R2` CA-89/95 row gains a typed accumulation interface.
+  The D2-C selection pointer gains the algebra-versus-placement distinction.
+  **No cell moves up a rung:** R0^u is reused; R1–R5 remain at their prior status.
+  In particular C6 internal stress/field locality is not proved by declaring
+  the standard local density, and fidelity cannot be read from this H2.
 
 ## Open problems
 
-All entries in the initial ledger remain open at this initial checkpoint.
+1. **Microscopic geometry-to-stress lemma.** On the general pointed carrier,
+   specify local coordinate/insertion deformations (distinguishing collars
+   from moduli) and prove their boundary response equals the prescribed
+   energy/current KS combination up to a controlled residual. A dyadic
+   algebra homomorphism is not this response by itself.
+2. **Coherent spatial reflection lemma.** For a declared s, prove (A.1)
+   and CA-98 G1/G2 for the proposed whole-history reflection and all allowed
+   tile sewings, or exhibit its failure. Canonical s existence alone is insufficient.
+3. **Nontrivial selected solution lemma.** Find h with actual occupation-changing
+   entries satisfying the geometric, seam and selected-KS equations, with
+   RP and a noncollapse condition. The frozen B,L linear system cannot
+   substitute for this nonlinear, generally F-sensitive problem.
+4. **Finite-presentation/completion lemma.** Prove a specified set of cell
+   moves generates all relevant decompositions and identify higher relations,
+   or retain the full infinite presentation. Prove positive, invariant null
+   quotients and convergent geometry jets; finite linear algebra does not do so.
+5. **Contour-to-operator lemma.** Realise both insertion orders and all
+   cylinder contacts on the same quotient, yielding (D.1) with explicitly
+   named endpoint, chart and exchange errors (CA-95 G1/G2).
+6. **Accumulated two-loss estimate.** Prove (D.2) uniformly for every fixed
+   mode pair and graph order, including the cut Gram conditioning and growing
+   cell count, or its uniform physical-probe replacement. Separate one-loss
+   KS discrepancy and summable differentiated refinement estimates are required.
+7. **OAR/C6 completion.** Verify the state/refinement certificate and
+   noncollapse, then local internal stress, positive energy and full
+   projective-unitary integration. No equality cohomology calculation here
+   proves those analytic or fidelity conclusions.
 
 ## Examples table
 
-Reserved for checks only; no model is the subject of a theorem.
+Instances below only check general formulas; none is a construction target.
+
+| Check instance | Exact invariant / result | Scope and artifact |
+|---|---|---|
+| Formal rank-two rule `x²=1+m x`, pointed `O=1+x` | Symbolic ring associativity; `O²=2·1+(m+2)x`; matrix-unit Ward systems on blocks (2,2), (2,3), (2,4), dimensions 8,13,20; direct, structure-constant and Kronecker computations agree | No categorifiability asserted for generic m; `checks/rank_two_ward_output.txt` |
+| Pointed `Hilb_fd(Z2,omega)`, `omega(1,1,1)=zeta`, `zeta²=1` (labels 0=unit, 1=nonunit) | All 16 cocycle identities and unitarity hold; `J[001,100]=i(a² zeta-b²)` for pair/hop coefficients a,b; changing valid zeta changes current but not A2 | Genuine symbolic associator test; no cap identification or braiding used; same artifact |
+| Universal matrix multiplicities on `O=1+1` in every C | Shared-connection Ward product, pairing derivative, twisted refinement, all 16 bend inverse checks and transported seam associativity; ordinary same-product/reflection shortcuts fail | `checks/cell_seam_identities_output.txt`; does not assert arbitrary-network RP |
+| Four-object path presentation with 2x2 amplitude jets | D0 shape 64x32 rank 28, D1 56x64 rank 36, D2 24x56 rank 20; D1D0=D2D1=0; wrong Ward sign produces entry -2 | Independent-B algebraic fragment only; `checks/equality_complex_output.txt` |
+| Singular 2x2 PSD seam / scalar germ | Straight PSD pencil fails at order two; corrected path PSD. For `E(x)=x²`, a Jacobian left-null row need not annihilate quadratic forcing | Same artifact; tests the need for off-shell identities and RP handling |
+
+The rank-two script's independent orthogonal 2x2 placeholder is explicitly
+**not** a categorical F-matrix. Arbitrarily varying symbolic F entries while
+ignoring pentagon/unitarity would not be a test within the conjecture's
+general class. The actual mutation above changes the checked cocycle;
+the separate `--mutate-f` regression test injects an illicit F term into
+the two-site compiler and must fail.
 
 ## Sources used
 
-- `reconstruction/01_cells.md:17–23,57–162,164–195`: typing, equations, LC-W.
-- `reconstruction/03_sewing_deformations.md:143–158`: linearisation versus complex.
-- `report/sections/75_integration_map.tex:115–138`: Link (a).
-- `report/sections/80_lattice_sewing_and_fidelity_certificate.tex:52–135`: exact cells.
-- `report/sections/86_spacetime_trotter_dictionary.tex:61–110`: history dictionary.
-- `report/sections/88_layered_targets.tex:54–56,82–125`: data and target layers.
-- `report/sections/89_ward_ks_transfer.tex:73–84,122–163`: W2 and transfer.
-- `report/sections/95_probe_word_ward_lifting.tex:38–84`: physical probe bounds.
-- `references/text/PenneysUnitaryFusionCategories.md:219–237,1010–1019`: unitary sums/duals.
-- `literature/md/1905.04924/1905.04924.md:688–718`: module internal homs.
-- `references/categorical-reconstruction/FuchsRunkelSchweigert2002/source/hep.tex:2278–2285,2396–2408`: associativity in categorical bases.
-- `references/lattice-symmetry/GransSamuelssonEtAl2020/source/Linnea11.5.tex:791–820`: KS energy/current prescription.
-- `references/categorical-reconstruction/BrehmRunkel2024/source/main.tex:680–692,799–809`: anomaly and cutting for an already given CFT.
+All citations are local. New statements have displayed derivations above;
+checks validate identities and witnesses, not the unproved geometric estimates.
+
+- `references/text/PenneysUnitaryFusionCategories.md:219–237,396–430,528–568,589–608,682–708,1010–1019`: unitary sums, coherent graphical calculus, oriented duals, channel bases, cocycle instance and spherical positivity.
+- `literature/md/1905.04924/1905.04924.md:688–718`: module internal-hom adjunction and composition.
+- `references/categorical-reconstruction/FuchsRunkelSchweigert2002/source/hep.tex:2278–2285,2396–2408`: algebra-object equations and their F-dependent categorical coordinates.
+- `references/lattice-symmetry/GransSamuelssonEtAl2020/source/Linnea11.5.tex:791–820`: energy/current and KS prescription; not a general convergence theorem.
+- `references/cft/Schottenloher2008/Schottenloher2008.md:2200–2264`: central CE cocycle and splitting/counterterm criterion.
+- `references/categorical-reconstruction/BrehmRunkel2024/source/main.tex:598–607,680–692,799–809`: supplied-CFT carriers, Weyl anomaly and cutting; no category-to-CFT existence imported.
+- `references/categorical-reconstruction/SOURCES.md:1–150`, `references/category-theory/SOURCES.md:1–100`, `references/lattice-symmetry/SOURCES.md:1–100`: local provenance/import boundaries consulted.
+- `CONVENTIONS.md:631–703,1196–1237,1397–1665`: pointed sites, signs, exact weights, algebra and placement constants, KS, layers, graph norms, seams and scoped round-3 notation.
+- `reconstruction/01_cells.md:17–53,57–162,164–228`: module channels, C0–C7, differential Ward propagation and analytic/finite-presentation boundary.
+- `reconstruction/02_obstructions.md:38–115,144–230`: innerness, central CE versus geometry, curvature, gauges and finite-matrix coboundary obstruction.
+- `reconstruction/03_sewing_deformations.md:57–158`: binary fragment and the missing full-system identity map.
+- `reconstruction/05_mixed_complex.md:20–107,109–167`: specified mixed algebra/action complex, first-order quotient and scope limitation.
+- `reconstruction/10_four_port_linearization.md:125–180`: inverse-Gram differentiation, fixed quotient, equality cokernel and identity requirement.
+- `report/sections/14_koo_saleur_prototype.tex:57–106,120–127`: density/current prescription and its scaling boundary.
+- `report/sections/75_integration_map.tex:115–138`: Link (a1)–(a4).
+- `report/sections/78_categorical_selection_equations.tex:37–68,70–97`: matrix-unit compiler, three-site F placements, exact gate ODE and metric-response boundary.
+- `report/sections/80_lattice_sewing_and_fidelity_certificate.tex:52–140`: exact cells, inverse-Gram sewing, temporal RP, Duhamel and accumulated Ward residuals.
+- `report/sections/86_spacetime_trotter_dictionary.tex:61–110`: history dictionary and the geometric weight factor.
+- `report/sections/88_layered_targets.tex:54–56,82–155,179–188,242–251`: declarations, rung grid, same-system rule and selection interface.
+- `report/sections/89_ward_ks_transfer.tex:51–84,88–163,165–185`: graph norms, W2, transfer, differentiated matching and failed simpler inferences.
+- `report/sections/90_local_unital_lift.tex:59–85,110–143`: actual transport hypotheses, alpha and its endomorphism domain.
+- `report/sections/92_spatial_seams_and_reflection_positivity.tex:53–153,157–165`: seam typing, bent kernel, conditional spatial RP and exact-gate witness.
+- `report/sections/95_probe_word_ward_lifting.tex:38–91,135–145`: uniform physical-probe lifting, geometric G1/G2, accumulated bounds and fixed-word failure.
+- `report/sections/96_blocked_dyadic_lifts.tex:75–106`: blocked transport hypothesis and the original-site algebra lift.
+- `report/sections/98_canonical_seams_reflection_coherence.tex:53–96,122–180`: canonical seam, oriented duals, invertible bending and the still-conditional G1/G2.
+- `cft_machine/research/virasoro_routes.md:50–82,151–177`: VR-1 A1–A4 and excluded analytic/fidelity conclusions.
+- `explorations/2026-10-22-astra/D2-selection-principle/REVIEW.md:76–87`: the precise category-blindness warning, not an F-independence theorem for placements.
+- `worklog/023_2026-10-27_status_overview.md:16–87,171–206`: four-pillars priority, current ladder and structural diagnosis.
+- `checks/rank_two_ward.py:1–230`, `checks/rank_two_ward_output.txt:1–52`: local exact producer, coefficient and symbolic associator checks, mutation transcript.
+- `checks/equality_complex.py:1–160`, `checks/equality_complex_output.txt:1–15`: actual finite differential matrices, off-shell expansions and mutation/PSD witnesses.
+- `checks/cell_seam_identities.py:1–148`, `checks/cell_seam_identities_output.txt:1–24`: exact seam, connection and refinement checks with rejected shortcuts.

@@ -186,3 +186,9 @@ excitation configuration, giving the positive linear excitation energy.
 The distinction from finite Dirac vacua and the spatial nonlocality caveat
 are explicit and correct (`same_system.md:121--137`; source
 `:1198--1205,1892--1894`). No categorical R2 or R3 conclusion follows.
+
+## Author resolution after review
+
+The requested particle/hole wording, interleaved-coordinate regrouping and
+explicit limiting-zero-mode positivity sentence have been corrected. No
+analytic claim or check result changed.

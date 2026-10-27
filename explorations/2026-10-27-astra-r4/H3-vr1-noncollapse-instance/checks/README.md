@@ -33,3 +33,38 @@ Headline: A3 fails at p=1 by a UV lower bound tending to
 integer p=2: A3 O(epsilon), all-bracket A4 O(epsilon²).
 The fixed diagonal witness `(Omega+w)/sqrt(2)` has
 `<v,T_-2 K^-1 v> >= 1/(2sqrt(2)pi)` at every M>=4.
+
+Independent review and exact non-collapse checks, from the same directory:
+
+```bash
+python3 checks/graph_review_check.py > checks/graph_review_check.json
+python3 checks/noncollapse_symbolic.py > checks/noncollapse_symbolic_green.txt
+python3 checks/noncollapse_symbolic.py --mutate > checks/noncollapse_symbolic_red.txt 2>&1
+python3 checks/same_system_check.py > checks/same_system_green.json
+python3 checks/same_system_check.py --mutate > checks/same_system_red.txt 2>&1
+```
+
+The first, second and fourth commands exit **0**. The two mutations exit
+**1**: the non-collapse mutation changes the level-two cross-Gram coefficient
+from 6h to 5h; the same-system mutation reverses the Wilson-limit covariance
+sign. They are rejected by independent Gram and fixed-spinor state oracles.
+
+`graph_review_check.py` verifies 224 saturated signed row/column Schur
+bounds, eight physical CAR generator refinement squares (including filled
+negative labels), and 65,856 global scalar bracket majorants, with real
+exponents alpha=0.5,1,2. Float64 tolerance: `2e-10`. It constructs no dense
+many-body matrix over 256 states. `noncollapse_symbolic.py` uses exact
+SymPy arithmetic. `same_system_check.py` uses Complex128 and tolerance
+`2e-12`, at M=8,16,32 (one-particle matrices of dimension at most 128 in
+the refinement square). All runs take seconds or less.
+
+Headline of the state check: the actual finite Dirac covariances have nonzero
+chiral mixing, while their limiting row covariances split exactly into the
+two complementary seas. Thus the common representation proof in
+`same_system.md` uses the actual Wilson limit and does not identify finite
+Dirac vacuum vectors with the exactly compatible chiral sea.
+
+Skeptical verdicts are in `noncollapse_review.md` and `graph_review.md`.
+The positivity-only central-charge implication remains unproved, with its
+precise missing domain lemma recorded in the former. Review scripts and raw
+outputs supplement, rather than replace, the all-scale mathematical proofs.

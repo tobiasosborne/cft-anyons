@@ -234,7 +234,7 @@ supplied-target cutoff construction.
 <1>1. Substitute T_0 into the normalized bracket: the scalar ledger is
 `(am³−(a−24h)m)/12`. Adjoint pairing and positivity of T_0 persist.
 <1>2. Use CA-100.10's finite spectral cutoffs, exact energy control and
-p>1 certificate (`report/sections/100_zero_mode_lattice_chirality.tex:212–226`).
+integer p>1 certificate (`report/sections/100_zero_mode_lattice_chirality.tex:212–226`).
 The constant shift changes neither A3 nor the nonzero modes, and its
 effect on A4 is exactly the ledger change of <1>1.
 <1>3. If Omega is unit primary, put
@@ -381,54 +381,158 @@ LC-4's prescribed periodic energy/current modes and declared ledgers still
 need to be the very modes being certified. Generality does not follow
 from the calibration or from categorical evaluation alone. Positive energy,
 integration and local-net axioms are R3 obligations; faithful sector content
-and target identification require their separately declared L1–L4 data for
-R4. Sources: CA-95 `:196–225`, CA-89 `:51–84,144–160,201–231`,
+and target identification require the appropriate separately declared target,
+braided and enriched data for the chosen R4 fidelity layer. Sources: CA-95 `:196–225`, CA-89 `:51–84,144–160,201–231`,
 `reconstruction/04_cutoff_oar.md:38–134`, CA-81 `:105–125`.
+
+## Acceptance and research record
+
+The proof audit separated three issues that the original brief conflated:
+non-collapse, positivity of the invariant charge, and the zero-mode-dependent
+linear ledger. The other decisive choice was to bound every allowed and
+deleted transition before taking Fock-space row/column sums. That avoids
+turning the old fixed-momentum-core estimate into an unsupported uniform claim.
+The auxiliary energy is declared linear excitation energy; replacing it by
+the finite sine dispersion breaks exact transport and the checked shift.
+
+Independent skeptical audits in `checks/noncollapse_review.md` and
+`checks/graph_review.md` found no blocker to the proofs with their stated
+assumptions. The former preserves the unresolved positivity-only domain
+lemma. Its search found that the available highest-weight and integrated
+symmetry theorems do not prove that lemma under VR-1's weaker assumptions.
+The graph review also checked the explicit same-system identification.
+
+Finite acceptance: exact symbolic Gram/shift/transport assertions pass;
+full-carrier sparse CAR assertions pass at 16 and 256 states, including all
+coarse input columns under refinement; independent checks verify 224
+weighted row/column bounds, eight physical CAR generator intertwiners, and
+65,856 scalar all-bracket bounds. Spinor/state squares pass at M=8,16,32.
+Five deliberate mutations fail: UV wrapping, missing normal ordering, wrong
+energy, wrong Gram entry, and reversed Wilson covariance sign. Commands,
+tolerances and raw outputs are in `checks/README.md`. Finite checks calibrate
+the proofs; none establishes an all-scale rate by extrapolation.
+
+No source acquisition, report edit, Julia suite, commit or network operation
+was performed. The user-scoped note and checks are the research/run record
+for this round; report/worklog/global convention promotion is deferred.
 
 ## Results ledger
 
-- A1, weighted transported witness implies non-collapse: proven (Theorem A).
-- A2, eventual witness converse and rejection of collapsing families: proven (A, A.1–A.2).
-- A3, positive invariant central charge: proven with (PE), conditional under positivity alone (A.3–A.4); the literal unnormalized c>0 assertion is negative (A.5).
-- B1, whole-Hilbert A1/A2 and admissible control: proven (B.1; supplemental certificate).
-- B2, sharp p threshold and summable A3: proven for the declared calibration; integer minimum 2, real threshold p>1 (supplemental certificate).
-- B3, all-bracket A4 and explicit A5: proven (supplemental certificate; κ=1/(2√2π)).
-- C1, Wilson/GNS/mode same-system identification: proven for the declared sharp-momentum calibration (C; checks/same_system.md).
-- D1, categorical integration boundary: proven logical scope statement (D); no general-C R2 instance is supplied.
+- **proven** — A5 is equivalent to nonzero limiting stress and admits a finite A3-tail margin certificate (A, A.1).
+- **proven** — Non-collapse makes every nonzero-index mode nonzero and the zero mode nonscalar (A).
+- **proven** — The general-class collapsing constructions CA-95.5 and CA-100.5 violate A5 (A.2).
+- **proven** — Under the explicit total restricted-vector condition (PE), A5 implies invariant c*>0 (A.3–A.4).
+- **conditional** — Strict c*>0 from positivity of the normalized L_0 form alone remains unproved without additional domain input; the stated sufficient bridge is unproved here.
+- **negative** — Positivity of raw T_0 does not imply positivity of the unnormalized linear ledger c (A.5, general shifted-target counterexample).
+- **proven** — Entrywise energy-shift row/column bounds give dimension-independent VR-1 certificates (B, B.1).
+- **proven** — The declared calibration satisfies whole-carrier A1–A4 for every real p>1; integer minimum p=2 (checks/graph_certificate.md).
+- **negative** — p=1 fails calibration A3 by an explicit UV sequence; p<1 also fails A2 (same certificate).
+- **proven** — Calibration A3 has sharp rate ε^min(p−1,2); p=2 gives A3 O(ε), A4 O(ε²), while p=3 retains A3 O(ε²).
+- **proven** — A fixed transported diagonal witness supplies κ=1/(2√2π) at every calibration scale (same certificate).
+- **proven** — The Wilson limiting rows and the source-modified modes share one full GNS system; the paired extension has exactly zero mixed brackets (C; checks/same_system.md).
+- **proven** — The logical scope remains conditional for arbitrary C; this work supplies no categorical R2 instance (D).
 
 ## Layer tags
 
-Setting: any (analytic implication), declared periodic/full per family (KS).
-Data: category-free; L0 only when supplied a categorical microscopic realization.
-Declarations: Hilbert tower, compatible K, modes and ledgers, states and GNS
-maps when claiming a common Wilson system. Rung reached: none yet. Rung
-claimed: nontrivial R2 conditionally; no categorical cell moves by calibration.
+| Statements | Setting | Data layer and declarations | Rung reached / claimed |
+|---|---|---|---|
+| A, A.1–A.4 | Any; periodic/full per family when applied to KS | Category-free; finite Hilbert tower, K, J, adjoint-paired modes and fixed ledgers; A1–A5; (PE) for strict charge positivity | Nontrivial algebraic R2 conditional on these data; no R3 claim |
+| A.2 | Any C with declared periodic representation | L0, pointed unit-multiplicity site objects, the cited densities/controls/refinements | Negative test at trivial R2; no rung advance |
+| A.5 | Supplied chiral target, no local spatial tower | L4, unitary highest-weight target and geometric spectral cutoffs | Abstract R2 counterexample to an unnormalized charge inference |
+| B, B.1, C | Any | Category-free; energy-labelled bases/bounds, or same-state cyclic algebra representations and intertwiners | Sufficient R2 / same-system implications; not data synthesis |
+| Calibration in checks | AP circle; one family and explicitly paired full extension | Category-free; complex CAR, no-wrap source-modified modes, linear excitation energy E, K=(1+E)^p, sharp momentum CAR maps, actual Dirac Wilson rows | R1 plus nontrivial R2 on their common limit GNS; no R3–R5 claim |
+| General categorical application | Boundary representation declared; no boundary choice is investigated | L0, arbitrary unitary fusion C and pointed O, plus microscopic densities, states, geometry, refinements and analytic certificates | No new categorical rung reached; nontrivial R2 is conditional |
+
+The compatible control E in the check is **not** the finite physical sine
+Hamiltonian. The standard continuum charge there is c=c*=1 per chiral
+factor; no braided/modular input or sector-fidelity conclusion is inferred.
 
 ## Pillar served
 
-P4: detect loss of stress under refinement and verify graph-norm transport
-without substituting estimates on a fixed momentum core.
+**P4:** stress survival is now a quantitative part of the OAR acceptance
+contract, with a finite witness and tail margin. The full graph-norm and
+common-state calibration shows that this strengthened contract is
+satisfiable. P1's general indefinite-number carrier, P2's worldline ensemble
+and P3's local conformal equations are not replaced by the calibration; they
+still need to supply the microscopic data on which the P4 theorem can act.
 
 ## What this gives the integration
 
-Open: identify the CA-88 cell and CA-75 link after proof audit. The intended
-change is to the analytic certificate and its calibration, not general-C R2.
+The free-fermion calibration row gains **“R2 by VR-1” alongside “R2 by
+Osborne–Stottmeister 4.11”**, now on WS-1's limit GNS representation. The
+CA-88 category-free certificate annotation is strengthened by A5, and the
+same-system condition in Remark 88.4 is verified for this calibration.
+No categorical cell moves. No general local R0^u, R1, R3, R4 or R5 claim
+follows; the sharp momentum refinement remains spatially nonlocal.
+
+For CA-75 this addresses row (4), “continuum state and generators,” and
+the generator-convergence contract at `:198–200`. It supplies the analytic
+receiver for **Link (a3)**, where stress insertions from the general
+spacetime/cell system must become the prescribed KS modes under refinement
+(`:131–138`). It does not derive those Ward insertions, and does not close
+Link (b3)'s categorical state-drift problem. WT-1's existing calibration
+is composed here with the new mode certificate, not reproved or generalized.
 
 ## Open problems
 
-All proof obligations above remain open in this initial ledger.
+1. **Normalized positivity-only lemma:** from the semibounded L_0 form
+   and VR-1's common domain, prove a total spectral-cutoff domain with
+   `L_n 1_Delta(L_0)D ⊂ Ran 1_(Delta−n)(L_0)`, preserving the same
+   operators and adjoint pairing, or prove strict c*>0 directly. A chosen
+   self-adjoint extension alone does not establish this intertwining.
+2. **Categorical realization lemma:** for arbitrary (C,O), construct the
+   category-evaluated microscopic densities and a positive state/refinement
+   system satisfying A1–A5. This is the missing general instance; the
+   entrywise certificate names what must be bounded, not how to select h.
+3. **Geometric identification lemma:** on that same system, prove CA-95's
+   endpoint/cylinder/accumulated Ward bounds and the identification with
+   LC-4's prescribed energy/current modes, when using the Ward route.
+4. **Local refinement comparison:** replace or compare the sharp momentum
+   calibration with a local categorical refinement while retaining its
+   whole-carrier estimates. Nothing here identifies the no-wrap modes
+   with a fixed-support standard local KS prescription at each scale.
+5. **Beyond R2:** prove local observables, integrated symmetry and the
+   required fidelity to declared categorical/target data; non-collapse
+   and a positive charge do not provide those statements.
 
 ## Examples table
 
-| Instance (checks only) | Status |
-|---|---|
-| Source-modified complex CAR, AP circle | Whole-Hilbert certificate open |
-| CA-95.5 / CA-100.5 collapse witnesses | A5 rejection to be checked |
+| Instance (checks only) | Exact finding | Scope |
+|---|---|---|
+| Source-modified complex CAR, negative sea on AP circle | K=(1+E)^p works iff p>1; smallest integer p=2; A5 κ=1/(2√2π); c=c*=1 | First whole-carrier nontrivial VR-1 calibration; analytic proof in checks/graph_certificate.md |
+| Same CAR, p=1 | One-particle UV defect divided by 1+E tends to 2(√2−1)/π>0 | Explicit failure of A3, despite fixed-core convergence |
+| Actual two-component Dirac Wilson rows | Fixed U=(e_+,e_−) gives S_-⊕S_+; full spectator extension has the same certificate | R1/R2 common system; finite P_Q are not replaced by the limiting sea |
+| Paired source-modified extension | Reflection exchanges seas; both factors have c=1 and commute exactly | Full paired algebraic R2; not a new local-net construction |
+| CA-95.5 on O=1⊕1⊕1 in arbitrary C | Transported A5 pairings vanish after one refinement | Exact general-class collapse witness |
+| CA-100.5 on O=1⊕1 in arbitrary C | Every mode and A5 pairing is zero | Exact general-class collapse witness |
+| Shifted supplied targets (a,h), a>1, h>a/24 | Raw T_0≥0 but c=a−24h<0, c*=a>0 | General normalization counterexample, not a lattice realization |
 
 ## Sources used
 
-- `cft_machine/research/virasoro_routes.md`, VR-1 (precise anchors to follow).
-- `report/sections/81_cft_machine_oar_contract.tex:95–125`, contract boundary.
-- `report/sections/95_probe_word_ward_lifting.tex`, 95.5, 95.8–95.11.
-- `worklog/023_2026-10-27_status_overview.md`, §§0,1,4.
-- `CONVENTIONS.md:801–869,1505–1562`, graph, calibration and layer conventions.
+Primary local ground truth:
+
+- `references/text/CFTFromLatticeFermions.txt:738–755,848–855,879–892`: quasi-free/GNS and normal-ordered CAR identities.
+- `references/text/CFTFromLatticeFermions.txt:1176–1205,1845–1894`: chiral spinor basis, finite-state entanglement, CAR refinement and spatial nonlocality.
+- `references/text/CFTFromLatticeFermions.txt:2372–2384,3379–3418`: projected and no-wrap modified KS coefficients; `:3483–3502` is the pre-existing strong-core theorem, not used to prove the new estimates.
+- `literature/md/2010.11121/2010.11121.md:126–180`: Wilson limiting states and their compatible GNS system.
+- `references/cft/Schottenloher2008/Schottenloher2008.md:2720–2766,2937–2947,2985–3004,3044–3054`: adjoint pairing, energy shifts, Gram entries, general unitary highest-weight targets and their integration scope.
+- `references/cft-machine/coset-symmetry/CarpiWeiner2004/source.tex:701–747`: integrated positive-energy hypotheses and energy bounds; not a bare-form integration theorem.
+- `references/cft-machine/proofs/lamport1993.tex:150–170`: structured proof-step numbering.
+- `references/cft-machine/fermion/SOURCES.md:1–37`, `references/cft/SOURCES.md:9–32`, `references/cft-machine/coset-symmetry/SOURCES.md:3–29`: source provenance; no new acquisition.
+
+Existing local derivations, conventions and integration interfaces:
+
+- `cft_machine/research/virasoro_routes.md:55–177`: A1–A4, the complete graph-space/product proof and exclusions.
+- `cft_machine/benchmarks/fermion/PROOF.md:12–76,78–128`: source prescription, fixed-core bound and finite Schwinger sum.
+- `cft_machine/benchmarks/fermion/WILSON_PROOF.md:9–98`: actual microscopic states, WS-1 and its limiting covariance.
+- `cft_machine/reviews/virasoro_referee.md:155–161`: fixed-core versus uniform graph-norm warning.
+- `CONVENTIONS.md:631–739,801–869,1196–1218,1431–1562`: site object, two central ledgers, graph and calibration normalization, KS and layer tags.
+- `report/sections/79_ks_shell_and_refinement_defect.tex:51–155,182–200`: KS/control conventions, shell certificate and exact-covariance obstruction.
+- `report/sections/81_cft_machine_oar_contract.tex:48–85,95–120`: WT-1, VR-1 and same-system boundary.
+- `report/sections/88_layered_targets.tex:96–125`: rung definitions and Remark 88.4.
+- `report/sections/89_ward_ks_transfer.tex:51–84,92–99,144–184,201–231`: transfer, wrong physical control, refinement matching and Ward gap.
+- `report/sections/95_probe_word_ward_lifting.tex:61–84,93–133,156–213`: conditional Ward interface, collapse, prior spectral checks, wrong energy and categorical insertion.
+- `report/sections/100_zero_mode_lattice_chirality.tex:142–150,212–226`: exact zero chain and supplied-target cutoff construction.
+- `report/sections/75_integration_map.tex:84–111,115–160,198–200`: state/generator row and the unfinished joins.
+- `reconstruction/04_cutoff_oar.md:61–155`: prescribed periodic KS, state/GNS system, analytic certificate and R3 boundary.
+- `worklog/023_2026-10-27_status_overview.md:18–78,161–179`: P4 priority and the prior missing-instance diagnosis.

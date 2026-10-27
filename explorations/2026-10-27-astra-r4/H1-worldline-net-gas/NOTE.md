@@ -174,7 +174,19 @@ The third identity defines ptr_a by closing only the a legs; closing the
 remaining legs is the same diagram. The second follows by a detached
 circle; the last follows with a replaced by O and d_O=Σ_c m_c(O)d_c.
 BY <1>1, graphical composition and cyclicity. These are the categorical
-**Markov trace/partial-trace identities** used here. QED.
+**Markov trace/partial-trace identities** used here.
+<1>5. More explicitly, for W=O^L the normalized right partial trace is
+
+    E_W(T)=d_O^−1 (id_W⊗coev_O†)(T⊗id_Ō)(id_W⊗coev_O).
+
+It is unital since coev_O†coev_O=d_O. At every matrix amplification it
+is a compression of T⊗id_Ō, hence preserves positivity. W-endomorphisms
+pass through the cup, so E_W((A⊗id)T(B⊗id))=A E_W(T)B and E_W(A⊗id)=A.
+Thus it is a completely positive conditional expectation onto End(W),
+identified with End(W)⊗id in the larger algebra; it preserves the
+normalized traces by <1>4. BY the displayed compression and composition.
+This is a quantum/algebraic Markov property, distinct from H1-C's classical
+conditional law. QED.
 
 **What the assertion excludes [negative qualification].** An unbranched
 component carrying a coupon A contributes tr_a(A), not necessarily d_a;
@@ -186,14 +198,20 @@ exclusion of other configurations remain in the statistical weight. This
 does not assert statistical independence of loops. Levin–Wen's four rules
 are local diagram identities (strnet.tex:497–524), not such independence.
 
-**Gibbs trace declaration [proven].** The ordinary Hilbert trace on
+**Gibbs trace declaration [proven]. ASSUME** the carrier and trace
+conventions of H1-A/B. **PROVE** the ordinary Gibbs trace is (B2).
+The ordinary Hilbert trace on
 H_L=⊕_c Hom(c,O^L) is Tr_H(T)=Σ_c Tr(T^c); it is generally different
 from tr_C(T). Let J_L=Σ_c d_c^(−1)P_c, a central boundary insertion. Then
 
     Tr_H(T)=tr_C(J_L T),
     ω_(β,H)(A)=tr_C(J_L e^(−βH) A)/tr_C(J_L e^(−βH)).        (B2)
 
-BY <1>4, blockwise. At finite brick depth replace e^(−βH) by R(t)^M;
+<1>1. Multiplying the c block by d_c^−1 cancels its categorical trace
+factor d_c. BY H1-B <1>4, blockwise.
+<1>2. Apply <1>1 to T=e^(−βH)A and T=e^(−βH); the latter has a
+strictly positive trace because H=H†. BY spectral calculus. QED.
+At finite brick depth replace e^(−βH) by R(t)^M;
 (A2) gives its exact history expansion. A *categorically traced* Gibbs
 state instead omits J_L and weights total charges by d_c. A fixed-charge
 trace uses P_c/d_c. In particular a single a-sector identity has ordinary
@@ -254,21 +272,27 @@ positivity or with a zero denominator, <1>2 remains an algebraic gluing
 identity and <1>3 is not a conditional probability. Inverse Gram entries
 are contraction coefficients, not transition probabilities.
 
-**Negative C-labels (general class).** In any unoriented loop sector with
+**Negative C-labels (general class). ASSUME** an unoriented loop sector with
 a simple symmetrically self-dual a and d=d_a>1, four boundary endpoints
-all carrying a admit pairings A=(12)(34), B=(14)(23). Take equal interior
-local products. Exterior A gives completion weights (d²,d), exterior B
-gives (d,d²). Their ratios d and 1/d differ. **Proof:** stacking identical
-pairings closes two circles; stacking different pairings closes one;
-apply H1-B. Thus endpoint species/occupancies do not determine the
-conditional law. Outside connectivity, or its full categorical tensor,
-must be retained. This is a counterexample for the entire indicated class,
-not a claim about one category. Indeed the cut Gram is
+all carrying a, and pairings A=(12)(34), B=(14)(23) with equal interior
+local products. **PROVE** endpoint labels do not determine the law.
+This choice is realizable by exact tiles: on the occupied a⊗a corner put
+e=vv†, so e²=d e and exp(t e)=I+[(exp(td)−1)/d]e. Taking
+t=log(1+d)/d gives the two pairings I and e with equal coefficient 1;
+extend by the identity on other occupation corners.
+<1>1. Stacking identical pairings closes two circles; stacking different
+pairings closes one. BY tracing the two explicit pairings.
+<1>2. Exterior A gives weights (d²,d), exterior B gives (d,d²); ratios
+d and 1/d differ. BY <1>1 and H1-B. Thus outside connectivity, or its
+full categorical tensor, must be retained.
+<1>3. The cut Gram and its inverse are
 
     G=[[d²,d],[d,d²]],
     G^−1=(d^4−d²)^−1 [[d²,−d],[−d,d²]],                       (C3)
 
-so sewing uses negative coefficients even though these loop laws are positive.
+BY the same closures and direct inversion; d>1 makes the determinant
+positive. Sewing uses negative coefficients even though these loop laws
+are positive. QED. This is a counterexample for the whole indicated class.
 
 For explorations by successive exposed tiles, (C2) also holds at each
 finite stopping step by conditioning on each possible revealed history.
@@ -316,19 +340,23 @@ U=P_0+iP_1 at each site gives h_-=(U⊗U)h_+(U⊗U)†; internal phases cancel.
 BY occupation bookkeeping from CA-77:90–116. QED: necessity fails even for
 exact self-adjoint exponential tiles, throughout this class.
 
-**Sharp phase criterion [proven].** In (D1), discard zero-weight histories
+**Sharp phase criterion [proven]. ASSUME** (D1), discard zero-weight histories
 and put ε_(p,α)=w_(p,α)/|w_(p,α)|. All closed weights are nonnegative iff
 
     ∏_p ε_(p,α_p)=1  for every realizable closed history.     (D3)
 
-BY division of (D1) by its strictly positive modulus. For real coefficients
+**PROVE** (D3) is equivalent to closed-weight positivity.
+<1>1. Divide (D1) by its strictly positive modulus. The remaining factor
+is exactly the left side of (D3). BY H1-B's d_a>0. QED. For real coefficients
 this says an even number of negative factors on every history; it does
 not say each factor is positive. Occupation coboundaries
 w_α↦exp(iθ ΔN_α)w_α leave (D3) unchanged. This is a necessary-and-sufficient
 criterion on the specified histories; it need not reduce to a local test.
 
-**Negative D-FS (missing hypothesis in H1(d)(i)).** For a simple
-self-dual X with κ_X=−1 the raw v,v† convention satisfies
+**Negative D-FS (missing hypothesis in H1(d)(i)). ASSUME** a simple
+self-dual X with κ_X=−1 and the raw v,v† convention. **PROVE** positive
+geometric coefficients do not suffice for positive closed weights.
+<1>1. The raw maps satisfy
 
     (v†⊗1)(1⊗v)=κ_X id_X,
     v†(1⊗v†⊗1)(v⊗v)=κ_X d_X.                              (D4)
@@ -339,13 +367,15 @@ diagram is one component with two births and two deaths. On four vacant
 sites it is realized by b_12, b_34, d_23, hops 4→3→2, then d_12;
 identities fill a brick schedule. This is a nearest-neighbour history.
 
-For h=b+b†+λ(hop_++hop_-), λ>0, the two summands act in orthogonal
+<1>2. For h=b+b†+λ(hop_++hop_-), λ>0, the two summands act in orthogonal
 occupation sectors. Its exponential is (D2) with the plus sign, plus
 
     sinh(tλ)(hop_++hop_-)+(cosh(tλ)−1)(P_Xv+P_vX).
 
-All displayed geometric coefficients are nonnegative, yet the history
-(D4) has negative weight. **Thus sufficiency also fails as H1 was worded**
+BY exponentiating the two independent 2-by-2 blocks.
+<1>3. All displayed geometric coefficients are nonnegative, yet the history
+(D4) has negative weight. BY <1>1–<1>2 and κ_X=−1. QED.
+**Thus sufficiency also fails as H1 was worded**
 if only self-duality and v†v=d are assumed. The separating hypothesis is
 κ=+1 for the collapsed unoriented convention, or the use of correctly
 oriented duality/pivotal morphisms with their actual coefficients. A proper
@@ -596,7 +626,8 @@ as ε changes. By a nondegenerate continuous critical choice we require:
    Euclidean-isotropy hypothesis, weaker than (E2); proving it for the
    selected model is an open part of tuning, not a consequence of (E1).
 
-Declare a Polish configuration space N(D), an embedding of the discrete
+The proposed continuum target includes the construction of a Polish
+configuration space N(D), an embedding of the discrete
 labelled nets into it, a topology retaining macroscopic connectivity,
 orientation, simple labels and junction marks, and compatible restriction
 and conformal-image maps. Require finitely many components of diameter
@@ -604,7 +635,9 @@ above each cutoff on compact subsets. For nets with arbitrarily dense
 branching, constructing such an admissible marked topology is itself an
 open lemma; ordinary loop topology cannot silently be substituted.
 
-**Conjecture:** for admissible data just specified the probability laws
+**Conjecture:** for the categorical and critical data just specified,
+there exist such compatible geometric configuration spaces/embeddings in
+which the probability laws
 μ^b_(D,ε) have a unique scaling limit μ_D^b with positive-diameter features
 and nontrivial probabilities for the specified macroscopic connection events
 (retaining the q,1−q bounds on continuity events), and for every
