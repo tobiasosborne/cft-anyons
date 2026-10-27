@@ -906,3 +906,11 @@ single ~200-line source file it points to.
 - Summary: The interval/dilation record does not determine the pointed input: charge translation in an abelian graded family preserves every interval and the fixed-H refinement while changing the site class, refuting the positive form of Target 97.16.
 - Summary: Cut commutants are intrinsic, but vacancy projections must be carried; even named points do not make placement maps natural. Pointed records separate the tested counterexamples, while general pointed-record faithfulness remains open.
 - Keywords: vacancy, pointed record, interval algebra, dyadic refinement, relative commutant, charge translation, half-braiding, naturality, fidelity, P1, G6
+
+## `CA-103-WORLDLINE-NET-GAS`
+
+- Source: `report/sections/103_worldline_net_gas.tex`
+- Title: The Worldline Net Gas on the Pointed Carrier: Exact Dictionary, Physical Trace, Conditional Markov Law and Sign Structure
+- Summary: For any unitary fusion C and pointed O = 1 + X, exact tiles exp(th) expand into decorated C-evaluated spacetime nets; the physical Gibbs trace is tr_C(J_L .), J_L = sum_c P_c/d_c, so only contractible loops carry d_a, and inverse-Gram sewing gives a domain Markov law for disk sub-patches conditional on nonnegative weights.
+- Summary: The coefficient-sign "iff" fails both ways (occupation gauge; pseudoreal X, kappa = -1); a nonnegative complete unitary F calculus exists iff the generated subcategory is Hilb_G with trivial associator class; temporal RP and termwise positivity of a fixed presentation are independent. Scaling is conjectural; next is loop-sector positivity under the physical trace.
+- Keywords: worldline net gas, spacetime string-net, Levin-Wen rules, exact tile expansion, pointed carrier, vacancy flag, physical Gibbs trace, J_L, Markov trace, inverse Gram sewing, domain Markov, Frobenius-Schur indicator, kappa, F-positivity, stoquastic, holonomy, reflection positivity, CLE, H1, P2, P1

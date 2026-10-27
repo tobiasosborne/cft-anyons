@@ -120,6 +120,7 @@ before treating report edits as complete.
 | 100 | `CA-100-ZERO-MODE-LATTICE-CHIRALITY` | `report/sections/100_zero_mode_lattice_chirality.tex` | Zero Modes and Lattice Chirality: Parity-Free KS Ledger Balance |
 | 101 | `CA-101-ANCILLA-TRANSPORT-LIFTS` | `report/sections/101_ancilla_transport_lifts.tex` | Ancilla Transport Lifts and the Failure of Finite-Power Extraction |
 | 102 | `CA-102-RECORD-FORGETS-THE-POINT` | `report/sections/102_record_forgets_the_point.tex` | The Interval/Dilation Record Forgets the Point |
+| 103 | `CA-103-WORLDLINE-NET-GAS` | `report/sections/103_worldline_net_gas.tex` | The Worldline Net Gas on the Pointed Carrier: Exact Dictionary, Physical Trace, Conditional Markov Law and Sign Structure |
 
 ## Adding a shard
 

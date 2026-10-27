@@ -1,0 +1,234 @@
+% SHARD-ID: CA-104-VR1-NONCOLLAPSE-AND-FIRST-INSTANCE
+% SHARD-TITLE: VR-1 Non-Collapse and a First Whole-Carrier Graph-Norm Instance
+% SHARD-SUMMARY: Category-free: under VR-1 A1-A4 a transported coarse-vector witness A5 is equivalent to nonzero limiting stress, with finite certificate |q_a| > d_{a,n}; the collapsing chains CA-95.5 and CA-100.5 fail it, A5 plus (PE) gives c* > 0, and raw T_0 >= 0 does not give c > 0 for the linear ledger.
+% SHARD-SUMMARY: Entrywise Schur certificates and a full-Fock quadratic CAR bound yield the first genuine VR-1 + A5 instance: source-modified fermion modes with K = (1+E)^p satisfy A1-A4 on the whole carrier iff p > 1, kappa = 1/(2 sqrt2 pi), on WS-1's GNS system with zero mixed brackets; the refinement is nonlocal and no categorical cell moves.
+% SHARD-KEYWORDS: VR-1, non-collapse, A5, finite certificate, central charge, c star, PE condition, linear ledger, Schur test, graph norm, whole carrier, CAR quadratic, free fermion calibration, same GNS system, WS-1, WT-1, graph-norm distortion, P4
+\section{VR-1 Non-Collapse and a First Whole-Carrier Graph-Norm Instance}\label{sec:vr1-noncollapse-first-instance}
+
+\subsection{Status, Sources, and Dependencies}
+
+\textbf{Status:} H3 as posed is \textbf{WEAKER-RESULT-PROVED}; the corrected statements are \textbf{PROOF-COMPLETE} (REVIEW:\allowbreak 1--11).
+Only the sub-clause ``adjoint pairing \(+\) positivity of \(L_0\) gives \(c>0\)'' fails: for the linear ledger it is false
+(104.7); for the invariant \(c^*\) it is proved only under (PE) (104.4), and from positivity alone it is open (104.6).
+104.1, 104.2, 104.4, 104.5, 104.8, 104.9, 104.10 are \emph{derived}; 104.3 and 104.7 are \emph{negative};
+104.11 is \emph{derived (calibration)}; 104.6 and Target 104.12 are \emph{conjectural}.
+\textbf{Weight (REVIEW:\allowbreak 142--151).} The general theorems are thin: 104.1 is close to a reformulation
+(A5 \(\Leftrightarrow\) some \(T_n\neq0\)); its operational content is the finite certificate and the ``one vanishes \(\Rightarrow\) all
+vanish'' bracket argument. 104.8 is a Schur test and 104.10 is GNS uniqueness. The hard analytic content is the
+instance (104.9 and the coefficient estimates of 104.11). Nothing here is advertised as a deep general result.
+\textbf{Pillar P4:} non-collapse becomes a quantitative clause of the OAR acceptance contract, and the strengthened
+contract is shown satisfiable once. P1--P3 are untouched; they must still supply the microscopic data (NOTE:\allowbreak 450--457).
+\textbf{CA-88 (INTEGRATION:\allowbreak 34--59).} \emph{Moves:} Def.~88.3's \(\mathsf R2\) ``Certificate in repo'' gains
+``VR-1\(+\)A5 first instance, category-free, sharp-momentum nonlocal refinement, on WS-1's GNS system [derived]''; the
+grid row ``WT-1, VR-1 (CA-81)'' gains ``non-collapse clause A5 (104.1); one calibration instance on a common system'';
+a new row ``Fermion calibration (WS-1\(+\)104.11)'' (\(\mathsf S\) periodic AP, one family or paired full; \(\mathsf L\) none;
+\(\mathsf R1+\mathsf R2\), \(\mathsf R0\) unital but nonlocal, no \(\mathsf R3\)) must be \emph{created}. \emph{Does not move:} every
+categorical row (CA-68, 71--74, 76--79, 89--95, LC-1--LC-13), CA-82--85, the \(\mathsf R1\) row, and \(\mathsf R3\)--\(\mathsf R5\) everywhere.
+Remark 88.4 is met for the calibration only; no categorical system carries both \(\mathsf R1\) and \(\mathsf R2\).
+NOTE, REVIEW, INTEGRATION and \path{checks/} mean the files in \path{explorations/2026-10-27-astra-r4/H3-vr1-noncollapse-instance/}.
+Dependencies: CA-75 (generator convergence), CA-79 (79.1 shift law, 79.2), CA-81 (WT-1, VR-1, same-system clause),
+CA-88 (88.3, 88.4, grid), CA-89 (89.2, 89.3), CA-95 (95.5, 95.8, 95.11), CA-100 (100.5, 100.10);
+CONVENTIONS (s), (v), (w), (al), (aq), (ar), (ax). Shard-local notation is proposed in \path{SHARD_META.md}.
+
+% Source: explorations/2026-10-27-astra-r4/H3-vr1-noncollapse-instance/NOTE.md:56-118,120-152,154-246,250-321,325-386,435-466.
+% Source: explorations/2026-10-27-astra-r4/H3-vr1-noncollapse-instance/REVIEW.md:1-11,20-66,68-151,153-252,254-303,305-319.
+% Source: explorations/2026-10-27-astra-r4/H3-vr1-noncollapse-instance/INTEGRATION.md:3-32,34-59,61-92,94-119,121-133.
+% Source: explorations/2026-10-27-astra-r4/H3-vr1-noncollapse-instance/checks/graph_certificate.md:33-88,90-118,120-169,171-238,240-272.
+% Source: explorations/2026-10-27-astra-r4/H3-vr1-noncollapse-instance/checks/same_system.md:13-124,126-142.
+% Source: explorations/2026-10-27-astra-r4/briefs/H3-vr1-noncollapse-instance.md:105-142 -- conjecture as posed.
+% Source: cft_machine/research/virasoro_routes.md:55-82 (A1-A4), :84-112 (graph spaces, tail), :143-146 (adjoint pairing only), :167-171 (distortion).
+% Source: cft_machine/benchmarks/fermion/WILSON_PROOF.md:28-41 -- WS-1 row limit (I - sign(r) sigma_y)/2.
+% Source: cft_machine/reviews/virasoro_referee.md:155-161 -- fixed-core estimate is not a graph-operator bound.
+% Source: references/text/CFTFromLatticeFermions.txt:739-755 (quasi-free/GNS), :848-855 (normal ordering), :886-892 (cocycle (27)-(28)).
+% Source: references/text/CFTFromLatticeFermions.txt:1176-1186 (spinor basis), :1845-1878 (CAR refinement), :1890-1894 (spatial nonlocality).
+% Source: references/text/CFTFromLatticeFermions.txt:2372-2384 (fixed p_+-, eq. 145), :3379-3418 (no-wrap, eqs. 197-199).
+% Source: references/cft/Schottenloher2008/Schottenloher2008.md:2937-2947 (level-two Gram), :2985-3004, :3044-3054 (unitary targets).
+% Source: references/cft-machine/coset-symmetry/CarpiWeiner2004/source.tex:701-747 -- energy bounds used via CA-100.10.
+% Source: report/sections/81_cft_machine_oar_contract.tex:97-120; 88_layered_targets.tex:96-158,179-188.
+% Source: report/sections/89_ward_ks_transfer.tex:88-99; 95_probe_word_ward_lifting.tex:93-133,156-226.
+% Source: report/sections/100_zero_mode_lattice_chirality.tex:142-150,212-226; 79_ks_shell_and_refinement_defect.tex:76-82,249-256.
+% Source: report/sections/75_integration_map.tex:198-200; worklog/023_2026-10-27_status_overview.md:76.
+% Source: CONVENTIONS.md:695-728 (s), 801-829 (v), 830-869 (w), 1524-1562 (aq),(ar), 1644-1665 (ax).
+
+\subsection{Setting}
+
+A tower \((H_r,J_r,K_r,T_{r,n})\) satisfies VR-1 A1--A4 exactly as in \path{virasoro_routes.md}:55--82, with graph norms
+\(\|v\|_{r,s}=\|K_r^sv\|\) of (v), \(|X|_{s,d}=\|K^sXK^{-s-d}\|\) of (ar), A3 errors \(e_{r,n,s}\), ledger
+\(z_{mn}=\delta_{m+n,0}(m^3c^*-mc)/12\) with both constants of (s) kept separate. \(K\) is the auxiliary control built
+there, never assumed to be a Hamiltonian; \(H\) is the completed inductive limit, \(D\) its common invariant domain,
+\(i_a:H_a\to H\). Inner products are linear in the second slot (al). For a unit \(v\in H_a\), \(n\neq0\), put
+\[
+ v_r=J_{r\leftarrow a}v,\qquad q_r(v,n)=\langle v_r,T_{r,n}K_r^{-1}v_r\rangle,\qquad d_{a,n}=\textstyle\sum_{j\ge a}e_{j,n,0}.
+\]
+\textbf{A5 (non-collapse):} there are \(n\neq0\), \(a\), such a \(v\), \(\kappa>0\), \(r_0\ge a\) with \(|q_r(v,n)|\ge\kappa\) for all \(r\ge r_0\).
+\emph{Setting} any; \emph{data} category-free; for a categorical chain the only input is the declared realisation.
+
+\subsection{Non-Collapse}
+
+\textbf{Theorem 104.1 [derived; any; category-free; \(\mathsf R2\) nontrivial given VR-1] (NOTE:\allowbreak 56--118; REVIEW:\allowbreak 155--164).}
+Under A1--A4: A5 holds iff some \(T_n\) (\(n\neq0\)) is nonzero on \(D\); A5 then makes \emph{every} \(T_n\), \(n\neq0\), nonzero and
+\(T_0\) non-scalar; \(|q_a(v,n)|>d_{a,n}\) is a finite sufficient certificate, and it is eventually necessary.
+\par\(\langle1\rangle1\). \(B_n=T_nK^{-1}\) extends boundedly (A2 at \(s=0\)) and \(|q_r(v,n)-\langle i_av,B_ni_av\rangle|\le d_{r,n}\).
+A1 gives \(K_r^{-1}v_r=J_{r\leftarrow a}K_a^{-1}v\); apply the VR-1 tail at order zero (\path{virasoro_routes.md}:111--112) to it,
+whose order-one norm is \(1\), and Cauchy--Schwarz.
+\par\(\langle1\rangle2\). A5 \(\Rightarrow\) \(|\langle i_av,B_ni_av\rangle|\ge\kappa\), so \(B_n\neq0\) and \(T_n\neq0\) on \(D\) (\(K^{-1}i_av\in D\)).
+\par\(\langle1\rangle3\). Conversely \(T_n\neq0\Rightarrow B_n\neq0\) (\(K\) maps \(D\) to \(D\)); polarisation on the dense algebraic union gives a
+coarse unit \(v\) with \(b=|\langle i_av,B_ni_av\rangle|>0\); since \(d_{r,n}\to0\), \(|q_r|\ge b/2\) eventually.
+\par\(\langle1\rangle4\). Telescoping A3 gives \(|q_r-q_a|\le\sum_{j=a}^{r-1}e_{j,n,0}\le d_{a,n}\): the certificate gives \(\kappa=|q_a|-d_{a,n}\).
+If A5 holds, pick \(r\) with \(d_{r,n}<\kappa\). Computing the tail majorant is substantive input, not an observed trend.
+\par\(\langle1\rangle5\). If \(T_k=0\) for some \(k\neq0\): \([T_k,T_{j-k}]=(2k-j)T_j\) kills \(T_j\) for \(j\neq0,2k\), and
+\([T_{3k},T_{-k}]=4kT_{2k}\) kills \(T_{2k}\); no central term enters. \([T_0,T_n]=-nT_n\) makes \(T_0\) non-scalar. QED.
+
+\textbf{Corollary 104.2 [derived; same tags] (NOTE:\allowbreak 120--123; REVIEW:\allowbreak 166--169).}
+For integer \(\sigma\ge1\), \(K^{-1}\) in A5 may be replaced by \(K^{-\sigma}\); the scalar tail is at most \(d_{r,n}\|K_a^{1-\sigma}v\|\).
+Real \(\sigma\) needs graph spaces of real order, which VR-1 does not define (REVIEW G1, harmless); it is not claimed.
+
+\textbf{Negative 104.3 [negative; any, full per KS family; \(\mathsf L0\), any \(\Cc\); trivial \(\mathsf R2\)] (NOTE:\allowbreak 125--144; REVIEW:\allowbreak 171--174).}
+A1--A4 do not exclude collapse: CA-95.5 has \(T_{r+1,n}J_r=0\) (\path{95_probe_word_ward_lifting.tex}:121), so \(q_r(v,n)=0\) for
+every coarse \(v\) and \(r>a\); CA-100.5 has all modes zero (\path{100_zero_mode_lattice_chirality.tex}:142--150). Both use
+unit-multiplicity carriers (\(O=\one\oplus\one\oplus\one\), \(O=\one\oplus\one\)) and their matrix units, so they embed in every unitary
+fusion \(\Cc\): A5 fails for the general class. Necessity means rejection of these systems, not that a preselected vector must detect stress.
+
+\subsection{The Central-Charge Clause}
+
+Normalised modes: \(L_n=T_n+\delta_{n0}(c^*-c)/24\), so \([L_m,L_n]=(m-n)L_{m+n}+\tfrac{c^*}{12}(m^3-m)\delta_{m+n,0}\); this is the shift
+law of 79.1 (\path{79_ks_shell_and_refinement_defect.tex}:78--80). The invariant is \(c^*\); ``\(c>0\)'' must name its ledger.
+\textbf{(PE):} \(D\) contains a Hilbert-total linear subspace \(V_{\rm fin}\) with \(L_nv=0\) for all sufficiently large \(n>0\), \(v\in V_{\rm fin}\).
+
+\textbf{Theorem 104.4 [derived; any; category-free \(+\)(PE); \(\mathsf R2\) restriction] (NOTE:\allowbreak 154--207; REVIEW:\allowbreak 180--189).}
+With the normalised relations and adjoint pairing on \(D\), (PE) gives \(c^*\ge0\), and \(c^*=0\) forces all \(L_n=0\).
+Hence A5\(+\)(PE) gives \(c^*>0\). Positivity of \(L_0\) is \emph{not} used.
+\par\(\langle1\rangle1\). For \(v\in V_{\rm fin}\) and large \(k\): \(\|L_{-k}v\|^2=2k\mu+\tfrac{c^*}{12}(k^3-k)\|v\|^2\), \(\mu=\langle v,L_0v\rangle\in\mathbb R\);
+so \(c^*\ge0\).
+\par\(\langle1\rangle2\). Let \(c^*=0\), \(\nu=\|L_0v\|^2\). With \(u=L_{-2k}v/k\), \(w=L_{-k}^2v/k^2\): \(\|u\|^2=4\mu/k\),
+\(\langle u,w\rangle=6\mu/k\) (from \([L_{2k},L_{-k}]=3kL_k\), \([L_k,L_{-k}]=2kL_0\)), and \(L_k^2L_{-k}^2v=(8k^2L_0^2+4k^3L_0)v\) (using
+\(L_kL_0v=0\)) gives \(\|w\|^2=8\nu/k^2+4\mu/k\). Then \(\det G=4\mu(8\nu-5k\mu)/k^3\ge0\) for all large \(k\) forces \(\mu=0\).
+\par\(\langle1\rangle3\). So \(L_{\pm k}v=0\) for large \(k\); \([L_k,L_{m-k}]\) with \(2k\neq m\) gives \((2k-m)L_mv=0\).
+\par\(\langle1\rangle4\). \(\langle u,L_mv\rangle=\langle L_{-m}u,v\rangle=0\) for \(u\in V_{\rm fin}\); totality gives \(L_m=0\) on \(D\), contradicting A5. QED.
+Exact word-algebra checks: \path{checks/noncollapse_symbolic.py}; the Gram mutation \(6h\to5h\) is rejected.
+
+\textbf{Corollary 104.5 [derived; same tags] (NOTE:\allowbreak 209--216; REVIEW:\allowbreak 191).}
+A lower bound \(b\) for the \(L_0\) form on \(D\) and a Hilbert-total span of \(L_0\)-eigenvectors in \(D\) give (PE):
+\(L_0L_nv=(h-n)L_nv\) for \(L_0v=hv\), so \(n>h-b\) forces \(L_nv=0\).
+
+\textbf{Conjecture 104.6 [conjectural; any; category-free; \(\mathsf R2\)]\newline (NOTE:\allowbreak 218--224,\allowbreak 478--482; REVIEW:\allowbreak 193--194).}
+\(c^*>0\) from positivity of the \(L_0\) form alone on VR-1's \(D\). VR-1 proves adjoint pairing only
+(\path{virasoro_routes.md}:143--146): no essential self-adjointness, no spectral projections preserving \(D\). Not declared false.
+
+\textbf{Negative 104.7 [negative; supplied chiral target, no local tower; \(\mathsf L4\), category-free contract; \(\mathsf R2\)] (NOTE:\allowbreak 226--246; REVIEW:\allowbreak 196--202).}
+Raw \(T_0\ge0\) does not give \(c>0\) for the linear ledger. For any unitary highest-weight target of charge \(a>1\) and
+lowest weight \(h>a/24\) (Schottenloher:2985--3004, 3044--3054), put \(T_n=L_n\) (\(n\neq0\)), \(T_0=L_0-h\ge0\).
+\par\(\langle1\rangle1\). The ledger becomes \((am^3-(a-24h)m)/12\): \(c^*=a>0\), \(c=a-24h<0\).
+\par\(\langle1\rangle2\). CA-100.10's spectral cutoffs and integer-\(p>1\) certificate give A1--A4; the shift changes only the ledger.
+\par\(\langle1\rangle3\). With \(w=L_{-1}\vac/\sqrt{2h}\), \(v=(\vac+w)/\sqrt2\), \(K=(1+L_0)^p\): \(\langle v,T_1K^{-1}v\rangle=\sqrt{2h}/(2(h+2)^p)>0\). QED.
+This refutes literal \(c>0\), not positivity of \(c^*\). No local categorical realisation is asserted.
+
+\subsection{Entrywise Certificates on the Whole Carrier}
+
+\textbf{Theorem 104.8 [derived; any; category-free \(+\) declared bases and energies; sufficient for \(\mathsf R2\) data] (NOTE:\allowbreak 250--321; REVIEW:\allowbreak 204--207).}
+\emph{(Lemma B.)} Let \(X\) be a matrix between finite spaces with orthonormal bases, \(Q_{\rm in}=1+e_x\), \(Q_{\rm out}=1+e_y\),
+\(e\ge0\), \(|e_y-e_x|\le\theta\) on every nonzero entry, column sums \(\sum_y|X_{yx}|\le uQ_{\rm in}(x)^\gamma\), row sums
+\(\sum_x|X_{yx}|\le u'Q_{\rm out}(y)^\gamma\). Then for \(t\ge0\), \(\lambda\ge\gamma\):
+\(\|Q_{\rm out}^tXQ_{\rm in}^{-t-\lambda}\|\le\sqrt{uu'}\,(1+\theta)^{t+\lambda/2}\).
+\emph{(B.1.)} If \(Q_{r+1}J_r=J_rQ_r\), modes are adjoint paired with bounded shifts and row/column sums \(O(Q)\), defects
+\(O(\epsilon_r^\alpha Q^{1+\alpha})\), full residuals (scalar ledger included) \(O(\epsilon_r^\beta Q^{2+\beta})\), \(\epsilon_r=\epsilon_02^{-r}\),
+uniformly in \(r\), then \(K_r=Q_r^p\) satisfies VR-1 A1--A4 whenever \(p\ge\max(1+\alpha,1+\beta/2)\).
+\par\(\langle1\rangle1\). On supported entries both energy ratios lie in \([(1+\theta)^{-1},1+\theta]\).
+\par\(\langle1\rangle2\). Factor weights as \((Q_{\rm out}/Q_{\rm in})^tQ_{\rm in}^{-\lambda}\) for columns (sum \(\le u(1+\theta)^t\)) and as
+\((Q_{\rm out}/Q_{\rm in})^{t+\lambda}Q_{\rm out}^{-\lambda}\) for rows (sum \(\le u'(1+\theta)^{t+\lambda}\)).
+\par\(\langle1\rangle3\). Schur test: row sums \(\le a\), column sums \(\le b\) give norm \(\le\sqrt{ab}\) (Cauchy--Schwarz per row).
+\par\(\langle1\rangle4\). B.1: A1 by spectral calculus; A2 with \((t,\gamma,\lambda)=(ps,1,p)\); A3 with \((ps,1+\alpha,p)\), dyadic sum
+\(C\epsilon_0^\alpha/(1-2^{-\alpha})\); A4 with \((ps,2+\beta,2p)\); then VR-1 (\path{virasoro_routes.md}:78--149). QED.
+No dimension or fusion-multiplicity factor appears; bases and energies are microscopic declarations, not fusion data.
+This complements, and does not supply, 79.2's shell certificate. A5 is still separately required.
+
+\textbf{Lemma 104.9 [derived; any; category-free CAR; \(\to\mathsf R2\)] (\path{checks/graph_certificate.md}:33--88; REVIEW:\allowbreak 80--90,210).}
+On a finite symmetric half-integer window in the sea representation \(S=1_{r<0}\) (source:739--755, 848--855), let
+\(X={:}d\Gamma_S(C){:}\) with \(Ce_r=d(r)e_{r-k}\), \(|d(r)|\le H(1+|r|)^\gamma\), \(\gamma\ge1\), \(k\in\mathbb Z\), missing edges zero;
+\(E=\sum_{\rm exc}|r|\), \(Q=1+E\). Then on the \emph{full} Fock carrier, spectators included,
+\(\|Q^tXQ^{-t-\gamma}\|\le H\,F(\gamma,k)(1+|k|)^{t+\gamma}\), \(F(\gamma,k)=(1+|k|)^\gamma(3^\gamma+|k|)\).
+\par\(\langle1\rangle1\). \(E=\sum_rr\,c_r^*c_r-\sum_{r<0}r\), so every matrix element shifts \(E\) by exactly \(-k\).
+\par\(\langle1\rangle2\). A column of energy \(e\) has absolute sum \(\le HF(\gamma,k)(1+e)^\gamma\): same-sign moves use each excited label once; \(1+|r|\le3|r|\),
+\(1+|r|\le(1+|k|)(1+|r-k|)\) for holes, \(\sum_{\rm exc}|r|^\gamma\le e^\gamma\); the \(\le|k|\) sign-crossing moves give \(H|k|(1+|k|)^\gamma\);
+for \(k=0\) the \emph{combined} particle\(+\)hole sum is used (separate bounds fail at \(\gamma=1\): \(2e>1+e\)). Pauli blocking only deletes terms.
+\par\(\langle1\rangle3\). The adjoint has coefficients \(\overline{d(r+k)}\), so rows obey the same bound; \(Q_{\rm out}/Q_{\rm in}\le1+|k|\) and Schur (104.8 \(\langle1\rangle3\)) finish. QED.
+
+\textbf{Theorem 104.10 [derived; any; category-free; joins \(\mathsf R1\) and \(\mathsf R2\) on one system] (NOTE:\allowbreak 325--364; REVIEW:\allowbreak 224).}
+Given a unital injective tower \((\Alg_r,\alpha^r_{r+1})\) with compatible states \(\omega_r\) (e.g.\ WT-1's limit rows) and a
+realisation \((\pi'_r,H'_r,\vac'_r,J'_r)\) cyclic for the same states with \(J'_r\vac'_r=\vac'_{r+1}\),
+\(J'_r\pi'_r(a)=\pi'_{r+1}(\alpha^r_{r+1}(a))J'_r\), the realisation is unitarily the compatible GNS tower; a VR-1/A5
+certificate on it and WT-1 meet CA-81's same-system clause. \par\(\langle1\rangle1\). \(U_r[a]=\pi'_r(a)\vac'_r\) is unitary
+(state identity, cyclicity). \(\langle1\rangle2\). \(U_{r+1}J_r=J'_rU_r\) on cyclic classes. \(\langle1\rangle3\). Norms are unitarily invariant. QED.
+
+\subsection{The Calibration}
+
+\textbf{Proposition 104.11 (calibration) [derived (calibration);\newline periodic AP, one family or paired full; category-free; \(\mathsf R1+\mathsf R2\) on one GNS system,
+\(\mathsf R0\) unital but spatially nonlocal, no \(\mathsf R3\)] (\path{checks/graph_certificate.md}:90--272; \path{checks/same_system.md}:13--124; REVIEW:\allowbreak 92--140,209--235).}
+This checks 104.1, 104.8--104.10; it is not their subject. Its \(\mathsf R0\) is the source's sharp-momentum CAR map
+(source:1890--1894), \emph{not} CA-88's local \(\mathsf R0^u\). Data (examples table): (w)'s no-wrap matrices \(A_n^M\),
+\(T_{M,n}={:}d\Gamma_S(A_n^M){:}\), \(M=2^rM_0\), \(\epsilon=2\pi/M\), canonical GNS refinement (new labels inserted as sea),
+\(K=(1+E)^p\). Then A1--A4 hold on the whole Fock carrier \emph{iff} \(p>1\), A3 at rate \(\epsilon^{\min(p-1,2)}\) (sharp), A4 at
+\(\epsilon^{\min(2,2p-2)}\), ledger \(c=c^*=1\), and A5 holds with \(\kappa=1/(2\sqrt2\pi)\).
+\par\(\langle1\rangle1\). A1: refinement preserves every excitation label, so \(E_{2M}J=JE_M\) for every \(p\).
+\par\(\langle1\rangle2\). Coefficients: for \(M\ge4(|n|+1)\), \(|f_n^M-b_n|\le h_{n,\alpha}\epsilon^\alpha w^{1+\alpha}\), \(w=1+|r|\), \(0\le\alpha\le2\), by
+\(|\sin x-x|\le|x|^3/6\), \(\sin^2u\le u^2\) and, on deleted edges, \(\epsilon^2w^2\ge\pi^2/4>1\); interpolate the minimum.
+\par\(\langle1\rangle3\). A2 by 104.9 with \(\gamma=1\); A3 since the defect is exactly \({:}d\Gamma_S(A^{2M}_n-A^M_n){:}J\), with \(\gamma=1+\alpha\le p\), \(\alpha=\min(p-1,2)\);
+A4 by \(C_M=\delta_mA_n+B_m\delta_n-\delta_nA_m-B_n\delta_m-(m-n)\delta_{m+n}\), \(\delta=A-B\), and 104.9 with \(\gamma=2+\alpha'\le2p\), \(\alpha'=\min(2,2p-2)\);
+the scalar is \(c_S(A_m,A_{-m})-(m^3-m)/12\) (source:886--892), \(O(\epsilon^{\alpha'})\). Finitely many small scales use crude bounds.
+\par\(\langle1\rangle4\). \(p=1\) fails A3 at \(n=0\): \(r_M=M/4-1/2\), the defect over \(1+r_M\) tends to \(2(\sqrt2-1)/\pi\) (at
+\(\epsilon r\to\pi/2\), in the coarse interior, not the window edge). \(p<1\) fails A2. Sharpness: the UV vector gives
+\(M^{1-p}\), a fixed low label gives \(\epsilon^2r^3/8\).
+\par\(\langle1\rangle5\). A5: \(w\) the unit direction of \(T_{-2}\vac\) at \(M_0=4\), \(Ew=2\), \(v=(\vac+w)/\sqrt2\): \(\langle v,T_{-2}K^{-1}v\rangle=b_M/2\),
+\(b_M=\sqrt2\cos^2(\epsilon/2)\sin(\epsilon/2)/\epsilon\ge1/(\sqrt2\pi)\) (\(\cos^2\ge\tfrac12\), \(\sin x\ge2x/\pi\)). 104.1's certificate applies.
+\par\(\langle1\rangle6\). Same system (104.10): \(U=(e_+,e_-)\), \(e_\pm=(1,\pm i)/\sqrt2\), sends WS-1's limit \((I-\operatorname{sign}(r)\sigma_y)/2\)
+(\path{WILSON_PROOF.md}:28--41) to \(S_-\oplus S_+\); the fixed-\(p_+\) mode (source:2372--2384) becomes \(T_{M,n}\otimes I\); with
+\(E^{\rm tot}\) all bounds persist; \(FA_nF\), \(Fe_r=e_{-r}\), is the partner, and mixed brackets of even quadratics vanish exactly.
+\emph{Review GAP G2 (REVIEW:\allowbreak 228--231):} intertwining of odd generators of the second factor (parity twist) is
+covered only by the note's eight-generator finite check, hence \emph{conditional}; even quadratics, and so the
+certificate, do not see it. The finite Dirac vectors enter only through the limit rows.
+
+\subsection{Effect on other shards}
+
+\emph{Amendment (2026-10-27, round 4):} CA-81's VR-1 gains A5 (104.1); A1--A4 alone admit collapse (104.3); the first
+instance is 104.11 on WS-1's system, and its numerical-scope sentence now uses the sea as WT-1 \emph{limit}.
+CA-79's first attackable lemma is answered for the calibration by 104.8--104.9, not P0--P3; \(\gamma\approx3\) is superseded
+and \(p=1\) fails. CA-88's D2-C first lemma: \(K=1+E\) fails A3; test 89.L with \(K=(1+E)^2\); grid as in Status.
+CA-95: 95.8's \(K=1+Q\) is not a VR-1 control. CA-75 generator convergence: one category-free instance, no categorical one.
+Worklog 023 \S1/\S4.3 (``VR-1 has no instance anywhere'') is superseded in the next entry (INTEGRATION:\allowbreak 61--92).
+
+\subsection{What This Does Not Claim}
+
+No categorical instance of A1--A5 and no categorical cell move; no local \(\mathsf R0^u\) (the refinement is nonlocal);
+no fixed-support standard local KS identification; no positivity-only \(c^*>0\) (104.6); no \(\mathsf R3\)
+(positive energy, integration, net axioms), \(\mathsf R4\) or \(\mathsf R5\). \(E\) is auxiliary, not the sine Hamiltonian
+(89.3: the physical control fails A2). The in-session reviews in \path{checks/} are not independent (REVIEW:\allowbreak 63--66).
+For arbitrary \(\Cc\), \(\mathsf R2\) still needs 95.11's densities in the actual positive carrier, Ward data (89, 95.2) if
+that route is used, and LC-4's prescribed modes on the same system (NOTE:\allowbreak 366--386).
+
+\subsection{Examples (Instances Only)}
+
+\begin{center}\footnotesize
+\begin{tabular}{p{3.4cm}p{10.6cm}}
+\toprule Instance & Exact finding; grade and tags of the indicated statement \\ \midrule
+Complex CAR, sea \(1_{r<0}\), AP circle, (w) no-wrap \(A_n^M\) & 104.11: \(K=(1+E)^p\) works iff \(p>1\); smallest integer \(p=2\) (A3 \(O(\epsilon)\), A4 \(O(\epsilon^2)\)); \(p=3\) gives A3 \(O(\epsilon^2)\); \(\kappa=1/(2\sqrt2\pi)\); \(c=c^*=1\). \\
+Same, \(p=1\) & UV defect ratios \(0.163,0.235,0.256,0.2618,0.2632\to2(\sqrt2-1)/\pi=0.2637\) (\path{checks/review_independent_green.txt}:6). \\
+Same, A5 & \(q_r\) at \(M=4,\ldots,1024\): \(0.159\) rising to \(0.3536\approx1/(2\sqrt2)\), all \(\ge\kappa=0.1125\) (\path{checks/review_independent_green.txt}:2). \\
+WS-1 Dirac rows & fixed \(U\) gives \(S_-\oplus S_+\); finite \(P_Q\) have nonzero chiral mixing; paired families commute exactly. \\
+CA-95.5, CA-100.5, any \(\Cc\) & 104.3: transported A5 pairings vanish after one refinement / identically. \\
+Shifted targets \((a,h)\), \(a>1\), \(h>a/24\) & 104.7: \(T_0\ge0\), \(c=a-24h<0\), \(c^*=a>0\). \\
+\bottomrule\end{tabular}
+\end{center}
+Reproduce from the package: \texttt{python3 checks/review\_independent\_check.py} (independent of the note's code, GNS map
+built from CAR words; \(\le256\times256\) dense, about 2\,s), plus the note's nine commands (\path{checks/README.md}:8--45).
+Mutations \texttt{empty-pad}, \texttt{ledger}, \texttt{collapse}, \texttt{p1} and the note's five (wrap, normal-order, energy,
+Gram \(6h\to5h\), Wilson sign) all exit~1 (REVIEW:\allowbreak 20--55). Float64 tolerance \(2\cdot10^{-10}\); finite sizes are
+pre-asymptotic for A4 and prove no rate; the rates rest on the analytic proofs.
+
+\subsection{Single Next Target}
+
+\textbf{Target 104.12 [conjectural; any; category-free; \(\to\mathsf R2\)] (REVIEW:\allowbreak 305--319; INTEGRATION:\allowbreak 121--133).}
+\emph{VR-1 with summable graph-norm distortion.} Replace \(K_{r+1}J_r=J_rK_r\) by
+\(\sup_s\max(\|K_{r+1}^sJ_rK_r^{-s}\|,\|K_r^sJ_r^*K_{r+1}^{-s}\|)\le1+\delta_r\), \(\sum_r\delta_r<\infty\), and prove that A1\('\)--A4\(+\)A5 still
+give the limiting representation and non-collapse (named, unproved, at \path{virasoro_routes.md}:167--171). It is the
+gate for moving 104.11 to a local (wavelet) tower and for the categorical local unital lifts CA-90/96, where no
+physical control is transported exactly; without it P4 cannot meet P1's local carrier. Runner-up: 104.6.
