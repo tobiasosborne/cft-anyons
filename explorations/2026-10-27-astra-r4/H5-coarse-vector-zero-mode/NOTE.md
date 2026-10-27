@@ -125,8 +125,10 @@ psi_r=J_(r<-a)v for fixed a,v. Choices of a_j may depend on r.
 **<1>1. Exact finite equation.** If delta_(r,j)=0 for every j, then Z_r=0.
 **BY** sum_j(a_(r,j+1)-a_(r,j))=0 and (H5.1).
 This is a finite cubic equation in the density and a linear equation in a.
-It is a local sufficient supplier of the already known conserved-current
-case, not a new proof of CA-100 Theorem 100.4.
+The equation itself is the cubic cokernel condition of CA-78 Theorem 78.5
+(`report/sections/78_categorical_selection_equations.tex:110-132`), reused
+here as a local supplier of the already known conserved-current case.
+Neither that condition nor CA-100 Theorem 100.4 is claimed as a new result.
 
 **<1>2. Uniform approximate equation.** For all s >= 0,
 

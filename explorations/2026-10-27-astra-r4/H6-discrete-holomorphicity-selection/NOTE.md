@@ -501,6 +501,43 @@ Nonzero spin, varying/degenerating face geometry, or another endpoint grammar
 require separate analysis; no such repair is proved by this obstruction.
 Changing the regular spectral parametrization alone cannot evade it.
 
+## H6-B5. The finite obstruction to consistent scalar edge phases
+
+**Tags:** any; category-free face/edge incidence graph and declared phases
+u_{pe}∈U(1) (in B1, u_{pe}=exp(−isω_{pe})); finite P3 ingredient, no rung.
+**ASSUME** these phases on every incidence of a face p with an edge e.
+**PROVE** there exist g_e,c_p∈U(1) with
+
+    g_e=c_p u_{pe}                                         (B14)
+
+iff the ordered product of u_{pe} on every cycle of the bipartite incidence
+graph is 1, using u_{pe} for p→e and u_{pe}^{−1} for e→p. A finite spanning-
+tree test decides this; the solution is unique up to one constant per connected
+component. This is exactly the scalar compatibility required after (B10).
+
+<1>1. If (B14) holds, write v_p=c_p and v_e=g_e. Each incidence phase is
+v_e/v_p. Products around a cycle telescope to 1. BY cancellation.
+
+<1>2. Conversely choose a root in each component, set v_root=1, and propagate
+values along a spanning tree by v_e=u_{pe}v_p (or its inverse). This assigns a
+unit-modulus value to every vertex. Each extra incidence completes a unique
+cycle with the tree; cycle product 1 is precisely the missing relation
+v_e=u_{pe}v_p. BY substitution along that tree path. There are finitely many
+extra incidences, and these tests suffice; no infinite family is needed.
+
+<1>3. For two solutions the ratios v'/v agree across each incidence, hence
+are constant on each connected component. QED BY connectedness.
+
+Thus local phase prescriptions define a multiplicative 1-cochain; the
+obstruction is its class modulo vertex phase changes, detected by cycle
+products. This explicit quotient is the only cohomology claim here. For
+example, if neighboring faces p,q share e, their ratio must be
+c_q/c_p=u_{pe}/u_{qe}; transporting these ratios around a closed sequence
+of faces must return 1. This is a finite obstruction test, not a claim that
+geometric spin phases from an arbitrary centre endpoint always pass it.
+Even when it passes, identifying g_e with the actual total turning of a
+physical defect path remains a separate geometric assertion.
+
 ## H6-D1. Exact lattice consequence and its sharp limitation
 
 **Definition (the imposed contour condition).** On the embedded brick/rhombus
@@ -683,6 +720,7 @@ No network acquisition was attempted, as the brief prohibits it.
 - H6-B2 — data dependence, gauge covariance and h-family qualifications: **proven**; strict universal F/γ sensitivity is **negative**.
 - H6-B3 — a cut-independent charged-edge field realizing LG with declared scalar phases: **proven**; original winding interpretation is conditional on phase compatibility.
 - H6-B4 — identity-gate obstruction for nonvacuum spin-zero endpoints: **negative**, proved.
+- H6-B5 — exact finite cycle-product test for consistent edge phases: **proven**.
 - H6-C — scalar-loop weight/contour calibration: **proven** in checks; identification with the H6 centre endpoint: **conjectural**.
 - H6-D1 — Stokes and primitive/period criterion: **proven**; automatic harmonic-conjugate claim: **negative**.
 - H6-D2 — C¹/local-uniform holomorphic-limit implication and separating-observable ensemble implication: **conditional**, with proofs of both implications; hypotheses not verified.

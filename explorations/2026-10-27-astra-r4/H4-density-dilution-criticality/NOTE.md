@@ -40,6 +40,9 @@ CA-86 tile h enters as k = −h. Chain length L is not particle number.
 For α use CA-90's declared pointed relative half-braiding (L0 + H);
 bare fusion data do not supply this datum. V needs only L0.
 All finite-dimensional state norms are full dual norms, bounded by 2.
+The δ used below is explicitly a full state distance, not (an)'s separate
+corner-vector defect δ²=2(1−√p). Corner weights p,q and mismatch e retain
+their (an) meanings. Fourier indices m are integers independent of L.
 Any periodic translation/seam, finite-band identification, microscopic
 coefficient dependence on L, positivity of history weights, or Gibbs-to-ground
 comparison is additional declared data, never inferred from C.
@@ -142,7 +145,8 @@ finite spectral theorem, no full R2 or CFT exclusion.
 
 **ASSUME** A(k)=Σ_(|r|≤R) A_r exp(irk), A_(-r)=A_r†, on a fixed
 finite-dimensional fibre E. Suppose A(k)≥E_*I for all real k and
-P=ker(A(k0)−E_*I) has dimension d>0. **PROVE** its d bottom eigenvalues
+P is the orthogonal projection onto ker(A(k0)−E_*I), of dimension d>0.
+**PROVE** its d bottom eigenvalues
 satisfy 0≤λ_j(k0+q)−E_*≤Cq² near q=0, j≤d.
 
 <1>1. For v∈P, the differentiable scalar <v,(A(k)−E_*)v> has a
@@ -517,6 +521,16 @@ gives 0=−2||u||²+2E'(0), hence u=0.
 <1>7. Thus the **original** k preserves the empty bond. B2 applies with
 uniform M and yields c*=0 along the zero-density subsequence, contradicting
 c*≠0. This proves the stated liminf conclusion. QED.
+
+**Right-family check (same theorem).** Write σ=+1 for the left family
+and σ=−1 for the right, with t_j=k_j−σJ_j and p=σ2πm/L. B7 replaces
+−iH' by −σiH'. The probe polynomials are consequently
+F_A=σie^(-ip)(E(p)+E(−p)) and
+F_B=2i(1−e^(-ip))||u||²+σe^(-ip)(E(p)−E(−p)). **BY** the same adjoint
+pairing used in <1>6. The Fourier-derivative extraction at p=σ2π/L,
+σ4π/L is unchanged except for a nonzero sign. It gives E(0)=E'(0)=0,
+then −2||u||²+2σE'(0)=0. B2's sine changes sign, leaving its absolute
+bound unchanged. Thus the conclusion holds for either standard family.
 
 This resolves the arbitrary-pointed fixed-k case **with the declared KS
 state bounds**. It does not cover arbitrary running k_L or velocities
@@ -982,10 +996,10 @@ F-symbol entries or pentagon claim are introduced.
 
 - AGENTS.md (read in full); README.md; report/README.md;
   report/SHARD_CATALOG.md; report.tex.
-- CONVENTIONS.md:1450–1483,1524–1543,1564–1575.
+- CONVENTIONS.md:631–690,1397–1483,1505–1543,1564–1575,1621–1662.
 - worklog/023_2026-10-27_status_overview.md:18–84,161–215.
 - report/sections/66_anyonic_states_variable_n_fock.tex:54–106.
-- report/sections/68_variable_n_refinement_maps.tex:51–119,140–150.
+- report/sections/68_variable_n_refinement_maps.tex:51–119,140–150,175–181.
 - report/sections/75_integration_map.tex:115–163 (links), 168–196 (one system).
 - report/sections/76_corner_to_wilson_bridge.tex:90–112,153–180,236–249.
 - report/sections/77_pointed_carrier_invariants.tex:47–60,90–116,175–231.
@@ -995,11 +1009,11 @@ F-symbol entries or pentagon claim are introduced.
 - report/sections/81_cft_machine_oar_contract.tex:49–85,97–114.
 - report/sections/86_spacetime_trotter_dictionary.tex:61–110,196–217.
 - report/sections/87_dilute_fibonacci_is_blocked_golden.tex:178–187.
-- report/sections/88_layered_targets.tex:82–125.
+- report/sections/88_layered_targets.tex:54–56,82–125,134–161.
 - report/sections/90_local_unital_lift.tex:110–168.
 - report/sections/91_parity_and_chiral_delineation.tex:46–98 (two-family ledger).
 - report/sections/94_number_changing_collision_dynamics.tex:77–95,123–162,
-  177–195,214–238 (positive squares, tuned limit, coefficient image, channels).
+  177–207,214–238 (positive squares, tuned limit, coefficient image, channels).
 - report/sections/96_blocked_dyadic_lifts.tex:63–105 (vacancy shuffle/lift).
 - report/sections/97_what_the_tower_remembers.tex:86–89,102–117
   (dual closure, normalized trace and its dyadic compatibility).
@@ -1014,10 +1028,10 @@ F-symbol entries or pentagon claim are introduced.
 - references/cft-machine/proofs/lamport1993.tex:152–175.
 - references/string-net/LevinWen2005/source/strnet.tex:490–525
   (local string-net partition-function precedent, not an H4 density theorem).
-- references/refinement/HaegemanEtAl2018Wavelet/source/latticefermions.tex:
-  470–491 (local/global accuracy and overlap caveat used by CA-76).
-- references/lattice-symmetry/GransSamuelssonEtAl2020/source/Linnea11.5.tex:
-  791–822 (standard lattice Virasoro density/current conventions).
+- references/refinement/HaegemanEtAl2018Wavelet/source/latticefermions.tex:470–491
+  (local/global accuracy and overlap caveat used by CA-76).
+- references/lattice-symmetry/GransSamuelssonEtAl2020/source/Linnea11.5.tex:791–822
+  (standard lattice Virasoro density/current conventions).
 - literature/md/2010.11121/2010.11121.md:126–180
   (OAR state/refinement setting; not a density theorem).
 
@@ -1025,4 +1039,5 @@ All new mathematical claims are proved above by finite identities,
 variational arguments, local state convergence or an explicitly given
 counterexample. The preceding papers and shards are not cited as proving
 H4. The immutable local source files were read; no source was fetched and
-no root conventions, report, worklog, index, or Git state was edited.
+this task made no edits to root conventions, report, worklog or index, and
+ran no Git mutation or network command.
