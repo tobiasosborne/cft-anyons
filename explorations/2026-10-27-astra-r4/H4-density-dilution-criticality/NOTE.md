@@ -452,8 +452,10 @@ vector above Ω_0=η^L. Since T'_mΩ_0=0 for m≠0,
 
 **BY** summing the divergence and the current identity, with H'Ω_0=0.
 
-<1>5. E(p)=L^(-1)<U_p,H'U_p> is a fixed real Laurent polynomial and
-E(p)≥0 for every real p.
+<1>5. Define E(p) as the finite-range one-particle Toeplitz symbol obtained
+by contracting H' between translates of u. It is a fixed real Laurent
+polynomial. For allowed periodic momenta p=2πm/L and sufficiently large L,
+E(p)=L^(-1)<U_p,H'U_p>. **PROVE** E(p)≥0 for every real p.
 
 <2>1. Ground states satisfy ω_L(C†[H_L,C])≥0 for every fixed local C.
 The operator tested has fixed support; B3<1>1 passes this inequality to
@@ -490,8 +492,6 @@ This resolves the arbitrary-pointed fixed-k case **with the declared KS
 state bounds**. It does not cover arbitrary running k_L or velocities
 without uniform normalization, or ground states uncontrolled by the VR-1
 regularity norms. B4 proves no conformal existence or category fidelity.
-
-## C. Which map dilutes?
 
 ## C. Which map dilutes?
 
@@ -619,6 +619,17 @@ For a translation-invariant fine state of density ρ, additionally q_n≥ρ:
 N_e≤L_n(1−P) and ω(N_e)=L_nρ. Thus positive-density states cannot satisfy
 bare-corner q_n→0. This last inequality uses CA-90's site placement, not
 a conformal hypothesis.
+
+**Zero density is weaker than bounded number, even here.** In every C with
+X≠0 choose a state χ_(2L) supported on X^(2L), and recursively put
+ω_(n+1)=(1−ε_n)V_*ω_n+ε_nχ_(2L_n), ε_n=(n+2)^(-2).
+The two summands have orthogonal supports, because the second has all
+inserted sites occupied. Thus q_n=ε_n, e_n=0, and the drift bound is
+summable; C5 gives ρ_n→0. Nevertheless
+ω_(n+1)(N_(2L_n))≥2L_nε_n→∞. **BY** the explicit convex mixture and
+geometric growth of L_n. Consequently even a corrected C3 cannot be
+combined with a theorem about *bounded* occupation alone. B2/B4 instead
+use the actual density, so this logical gap does not affect their use.
 
 ## D. Necessary refill and an exact local construction
 

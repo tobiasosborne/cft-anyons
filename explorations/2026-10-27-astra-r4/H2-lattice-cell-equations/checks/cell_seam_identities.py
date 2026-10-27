@@ -128,6 +128,21 @@ for i, j in itertools.product(range(4), repeat=2):
     zero(sharp(sharp(unit)) - unit, "sharp involution")
 print("PASS universal multiplicity seam: unitary, cup-preserving; K_s(1)=u u^dagger rank 1")
 print("PASS all 16 matrix units: both bend inverses and sharp involution")
+coupling = s.symbols("coupling", real=True)
+z2 = s.diag(1, -1)
+h_pair = s.kronecker_product(z2, z2)
+zero(h_pair * h_pair - s.eye(4), "exact pair gate involution")
+tile = s.cosh(t * coupling) * s.eye(4) + s.sinh(t * coupling) * h_pair
+zero(tile.diff(t) - coupling * h_pair * tile, "exact pair gate ODE")
+zero(tile.subs(t, 0) - s.eye(4), "exact pair gate initial condition")
+zvec = s.Matrix([1, 0, 0, -1])
+zero(kflip(tile) - s.cosh(t * coupling) * u * u.H
+     - s.sinh(t * coupling) * zvec * zvec.H, "exact gate spatial RP cone")
+assert (u.H * zvec)[0] == 0
+zero(kflip(tile) * zvec - 2 * s.sinh(t * coupling) * zvec,
+     "sign-sensitive spatial RP eigenvalue")
+print("PASS exact gate RP cone: h=a Z tensor Z; spatial kernel has eigenvalues "
+      "2*cosh(t*a), 2*sinh(t*a), 0, 0; for t>0 positivity iff a>=0")
 L = s.eye(4) + matrix_unit(0, 1) + 2 * matrix_unit(2, 3)
 M = matrix_unit(1, 0) + matrix_unit(3, 2) + matrix_unit(0, 2)
 N = s.eye(4) + matrix_unit(2, 0) + matrix_unit(1, 3)

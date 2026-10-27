@@ -473,8 +473,8 @@ Q_L=Q_R. This forces q=f⊗1_O for f:Y→1 satisfying
 
     (1_O⊗f) γ_O = f⊗1_O.                                  (B13)
 
-In particular, if Hom_C(Y,1)=0, no nonzero q in this ansatz admits an exact
-family e^{th} satisfying the fixed-geometry equation down to t=0.
+In particular, if Hom_C(Y,1)=0, no nonzero q in this ansatz admits any continuous regular family T(u)→1
+satisfying the fixed-geometry equation down to u=0 (including e^{th}).
 
 <1>1. At s=0, (B1)–(B3) give
 R_q(1)=(a+b)(Q_R−Q_L). A nondegenerate parallelogram has a+b≠0.
@@ -491,15 +491,14 @@ last factor cancels it. Conversely (B13) and q=f⊗1_O imply Q_L=Q_R.
 BY the displayed compositions. These are precisely vacuum-valued endpoint
 maps transparent to the O strands, not an arbitrary nonvacuum charge.
 
-<1>4. If Hom(Y,1)=0, then f=0 and q=0. If e^{th} solved the equation for t>0
-arbitrarily small, continuity would give R_q(1)=0 and the same conclusion.
-BY steps 1–3 and e^{0h}=1. QED.
+<1>4. If Hom(Y,1)=0, then f=0 and q=0. If T(u) solved the equation with T(u)→1, continuity would give
+R_q(1)=0 and the same conclusion. BY steps 1–3 and linearity of R_q. QED.
 
 This explains why a finite nonzero kernel—even one containing a positive
 semidefinite tile—is insufficient to select an exact Hamiltonian family.
-Nonzero spin, varying/degenerating face geometry, another endpoint grammar,
-or a different regular spectral parametrization require separate analysis;
-no such repair is proved by this obstruction.
+Nonzero spin, varying/degenerating face geometry, or another endpoint grammar
+require separate analysis; no such repair is proved by this obstruction.
+Changing the regular spectral parametrization alone cannot evade it.
 
 ## H6-D1. Exact lattice consequence and its sharp limitation
 

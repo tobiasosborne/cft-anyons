@@ -88,6 +88,8 @@ assert charge * U == U * charge
 print("PASS exact neutral refill gain 32/25, isometry, charge, commutator balance")
 
 # This symmetric-instance ancilla dressing leaves the old-factor algebra intact.
+# We verify the larger full matrix algebra; its grade-preserving subalgebra
+# is the categorical algebra, so the stronger identity implies the needed one.
 for row in range(4):
     for col in range(4):
         a = s.zeros(4)
