@@ -1,0 +1,35 @@
+$ python3 explorations/2026-10-27-astra-r4/H2-lattice-cell-equations/checks/rank_two_ward.py
+SymPy 1.12; exact arithmetic; no numeric tolerance
+ASSUMPTIONS: formal rank-two rings only; actual category needed for categorification; generic h,B,L independent; fixed same-cut B
+Independent orthogonal 2x2 placeholder is not categorical F-data
+PASS symbolic m>=0 integer: ring associativity; O^2=(2,m+2)
+RED OBSERVED m=0: injected F coefficient rejected: F leaked into A2
+PASS m=0: blocks=[2, 2], dim(A2)=8, nonzero matrix-unit products=16; R0=h; R1=h^2-[B,h]; metric coefficient=L-ad_B; no F
+RED OBSERVED m=1: injected F coefficient rejected: F leaked into A2
+PASS m=1: blocks=[2, 3], dim(A2)=13, nonzero matrix-unit products=35; R0=h; R1=h^2-[B,h]; metric coefficient=L-ad_B; no F
+RED OBSERVED m=2: injected F coefficient rejected: F leaked into A2
+PASS m=2: blocks=[2, 4], dim(A2)=20, nonzero matrix-unit products=72; R0=h; R1=h^2-[B,h]; metric coefficient=L-ad_B; no F
+PASS pointed m=0: omega=+/-1 normalized; all 16 cocycle identities per sign; unitary F3; full O^3 basis; charge and dagger preserved
+PASS J(-)-J(+): (001,100)=-2*i*a^2, (010,111)=-2*i*a*b, conjugate entries; same two-site k/algebra
+PASS symbolic pointed F3: real zeta, zeta^2=1; cocycle and unitarity modulo relation; J[001,100]=i*(a^2*zeta-b^2); +/- specializations
+PASS zeta=+1: Tr((X tensor Z tensor Y)J)/8=(a^2-b^2)/2; genuine three-site support when a^2!=b^2
+Boundary: no criticality, Ward solution, KS convergence or CFT fidelity
+ALL CHECKS PASS; elapsed_seconds=6.047
+
+$ python3 explorations/2026-10-27-astra-r4/H2-lattice-cell-equations/checks/rank_two_ward.py --mutate-f
+SymPy 1.12; exact arithmetic; no numeric tolerance
+ASSUMPTIONS: formal rank-two rings only; actual category needed for categorification; generic h,B,L independent; fixed same-cut B
+Independent orthogonal 2x2 placeholder is not categorical F-data
+PASS symbolic m>=0 integer: ring associativity; O^2=(2,m+2)
+Traceback (most recent call last):
+  File "/home/tobias/Projects/cft-anyons/explorations/2026-10-27-astra-r4/H2-lattice-cell-equations/checks/rank_two_ward.py", line 230, in <module>
+    main()
+  File "/home/tobias/Projects/cft-anyons/explorations/2026-10-27-astra-r4/H2-lattice-cell-equations/checks/rank_two_ward.py", line 224, in main
+    rank_two_check(m, {u}, args.mutate_f)
+  File "/home/tobias/Projects/cft-anyons/explorations/2026-10-27-astra-r4/H2-lattice-cell-equations/checks/rank_two_ward.py", line 113, in rank_two_check
+    f_free(coefficient_map, forbidden)
+  File "/home/tobias/Projects/cft-anyons/explorations/2026-10-27-astra-r4/H2-lattice-cell-equations/checks/rank_two_ward.py", line 36, in f_free
+    assert not matrix.free_symbols.intersection(forbidden), "F leaked into A2"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: F leaked into A2
+EXPECTED RED: exit=1; injected F coefficient rejected.
