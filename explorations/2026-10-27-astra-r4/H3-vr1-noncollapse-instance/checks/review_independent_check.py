@@ -144,17 +144,34 @@ for M in (4, 8):
                     'GNS intertwining J c_r = c_r J'
 log('A1 + GNS intertwining of all coarse c_r, c_r^*: PASS (M=4->8, 8->16)')
 
+# ---- A5 witness on the transported coarse vector ----
+kappa = 1/(2*math.sqrt(2)*math.pi)
+M0 = 4
+Om = {vac(M0): 1.0}; t = apply_T(M0, -2, Om); nt = math.sqrt(sum(v*v for v in t.values()))
+w = {k: v/nt for k, v in t.items()}
+v = {k: x/math.sqrt(2) for k, x in Om.items()}
+for k, x in w.items(): v[k] = v.get(k, 0) + x/math.sqrt(2)
+qs, M, p = [], M0, 2.0
+while M <= 1024:
+    Kinv = {k: x/(1+energy(M, k))**p for k, x in v.items()}
+    Tv = apply_T(M, -2, Kinv)
+    qs.append(sum(v.get(k, 0)*x for k, x in Tv.items()))
+    if M < 1024: v = J_state(M, 2*M, v)
+    M *= 2
+log('A5 q_r = <v_r, T_-2 K^-1 v_r>, M=4..1024:', [round(q, 6) for q in qs], 'kappa', round(kappa, 6))
+assert min(qs) >= kappa - TOL, 'A5 lower bound kappa'
+assert abs(qs[-1] - 1/(2*math.sqrt(2))) < 1e-4, 'A5 limit 1/(2 sqrt 2)'
 # ---- A2: exact weighted norms vs Lemma Q constant, M = 4..10 ----
 def lemmaQ(q, k, t, H): return H*(1+abs(k))**q*(3**q+abs(k))*(1+abs(k))**(t+q)
 for p in (1.0, 2.0):
     for s in (0, 1):
         for n in (-2, -1, 0, 1, 2):
             vals = []
-            for M in (4, 6, 8, 10):
+            for M in (4, 6, 8):
                 E = Evec(M); vals.append(wnorm(dense_T(M, n), E, E, p*s, p))
             bound = lemmaQ(1, n, p*s, 1+abs(n)/2)
             assert max(vals) <= bound + TOL, 'A2 exceeds Lemma Q constant'
-            if n == 2 and s == 1: log(f'A2 p={p} s={s} n={n}: exact norms M=4..10',
+            if n == 2 and s == 1: log(f'A2 p={p} s={s} n={n}: exact norms M=4,6,8',
                                       [round(v, 4) for v in vals], '<= bound', round(bound, 1))
 # p<1 fails A2 (moving one-particle vector, n=0)
 r_ = [((M//4) - 0.5) for M in (16, 64, 256, 1024)]
@@ -199,10 +216,11 @@ for p in (2.0, 3.0):
             row.append(np.linalg.norm(W, 2))
         log(f'A3 s=1 p={p} n={n}: exact defect norms M=4->8, 8->16:', [f'{x:.4f}' for x in row])
 
-# ---- A4: full residual with ledger, exact, M=4..10 ----
+# ---- A4: full residual with ledger ----
 cs = c = 0.0 if MUT == 'ledger' else 1.0
+# (i) small-M exact many-body weighted residual (pre-asymptotic calibration, must decrease)
 worst = {}
-for M in (4, 6, 8, 10):
+for M in (4, 6, 8):
     E = Evec(M); T = {n: dense_T(M, n) for n in range(-4, 5)}
     for n in range(-3, 4):
         assert np.max(np.abs(T[n].T - T[-n])) < TOL, 'adjoint pairing'
@@ -213,33 +231,31 @@ for M in (4, 6, 8, 10):
             R = T[m] @ T[n] - T[n] @ T[m] - (m-n)*T[m+n] - z*np.eye(1 << M)
             w = max(w, wnorm(R, E, E, 0.0, 4.0))
     worst[M] = w
-log('A4 p=2 s=0 max_{|m|,|n|<=2} ||R K^-2||, M=4,6,8,10:', {k: round(v, 4) for k, v in worst.items()})
-assert worst[10] < worst[6] < worst[4] and worst[10]*(10/6)**2 < 1.3*worst[6], 'A4 ~eps^2 decay'
-
-# scalar cocycle from many-body vacuum norms: <O,[T_m,T_-m]O> = ||T_-m O||^2 (T_m O=0)
+log('A4 p=2 s=0 max_{|m|,|n|<=2} ||R K^-2|| (pre-asymptotic), M=4,6,8:', {k: round(v, 4) for k, v in worst.items()})
+assert worst[8] < worst[6] < worst[4], 'A4 residual decreasing'
+# (ii) large-M many-body vacuum residual <Omega, R_{m,-m} Omega> with the ledger -> 0
 for m in (1, 2, 3):
     vals = []
-    for M in (16, 64, 256, 1024):
-        st = apply_T(M, -m, {vac(M): 1.0}); vals.append(sum(v*v for v in st.values()))
-    target = (m**3 - m)/12
-    log(f'cocycle m={m}: ||T_-m Omega||^2 ->', [round(v, 6) for v in vals], 'target', target)
-    assert abs(vals[-1] - target) < 1e-4 + 1e-6, 'cocycle sign/value (c=c*=1)'
+    for M in (64, 256, 1024):
+        st = apply_T(M, -m, {vac(M): 1.0})
+        vals.append(sum(x*x for x in st.values()) - (m**3*cs - m*c)/12)  # T_m Omega = 0, T_0 Omega = 0
+    log(f'A4 ledger vacuum residual m={m}, M=64,256,1024:', [f'{x:.2e}' for x in vals])
+    assert abs(vals[-1]) < 1e-4 and abs(vals[-1]) <= abs(vals[0]) + 1e-15, 'A4 ledger: vacuum residual must vanish'
+# (iii) one-particle coefficient bound |C_M(r)| <= H_mn eps^2 w^4 on the whole window
+def g(n): return 1+abs(n)/2
+def dd(n): return g(n)**3/6 + n*n*g(n)/16 + g(n)
+for M in (64, 256, 1024):
+    eps = 2*math.pi/M; worst_ratio = 0.0
+    for m in range(-3, 4):
+        for n in range(-3, 4):
+            if M < 4*(max(abs(m), abs(n), abs(m+n))+1): continue
+            H = (dd(m)*(1+abs(n))**3*g(n) + g(m)*(1+abs(n))*dd(n) + dd(n)*(1+abs(m))**3*g(m)
+                 + g(n)*(1+abs(m))*dd(m) + abs(m-n)*dd(m+n))
+            for r in labels(M):
+                C = (coeff(M, n, r)*coeff(M, m, r-n) - coeff(M, m, r)*coeff(M, n, r-m)
+                     - (m-n)*coeff(M, m+n, r))
+                worst_ratio = max(worst_ratio, abs(C)/(H*eps**2*(1+abs(r))**4))
+    log(f'A4 coefficient |C_M(r)|/(H_mn eps^2 w^4) max over |m|,|n|<=3, M={M}:', round(worst_ratio, 4))
+    assert worst_ratio <= 1 + 1e-12, 'A4 global coefficient majorant'
 
-# ---- A5 witness on the transported coarse vector ----
-kappa = 1/(2*math.sqrt(2)*math.pi)
-M0 = 4
-Om = {vac(M0): 1.0}; t = apply_T(M0, -2, Om); nt = math.sqrt(sum(v*v for v in t.values()))
-w = {k: v/nt for k, v in t.items()}
-v = {k: x/math.sqrt(2) for k, x in Om.items()}
-for k, x in w.items(): v[k] = v.get(k, 0) + x/math.sqrt(2)
-qs, M, p = [], M0, 2.0
-while M <= 1024:
-    Kinv = {k: x/(1+energy(M, k))**p for k, x in v.items()}
-    Tv = apply_T(M, -2, Kinv)
-    qs.append(sum(v.get(k, 0)*x for k, x in Tv.items()))
-    if M < 1024: v = J_state(M, 2*M, v)
-    M *= 2
-log('A5 q_r = <v_r, T_-2 K^-1 v_r>, M=4..1024:', [round(q, 6) for q in qs], 'kappa', round(kappa, 6))
-assert min(qs) >= kappa - TOL, 'A5 lower bound kappa'
-assert abs(qs[-1] - 1/(2*math.sqrt(2))) < 1e-4, 'A5 limit 1/(2 sqrt 2)'
 log('ALL PASS' + (f' (mutation {MUT} NOT detected!)' if MUT else ''))

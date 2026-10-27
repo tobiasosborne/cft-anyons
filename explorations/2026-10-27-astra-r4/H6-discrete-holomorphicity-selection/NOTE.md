@@ -43,7 +43,8 @@ Faces will have positively oriented polygonal boundaries, edge displacement Δz_
 and one common edge value F(e)=F(reverse e); the oriented 1-cochain is
 ω(e)=Δz_e F(e). Winding will mean total signed turn of a framed oriented path,
 with endpoint tangent directions and a real spin lift explicitly fixed.
-All path summation, framing, endpoint, and seam hypotheses remain to be specified.
+The following statements specify the needed path, endpoint, phase and seam data
+before each construction uses them.
 
 ## H6-A0. What fails in the literal statement
 
@@ -99,13 +100,14 @@ separate construction from the independent path sum of step 3.
 **Additional note-local conventions (proposed registration).**
 Fix a finite embedded patch, exact tiles and a finite list of decorated
 histories. For each history choose one oriented defect route, or a specified
-finite weighted route list with scalar route weights independent of w. Declare endpoint tensors (possibly in a module
-category), all boundary contractions, and a linear closure ℓ to C. In the
+finite weighted route list with scalar route weights independent of w. Declare
+endpoint tensors (possibly in a module category), all boundary contractions, and a linear closure ℓ to C. In the
 unit sector the total route weight must be one and endpoints erase to the
 ordinary boundary tensors if the unit reduction is wanted. Declare framed
 endpoint tangents and a continuous real angle lift along each piecewise smooth
 route; W is final minus initial lifted tangent angle, including rounded corner
-turns. Positive turns are counterclockwise. Fix s∈R in a scalar-twist sector. Throughout, “the unit defect” means the
+turns. Positive turns are counterclockwise. Fix s∈R in a scalar-twist sector.
+Throughout, “the unit defect” means the
 **tensor unit of Z(C)**, with its trivial half-braiding (Wolf:1260), not merely
 a central object whose underlying object is 1. The latter can have a nontrivial
 half-braiding, and γ_1=id_Y alone would not erase it.
@@ -259,7 +261,7 @@ For example Q_L includes the associator U→(Y⊗O)⊗O; Q_R first uses this
 associator, then γ_O⊗1, then rebrackets to O⊗(Y⊗O). The four K describe
 absorption at the two incoming or the two outgoing legs. No map with a free
 Y output is silently replaced by a number. Rigidity gives
-Q≅Hom_C(Y,O⊗O^vee); thus Q can be zero. A larger puncture space or a module
+Q≅Hom_C(Y,O⊗O^vee) (Penneys:427–430); thus Q can be zero. A larger puncture space or a module
 boundary is another declaration, not automatically the same ansatz.
 
 Choose bases D_α of B₂ and E_μ of H_Y, with
@@ -313,8 +315,9 @@ endpoint extensions; finite →R2/R3, no rung. The global implication also assum
 under LG this suffices for every scalar face contour. Its necessity holds when
 the admitted exterior contractions separate H_Y and are tested individually.
 
-<1>1. Each map in (B2)–(B3) is linear B₂→H_Y: composition and tensor product
-with a fixed morphism are linear. BY the displayed typed formulas.
+<1>1. Each K_i in (B3) is linear B₂→H_Y, with Q_L,Q_R fixed by (B2):
+composition and tensor product with a fixed morphism are linear. BY the
+displayed typed formulas.
 
 <1>2. For T=Σ_α w_αD_α define R_q(T)=Σ_i ζ_i K_i(T). Then
 
@@ -378,8 +381,8 @@ summands and has a larger kernel. BY linearity and projection to summands.
 Changing Y also changes H_Y and Q, which can vanish; no universal nonzero
 observable or useful kernel follows from the choice of Y alone.
 
-<1>5. The finite equation is on **T**, not directly on h. To extract a bond
-energy, declare a differentiable solution family T(u), with T(0)=1 and
+<1>5. The finite equation is on **T**, not directly on h. To extract h (bond
+energy k=−h), declare a differentiable solution family T(u), with T(0)=1 and
 h=T'(0); keep H=−Σ_j h_j as in (ak). For a varying matrix A(u), differentiating
 A(u)w(u)=0 gives A(0)c=−A'(0)w(0), c the coefficients of h. This is necessary,
 not sufficient, for a full family. BY the product rule and CA-78.2.
@@ -544,7 +547,9 @@ c_q/c_p=u_{pe}/u_{qe}; transporting these ratios around a closed sequence
 of faces must return 1. This is a finite obstruction test, not a claim that
 geometric spin phases from an arbitrary centre endpoint always pass it.
 Even when it passes, identifying g_e with the actual total turning of a
-physical defect path remains a separate geometric assertion.
+physical defect path remains a separate geometric assertion. Nontrivial
+holonomy rejects a single-valued scalar phase on this complex; a specified
+cover or local system can carry it, but changes the declaration used in D1.
 
 ## H6-D1. Exact lattice consequence and its sharp limitation
 
@@ -720,13 +725,14 @@ No network acquisition was attempted, as the brief prohibits it.
 
 ## Verification and session record
 
-The three substantial proof blocks and the scalar-loop calibration were checked
+A0–B4, D1–D2 and the scalar-loop calibration were checked
 by a skeptical research reviewer; repairs clarified the central unit, supplied
 a genuine global charged-edge field, made the nonlinear contour witness literal,
 and strengthened B4 from exponentials to all continuous regular families.
 The primary agent independently read the cited definitions and reran the checks.
-This is an exploration result; no report shard, conventions file, worklog, git
-commit or remote state was changed.
+This is an exploration result. This session edited only this note and its
+checks and executed no git mutation commands; unrelated workspace changes
+were left untouched.
 
 Run commands from the repository root (all output files stay in this directory):
 
